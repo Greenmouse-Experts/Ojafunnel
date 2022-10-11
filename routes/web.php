@@ -21,6 +21,8 @@ Route::get('/contact', [App\Http\Controllers\HomePageController::class, 'contact
 Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])->name('login');
 // Sign In
 Route::get('/signup', [App\Http\Controllers\HomePageController::class, 'signup'])->name('signup');
+// Forgor
+Route::get('/forgot', [App\Http\Controllers\HomePageController::class, 'forgot'])->name('forgot');
 // Market Automation
 Route::get('/features/marketauto', [App\Http\Controllers\HomePageController::class, 'marketauto'])->name('marketauto');
 // Page Builder
@@ -33,3 +35,6 @@ Route::get('/terms', [App\Http\Controllers\HomePageController::class, 'terms'])-
 Route::get('/emailmarketing', [App\Http\Controllers\HomePageController::class, 'emailmarketing'])->name('emailmarketing');
 // Chat Automation
 Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
+
+// Dahboard Part
+Route::get('/dashboard', [App\Http\Controllers\HomePageController::class, 'dashboard'])->name('dashboard');

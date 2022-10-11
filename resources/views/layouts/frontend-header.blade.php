@@ -1,9 +1,9 @@
 <header>
     <nav class="navbar navbar-expand-lg fixed-top" id="header-scroll">
         <div class="container">
-            <a class="navbar-brand">
-                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660222222/OjaFunnel-Images/lo_dwxa54.png" draggable="false" alt="OjaFunnel">
-            </a>
+        <a href="{{route('index')}}" class="navbar-brand">
+        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660222222/OjaFunnel-Images/lo_dwxa54.png" draggable="false" alt="OjaFunnel">
+        </a>
             <button class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                 <i class="fas fa-bars"></i>
             </button>

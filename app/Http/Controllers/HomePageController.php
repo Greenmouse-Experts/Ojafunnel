@@ -24,12 +24,17 @@ class HomePageController extends Controller
     // Login
     public function login()
     {
-        return view('frontend.login');
+        return view('auth.login');
     }
     // Sign In
     public function signup()
     {
-        return view('frontend.signup');
+        return view('auth.signup');
+    }
+    // Forgor
+    public function forgot()
+    {
+        return view('auth.forgot');
     }
     // Market Automation
     public function marketauto()
@@ -46,19 +51,24 @@ class HomePageController extends Controller
     {
         return view('frontend.privacy');
     }
-     // Terms
-     public function terms()
-     {
-         return view('frontend.terms');
-     }
-     // EmailMarketing
-     public function emailmarketing()
-     {
-         return view('frontend.emailmarketing');
-     }
-      // Chat Automation
-      public function chatautomation()
-      {
-          return view('frontend.chatautomation');
-      }
+    // Terms
+    public function terms()
+    {
+        return view('frontend.terms');
+    }
+    // EmailMarketing
+    public function emailmarketing()
+    {
+        return view('frontend.emailmarketing');
+    }
+    // Chat Automation
+    public function chatautomation()
+    {
+        return view('frontend.chatautomation');
+    }
+    // Dahboard Part Route Contoller
+    public function dashboard()
+    {
+        return view('dashboard.dashboard');
+    }
 }
