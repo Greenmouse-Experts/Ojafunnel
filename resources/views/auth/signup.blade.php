@@ -22,7 +22,7 @@
                         <div class="col-lg-4" >
                             <div class="sign">
                                 <form class="sign-div">
-                                    <a href="index">
+                                    <a href="{{route('index')}}">
                                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" draggable="false" alt="OjaFunnel Logo">
                                     </a>
                                     <h4>

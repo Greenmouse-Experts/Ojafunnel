@@ -24,7 +24,7 @@
                                 <div class="col-md-12">
                                     <div class="btn-div">
                                         <div class="sidelist">
-                                            <a href="index">
+                                            <a href="{{route('index')}}">
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" draggable="false" alt="">
                                             </a>
                                             <h4></h4>
@@ -51,12 +51,16 @@
                                                         </div>
                                                     </div>
                                                     <p>
-                                                        <a href="forgot">
+                                                        <a href="{{route('forgot')}}">
                                                             Forgot Password ?
                                                         </a>
                                                     </p>
                                                     <div class="col-md-12 mb-2">
-                                                        <button type="submit">Log in</button>
+                                                        <button type="submit">
+                                                            <a href="{{route('dashboard')}}">
+                                                            Log in
+                                                            </a>
+                                                        </button>
                                                     </div>
                                                     <p class="have">
                                                         Don't have an account ?
