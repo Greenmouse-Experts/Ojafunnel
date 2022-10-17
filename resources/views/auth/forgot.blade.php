@@ -62,7 +62,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 mb-2">
-                                                    <button type="submit">Submit</button>
+                                                    <button type="submit">
+                                                        <a href="{{route('verification')}}">
+                                                            Submit
+                                                        </a>
+                                                    </button>
                                                 </div>
                                                 <p>
                                                     We have sent a mail to your registered email to reset your Password.
