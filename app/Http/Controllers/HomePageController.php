@@ -36,6 +36,11 @@ class HomePageController extends Controller
     {
         return view('auth.forgot');
     }
+    // Forgor
+    public function verification()
+    {
+        return view('auth.verification');
+    }
     // Market Automation
     public function marketauto()
     {

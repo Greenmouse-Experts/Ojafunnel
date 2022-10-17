@@ -12,6 +12,14 @@ html, body{
     background-position: center center;
     background-repeat: no-repeat;
 }
+button a{
+    text-decoration: none;
+    color: #fff;
+}
+button a:hover{
+    text-decoration: underline;
+    color: #fff;
+}
 /* ===== Scrollbar CSS ===== */
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {

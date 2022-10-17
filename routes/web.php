@@ -2,17 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 // FrontEnd
 
 Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
@@ -26,6 +15,8 @@ Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])-
 Route::get('/signup', [App\Http\Controllers\HomePageController::class, 'signup'])->name('signup');
 // Forgor
 Route::get('/forgot', [App\Http\Controllers\HomePageController::class, 'forgot'])->name('forgot');
+// Verification
+Route::get('/verification', [App\Http\Controllers\HomePageController::class, 'verification'])->name('verification');
 // Market Automation
 Route::get('/features/marketauto', [App\Http\Controllers\HomePageController::class, 'marketauto'])->name('marketauto');
 // Page Builder
