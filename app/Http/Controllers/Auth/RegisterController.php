@@ -22,6 +22,11 @@ class RegisterController extends Controller
         $response = Http::acceptJson()->withHeaders($this->header)->post($endpoint, $request);
         $ApiResponse = $response->json();
 
-        return dd($ApiResponse);
+        // return dd();
+
+        return back()->with([
+            'type' => 'danger',
+            'message' => $ApiResponse['message']
+        ]); 
     }
 }
