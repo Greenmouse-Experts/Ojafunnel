@@ -461,6 +461,12 @@ body {
   width: 100%;
   background-color: grey;
 }
+.arisse img{
+  width: 100%;
+  display: block;
+  margin: auto;
+  pointer-events: none;
+}
 .small-circle {
   width: 40px;
   height: 40px;
@@ -701,17 +707,19 @@ body {
 .arisse .page h2{
   font-size: 15px;
   font-weight: 500;
-  margin-top: 0;
-  text-align: center;
+  margin-top: 20px;
+  text-align: left;
   color: #70418f;
   margin-bottom: 0;
+}
+.normal{
+  float: left;
 }
 .arisse .page h3{
   padding: 20px 0px 10px 0px;
   font-size: 15px;
   font-weight: 500;
-  margin-top: 0;
-  text-align: center;
+  text-align: left;
   color: #70418f;
   margin-bottom: 0;
 }
@@ -1442,3 +1450,11 @@ ol, ul {
 }
 /* Integration Ends */
 
+
+
+/*  */
+.begin {
+  margin-top: 17px !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}

@@ -9,7 +9,7 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row mt-1">
+            <div class="row card begin">
                 <div class="col-12 account-head">
                     <div>
                         <h4 class="font-500">My Account</h4>
