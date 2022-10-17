@@ -135,13 +135,6 @@
         </div>
     </div>
 
-    <!-- footer -->
-    <div class="dashboard-footer">
-        <p>Copyright © <script>
-                document.write(new Date().getFullYear())
-            </script> Ojafunnel | All Right Reserved</p>
-    </div>
-
     <!-- JAVASCRIPT -->
     <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

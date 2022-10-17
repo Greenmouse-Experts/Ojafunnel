@@ -16,9 +16,14 @@ class DashboardController extends Controller
         return view('dashboard.emailChecker');
     }
 
-    public function email_compaign()
+    public function email_campaign()
     {
-        return view('dashboard.emailCompaign');
+        return view('dashboard.emailCampaign');
+    }
+
+    public function email_design()
+    {
+        return view('dashboard.emailDesign');
     }
 
     public function email_automation()
@@ -26,9 +31,9 @@ class DashboardController extends Controller
         return view('dashboard.emailAutomation');
     }
 
-    public function automation_compaign()
+    public function automation_campaign()
     {
-        return view('dashboard.automationCompaign');
+        return view('dashboard.automationCampaign');
     }
 
     public function mailing_list()
