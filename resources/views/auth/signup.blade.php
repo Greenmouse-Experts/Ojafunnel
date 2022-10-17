@@ -21,7 +21,8 @@
                         <div class="col-lg-1"></div>
                         <div class="col-lg-4" >
                             <div class="sign">
-                                <form class="sign-div">
+                                <form class="sign-div" action="{{ route('register')}}" method="post">
+                                    @csrf
                                     <a href="{{route('index')}}">
                                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" draggable="false" alt="OjaFunnel Logo">
                                     </a>
@@ -35,7 +36,7 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <i class="bi bi-person"></i>
-                                                    <input type="text" placeholder="Enter your Name" name="firstname" class="input" required>
+                                                    <input type="text" placeholder="Enter a sub - domain name" name="subdomain" class="input" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -59,13 +60,32 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!--Phone Number-->
+                                        <div class="col-lg-12">
+                                            <label>Referral Code</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <i class="bi bi-phone"></i>
+                                                    <input type="text" placeholder="Enter referral code" name="referral_code" class="input">
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!--Password-->
                                         <div class="col-lg-12">
                                             <label>Password</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <i class="bi bi-file-lock"></i>
-                                                    <input type="password" placeholder="Enter your prefered password" name="phone" class="input" required>
+                                                    <input type="password" placeholder="Enter your prefered password" name="password" class="input" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <label>Confirm Password</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <i class="bi bi-file-lock"></i>
+                                                    <input type="password" placeholder="Enter your prefered password" name="password_confirmation" class="input" required>
                                                 </div>
                                             </div>
                                         </div>

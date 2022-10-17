@@ -39,6 +39,10 @@ Route::get('/emailmarketing', [App\Http\Controllers\HomePageController::class, '
 // Chat Automation
 Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
 
+//User Authentications
+Route::prefix('auth')->group(function () {
+    Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register');
+});
 
 // User Dashboard
 Route::prefix('dashboard')->group(function () {
