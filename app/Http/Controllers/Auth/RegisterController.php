@@ -12,17 +12,16 @@ class RegisterController extends Controller
 
     public function __construct()
     {
-        $this->secretKey = "new";
-        $this->header = ["x-access-token" =>  "$this->secretKey", "Content-Type" => "application/json"];
+        $this->header = ["Accept" =>  "application/json", "Content-Type" => "application/json"];
     }
 
     public function create(Request $request)
     {
         // $response = Http::acceptJson()->withHeaders($this->header)->get($endpoint);
-        // $endpoint = env('API_URL_SITE');
-        // $response = Http::acceptJson()->withHeaders($this->header)->post($endpoint,$request);
-        // $gatewayResponse = $response->json();
+        $endpoint = config('app.url_site')."/api/v1/auth/register";
+        $response = Http::acceptJson()->withHeaders($this->header)->post($endpoint, $request);
+        $ApiResponse = $response->json();
 
-        return dd($request);
+        return dd($ApiResponse);
     }
 }

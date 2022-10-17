@@ -17,6 +17,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'url_site' => env('API_URL_SITE', 'http://ojafunnel.api.v1.greenmouseproperties.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
