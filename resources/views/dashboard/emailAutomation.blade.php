@@ -5,117 +5,196 @@
 <!-- Start right Content here -->
 <!-- ============================================================== -->
 <div class="main-content">
-    <div class="page-content">
-        <!-- container-fluid -->
-        <div class="container-fluid">
+        <div class="page-content">
+          <!-- container-fluid -->
+          <div class="container-fluid">
             <!-- start page title -->
-            <div class="row card begin">
-                <div class="col-12 account-head">
-                    <div class="row py-3 align-items-center">
-                        <div class="col-md-6">
-                            <h4>Email Automation</h4>
+            <div class="row begin">
+                <div class="col-lg-12 move">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="align-items-center">
+                                <h4>Edit Automation Template</h4>
+                                <p>
+                                    Edit  the automated email campaignto suit you     
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row cut">
+                <div class="col-lg-2 ">
+                    <div class="email-arise">
+                        <div class="arising">
                             <p>
-                                Impact your business with automated emails for your
-                                customers
+                                Actions
                             </p>
                         </div>
-                        <div class="col-md-6 text-end">
-                            <button class="btn text-purp border-purp">
-                                <a href="EditAutomationTemplate.html">
-                                    Create Custom Automation
-                                </a>
-                            </button>
+                    </div>
+                    <div class="email-arising">
+                        <div class="arising">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965301/OjaFunnel-Images/Vectorr_asucru.png" draggable="false">
+                            <p>
+                                Send Message 
+                            </p>
                         </div>
                     </div>
-                    <div class="row text-center mt-5 mb-4">
-                        <div class="col-md-2 text-purp">
-                            <a href="Eautomation.html">
-                                Most Popular
-                            </a>
-                        </div>
-                        <div class="col-md-2 text-purpp">
-                            <a href="">
-                                Improve Engagement
-                            </a>
-                        </div>
-                        <div class="col-md-2 text-purpp">
-                            <a href="#">
-                                Increased Traffic
-                            </a>
-                        </div>
-                        <div class="col-md-2 text-purpp">
-                            <a href="">
-                                Increased Revenue
-                            </a>
+                    <div class="email-arising">
+                        <div class="arising">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965300/OjaFunnel-Images/Group_46747_du2s51.png" draggable="false">
+                            <p>
+                                Wait 
+                            </p>
                         </div>
                     </div>
+                    <div class="email-arising">
+                        <div class="arising">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965300/OjaFunnel-Images/Group_46748_utkqqz.png" draggable="false">
+                            <p>
+                                Apply Tags 
+                            </p>
+                        </div>
+                    </div>
+                    <div class="email-arising">
+                        <div class="arising">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965301/OjaFunnel-Images/Vectorrr_u3hhoe.png" draggable="false">
+                            <p>
+                                Conditions 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="Edit">
+                        <div class="product">
+                            <ul>
+                                <li>
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965960/OjaFunnel-Images/Group_46830_sy8dxi.png" draggable="false" alt="">
+                                </li>
+                                <li>
+                                    <h5>
+                                        Campaign Trigger :
+                                    </h5>
+                                </li>
+                                <li>
+                                    <h5>
+                                        Purchase Product 
+                                    </h5>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="product">
+                            <ul>
+                                <li>
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965960/OjaFunnel-Images/Group_46831_g4ya5z.png" draggable="false" alt="">
+                                </li>
+                                <li>
+                                    <h5>
+                                        Campaign Trigger :
+                                    </h5>
+                                </li>
+                                <li>
+                                    <h5>
+                                        Purchase Product 
+                                    </h5>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="product">
+                            <ul>
+                                <li>
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965960/OjaFunnel-Images/Group_46835_rvexhk.png" draggable="false" alt="">
+                                </li>
+                                <li>
+                                    <h5>
+                                        Campaign Trigger :
+                                    </h5>
+                                </li>
+                                <li>
+                                    <h5>
+                                        Purchase Product 
+                                    </h5>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="product">
+                            <ul>
+                                <li>
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965960/OjaFunnel-Images/Group_46837_pfafoe.png" draggable="false" alt="">
+                                </li>
+                                <li>
+                                    <h5>
+                                        Campaign Trigger :
+                                    </h5>
+                                </li>
+                                <li>
+                                    <h5>
+                                        Purchase Product 
+                                    </h5>
+                                </li>
+                            </ul>
+                        </div>
+                       <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <div class="product">
+                                    <div class="end">
+                                        <Button>
+                                            <a href="{{route('user.automation.campaign')}}">
+                                                Create Automation
+                                            </a>
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="Dept">
+                        Description
+                    </h5>
+                    <div class="form">
+                    <div class="row">
+                     <div class="col-md-12">
+                       <label>Message</label>
+                       <div class="row">
+                           <div class="col-md-12 mb-4">
+                               <textarea name="" id="" cols="20" rows="6"></textarea>
+                           </div>
+                       </div>
+                     </div>
+                     <div class="col-md-8"></div>
+                     <div class="col-md-4">
+                        <div class="end">
+                            <Button>Set</Button>
+                        </div>
+                     </div>
+                    </div>
+                </div>
                 </div>
             </div>
             <!-- account container form -->
-            <div class="row">
-                <div class="template-con">
-                    <div class="row justify-content-between">
-                        <div class="col-lg-4">
-                            <div class="p-3 shadows rounded bg-white">
-                                <p class="fs-me">
-                                    <a href="Eautomation.html">
-                                        Abandoned Cart
-                                    </a>
-                                </p>
-                                <p>Send an email after a contact abandons a cart</p>
-                            </div>
-                            <div class="p-3 shadows mt-4 rounded bg-white">
-                                <p class="fs-me">
-                                    <a href="EmailAutoProduct.html">
-                                        Product Purchase
-                                    </a>
-                                </p>
-                                <p>Send an email after a contact abandons a cart</p>
-                            </div>
-                            <div class="p-3 shadows mt-4 rounded bg-white">
-                                <p class="fs-me">Anniversary</p>
-                                <p>Send an email after a contact abandons a cart</p>
-                            </div>
-                            <div class="p-3 shadows mt-4 rounded bg-white last">
-                                <p class="fs-me">Welcome Message</p>
-                                <p>Send an email after a contact abandons a cart</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-7 p-3 bg-white rounded">
-                            <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <p class="fs-me">Abandoned Cart</p>
-                                </div>
-                                <div class="col-md-6 text-end">
-                                    <button class="border-0 rounded bg-purp text-white py-1 px-3">
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="abandon-cart">
-                                <p class="opacity-75">Automation Starts</p>
-                                <p>Trigger - Customer adds product to cart</p>
-                            </div>
-                            <div class="abandon-cart">
-                                <p>Condition - Customer does not checkout</p>
-                            </div>
-                            <div class="abandon-cart">
-                                <p class="opacity-75">Wait</p>
-                                <p>Action - Wait for customer for 2 days</p>
-                            </div>
-                            <div class="abandon-cart">
-                                <p class="opacity-75">Email</p>
-                                <p>Action - Wait for customer for 2 days</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-1"></div>
-                    </div>
-                </div>
-            </div>
             <!-- end page title -->
+          </div>
         </div>
-    </div>
-    <!-- End Page-content -->
-</div>
+        <!-- End Page-content -->
+
+        <footer class="footer border-0 bg-transparent mt-5">
+          <div class="container-fluid mt-5">
+            <div class="row text-center bg-white mt-5">
+              <div class="text-center py-4">
+                Copyright ©
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                Ojafunnel | All Right Reserved
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
 <!-- END layout-wrapper -->
 @endsection
