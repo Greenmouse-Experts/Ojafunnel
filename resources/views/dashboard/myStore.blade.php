@@ -114,7 +114,7 @@
                     <p>Congratulations, you've created your online store</p>
                 </div>
                 <div class="text-end mt-2">
-                    <a href="ecommerce2.html" class="text-decoration-none">
+                    <a href="{{route('user.check.store')}}" class="text-decoration-none">
                         <button class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
                             Next
                         </button></a>

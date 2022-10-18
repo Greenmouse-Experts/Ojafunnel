@@ -27,7 +27,7 @@
                                         </li>
                                         </li>
                                         <li>
-                                            <a href="" class="text-decoration-none text-dark">Course Content >></a>
+                                            <a href="{{route('user.course.content')}}" class="text-decoration-none text-dark">Course Content >></a>
                                         </li>
                                         <li>
                                             <a href="" class="text-decoration-none text-dark">Summary >></a>

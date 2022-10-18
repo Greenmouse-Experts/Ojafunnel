@@ -74,7 +74,27 @@
             </div>
         </div>
     </div>
-    <!-- End Page-content -->
 </div>
+<!-- email confirm modal -->
+    <div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content pb-3">
+            <div class="modal-header border-bottom-0">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+            <div class="icon-success">
+                <img src="assets/image/theme.png" alt="" width="100%" />
+            </div>
+            <p class="text-center" style="margin-top: 20px !important;">
+                <b>
+                You’ve succesfully created your Email Automation
+                </b>
+            </p>
+            </div>
+        </div>
+        </div>
+    </div>
+  <!-- end modal -->
 <!-- END layout-wrapper -->
 @endsection

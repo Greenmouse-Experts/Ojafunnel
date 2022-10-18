@@ -6,17 +6,17 @@
           <!-- container-fluid -->
           <div class="container-fluid">
             <!-- start page title -->
-            <div class="row mt-1">
+            <div class="row card begin mt-1">
               <div class="col-12 account-head">
                 <div
-                  class="row py-2 justify-content-between align-items-center"
+                  class="row justify-content-between align-items-center"
                 >
                   <div class="col">
                     <h4 class="font-60">My Store</h4>
                     <p>All your shops and the products in them</p>
                   </div>
                   <div class="col text-end">
-                    <a href="ecommerce.html"
+                    <a href="{{route('user.my.store')}}"
                       ><button
                         class="btn px-3"
                         style="color: #714091; border: 1px solid #714091"
@@ -29,8 +29,7 @@
               </div>
             </div>
             <!-- store data information-->
-            <div class="container">
-              <div class="store-table">
+            <div class="store-table">
                 <div class="table-head row pt-4">
                   <div class="col-lg-6"><h3>All Stores</h3></div>
                   <div class="col-lg-6 search-item">
@@ -63,7 +62,7 @@
                         <td>Chukka Shoes</td>
                         <td>120</td>
                         <td>
-                          <a href="store.html" class="text-decoration-underline"
+                          <a href="{{route('user.store')}}" class="text-decoration-underline"
                             >Preview</a
                           >
                         </td>
@@ -71,7 +70,7 @@
                           <div class="d-flex justify-content-center">
                             <ul class="list-unstyled d-flex">
                               <li class="px-1">
-                                <a href="#" class="text-decoration-none"
+                                <a href="{{route('user.my.store')}}" class="text-decoration-none"
                                   >View Shop</a
                                 >
                               </li>
@@ -101,7 +100,7 @@
                         <td>Chukka Digital Books</td>
                         <td>12</td>
                         <td>
-                          <a href="store.html" class="text-decoration-underline"
+                          <a href="{{route('user.store')}}" class="text-decoration-underline"
                             >Preview</a
                           >
                         </td>
@@ -109,7 +108,7 @@
                           <div class="d-flex justify-content-center">
                             <ul class="list-unstyled d-flex">
                               <li class="px-1">
-                                <a href="#" class="text-decoration-none"
+                                <a href="{{route('user.my.store')}}" class="text-decoration-none"
                                   >View Shop</a
                                 >
                               </li>
@@ -153,7 +152,6 @@
                   </div>
                 </div>
               </div>
-            </div>
             <!-- end page title -->
           </div>
         </div>

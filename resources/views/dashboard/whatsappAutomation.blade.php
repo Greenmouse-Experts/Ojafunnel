@@ -20,7 +20,7 @@
                             <div class="">
                                 <div class="all-create">
                                     <button>
-                                        <a href="SendBroadcast.html">
+                                        <a href="{{route('user.send.broadcast')}}">
                                             Send Brodcast Messsage
                                         </a>
                                     </button>
@@ -134,5 +134,61 @@
     </div>
 </div>
 <!-- End Page-content -->
+<!-- email confirm modal -->
+<div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        Add Whatsapp Number
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="Edit-level">
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label>Phone Number</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="tel" placeholder="+234 800 000 0000" name="name" class="input"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Description</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <textarea name="" placeholder="Enter a description, eg for book sales" id=""
+                                                cols="30" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <a href="#" class="text-decoration-none">
+                                            <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                Cancel
+                                            </button></a>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <a href="#" class="text-decoration-none">
+                                            <button class="btn px-4" style="color: #ffffff; background-color: #714091"
+                                                >
+                                                Save Number
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modal -->
 
 @endsection

@@ -41,6 +41,11 @@ class HomePageController extends Controller
     {
         return view('auth.reset');
     }
+     // emailverify
+     public function emailverify()
+     {
+         return view('auth.veriyemail');
+     }
     // Market Automation
     public function marketauto()
     {

@@ -23,7 +23,7 @@
                             </li>
                             </li>
                             <li>
-                                <a href="Ecampaign2.html" class="text-decoration-none text-dark">Message Content >></a>
+                                <a href="{{route('user.email.Ecampaign')}}" class="text-decoration-none text-dark">Message Content >></a>
                             </li>
                             <li>
                                 <a href="Ecampaign.html" class="text-decoration-none text-dark">Summary >></a>
@@ -74,7 +74,7 @@
                             </button>
                         </div>
                         <div class="text-end col-6">
-                            <a href="Ecampaign2.html">
+                            <a href="{{route('user.email.Ecampaign')}}">
                                 <button class="btn px-4 my-2" style="color: #ffffff; background-color: #714091">
                                     Proceed
                                 </button>

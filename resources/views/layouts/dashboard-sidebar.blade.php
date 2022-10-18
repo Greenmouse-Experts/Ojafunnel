@@ -5,46 +5,65 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li style="background: #f5e6fe; border-right: 4px solid #714091">
+                <li>
                     <a href="{{route('user.dashboard')}}">
-                        <i class="bi bi-grid-fill"></i>
-                        <span key="t-dashboards">Dashboards</span>
+                    <i class="bi bi-grid-fill"></i>
+                    <span key="t-dashboards">Dashboards</span>
                     </a>
                 </li>
                 <!-- email marketing -->
                 <li>
-                    <!-- class="has-arrow waves-effect" -->
-                    <a href="#" id="emailmarketDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="has-arrow">
-                        <i class="bi bi-envelope-paper-fill"></i>
-                        <span key="t-layouts">Email Marketing </span>
-                    </a>
-                    <ul class="sub-menu p mt-1" aria-labelledby="emailmarketDrop">
-                        <li>
-                            <a href="{{route('user.email.checker')}}" key="t-vertical" class="">Email Checker</a>
-                        </li>
-                        <li>
-                            <a href="{{route('user.email.campaign')}}" key="t-vertical" class="py-2">Email Campaign</a>
-                        </li>
-                        <li>
-                            <a href="{{route('user.email.automation')}}" key="t-vertical" class="py-2">Email Automation</a>
-                        </li>
-                        <li>
-                            <a href="{{route('user.automation.campaign')}}" key="t-vertical" class="py-2">Automation Campaign</a>
-                        </li>
-                    </ul>
-                </li>
+                <!-- class="has-arrow waves-effect" -->
+                <a
+                  href="#"
+                  id="emailmarketDrop"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  class="has-arrow"
+                >
+                  <i class="bi bi-envelope-paper-fill"></i>
+                  <span key="t-layouts">Email Marketing </span>
+                </a>
+                <ul class="sub-menu p mt-1" aria-labelledby="emailmarketDrop">
+                  <li>
+                    <a href="{{route('user.email.checker')}}" key="t-vertical" class=""
+                      >Email Checker</a
+                    >
+                  </li>
+                  <li>
+                    <a href="{{route('user.email.campaign')}}" key="t-vertical" class="py-2">Email Campaign</a>
+                  </li>
+                  <li>
+                    <a href="{{route('user.edit.template')}}" key="t-vertical" class="py-2"
+                      >Email Automation</a
+                    >
+                  </li>
+                  <li>
+                    <a href="{{route('user.automation.campaign')}}" key="t-vertical" class="py-2"
+                      >Automation Campaign</a
+                    >
+                  </li>
+                </ul>
                 <li>
-                    <!-- class="has-arrow waves-effect" -->
-                    <a href="#" id="emailmarketDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="has-arrow">
-                        <i class="bx bx-share-alt"></i>
-                        <span key="t-layouts">Subscribers</span>
-                    </a>
-                    <ul class="sub-menu p mt-1" aria-labelledby="emailmarketDrop">
-                        <li>
-                            <a href="{{route('user.mailing.list')}}" key="t-vertical" class="">Mailing List </a>
-                        </li>
-                    </ul>
-                </li>
+                <a
+                  href="#"
+                  id="emailmarketDrop"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  class="has-arrow"
+                >
+                <i class="bx bx-share-alt"></i>
+                  <span key="t-layouts">Subscribers</span>
+                </a>
+                <ul class="sub-menu p mt-1" aria-labelledby="emailmarketDrop">
+                  <li>
+                    <a href="{{route('user.mailing.list')}}" key="t-vertical" class=""
+                      >Mailing List </a
+                    >
+                  </li>
+                </ul>
                 <li>
                     <a href="#" class="has-arrow">
                         <i class="bi bi-envelope-open-fill"></i>
