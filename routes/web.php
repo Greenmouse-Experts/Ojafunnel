@@ -13,6 +13,8 @@ Route::get('/contact', [App\Http\Controllers\HomePageController::class, 'contact
 Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])->name('login');
 // Sign In
 Route::get('/signup', [App\Http\Controllers\HomePageController::class, 'signup'])->name('signup');
+// Email Verification
+Route::get('/emailverification', [App\Http\Controllers\HomePageController::class, 'emailverification'])->name('emailverification');
 // Forgot Password
 Route::get('/forgot', [App\Http\Controllers\HomePageController::class, 'forgot'])->name('forgot');
 // Reset Password
@@ -33,6 +35,9 @@ Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, '
 //User Authentications
 Route::prefix('auth')->group(function () {
     Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register');
+    Route::post('/emailverify', [App\Http\Controllers\Auth\RegisterController::class, 'emailverify'])->name('emailverify');
+
+    Route::post('/userlogin', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('userlogin');
 });
 
 // User Dashboard

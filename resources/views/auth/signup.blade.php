@@ -54,7 +54,11 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-person"></i>
-                                                <input type="text" placeholder="Enter a sub - domain name" name="subdomain" class="input" required>
+                                                <input type="text" value="{{ old('subdomain') }}" placeholder="Enter a sub - domain name" name="subdomain" class="input" required>
+                                                <p>
+                                                    Please enter a sub - domain in the above field. E.g ayo<br>
+                                                    <span style="color:#f00;">NB:</span> It must be a signle word without white space
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -64,7 +68,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-envelope"></i>
-                                                <input type="email" placeholder="Enter your email address" name="email" class="input" required>
+                                                <input type="email" value="{{old('email')}}" placeholder="Enter your email address" name="email" class="input" required>
                                             </div>
                                         </div>
                                     </div>
@@ -74,7 +78,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-phone"></i>
-                                                <input type="tel" placeholder="Enter your Phone Number" name="phone" class="input" required>
+                                                <input type="tel" value="{{old('phone')}}" placeholder="Enter your Phone Number" name="phone" class="input" required>
                                             </div>
                                         </div>
                                     </div>
@@ -84,7 +88,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-phone"></i>
-                                                <input type="text" placeholder="Enter referral code" name="referral_code" class="input">
+                                                <input type="text" value="{{old('referral_code')}}" placeholder="Enter referral code" name="referral_code" class="input">
                                             </div>
                                         </div>
                                     </div>
