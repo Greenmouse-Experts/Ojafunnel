@@ -109,7 +109,7 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="Add-contact.html">Add Contact</a></li>
+                                                        <li><a class="dropdown-item" href="#">Edit/a></li>
                                                         <li><a class="dropdown-item" href="#">Enable</a></li>
                                                         <li><a class="dropdown-item" href="#">Disable</a></li>
                                                         <li><a class="dropdown-item" href="#">Delete</a></li>

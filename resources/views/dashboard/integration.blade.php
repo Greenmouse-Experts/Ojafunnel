@@ -9,7 +9,7 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row">
+            <div class="row begin">
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">

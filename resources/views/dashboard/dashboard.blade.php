@@ -11,7 +11,7 @@
                 <!-- start page title -->
                 <div class="row">
                     <div class="col-12">
-                        <div class="start">
+                    <div class="start">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="start-main">

@@ -20,17 +20,34 @@ class DashboardController extends Controller
     {
         return view('dashboard.emailCampaign');
     }
-
+    public function email_Ecampaign()
+    {
+        return view('dashboard.EemailCampaign');
+    }
+    public function email_layout()
+    {
+        return view('dashboard.emaillayout');
+    }
+    public function email_code()
+    {
+        return view('dashboard.emailcode');
+    }
     public function email_design()
     {
         return view('dashboard.emailDesign');
     }
-
+    public function email_preview()
+    {
+        return view('dashboard.emailpreview');
+    }
     public function email_automation()
     {
         return view('dashboard.emailAutomation');
     }
-
+    public function edit_template()
+    {
+        return view('dashboard.editemplate');
+    }
     public function automation_campaign()
     {
         return view('dashboard.automationCampaign');
@@ -41,6 +58,21 @@ class DashboardController extends Controller
         return view('dashboard.mailingList');
     }
 
+    public function add_contact()
+    {
+        return view('dashboard.addcontact');
+    }
+
+    public function copy_paste()
+    {
+        return view('dashboard.copypaste');
+    }
+
+    public function upload()
+    {
+        return view('dashboard.upload');
+    }
+   
     public function create_message()
     {
         return view('dashboard.createMessage');
@@ -61,9 +93,19 @@ class DashboardController extends Controller
         return view('dashboard.smsAutomation');
     }
 
+    public function newsms()
+    {
+        return view('dashboard.newsms');
+    }
+
     public function whatsapp_automation()
     {
         return view('dashboard.whatsappAutomation');
+    }
+
+    public function sendbroadcast()
+    {
+        return view('dashboard.sendbroadcast');
     }
 
     public function my_store()
@@ -71,9 +113,44 @@ class DashboardController extends Controller
         return view('dashboard.myStore');
     }
 
+    public function viewstore()
+    {
+        return view('dashboard.checkstore');
+    }
+
+    public function store()
+    {
+        return view('dashboard.mystoree');
+    }
+
     public function create_course()
     {
         return view('dashboard.createCourse');
+    }
+
+    public function course_content()
+    {
+        return view('dashboard.coursecontent');
+    }
+
+    public function get_quiz()
+    {
+        return view('dashboard.getquiz');
+    }
+
+    public function course_summary()
+    {
+        return view('dashboard.coursesummary');
+    }
+
+    public function enroll_now()
+    {
+        return view('dashboard.enrollcourse');
+    }
+
+    public function enroll_cur()
+    {
+        return view('dashboard.enrollcur');
     }
 
     public function affiliate_marketing()
