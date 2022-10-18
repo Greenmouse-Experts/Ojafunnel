@@ -13,10 +13,10 @@ Route::get('/contact', [App\Http\Controllers\HomePageController::class, 'contact
 Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])->name('login');
 // Sign In
 Route::get('/signup', [App\Http\Controllers\HomePageController::class, 'signup'])->name('signup');
-// Forgor
+// Forgot Password
 Route::get('/forgot', [App\Http\Controllers\HomePageController::class, 'forgot'])->name('forgot');
-// Verification
-Route::get('/verification', [App\Http\Controllers\HomePageController::class, 'verification'])->name('verification');
+// Reset Password
+Route::get('/reset/password', [App\Http\Controllers\HomePageController::class, 'resetpassword'])->name('resetpassword');
 // Market Automation
 Route::get('/features/marketauto', [App\Http\Controllers\HomePageController::class, 'marketauto'])->name('marketauto');
 // Page Builder

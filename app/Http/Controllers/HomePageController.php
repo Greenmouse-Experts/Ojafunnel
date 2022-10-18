@@ -31,15 +31,15 @@ class HomePageController extends Controller
     {
         return view('auth.signup');
     }
-    // Forgor
+    // Forgot
     public function forgot()
     {
         return view('auth.forgot');
     }
-    // Forgor
-    public function verification()
+    // ResetPassword
+    public function resetpassword()
     {
-        return view('auth.verification');
+        return view('auth.reset');
     }
     // Market Automation
     public function marketauto()
@@ -70,10 +70,5 @@ class HomePageController extends Controller
     public function chatautomation()
     {
         return view('frontend.chatautomation');
-    }
-    // Dahboard Part Route Contoller
-    public function dashboard()
-    {
-        return view('dashboard.dashboard');
     }
 }

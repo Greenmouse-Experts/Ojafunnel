@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="assets/images/Logo-fav.png" type="image/x-icon">
         <title>Forgor | OjaFunnel </title>
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
+        <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -63,7 +63,7 @@
                                                 </div>
                                                 <div class="col-md-12 mb-2">
                                                     <button type="submit">
-                                                        <a href="{{route('verification')}}">
+                                                        <a href="{{route('resetpassword')}}">
                                                             Submit
                                                         </a>
                                                     </button>
