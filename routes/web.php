@@ -64,6 +64,15 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/create-message', [App\Http\Controllers\DashboardController::class, 'create_message'])->name('user.create.message');
         Route::get('/view-message', [App\Http\Controllers\DashboardController::class, 'view_message'])->name('user.view.message');
     });
+    Route::prefix('/funnel-builder')->group(function () {
+        Route::get('/choose-temp', [App\Http\Controllers\DashboardController::class, 'choose_temp'])->name('user.choose.temp');
+        Route::get('/choose-temp/use-template', [App\Http\Controllers\DashboardController::class, 'use_template'])->name('user.use.template');
+        Route::get('/choose-temp/product-recommendation', [App\Http\Controllers\DashboardController::class, 'product_recall'])->name('user.product.recall');
+        Route::get('/choose-temp/take-quiz', [App\Http\Controllers\DashboardController::class, 'take_quiz'])->name('user.take.quiz');
+        Route::get('/choose-temp/face-shape', [App\Http\Controllers\DashboardController::class, 'face_shape'])->name('user.face.shape');
+        Route::get('/choose-temp/choose-diamond', [App\Http\Controllers\DashboardController::class, 'choose_diamond'])->name('user.choose.diamond');
+        Route::get('/choose-temp/final-step', [App\Http\Controllers\DashboardController::class, 'final_step'])->name('user.final.step');
+    });
     Route::get('/page-builder', [App\Http\Controllers\DashboardController::class, 'page_builder'])->name('user.page.builder');
     Route::prefix('/chat-automation')->group(function () {
         Route::get('/sms-automation', [App\Http\Controllers\DashboardController::class, 'sms_automation'])->name('user.sms.automation');

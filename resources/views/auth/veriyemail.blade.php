@@ -63,12 +63,11 @@
     </section>
     <!-- login Ends -->
 </body>
-<script>
-    $(function() {
-        $("form").submit(function() {
-            $('#loader').show();
+    <script>
+        $(function() {
+            $("form").submit(function() {
+                $('#loader').show();
+            });
         });
-    });
-</script>
-
+    </script>
 </html>
