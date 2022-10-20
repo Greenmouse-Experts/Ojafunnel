@@ -3,11 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        
+    }
+
     public function dashboard()
     {
+        if(!Session::get('AuthAccessToken')){
+            return redirect()->route('login')->with([
+                'type' => 'danger',
+                'message' => "Please login with valid details"
+            ]);
+        }
         return view('dashboard.dashboard');
     }
 

@@ -31,6 +31,11 @@ class HomePageController extends Controller
     {
         return view('auth.signup');
     }
+    // Email Verification
+    public function emailverification()
+    {
+        return view('auth.emailverification');
+    }
     // Forgot
     public function forgot()
     {
