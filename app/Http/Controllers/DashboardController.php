@@ -95,6 +95,41 @@ class DashboardController extends Controller
         return view('dashboard.viewMessage');
     }
 
+    public function choose_temp()
+    {
+        return view('dashboard.funnelBuilder');
+    }
+
+    public function use_template()
+    {
+        return view('dashboard.useTemplate');
+    }
+
+    public function product_recall()
+    {
+        return view('dashboard.productRecall');
+    }
+
+    public function take_quiz()
+    {
+        return view('dashboard.takeQuiz');
+    }
+
+    public function face_shape()
+    {
+        return view('dashboard.faceShape');
+    }
+
+    public function choose_diamond()
+    {
+        return view('dashboard.chooseDiamond');
+    }
+
+    public function final_step()
+    {
+        return view('dashboard.finalStep');
+    }
+
     public function page_builder()
     {
         return view('dashboard.pageBuilder');

@@ -925,6 +925,10 @@ body {
   font-size: 12px;
   color: #999797;
 }
+.form select::placeholder{
+  font-size: 12px;
+  color: #999797;
+}
 .form label{
   font-size: 13px;
   margin-bottom: 10px;
@@ -953,11 +957,23 @@ body {
   width: 100%;
   margin-top: -10px;
   padding: 10px 5px 10px 20px;
-  border-radius: 10px;
+  border-radius: 3px;
   border: 1px solid #70418F;
   letter-spacing: 0.8px;
   background-color: #F8F8FB;
-  font-size: 16px;
+  font-size: 12px;
+  transition: 0.6s;
+}
+.form select{
+  display: block;
+  width: 100%;
+  margin-top: -10px;
+  padding: 10px 5px 10px 20px;
+  border-radius: 3px;
+  border: 1px solid #70418F;
+  letter-spacing: 0.8px;
+  background-color: #F8F8FB;
+  font-size: 10px;
   transition: 0.6s;
 }
 .Dept{
@@ -1447,12 +1463,195 @@ ol, ul {
  margin-left: 40%;
 }
 /* Integration Ends */
-
-
-
 /*  */
 .begin {
   margin-top: 17px !important;
   margin-left: 5px !important;
   margin-right: 5px !important;
+}
+.backing{
+  background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1666260250/OjaFunnel-Images/Rectangle_19204_1_urmuil.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 30px 0px 10px 0px;
+}
+.backing .user img{
+  margin-top: 30px !important;
+  width: 150px;
+  display: block;
+  margin: auto;
+}
+.Light{
+  padding: 0px 20px;
+}
+.backing .user h2{
+  font-size: 25px;
+  padding: 15px 0 0 0;
+}
+.backing .user p{
+  margin-bottom: 0;
+}
+.backing .user{
+  text-align: center;
+}
+.arise .off .shut{
+  padding: 40px 0 0 0;
+}
+.backing .shut ul li{
+  list-style-type: none;
+  float: left;
+  margin: 0 7px;
+}
+.backing  .shut img{
+  display: block;
+  margin: auto;
+  width: 30px;
+}
+@media (max-width:990px) {
+  .backing{
+    padding: 00px 0px 0px 0px;
+  }
+  .all-create button{
+    display: block;
+    margin: auto;
+    width: 100%;
+    margin-top: 20px !important;
+  }
+}
+.commit{
+  background-color: #FFE8E8;
+  padding: 50px 0px 100px 0px;
+  border-radius: 5px;
+}
+.commit .organ{
+  background-color: #A5D3D1;
+  padding: 50px 20px 0px 20px;
+  border-radius: 5px;
+}
+.commit .organ h1{
+  font-size: 40px;
+  color: #000;
+  padding: 10px 0 0 0;
+  text-align: center;
+}
+.commit .organ p{
+  font-size: 18px;
+  color: #000;
+  text-align: center;
+}
+@media (max-width:520px) {
+  .commit .organ h1{
+    font-size: 25px;
+    color: #000;
+    padding: 10px 0 0 0;
+    text-align: center;
+  }
+  .commit .organn h1{
+    font-size: 25px;
+    color: #000;
+    padding: 10px 0 0 0;
+    text-align: center;
+  }
+  .commit{
+    background-color: #FFE8E8;
+    padding: 50px 20px 100px 20px;
+    border-radius: 5px;
+  }
+}
+.commit .organ a{
+  text-decoration: none;
+  color: #fff;
+}
+.commit .organ button{
+  border: none;
+  background-color: #283E69;
+  display: block;
+  margin: auto;border-radius: 5px;
+  width: 20%;
+  color: #fff;
+  padding: 15px 0px;
+}
+.commit .organn{
+  background-color: #A5D3D1;
+  padding: 50px 10px 50px 10px;
+  border-radius: 5px;
+}
+.commit .organn h1{
+  font-size: 40px;
+  color: #000;
+  padding: 10px 0 0 0;
+  text-align: center;
+}
+.commit .organn p{
+  font-size: 18px;
+  color: #000;
+  text-align: center;
+}
+.commit .organn a{
+  text-decoration: none;
+  color: #fff;
+}
+.commit .organn button{
+  border: none;
+  background-color: #283E69;
+  display: block;
+  margin: auto;border-radius: 5px;
+  width: 20%;
+  color: #fff;
+  padding: 15px 0px;
+}
+.commit .organ .emmet{
+  margin-top: 10px;
+  padding: 20px 0px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.commit .organ .emmet a{
+  text-decoration: none;
+}
+.commit .organ .emmet img{
+  display: block;
+  margin: auto;
+  width: 90px;
+  border-radius: 5px;
+}
+.commit .organ .emmet p{
+  text-align: center;
+  margin-bottom: 0;
+  padding: 10px 0 0 0;
+}
+.commit img{
+  margin-top: 20px !important;
+  width: 400px;
+  display: block;
+  margin: auto;
+}
+.forrm{
+  padding: 0px 20px;
+}
+.forrm input::placeholder{
+  font-size: 12px;
+}
+.forrm label{
+  font-size: 13px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  margin-bottom: -0px;
+  z-index: 999 !important;
+  position: relative;
+  background-color: #fff;
+  margin-left: 30px;
+  padding: 0px 5px 0px 5px ;
+}
+.forrm input{
+  display: block;
+  width: 100%;
+  margin-top: -10px;
+  padding: 10px 5px 10px 40px;
+  border-radius: 3px;
+  border: 1px solid #fff;
+  letter-spacing: 0.8px;
+  background-color: #fff;
+  font-size: 16px;
+  transition: 0.6s;
 }
