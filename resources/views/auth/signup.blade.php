@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
-        <title>Sign Up | OjaFunnel </title>
+        <title>{{config('app.name')}} | Sign Up</title>
         <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
         <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -54,7 +54,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-person"></i>
-                                                <input type="text" placeholder="Enter a sub - domain name" name="subdomain" class="input" required>
+                                                <input type="text" placeholder="Enter name" name="name" class="input" required>
                                             </div>
                                         </div>
                                     </div>
@@ -74,7 +74,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-phone"></i>
-                                                <input type="tel" placeholder="Enter your Phone Number" name="phone" class="input" required>
+                                                <input type="tel" placeholder="Enter your Phone Number" name="phone_number" class="input" required>
                                             </div>
                                         </div>
                                     </div>

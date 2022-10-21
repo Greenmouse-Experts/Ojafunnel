@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="assets/images/Logo-fav.png" type="image/x-icon">
-    <title>Reset Password | OjaFunnel </title>
+    <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
+    <title>{{config('app.name')}} | Reset Password </title>
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +24,11 @@
 </head>
 
 <body>
+    <!-- Alerts  Start-->
+    <div style="position: fixed; top: 10px; right: 20px; z-index: 100000; width: auto;">
+            @include('layouts.alert')
+        </div>
+        <!-- Alerts End -->
     <div id='loader'>
         <div class="loader-inner">
             <div class="loading-content"></div>
@@ -47,16 +52,17 @@
                                     </h4>
                                     <p>
                                         To complete the reset password process, Please enter the code sent to the email address
-                                        <code>greenmouse@gmail.com</code>
+                                        <code>{{$email}}</code>
                                     </p>
-                                    <form class="sign-div">
+                                    <form class="sign-div"  method="POST" action="{{ route('user.update.password')}}">
+                                        @csrf
                                         <div class="row">
                                             <!--Email-->
                                             <div class="col-lg-12">
                                                 <label>Code</label>
                                                 <div class="row">
                                                     <div class="col-md-12 mb-4">
-                                                        <input type="tel" placeholder="Enter your Code" name="email" class="input" required>
+                                                        <input type="text" placeholder="Enter your Code" name="code" class="input" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -72,7 +78,7 @@
                                                     <label>Confirm Password</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
-                                                            <input type="password" placeholder="Enter your confirm password" name="password" class="input" required>
+                                                            <input type="password" placeholder="Enter your confirm password" name="password_confirmation" class="input" required>
                                                         </div>
                                                     </div>
                                                 </div>

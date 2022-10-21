@@ -15,10 +15,6 @@ Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])-
 Route::get('/signup', [App\Http\Controllers\HomePageController::class, 'signup'])->name('signup');
 // Forgot Password
 Route::get('/forgot', [App\Http\Controllers\HomePageController::class, 'forgot'])->name('forgot');
-// Reset Password
-Route::get('/reset/password', [App\Http\Controllers\HomePageController::class, 'resetpassword'])->name('resetpassword');
-// Reset Password
-Route::get('/emailverify', [App\Http\Controllers\HomePageController::class, 'emailverify'])->name('emailverify');
 // Market Automation
 Route::get('/features/marketauto', [App\Http\Controllers\HomePageController::class, 'marketauto'])->name('marketauto');
 // Page Builder
@@ -34,8 +30,17 @@ Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, '
 
 //User Authentications
 Route::prefix('auth')->group(function () {
-    Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('register');
+    Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
+    Route::get('/verify/account/{email}', [App\Http\Controllers\AuthController::class, 'verify_account'])->name('verify.account');
+    Route::post('/email/verify/resend/{email}', [App\Http\Controllers\AuthController::class, 'email_verify_resend'])->name('email.verify.resend');
+    Route::post('/email/confirm/{token}', [App\Http\Controllers\AuthController::class, 'registerConfirm'])->name('email.confirmation');
+    Route::post('/user/login', [App\Http\Controllers\AuthController::class, 'user_login'])->name('user.login');
+    Route::post('/password/forget',  [App\Http\Controllers\AuthController::class, 'forget_password'])->name('user.forget.password');
+    Route::get('/reset/password/email/{email}', [App\Http\Controllers\AuthController::class, 'password_reset_email'])->name('user.reset.password');
+    Route::post('update/password/reset/', [App\Http\Controllers\AuthController::class, 'reset_password'])->name('user.update.password');
 });
+
+Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 // User Dashboard
 Route::prefix('dashboard')->group(function () {
@@ -48,8 +53,8 @@ Route::prefix('dashboard')->group(function () {
         Route::get('/email-campaign/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
         Route::get('/email-campaign/email-preview', [App\Http\Controllers\DashboardController::class, 'email_preview'])->name('user.email.preview');
         Route::get('/email-campaign/email-design', [App\Http\Controllers\DashboardController::class, 'email_design'])->name('user.email.design');
-        Route::get('/email-campaign/email-layout', [App\Http\Controllers\DashboardController::class, 'email_layout'])->name('user.email.layout');
-        Route::get('/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
+        // Route::get('/email-campaign/email-layout', [App\Http\Controllers\DashboardController::class, 'email_layout'])->name('user.email.layout');
+        // Route::get('/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
         Route::get('/email-automation', [App\Http\Controllers\DashboardController::class, 'email_automation'])->name('user.email.automation');
         Route::get('/automation-campaign', [App\Http\Controllers\DashboardController::class, 'automation_campaign'])->name('user.automation.campaign');
         Route::get('/edittemplate', [App\Http\Controllers\DashboardController::class, 'edit_template'])->name('user.edit.template');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomePageController extends Controller
 {
@@ -24,9 +25,11 @@ class HomePageController extends Controller
     // Login
     public function login()
     {
+        Auth::logout();
+
         return view('auth.login');
     }
-    // Sign In
+    // Sign Up
     public function signup()
     {
         return view('auth.signup');
@@ -41,11 +44,6 @@ class HomePageController extends Controller
     {
         return view('auth.reset');
     }
-     // emailverify
-     public function emailverify()
-     {
-         return view('auth.veriyemail');
-     }
     // Market Automation
     public function marketauto()
     {
