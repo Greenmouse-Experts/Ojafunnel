@@ -76,11 +76,7 @@
                                                     </p>
                                                     <div class="col-md-12 mb-2">
                                                         <button type="submit">
-<<<<<<< HEAD
                                                             Log In
-=======
-                                                            Log in
->>>>>>> a64c1e98705647570a271ddb10c49cfbdd5acdbd
                                                         </button>
                                                     </div>
                                                     <p class="have">
