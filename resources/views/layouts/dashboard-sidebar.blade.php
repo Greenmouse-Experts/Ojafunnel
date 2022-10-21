@@ -75,7 +75,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);">
+                    <a href="{{route('user.choose.temp')}}">
                         <i class="fa-solid fa-building-circle-check"></i>
                         <span key="t-chat">Funnel Builder</span>
                     </a>

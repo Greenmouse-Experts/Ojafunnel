@@ -64,7 +64,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-envelope"></i>
-                                                <input type="email" placeholder="Enter your email address" name="email" class="input" required>
+                                                <input type="email" value="{{old('email')}}" placeholder="Enter your email address" name="email" class="input" required>
                                             </div>
                                         </div>
                                     </div>
@@ -74,7 +74,11 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-phone"></i>
+<<<<<<< HEAD
                                                 <input type="tel" placeholder="Enter your Phone Number" name="phone_number" class="input" required>
+=======
+                                                <input type="tel" value="{{old('phone')}}" placeholder="Enter your Phone Number" name="phone" class="input" required>
+>>>>>>> a64c1e98705647570a271ddb10c49cfbdd5acdbd
                                             </div>
                                         </div>
                                     </div>
@@ -84,7 +88,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-phone"></i>
-                                                <input type="text" placeholder="Enter referral code" name="referral_code" class="input">
+                                                <input type="text" value="{{old('referral_code')}}" placeholder="Enter referral code" name="referral_code" class="input">
                                             </div>
                                         </div>
                                     </div>

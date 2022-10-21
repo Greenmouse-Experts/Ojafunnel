@@ -51,11 +51,11 @@
                                                 <div class="row">
                                                     <!--Email-->
                                                     <div class="col-lg-12">
-                                                        <label>Email or username</label>
+                                                        <label>Email</label>
                                                         <div class="row">
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-envelope"></i>
-                                                                <input type="email" placeholder="Enter your email address" name="email" class="input" required>
+                                                                <input type="email" placeholder="Enter your email address" value="{{ old('email')}}" name="email" class="input" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -76,7 +76,11 @@
                                                     </p>
                                                     <div class="col-md-12 mb-2">
                                                         <button type="submit">
+<<<<<<< HEAD
                                                             Log In
+=======
+                                                            Log in
+>>>>>>> a64c1e98705647570a271ddb10c49cfbdd5acdbd
                                                         </button>
                                                     </div>
                                                     <p class="have">

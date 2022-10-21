@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
@@ -18,6 +19,12 @@ class DashboardController extends Controller
     
     public function dashboard()
     {
+        if(!Session::get('AuthAccessToken')){
+            return redirect()->route('login')->with([
+                'type' => 'danger',
+                'message' => "Please login with valid details"
+            ]);
+        }
         return view('dashboard.dashboard');
     }
 
@@ -91,6 +98,41 @@ class DashboardController extends Controller
     public function view_message()
     {
         return view('dashboard.viewMessage');
+    }
+
+    public function choose_temp()
+    {
+        return view('dashboard.funnelBuilder');
+    }
+
+    public function use_template()
+    {
+        return view('dashboard.useTemplate');
+    }
+
+    public function product_recall()
+    {
+        return view('dashboard.productRecall');
+    }
+
+    public function take_quiz()
+    {
+        return view('dashboard.takeQuiz');
+    }
+
+    public function face_shape()
+    {
+        return view('dashboard.faceShape');
+    }
+
+    public function choose_diamond()
+    {
+        return view('dashboard.chooseDiamond');
+    }
+
+    public function final_step()
+    {
+        return view('dashboard.finalStep');
     }
 
     public function page_builder()
