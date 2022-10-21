@@ -19,12 +19,6 @@ class DashboardController extends Controller
     
     public function dashboard()
     {
-        if(!Session::get('AuthAccessToken')){
-            return redirect()->route('login')->with([
-                'type' => 'danger',
-                'message' => "Please login with valid details"
-            ]);
-        }
         return view('dashboard.dashboard');
     }
 

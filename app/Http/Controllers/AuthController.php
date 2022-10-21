@@ -117,11 +117,12 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:8'],
             // 'g-recaptcha-response' => 'required|captcha',
         ]);
-        
+      
+
         $input = $request->only(['email', 'password']);
         
         $user = User::query()->where('email', $request->email)->first();
-
+  
         if ($user && !Hash::check($request->password, $user->password)){
             return back()->with([
                 'type' => 'danger',
@@ -157,7 +158,7 @@ class AuthController extends Controller
 
             return back()->with([
                 'type' => 'danger',
-                'message' => 'You are not a Client User.'
+                'message' => 'You are not a User.'
             ]);
         } else {
             return back()->with([
