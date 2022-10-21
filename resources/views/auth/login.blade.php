@@ -55,7 +55,7 @@
                                                         <div class="row">
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-envelope"></i>
-                                                                <input type="email" placeholder="Enter your email address" value="{{ old('email')}}" name="email" class="input" required>
+                                                                <input type="email" placeholder="Enter your email address" name="email" class="input" required>
                                                             </div>
                                                         </div>
                                                     </div>
