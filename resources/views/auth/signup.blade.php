@@ -48,13 +48,23 @@
                                     Create an account and get started today
                                 </h4>
                                 <div class="row">
-                                    <!--Name-->
+                                    <!--First Name-->
                                     <div class="col-lg-12">
-                                        <label class="name">Name</label>
+                                        <label class="name">First Name</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-person"></i>
-                                                <input type="text" placeholder="Enter name" name="name" class="input" required>
+                                                <input type="text" placeholder="Enter First Name" name="first_name" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Last Name-->
+                                    <div class="col-lg-12">
+                                        <label class="name">Last Name</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <i class="bi bi-person"></i>
+                                                <input type="text" placeholder="Enter Last Name" name="last_name" class="input" required>
                                             </div>
                                         </div>
                                     </div>

@@ -25,9 +25,22 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script type="text/javascript">
+        window.setTimeout(function() {
+            $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function(){
+                $(this).remove(); 
+            });
+        }, 8000);
+    </script>
 </head>
 
 <body data-sidebar="dark" data-layout-mode="light">
+    <!-- Alerts  Start-->
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 100000; width: auto;">
+        @include('layouts.alerts')
+    </div>
+    <!-- Alerts End -->
     <!-- Begin page -->
     <div id="layout-wrapper">
         <!-- Header -->
@@ -258,6 +271,16 @@
 
     <!-- App js -->
     <script src="{{URL::asset('dash/assets/js/app.js')}}"></script>
+    <script>
+        function showPreview(event){
+            if(event.target.files.length > 0){
+                var src = URL.createObjectURL(event.target.files[0]);
+                var preview = document.getElementById("file-ip-1-preview");
+                preview.src = src;
+                preview.style.display = "block";
+            }
+        }
+    </script>
 </body>
 
 </html>

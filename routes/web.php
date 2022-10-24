@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 // FrontEnd
-
 Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
 // Faqs
 Route::get('/faqs', [App\Http\Controllers\HomePageController::class, 'faqs'])->name('faqs');
