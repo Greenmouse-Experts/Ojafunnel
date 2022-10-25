@@ -28,7 +28,9 @@
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
                                 <div>
-                                    <button style="background-color: #fff; color:#000">Sign Up</button>
+                                    <button style="background-color: #fff; "><a href="{{route('signup')}}" style="color: #000;">
+                                    Sign Up
+                                    </a></button>
                                     <button>See Demo</button>
                                 </div>
                             </div>
