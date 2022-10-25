@@ -853,6 +853,24 @@ header nav .offcanvas-header button i{
     background-repeat: no-repeat;
     background-size: contain;
 }
+@media (max-width:1994px) {
+    .welcome{
+        padding: 150px 0px 50px 0px;
+        background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660223434/OjaFunnel-Images/home_rstv52.jpg);
+        background-position-y: -80px;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+@media (max-width:1600px) {
+    .welcome{
+        padding: 150px 0px 50px 0px;
+        background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660223434/OjaFunnel-Images/home_rstv52.jpg);
+        background-position-y: -80px;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+}
 .welcome .accelerate h1{
     text-align: center;
     font-weight: 800;
@@ -1737,7 +1755,7 @@ header nav .offcanvas-header button i{
 .choose .text-btn-fot p{
     text-align: center;
     padding: 0px 0px 100px 0;
-    font-size: 17px;
+    font-size: 14px;
 }
 .choose .text-btn h1{
     font-style: normal;
