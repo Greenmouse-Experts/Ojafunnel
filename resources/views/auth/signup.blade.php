@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
-        <title>Sign Up | OjaFunnel </title>
+        <title>{{config('app.name')}} | Sign Up</title>
         <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
         <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -48,17 +48,23 @@
                                     Create an account and get started today
                                 </h4>
                                 <div class="row">
-                                    <!--Name-->
+                                    <!--First Name-->
                                     <div class="col-lg-12">
-                                        <label class="name">Name</label>
+                                        <label class="name">First Name</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-person"></i>
-                                                <input type="text" value="{{ old('subdomain') }}" placeholder="Enter a sub - domain name" name="subdomain" class="input" required>
-                                                <p>
-                                                    Please enter a sub - domain in the above field. E.g ayo<br>
-                                                    <span style="color:#f00;">NB:</span> It must be a signle word without white space
-                                                </p>
+                                                <input type="text" placeholder="Enter First Name" name="first_name" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Last Name-->
+                                    <div class="col-lg-12">
+                                        <label class="name">Last Name</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <i class="bi bi-person"></i>
+                                                <input type="text" placeholder="Enter Last Name" name="last_name" class="input" required>
                                             </div>
                                         </div>
                                     </div>
@@ -78,7 +84,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-phone"></i>
-                                                <input type="tel" value="{{old('phone')}}" placeholder="Enter your Phone Number" name="phone" class="input" required>
+                                                <input type="tel" placeholder="Enter your Phone Number" name="phone_number" class="input" required>
                                             </div>
                                         </div>
                                     </div>

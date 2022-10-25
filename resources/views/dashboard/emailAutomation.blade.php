@@ -16,7 +16,7 @@
                             <div class="align-items-center">
                                 <h4>Edit Automation Template</h4>
                                 <p>
-                                    Edit  the automated email campaignto suit you     
+                                    Edit the automated email campaignto suit you     
                                 </p>
                             </div>
                         </div>

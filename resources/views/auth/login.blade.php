@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
-        <title>Login | {{config('app.name')}} </title>
+        <title>{{config('app.name')}} | Login</title>
         <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
         <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" draggable="false" alt="">
                                             </a>
                                             <h4></h4>
-                                            <form class="sign-div" action="{{ route('userlogin')}}" method="post">
+                                            <form class="sign-div" action="{{ route('user.login')}}" method="post">
                                                 @csrf
                                                 <div class="row">
                                                     <!--Email-->
@@ -55,7 +55,7 @@
                                                         <div class="row">
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-envelope"></i>
-                                                                <input type="email" placeholder="Enter your email address" value="{{ old('email')}}" name="email" class="input" required>
+                                                                <input type="email" placeholder="Enter your email address" name="email" class="input" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -76,7 +76,7 @@
                                                     </p>
                                                     <div class="col-md-12 mb-2">
                                                         <button type="submit">
-                                                            Log in
+                                                            Log In
                                                         </button>
                                                     </div>
                                                     <p class="have">

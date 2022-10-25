@@ -88,46 +88,6 @@
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="d-flex">
                                 <div class="avatar-xs me-3">
-                                    <span class="avatar-title bg-primary rounded-circle font-size-16">
-                                        <i class="bx bx-cart"></i>
-                                    </span>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1" key="t-your-order">
-                                        Your order is placed
-                                    </h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-1" key="t-grammer">
-                                            If several languages coalesce the grammar
-                                        </p>
-                                        <p class="mb-0">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            <span key="t-min-ago">3 min ago</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="d-flex">
-                                <img src="{{URL::asset('dash/assets/images/users/avatar-3.jpg')}}" class="me-3 rounded-circle avatar-xs" alt="user-pic" />
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">James Lemire</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-1" key="t-simplified">
-                                            It will seem like simplified English.
-                                        </p>
-                                        <p class="mb-0">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            <span key="t-hours-ago">1 hours ago</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="d-flex">
-                                <div class="avatar-xs me-3">
                                     <span class="avatar-title bg-success rounded-circle font-size-16">
                                         <i class="bx bx-badge-check"></i>
                                     </span>
@@ -148,24 +108,6 @@
                                 </div>
                             </div>
                         </a>
-
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="d-flex">
-                                <img src="{{URL::asset('dash/assets/images/users/avatar-4.jpg')}}" class="me-3 rounded-circle avatar-xs" alt="user-pic" />
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">Salena Layfield</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-1" key="t-occidental">
-                                            As a skeptical Cambridge friend of mine occidental.
-                                        </p>
-                                        <p class="mb-0">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            <span key="t-hours-ago">1 hours ago</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
                     </div>
                     <div class="p-2 border-top d-grid">
                         <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
@@ -176,27 +118,30 @@
                 </div>
             </div>
             <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" style="display: flex; align-items: center;" class="btn header-item" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="d-none d-xl-inline-block ms-1" key="t-henry">
                         <div class="hamzat">
-                            <b> Hamzat </b>
+                            <b> {{Auth::user()->first_name}} {{Auth::user()->last_name}} </b>
                         </div>
                     </span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-                    <img class="rounded-circle header-profile-user" src="{{URL::asset('dash/assets/images/users/avatar-1.jpg')}}" alt="Header Avatar" />
+                    <!-- <img class="rounded-circle header-profile-user" src="{{URL::asset('dash/assets/images/users/avatar-1.jpg')}}" alt="Header Avatar" /> -->
+                    @if(Auth::user()->photo)
+                    <img class="rounded-circle header-profile-user" src="{{Auth::user()->photo}}" alt="{{Auth::user()->first_name}}" width="100%">
+                    @else
+                    <span class="rounded-circle header-profile-user" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">{{ ucfirst(substr(Auth::user()->first_name, 0, 1)) }} {{ ucfirst(substr(Auth::user()->last_name, 0, 1)) }}</span>  
+                    @endif
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i>
+                    <a class="dropdown-item" href="{{route('user.general')}}"><i class="bx bx-user font-size-16 align-middle me-1"></i>
                         <span key="t-profile">Profile</span></a>
                     <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i>
                         <span key="t-my-wallet">My Wallet</span></a>
-                    <a class="dropdown-item d-block" href="account.html"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i>
+                    <a class="dropdown-item d-block" href="{{route('user.security')}}"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i>
                         <span key="t-settings">Settings</span></a>
-                    <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i>
-                        <span key="t-lock-screen">Lock screen</span></a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
+                    <a class="dropdown-item text-danger" href="{{route('logout')}}"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
                         <span key="t-logout">Logout</span></a>
                 </div>
             </div>

@@ -28,6 +28,8 @@
             <div class="container">
                 <div class="account-con">
                     <div class="Edit">
+                    <form method="POST" action="{{ route('user.password.update')}}">
+                    @csrf
                         <div class="form">
                             <div class="row">
                                 <h4>Password</h4>
@@ -36,7 +38,7 @@
                                     <label>Old Password</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="password" placeholder="Enter your current password" name="name" class="input" required>
+                                            <input type="password" placeholder="Enter your current password" value="{{Auth::user()->password}}" readonly class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -44,7 +46,7 @@
                                     <label>New Password</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="password" placeholder="Enter your new password" name="name" class="input" required>
+                                            <input type="password" placeholder="Enter your new password" name="new_password" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -52,18 +54,19 @@
                                     <label>Confirm Password</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="password" placeholder="Re-enter your new password" name="name" class="input" required>
+                                            <input type="password" placeholder="Re-enter your new password" name="new_password_confirmation" class="input" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-10"></div>
                                 <div class="col-lg-3">
-                                    <button class="btn" style="color: #714091; border: 1px solid #714091" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                                    <button class="btn" style="color: #714091; border: 1px solid #714091" type="submit">
                                         Change Password
                                     </button>
                                 </div>
                             </div>
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>

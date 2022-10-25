@@ -141,7 +141,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);">
+                    <a href="/logout">
                         <i class="bi bi-box-arrow-right"></i>
                         <span key="t-chat">Log Out</span>
                     </a>

@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="assets/images/Logo-fav.png" type="image/x-icon">
-        <title>Forgor | OjaFunnel </title>
+        <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
+        <title>{{config('app.name')}} | Forgot</title>
         <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
         <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +22,11 @@
         </script>
     </head>
     <body>
+        <!-- Alerts  Start-->
+        <div style="position: fixed; top: 10px; right: 20px; z-index: 100000; width: auto;">
+            @include('layouts.alert')
+        </div>
+        <!-- Alerts End -->
         <div id='loader'>
             <div class="loader-inner">
                 <div class="loading-content"></div>
@@ -45,11 +50,13 @@
                                         </h4>
                                         <p>
                                             Remember Password?
-                                            <a href="Login">
+                                            <a href="{{route('login')}}">
                                                 Login
                                             </a>
                                         </p>
-                                        <form class="sign-div">
+                                        <p class="pt-1 opacity-50">Please type in the email address linked to your {{config('app.name')}} account to reset your password.</p>
+                                        <form class="sign-div" method="POST" action="{{ route('user.forget.password')}}">
+                                            @csrf
                                             <div class="row">
                                                 <!--Email-->
                                                 <div class="col-lg-12">
@@ -63,14 +70,9 @@
                                                 </div>
                                                 <div class="col-md-12 mb-2">
                                                     <button type="submit">
-                                                        <a href="{{route('resetpassword')}}">
-                                                            Submit
-                                                        </a>
+                                                        Reset
                                                     </button>
                                                 </div>
-                                                <p>
-                                                    We have sent a mail to your registered email to reset your Password.
-                                                </p>
                                             </div>
                                         </form>
                                     </div>

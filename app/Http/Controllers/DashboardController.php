@@ -7,19 +7,18 @@ use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
-        
+        $this->middleware(['auth','verified']);
     }
-
+    
     public function dashboard()
     {
-        if(!Session::get('AuthAccessToken')){
-            return redirect()->route('login')->with([
-                'type' => 'danger',
-                'message' => "Please login with valid details"
-            ]);
-        }
         return view('dashboard.dashboard');
     }
 

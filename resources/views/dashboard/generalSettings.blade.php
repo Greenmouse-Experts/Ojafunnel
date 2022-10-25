@@ -27,78 +27,88 @@
             <!-- account container form -->
             <div class="container">
                 <div class="account-con">
-                    <div>
-                        <h4>Profile Photo</h4>
-                        <p>You can upload and change your profile picyure</p>
-                    </div>
-                    <div class="d-flex mt-5 align-items-center">
-                        <div class="account-img overflow-hidden">
-                            <img src="{{URL::asset('dash/assets/image/no-img.jpg')}}" alt="" width="100%" />
+                    <form method="POST" action="{{ route('user.profile.update')}}" enctype="multipart/form-data">
+                        @csrf
+                        <div>
+                            <h4>Profile Photo</h4>
+                            <p>You can upload and change your profile picyure</p>
                         </div>
-                        <div class="upload-img ps-5">
-                            <button class="btn btn-outline-dark">Upload Photo</button>
+                        <div class="d-flex mt-5 align-items-center">
+                            <div class="account-img overflow-hidden">
+                                @if(Auth::user()->photo)
+                                <img id="file-ip-1-preview" src="{{Auth::user()->photo}}" alt="{{Auth::user()->first_name}}" width="100%">
+                                @else
+                                <img id="file-ip-1-preview" src="{{URL::asset('dash/assets/image/no-img.jpg')}}" alt="" width="100%" />
+                                @endif
+                            </div>
+                            <div class="upload-img ps-5">
+                                <input type="file" class="btn btn-outline-dark" id="file-ip-1" accept="image/*" name="photo" onchange="showPreview(event);">
+                            </div>
                         </div>
-                    </div>
-                    <div class="account-border"></div>
-                    <div class="Edit">
-                        <div class="form">
-                            <div class="row">
-                                <div>
-                                    <h4>Basic Information</h4>
-                                    <p>Personal info about your account</p>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>First Name</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Enter your first name" name="name" class="input" required>
+                        <div class="account-border"></div>
+                        <div class="Edit">
+                            <div class="form">
+                                <div class="row">
+                                    <div>
+                                        <h4>Basic Information</h4>
+                                        <p>Personal info about your account</p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>First Name</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Enter your first name" name="first_name" value="{{Auth::user()->first_name}}" class="input" required>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>Last Name</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Enter your last name" name="name" class="input" required>
+                                    <div class="col-lg-6">
+                                        <label>Last Name</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Enter your last name" name="last_name" value="{{Auth::user()->last_name}}" class="input" required>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="account-border"></div>
-                                <div>
-                                    <h4>Login Details</h4>
-                                    <p>Your email and password for your account</p>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>Email</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="email" placeholder="Enter your email address" name="name" class="input" required>
+                                    <div class="col-12">
+                                        <label>Phone Number</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="tel" placeholder="Enter your phone number" name="phone_number" value="{{Auth::user()->phone_number}}" class="input" required>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label>Password</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="password" placeholder="Enter your password" name="name" class="input" required>
+                                    <div class="account-border"></div>
+                                    <div>
+                                        <h4>Login Details</h4>
+                                        <p>Your email and password for your account</p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Email</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="email" placeholder="Enter your email address" name="email" value="{{Auth::user()->email}}" class="input" required>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-10"></div>
-                                <div class="col-lg-3">
-                                    <button class="btn" style="color: #714091; border: 1px solid #714091" data-bs-toggle="modal" data-bs-target="#passwordModal">
-                                        Change Password
-                                    </button>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <a class="btn" style="margin-top: 0.6rem; height: 45px; width: 100%; color: #714091; border: 1px solid #714091" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                                                    Change Password
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="account-border"></div>
-                    <div class="text-end">
-                        <button class="btn" style="color: #ffffff; background-color: #714091">
-                            Save Changes
-                        </button>
-                    </div>
+                        <div class="account-border"></div>
+                        <div class="text-end">
+                            <button type="submit" class="btn" style="color: #ffffff; background-color: #714091">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <!-- end page title -->
@@ -115,39 +125,43 @@
                 </div>
                 <div class="modal-body">
                     <div class="Edit">
-                        <div class="form">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <label>Old Password</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="password" placeholder="Enter your current password" name="name" class="input" required>
+                        <h3>Update Password</h3>
+                        <form method="POST" action="{{ route('user.password.update')}}" enctype="multipart/form-data">
+                        @csrf
+                            <div class="form">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>Old Password</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="password" placeholder="Enter your current password" value="{{Auth::user()->password}}" readonly class="input" required>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>New Password</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="password" placeholder="Enter your new password" name="name" class="input" required>
+                                    <div class="col-lg-12">
+                                        <label>New Password</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="password" placeholder="Enter your new password" name="new_password" class="input" required>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>Confirm Password</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="password" placeholder="Re-enter your new password" name="name" class="input" required>
+                                    <div class="col-lg-12">
+                                        <label>Confirm Password</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="password" placeholder="Re-enter your new password" name="new_password_confirmation" class="input" required>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="text-end">
-                                    <button class="btn" style="color: #ffffff; background-color: #714091">
-                                        Change Password
-                                    </button>
+                                    <div class="text-end">
+                                        <button type="submit" class="btn" style="color: #ffffff; background-color: #714091">
+                                            Change Password
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
