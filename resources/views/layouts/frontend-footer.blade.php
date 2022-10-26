@@ -5,7 +5,7 @@
                 <div class="kit-font">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png">
                     <p>
-                        Amet minim mollit non deserunt ullamco est sit aliqua dolor do Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
+                        Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                     </p>
                 </div>
             </div>
@@ -86,24 +86,22 @@
                     </div>
                 </div>
                 <div class="row paff">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4 text-center">
                         <li>
                             <a href="{{route('privacy')}}">
                                 Privacy Policy
                             </a>
                         </li>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4 text-center">
                         <li>
                             <a href="{{route('terms')}}">
                                 Terms & Condition
                             </a>
                         </li>
                     </div>
-                    <div class="col-sm-3">
-
-                    </div>
+                    <div class="col-sm-2"></div>
                 </div>
             </div>
             <div class="col-lg-3"></div>
