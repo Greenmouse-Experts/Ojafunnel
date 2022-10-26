@@ -17,7 +17,7 @@
                     </div>
                     <div class="d-flex account-nav">
                         <p class="ps-0 me-3">
-                            <a href="{{route('user.general')}}" class="text-decoration-none text-dark">General</a>
+                            <a href="{{route('user.general', Auth::user()->username)}}" class="text-decoration-none text-dark">General</a>
                         </p>
                         <p class="active ps-0 ms-5">Security</p>
                     </div>

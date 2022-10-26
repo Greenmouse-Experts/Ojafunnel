@@ -17,19 +17,26 @@ class AuthController extends Controller
 {
     public function register(Request $request) 
     {
+        $messages = [
+            'username.regex' => 'Username must not have space in between',
+            // 'password.regex' => 'Password must be more than 8 characters long, should contain at least 1 Uppercase, 1 Lowercase and  1 number',
+        ];
+
         $this->validate($request, [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'min:5', 'max:100', 'regex:/^\S*$/u', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
             'phone_number' => ['required', 'numeric'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             // 'g-recaptcha-response' => 'required|captcha',
-        ]);
+        ], $messages);
 
         $user = User::create([
             'user_type' => 'User',
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
+            'username' => $request->username,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => Hash ::make($request->password),
@@ -153,7 +160,7 @@ class AuthController extends Controller
             }
 
             if($user->user_type == 'User'){
-                return redirect()->route('user.dashboard');
+                return redirect()->route('user.dashboard', $user->username);
             }
             
             Auth::logout();

@@ -26,6 +26,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Route::pattern('domain', '[a-z0-9.\-]+'); 
+        // parent::boot();
+
         $this->configureRateLimiting();
 
         $this->routes(function () {

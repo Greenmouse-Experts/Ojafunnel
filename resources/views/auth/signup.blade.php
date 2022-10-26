@@ -68,6 +68,16 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!--User Name-->
+                                    <div class="col-lg-12">
+                                        <label class="username">Username</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <i class="bi bi-person"></i>
+                                                <input type="text" id="username" placeholder="Enter User Name" name="username" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!--Email-->
                                     <div class="col-lg-12">
                                         <label>Email</label>

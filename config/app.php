@@ -17,7 +17,11 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'url_site' => env('API_URL_SITE', 'http://ojafunnel.api.v1.greenmouseproperties.com'),
+    'url' => env('APP_URL', 'http://localhost'),
+    
+    'domain_url' => preg_replace('#^https?://#', '', rtrim(env('APP_URL', 'http://localhost'),'/')),
+
+    'base_url' => env('BASE_URL', 'http://ojafunnel.greenmouseproperties.com/'),
 
     /*
     |--------------------------------------------------------------------------
