@@ -19,6 +19,8 @@ return [
 
     'domain_url' => preg_replace('#^https?://#', '', rtrim(env('APP_URL'),'/')),
 
+    'log' => 'errorlog',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
