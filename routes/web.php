@@ -3,31 +3,33 @@
 use Illuminate\Support\Facades\Route;
 
 // FrontEnd
-Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
-// Faqs
-Route::get('/faqs', [App\Http\Controllers\HomePageController::class, 'faqs'])->name('faqs');
-// Contact Us
-Route::get('/contact', [App\Http\Controllers\HomePageController::class, 'contact'])->name('contact');
-// Login
-Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])->name('login');
-// Sign In
-Route::get('/signup', [App\Http\Controllers\HomePageController::class, 'signup'])->name('signup');
-// Email Verification
-Route::get('/emailverification', [App\Http\Controllers\HomePageController::class, 'emailverification'])->name('emailverification');
-// Forgot Password
-Route::get('/forgot', [App\Http\Controllers\HomePageController::class, 'forgot'])->name('forgot');
-// Market Automation
-Route::get('/features/marketauto', [App\Http\Controllers\HomePageController::class, 'marketauto'])->name('marketauto');
-// Page Builder
-Route::get('/features/pagebuilder', [App\Http\Controllers\HomePageController::class, 'pagebuilder'])->name('pagebuilder');
-// Privacy
-Route::get('/privacy', [App\Http\Controllers\HomePageController::class, 'privacy'])->name('privacy');
-// Terms
-Route::get('/terms', [App\Http\Controllers\HomePageController::class, 'terms'])->name('terms');
-// EmailMarkeying
-Route::get('/emailmarketing', [App\Http\Controllers\HomePageController::class, 'emailmarketing'])->name('emailmarketing');
-// Chat Automation
-Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
+// Route::domain(config('app.domain_url'))->group(function() {
+    Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
+    // Faqs
+    Route::get('/faqs', [App\Http\Controllers\HomePageController::class, 'faqs'])->name('faqs');
+    // Contact Us
+    Route::get('/contact', [App\Http\Controllers\HomePageController::class, 'contact'])->name('contact');
+    // Login
+    Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])->name('login');
+    // Sign In
+    Route::get('/signup', [App\Http\Controllers\HomePageController::class, 'signup'])->name('signup');
+    // Email Verification
+    Route::get('/emailverification', [App\Http\Controllers\HomePageController::class, 'emailverification'])->name('emailverification');
+    // Forgot Password
+    Route::get('/forgot', [App\Http\Controllers\HomePageController::class, 'forgot'])->name('forgot');
+    // Market Automation
+    Route::get('/features/marketauto', [App\Http\Controllers\HomePageController::class, 'marketauto'])->name('marketauto');
+    // Page Builder
+    Route::get('/features/pagebuilder', [App\Http\Controllers\HomePageController::class, 'pagebuilder'])->name('pagebuilder');
+    // Privacy
+    Route::get('/privacy', [App\Http\Controllers\HomePageController::class, 'privacy'])->name('privacy');
+    // Terms
+    Route::get('/terms', [App\Http\Controllers\HomePageController::class, 'terms'])->name('terms');
+    // EmailMarkeying
+    Route::get('/emailmarketing', [App\Http\Controllers\HomePageController::class, 'emailmarketing'])->name('emailmarketing');
+    // Chat Automation
+    Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
+// });
 
 //User Authentications
 Route::prefix('auth')->group(function () {

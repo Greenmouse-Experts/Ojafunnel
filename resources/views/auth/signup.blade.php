@@ -100,11 +100,15 @@
                                     </div>
                                     <!--Phone Number-->
                                     <div class="col-lg-12">
-                                        <label>Referral Code</label>
+                                        <label>Referral Code (Optional)</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <i class="bi bi-phone"></i>
-                                                <input type="text" value="{{old('referral_code')}}" placeholder="Enter referral code" name="referral_code" class="input">
+                                                @if ($referrer_id == true)
+                                                <input type="text" class="input" name="referral_link" class="input" placeholder="{{$referrer_id}}" value="{{$referrer_id}}" readonly autofocus>
+                                                @else
+                                                <input type="text" class="input" placeholder="Enter Referral Code (if any)" name="referral_link" autocomplete="referral_link" autofocus>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

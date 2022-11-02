@@ -22,13 +22,17 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="">
-                                    <div style="margin-bottom: 10px;">
-                                        Your Affiliate Link
-                                    </div>
-                                    <div class="d-flex border-in align-items-center">
-                                        <div class="w-50 d-flex ps-3 pt-2" style="color: #714091; background: #efd7ff">
-                                            <p class="mb-2">https://chuka.ojafunnel.cc/store</p>
+                                <div>
+                                    <div class="">
+                                        <div style="margin-bottom: 10px;">
+                                            Your Affiliate Link
+                                        </div>
+                                        <div class="d-flex border-in align-items-center">
+                                            <div class="d-flex ps-3 pt-2" style="color: #714091; background: #efd7ff">
+                                                <p class="mb-2">
+                                                    {{ route('signup', ['ref' => Auth::user()->affiliate_link]) }}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -43,10 +47,10 @@
                         <div class="card-body">
                             <div class="affliate">
                                 <h2>
-                                    2
+                                    {{$referrals->count()}}
                                 </h2>
                                 <p>
-                                    No Of Affiliates
+                                    No Of Refferals
                                 </p>
                             </div>
                         </div>
@@ -60,7 +64,7 @@
                                     0
                                 </h2>
                                 <p>
-                                    No Of Refferals
+                                    No Of Affiliates
                                 </p>
                             </div>
                         </div>

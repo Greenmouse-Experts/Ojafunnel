@@ -83,7 +83,7 @@
                                     page editor.
                                 </p>
                                 <div class="con">
-                                    <a href="pagebuild.html" class="text-purp">
+                                    <a href="#" class="text-purp">
                                         <b> Continue <i class="bi bi-arrow-right"></i> </b>
                                     </a>
                                 </div>
@@ -97,7 +97,7 @@
                                 <h3>Create Shore</h3>
                                 <p>Create shops to sell your digital and physical products</p>
                                 <div class="con">
-                                    <a href="ecommerce.html" class="text-purp">
+                                    <a href="#" class="text-purp">
                                         <b> Continue <i class="bi bi-arrow-right"></i> </b>
                                     </a>
                                 </div>
@@ -114,7 +114,7 @@
                                     avaliable for you
                                 </p>
                                 <div class="con">
-                                    <a href="emailmarket.html" class="text-purp">
+                                    <a href="#" class="text-purp">
                                         <b> Continue <i class="bi bi-arrow-right"></i> </b>
                                     </a>
                                 </div>
@@ -131,7 +131,7 @@
                                     perfect time.
                                 </p>
                                 <div class="con">
-                                    <a href="emailAuto.html" class="text-purp">
+                                    <a href="#" class="text-purp">
                                         <b> Continue <i class="bi bi-arrow-right"></i> </b>
                                     </a>
                                 </div>

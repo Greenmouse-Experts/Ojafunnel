@@ -35,14 +35,10 @@
                     <a href="{{route('user.email.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Campaign</a>
                   </li>
                   <li>
-                    <a href="{{route('user.edit.template', Auth::user()->username)}}" key="t-vertical" class="py-2"
-                      >Email Automation</a
-                    >
+                    <a href="{{route('user.edit.template', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Automation</a>
                   </li>
                   <li>
-                    <a href="{{route('user.automation.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2"
-                      >Automation Campaign</a
-                    >
+                    <a href="{{route('user.automation.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2">Automation Campaign</a>
                   </li>
                 </ul>
                 <li>

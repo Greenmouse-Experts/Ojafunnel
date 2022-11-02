@@ -24,7 +24,7 @@
                     <div class="card account-head">
                         <div class="all-create py-2">
                             <button>
-                                <a href="{{route('user.add.contact')}}">
+                                <a href="{{route('user.add.contact', Auth::user()->username)}}">
                                 + Add Contact 
                                 </a>
                             </button>
@@ -68,7 +68,7 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('user.add.contact')}}">Add Contact</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('user.add.contact', Auth::user()->username)}}">Add Contact</a></li>
                                                         <li><a class="dropdown-item" href="#">Enable</a></li>
                                                         <li><a class="dropdown-item" href="#">Disable</a></li>
                                                         <li><a class="dropdown-item" href="#">Delete</a></li>
@@ -89,7 +89,7 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('user.add.contact')}}">Add Contact</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('user.add.contact', Auth::user()->username)}}">Add Contact</a></li>
                                                         <li><a class="dropdown-item" href="#">Enable</a></li>
                                                         <li><a class="dropdown-item" href="#">Disable</a></li>
                                                         <li><a class="dropdown-item" href="#">Delete</a></li>
@@ -110,7 +110,7 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('user.add.contact')}}">Add Contact</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('user.add.contact', Auth::user()->username)}}">Add Contact</a></li>
                                                         <li><a class="dropdown-item" href="#">Enable</a></li>
                                                         <li><a class="dropdown-item" href="#">Disable</a></li>
                                                         <li><a class="dropdown-item" href="#">Delete</a></li>
@@ -131,7 +131,7 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('user.add.contact')}}">Add Contact</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('user.add.contact', Auth::user()->username)}}">Add Contact</a></li>
                                                         <li><a class="dropdown-item" href="#">Enable</a></li>
                                                         <li><a class="dropdown-item" href="#">Disable</a></li>
                                                         <li><a class="dropdown-item" href="#">Delete</a></li>
@@ -152,7 +152,7 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('user.add.contact')}}">Add Contact</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('user.add.contact', Auth::user()->username)}}">Add Contact</a></li>
                                                         <li><a class="dropdown-item" href="#">Enable</a></li>
                                                         <li><a class="dropdown-item" href="#">Disable</a></li>
                                                         <li><a class="dropdown-item" href="#">Delete</a></li>

@@ -21,7 +21,7 @@
                         </div>
                         <div class="col-md-6 text-end">
                             <button class="btn text-purp border-purp">
-                                <a href="{{route('user.email.automation')}}">
+                                <a href="{{route('user.email.automation', Auth::user()->username)}}">
                                     Create Custom Automation
                                 </a>
                             </button>

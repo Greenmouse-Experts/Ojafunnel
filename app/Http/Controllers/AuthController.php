@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -22,6 +23,9 @@ class AuthController extends Controller
             // 'password.regex' => 'Password must be more than 8 characters long, should contain at least 1 Uppercase, 1 Lowercase and  1 number',
         ];
 
+
+        // dd($request->referral_link);
+
         $this->validate($request, [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
@@ -32,15 +36,39 @@ class AuthController extends Controller
             // 'g-recaptcha-response' => 'required|captcha',
         ], $messages);
 
-        $user = User::create([
-            'user_type' => 'User',
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'phone_number' => $request->phone_number,
-            'password' => Hash ::make($request->password),
-        ]);
+        if(!$request->referral_link == null)
+        {
+            $this->validate($request, [
+                'referral_link' => 'exists:users,affiliate_link'
+            ]);
+
+            $referrer_id = User::where('affiliate_link', $request->referral_link)->first();
+
+            $user = User::create([
+                'user_type' => 'User',
+                'affiliate_link' => config('app.name').'-'.strtolower($request->username),
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'username' => strtolower($request->username),
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'password' => Hash ::make($request->password),
+                'referral_link' => $referrer_id->id
+            ]);
+        } else {
+            $user = User::create([
+                'user_type' => 'User',
+                'affiliate_link' => config('app.name').'-'.strtolower($request->username),
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'username' => strtolower($request->username),
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'password' => Hash ::make($request->password),
+                'referral_link' => $request->referral_link
+            ]);
+        }
+        
 
         $code = mt_rand(100000, 999999);
 
@@ -127,11 +155,22 @@ class AuthController extends Controller
             // 'g-recaptcha-response' => 'required|captcha',
         ]);
       
-
         $input = $request->only(['email', 'password']);
         
+        // if(is_numeric($request->get('email'))){
+        //     return ['phone'=>$request->get('email'),'password'=>$request->get('password')];
+        //     $user = User::query()->where('phone_number', $request->email)->first();
+        // }
+        // elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
+        //     return ['email' => $request->get('email'), 'password'=>$request->get('password')];
+        //     $user = User::query()->where('email', $request->email)->first();
+        // } else {
+        //     return ['username' => $request->get('email'), 'password'=>$request->get('password')];
+        //     $user = User::query()->where('username', $request->email)->first();
+        // }
+        
         $user = User::query()->where('email', $request->email)->first();
-  
+
         if ($user && !Hash::check($request->password, $user->password)){
             return back()->with([
                 'type' => 'danger',
@@ -308,6 +347,7 @@ class AuthController extends Controller
 
         Auth::logout();
 
-        return redirect('/');
+        // return redirect('/');
+        return Redirect::to('http://localhost:8000');
     }
 }
