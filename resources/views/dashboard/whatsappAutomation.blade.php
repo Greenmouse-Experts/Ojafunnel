@@ -12,7 +12,28 @@
             <div class="row begin">
                 <div class="col-lg-12">
                     <div class="card account-head mb-4">
-                        <div class="py-2">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="py-2">
+                                    <h4 class="font-600">WhatsApp Automation</h4>
+                                    <p>
+                                        Send instant, scheduled or automated messages to your contact
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="">
+                                    <div class="all-create">
+                                        <a href="{{route('user.send.broadcast', Auth::user()->username)}}">
+                                            <button>
+                                                Send Brodcast Messsage
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="py-2">
                             <h4 class="font-600">WhatsApp Automation</h4>
                             <p>
                                 Send instant, scheduled or automated messages to your contact
@@ -26,7 +47,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="d-flex account-nav">
                             <p class="ps-0">New Campaign</p>
                             <p>
@@ -71,8 +92,8 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="row">
-                                        <div class="col-md-6"></div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-9"></div>
+                                        <div class="col-md-3">
                                             <div class="boding">
                                                 <button data-bs-toggle="modal" data-bs-target="#emailConfirm">
                                                     Add New Number
@@ -112,8 +133,8 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="row">
-                                        <div class="col-md-6"></div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-9"></div>
+                                        <div class="col-md-3">
                                             <div class="boding">
                                                 <button>
                                                     <a href="" style="color: #fff;">
@@ -135,7 +156,7 @@
 </div>
 <!-- End Page-content -->
 <!-- email confirm modal -->
-<div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-bottom-0">
@@ -189,6 +210,6 @@
             </div>
         </div>
     </div>
-    <!-- end modal -->
+<!-- end modal -->
 
 @endsection
