@@ -15,7 +15,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="start-main">
-                                        <h1>Welcome, Hamzat 👋</h1>
+                                        <h1>Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}} 👋</h1>
                                         <p>
                                             Start enjoying full control of your business all in
                                             one place

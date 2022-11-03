@@ -27,12 +27,12 @@
                             <div class="sms">
                                 <ul>
                                     <li class="text-purpp">
-                                        <a href="{{route('user.up.load')}}">
+                                        <a href="{{route('user.up.load', Auth::user()->username)}}">
                                             Upload Files
                                         </a>
                                     </li>
                                     <li class="text-purpp">
-                                        <a href="{{route('user.copy.paste')}}">
+                                        <a href="{{route('user.copy.paste', Auth::user()->username)}}">
                                             Copy & Paste
                                         </a>
                                     </li>

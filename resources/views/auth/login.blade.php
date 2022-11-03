@@ -51,7 +51,7 @@
                                                 <div class="row">
                                                     <!--Email-->
                                                     <div class="col-lg-12">
-                                                        <label>Email</label>
+                                                        <label>Email/Phone Number/Username</label>
                                                         <div class="row">
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-envelope"></i>

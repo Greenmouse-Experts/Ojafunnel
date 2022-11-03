@@ -20,7 +20,7 @@
                             <div class="">
                                 <div class="all-create">
                                     <button>
-                                        <a href="{{route('user.send.broadcast')}}">
+                                        <a href="{{route('user.send.broadcast', Auth::user()->username)}}">
                                             Send Brodcast Messsage
                                         </a>
                                     </button>

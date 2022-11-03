@@ -17,7 +17,7 @@
                             <p>View your sent and scheduled sms to your customers</p>
                         </div>
                         <div class="col text-end">
-                            <a href="{{route('user.new.sms')}}"><button class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                            <a href="{{route('user.new.sms', Auth::user()->username)}}"><button class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                     Create New Campaign
                                 </button></a>
                         </div>

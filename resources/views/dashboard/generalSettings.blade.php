@@ -18,7 +18,7 @@
                     <div class="d-flex account-nav">
                         <p class="ps-0 active">General</p>
                         <p>
-                            <a href="{{route('user.security')}}" class="text-decoration-none text-dark">Security</a>
+                            <a href="{{route('user.security', Auth::user()->username)}}" class="text-decoration-none text-dark">Security</a>
                         </p>
                     </div>
                     <div class="acc-border"></div>
@@ -39,6 +39,7 @@
                                 <img id="file-ip-1-preview" src="{{Auth::user()->photo}}" alt="{{Auth::user()->first_name}}" width="100%">
                                 @else
                                 <img id="file-ip-1-preview" src="{{URL::asset('dash/assets/image/no-img.jpg')}}" alt="" width="100%" />
+                                <!-- <span id="img-avatar" style="font-size: 3rem; width: 140px; height: 140px; vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">{{ ucfirst(substr(Auth::user()->first_name, 0, 1)) }} {{ ucfirst(substr(Auth::user()->last_name, 0, 1)) }}</span>   -->
                                 @endif
                             </div>
                             <div class="upload-img ps-5">
@@ -69,11 +70,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-lg-6">
                                         <label>Phone Number</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <input type="tel" placeholder="Enter your phone number" name="phone_number" value="{{Auth::user()->phone_number}}" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Username</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" value="{{Auth::user()->username}}" class="input" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -82,11 +91,19 @@
                                         <h4>Login Details</h4>
                                         <p>Your email and password for your account</p>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-12">
                                         <label>Email</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <input type="email" placeholder="Enter your email address" name="email" value="{{Auth::user()->email}}" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Password</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="password" value="{{Auth::user()->password}}" class="input" readonly>
                                             </div>
                                         </div>
                                     </div>

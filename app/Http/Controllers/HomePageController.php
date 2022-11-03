@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Djunehor\Sms\BetaSms;
 
 class HomePageController extends Controller
 {
@@ -32,7 +34,15 @@ class HomePageController extends Controller
     // Sign Up
     public function signup()
     {
-        return view('auth.signup');
+        if (request()->has('ref')) {
+            session(['referrer' => request()->query('ref')]);
+        }
+
+        $referrer = User::whereaffiliate_link(session()->pull('referrer'))->first();
+         
+        $referrer_id = $referrer ? $referrer->affiliate_link : null;
+
+        return view('auth.signup', compact('referrer_id'));
     }
     // Email Verification
     public function emailverification()
@@ -79,4 +89,10 @@ class HomePageController extends Controller
     {
         return view('frontend.chatautomation');
     }
+
+    // public function test()
+    // {
+    //     $sms = new Betasms();
+    //     $sms->text($message)->to(08135087966)->from('MyLaravel')->send();
+    // }
 }
