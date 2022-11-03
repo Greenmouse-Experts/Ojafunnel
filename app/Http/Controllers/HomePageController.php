@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Djunehor\Sms\BetaSms;
 
 class HomePageController extends Controller
 {
@@ -88,4 +89,10 @@ class HomePageController extends Controller
     {
         return view('frontend.chatautomation');
     }
+
+    // public function test()
+    // {
+    //     $sms = new Betasms();
+    //     $sms->text($message)->to(08135087966)->from('MyLaravel')->send();
+    // }
 }

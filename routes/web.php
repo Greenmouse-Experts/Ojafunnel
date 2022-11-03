@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 // FrontEnd
+Route::get('/test', [App\Http\Controllers\HomePageController::class, 'test']);
+
 // Route::domain(config('app.domain_url'))->group(function() {
     Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
     // Faqs
