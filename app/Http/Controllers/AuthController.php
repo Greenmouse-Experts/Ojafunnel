@@ -303,7 +303,6 @@ class AuthController extends Controller
         }
     }
 
-
     public function admin_login()
     {
         return view('auth.admin_login');
