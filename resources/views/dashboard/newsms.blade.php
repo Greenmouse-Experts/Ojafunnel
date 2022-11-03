@@ -20,77 +20,77 @@
                 </div>
             </div>
             <!-- account container form -->
-            <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
-                    <div class="sms-con">
-                        <form action="">
-                            <!-- senders name -->
-                            <div class="">
-                                <div class="account-input-div">
-                                    <input type="text" class="rounded" placeholder="Enter Senders name" required />
-                                    <div class="label-text fs-6 font-500">Senders Name</div>
-                                </div>
-                            </div>
-                            <!-- sms message -->
-                            <div class="mt-5">
-                                <div class="account-input-div">
-                                    <textarea type="Password" class="rounded p-3" style="height: 100px; width: 100%" placeholder="Enter the message you would like to send to the reciepient(s) details below " required></textarea>
-                                    <div class="label-text fs-6 font-500">SMS Message</div>
-                                </div>
-                            </div>
-                            <!-- recipients -->
-                            <div class="mt-5 row justify-content-between">
-                                <div class="col-4">
-                                    <p class="font-500 fs-6">Recipients:</p>
-                                </div>
-                                <div class="col-7">
-                                    <select name="recipients" id="" class="bg-light w-100 py-2 rounded px-2 fs-6">
-                                        <option value="">Choose from mailing list</option>
-                                        <option value="">Option 1</option>
-                                        <option value="">Option 2</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- additional message -->
-                            <div class="mt-5">
-                                <div class="account-input-div">
-                                    <textarea class="rounded p-2" style="height: 100px; width: 100%" placeholder="Add phone number manually E.g: +234 8000 111 333 " required></textarea>
-                                </div>
-                            </div>
-                            <!-- send sms -->
-                            <div class="mt-5 row">
-                                <div class="col-3 fs-6 font-500">send SMS:</div>
-                                <div class="col-9 row justify-content-between">
-                                    <div class="col-lg-5">
-                                        <input type="radio" name="sms" id="" />
-                                        <label for="sms">Immediately</label>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">
+                        <div class="sms-con">
+                            <form action="">
+                                <!-- senders name -->
+                                <div class="">
+                                    <div class="account-input-div">
+                                        <input type="text" class="rounded" placeholder="Enter Senders name" required />
+                                        <div class="label-text fs-6 font-500">Senders Name</div>
                                     </div>
-                                    <div class="col-lg-5">
-                                        <div>
+                                </div>
+                                <!-- sms message -->
+                                <div class="mt-5">
+                                    <div class="account-input-div">
+                                        <textarea type="Password" class="rounded p-3" style="height: 100px; width: 100%" placeholder="Enter the message you would like to send to the reciepient(s) details below " required></textarea>
+                                        <div class="label-text fs-6 font-500">SMS Message</div>
+                                    </div>
+                                </div>
+                                <!-- recipients -->
+                                <div class="mt-5 row justify-content-between">
+                                    <div class="col-4">
+                                        <p class="font-500 fs-6">Recipients:</p>
+                                    </div>
+                                    <div class="col-7">
+                                        <select name="recipients" id="" class="bg-light w-100 py-2 rounded px-2 fs-6">
+                                            <option value="">Choose from mailing list</option>
+                                            <option value="">Option 1</option>
+                                            <option value="">Option 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- additional message -->
+                                <div class="mt-5">
+                                    <div class="account-input-div">
+                                        <textarea class="rounded p-2" style="height: 100px; width: 100%" placeholder="Add phone number manually E.g: +234 8000 111 333 " required></textarea>
+                                    </div>
+                                </div>
+                                <!-- send sms -->
+                                <div class="mt-5 row">
+                                    <div class="col-3 fs-6 font-500">send SMS:</div>
+                                    <div class="col-9 row justify-content-between">
+                                        <div class="col-lg-5">
                                             <input type="radio" name="sms" id="" />
-                                            <label for="sms">Schedule to</label>
+                                            <label for="sms">Immediately</label>
                                         </div>
-                                        <div class="row">
-                                            <div class="w-100">
-                                                <input type="date" name="sms-date" id="" class="rounded px-2 border-light py-1" />
+                                        <div class="col-lg-5">
+                                            <div>
+                                                <input type="radio" name="sms" id="" />
+                                                <label for="sms">Schedule to</label>
                                             </div>
-                                            <div class="w-100 mt-3">
-                                                <input type="time" name="sms-date" id="" class="rounded px-2 border-light py-1" />
+                                            <div class="row">
+                                                <div class="w-100">
+                                                    <input type="date" name="sms-date" id="" class="rounded px-2 border-light py-1" />
+                                                </div>
+                                                <div class="w-100 mt-3">
+                                                    <input type="time" name="sms-date" id="" class="rounded px-2 border-light py-1" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="text-end mt-5">
-                                    <button class="btn mt-2 px-4" style="color: #ffffff; background-color: #714091" data-bs-toggle="modal" data-bs-target="#smsSuccess">
-                                        Send SMS
-                                    </button>
-                                </div>
-                        </form>
+                                    <div class="text-end mt-5">
+                                        <button class="btn mt-2 px-4" style="color: #ffffff; background-color: #714091" data-bs-toggle="modal" data-bs-target="#emailConfirm">
+                                            Send SMS
+                                        </button>
+                                    </div>
+                            </form>
+                        </div>
                     </div>
+                    <div class="col-lg-2"></div>
                 </div>
-                <div class="col-lg-2"></div>
-            </div>
             <!-- end page title -->
         </div>
     </div>
@@ -112,7 +112,58 @@
 </div>
 
 <!-- END layout-wrapper -->
+<!-- email confirm modal -->
+<div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        Provide Us Your Option For Integration
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    <div class="Edit">
+                        <div class="form">
+                            <div class="row">
+                                <!-- <p class="tell mb-4">
+                                    <b>
+                                        Essentials - Your integration starter kit
+                                    </b>
+                                </p> -->
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="circle">
+                                                <img src="{{URL::asset('dash/assets/image/image 789.png')}}" draggable="false" alt="">
+                                                Zapier
 
+                                            </div>
+                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#smsSuccess">
+                                                <input type="radio">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="circle">
+                                                <img src="{{URL::asset('dash/assets/image/image 793.png')}}" draggable="false" alt="">
+                                                Getresponse
+                                            </div>
+                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#smsSuccess">
+                                                <input type="radio">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- end modal -->
 <!-- smsModal -->
 <div
         class="modal fade"
