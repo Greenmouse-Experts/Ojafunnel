@@ -280,6 +280,12 @@
                 preview.style.display = "block";
             }
         }
+
+        $(function() {
+            $("form").submit(function() {
+                $('#loader').show();
+            });
+        });
     </script>
 </body>
 

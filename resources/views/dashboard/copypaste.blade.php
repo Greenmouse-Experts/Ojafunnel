@@ -13,9 +13,9 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-500">Add Contact ; <span style="color:#2E59F3;"> Student List</span> </h4>
+                            <h4 class="font-500">Add Contact ; <span style="color:#2E59F3;"> {{$mailinglist->mailinglist_name}}</span> </h4>
                             <p>
-                                Add emails & phone numbers to your created mailing list
+                            Add first name, last name, emails & phone numbers to your created mailing lis
                             </p>
                         </div>
                     </div>
@@ -26,17 +26,17 @@
                     <div class="sms">
                         <ul>
                             <li class="text-purpp">
-                                <a href="{{route('user.up.load')}}">
+                                <a href="{{route('user.up.load', [Auth::user()->username, Crypt::encrypt($mailinglist->id)])}}">
                                     Upload Files
                                 </a>
                             </li>
                             <li class="text-purp">
-                                <a href="{{route('user.copy.paste')}}">
+                                <a href="#">
                                     Copy & Paste
                                 </a>
                             </li>
                             <li class="text-purpp">
-                                <a href="{{route('user.add.contact')}}">
+                                <a href="{{route('user.add.contact', [Auth::user()->username, Crypt::encrypt($mailinglist->id)])}}">
                                     Add Individualy
                                 </a>
                             </li>
@@ -49,13 +49,15 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="Edit">
+                    <form method="POST" action="{{ route('user.subscriber.mailing.contact.copy.paste', Crypt::encrypt($mailinglist->id))}}" enctype="multipart/form-data">
+                        {{ csrf_field() }}
                         <div class="form">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label>Contact List</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <textarea name="" id="" required cols="30" placeholder="Email, Phone, Variable1, Variable2,.. " rows="6"></textarea>
+                                            <textarea name="contact" required cols="30" placeholder="First Name, Last Name, Email, Phone Number" rows="6"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +68,7 @@
                                                 Email Verification :
                                             </li>
                                             <li>
-                                                <input type="checkbox">
+                                                <input type="checkbox" checked readonly>
                                             </li>
                                             <li>
                                                 Verify uploaded addresses
@@ -94,6 +96,7 @@
                                 </div>
                             </div>
                         </div>
+                    </form>
                     </div>
                 </div>
                 <div class="col-lg-3">

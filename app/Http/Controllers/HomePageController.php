@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tzsk\Sms\Facades\Sms;
@@ -94,8 +95,11 @@ class HomePageController extends Controller
     {
         $number1 = '+2348161215848';
         $number2 = '+2348161215848';
-
-        $sms = Sms::via('twilio')->send("Testing Ojafunnel SMS Automation Using Twilio")->to([$number1, $number2])->dispatch();
-        dd($sms);   
+        try {
+            $sms = Sms::via('twilio')->send("Testing Ojafunnel SMS Automation Using Twilio")->to([$number1, $number2])->dispatch();
+            dd($sms);
+        } catch(Exception $e) {
+            dd($e);
+        } 
     }
 }

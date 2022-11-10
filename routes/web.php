@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // FrontEnd
-Route::get('/test', [App\Http\Controllers\HomePageController::class, 'test']);
+
 
 // Route::domain(config('app.domain_url'))->group(function() {
     Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
@@ -48,7 +48,9 @@ Route::prefix('auth')->group(function () {
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 // User Dashboard
-Route::prefix('{username}')->group(function() {
+// Route::prefix('{username}')->group(function() {
+Route::domain('{username}.' . config('app.domain_url'))->group(function () {
+    Route::get('/test', [App\Http\Controllers\DashboardController::class, 'test']);
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('user.dashboard');
         Route::prefix('/email-marketing')->group(function () {
@@ -67,9 +69,10 @@ Route::prefix('{username}')->group(function() {
         });
         Route::prefix('/subscribers')->group(function () {
             Route::get('/mailing-list', [App\Http\Controllers\DashboardController::class, 'mailing_list'])->name('user.mailing.list');
-            Route::get('/mailing-list/add-contact', [App\Http\Controllers\DashboardController::class, 'add_contact'])->name('user.add.contact');
-            Route::get('/mailing-list/copypaste', [App\Http\Controllers\DashboardController::class, 'copy_paste'])->name('user.copy.paste');
-            Route::get('/mailing-list/upload', [App\Http\Controllers\DashboardController::class, 'upload'])->name('user.up.load');
+            Route::get('/mailing-list/contacts/{id}', [App\Http\Controllers\DashboardController::class, 'contact'])->name('user.contact');
+            Route::get('/mailing-list/add-contact/{id}', [App\Http\Controllers\DashboardController::class, 'add_contact'])->name('user.add.contact');
+            Route::get('/mailing-list/copypaste/{id}', [App\Http\Controllers\DashboardController::class, 'copy_paste'])->name('user.copy.paste');
+            Route::get('/mailing-list/upload/{id}', [App\Http\Controllers\DashboardController::class, 'upload'])->name('user.up.load');
         });
         Route::prefix('/messages')->group(function () {
             Route::get('/create-message', [App\Http\Controllers\DashboardController::class, 'create_message'])->name('user.create.message');

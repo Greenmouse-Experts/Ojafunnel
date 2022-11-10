@@ -39,10 +39,16 @@ return [
         ],
         // Install: composer require twilio/sdk
         'twilio' => [
-            'sid' => 'ACe75dc47f94c7f33f7dd6128843c532ce',
-            'token' => '8198fe19c3a7a410790b731e1e29fafa',
-            'from' => '+15735333364',
+            'sid' => '',
+            'token' => '',
+            'from' => '',
         ],
+        // Install: composer require ossycodes/nigeriabulksms
+        // 'nigeriabulksms' => [
+        //     'username' => 'promiseezema11@gmail.com',
+        //     'password' => 'password',
+        //     'sender' => '08161215848',
+        // ],
         // Install: composer require mediaburst/clockworksms
         'clockwork' => [
             'key' => 'Your clockwork API Key',
@@ -139,6 +145,7 @@ return [
         'sns' => \Tzsk\Sms\Drivers\Sns::class,
         'textlocal' => \Tzsk\Sms\Drivers\Textlocal::class,
         'twilio' => \Tzsk\Sms\Drivers\Twilio::class,
+        // 'nigeriabulksms' => \Tzsk\Sms\Drivers\Nigeriabulksms::class,
         'smsgateway24' => \Tzsk\Sms\Drivers\SmsGateway24::class,
         'clockwork' => \Tzsk\Sms\Drivers\Clockwork::class,
         'linkmobility' => \Tzsk\Sms\Drivers\Linkmobility::class,

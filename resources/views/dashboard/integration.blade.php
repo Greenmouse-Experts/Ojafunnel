@@ -164,8 +164,8 @@
                                         </p>
                                         <div class="col-md-4">
                                             <div class="circle">
-                                                <img src="{{URL::asset('dash/assets/image/image 790.png')}}" draggable="false" alt="">
-                                                Mailmunch
+                                                <img src="{{URL::asset('dash/assets/image/twilio-icon.png')}}" draggable="false" alt="">
+                                                Twillio
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#emailConfirm">
                                                 <input type="radio">
@@ -237,65 +237,64 @@
 <!-- end main content-->
 <!-- email confirm modal -->
 <div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Provide Us Your integration Starter Kit
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Provide Us Your integration Starter Kit
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="POST" action="{{ route('user.integration.twilio.create')}}">
+                            @csrf
                             <div class="form">
                                 <div class="col-lg-12">
-                                    <label>Full Name</label>
+                                    <label>SID</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Enter Your Name" name="name" class="input" required>
+                                            <input type="text" placeholder="ACe75dc47f94c7f33f7dd6128843c532ce" name="sid" class="input" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <label>Phone Number</label>
+                                    <label>Token</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="09088901214" name="name" class="input" required>
+                                            <input type="text" placeholder="8198fe19c3a7a410790b731e1e29fafa" name="token" class="input" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <label>Description</label>
+                                    <label>From</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <textarea name="" placeholder="Enter a description, eg Api Integration" id=""
-                                                cols="30" rows="5"></textarea>
+                                            <input type="number" placeholder="+15735333364" name="from" class="input" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <a href="#" class="text-decoration-none">
-                                            <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                Cancel
-                                            </button></a>
+                                        <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <a href="#" class="text-decoration-none">
-                                            <button class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                >
-                                                Save
-                                            </button>
-                                        </a>
+                                        <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                            Save
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <!-- end modal -->
 @endsection

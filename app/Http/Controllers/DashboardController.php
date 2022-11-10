@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mailinglist;
+use App\Models\Subscriber;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Tzsk\Sms\Facades\Sms;
+use Exception;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Http;
 
 class DashboardController extends Controller
 {
@@ -16,14 +22,12 @@ class DashboardController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth', 'verified']);
     }
-    
-    public function dashboard($username)
+
+    public function dashboard()
     {
-        return view('dashboard.dashboard', [
-            'username' => $username
-        ]);
+        return view('dashboard.dashboard');
     }
 
     public function email_checker($username)
@@ -90,32 +94,65 @@ class DashboardController extends Controller
 
     public function mailing_list($username)
     {
+        $mailinglists = Mailinglist::latest()->where('user_id', Auth::user()->id)->get();
+
         return view('dashboard.mailingList', [
-            'username' => $username
+            'username' => $username,
+            'mailinglists' => $mailinglists
         ]);
     }
 
-    public function add_contact($username)
+    public function contact($username, $id)
     {
+        $idFinder = Crypt::decrypt($id);
+
+        $mailinglist = Mailinglist::findorfail($idFinder);
+
+        $contacts = Subscriber::latest()->where('mailinglist_id', $mailinglist->id)->get();
+
+        return view('dashboard.contact', [
+            'username' => $username,
+            'contacts' => $contacts,
+            'mailinglist' => $mailinglist
+        ]);
+    }
+
+    public function add_contact($username, $id)
+    {
+        $idFinder = Crypt::decrypt($id);
+
+        $mailinglist = Mailinglist::findorfail($idFinder);
+
         return view('dashboard.addcontact', [
-            'username' => $username
+            'username' => $username,
+            'mailinglist' => $mailinglist
         ]);
     }
 
-    public function copy_paste($username)
+    public function copy_paste($username, $id)
     {
+        $idFinder = Crypt::decrypt($id);
+
+        $mailinglist = Mailinglist::findorfail($idFinder);
+
         return view('dashboard.copypaste', [
-            'username' => $username
+            'username' => $username,
+            'mailinglist' => $mailinglist
         ]);
     }
 
-    public function upload($username)
+    public function upload($username, $id)
     {
+        $idFinder = Crypt::decrypt($id);
+
+        $mailinglist = Mailinglist::findorfail($idFinder);
+
         return view('dashboard.upload', [
-            'username' => $username
+            'username' => $username,
+            'mailinglist' => $mailinglist
         ]);
     }
-   
+
     public function create_message($username)
     {
         return view('dashboard.createMessage', [
@@ -320,5 +357,81 @@ class DashboardController extends Controller
         return view('dashboard.securitySettings', [
             'username' => $username
         ]);
+    }
+
+    public function test()
+    {
+        // if(auth()->check()) dd('success');
+        // dd(config('sms.drivers.twilio.sid'));
+
+        // $number1 = '+2348161215848';
+        // $number2 = '+2348161215848';
+        // try {
+        //     $sms = Sms::via('twilio')->send("Testing Ojafunnel SMS Automation Using Twilio")->to([$number1, $number2])->dispatch();
+        //     dd($sms);
+        // } catch(Exception $e) {
+        //     dd($e);
+        // } 
+
+        /*
+            Sending messages using our API
+            Requirements - PHP, cURL (enabled) function
+        */
+
+
+
+        // Initialize variables ( set your variables here )
+
+        $username = 'promiseezema11@gmail.com';
+
+        $password = 'password';
+
+        $sender   = '08161215848';
+        $message  = 'This is a test message.';
+
+        // Separate multiple numbers by comma
+
+        $mobiles  = '23481';
+
+        // Set your domain's API URL
+
+        $api_url  = 'http://domain.com/api/';
+
+
+        //Create the message data
+
+        $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $message, 'mobiles' => $mobiles);
+
+        //URL encode the message data
+
+        $data = http_build_query($data);
+
+        //Send the message
+
+        $ch = curl_init(); // Initialize a cURL connection
+
+        curl_setopt($ch, CURLOPT_URL, $api_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+        $result = curl_exec($ch);
+
+        $result = json_decode($result);
+
+
+        if (isset($result->status) && strtoupper($result->status) == 'OK') {
+            // Message sent successfully, do anything here
+
+            echo 'Message sent at N' . $result->price;
+        } else if (isset($result->error)) {
+            // Message failed, check reason.
+
+            echo 'Message failed - error: ' . $result->error;
+        } else {
+            // Could not determine the message response.
+
+            echo 'Unable to process request';
+        }
     }
 }
