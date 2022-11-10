@@ -71,30 +71,43 @@ class SubscriberController extends Controller
         ]); 
     }
 
-    public function subscriber_mailing_delete($id)
+    public function subscriber_mailing_delete($id, Request $request)
     {
-        $idFinder = Crypt::decrypt($id);
+        //Validate Request
+        $this->validate($request, [
+            'delete_field' => ['required', 'string', 'max:255']
+        ]);
 
-        $mailinglist = Mailinglist::findorfail($idFinder);
-
-
-        $contacts = Subscriber::where('mailinglist_id', $mailinglist->id)->get();
-
-        if($contacts->isEmpty())
+        if($request->delete_field == "DELETE")
         {
-            $mailinglist->delete();
-        } else {
-            foreach($contacts as $contact)
+            $idFinder = Crypt::decrypt($id);
+
+            $mailinglist = Mailinglist::findorfail($idFinder);
+
+
+            $contacts = Subscriber::where('mailinglist_id', $mailinglist->id)->get();
+
+            if($contacts->isEmpty())
             {
-                $contact->delete();
+                $mailinglist->delete();
+            } else {
+                foreach($contacts as $contact)
+                {
+                    $contact->delete();
+                }
+
+                $mailinglist->delete();
             }
 
-            $mailinglist->delete();
-        }
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Mailinglist Deleted Successfully!'
+            ]); 
+        } 
 
         return back()->with([
-            'type' => 'success',
-            'message' => 'Mailinglist Deleted Successfully!'
+            'type' => 'danger',
+            'message' => "Field doesn't match, Try Again!"
         ]); 
     }
 
@@ -269,24 +282,63 @@ class SubscriberController extends Controller
 
     }
 
-    public function subscriber_mailing_contact_delete($id)
+    public function subscriber_mailing_contact_update($id, Request $request)
     {
+        //Validate Request
+        $this->validate($request, [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'phone_number' => ['required', 'numeric'],
+        ]);
+        
         $idFinder = Crypt::decrypt($id);
 
         $subscriber = Subscriber::findorfail($idFinder);
 
-        $mailinglist = Mailinglist::findorfail($subscriber->mailinglist_id);
-
-        $mailinglist->no_of_contacts -= 1;
-        $mailinglist->email -= 1;
-        $mailinglist->phone_number -= 1;
-        $mailinglist->save();
-
-        $subscriber->delete();
+        $subscriber->first_name = ucfirst($request->first_name);
+        $subscriber->last_name = ucfirst($request->last_name);
+        $subscriber->email = $request->email;
+        $subscriber->phone_number = $request->phone_number;
+        $subscriber->save();
         
         return back()->with([
             'type' => 'success',
-            'message' => 'Contact Deleted Successfully!'
+            'message' => 'Contact Updated Successfully!'
+        ]); 
+    }
+
+    public function subscriber_mailing_contact_delete($id, Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'delete_field' => ['required', 'string', 'max:255']
+        ]);
+
+        if($request->delete_field == "DELETE")
+        {
+            $idFinder = Crypt::decrypt($id);
+
+            $subscriber = Subscriber::findorfail($idFinder);
+
+            $mailinglist = Mailinglist::findorfail($subscriber->mailinglist_id);
+
+            $mailinglist->no_of_contacts -= 1;
+            $mailinglist->email -= 1;
+            $mailinglist->phone_number -= 1;
+            $mailinglist->save();
+
+            $subscriber->delete();
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Contact Deleted Successfully!'
+            ]); 
+        }
+        
+        return back()->with([
+            'type' => 'danger',
+            'message' => "Field doesn't match, Try Again!"
         ]); 
     }
 }
