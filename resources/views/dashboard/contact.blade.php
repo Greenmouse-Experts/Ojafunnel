@@ -74,12 +74,12 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#emailConfirm">Edit/Update</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('user.subscriber.mailing.contact.delete', Crypt::encrypt($contact->id))}}">Delete</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit-{{$contact->id}}">Edit/Update</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$contact->id}}">Delete</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- Modal START -->
-                                                <div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="edit-{{$contact->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content pb-3">
                                                             <div class="modal-header border-bottom-0">
@@ -88,7 +88,8 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        <form>
+                                                                        <form method="POST" action="{{ route('user.subscriber.mailing.contact.update', Crypt::encrypt($contact->id))}}">
+                                                                            @csrf
                                                                             <div class="form">
                                                                                 <p>
                                                                                     <b>
@@ -100,7 +101,7 @@
                                                                                         <label>First Name </label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" placeholder="Enter Your First Name" name="name" class="input" required>
+                                                                                                <input type="text" placeholder="Enter Your First Name" name="first_name" value="{{$contact->first_name}}" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -108,7 +109,7 @@
                                                                                         <label>Last Name </label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" placeholder="Enter Your Last Name" name="name" class="input" required>
+                                                                                                <input type="text" placeholder="Enter Your Last Name" name="last_name" value="{{$contact->last_name}}" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -116,7 +117,7 @@
                                                                                         <label>Email </label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="email" placeholder="Enter Your Email" name="name" class="input" required>
+                                                                                                <input type="email" placeholder="Enter Your Email" name="email" value="{{$contact->email}}" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -124,14 +125,55 @@
                                                                                         <label>Phone Number </label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="tel" placeholder="Enter Your Phone Number" name="name" class="input" required>
+                                                                                                <input type="tel" placeholder="Enter Your Phone Number" name="phone_number" value="{{$contact->phone_number}}" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <div class="boding">
                                                                                             <button type="submit">
-                                                                                                Submit
+                                                                                                Update
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end modal -->
+                                                <!-- Modal START -->
+                                                <div class="modal fade" id="delete-{{$contact->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content pb-3">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body ">
+                                                                <div class="row">
+                                                                    <div class="Editt">
+                                                                        <form method="POST" action="{{ route('user.subscriber.mailing.contact.delete', Crypt::encrypt($contact->id))}}">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <p><b>Delete Contact</b></p>
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12">
+                                                                                        <p>This action cannot be undone. This will permanently delete {{$contact->first_name}} {{$contact->last_name}} contact.</p>
+                                                                                        <label>Please type DELETE to confirm.</label>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 mb-4">
+                                                                                                <input type="text" name="delete_field" class="input" required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <div class="boding">
+                                                                                            <button type="submit">
+                                                                                                I understand this consquences, Delete Contact
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>
