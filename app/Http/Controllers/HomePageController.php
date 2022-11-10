@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Djunehor\Sms\BetaSms;
+use Tzsk\Sms\Facades\Sms;
 
 class HomePageController extends Controller
 {
@@ -90,9 +91,15 @@ class HomePageController extends Controller
         return view('frontend.chatautomation');
     }
 
-    // public function test()
-    // {
-    //     $sms = new Betasms();
-    //     $sms->text($message)->to(08135087966)->from('MyLaravel')->send();
-    // }
+    public function test()
+    {
+        $number1 = '+2348161215848';
+        $number2 = '+2348161215848';
+        try {
+            $sms = Sms::via('twilio')->send("Testing Ojafunnel SMS Automation Using Twilio")->to([$number1, $number2])->dispatch();
+            dd($sms);
+        } catch(Exception $e) {
+            dd($e);
+        } 
+    }
 }

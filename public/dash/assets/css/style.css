@@ -316,7 +316,7 @@ body {
 .border-in {
   border: 1px solid #9c9ca0;
   border-radius: 5px;
-  width: 500px;
+  width: auto;
 }
 .avatar-logo {
   width: 70px;
@@ -985,7 +985,8 @@ body {
 /* Email  Summary  Ends*/
 
 /* Email  Campaign */
-.all-create button{
+.all-create button,
+.all-create .btn {
   border: 1px solid #70418F;
   padding: 10px 20px 10px 20px;
   background-color: #fff;
@@ -1003,7 +1004,8 @@ body {
   background-color: #F5E6FE !important;
   /* padding: 10px 0px 10px 0; */
 }
-.all-create button:hover{
+.all-create button,
+.all-create .btn:hover{
   background-color: #000;
   color: #fff;
   border: none;

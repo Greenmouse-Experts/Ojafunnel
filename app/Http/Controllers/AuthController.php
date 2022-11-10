@@ -168,7 +168,7 @@ class AuthController extends Controller
         //     return ['username' => $request->get('email'), 'password'=>$request->get('password')];
         //     $user = User::query()->where('username', $request->email)->first();
         // }
-        
+
         $user = User::query()->where('email', $request->email)->first();
 
         if ($user && !Hash::check($request->password, $user->password)){
@@ -185,6 +185,9 @@ class AuthController extends Controller
             ]);
         }
 
+        $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
+        
         // authentication attempt
         if (auth()->attempt($input)) {
 
@@ -302,7 +305,6 @@ class AuthController extends Controller
             ]);
         }
     }
-
 
     public function admin_login()
     {

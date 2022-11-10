@@ -19,6 +19,8 @@ return [
 
     'domain_url' => preg_replace('#^https?://#', '', rtrim(env('APP_URL'),'/')),
 
+    'man' => '',
+
     'log' => 'errorlog',
 
     /*
@@ -198,6 +200,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\SmsAutomationProvider::class,
 
     ],
 
