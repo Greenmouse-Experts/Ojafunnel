@@ -114,7 +114,7 @@
             <!-- end page title -->
         </div>
     </div>
-    <!-- End Page-content -->
+    <!-- End Page-content ---->
 
     <footer class="footer border-0 bg-transparent mt-5">
         <div class="container-fluid mt-5">
