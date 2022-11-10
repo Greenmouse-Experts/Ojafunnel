@@ -331,6 +331,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function manage_integration($username)
+    {
+        return view('dashboard.manageintegration', [
+            'username' =>$username
+        ]);
+    }
+
     public function reports_analysis($username)
     {
         return view('dashboard.reportsAnalysis', [

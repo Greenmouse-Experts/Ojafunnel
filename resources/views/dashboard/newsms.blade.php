@@ -20,27 +20,28 @@
                 </div>
             </div>
             <!-- account container form -->
-                <div class="row">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-8">
-                        <div class="sms-con">
-                            <form action="">
-                                <!-- senders name -->
-                                <div class="">
-                                    <div class="account-input-div">
-                                        <input type="text" class="rounded" placeholder="Enter Senders name" required />
-                                        <div class="label-text fs-6 font-500">Senders Name</div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="Edit">
+                        <div class="form">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Senders Name</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-5">
+                                            <input type="text" placeholder="Enter Senders Name" name="first_name" class="input" required>
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- sms message -->
-                                <div class="mt-5">
-                                    <div class="account-input-div">
-                                        <textarea type="Password" class="rounded p-3" style="height: 100px; width: 100%" placeholder="Enter the message you would like to send to the reciepient(s) details below " required></textarea>
-                                        <div class="label-text fs-6 font-500">SMS Message</div>
+                                <div class="col-lg-12">
+                                    <label>SMS Message Name</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-5">
+                                            <textarea name="" id="" cols="30" rows="5" placeholder="Enter the message you would like to send to the reciepient(s) details below " ></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- recipients -->
-                                <div class="mt-5 row justify-content-between">
+                                <div class="row mt-3 mb-5 justify-content-between">
                                     <div class="col-4">
                                         <p class="font-500 fs-6">Recipients:</p>
                                     </div>
@@ -52,45 +53,64 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- additional message -->
-                                <div class="mt-5">
-                                    <div class="account-input-div">
-                                        <textarea class="rounded p-2" style="height: 100px; width: 100%" placeholder="Add phone number manually E.g: +234 8000 111 333 " required></textarea>
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <textarea name="" id="" cols="30" rows="5" placeholder="Add phone number manually E.g: +234 8000 111 333 " ></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- send sms -->
-                                <div class="mt-5 row">
-                                    <div class="col-3 fs-6 font-500">send SMS:</div>
-                                    <div class="col-9 row justify-content-between">
-                                        <div class="col-lg-5">
-                                            <input type="radio" name="sms" id="" />
-                                            <label for="sms">Immediately</label>
+                                <div class="col-lg-12">
+                                    <label>Opt Out Message </label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-5">
+                                            <input type="text" placeholder="Enter opt out message eg text stop to 12344" name="email" class="input" required>
                                         </div>
-                                        <div class="col-lg-5">
-                                            <div>
-                                                <input type="radio" name="sms" id="" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 mb-5">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            Send SMS:
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="between">
+                                                <input type="checkbox"/>
+                                                <label for="sms">Immediately</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="between">
+                                                <input type="checkbox"/>
                                                 <label for="sms">Schedule to</label>
-                                            </div>
-                                            <div class="row">
-                                                <div class="w-100">
-                                                    <input type="date" name="sms-date" id="" class="rounded px-2 border-light py-1" />
-                                                </div>
-                                                <div class="w-100 mt-3">
-                                                    <input type="time" name="sms-date" id="" class="rounded px-2 border-light py-1" />
+                                                <div class="row">
+                                                    <div class="col-sm-6 mt-4">
+                                                        <input type="date" />
+                                                    </div>
+                                                    <div class="col-sm-6  mt-4">
+                                                        <input type="Time" />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-end mt-5">
-                                        <button class="btn mt-2 px-4" style="color: #ffffff; background-color: #714091" data-bs-toggle="modal" data-bs-target="#emailConfirm">
-                                            Send SMS
-                                        </button>
+                                </div>
+                                <div class="col-lg-9"></div>
+                                <div class="col-lg-3">
+                                    <div class="row">
+                                        <div class="boding">
+                                            <button type="submit">
+                                                Send SMS
+                                            </button>
+                                        </div>
                                     </div>
-                            </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-2"></div>
                 </div>
+                <div class="col-lg-3"></div>
+            </div>
             <!-- end page title -->
         </div>
     </div>
@@ -114,16 +134,16 @@
 <!-- END layout-wrapper -->
 <!-- email confirm modal -->
 <div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Provide Us Your Option For Integration
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Provide Us Your Option For Integration
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
                     <div class="Edit">
                         <div class="form">
                             <div class="row">
@@ -158,44 +178,33 @@
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <!-- end modal -->
 <!-- smsModal -->
-<div
-        class="modal fade"
-        id="smsSuccess"
-        tabindex="-1"
-        aria-labelledby="subscribeModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content pb-3">
+<div class="modal fade" id="smsSuccess" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content pb-3">
             <div class="modal-header border-bottom-0">
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="icon-success">
-                <img src="assets/image/theme.png" alt="" width="100%" />
-              </div>
-              <div class="text-center mt-5">
-                <p>
-                    <b>
-                    You’ve succesfully sent your SMS to the recipient(s) 
-                    </b>
-                </p>
-              </div>
+                <div class="icon-success">
+                    <img src="assets/image/theme.png" alt="" width="100%" />
+                </div>
+                <div class="text-center mt-5">
+                    <p>
+                        <b>
+                            You’ve succesfully sent your SMS to the recipient(s)
+                        </b>
+                    </p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <!-- end modal -->
+    </div>
+</div>
+<!-- end modal -->
 @endsection

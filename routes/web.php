@@ -107,6 +107,7 @@ Route::prefix('{username}')->group(function() {
         });
         Route::get('/affiliate-marketing', [App\Http\Controllers\DashboardController::class, 'affiliate_marketing'])->name('user.affiliate.marketing');
         Route::get('/integration', [App\Http\Controllers\DashboardController::class, 'integration'])->name('user.integration');
+        Route::get('/manage-integration', [App\Http\Controllers\DashboardController::class, 'manage_integration'])->name('user.manage_integration');
         Route::get('/reports-analysis', [App\Http\Controllers\DashboardController::class, 'reports_analysis'])->name('user.reports.analysis');
         Route::get('/help', [App\Http\Controllers\DashboardController::class, 'help'])->name('user.help');
         Route::prefix('/settings')->group(function () {

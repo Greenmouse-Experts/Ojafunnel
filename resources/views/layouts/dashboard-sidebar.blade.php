@@ -109,10 +109,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('user.integration', Auth::user()->username)}}">
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-code-square"></i>
                         <span key="t-chat">Integration</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('user.integration', Auth::user()->username)}}" key="t-tui-calendar">Create Integrations</a></li>
+                        <li><a href="{{route('user.manage_integration', Auth::user()->username)}}" key="t-tui-calendar">Manage Integrations</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="{{route('user.reports.analysis', Auth::user()->username)}}">

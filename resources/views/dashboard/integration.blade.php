@@ -13,7 +13,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Integrations </h4>
+                            <h4 class="font-600">Create Integrations </h4>
                             <p>
                                 Connect the tools that power your business
                             </p>
@@ -173,11 +173,11 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="circle">
-                                                <img src="{{URL::asset('dash/assets/image/image 793.png')}}" draggable="false" alt="">
-                                                Getresponse
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668092970/OjaFunnel-Images/vikbooking-smslive247-300x300_xixgv5.jpg" draggable="false" alt="">
+                                                SMSlive247
                                             </div>
-                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#Getresponse">
-                                                <input type="radio"  name="sms_gateways" value="Getresponse">
+                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#SMSlive247">
+                                                <input type="radio"  name="sms_gateways" value="SMSlive247">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -355,13 +355,13 @@
 </div>
 <!--Twillio end modal -->
 
-<!-- Getresponse modal -->
-<div class="modal fade" id="Getresponse" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+<!-- SMSlive247 modal -->
+<div class="modal fade" id="SMSlive247" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
                 <h5 class="modal-title" id="staticBackdropLabel">
-                    Provide Us Your Getresponse integration Starter Kit
+                    Provide Us Your SMSlive247 integration Starter Kit
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
