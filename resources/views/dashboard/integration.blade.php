@@ -168,7 +168,7 @@
                                                 Twillio
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#Twillio">
-                                                <input type="radio" name="Twillio" value="Twillio">
+                                                <input type="radio" name="sms_gateways" value="Twillio">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -177,7 +177,7 @@
                                                 Getresponse
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#Getresponse">
-                                                <input type="radio"  name="Getresponse" value="Getresponse">
+                                                <input type="radio"  name="sms_gateways" value="Getresponse">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -186,7 +186,7 @@
                                                 InfoBip
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#InfoBip">
-                                                <input type="radio" name="InfoBip" value="InfoBip">
+                                                <input type="radio" name="sms_gateways" value="InfoBip">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -195,7 +195,7 @@
                                                 AWS
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#AWS">
-                                                <input type="radio" name="AWS" value="AWS">
+                                                <input type="radio" name="sms_gateways" value="AWS">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -204,7 +204,7 @@
                                                 NigeriaBulkSms
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#NigeriaBulkSms">
-                                                <input type="radio" name="NigeriaBulkSms" value="NigeriaBulkSms">
+                                                <input type="radio" name="sms_gateways" value="NigeriaBulkSms">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -213,7 +213,7 @@
                                                 Multitexter
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#Multitexter">
-                                                <input type="radio" name="Multitexter" value="Multitexter">
+                                                <input type="radio" name="sms_gateways" value="Multitexter">
                                             </div>
                                         </div>
                                     </div>
@@ -356,7 +356,7 @@
 <!--Twillio end modal -->
 
 <!-- Getresponse modal -->
-    <div class="modal fade" id="Getresponse" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+<div class="modal fade" id="Getresponse" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
@@ -415,7 +415,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 <!--Getresponse end modal -->
 
 <!-- InfoBip modal -->
@@ -435,26 +435,10 @@
                             @csrf
                             <div class="form">
                                 <div class="col-lg-12">
-                                    <label>SID</label>
+                                    <label>API KEY</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="ACe75dc47f94c7f33f7dd6128843c532ce" name="sid" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>Token</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="8198fe19c3a7a410790b731e1e29fafa" name="token" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>From</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="number" placeholder="+15735333364" name="from" class="input" required>
+                                            <input type="text" placeholder="3e299022a25c9eb6c26d79bc0850dca3-39356585-14ef-4e9b-8e89-23ea015a616c" name="api_key" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -478,7 +462,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 <!--InfoBip end modal -->
 
 <!-- AWS modal -->
@@ -557,30 +541,30 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="Edit-level">
-                        <form method="POST" action="{{ route('user.integration.twilio.create')}}">
+                        <form method="POST" action="{{ route('user.integration.nigeriabulksms.create')}}">
                             @csrf
                             <div class="form">
                                 <div class="col-lg-12">
-                                    <label>SID</label>
+                                    <label>Username</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="ACe75dc47f94c7f33f7dd6128843c532ce" name="sid" class="input" required>
+                                            <input type="text" placeholder="Your Nigeriabulksms username" name="username" class="input" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <label>Token</label>
+                                    <label>Password</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="8198fe19c3a7a410790b731e1e29fafa" name="token" class="input" required>
+                                            <input type="text" placeholder="Your Nigeriabulksms password" name="password" class="input" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <label>From</label>
+                                    <label>Sender</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="number" placeholder="+15735333364" name="from" class="input" required>
+                                            <input type="number" placeholder="Your Nigeriabulksms sender" name="sender" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -624,26 +608,18 @@
                             @csrf
                             <div class="form">
                                 <div class="col-lg-12">
-                                    <label>SID</label>
+                                    <label>Username</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="ACe75dc47f94c7f33f7dd6128843c532ce" name="sid" class="input" required>
+                                            <input type="text" placeholder="Your multitexter username" name="username" class="input" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <label>Token</label>
+                                    <label>Password</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="8198fe19c3a7a410790b731e1e29fafa" name="token" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>From</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="number" placeholder="+15735333364" name="from" class="input" required>
+                                            <input type="text" placeholder="Your multitexter password" name="password" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -667,6 +643,6 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 <!--Multitexter end modal -->
 @endsection

@@ -51,11 +51,11 @@
                                                 <div class="row">
                                                     <!--Email-->
                                                     <div class="col-lg-12">
-                                                        <label>Email/Phone Number/Username</label>
+                                                        <label>Email/Username</label>
                                                         <div class="row">
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-envelope"></i>
-                                                                <input type="email" placeholder="Enter your email address" name="email" class="input" required>
+                                                                <input type="text" placeholder="Enter your email address/username" name="email" class="input" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -65,7 +65,7 @@
                                                         <div class="row">
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-file-lock"></i>
-                                                                <input type="password" placeholder="Enter your prefered password" name="password" class="input" required>
+                                                                <input type="password" placeholder="Enter your prefered password" name="password" class="input">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -74,9 +74,17 @@
                                                             Forgot Password ?
                                                         </a>
                                                     </p>
-                                                    <div class="col-md-12 mb-2">
-                                                        <button type="submit">
+                                                    <div class="col-md-5 mb-2">
+                                                        <button type="submit" name="submit" value="login">
                                                             Log In
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-md-2 mb-2">
+                                                        OR
+                                                    </div>
+                                                    <div class="col-md-5 mb-2">
+                                                        <button type="submit" name="submit" value="magic-link">
+                                                            {{ __('Send Magic Link') }}
                                                         </button>
                                                     </div>
                                                     <p class="have">

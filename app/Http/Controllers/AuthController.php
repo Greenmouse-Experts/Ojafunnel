@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\SendCodeResetPassword;
 use App\Models\ResetCodePassword;
 use App\Models\User;
+use App\Notifications\SendMagicLinkNotification;
 use App\Notifications\SendVerificationCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -149,47 +150,53 @@ class AuthController extends Controller
 
     public function user_login(Request $request)
     {
+        if($request->input('submit') == 'magic-link')
+        {
+            $user = $this->loginViaMagicLink($request);
+
+            if(!$user){
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'User with this username/email does not exist.'
+                ]);
+            }
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Magic Link Sent to the registered email ID.'
+            ]);
+        }
+
         $this->validate($request, [
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
             // 'g-recaptcha-response' => 'required|captcha',
         ]);
       
         $input = $request->only(['email', 'password']);
+
+        $user = User::query()->where('email', $request->email)
+                                ->orWhere('username', $request->email)->first();
         
-        // if(is_numeric($request->get('email'))){
-        //     return ['phone'=>$request->get('email'),'password'=>$request->get('password')];
-        //     $user = User::query()->where('phone_number', $request->email)->first();
-        // }
-        // elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
-        //     return ['email' => $request->get('email'), 'password'=>$request->get('password')];
-        //     $user = User::query()->where('email', $request->email)->first();
-        // } else {
-        //     return ['username' => $request->get('email'), 'password'=>$request->get('password')];
-        //     $user = User::query()->where('username', $request->email)->first();
-        // }
-
-        $user = User::query()->where('email', $request->email)->first();
-
         if ($user && !Hash::check($request->password, $user->password)){
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Incorrect Password!'
             ]);
         }
-
+        
         if(!$user || !Hash::check($request->password, $user->password)) {
             return back()->with([
                 'type' => 'danger',
-                'message' => "Email doesn't exist"
+                'message' => "Email/Username doesn't exist"
             ]);
         }
 
-        $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
-        
+        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        // if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
+
         // authentication attempt
-        if (auth()->attempt($input)) {
+        if(auth()->attempt(array($fieldType => $input['email'], 'password' => $input['password']))) {
 
             if(!$user->email_verified_at){
                 // Send email to user
@@ -217,6 +224,22 @@ class AuthController extends Controller
                 'message' => 'User authentication failed.'
             ]);
         }
+    }
+
+    public function loginViaMagicLink(Request $request)
+    {
+        $this->validate($request, [
+            'email' => ['required', 'string', 'max:255'],
+        ]);
+
+        $user = User::where('email', $request->email)
+                            ->orWhere('username', $request->email)->first();
+
+        if ($user) {
+            $user->notify(new SendMagicLinkNotification($user));
+        }
+
+        return $user;
     }
 
     public function forget()

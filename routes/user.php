@@ -5,9 +5,15 @@ use Illuminate\Support\Facades\Route;
 
 //User Authentications
 Route::prefix('user')->group(function () {
+    // Profile
     Route::post('/profile/update', [App\Http\Controllers\ProfileController::class, 'profile_update'])->name('user.profile.update');
     Route::post('/password/update', [App\Http\Controllers\ProfileController::class, 'password_update'])->name('user.password.update');
-    Route::post('/integration/twilio/create', [App\Http\Controllers\SmsAutomationController::class, 'integration_twilio_create'])->name('user.integration.twilio.create');
+    
+    // Intgration
+    Route::post('/integration/twilio/create', [App\Http\Controllers\IntegrationController::class, 'integration_twilio_create'])->name('user.integration.twilio.create');
+    Route::post('/integration/nigeriabulksms/create', [App\Http\Controllers\IntegrationController::class, 'integration_nigeriabulksms_create'])->name('user.integration.nigeriabulksms.create');
+    
+    // Subscribers
     Route::post('/subscriber/mailing/create', [App\Http\Controllers\SubscriberController::class, 'subscriber_mailing_create'])->name('user.subscriber.mailing.create');
     Route::get('/subscriber/mailing/enable/{id}', [App\Http\Controllers\SubscriberController::class, 'subscriber_mailing_enable'])->name('user.subscriber.mailing.enable');
     Route::get('/subscriber/mailing/disable/{id}', [App\Http\Controllers\SubscriberController::class, 'subscriber_mailing_disable'])->name('user.subscriber.mailing.disable');
