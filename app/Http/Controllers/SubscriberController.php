@@ -161,7 +161,7 @@ class SubscriberController extends Controller
         if($validator->fails()){
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Oops something went wrong!'
+                'message' => 'Wrong file format'
             ]); 
         }
         

@@ -281,10 +281,10 @@
             }
         }
 
-        $(function() {
-            $("form").submit(function() {
-                $('#loader').show();
-            });
+        const theButton = document.querySelector(".btn");
+
+        theButton.addEventListener("click", () => {
+            theButton.classList.add("button--loading");
         });
     </script>
 </body>

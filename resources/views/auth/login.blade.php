@@ -55,7 +55,7 @@
                                                         <div class="row">
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-envelope"></i>
-                                                                <input type="text" placeholder="Enter your email address/username" name="email" class="input" required>
+                                                                <input type="text" placeholder="Enter your email/username" name="email" class="input" required>
                                                             </div>
                                                         </div>
                                                     </div>
