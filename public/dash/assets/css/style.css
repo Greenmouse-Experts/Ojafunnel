@@ -1667,6 +1667,62 @@ ol, ul {
   position: relative;
   left: 20px;
 }
+@media (max-width:1300px) {
+  .between input{
+    position: relative;
+    right: 60px;
+    top: 15px;
+  }
+}
+@media (max-width:974px) {
+  .between input{
+    position: relative;
+    right: 100px;
+    top: 15px;
+  }
+}
+@media (max-width:767px) {
+  .fine{
+    display: none;
+  }
+}
+.open{
+  cursor: pointer;
+  color: #70418F;
+  text-decoration: underline;
+  text-align: end;
+}
+.form .master img{
+  width: 100%;
+  display: block;
+  margin: auto;
+}
+.modal-header p{
+  color: #70418F;
+  font-size: 10px;
+  text-decoration: underline;
+}
+.insert{
+  position: relative;
+  top: -220px;
+  width: 67%;
+  display: block;
+  margin: auto;
+}
+.insert textarea{
+  border: none !important;
+  background-color: #fff !important;
+  margin-left: 5px;
+}
+@media (max-width:500px) {
+  .insert{
+    position: relative;
+    top: -150px;
+    width: 67%;
+    display: block;
+    margin: auto;
+  }
+}
 
 .button__text {
   transition: all 0.2s;
