@@ -19,7 +19,7 @@
                             <div class="col-md-2">
                                 <ul class="list-unstyled mt-3">
                                     <li>
-                                        <a href="{{route('user.create.course')}}">
+                                        <a href="{{route('user.create.course', Auth::user()->username)}}">
                                             << Previous </a>
                                     </li>
                                 </ul>

@@ -12,7 +12,7 @@
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-md-2">
-                            <a href="{{route('user.choose.temp')}}">
+                            <a href="{{route('user.choose.temp', Auth::user()->username)}}">
                                 <P>
                                     <b>
                                         << Back </b>

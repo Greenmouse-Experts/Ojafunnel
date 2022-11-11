@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="emmet">
-                                                <a href="{{route('user.final.step')}}">
+                                                <a href="{{route('user.final.step', Auth::user()->username)}}">
                                                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
                                                     <p>
                                                      Unique

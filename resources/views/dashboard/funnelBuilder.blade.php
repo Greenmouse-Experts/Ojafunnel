@@ -21,7 +21,7 @@
                         <div class="col-md-3">
                             <div class="all-create">
                                 <button>
-                                    <!-- <a href="{{route('user.send.broadcast')}}"> -->
+                                    <!-- <a href="{{route('user.send.broadcast', Auth::user()->username)}}"> -->
                                     + Create New Funnel
                                     </a>
                                 </button>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="pageX">
-                        <a href="{{route('user.use.template')}}">
+                        <a href="{{route('user.use.template', Auth::user()->username)}}">
                             <div class="page-top"></div>
                             <div class="p-3">
                                 <h6>Sales Lead Form</h6>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="pageX">
-                        <a href="{{route('user.product.recall')}}">
+                        <a href="{{route('user.product.recall', Auth::user()->username)}}">
                             <div class="page-top"></div>
                             <div class="p-3">
                                 <h6>Product Recommendation</h6>
