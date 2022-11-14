@@ -216,6 +216,21 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function pay($username)
+    {
+        return view('dashboard.pay', [
+            'username' => $username
+        ]);
+    }
+
+    public function congratulation($username)
+    {
+        return view('dashboard.congratulation', [
+            'username' => $username
+        ]);
+    }
+
+    
     public function page_builder($username)
     {
         return view('dashboard.pageBuilder', [

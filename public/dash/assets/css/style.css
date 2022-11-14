@@ -1574,6 +1574,11 @@ ol, ul {
   color: #fff;
   padding: 15px 0px;
 }
+@media (max-width:1200px) {
+  .commit .organ button{
+    width: 100%;
+  }
+}
 .commit .organn{
   background-color: #A5D3D1;
   padding: 50px 10px 50px 10px;
@@ -1722,6 +1727,51 @@ ol, ul {
     display: block;
     margin: auto;
   }
+}
+
+.button__text {
+  transition: all 0.2s;
+}
+
+.button--loading .button__text {
+  visibility: hidden;
+  opacity: 0;
+}
+textarea{
+  height: 150px !important;
+}
+
+.where{
+  margin-bottom: 30px !important;
+}
+.organ .content{
+  text-align: center;
+}
+.organ .content img{
+  width: 25%;
+  display: block;
+  margin: auto;
+}
+.organ .content h1{
+  font-size: 25px;
+  font-weight: 600;
+}
+@media (max-width:1000px) {
+  .organ .content img{
+    margin-top: -50px !important;
+    width: 50%;
+    display: block;
+    margin: auto;
+  }
+}
+.alert{
+  margin-bottom: 10px !important;
+}
+.emolj{
+  padding: 5px 2px 2px 2px ;
+  background-color: #F5E6FE;
+  text-align: end;
+  border-radius: 0px 0px 5px 5px ;
 }
 
 button:focus:before{

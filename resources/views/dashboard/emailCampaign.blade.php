@@ -23,13 +23,13 @@
                             </li>
                             </li>
                             <li>
-                                <a href="{{route('user.email.Ecampaign', Auth::user()->username)}}" class="text-decoration-none text-dark">Message Content >></a>
+                                <a href="{{route('user.email.layout', Auth::user()->username)}}" class="text-decoration-none text-dark">Message Content >></a>
                             </li>
                             <li>
-                                <a href="Ecampaign.html" class="text-decoration-none text-dark">Summary >></a>
+                                <a href="#" class="text-decoration-none text-dark">Summary >></a>
                             </li>
                             <li>
-                                <a href="Ecampaign.html" class="text-decoration-none text-dark">Send >></a>
+                                <a href="#" class="text-decoration-none text-dark">Send >></a>
                             </li>
                         </ul>
                     </div>
