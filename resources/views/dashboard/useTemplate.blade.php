@@ -30,7 +30,7 @@
                         <div class="col-md-2">
                             <div class="all-create">
                                 <button>
-                                    <!-- <a href="{{route('user.send.broadcast')}}"> -->
+                                    <!-- <a href="{{route('user.send.broadcast', Auth::user()->username)}}"> -->
                                     Use Template
                                     </a>
                                 </button>

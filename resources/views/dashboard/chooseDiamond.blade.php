@@ -12,7 +12,7 @@
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-md-2">
-                            <a href="{{route('user.choose.temp')}}">
+                            <a href="{{route('user.choose.temp', Auth::user()->username)}}">
                                 <P>
                                     <b>
                                         << Back </b>
@@ -29,7 +29,7 @@
                         <div class="col-md-2">
                             <div class="all-create">
                                 <button>
-                                    <!-- <a href="{{route('user.send.broadcast')}}"> -->
+                                    <!-- <a href="{{route('user.send.broadcast', Auth::user()->username)}}"> -->
                                     Use Template
                                     </a>
                                 </button>

@@ -10,18 +10,36 @@
         <div class="container-fluid">
             <!-- start page title -->
             <div class="row card begin mt-4">
-                <div class="col-12 account-head">
-                    <div class="py-3">
-                        <h4 class="font-500">New SMS Campaign</h4>
+                <div class="col-lg-12 account-head">
+                <h4 class="font-500">New SMS Campaign</h4>
                         <p>
                             Send SMS to your new customer and those on your mailing list
                         </p>
+                    <div class="row">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2">
+                        <nav aria-label="Page navigation example normal">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="{{route('user.sms.automation', Auth::user()->username)}}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- account container form -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-6">
                     <div class="Edit">
                         <div class="form">
                             <div class="row">
@@ -109,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <p data-bs-toggle="modal" data-bs-target="#OpenReview" class="open">
                         Open Preview
                     </p>

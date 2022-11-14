@@ -30,7 +30,7 @@
                         <div class="col-md-2">
                             <div class="all-create">
                                 <button>
-                                    <!-- <a href="{{route('user.send.broadcast')}}"> -->
+                                    <!-- <a href="{{route('user.send.broadcast', Auth::user()->username)}}"> -->
                                     Use Template
                                     </a>
                                 </button>
@@ -53,7 +53,7 @@
                                     <p class="mt-1 mb-4">
                                         Take this quiz and find out
                                     </p>
-                                    <a href="{{route('user.take.quiz')}}">
+                                    <a href="{{route('user.take.quiz', Auth::user()->username)}}">
                                         <button style="margin-bottom:20px !important;">
                                             Take Quiz
                                         </button>  

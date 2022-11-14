@@ -22,7 +22,7 @@
                   <nav aria-label="Page navigation example normal">
                     <ul class="pagination">
                       <li class="page-item">
-                        <a class="page-link" href="{{route('user.email.code')}}" aria-label="Previous">
+                        <a class="page-link" href="{{route('user.email.code', Auth::user()->username)}}" aria-label="Previous">
                           <span aria-hidden="true">&laquo;</span>
                         </a>
                       </li>
@@ -54,7 +54,7 @@
                       Message Content >>
                     </li>
                     <li>
-                      <a href="{{route('user.email.preview')}}" class="text-decoration-none text-dark">
+                      <a href="{{route('user.email.preview', Auth::user()->username)}}" class="text-decoration-none text-dark">
                         <div class="camp">
                           Preview >>
                         </div>

@@ -22,7 +22,7 @@
                             <nav aria-label="Page navigation example normal">
                                 <ul class="pagination">
                                     <li class="page-item">
-                                        <a class="page-link" href="{{route('user.email.Ecampaign')}}" aria-label="Previous">
+                                        <a class="page-link" href="{{route('user.email.Ecampaign', Auth::user()->username)}}" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
@@ -55,12 +55,12 @@
                                     Message Content >>
                                 </li>
                                 <li class="">
-                                    <a href="Ecampaign.html" class="text-decoration-none text-dark">
+                                    <a href="#" class="text-decoration-none text-dark">
                                         <div class="camp">Preview >></div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Ecampaign.html" class="text-decoration-none text-dark">
+                                    <a href="#" class="text-decoration-none text-dark">
                                         <div class="camp">Send >></div>
                                     </a>
                                 </li>
@@ -142,13 +142,13 @@
                                     <nav aria-label="Page navigation example normal">
                                         <ul class="pagination mt-4">
                                             <li class="page-item">
-                                                <a class="page-link" href="{{route('user.email.Ecampaign')}}" aria-label="Previous">
+                                                <a class="page-link" href="{{route('user.email.Ecampaign', Auth::user()->username )}}" aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             </li>
                                             <li class="page-item"><a class="page-link" href="#">1</a></li>
                                             <li class="page-item">
-                                                <a class="page-link" href="{{route('user.email.code')}}" aria-label="Next">
+                                                <a class="page-link" href="{{route('user.email.code', Auth::user()->username)}}" aria-label="Next">
                                                     <span aria-hidden="true">&raquo;</span>
                                                 </a>
                                             </li>

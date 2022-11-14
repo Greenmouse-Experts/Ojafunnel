@@ -46,33 +46,26 @@
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
                                 <div class="organ">
-                                    <h1>
-                                        How often do you wear glasses ?
-                                    </h1>
-                                    <p class="mt-1 mb-4">
-                                    </p>
+                                    <div class="content">
+                                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668171358/OjaFunnel-Images/image_796_ka7bcn.png" draggable="false" alt="">
+                                        <h1>
+                                            Congratulations !
+                                        </h1>
+                                        <p>
+                                            You have succefully purchase your glasses, delivery details would be sent to your email
+                                        </p>
+                                    </div>
+                                    
                                     <div class="row">
-                                        <div class="col-sm-3"></div>
-                                        <div class="col-sm-3">
-                                            <div class="emmet">
-                                                <a href="{{route('user.face.shape', Auth::user()->username)}}">
-                                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
-                                                    <p>
-                                                        All Day
-                                                    </p>
-                                                </a>
-                                            </div>
+                                    <div class="col-md-12">
+                                        <div class="boding alert mb-4">
+                                            <a href="{{route('user.congratulation', Auth::user()->username)}}">
+                                                <button type="submit">
+                                                    Close
+                                                </button>
+                                            </a>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="emmet">
-                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
-                                                <p>
-                                                Just for reading
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3"></div>
-                                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1666276876/OjaFunnel-Images/image_789_uy2ozx.png" alt="">
+                                    </div>
                                     </div>
                                 </div>
                             </div>

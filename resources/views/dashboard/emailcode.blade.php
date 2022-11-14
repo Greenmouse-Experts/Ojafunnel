@@ -22,7 +22,7 @@
                   <nav aria-label="Page navigation example normal">
                                 <ul class="pagination">
                                     <li class="page-item">
-                                        <a class="page-link" href="{{route('user.email.layout')}}" aria-label="Previous">
+                                        <a class="page-link" href="{{route('user.email.layout', Auth::user()->username)}}" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
@@ -46,7 +46,7 @@
                     <ul class="list-unstyled">
                       <li class="px-3 py-2 text-white bg-purp" style="border-right: 1px solid #fff">
                         <a
-                          href="Ecampaign.html"
+                          href="#"
                           class="text-decoration-none text-white"
                           ><div class="campp">
                             Campaign Info >>
@@ -58,7 +58,7 @@
                       </li>
                       <li class="">
                         <a
-                          href="Ecampaign.html"
+                          href="#"
                           class="text-decoration-none text-dark"
                           >
                           <div class="camp">Preview >></div></a
@@ -66,7 +66,7 @@
                       </li>
                       <li>
                         <a
-                          href="Ecampaign.html"
+                          href="#"
                           class="text-decoration-none text-dark"
                           >
                           <div class="camp">Send >></div>
@@ -126,7 +126,7 @@
                           class="btn px-4 my-2"
                           style="border: 1px solid #714091; color: #714091"
                         >
-                          <a href="{{route('user.email.design')}}">
+                          <a href="{{route('user.email.design', Auth::user()->username)}}">
                             Proceed
                           </a>
                         </button>
