@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mailinglist;
 use App\Models\Subscriber;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -147,6 +148,11 @@ class SubscriberController extends Controller
 
     public function subscriber_mailing_contact_upload(Request $request, $id)
     {
+        //Validate Request
+        $this->validate($request, [
+            'contact_upload' => 'required',
+        ]);
+        
         $validator = Validator::make(
             [
                 'file'      => $request->contact_upload,
@@ -161,7 +167,7 @@ class SubscriberController extends Controller
         if($validator->fails()){
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Wrong file format'
+                'message' => 'The selected file format is invalid'
             ]); 
         }
         
@@ -169,56 +175,64 @@ class SubscriberController extends Controller
 
         $mailinglist = Mailinglist::findorfail($idFinder);
 
-        $path = $request->file('contact_upload')->getRealPath();
-        $data = array_map('str_getcsv', file($path));
+        try {
+            $path = $request->file('contact_upload')->getRealPath();
+            $data = array_map('str_getcsv', file($path));
 
-        $csv_data = array_slice($data, 1);
+            $csv_data = array_slice($data, 1);
 
-        foreach ($csv_data as $key => $escapedItem) {
-            $data = preg_replace('/\s+/', '', $escapedItem);
+            foreach ($csv_data as $key => $escapedItem) {
+                $data = preg_replace('/\s+/', '', $escapedItem);
 
-            $validatedData = Validator::make([
-                'first_name' => $data[0],
-                'last_name' => $data[1],
-                'email' => $data[2],
-                'phone_number' => $data[3]
-                ],[
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'email' => 'required|email',
-                'phone_number' => 'required|numeric'
-            ],);
-    
-            if($validatedData->fails()){
-                return back()->with([
-                    'type' => 'danger',
-                    'message' => 'Oops something went wrong. field contain wrong information!'
-                ]); 
+                $validatedData = Validator::make([
+                    'first_name' => $data[0],
+                    'last_name' => $data[1],
+                    'email' => $data[2],
+                    'phone_number' => $data[3]
+                    ],[
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'email' => 'required|email',
+                    'phone_number' => 'required|numeric'
+                ],);
+        
+                if($validatedData->fails()){
+                    return back()->with([
+                        'type' => 'danger',
+                        'message' => 'Oops something went wrong. field contain wrong information!'
+                    ]); 
+                }
+
+                $contact[] = [
+                    'user_id' => Auth::user()->id,
+                    'mailinglist_id' => $mailinglist->id,
+                    'first_name' => ucfirst($data[0]),
+                    'last_name' => ucfirst($data[1]),
+                    'email' => $data[2],
+                    'phone_number' => $data[3],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
             }
+            
+            Subscriber::insert($contact);
+            
+            $mailinglist->no_of_contacts += count($csv_data);
+            $mailinglist->email += count($csv_data);
+            $mailinglist->phone_number += count($csv_data);
+            $mailinglist->save();
 
-            $contact[] = [
-                'user_id' => Auth::user()->id,
-                'mailinglist_id' => $mailinglist->id,
-                'first_name' => ucfirst($data[0]),
-                'last_name' => ucfirst($data[1]),
-                'email' => $data[2],
-                'phone_number' => $data[3],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
-        
-        Subscriber::insert($contact);
-        
-        $mailinglist->no_of_contacts += count($csv_data);
-        $mailinglist->email += count($csv_data);
-        $mailinglist->phone_number += count($csv_data);
-        $mailinglist->save();
-
-        return redirect()->route('user.contact', [Auth::user()->username, Crypt::encrypt($mailinglist->id)])->with([
-            'type' => 'success',
-            'message' => 'Contacts Added Successfully!'
-        ]); 
+            return redirect()->route('user.contact', [Auth::user()->username, Crypt::encrypt($mailinglist->id)])->with([
+                'type' => 'success',
+                'message' => 'Contacts Added Successfully!'
+            ]);
+        } catch (Exception $e)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Contact arrangement invalid!'
+            ]); 
+        } 
     }
 
     public function subscriber_mailing_contact_copy_paste(Request $request, $id)
@@ -232,54 +246,62 @@ class SubscriberController extends Controller
 
         $mailinglist = Mailinglist::findorfail($idFinder);
 
-        $file = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $request->contact));
+        try {
+            $file = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $request->contact));
+            
+            foreach ($file as $key => $escapedItem) {
+                $data = preg_replace('/\s+/', '', $escapedItem);
 
-        foreach ($file as $key => $escapedItem) {
-            $data = preg_replace('/\s+/', '', $escapedItem);
-
-            $validatedData = Validator::make([
-                'first_name' => $data[0],
-                'last_name' => $data[1],
-                'email' => $data[2],
-                'phone_number' => $data[3]
-                ],[
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'email' => 'required|email',
-                'phone_number' => 'required|numeric'
-            ],);
-    
-            if($validatedData->fails()){
-                return back()->with([
-                    'type' => 'danger',
-                    'message' => 'Oops something went wrong. field contain wrong information!'
-                ]); 
-            }
-
-            $contact[] = [
-                'user_id' => Auth::user()->id,
-                'mailinglist_id' => $mailinglist->id,
-                'first_name' => ucfirst($data[0]),
-                'last_name' => ucfirst($data[1]),
-                'email' => $data[2],
-                'phone_number' => $data[3],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
-    
-        Subscriber::insert($contact);
+                $validatedData = Validator::make([
+                    'first_name' => $data[0],
+                    'last_name' => $data[1],
+                    'email' => $data[2],
+                    'phone_number' => $data[3]
+                    ],[
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'email' => 'required|email',
+                    'phone_number' => 'required|numeric'
+                ],);
         
-        $mailinglist->no_of_contacts += count($file);
-        $mailinglist->email += count($file);
-        $mailinglist->phone_number += count($file);
-        $mailinglist->save();
+                if($validatedData->fails()){
+                    return back()->with([
+                        'type' => 'danger',
+                        'message' => 'Oops something went wrong. field contain wrong information!'
+                    ]); 
+                }
 
-        return redirect()->route('user.contact', [Auth::user()->username, Crypt::encrypt($mailinglist->id)])->with([
-            'type' => 'success',
-            'message' => 'Contacts Added Successfully!'
-        ]); 
+                $contact[] = [
+                    'user_id' => Auth::user()->id,
+                    'mailinglist_id' => $mailinglist->id,
+                    'first_name' => ucfirst($data[0]),
+                    'last_name' => ucfirst($data[1]),
+                    'email' => $data[2],
+                    'phone_number' => $data[3],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+        
+            Subscriber::insert($contact);
+            
+            $mailinglist->no_of_contacts += count($file);
+            $mailinglist->email += count($file);
+            $mailinglist->phone_number += count($file);
+            $mailinglist->save();
 
+            return redirect()->route('user.contact', [Auth::user()->username, Crypt::encrypt($mailinglist->id)])->with([
+                'type' => 'success',
+                'message' => 'Contacts Added Successfully!'
+            ]); 
+
+        } catch (Exception $e)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Contact arrangement invalid!'
+            ]); 
+        } 
     }
 
     public function subscriber_mailing_contact_update($id, Request $request)

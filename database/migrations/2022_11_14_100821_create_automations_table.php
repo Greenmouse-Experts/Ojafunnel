@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('twilio_integrations', function (Blueprint $table) {
+        Schema::create('automations', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
+            $table->string('username');
+            $table->string('password');
+            $table->string('sender');
             $table->string('sid');
             $table->string('token');
             $table->string('from');
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('twilio_integrations');
+        Schema::dropIfExists('automations');
     }
 };

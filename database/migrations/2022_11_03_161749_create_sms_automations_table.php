@@ -16,9 +16,6 @@ return new class extends Migration
         Schema::create('sms_automations', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->string('sid');
-            $table->string('token');
-            $table->string('from');
             $table->timestamps();
         });
     }

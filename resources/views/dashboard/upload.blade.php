@@ -67,6 +67,9 @@
                                             <span class="mt-3 text-danger">This tool allows you to import (merge) contact data from a csv, xsls, xsl file format</span>
                                         </div>
                                     </div>
+                                    <p class="mt-5 text-center">
+                                        <b><a href="">Click here to view our format</a></b>
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-4 py-3">

@@ -75,13 +75,13 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="between">
-                                                <input type="checkbox"/>
+                                                <input type="radio" name="send" value="Immediately"/>
                                                 <label for="sms">Immediately</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="between">
-                                                <input type="checkbox"/>
+                                                <input type="radio" name="send" value="Schedule"/>
                                                 <label for="sms">Schedule to</label>
                                                 <div class="row">
                                                     <div class="col-sm-6 mt-4">

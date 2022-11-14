@@ -121,8 +121,8 @@
                         </div>
                         <div class="account-border"></div>
                         <div class="text-end">
-                            <button type="submit" class="btn" onclick="this.classList.toggle('button--loading')" style="color: #ffffff; background-color: #714091">
-                                <span class="button__text">Save Changes</span><span class="spinner"></span>
+                            <button type="submit" class="btn" style="color: #ffffff; background-color: #714091">
+                                Save Changes
                             </button>
                         </div>
                     </form>
