@@ -32,13 +32,9 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">All Mailing List(s)</h4>
-                            <p class="card-title-desc">
-
-                            </p>
-
+                            <h4 class="card-title mb-4">All Mailing List(s)</h4>
                             <div class="table-responsive">
-                                <table class="table mb-0">
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>

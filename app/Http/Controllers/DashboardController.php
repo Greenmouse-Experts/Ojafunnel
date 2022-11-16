@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Integration;
 use App\Models\Mailinglist;
 use App\Models\Subscriber;
 use App\Models\User;
@@ -348,8 +349,11 @@ class DashboardController extends Controller
 
     public function manage_integration($username)
     {
+        $integrations = Integration::latest()->where('user_id', Auth::user()->id)->get();
+
         return view('dashboard.manageintegration', [
-            'username' =>$username
+            'username' =>$username,
+            'integrations' => $integrations
         ]);
     }
 

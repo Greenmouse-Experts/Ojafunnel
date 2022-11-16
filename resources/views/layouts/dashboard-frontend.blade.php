@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> Oja Funnel | Dashboard</title>
+    <title> {{config('app.name')}} | Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta content="Oja Funnel |  Dashboard" name="Oja Funnel |  Dashboard" />
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -22,6 +22,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- DataTables -->
+    <link href="{{URL::asset('dash/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{URL::asset('dash/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -158,6 +162,30 @@
     <!-- apexcharts -->
     <script src="{{URL::asset('dash/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
 
+    <!-- dashboard init -->
+    <script src="{{URL::asset('dash/assets/js/pages/datatables.init.js')}}"></script>   
+    <script src="{{URL::asset('dash/assets/js/pages/dashboard.init.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
+
+    <!-- App js -->
+    <script src="{{URL::asset('dash/assets/js/app.js')}}"></script>
+
+    <!-- Required datatable js -->
+    <script src="{{URL::asset('dash/assets/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+
+    <!-- Buttons examples -->
+    <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/jszip/jszip.min.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/pdfmake/build/pdfmake.min.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/pdfmake/build/vfs_fonts.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
+
+
     <!-- email automation chart -->
     <script>
         var options = {
@@ -234,28 +262,6 @@
                     stops: [0, 90, 100],
                 },
             },
-            // grid: {
-            //   row: {
-            //     colors: ["transparent"],
-            //     opacity: 0,
-            //   },
-            //   column: {
-            //     colors: ["transparent"],
-            //     opacity: 0,
-            //   },
-            //   borderColor: "black",
-            //   yaxis: {
-            //     lines: {
-            //       show: true,
-            //     },
-            //   },
-            //   Xaxis: {
-            //     lines: {
-            //       show: true,
-            //       colors: ["black"],
-            //     },
-            //   },
-            // },
             xaxis: {
                 categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
             },
@@ -266,11 +272,6 @@
 
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
 
-    <!-- dashboard init -->
-    <script src="{{URL::asset('dash/assets/js/pages/dashboard.init.js')}}"></script>
-
-    <!-- App js -->
-    <script src="{{URL::asset('dash/assets/js/app.js')}}"></script>
     <script>
         function showPreview(event){
             if(event.target.files.length > 0){
@@ -280,23 +281,6 @@
                 preview.style.display = "block";
             }
         }
-
-        // const theButton = document.querySelector(".btn");
-
-        // theButton.addEventListener("click", () => {
-        //     theButton.classList.add("button--loading");
-        // });
-
-        // $(document).ready(function() {
-        //     $("#btnFetch").click(function() {
-        //     // disable button
-        //     $(this).prop("disabled", true);
-        //     // add spinner to button
-        //     $(this).html(
-        //         `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
-        //     );
-        //     });
-        // });
     </script>
 </body>
 

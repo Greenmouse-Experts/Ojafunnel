@@ -10,9 +10,12 @@ Route::prefix('user')->group(function () {
     Route::post('/password/update', [App\Http\Controllers\ProfileController::class, 'password_update'])->name('user.password.update');
     
     // Intgration
-    Route::post('/integration/twilio/create', [App\Http\Controllers\IntegrationController::class, 'integration_twilio_create'])->name('user.integration.twilio.create');
-    Route::post('/integration/nigeriabulksms/create', [App\Http\Controllers\IntegrationController::class, 'integration_nigeriabulksms_create'])->name('user.integration.nigeriabulksms.create');
-    
+    Route::post('/integration/create', [App\Http\Controllers\IntegrationController::class, 'integration_create'])->name('user.integration.create');
+    Route::post('/integration/update/{id}', [App\Http\Controllers\IntegrationController::class, 'integration_update'])->name('user.integration.update');
+    Route::get('/integration/enable/{id}', [App\Http\Controllers\IntegrationController::class, 'integration_enable'])->name('user.integration.enable');
+    Route::get('/integration/disable/{id}', [App\Http\Controllers\IntegrationController::class, 'integration_disable'])->name('user.integration.disable');
+    Route::post('/integration/delete/{id}', [App\Http\Controllers\IntegrationController::class, 'integration_delete'])->name('user.integration.delete');
+
     // Subscribers
     Route::post('/subscriber/mailing/create', [App\Http\Controllers\SubscriberController::class, 'subscriber_mailing_create'])->name('user.subscriber.mailing.create');
     Route::get('/subscriber/mailing/enable/{id}', [App\Http\Controllers\SubscriberController::class, 'subscriber_mailing_enable'])->name('user.subscriber.mailing.enable');

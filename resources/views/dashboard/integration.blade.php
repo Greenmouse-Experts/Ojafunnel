@@ -243,7 +243,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="Edit-level">
-                        <form method="POST" action="{{ route('user.integration.twilio.create')}}">
+                        <form method="POST" action="{{ route('user.integration.create')}}">
                             @csrf
                             <div class="form">
                                 <div class="col-lg-12">
@@ -298,15 +298,16 @@
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
                 <h5 class="modal-title" id="staticBackdropLabel">
-                    Provide Us Your Twillio integration Starter Kit
+                    Provide Us Your Twilio integration Starter Kit
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="Edit-level">
-                        <form method="POST" action="{{ route('user.integration.twilio.create')}}">
+                        <form method="POST" action="{{ route('user.integration.create')}}">
                             @csrf
+                            <input name="type" value="Twilio" hidden>
                             <div class="form">
                                 <div class="col-lg-12">
                                     <label>SID</label>
@@ -366,52 +367,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="Edit-level">
-                        <form method="POST" action="{{ route('user.integration.twilio.create')}}">
-                            @csrf
-                            <div class="form">
-                                <div class="col-lg-12">
-                                    <label>SID</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="ACe75dc47f94c7f33f7dd6128843c532ce" name="sid" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>Token</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="8198fe19c3a7a410790b731e1e29fafa" name="token" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>From</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="number" placeholder="+15735333364" name="from" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row justify-content-between">
-                                    <div class="col-6">
-                                        <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                            Cancel
-                                        </button>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
-                                            Save
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
+                <h1 class="text-center">SMSlive247 Coming Soon</h1>
             </div>
         </div>
     </div>
@@ -431,9 +387,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="Edit-level">
-                        <form method="POST" action="{{ route('user.integration.twilio.create')}}">
+                        <form method="POST" action="{{ route('user.integration.create')}}">
                             @csrf
                             <div class="form">
+                                <input name="type" value="InfoBip" hidden>
                                 <div class="col-lg-12">
                                     <label>API KEY</label>
                                     <div class="row">
@@ -476,56 +433,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="Edit-level">
-                        <form method="POST" action="{{ route('user.integration.twilio.create')}}">
-                            @csrf
-                            <div class="form">
-                                <div class="col-lg-12">
-                                    <label>SID</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="ACe75dc47f94c7f33f7dd6128843c532ce" name="sid" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>Token</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="8198fe19c3a7a410790b731e1e29fafa" name="token" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>From</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="number" placeholder="+15735333364" name="from" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row justify-content-between">
-                                    <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                            Cancel
-                                        </button>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
-                                            Save
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
+                <h1 class="text-center">AWS Coming Soon</h1>
             </div>
         </div>
     </div>
-    </div>
+</div>
 <!--AWS end modal -->
 
 <!-- NigeriaBulkSms modal -->
@@ -541,9 +453,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="Edit-level">
-                        <form method="POST" action="{{ route('user.integration.nigeriabulksms.create')}}">
+                        <form method="POST" action="{{ route('user.integration.create')}}">
                             @csrf
                             <div class="form">
+                                <input name="type" value="NigeriaBulkSms" hidden>
                                 <div class="col-lg-12">
                                     <label>Username</label>
                                     <div class="row">
@@ -604,9 +517,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="Edit-level">
-                        <form method="POST" action="{{ route('user.integration.twilio.create')}}">
+                        <form method="POST" action="{{ route('user.integration.create')}}">
                             @csrf
                             <div class="form">
+                            <input name="type" value="Multitexter" hidden>
                                 <div class="col-lg-12">
                                     <label>Username</label>
                                     <div class="row">
