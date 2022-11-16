@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::create('pagebuilder_uploads', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->string('public_id', 50)->unique();
-        //     $table->string('original_file', 512);
-        //     $table->string('mime_type', 50);
-        //     $table->string('server_file', 512)->unique();
-        //     $table->timestamps();
-        // });
+        Schema::create('pagebuilder_uploads', function (Blueprint $table) {
+            $table->id();
+            // $table->string('public_id', 50)->unique();
+            // $table->string('original_file', 512);
+            // $table->string('mime_type', 50);
+            // $table->string('server_file', 512)->unique();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('pagebuilder_uploads');
+        Schema::dropIfExists('pagebuilder_uploads');
     }
 };

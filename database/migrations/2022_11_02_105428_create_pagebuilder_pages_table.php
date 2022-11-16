@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pagebuilder_pages', function (Blueprint $table) {
-            // $table->id();
+            $table->id();
             // $table->string('name', 256);
             // $table->string('title', 256);
             // $table->string('route', 512)->unique();
             // $table->string('layout', 256);
             // $table->longText('data')->nullable();
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

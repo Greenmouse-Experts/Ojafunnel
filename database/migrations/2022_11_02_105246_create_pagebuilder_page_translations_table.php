@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pagebuilder_page_translations', function (Blueprint $table) {
-            // $table->id();
+            $table->id();
             // $table->unsignedInteger('page_id');
             // $table->string('locale', 50);
             // $table->string('title', 255);
@@ -40,6 +40,6 @@ return new class extends Migration
         //     $table->string('title', 256)->after('name');
         // });
 
-        // Schema::dropIfExists('pagebuilder_page_translations');
+        Schema::dropIfExists('pagebuilder_page_translations');
     }
 };
