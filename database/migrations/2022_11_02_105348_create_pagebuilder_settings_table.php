@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pagebuilder_settings', function (Blueprint $table) {
-            $table->id();
-            $table->string('setting', 50)->unique();
-            $table->mediumText('value');
-            $table->boolean('is_array');
-            $table->timestamps();
-        });
+        // Schema::create('pagebuilder_settings', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('setting', 50)->unique();
+        //     $table->mediumText('value');
+        //     $table->boolean('is_array');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pagebuilder_settings');
+        // Schema::dropIfExists('pagebuilder_settings');
     }
 };
