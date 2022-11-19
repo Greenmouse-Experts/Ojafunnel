@@ -16,13 +16,14 @@ class Integration extends Model
      */
     protected $fillable = [
         'user_id',
+        'email',
         'username',
         'password',
-        'sender',
         'sid',
         'token',
         'from',
         'api_key',
+        'api_base_url',
         'type',
         'status'
     ];

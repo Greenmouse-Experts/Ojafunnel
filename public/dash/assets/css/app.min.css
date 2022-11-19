@@ -472,7 +472,7 @@ body[data-layout=horizontal] .page-content {
     transition-property: height, visibility;
 }
 .vertical-menu {
-    width: 250px;
+    width: 240px;
     z-index: 1001;
     background: #fff;
     bottom: 0;

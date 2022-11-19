@@ -7,13 +7,12 @@
     "require": {
         "php": "^8.0.2",
         "grosv/laravel-passwordless-login": "^1.8",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.5",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
-        "twilio/sdk": "^6.43",
-        "tzsk/sms": "^6.0"
+        "twilio/sdk": "^6.43"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

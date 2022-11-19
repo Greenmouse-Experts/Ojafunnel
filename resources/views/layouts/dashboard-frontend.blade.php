@@ -30,12 +30,29 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <script type="text/javascript">
+    <script>
         window.setTimeout(function() {
-            $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function(){
-                $(this).remove(); 
+            $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function() {
+                $(this).remove();
             });
         }, 8000);
+
+        function show1() {
+            document.getElementById('schedule').style.display = 'none';
+        }
+
+        function show2() {
+            document.getElementById('schedule').style.display = 'block';
+        }
+
+        function myFunction() {
+            var x = document.getElementById("preview");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
     </script>
 </head>
 
@@ -163,7 +180,7 @@
     <script src="{{URL::asset('dash/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
 
     <!-- dashboard init -->
-    <script src="{{URL::asset('dash/assets/js/pages/datatables.init.js')}}"></script>   
+    <script src="{{URL::asset('dash/assets/js/pages/datatables.init.js')}}"></script>
     <script src="{{URL::asset('dash/assets/js/pages/dashboard.init.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
@@ -273,8 +290,8 @@
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
 
     <script>
-        function showPreview(event){
-            if(event.target.files.length > 0){
+        function showPreview(event) {
+            if (event.target.files.length > 0) {
                 var src = URL.createObjectURL(event.target.files[0]);
                 var preview = document.getElementById("file-ip-1-preview");
                 preview.src = src;

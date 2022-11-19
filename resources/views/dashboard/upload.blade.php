@@ -10,6 +10,23 @@
         <div class="container-fluid">
             <!-- start page title -->
             <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+                        <h4 class="mb-sm-0 font-size-18">Upload Contacts</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                                <li class="breadcrumb-item active">Upload Contacts</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+            <!-- start page title -->
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
@@ -45,9 +62,7 @@
                 </div>
             </div>
             <div class="row cut">
-                <div class="col-lg-2">
-                </div>
-                <div class="col-lg-8">
+                <div class="col-12">
                     <form method="POST" action="{{ route('user.subscriber.mailing.contact.upload', Crypt::encrypt($mailinglist->id)) }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="Edittt">
@@ -95,7 +110,6 @@
                             </div>
                         </div>
                     </form>
-                    
                 </div>
             </div>
         </div>

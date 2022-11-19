@@ -16,13 +16,14 @@ return new class extends Migration
         Schema::create('integrations', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
+            $table->string('email')->nullable();
             $table->string('username')->nullable();
             $table->string('password')->nullable();
-            $table->string('sender')->nullable();
             $table->string('sid')->nullable();
             $table->string('token')->nullable();
             $table->string('from')->nullable();
             $table->string('api_key')->nullable();
+            $table->string('api_base_url')->nullable();
             $table->string('type')->nullable();
             $table->enum('status', ['Active', 'Inactive'])->default('Active')->index();
             $table->timestamps();

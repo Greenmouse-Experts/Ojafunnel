@@ -50,7 +50,7 @@ Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->n
 // User Dashboard
 Route::prefix('{username}')->group(function() {
 // Route::domain('{username}.' . config('app.domain_url'))->group(function () {
-    Route::get('/test', [App\Http\Controllers\DashboardController::class, 'test']);
+    Route::get('/test', [App\Http\Controllers\HomePageController::class, 'test']);
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('user.dashboard');
         Route::prefix('/email-marketing')->group(function () {

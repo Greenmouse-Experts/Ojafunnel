@@ -248,8 +248,13 @@ class DashboardController extends Controller
 
     public function newsms($username)
     {
+        $mailinglists = Mailinglist::latest()->where('user_id', Auth::user()->id)->get();
+        $integrations = Integration::latest()->where('user_id', Auth::user()->id)->get();
+
         return view('dashboard.newsms', [
-            'username' => $username
+            'username' => $username,
+            'mailinglists' => $mailinglists,
+            'integrations' => $integrations
         ]);
     }
 

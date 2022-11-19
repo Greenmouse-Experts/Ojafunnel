@@ -1695,7 +1695,8 @@ ol, ul {
   cursor: pointer;
   color: #70418F;
   text-decoration: underline;
-  text-align: end;
+  display: flex;
+  justify-content: flex-end;
 }
 .form .master img{
   width: 100%;
@@ -1788,3 +1789,11 @@ button:focus:before{
  }
  
  @keyframes spin { 100% { -webkit-transform: rotate(360deg);transform-origin:5px 5px } }
+
+
+ /*  */
+ .messageCounter {
+  position: absolute;
+  top: 120px;
+  right: 23px;
+ }

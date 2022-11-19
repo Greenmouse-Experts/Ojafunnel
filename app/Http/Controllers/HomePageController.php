@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tzsk\Sms\Facades\Sms;
+use GuzzleHttp\Client;
 
 class HomePageController extends Controller
 {
@@ -40,7 +41,7 @@ class HomePageController extends Controller
         }
 
         $referrer = User::whereaffiliate_link(session()->pull('referrer'))->first();
-         
+
         $referrer_id = $referrer ? $referrer->affiliate_link : null;
 
         return view('auth.signup', compact('referrer_id'));
@@ -93,38 +94,28 @@ class HomePageController extends Controller
 
     public function test()
     {
-        $number1 = '+2348161215848';
-        $number2 = '+2348161215848';
-        try {
-            $sms = Sms::via('twilio')->send("Testing Ojafunnel SMS Automation Using Twilio")->to([$number1, $number2])->dispatch();
-            dd($sms);
-        } catch(Exception $e) {
-            dd($e);
-        } 
+        $curl = curl_init();
 
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://9r3xk3.api.infobip.com/sms/2/text/advanced',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{"messages":[{"destinations":[{"to":"08161215848"}],"from":"Ojafunnel","text":"This is a sample message"}]}',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: {3e299022a25c9eb6c26d79bc0850dca3-39356585-14ef-4e9b-8e89-23ea015a616c}',
+                'Content-Type: application/json',
+                'Accept: application/json'
+            ),
+        ));
 
-        $email = "your multitexter registered email "; 
-        $password = "Your password"; 
-        $message = "message content"; 
-        $sender_name = "Your sender name"; 
-        $recipients = "mobile numbers seperated by comma e.9 2348028828288,234900002000,234808887800"; 
-        $forcednd = "set to 1 if you want DND numbers to "; 
-        $data = array(
-            "email" => $email, 
-            "password" => $password,
-            "message"=>$message, 
-            "sender_name" => $sender_name,
-            "recipients" => $recipients,
-            "forcednd" => $forcednd
-        ); 
-        $data_string = json_encode($data); 
-        $ch = curl_init('https://app.multitexter.com/v2/app/sms'); 
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST"); 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen($data_string))); 
-        $result = curl_exec($ch); 
-        $res_array = json_decode($result); 
-        print_r($res_array); 
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        dd($response);
     }
 }

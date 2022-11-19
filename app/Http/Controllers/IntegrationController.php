@@ -39,12 +39,14 @@ class IntegrationController extends Controller
         {
             //Validate Request
             $this->validate($request, [
-                'api_key' => ['required', 'string', 'max:255']
+                'api_key' => ['required', 'string', 'max:255'],
+                'api_base_url' => ['required', 'string', 'max:255']
             ]);
 
             Integration::create([
                 'user_id' => Auth::user()->id,
                 'api_key' => $request->api_key,
+                'api_base_url' => $request->api_base_url,
                 'type' => $request->type
             ]);
 
@@ -59,14 +61,12 @@ class IntegrationController extends Controller
             $this->validate($request, [
                 'username' => ['required', 'string', 'max:255'],
                 'password' => ['required', 'string', 'max:255'],
-                'sender' => ['required', 'string', 'max:255']
             ]);
 
             Integration::create([
                 'user_id' => Auth::user()->id,
                 'username' => $request->username,
                 'password' => $request->password,
-                'sender' => $request->sender,
                 'type' => $request->type
             ]);
 
@@ -79,14 +79,16 @@ class IntegrationController extends Controller
         {
             //Validate Request
             $this->validate($request, [
-                'username' => ['required', 'string', 'max:255'],
-                'password' => ['required', 'string', 'max:255']
+                'email' => ['required', 'string', 'max:255'],
+                'password' => ['required', 'string', 'max:255'],
+                'api_key' => ['required', 'string', 'max:255']
             ]);
 
             Integration::create([
                 'user_id' => Auth::user()->id,
-                'username' => $request->username,
+                'email' => $request->email,
                 'password' => $request->password,
+                'api_key' => $request->api_key,
                 'type' => $request->type
             ]);
 
@@ -131,11 +133,13 @@ class IntegrationController extends Controller
         {
             //Validate Request
             $this->validate($request, [
-                'api_key' => ['required', 'string', 'max:255']
+                'api_key' => ['required', 'string', 'max:255'],
+                'api_base_url' => ['required', 'string', 'max:255']
             ]);
 
             $integration->update([
-                'api_key' => $request->api_key
+                'api_key' => $request->api_key,
+                'api_base_url' => $request->api_base_url,
             ]);
 
             return back()->with([
@@ -148,14 +152,12 @@ class IntegrationController extends Controller
             //Validate Request
             $this->validate($request, [
                 'username' => ['required', 'string', 'max:255'],
-                'password' => ['required', 'string', 'max:255'],
-                'sender' => ['required', 'string', 'max:255']
+                'password' => ['required', 'string', 'max:255']
             ]);
 
             $integration->update([
                 'username' => $request->username,
-                'password' => $request->password,
-                'sender' => $request->sender
+                'password' => $request->password
             ]);
 
             return back()->with([
@@ -167,13 +169,15 @@ class IntegrationController extends Controller
         {
             //Validate Request
             $this->validate($request, [
-                'username' => ['required', 'string', 'max:255'],
-                'password' => ['required', 'string', 'max:255']
+                'email' => ['required', 'email', 'max:255'],
+                'password' => ['required', 'string', 'max:255'],
+                'api_key' => ['required', 'string', 'max:255']
             ]);
 
             $integration->update([
-                'username' => $request->username,
-                'password' => $request->password
+                'email' => $request->email,
+                'password' => $request->password,
+                'api_key' => $request->api_key,
             ]);
 
             return back()->with([

@@ -9,7 +9,24 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row begin">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+                        <h4 class="mb-sm-0 font-size-18">Create Integration</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                                <li class="breadcrumb-item active">Create Integration</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+            <!-- start page title -->
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
@@ -23,9 +40,9 @@
                 <div class="row mt-1"></div>
             </div>
             <div class="row cut">
-                <div class="col-lg-2">
-                </div>
-                <div class="col-lg-8">
+                <!-- <div class="col-lg-2">
+                </div> -->
+                <div class="col-12">
                     <div class="Edit">
                         <div class="form">
                             <div class="row">
@@ -222,8 +239,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                </div>
+                <!-- <div class="col-lg-2">
+                </div> -->
             </div>
         </div>
     </div>
@@ -292,6 +309,7 @@
     </div>
 </div>
 <!-- end modal -->
+
 <!-- Twillio modal -->
 <div class="modal fade" id="Twillio" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -399,6 +417,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <label>API BASE URL</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="9r3xk3.api.infobip.com" name="api_base_url" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
                                         <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
@@ -473,14 +499,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <label>Sender</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="number" placeholder="Your Nigeriabulksms sender" name="sender" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
                                         <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
@@ -522,10 +540,10 @@
                             <div class="form">
                             <input name="type" value="Multitexter" hidden>
                                 <div class="col-lg-12">
-                                    <label>Username</label>
+                                    <label>Email</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Your multitexter username" name="username" class="input" required>
+                                            <input type="email" placeholder="Your multitexter username" name="email" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -534,6 +552,14 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Your multitexter password" name="password" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>API KEY</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your multitexter api-key" name="api_key" class="input" required>
                                         </div>
                                     </div>
                                 </div>

@@ -9,128 +9,228 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row card begin mt-4">
-                <div class="col-lg-12 account-head">
-                <h4 class="font-500">New SMS Campaign</h4>
-                        <p>
-                            Send SMS to your new customer and those on your mailing list
-                        </p>
-                    <div class="row">
-                        <div class="col-md-10"></div>
-                        <div class="col-md-2">
-                        <nav aria-label="Page navigation example normal">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="{{route('user.sms.automation', Auth::user()->username)}}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+                        <h4 class="mb-sm-0 font-size-18">SMS Campaign</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                                <li class="breadcrumb-item active">SMS Campaign</li>
+                            </ol>
                         </div>
+
                     </div>
+                </div>
+            </div>
+            <!-- end page title -->
+            <!-- start page title -->
+            <div class="row card">
+                <div class="col-lg-12 account-head">
+                    <h4 class="font-500">New SMS Campaign</h4>
+                    <p>
+                        Send SMS to your new customer and those on your mailing list
+                    </p>
                 </div>
             </div>
             <!-- account container form -->
             <div class="row">
                 <div class="col-lg-6">
                     <div class="Edit">
-                        <div class="form">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <label>Senders Name</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Enter Senders Name" name="first_name" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>SMS Message Name</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <textarea name="" id="" cols="30" rows="5" placeholder="Enter the message you would like to send to the reciepient(s) details below " ></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3 mb-4 justify-content-between">
-                                    <div class="col-4">
-                                        <p class="font-500 fs-6">Recipients:</p>
-                                    </div>
-                                    <div class="col-7">
-                                        <select name="recipients" id="" class="bg-light w-100 py-2 rounded px-2 fs-6">
-                                            <option value="">Choose from mailing list</option>
-                                            <option value="">Option 1</option>
-                                            <option value="">Option 2</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <textarea name="" id="" cols="30" rows="5" placeholder="Add phone number manually E.g: +234 8000 111 333 " ></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>Opt Out Message </label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Enter opt out message eg text stop to 12344" name="email" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 mb-4">
-                                    <div class="row fine">
-                                        <div class="col-md-4">
-                                            Send SMS:
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="between">
-                                                <input type="radio" name="send" value="Immediately"/>
-                                                <label for="sms">Immediately</label>
+                        <form method="POST" action="{{ route('user.sms.sendmessage.campaign')}}">
+                            @csrf
+                            <div class="form">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>Campaign Name</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Enter Campaign Name" name="campaign_name" class="input">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="between">
-                                                <input type="radio" name="send" value="Schedule"/>
-                                                <label for="sms">Schedule to</label>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>Sender Name</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Enter Sender Name" name="sender_name" class="input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>SMS Message</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <textarea name="message" id="message" cols="30" rows="5" placeholder="Enter the message you would like to send to the reciepient(s) details below " maxlength="160"></textarea>
+                                                <div class="messageCounter"><span id="chars">160</span> characters</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3 mb-4 justify-content-between">
+                                        <div class="col-4">
+                                            <p class="font-500 fs-6">Recipients:</p>
+                                        </div>
+                                        <div class="col-8">
+                                            <select name="mailinglist_id" class="bg-light w-100 py-2 rounded px-2 fs-6">
+                                                <option value="">Choose from mailing list</option>
+                                                @if($mailinglists->isEmpty())
+                                                <option value="">No Mailing List</option>
+                                                @else
+                                                @foreach($mailinglists as $mailinglist)
+                                                <option value="{{$mailinglist->id}}">{{$mailinglist->mailinglist_name}}</option>
+                                                @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <textarea name="contacts" cols="30" rows="5" placeholder="Add phone number manually E.g: +234 8000 111 333 "></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label>Opt Out Message </label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Enter opt out message eg text stop to 12344" name="optout_message" class="input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-4">
+                                        <div class="row">
+                                            <div class="col-md-4 col-12">
+                                                Send SMS:
+                                            </div>
+                                            <div class="col-md-4 col-6">
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timimg" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
+                                            </div>
+                                            <div class="col-md-4 col-6">
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timimg" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule to</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12" id="schedule" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-4 mt-4"></div>
+                                            <div class="col-4 mt-4">
+                                                <input type="date" name="schedule_date" />
+                                            </div>
+                                            <div class="col-4 mt-4">
+                                                <input type="Time" name="schedule_time" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6"></div>
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="boding">
+                                                <button type="button" data-bs-toggle="modal" data-bs-target="#chooseIntegrationGateway">
+                                                    Proceed
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- email chooseGateway modal -->
+                                <div class="modal fade" id="chooseIntegrationGateway" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header border-bottom-0">
+                                                <h5 class="modal-title" id="staticBackdropLabel">
+                                                    Provide Us Your Option For Integration
+                                                </h5>
+                                                <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+                                            </div>
+                                            <div class="modal-body">
                                                 <div class="row">
-                                                    <div class="col-sm-6 mt-4">
-                                                        <input type="date" />
-                                                    </div>
-                                                    <div class="col-sm-6  mt-4">
-                                                        <input type="Time" />
+                                                    <div class="Edit">
+                                                        <div class="form">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="row">
+                                                                        @if($integrations->isEmpty())
+                                                                        <div class="col-md-6">
+                                                                            <div class="circle">
+                                                                                <img src="{{URL::asset('dash/assets/image/image 789.png')}}" draggable="false" alt="">
+                                                                                Zapier
+                                                                            </div>
+                                                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#smsSuccess">
+                                                                                <input type="radio" name="Zapier" value="Zapier">
+                                                                            </div>
+                                                                        </div>
+                                                                        @else
+                                                                        @foreach($integrations as $integration)
+                                                                        <div class="col-md-6">
+                                                                            <div class="circle" style="padding: 20px 20px 20px 20px;">
+                                                                                {{$integration->type}}
+                                                                            </div>
+                                                                            <div class="zazu">
+                                                                                <input type="radio" name="integration" value="{{$integration->type}}" style="margin-top: -70px !important;">
+                                                                            </div>
+                                                                        </div>
+                                                                        @endforeach
+                                                                        @endif
+                                                                        <div class="row">
+                                                                            <div class="col-6 text-center">
+                                                                                <a data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                    Cancel
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="col-6 text-center">
+                                                                                <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                                                                    Send SMS
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-9"></div>
-                                <div class="col-lg-3">
-                                    <div class="row">
-                                        <div class="boding">
-                                            <button data-bs-toggle="modal" data-bs-target="#OpenReview" type="submit">
-                                                Send SMS
-                                            </button>
+                                <!-- end modal -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <botton class="open" onclick="myFunction()">
+                        Open Preview
+                    </botton>
+                    <div class="row" id="preview" style="display: none;">
+                        <div class="Edit">
+                            <div class="form">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="master">
+                                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668162728/EProd%20Images/Frame_46722_xglo6p.png" draggable="false" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <div class="insert">
+                                                        <textarea id="showMessage" cols="30" rows="10" placeholder="Enter Your Message" disabled></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <p data-bs-toggle="modal" data-bs-target="#OpenReview" class="open">
-                        Open Preview
-                    </p>
                 </div>
             </div>
             <!-- end page title -->
@@ -152,103 +252,9 @@
         </div>
     </footer>
 </div>
-
 <!-- END layout-wrapper -->
-<!-- email confirm modal -->
-<div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="staticBackdropLabel">
-                    Provide Us Your Option For Integration
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="Edit">
-                        <div class="form">
-                            <div class="row">
-                                <!-- <p class="tell mb-4">
-                                    <b>
-                                        Essentials - Your integration starter kit
-                                    </b>
-                                </p> -->
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="circle">
-                                                <img src="{{URL::asset('dash/assets/image/image 789.png')}}" draggable="false" alt="">
-                                                Zapier
-                                            </div>
-                                            <div class="zazu"  data-bs-toggle="modal" data-bs-target="#smsSuccess">
-                                                <input type="radio" name="Zapier" value="Zapier">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="circle">
-                                                <img src="{{URL::asset('dash/assets/image/image 793.png')}}" draggable="false" alt="">
-                                                Getresponse
-                                            </div>
-                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#smsSuccess">
-                                                <input type="radio" name="Zapier" value="Getresponse">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end modal -->
 
-<!-- OpenReview modal -->
-<div class="modal fade" id="OpenReview" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header border-bottom-0">
-                <p class="modal-title" id="staticBackdropLabel">
-                    ClosePreview >
-                </p>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-           
-            <div class="modal-body">
-                <div class="row">
-                    <div class="Edit">
-                        <div class="form">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="master">
-                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668162728/EProd%20Images/Frame_46722_xglo6p.png" draggable="false" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <div class="insert">
-                                                    <textarea name="" id="" cols="30" rows="10" placeholder="Enter Your Message" ></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end modal -->
+
 <!-- smsModal -->
 <div class="modal fade" id="smsSuccess" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
