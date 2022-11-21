@@ -372,7 +372,7 @@ class AuthController extends Controller
 
         Auth::logout();
 
-        // return redirect('/');
-        return Redirect::to('http://localhost:8000');
+        return redirect('/');
+        // return Redirect::to('http://localhost:8000');
     }
 }

@@ -17,6 +17,13 @@ class SmsAutomation extends Model
     protected $fillable = [
         'user_id',
         'mailinglist_id',
+        'integration_id',
+        'sms_sent',
+        'delivered',
+        'not_delivered',
+        'opens',
+        'unsubscribed',
+        'campaign_name',
         'senders_name',
         'message',
         'contacts',
@@ -24,7 +31,6 @@ class SmsAutomation extends Model
         'message_timimg',
         'schedule_date',
         'schedule_time',
-        'integration_id',
         'status'
     ];
 }

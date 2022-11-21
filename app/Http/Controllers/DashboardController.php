@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Integration;
 use App\Models\Mailinglist;
+use App\Models\SmsAutomation;
 use App\Models\Subscriber;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -241,8 +242,11 @@ class DashboardController extends Controller
 
     public function sms_automation($username)
     {
+        $smsAutomations = SmsAutomation::latest()->where('user_id', Auth::user()->id)->get();
+
         return view('dashboard.smsAutomation', [
-            'username' => $username
+            'username' => $username,
+            'smsAutomations' => $smsAutomations
         ]);
     }
 

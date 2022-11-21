@@ -38,16 +38,16 @@
                         <div class="col-lg-6">
                             <h4>Sent SMS</h4>
                         </div>
-                        <div class="col-lg-6 search-item">
+                        <!-- <div class="col-lg-6 search-item">
                             <div class="bg-light search-store border-in flex">
                                 <input class="bg-light" type="search" placeholder="search by name" name="store" id="" />
                                 <button><i class="bi bi-search"></i></button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="table-body mt-5 table-responsive">
-                        <table class="table text-center">
-                            <thead class="fw-bold bg-light rounded-pill">
+                        <table id="datatable-buttons" class=" table table-bordered dt-responsive nowrap w-100">
+                            <thead class="fw-bold bg-light rounded-pill ">
                                 <tr>
                                     <th scope="col">S/N</th>
                                     <th scope="col">Campaign Name</th>
@@ -55,42 +55,33 @@
                                     <th scope="col">SMS Sent</th>
                                     <th scope="col">Delivered</th>
                                     <th scope="col">Not Delivered</th>
-                                    <th scope="col">Opens</th>
+                                    <!-- <th scope="col">Opens</th> -->
                                     <th scope="col">Unsubscribed</th>
                                 </tr>
                             </thead>
+                            @if($smsAutomations->isEmpty())
+                                <tbody>
+                                    <tr>
+                                        <td class="align-enter text-dark font-15" colspan="8">No sms campaign added.</td>
+                                    </tr>
+                                </tbody>
+                            @else
+                            @foreach($smsAutomations as $key => $smsAutomation)
                             <tbody>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Chukka SMS</td>
-                                    <td>30-09-2022</td>
-                                    <td>100</td>
-                                    <td>70</td>
-                                    <td>30</td>
-                                    <td>66</td>
-                                    <td>10</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Chukka Digital</td>
-                                    <td>31-09-2022</td>
-                                    <td>32</td>
-                                    <td>30</td>
-                                    <td>2</td>
-                                    <td>23</td>
-                                    <td>2</td>
+                                    <th scope="row">{{$loop->iteration}}</th>
+                                    <td>{{$smsAutomation->campaign_name}}</td>
+                                    <td>{{$smsAutomation->created_at->toDayDateTimeString()}}</td>
+                                    <td>{{$smsAutomation->sms_sent}}</td>
+                                    <td>{{$smsAutomation->delivered}}</td>
+                                    <td>{{$smsAutomation->not_delivered}}</td>
+                                    <!-- <td>{{$smsAutomation->opens}}</td> -->
+                                    <td>{{$smsAutomation->unsubscribed}}</td>
                                 </tr>
                             </tbody>
+                            @endforeach
+                            @endif
                         </table>
-                    </div>
-                    <div class="row align-items-center table-footer mt-4 bg-light rounded-pill">
-                        <div class="col-6 mt-2 fw-bold ps-4">
-                            <p>2 campaign in total</p>
-                        </div>
-                        <div class="col-6 text-end">
-                            <button class="btn mx-4 fw-bold fs-4 btn-outline-dark py-0 px-2"></button>
-                            <button class="btn fw-bold fs-4 btn-outline-dark py-0 px-2"></button>
-                        </div>
                     </div>
                 </div>
             </div>

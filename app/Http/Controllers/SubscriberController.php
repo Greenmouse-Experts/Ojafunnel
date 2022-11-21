@@ -6,6 +6,7 @@ use App\Models\Mailinglist;
 use App\Models\Subscriber;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
@@ -20,6 +21,14 @@ class SubscriberController extends Controller
     public function __construct()
     {
         $this->middleware(['auth','verified']);
+    }
+
+    public function subscriber_download_format()
+    {
+        // $url = __DIR__.'/format.csv';
+        $filepath = public_path('files/format.csv');
+
+        return response()->download($filepath); 
     }
 
     public function subscriber_mailing_create(Request $request)

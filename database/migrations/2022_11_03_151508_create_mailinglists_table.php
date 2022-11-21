@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('no_of_contacts')->default(0);
             $table->string('email')->default(0);
             $table->string('phone_number')->default(0);
-            $table->enum('status', ['Active', 'Disable'])->default('Active')->index();
+            $table->enum('status', ['Active', 'Inactive'])->default('Active')->index();
             $table->timestamps();
         });
     }

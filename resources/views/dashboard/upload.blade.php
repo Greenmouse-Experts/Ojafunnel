@@ -79,11 +79,11 @@
                                         </div>
                                         <div class="logo-file">
                                             <input type="file" name="contact_upload" class="mt-4 w-100" />
-                                            <span class="mt-3 text-danger">This tool allows you to import (merge) contact data from a csv, xsls, xsl file format</span>
+                                            <span class="mt-3 text-danger text-center">This tool allows you to import (merge) contact data from a csv, xsls, xsl file format.</span>
                                         </div>
                                     </div>
                                     <p class="mt-5 text-center">
-                                        <b><a href="">Click here to view our format</a></b>
+                                        <b><a href="{{route('user.subscriber.download.format')}}">Click here to view our format</a></b>
                                     </p>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                                             Email Verification : 
                                         </li>
                                         <li>
-                                            <input type="checkbox" checked readonly>
+                                            <input style="margin: 1px 8px 1px 25px;" type="checkbox" checked readonly>
                                         </li>
                                         <li>
                                             Verify uploaded addresses

@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Integration;
 use App\Models\Mailinglist;
+use App\Models\SmsAutomation;
 use App\Models\Subscriber;
-use App\Models\TwilioIntegration;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Twilio\Rest\Client as twilio;
-use Tzsk\Sms\Facades\Sms;
 use GuzzleHttp\Client;
 
 class SmsAutomationController extends Controller
@@ -35,7 +34,7 @@ class SmsAutomationController extends Controller
                 'message' => ['required', 'string', 'max:255'],
                 'contacts' => ['required', 'string', 'max:255'],
                 'optout_message' => ['required', 'string', 'max:255'],
-                'message_timimg' => ['required', 'string', 'max:255'],
+                // 'message_timimg' => ['required', 'string', 'max:255'],
                 'integration' => ['required', 'string', 'max:255'],
             ]);
 
@@ -50,17 +49,35 @@ class SmsAutomationController extends Controller
                 $message = $this->sendMessageTwilio($request);
 
                 dd($message);
-            }
-
-            if ($request->integration == "Multitexter") {
+            } elseif ($request->integration == "Multitexter") {
                 try {
-                    $contact = array($request->contacts);
+                    $file = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $request->contacts));
 
-                    $data = implode(',', $contact);
+                    foreach ($file as $key => $escapedItem) {
+                        $contacts = preg_replace('/\s+/', '', $escapedItem);
+                    }
+
+                    $data = implode(',', $contacts);
 
                     $message = $this->sendMessageMultitexter($request, $data);
 
-                    return back()->with([
+                    SmsAutomation::create([
+                        'user_id' => Auth::user()->id,
+                        'mailinglist_id' => $request->mailinglist_id,
+                        'integration' => $request->integration,
+                        'campaign_name' => ucfirst($request->campaign_name),
+                        'sms_sent' => count($contacts),
+                        'delivered' => count($contacts),
+                        'senders_name' => ucfirst($request->sender_name),
+                        'message' => $request->message,
+                        'contacts' => $request->contacts,
+                        'optout_message' => $request->optout_message,
+                        'message_timimg' => $request->message_timimg,
+                        'schedule_date' => $request->schedule_date,
+                        'schedule_time' => $request->schedule_time,
+                    ]);
+
+                    return redirect()->route('user.sms.automation', Auth::user()->username)->with([
                         'type' => 'success',
                         'message' => $message->msg
                     ]);
@@ -72,19 +89,37 @@ class SmsAutomationController extends Controller
                     'type' => 'danger',
                     'message' => $data
                 ]);
-            }
-
-            if ($request->integration == "NigeriaBulkSms") {
+            } elseif ($request->integration == "NigeriaBulkSms") {
                 try {
-                    $contact = array($request->contacts);
+                    $file = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $request->contacts));
 
-                    $data = implode(',', $contact);
+                    foreach ($file as $key => $escapedItem) {
+                        $contacts = preg_replace('/\s+/', '', $escapedItem);
+                    }
+                    
+                    $data = implode(',', $contacts);
 
                     $message = $this->sendMessageNigeriaBulkSms($request, $data);
 
                     if(str_contains($message, 'Message sent'))
                     {
-                        return back()->with([
+                        SmsAutomation::create([
+                            'user_id' => Auth::user()->id,
+                            'mailinglist_id' => $request->mailinglist_id,
+                            'integration' => $request->integration,
+                            'campaign_name' => ucfirst($request->campaign_name),
+                            'sms_sent' => count($contacts),
+                            'delivered' => count($contacts),
+                            'senders_name' => ucfirst($request->sender_name),
+                            'message' => $request->message,
+                            'contacts' => $request->contacts,
+                            'optout_message' => $request->optout_message,
+                            'message_timimg' => $request->message_timimg,
+                            'schedule_date' => $request->schedule_date,
+                            'schedule_time' => $request->schedule_time,
+                        ]);
+
+                        return redirect()->route('user.sms.automation', Auth::user()->username)->with([
                             'type' => 'success',
                             'message' => $message
                         ]);
@@ -101,6 +136,11 @@ class SmsAutomationController extends Controller
                 return back()->with([
                     'type' => 'danger',
                     'message' => $data
+                ]);
+            } else {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Integration service ongoing.'
                 ]);
             }
         } elseif ($request->contacts == null and $request->mailinglist_id !== null) {
@@ -127,20 +167,54 @@ class SmsAutomationController extends Controller
 
                 $message = $this->sendMessageMultitexter($request, $data);
 
-                return back()->with([
+                $maillist = Mailinglist::findorfail($request->mailinglist_id);
+
+                SmsAutomation::create([
+                    'user_id' => Auth::user()->id,
+                    'mailinglist_id' => $request->mailinglist_id,
+                    'integration' => $request->integration,
+                    'campaign_name' => ucfirst($request->campaign_name),
+                    'sms_sent' => $maillist->no_of_contacts,
+                    'delivered' => $maillist->no_of_contacts,
+                    'senders_name' => ucfirst($request->sender_name),
+                    'message' => $request->message,
+                    'contacts' => $request->contacts,
+                    'optout_message' => $request->optout_message,
+                    'message_timimg' => $request->message_timimg,
+                    'schedule_date' => $request->schedule_date,
+                    'schedule_time' => $request->schedule_time,
+                ]);
+
+                return redirect()->route('user.sms.automation', Auth::user()->username)->with([
                     'type' => 'success',
                     'message' => $message->msg
                 ]);
-            }
-
-            if ($request->integration == "NigeriaBulkSms") {
+            } elseif ($request->integration == "NigeriaBulkSms") {
                 $data = "No Contact";
 
                 $message = $this->sendMessageNigeriaBulkSms($request, $data);
 
+                $maillist = Mailinglist::findorfail($request->mailinglist_id);
+
                 if(str_contains($message, 'Message sent'))
                 {
-                    return back()->with([
+                    SmsAutomation::create([
+                        'user_id' => Auth::user()->id,
+                        'mailinglist_id' => $request->mailinglist_id,
+                        'integration' => $request->integration,
+                        'campaign_name' => ucfirst($request->campaign_name),
+                        'sms_sent' => $maillist->no_of_contacts,
+                        'delivered' => $maillist->no_of_contacts,
+                        'senders_name' => ucfirst($request->sender_name),
+                        'message' => $request->message,
+                        'contacts' => $request->contacts,
+                        'optout_message' => $request->optout_message,
+                        'message_timimg' => $request->message_timimg,
+                        'schedule_date' => $request->schedule_date,
+                        'schedule_time' => $request->schedule_time,
+                    ]);
+
+                    return redirect()->route('user.sms.automation', Auth::user()->username)->with([
                         'type' => 'success',
                         'message' => $message
                     ]);
@@ -150,23 +224,18 @@ class SmsAutomationController extends Controller
                         'message' => $message
                     ]);
                 }
+            } else {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Integration service ongoing.'
+                ]);
             }
         } else {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Please check your field and try again!'
+                'message' => 'Please check your fields and try again!'
             ]);
         }
-
-        // Mailinglist::create([
-        //     'user_id' => Auth::user()->id,
-        //     'mailinglist_name' => ucfirst($request->name)
-        // ]);
-
-        // return back()->with([
-        //     'type' => 'success',
-        //     'message' => 'Maillist Added Successfully!'
-        // ]); 
     }
 
     public function sendMessageTwilio(Request $request)
