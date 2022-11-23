@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c96235aea330b88603f21f7799c26b2d",
+    "content-hash": "dce0e654ea3344fd69e1c321d70e3a97",
     "packages": [
         {
             "name": "brick/math",
@@ -945,6 +945,54 @@
                 }
             ],
             "time": "2022-10-26T14:07:24+00:00"
+        },
+        {
+            "name": "jd-dotlogics/laravel-grapesjs",
+            "version": "3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jd-dotlogics/laravel-grapesjs.git",
+                "reference": "51b1d15885fc44cba5ed3587297b0ace3e8ab58e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jd-dotlogics/laravel-grapesjs/zipball/51b1d15885fc44cba5ed3587297b0ace3e8ab58e",
+                "reference": "51b1d15885fc44cba5ed3587297b0ace3e8ab58e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=5.6.0",
+                "php": "^7.4|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Dotlogics\\Grapesjs\\GrapesjsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Dotlogics\\Grapesjs\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dotlogics",
+                    "email": "hello@dotlogics.com"
+                }
+            ],
+            "description": "A package to easily integrate GrapesJS into your laravel proejct.",
+            "support": {
+                "issues": "https://github.com/jd-dotlogics/laravel-grapesjs/issues",
+                "source": "https://github.com/jd-dotlogics/laravel-grapesjs/tree/3.4.0"
+            },
+            "time": "2022-10-25T10:58:12+00:00"
         },
         {
             "name": "laravel/framework",

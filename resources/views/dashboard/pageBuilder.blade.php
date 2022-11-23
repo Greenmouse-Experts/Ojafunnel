@@ -31,13 +31,13 @@
                     <div class="d-flex account-nav">
                         <ul class="list-unstyled d-flex justify-content-between w-100">
                             <li class="active">All</li>
-                            <li>Landing Page</li>
+                            <!-- <li>Landing Page</li>
                             <li>Opt-in-page</li>
-                            <!-- <li>Coming Soon Page</li>
-                    <li>Sales Page</li>
-                    <li>Pre Sales Page</li>
-                    <li>Thank You Page</li>
-                    <li>Upsell</li> -->
+                            <li>Coming Soon Page</li>
+                            <li>Sales Page</li>
+                            <li>Pre Sales Page</li>
+                            <li>Thank You Page</li>
+                            <li>Upsell</li> -->
                         </ul>
                     </div>
                     <div class="acc-border temp-border"></div>
@@ -49,42 +49,28 @@
                 <div class="col-md-3">
                     <div class="pageXX pageAdd">
                         <div class="small-circle">
-                            <h5 class="pt-2">
-                                <a href="#" class="text-white text-decoration-none">+</a>
-                            </h5>
+                            <a href="{{route('user.page.builder.view.editor', [Auth::user()->username, '1'])}}" class="text-white text-decoration-none">
+                                <h5 class="pt-2">
+                                    +
+                                </h5>
+                            </a>
                         </div>
                         <div class="text-center mt-3 text-purp">
                             <h5>Blank Canvas</h5>
                         </div>
                     </div>
                 </div>
+                @foreach($pages as $page)
                 <div class="col-md-3">
                     <div class="pageX">
                         <div class="page-top"></div>
                         <div class="p-3">
                             <h6>Sales Page</h6>
-                            <p>Education</p>
+                            <p>{{$page->title}}</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="pageX">
-                        <div class="page-top"></div>
-                        <div class="p-3">
-                            <h6>Sales Page</h6>
-                            <p>Education</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="pageX">
-                        <div class="page-top"></div>
-                        <div class="p-3">
-                            <h6>Sales Page</h6>
-                            <p>Education</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <!-- end page title -->
         </div>

@@ -19,7 +19,7 @@ return [
 
     'domain_url' => preg_replace('#^https?://#', '', rtrim(env('APP_URL'),'/')),
 
-    'man' => '',
+    'zerobounce_api_key' => 'f19198c3787742cf823b4a3156d4b714',
 
     'log' => 'errorlog',
 

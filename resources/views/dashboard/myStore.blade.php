@@ -117,7 +117,8 @@
                     <a href="{{route('user.check.store', Auth::user()->username)}}" class="text-decoration-none">
                         <button class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
                             Next
-                        </button></a>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>

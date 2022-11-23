@@ -9,6 +9,9 @@ Route::prefix('user')->group(function () {
     Route::post('/profile/update', [App\Http\Controllers\ProfileController::class, 'profile_update'])->name('user.profile.update');
     Route::post('/password/update', [App\Http\Controllers\ProfileController::class, 'password_update'])->name('user.password.update');
     
+    // Email Campaign
+    Route::post('/email/campaign/checker', [App\Http\Controllers\EmailCampaignController::class, 'email_campaign_checker'])->name('user.email.campaign.checker');
+
     // SMS Automation
     Route::post('/sms/sendmessage/campaign', [App\Http\Controllers\SmsAutomationController::class, 'sms_sendmessage_campaign'])->name('user.sms.sendmessage.campaign');
 
@@ -30,4 +33,7 @@ Route::prefix('user')->group(function () {
     Route::post('/subscriber/mailing/contact/update/{id}', [App\Http\Controllers\SubscriberController::class, 'subscriber_mailing_contact_update'])->name('user.subscriber.mailing.contact.update');
     Route::post('/subscriber/mailing/contact/delete/{id}', [App\Http\Controllers\SubscriberController::class, 'subscriber_mailing_contact_delete'])->name('user.subscriber.mailing.contact.delete');
     Route::get('/subscriber/mailing/format/download', [App\Http\Controllers\SubscriberController::class, 'subscriber_download_format'])->name('user.subscriber.download.format');
+
+    // Page Builder
+    
 });

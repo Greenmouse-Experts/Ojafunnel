@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Integration;
 use App\Models\Mailinglist;
+use App\Models\Page;
 use App\Models\SmsAutomation;
 use App\Models\Subscriber;
 use App\Models\User;
@@ -235,8 +236,11 @@ class DashboardController extends Controller
     
     public function page_builder($username)
     {
+        $pages = Page::latest()->get();
+
         return view('dashboard.pageBuilder', [
-            'username' => $username
+            'username' => $username,
+            'pages' => $pages
         ]);
     }
 

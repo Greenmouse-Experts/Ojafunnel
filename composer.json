@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "grosv/laravel-passwordless-login": "^1.8",
         "guzzlehttp/guzzle": "^7.5",
+        "jd-dotlogics/laravel-grapesjs": "^3.4",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
