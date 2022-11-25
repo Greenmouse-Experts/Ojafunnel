@@ -213,7 +213,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="master">
-                                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668162728/EProd%20Images/Frame_46722_xglo6p.png" draggable="false" alt="">
+                                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1669370587/OjaFunnel-Images/Frame_46722_vzkyft.png" draggable="false" alt="">
                                                 </div>
                                             </div>
                                         </div>
