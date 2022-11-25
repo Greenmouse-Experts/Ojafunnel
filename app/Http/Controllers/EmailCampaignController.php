@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -17,24 +18,35 @@ class EmailCampaignController extends Controller
 
         $api_key = config('app.zerobounce_api_key');
 
-        $client = new Client(); //GuzzleHttp\Client
-        $url = "https://api.zerobounce.net/v2/validate?api_key=$api_key&email=$request->email&ip_address=";
+        // try {
+            $client = new Client(); //GuzzleHttp\Client
+            $url = "https://api.zerobounce.net/v2/validate?api_key=$api_key&email=$request->email&ip_address=";
 
-        $response = $client->request('GET', $url);
+            $response = $client->request('GET', $url);
 
-        $responseBody = json_decode($response->getBody());
+            $responseBody = json_decode($response->getBody());
 
-        if($responseBody->status == 'valid')
-        {
-            return back()->with([
-                'type' => 'success',
-                'message' => $responseBody->status
-            ]);
-        }
-        
-        return back()->with([
-            'type' => 'danger',
-            'message' => $responseBody->status
-        ]);
+            // dd($responseBody);
+            if($responseBody->error)
+            {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => $responseBody->error
+                ]);1
+            }
+            if($responseBody->status == 'valid')
+            {
+                return back()->with([
+                    'type' => 'success',
+                    'message' => $responseBody->status
+                ]);
+            }
+            
+        // } catch (Exception $e) {
+        //     return back()->with([
+        //         'type' => 'danger',
+        //         'message' => $e
+        //     ]);
+        // }
     }
 }
