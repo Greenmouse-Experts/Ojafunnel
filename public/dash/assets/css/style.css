@@ -1775,7 +1775,7 @@ textarea{
   border-radius: 0px 0px 5px 5px ;
 }
 
-button:focus:before{
+.form-btn:focus:before{
   font-size:10px;
   font-family: "Font Awesome 5 Free";
   font-style: normal;

@@ -35,5 +35,5 @@ Route::prefix('user')->group(function () {
     Route::get('/subscriber/mailing/format/download', [App\Http\Controllers\SubscriberController::class, 'subscriber_download_format'])->name('user.subscriber.download.format');
 
     // Page Builder
-    
+    Route::get('/page/builder/create', [App\Http\Controllers\PageController::class, 'page_builder_create'])->name('user.page.builder.create');
 });

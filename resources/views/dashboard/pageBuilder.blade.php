@@ -49,7 +49,7 @@
                 <div class="col-md-3">
                     <div class="pageXX pageAdd">
                         <div class="small-circle">
-                            <a href="{{route('user.page.builder.view.editor', [Auth::user()->username, '1'])}}" class="text-white text-decoration-none">
+                            <a href="{{route('user.page.builder.create')}}" class="text-white text-decoration-none">
                                 <h5 class="pt-2">
                                     +
                                 </h5>
@@ -62,13 +62,19 @@
                 </div>
                 @foreach($pages as $page)
                 <div class="col-md-3">
-                    <div class="pageX">
-                        <div class="page-top"></div>
-                        <div class="p-3">
-                            <h6>Sales Page</h6>
-                            <p>{{$page->title}}</p>
+                    <a href="{{route('user.page.builder.view.editor', [Auth::user()->username, $page->id])}}" class="text-white text-decoration-none">
+                        <div class="pageX">
+                            <div class="page-top"></div>
+                            <div class="p-3 text-dark">
+                                <h6>{{$page->name}}</h6>
+                                @if($page->title)
+                                <p>{{$page->title}}</p>
+                                @else
+                                <p>Title</p>
+                                @endif
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 @endforeach
             </div>

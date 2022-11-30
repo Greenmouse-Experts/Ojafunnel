@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id');
+            $table->string('name')->nullable();
             $table->string('title')->nullable();
             $table->text('body')->nullable();
             $table->unsignedTinyInteger('listable')->default(1);

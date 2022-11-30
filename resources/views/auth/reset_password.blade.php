@@ -48,7 +48,7 @@
                                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" draggable="false" alt="">
                                     </a>
                                     <h4>
-                                        Confirm Code
+                                        Reset Password
                                     </h4>
                                     <p>
                                         To complete the reset password process, Please enter the code sent to the email address
@@ -75,16 +75,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    <label>Confirm Password</label>
+                                                    <label>Confirm New Password</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
-                                                            <input type="password" placeholder="Enter your confirm password" name="password_confirmation" class="input" required>
+                                                            <input type="password" placeholder="Enter your confirm new password" name="password_confirmation" class="input" required>
                                                         </div>
                                                     </div>
                                                 </div>
                                             <div class="col-md-12 mb-2">
                                                 <button type="submit">
-                                                        Confirm Code
+                                                    Reset Password
                                                 </button>
                                             </div>
                                         </div>

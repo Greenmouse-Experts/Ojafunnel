@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-lg-10"></div>
                                 <div class="col-lg-3">
-                                    <button class="btn" style="color: #714091; border: 1px solid #714091" type="submit">
+                                    <button class="form-btn btn" style="color: #714091; border: 1px solid #714091" type="submit">
                                         Change Password
                                     </button>
                                 </div>

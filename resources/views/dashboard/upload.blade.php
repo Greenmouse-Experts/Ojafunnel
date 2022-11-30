@@ -104,7 +104,7 @@
                             </div>
                             <!-- buttons -->
                             <div class="col-12 mt-5">
-                                <button type="submit" class="btn px-4" style="width:100%; color: #ffffff; background-color: #714091">
+                                <button type="submit" class="form-btn btn px-4" style="width:100%; color: #ffffff; background-color: #714091">
                                     Proceed
                                 </button>
                             </div>

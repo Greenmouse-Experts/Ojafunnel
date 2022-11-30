@@ -282,7 +282,7 @@
                                                                                             </button>
                                                                                         </div>
                                                                                         <div class="col-6 text-end">
-                                                                                            <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                                                                            <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
                                                                                                 Update
                                                                                             </button>
                                                                                         </div>
@@ -317,7 +317,7 @@
                                                                                             </button>
                                                                                         </div>
                                                                                         <div class="col-6 text-end">
-                                                                                            <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                                                                            <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
                                                                                                 Update
                                                                                             </button>
                                                                                         </div>
@@ -352,7 +352,7 @@
                                                                                             </button>
                                                                                         </div>
                                                                                         <div class="col-6 text-end">
-                                                                                            <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                                                                            <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
                                                                                                 Update
                                                                                             </button>
                                                                                         </div>
@@ -395,7 +395,7 @@
                                                                                             </button>
                                                                                         </div>
                                                                                         <div class="col-6 text-end">
-                                                                                            <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                                                                            <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
                                                                                                 Update
                                                                                             </button>
                                                                                         </div>
@@ -437,7 +437,7 @@
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <div class="boding">
-                                                                                            <button type="submit">
+                                                                                            <button type="submit" class="form-btn">
                                                                                                 I understand this consquences, Delete Mailing List
                                                                                             </button>
                                                                                         </div>

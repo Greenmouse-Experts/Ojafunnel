@@ -121,7 +121,7 @@
                         </div>
                         <div class="account-border"></div>
                         <div class="text-end">
-                            <button type="submit" class="btn" style="color: #ffffff; background-color: #714091">
+                            <button type="submit" class="form-btn btn" style="color: #ffffff; background-color: #714091">
                                 Save Changes
                             </button>
                         </div>
@@ -172,7 +172,7 @@
                                         </div>
                                     </div>
                                     <div class="text-end">
-                                        <button type="submit" class="btn" style="color: #ffffff; background-color: #714091">
+                                        <button type="submit" class="form-btn btn" style="color: #ffffff; background-color: #714091">
                                             Change Password
                                         </button>
                                     </div>

@@ -120,7 +120,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="boding">
-                                                    <button type="submit">
+                                                    <button type="submit" class="form-btn">
                                                         Proceed
                                                     </button>
                                                 </div>

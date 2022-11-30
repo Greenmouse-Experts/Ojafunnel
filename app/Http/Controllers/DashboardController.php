@@ -236,7 +236,7 @@ class DashboardController extends Controller
     
     public function page_builder($username)
     {
-        $pages = Page::latest()->get();
+        $pages = Page::latest()->where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.pageBuilder', [
             'username' => $username,

@@ -294,7 +294,7 @@
                                         </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
                                             Save
                                         </button>
                                     </div>
@@ -358,7 +358,7 @@
                                         </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
                                             Save
                                         </button>
                                     </div>
@@ -432,7 +432,7 @@
                                         </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
                                             Save
                                         </button>
                                     </div>
@@ -506,7 +506,7 @@
                                         </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
                                             Save
                                         </button>
                                     </div>
@@ -570,7 +570,7 @@
                                         </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
                                             Save
                                         </button>
                                     </div>

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // if(config('app.env') === 'local') {
-            $this->call(TestPageSeeder::class);
+        //     $this->call(TestPageSeeder::class);
         // }
     }
 }

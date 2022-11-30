@@ -148,7 +148,7 @@
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <div class="boding">
-                                                                                            <button type="submit">
+                                                                                            <button type="submit" class="form-btn">
                                                                                                 Update
                                                                                             </button>
                                                                                         </div>
@@ -189,7 +189,7 @@
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <div class="boding">
-                                                                                            <button type="submit">
+                                                                                            <button type="submit" class="form-btn">
                                                                                                 I understand this consquences, Delete Contact
                                                                                             </button>
                                                                                         </div>

@@ -12,6 +12,15 @@ class Page extends Model implements Editable
     use HasFactory;
     use EditableTrait;
 
+    protected $fillable = [
+        'user_id',
+        'name',
+        'title',
+        'body',
+        'listable',
+        'gjs_data'
+    ];
+
     public function scopeListable($query)
     {
         return $query->where('listable', 1);

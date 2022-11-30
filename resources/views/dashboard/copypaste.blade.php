@@ -102,7 +102,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="boding">
-                                                <button type="submit" data-bs-toggle="modal" data-bs-target="#emailConfirm">
+                                                <button type="submit" class="form-btn">
                                                     Proceed
                                                 </button>
                                             </div>
