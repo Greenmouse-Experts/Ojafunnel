@@ -6,6 +6,8 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use Dotlogics\Grapesjs\App\Traits\EditorTrait;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
@@ -34,5 +36,83 @@ class PageController extends Controller
     public function viewPage($username, Request $request, Page $page)
     {
         return view('dashboard.page', compact('page'));
+    }
+
+    public function page_builder_update($id, Request $request)
+    {   
+        //Validate Request
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255']
+        ]);
+
+        $idFinder = Crypt::decrypt($id);
+
+        //Page
+        $page = Page::find($idFinder);
+
+        //Validate User
+        if (request()->hasFile('thumbnail')) {
+            $this->validate($request, [
+                'thumbnail' => 'required|mimes:jpeg,png,jpg',
+            ]);
+            $filename = request()->thumbnail->getClientOriginalName();
+            if($page->thumbnail) {
+                Storage::delete(str_replace("storage", "public", $page->thumbnail));
+            }
+            request()->thumbnail->storeAs('pages', $filename, 'public');
+
+            $page->update([
+                'thumbnail' => '/storage/pages/'.$filename,
+                'name' => $request->name,
+                'title' => $request->title,
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Page Updated Successfully!'
+            ]);
+        }
+
+        $page->update([
+            'name' => $request->name,
+            'title' => $request->title,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Page Updated Successfully!'
+        ]);
+    }
+
+    public function page_builder_delete($id, Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'delete_field' => ['required', 'string', 'max:255']
+        ]);
+
+        if($request->delete_field == "DELETE")
+        {
+            $idFinder = Crypt::decrypt($id);
+
+            $page = Page::findorfail($idFinder);
+
+            if($page->thumbnail) {
+                Storage::delete(str_replace("storage", "public", $page->thumbnail));
+            }
+
+            $page->delete();
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Page Deleted Successfully!'
+            ]); 
+        } 
+
+        return back()->with([
+            'type' => 'danger',
+            'message' => "Field doesn't match, Try Again!"
+        ]); 
     }
 }

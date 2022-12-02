@@ -16,6 +16,7 @@ class Page extends Model implements Editable
         'user_id',
         'name',
         'title',
+        'thumbnail',
         'body',
         'listable',
         'gjs_data'
