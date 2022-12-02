@@ -58,15 +58,15 @@
 <section class="Increasing">
     <div class="container">
         <div class="row">
-            <div class="col-lg-2"></div>
-            <div class="col-lg-8">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
                 <div class="thread-text">
                     <h1>
                         Increasing the Effectiveness and Sales of your business
                     </h1>
                 </div>
             </div>
-            <div class="col-lg-2"></div>
+            <div class="col-lg-3"></div>
             <div class="col-lg-6">
                 <div class="thread-text">
                     <h4>
@@ -403,8 +403,8 @@
 <section class="Features">
     <div class="container">
         <div class="row">
-            <div class="col-lg-2 col-md-2"></div>
-            <div class="col-lg-8 col-md-8">
+            <div class="col-lg-3 col-md-3"></div>
+            <div class="col-lg-6 col-md-6">
                 <div class="btn-text">
                     <h1>
                         Enjoy All-In-One features to make your business run smoother
@@ -414,7 +414,7 @@
                     </p>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-2"></div>
+            <div class="col-lg-3 col-md-3"></div>
             <div class="col-lg-3 col-md-3">
                 <div class="alert"></div>
                 <div class="Amet">
@@ -674,8 +674,8 @@
             <div class="col-lg-12">
                 <div class="mount">
                     <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
                             <h1>
                                 Enhance your marketing by sending the right message at the right time
                             </h1>
