@@ -1,10 +1,11 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body{
+html,
+body {
     font-family: 'Poppins', sans-serif !important;
     scroll-behavior: smooth;
     overflow-x: hidden;
@@ -12,72 +13,89 @@ html, body{
     background-position: center center;
     background-repeat: no-repeat;
 }
-button a{
+
+button a {
     text-decoration: none;
     color: #fff;
 }
-button a:hover{
+
+button a:hover {
     text-decoration: underline;
     color: #fff;
 }
+
 /* ===== Scrollbar CSS ===== */
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
     width: 10px;
 }
+
 *::-webkit-scrollbar-thumb {
     background-color: #70418F;
     border-radius: 2px;
 }
+
 *::-moz-scrollbar-thumb {
     background-color: #70418F;
     border-radius: 2px;
 }
+
 /* Highlight Text */
-::-moz-selection { /* Code for Firefox */
+::-moz-selection {
+    /* Code for Firefox */
     color: #fff;
     background: #2690e6;
 }
+
 ::selection {
     color: #fff;
     background: #2690e6;
 }
+
 /*********Header Nav*********/
-header nav{
+header nav {
     background-color: #2B8DE6;
-    padding: 10px 10px 10px 10px  !important;
+    padding: 10px 10px 10px 10px !important;
     margin-top: -10px;
 }
-.navbar-onscroll{
+
+.navbar-onscroll {
     transition: 0.8s;
     padding: 10px !important;
     box-shadow: 0px 5px 20px #a1a1a11c, 0px 0px 20px #00000015;
 }
-header nav .navbar-brand img{
+
+header nav .navbar-brand img {
     width: 100px;
 }
-header nav .navbar-nav{
+
+header nav .navbar-nav {
     margin-top: 10px;
 }
-header nav .navbar-nav .nav-item{
+
+header nav .navbar-nav .nav-item {
     font-size: 15px;
     letter-spacing: 0.3px;
 }
-header nav .navbar-nav .nav-item .active{
+
+header nav .navbar-nav .nav-item .active {
     color: #fff !important;
     border-top: 1px solid #fff;
 }
-header nav .navbar-nav .nav-item .nav-link{
+
+header nav .navbar-nav .nav-item .nav-link {
     color: #FFFFFF;
     font-weight: 500;
     padding: 20px 20px;
 }
-header nav .navbar-nav .nav-item .nav-link:hover{
+
+header nav .navbar-nav .nav-item .nav-link:hover {
     color: #fff;
     border-top: 1px solid #fff;
 }
+
 /**********Desktop Dropdown***********/
-header nav .dropdown-content{
+header nav .dropdown-content {
     display: none;
     position: absolute;
     left: -310px;
@@ -89,63 +107,76 @@ header nav .dropdown-content{
     border-radius: 10px 10px 20px 20px;
     box-shadow: 0px 10px 20px #0000001c;
 }
-header nav .dropdown-content h4{
+
+header nav .dropdown-content h4 {
     font-size: 16px;
     margin-top: 0;
     font-weight: 600;
     margin-bottom: 0;
 }
-header nav .dropdown-content h4:hover{
+
+header nav .dropdown-content h4:hover {
     font-size: 16px;
     margin-top: 0;
     margin-bottom: 0;
 }
-header nav .dropdown-content .btn-area h4 a{
+
+header nav .dropdown-content .btn-area h4 a {
     text-decoration: none;
     color: #000;
     padding: 0 0 0 10px;
     font-size: 16px !important;
     font-weight: 600 !important;
-    
+
 }
-header nav .dropdown-content .upload{
+
+header nav .dropdown-content .upload {
     padding: 20px 0 20px 10px;
 }
-header nav .dropdown-content .upload img{
+
+header nav .dropdown-content .upload img {
     width: 8%;
     margin-top: -8px !important;
 }
-header nav .dropdown-content .upload span{
+
+header nav .dropdown-content .upload span {
     font-size: 16px;
     font-weight: 600;
     color: #787878;
 }
-header nav .dropdown-content .btn-area{
+
+header nav .dropdown-content .btn-area {
     padding: 9px 0px 9px 0px;
     width: 80%;
     border-radius: 10px;
 }
-header nav .dropdown-content p{
+
+header nav .dropdown-content p {
     font-size: 14px;
     padding: 0px 0px 0px 10px;
 }
-header nav .dropdown-content .btn-area:hover{
+
+header nav .dropdown-content .btn-area:hover {
     background-color: #F2E0FE;
     color: #000;
     transition: 0.5s;
     padding: 9px 0px 9px 0px;
 }
-.btn-area .bi:hover{
+
+.btn-area .bi:hover {
     color: #714091;
 }
-.btn-area .bi{
+
+.btn-area .bi {
     color: #fff;
 }
-header nav .dropdown-content p{
+
+header nav .dropdown-content p {
     font-size: 14px !important;
     margin-bottom: 10px;
 }
-header nav .dropdown-content .contact-megamenu{
+
+header nav .dropdown-content .contact-megamenu {
     color: #2a531d;
     text-decoration: none;
     padding: 7px 13px;
@@ -154,86 +185,104 @@ header nav .dropdown-content .contact-megamenu{
     font-size: 15px;
     font-weight: 600;
 }
-header nav .dropdown-content .contact-megamenu:hover{
+
+header nav .dropdown-content .contact-megamenu:hover {
     background-color: #F2E0FE;
     color: #ffffff;
     transition: 0.5s;
 }
-header nav .dropdown-content .col-lg-3{
+
+header nav .dropdown-content .col-lg-3 {
     margin-top: 10px;
 }
 
-header nav .dropdown-content .col-lg-3 .routers:hover a{
+header nav .dropdown-content .col-lg-3 .routers:hover a {
     color: #ffffff !important;
 }
-header nav .dropdown-content .col-lg-3 a:hover{
+
+header nav .dropdown-content .col-lg-3 a:hover {
     background-color: #F2E0FE;
     color: #000;
     font-size: 16px;
     font-weight: 600;
 }
-header nav .dropdown-content .col-lg-3 a i{
+
+header nav .dropdown-content .col-lg-3 a i {
     font-size: 20px !important;
     font-weight: 800;
 }
+
 header nav .dropdown:hover .dropdown-content {
     display: block;
 }
+
 /**********Mobile Dropdown***********/
-header nav .mobile-dropdown{
+header nav .mobile-dropdown {
     display: none !important;
     visibility: hidden !important;
 }
-header nav .dropdown-menu{
+
+header nav .dropdown-menu {
     border: none;
     border-top: 5px solid #4c8f35;
     box-shadow: 0px 10px 20px #0000001c;
 }
-header nav .dropdown-menu li{
+
+header nav .dropdown-menu li {
     padding-top: 3px;
 }
-header nav .dropdown-menu li a{
+
+header nav .dropdown-menu li a {
     padding-top: 10px;
     padding-bottom: 10px;
     font-weight: 500;
     font-size: 20px;
     color: #000000;
 }
-header nav .dropdown-menu li a:hover{
+
+header nav .dropdown-menu li a:hover {
     background-color: #4c8f35;
     color: #ffffff;
 }
+
 /**********Mobile Dropdown***********/
-header nav .mobile-dropdown{
+header nav .mobile-dropdown {
     display: none !important;
     visibility: hidden !important;
 }
-header nav .dropdown-menu{
+
+header nav .dropdown-menu {
     border: none;
     border-top: 5px solid #2B8DE6;
     border-bottom: 5px solid #2B8DE6;
     border-right: 5px solid #2B8DE6;
     box-shadow: 0px 10px 20px #0000001c;
 }
-header nav .dropdown-menu li{
+
+header nav .dropdown-menu li {
     padding-top: 3px;
 }
-header nav .dropdown-menu li a{
+
+header nav .dropdown-menu li a {
     padding-top: 10px;
     padding-bottom: 10px;
     font-weight: 500;
     color: #000000;
 }
-header nav .dropdown-menu li a:hover{
+
+header nav .dropdown-menu li a:hover {
     background-color: #2B8DE6;
     color: #ffffff;
 }
+
 /********Nav Login Auth********/
-header nav .login-div{
+header nav .login-div {
     margin-top: 30px;
     margin-right: 30px;
 }
-header nav .login-div .btn-login, nav .login-div .btn-signup{
+
+header nav .login-div .btn-login,
+nav .login-div .btn-signup {
     font-size: 15px;
     letter-spacing: 0.3px;
     padding: 10px 15px;
@@ -243,121 +292,151 @@ header nav .login-div .btn-login, nav .login-div .btn-signup{
     border-radius: 10px;
     transition: 0.5s;
 }
-header nav .login-div .btn-login{
+
+header nav .login-div .btn-login {
     color: #ffffff;
 }
 
-header nav .login-div .btn-signup{
+header nav .login-div .btn-signup {
     background-color: #ffffff;
     color: #000;
 }
-header nav .login-div .btn-signup i{
+
+header nav .login-div .btn-signup i {
     padding-left: 5px;
 }
+
 /********Nav Toggler********/
-header nav .navbar-toggler{
-    border: 1px solid #fff!important; 
+header nav .navbar-toggler {
+    border: 1px solid #fff !important;
 }
-header nav .navbar-toggler i{
+
+header nav .navbar-toggler i {
     color: #fff;
 }
-header nav .navbar-toggler:focus, header nav .navbar-toggler:active{
+
+header nav .navbar-toggler:focus,
+header nav .navbar-toggler:active {
     outline: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
 }
+
 /********Nav Mobile Offcanvas********/
-header nav .offcanvas{
+header nav .offcanvas {
     width: 340px;
 }
-header nav .offcanvas-header{
+
+header nav .offcanvas-header {
     text-align: right;
     padding: 10px 1px 1px 1px !important;
     margin-bottom: -20px;
 }
-header nav .offcanvas-header button{
+
+header nav .offcanvas-header button {
     cursor: pointer;
     border: none;
     background-color: transparent;
     margin-left: 20px;
     margin-bottom: 20px;
 }
-header nav .offcanvas-header button i{
+
+header nav .offcanvas-header button i {
     font-size: 25px;
     color: #000
 }
-@media(max-width: 1199px){
-    header nav .login-div{
+
+@media(max-width: 1199px) {
+    header nav .login-div {
         margin-right: 10px;
         margin-top: 20px;
     }
-    header nav .navbar-nav .nav-item .nav-link{
+
+    header nav .navbar-nav .nav-item .nav-link {
         font-size: 16px;
         padding: 10px 15px;
     }
-    header nav .login-div .btn-login, nav .login-div .btn-signup{
+
+    header nav .login-div .btn-login,
+    nav .login-div .btn-signup {
         font-size: 16px;
         padding: 10px 10px;
     }
-    header nav .icon-hambuger{
+
+    header nav .icon-hambuger {
         margin-top: 15px;
     }
-    header nav .icon-hambuger a{
+
+    header nav .icon-hambuger a {
         font-size: 22px;
     }
-    header nav .dropdown-footer{
+
+    header nav .dropdown-footer {
         top: 50px;
     }
-    header nav .navbar-nav .nav-item .nav-link{
+
+    header nav .navbar-nav .nav-item .nav-link {
         color: #fff;
         font-weight: 600;
         padding: px;
     }
-    header nav .login-div .btn-login{
+
+    header nav .login-div .btn-login {
         color: #fff;
     }
 }
-@media(max-width: 991px){
-    header nav .icon-hambuger{
+
+@media(max-width: 991px) {
+    header nav .icon-hambuger {
         display: none;
     }
-    header nav .login-div{
+
+    header nav .login-div {
         margin-left: 5px;
         margin-top: -7px;
     }
-    header nav .login-div a{
+
+    header nav .login-div a {
         display: block;
         margin-top: 5px;
     }
-    header nav .navbar-nav{
+
+    header nav .navbar-nav {
         margin-top: -5px;
     }
-    header nav .desktop-dropdown{
+
+    header nav .desktop-dropdown {
         display: none !important;
         visibility: hidden !important;
     }
+
     header nav .dropdown:hover .dropdown-menu {
         display: block !important;
         visibility: visible !important;
     }
-    header nav .navbar-toggler{
+
+    header nav .navbar-toggler {
         margin-top: 10px;
     }
-    header nav .navbar-nav .nav-item .nav-link{
+
+    header nav .navbar-nav .nav-item .nav-link {
         color: #000 !important;
         font-weight: 500;
         padding: px;
     }
-    header nav .navbar-nav .nav-item .nav-link:hover{
+
+    header nav .navbar-nav .nav-item .nav-link:hover {
         color: #000;
         font-weight: 500;
         padding: px;
     }
-    header nav .login-div .btn-login{
+
+    header nav .login-div .btn-login {
         color: #000;
         font-weight: 500;
     }
 }
+
 /**Sign Up**/
 /* #lent{
     background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1662630837/OjaFunnel-Images/signup-image_ecquqt.png);
@@ -365,28 +444,33 @@ header nav .offcanvas-header button i{
     background-repeat:no-repeat;
     background-color: #FCF9FF !important;
 } */
-.http{
-    background-color:#e5eeff;
+.http {
+    background-color: #e5eeff;
     padding: 100px 0px 200px 0;
 }
-.http img{
+
+.http img {
     display: block;
     margin: auto;
     width: 80%;
 }
-.register{
+
+.register {
     padding: 0px 0 0 0;
 }
-.register .text p{
+
+.register .text p {
     text-align: left;
     color: #FFFFFF;
     padding: 0px 0px 0px 0px;
 }
-.register .sign .sign-div img{
+
+.register .sign .sign-div img {
     width: 130px;
     display: inline-block;
     margin: auto;
 }
+
 .register .sign .sign-div {
     background-color: #fff;
     border-radius: 10px;
@@ -395,21 +479,25 @@ header nav .offcanvas-header button i{
     margin-top: 20px;
     margin-bottom: 10px;
 }
-.register .sign .sign-div h4{
+
+.register .sign .sign-div h4 {
     padding: 20px 0px 20px 0px;
     color: #000;
     font-size: 25px;
     font-weight: 600;
 }
-.register .sign .sign-div p{
+
+.register .sign .sign-div p {
     font-size: 14px;
     color: #000;
 }
-.register .sign .sign-div ::placeholder{
+
+.register .sign .sign-div ::placeholder {
     font-size: 12px;
     color: #999797;
 }
-.register .sign .sign-div label{
+
+.register .sign .sign-div label {
     font-size: 13px;
     margin-bottom: 10px;
     font-size: 13px;
@@ -418,12 +506,14 @@ header nav .offcanvas-header button i{
     position: relative;
     background-color: #fff;
     margin-left: 30px;
-    padding: 0px 5px 0px 5px ;
+    padding: 0px 5px 0px 5px;
 }
-.register .name{
+
+.register .name {
     padding: 20px 0 0 0;
 }
-.register .sign .sign-div input{
+
+.register .sign .sign-div input {
     display: block;
     width: 100%;
     margin-top: -10px;
@@ -435,10 +525,12 @@ header nav .offcanvas-header button i{
     font-size: 16px;
     transition: 0.6s;
 }
-.register .sign .sign-div input:hover{
+
+.register .sign .sign-div input:hover {
     border: 1px solid #70418F !important;
 }
-.register .sign .sign-div .bi{
+
+.register .sign .sign-div .bi {
     position: absolute;
     margin-top: 1px;
     margin-left: 15px;
@@ -447,19 +539,23 @@ header nav .offcanvas-header button i{
     padding-top: 0px;
     color: #000;
 }
-.register .sign a{
+
+.register .sign a {
     color: #000;
 }
-.register .sign .sign-div a{
+
+.register .sign .sign-div a {
     text-decoration: none;
     color: #000;
     font-weight: 700;
 }
-.register .sign .sign-div p{
+
+.register .sign .sign-div p {
     font-size: 13px;
     margin-top: 10px;
 }
-.register .sign .sign-div button{
+
+.register .sign .sign-div button {
     width: 100%;
     padding: 10px 10px 10px 10px !important;
     text-align: center;
@@ -468,8 +564,9 @@ header nav .offcanvas-header button i{
     color: #fff;
     border-radius: 3px;
 }
-@media(max-width: 1400px){
-    .register .sign .sign-div button{
+
+@media(max-width: 1400px) {
+    .register .sign .sign-div button {
         display: block;
         margin: auto;
         margin-top: 30px;
@@ -482,12 +579,14 @@ header nav .offcanvas-header button i{
         border-radius: 3px;
     }
 }
+
 @media (max-width:1000px) {
-    .http{
+    .http {
         display: none;
     }
 }
-@media(max-width: 1200px){
+
+@media(max-width: 1200px) {
     .register .sign .sign-div {
         background-color: #fff;
         border-radius: 10px;
@@ -497,8 +596,9 @@ header nav .offcanvas-header button i{
         margin-bottom: 10px;
     }
 }
-@media(max-width: 520px){
-    .register .sign .sign-div button{
+
+@media(max-width: 520px) {
+    .register .sign .sign-div button {
         display: block;
         margin: auto;
         margin-top: 20px;
@@ -510,18 +610,21 @@ header nav .offcanvas-header button i{
         color: #fff;
         border-radius: 10px;
     }
-    .register .sign .sign-div a{
+
+    .register .sign .sign-div a {
         text-decoration: none;
         color: #000;
         font-weight: 500;
         font-size: 15px !important;
     }
-    .register h4{
+
+    .register h4 {
         font-size: 18px;
         font-weight: 500;
         color: #1D1D5F;
         text-align: center;
     }
+
     .register .sign .sign-div {
         background-color: #fff;
         box-shadow: 0px 0px 20px rgba(136, 136, 136, 0.219);
@@ -529,101 +632,121 @@ header nav .offcanvas-header button i{
         width: 100%;
         padding: 30px 20px;
         margin-top: 20px;
-       
+
     }
-    .register .sign .sign-div img{
+
+    .register .sign .sign-div img {
         width: 200px;
-        display:block;
+        display: block;
         margin: auto;
     }
 }
+
 /**Sign Up Ends**/
 
 /**login**/
-.login{
-    padding:0px 0px 0px 0px;
+.login {
+    padding: 0px 0px 0px 0px;
 }
-.login .btn-div{
+
+.login .btn-div {
     width: 100%;
 }
-.login .btn-div .portlog img{
+
+.login .btn-div .portlog img {
     width: 100%;
     display: block;
     margin: auto;
 }
-.login .btn-divv{
+
+.login .btn-divv {
     width: 100%;
     padding: 0px 0px 50px 0;
     background-color: #E5EEFF;
 }
-.login .btn-divv .portlog{
+
+.login .btn-divv .portlog {
     padding: 30px 0 0 0;
 }
-.login .btn-divv .portlog img{
+
+.login .btn-divv .portlog img {
     width: 80%;
     display: block;
     margin: auto;
 }
-.login .btn-div .sidelist{
+
+.login .btn-div .sidelist {
     padding: 100px 30px 0px 10px;
 }
-.login .btn-div .sidelist img{
+
+.login .btn-div .sidelist img {
     width: 180px;
     margin: auto;
-    display:block;
+    display: block;
 }
-.login .btn-div .sidelist h4{
+
+.login .btn-div .sidelist h4 {
     padding: 20px 0 30px 0;
     font-size: 18px;
     font-weight: 700;
     text-align: center;
     margin-bottom: 0px;
 }
+
 .login .btn-div .sidelist .sign-div {
     background-color: #fff;
     border-radius: 10px;
     width: 100%;
     padding: 0px 0px 0px 0px;
 }
-.login .btn-div .sidelist .sign-div p{
+
+.login .btn-div .sidelist .sign-div p {
     text-align: right;
     font-size: 12px;
     margin-top: 0px;
     margin-bottom: 0px;
-    padding: 0 10px 0 0px ;
+    padding: 0 10px 0 0px;
 }
-.login .btn-div .sidelist .sign-div .have{
+
+.login .btn-div .sidelist .sign-div .have {
     text-align: center;
     font-size: 12px;
     margin-top: 0px;
     margin-bottom: 0px;
-    padding: 30px 10px 0 0px ;
+    padding: 30px 10px 0 0px;
 }
-.login .btn-div .sidelist .sign-div p a{
+
+.login .btn-div .sidelist .sign-div p a {
     text-decoration: none;
     color: #000;
 }
-.login .btn-div .sidelist .sign-div p a:hover{
+
+.login .btn-div .sidelist .sign-div p a:hover {
     text-decoration: underline;
     color: #70418F;
 }
-.login .btn-div .sidelist p{
+
+.login .btn-div .sidelist p {
     padding: 5px 0 0 0;
     font-size: 11px;
 }
-.login .btn-div .sidelist p a{
+
+.login .btn-div .sidelist p a {
     text-decoration: none;
     color: #000;
 }
-.login .btn-div .sidelist p a:hover{
+
+.login .btn-div .sidelist p a:hover {
     text-decoration: underline;
     color: #70418F;
 }
-.login .btn-div .sidelist .sign-div ::placeholder{
+
+.login .btn-div .sidelist .sign-div ::placeholder {
     font-size: 12px;
     color: #000;
 }
-.login .btn-div .sidelist .sign-div label{
+
+.login .btn-div .sidelist .sign-div label {
     font-size: 13px;
     margin-bottom: 10px;
     font-size: 13px;
@@ -632,9 +755,10 @@ header nav .offcanvas-header button i{
     position: relative;
     background-color: #fff;
     margin-left: 30px;
-    padding: 0px 5px 0px 5px ;
+    padding: 0px 5px 0px 5px;
 }
-.login .btn-div .sidelist .sign-div input{
+
+.login .btn-div .sidelist .sign-div input {
     display: block;
     width: 100%;
     margin-top: -10px;
@@ -646,11 +770,13 @@ header nav .offcanvas-header button i{
     font-size: 16px;
     transition: 0.6s;
 }
-.login .btn-div .sidelist .sign-div ::placeholder{
+
+.login .btn-div .sidelist .sign-div ::placeholder {
     font-size: 12px;
     color: #999797;
 }
-.login .btn-div .sidelist .sign-div .bi{
+
+.login .btn-div .sidelist .sign-div .bi {
     position: absolute;
     margin-top: 1px;
     margin-left: 15px;
@@ -659,7 +785,8 @@ header nav .offcanvas-header button i{
     padding-top: 0px;
     color: #000;
 }
-.login .btn-div .sidelist .sign-div button{
+
+.login .btn-div .sidelist .sign-div button {
     width: 100%;
     padding: 10px 10px 10px 10px !important;
     text-align: center;
@@ -669,100 +796,122 @@ header nav .offcanvas-header button i{
     color: #fff;
     border-radius: 4px;
 }
+
 @media (max-width:1000px) {
-    .login .btn-div .sidelist img{
+    .login .btn-div .sidelist img {
         width: 200px;
         margin: auto;
-        display:block;
+        display: block;
     }
-    .login .btn-div .portlog{
+
+    .login .btn-div .portlog {
         display: none;
     }
-    .login .btn-divv .portlog{
+
+    .login .btn-divv .portlog {
         display: none;
     }
+
     .login .btn-divv {
         display: none;
     }
-    .login .btn-div .sidelist h4{
+
+    .login .btn-div .sidelist h4 {
         text-align: center;
     }
-    .login .btn-div .sidelist p{
+
+    .login .btn-div .sidelist p {
         padding: 5px 0 0 0;
         text-align: center;
     }
-    .login .btn-div .sidelist{
+
+    .login .btn-div .sidelist {
         padding: 90px 20px 0px 20px;
     }
-    .login .btn-div .sidelist .sign-div input{
+
+    .login .btn-div .sidelist .sign-div input {
         display: block;
         width: 100%;
     }
-    .login .btn-div .sidelist .sign-div button{
+
+    .login .btn-div .sidelist .sign-div button {
         width: 100%;
     }
-    .login .btn-div{
+
+    .login .btn-div {
         padding: 0px 0px 20px 0px;
     }
 }
+
 /**login Ends**/
 /**Fogotten**/
-.Fogotten{
+.Fogotten {
     padding: 100px 0px 120px 0px;
     background-color: #e5eeff;
     height: 100VH;
 }
-.Fogotten .btn-div{
+
+.Fogotten .btn-div {
     background-color: #fff;
     border-radius: 10px;
     width: 100%;
     box-shadow: 0px 0px 20px rgba(136, 136, 136, 0.219);
     padding: 0px 30px 20px 30px;
 }
-.Fogotten .btn-div .portlog img{
+
+.Fogotten .btn-div .portlog img {
     width: 100%;
     display: block;
     margin: auto;
     border-radius: 10px 0px 0px 10px;
 }
-.Fogotten .btn-div .sidelist{
+
+.Fogotten .btn-div .sidelist {
     padding: 30px 0px 0px 0px;
 }
-.Fogotten .btn-div .sidelist img{
+
+.Fogotten .btn-div .sidelist img {
     width: 150px;
     margin: auto;
-    display:block;
+    display: block;
 }
-.Fogotten .btn-div .sidelist h4{
+
+.Fogotten .btn-div .sidelist h4 {
     padding: 20px 0 0 0;
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 0px;
     text-align: center;
 }
+
 .Fogotten .btn-div .sidelist .sign-div {
     background-color: #fff;
     border-radius: 10px;
     width: 100%;
     padding: 0px 0px 0px 0px;
 }
-.Fogotten .btn-div .sidelist p{
+
+.Fogotten .btn-div .sidelist p {
     padding: 5px 0 0 0;
     text-align: center;
 }
-.Fogotten .btn-div .sidelist p a{
+
+.Fogotten .btn-div .sidelist p a {
     text-decoration: none;
     color: #000;
 }
-.Fogotten .btn-div .sidelist p a:hover{
+
+.Fogotten .btn-div .sidelist p a:hover {
     text-decoration: underline;
     color: #70418F;
 }
-.Fogotten .btn-div .sidelist .sign-div ::placeholder{
+
+.Fogotten .btn-div .sidelist .sign-div ::placeholder {
     font-size: 12px;
     color: #000;
 }
-.Fogotten .btn-div .sidelist .sign-div label{
+
+.Fogotten .btn-div .sidelist .sign-div label {
     font-size: 13px;
     margin-bottom: 10px;
     font-size: 13px;
@@ -771,9 +920,10 @@ header nav .offcanvas-header button i{
     position: relative;
     background-color: #fff;
     margin-left: 30px;
-    padding: 0px 5px 0px 5px ;
+    padding: 0px 5px 0px 5px;
 }
-.Fogotten .btn-div .sidelist .sign-div input{
+
+.Fogotten .btn-div .sidelist .sign-div input {
     display: block;
     width: 100%;
     margin-top: -10px;
@@ -785,11 +935,13 @@ header nav .offcanvas-header button i{
     font-size: 16px;
     transition: 0.6s;
 }
-.Fogotten .btn-div .sidelist .sign-div ::placeholder{
+
+.Fogotten .btn-div .sidelist .sign-div ::placeholder {
     font-size: 10px;
     color: #999797;
 }
-.Fogotten .btn-div .sidelist .sign-div .bi{
+
+.Fogotten .btn-div .sidelist .sign-div .bi {
     position: absolute;
     margin-top: 1px;
     margin-left: 15px;
@@ -798,7 +950,8 @@ header nav .offcanvas-header button i{
     padding-top: 0px;
     color: #000;
 }
-.Fogotten .btn-div .sidelist .sign-div button{
+
+.Fogotten .btn-div .sidelist .sign-div button {
     width: 100%;
     padding: 10px 10px 10px 10px !important;
     text-align: center;
@@ -808,53 +961,64 @@ header nav .offcanvas-header button i{
     color: #fff;
     border-radius: 3px;
 }
-.sign-div p{
+
+.sign-div p {
     font-size: 13px;
 }
+
 @media (max-width:770px) {
-    .Fogotten .btn-div .portlog img{
+    .Fogotten .btn-div .portlog img {
         display: none;
     }
 }
+
 @media (max-width:1000px) {
-    .Fogotten .btn-div .sidelist img{
+    .Fogotten .btn-div .sidelist img {
         width: 200px;
         margin: auto;
-        display:block;
+        display: block;
     }
-    .Fogotten .btn-div .sidelist h4{
+
+    .Fogotten .btn-div .sidelist h4 {
         text-align: center;
     }
-    .Fogotten .btn-div .sidelist p{
+
+    .Fogotten .btn-div .sidelist p {
         padding: 5px 0 0 0;
         text-align: center;
     }
-    .Fogotten .btn-div .sidelist{
+
+    .Fogotten .btn-div .sidelist {
         padding: 30px 20px 0px 20px;
     }
-    .Fogotten .btn-div .sidelist .sign-div input{
+
+    .Fogotten .btn-div .sidelist .sign-div input {
         display: block;
         width: 100%;
     }
-    .Fogotten .btn-div .sidelist .sign-div button{
+
+    .Fogotten .btn-div .sidelist .sign-div button {
         width: 100%;
     }
-    .Fogotten .btn-div{
+
+    .Fogotten .btn-div {
         padding: 0px 0px 20px 0px;
     }
 }
+
 /**Fogotten Ends**/
 
 /**Welcome**/
-.welcome{
+.welcome {
     padding: 150px 0px 50px 0px;
     background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660223434/OjaFunnel-Images/home_rstv52.jpg);
     background-position-y: -80px;
     background-repeat: no-repeat;
     background-size: contain;
 }
+
 @media (max-width:1994px) {
-    .welcome{
+    .welcome {
         padding: 150px 0px 50px 0px;
         background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660223434/OjaFunnel-Images/home_rstv52.jpg);
         background-position-y: -80px;
@@ -862,8 +1026,9 @@ header nav .offcanvas-header button i{
         background-size: cover;
     }
 }
+
 @media (max-width:1600px) {
-    .welcome{
+    .welcome {
         padding: 150px 0px 50px 0px;
         background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660223434/OjaFunnel-Images/home_rstv52.jpg);
         background-position-y: -80px;
@@ -871,7 +1036,8 @@ header nav .offcanvas-header button i{
         background-size: contain;
     }
 }
-.welcome .accelerate h1{
+
+.welcome .accelerate h1 {
     text-align: center;
     font-weight: 800;
     margin-top: 0;
@@ -880,7 +1046,8 @@ header nav .offcanvas-header button i{
     color: #ffffff;
     padding: 0px 0px 5px 0px;
 }
-.welcome .accelerate h3{
+
+.welcome .accelerate h3 {
     text-align: center;
     font-weight: 500;
     font-size: 18px !important;
@@ -888,10 +1055,12 @@ header nav .offcanvas-header button i{
     line-height: 1.5;
     letter-spacing: 00.10rem;
 }
-.welcome .accelerate .btn-curve{
+
+.welcome .accelerate .btn-curve {
     padding: 20px 0px 0px 0px;
 }
-.welcome .accelerate .btn-curve button{
+
+.welcome .accelerate .btn-curve button {
     border: 1px solid #ffffff;
     padding: 15px 30px 15px 30px;
     border-radius: 10px;
@@ -903,38 +1072,48 @@ header nav .offcanvas-header button i{
     font-weight: 700;
     margin-left: 10px !important;
 }
-.welcome .accelerate .btn-curve button:hover{
+
+.welcome .accelerate .btn-curve button:hover {
     background-color: #000;
     border: none;
 }
-.welcome .accelerate .images{
+
+.welcome .accelerate .images {
     padding: 100px 0px 0px 0px;
 }
-.welcome .accelerate .images img{
+
+.welcome .accelerate .images img {
     display: block;
     margin: auto;
     width: 100%;
     border-radius: 20px;
     pointer-events: none;
 }
-.welcome .accelerate .images img{
+
+.welcome .accelerate .images img {
     -webkit-animation: bounce 4s linear alternate infinite;
     animation: bounce 4s linear alternate infinite;
 }
+
 .welcome .accelerate .images img {
     -webkit-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out;
 }
+
 @keyframes bounce {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: none;
     }
+
     50% {
         transform: translateY(calc((3vh - 5px) * -1));
     }
 }
+
 @media (max-width:1399px) {
-    .welcome .accelerate h1{
+    .welcome .accelerate h1 {
         text-align: center;
         font-weight: 800;
         font-size: 50px;
@@ -944,7 +1123,9 @@ header nav .offcanvas-header button i{
         padding: 0px 0px 5px 0px;
     }
 }
+
 @media (max-width:1200px) {
+
     /* .welcome .accelerate .btn-curve button{
         border-radius: 10px;
         display: inline-block;
@@ -953,43 +1134,51 @@ header nav .offcanvas-header button i{
         margin-left: 30px !important;
         margin-bottom: 10px !important;
     } */
-    .welcome .accelerate h1{
+    .welcome .accelerate h1 {
         font-weight: 800;
         font-size: 40px;
     }
-    .welcome{
+
+    .welcome {
         padding: 150px 0px 50px 0px;
         background-position-y: -200px;
         background-size: cover;
     }
-    .welcome .accelerate .images{
+
+    .welcome .accelerate .images {
         padding: 80px 0px 0px 0px;
     }
 }
+
 @media (max-width:1000px) {
-    .welcome .accelerate h1{
+    .welcome .accelerate h1 {
         font-weight: 800;
         font-size: 40px;
     }
-    .welcome .accelerate .images{
+
+    .welcome .accelerate .images {
         display: none;
     }
-    .welcome{
+
+    .welcome {
         padding: 150px 0px 50px 0px;
         background-position-y: 0px;
         background-size: cover;
     }
+
     .btn-curve {
         display: block !important;
         margin: auto !important;
         width: 100%;
     }
 }
+
 @media (max-width:768px) {
-    .welcome .accelerate h1{
+    .welcome .accelerate h1 {
         font-weight: 800;
         font-size: 40px;
     }
+
     /* .welcome .accelerate .btn-curve button{
         padding: 10px 30px 10px 30px;
         border-radius: 10px;
@@ -1001,29 +1190,34 @@ header nav .offcanvas-header button i{
         margin-bottom: 20px !important;
     } */
 }
+
 @media (max-width:520px) {
-    .welcome .accelerate h1{
+    .welcome .accelerate h1 {
         font-weight: 800;
         font-size: 35px;
     }
-    .welcome .accelerate h3{
+
+    .welcome .accelerate h3 {
         text-align: center;
         font-weight: 500;
         padding: 0 0 20px 0px;
         font-size: 15px !important;
     }
 }
+
 @media (max-width:430px) {
-    .welcome .accelerate h1{
+    .welcome .accelerate h1 {
         font-weight: 800;
         font-size: 30px;
     }
-    .welcome .accelerate h3{
+
+    .welcome .accelerate h3 {
         text-align: center;
         font-weight: 400;
         padding: 10px 0 0 0;
     }
-    .welcome .accelerate .btn-curve button{
+
+    .welcome .accelerate .btn-curve button {
         padding: 10px 30px 10px 30px;
         border-radius: 10px;
         width: 70%;
@@ -1033,16 +1227,19 @@ header nav .offcanvas-header button i{
         margin-bottom: 10px !important;
     }
 }
+
 @media (max-width:380px) {
-    .welcome .accelerate h1{
+    .welcome .accelerate h1 {
         font-weight: 900;
     }
-    .welcome .accelerate h3{
+
+    .welcome .accelerate h3 {
         text-align: center;
         font-weight: 500;
         font-size: 17px;
     }
-    .welcome .accelerate .btn-curve button{
+
+    .welcome .accelerate .btn-curve button {
         padding: 10px 30px 10px 30px;
         border-radius: 10px;
         width: 70%;
@@ -1052,53 +1249,62 @@ header nav .offcanvas-header button i{
         margin-bottom: 10px !important;
     }
 }
+
 /**Welcome Ends**/
 
 /**Increasing**/
-.Increasing{
+.Increasing {
     padding: 80px 0px 50px 0px;
 }
-.Increasing .thread-text h1{
+
+.Increasing .thread-text h1 {
     font-size: 38px;
     font-weight: 700;
     text-align: center;
     padding: 0px 0px 100px 0px;
 }
-.Increasing .thread-text h4{
+
+.Increasing .thread-text h4 {
     font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
     color: #A7A5A3;
     padding: 0px 0px 5px 0px;
 }
-.Increasing .thread-text h2{
+
+.Increasing .thread-text h2 {
     font-size: 27px;
     font-weight: 600;
     line-height: 1.5;
 }
-.Increasing .thread-text p{
+
+.Increasing .thread-text p {
     font-size: 17px;
     margin-bottom: 0;
     margin-top: 0;
     line-height: 1.5;
     color: #000;
 }
-.Increasing .thread-text .output{
+
+.Increasing .thread-text .output {
     padding: 20px 0 0 0;
 }
-.Increasing .thread-text .output img{
+
+.Increasing .thread-text .output img {
     pointer-events: none;
     width: 40%;
     display: inline-block;
     margin: auto;
 }
-.Increasing .thread-text .output p{
+
+.Increasing .thread-text .output p {
     font-size: 14px !important;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
 }
-.Increasing .thread-text button{
+
+.Increasing .thread-text button {
     margin-top: 40px !important;
     display: inline-block;
     margin: auto;
@@ -1110,138 +1316,170 @@ header nav .offcanvas-header button i{
     font-size: 12px;
     color: #70418F;
 }
-.Increasing .thread-text button:hover{
+
+.Increasing .thread-text button:hover {
     background-color: #70418F;
     color: #fff;
 }
-.Increasing .imagess img{
+
+.Increasing .imagess img {
     display: block;
     margin: auto;
     width: 80%;
     border-radius: 10px;
 }
+
 .Increasing .imagess .pulse {
     animation: pulse 3s infinite ease-in-out alternate;
 }
+
 @media (max-width:990px) {
-    .Increasing .imagess{
+    .Increasing .imagess {
         padding: 100px 0 0 0;
     }
-    .Increasing .imagess img{
+
+    .Increasing .imagess img {
         display: block;
         margin: auto;
         width: 75%;
     }
 }
+
 @keyframes pulse {
-    from { transform: scale(1.1); }
-    to { transform: scale(1.2); }
-} 
+    from {
+        transform: scale(1.1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
 @media (max-width:756px) {
-    .Increasing .thread-text h1{
+    .Increasing .thread-text h1 {
         font-size: 32px;
         font-weight: 800;
         text-align: center;
         padding: 0px 0px 50px 0px;
     }
-    .Increasing .thread-text h2{
+
+    .Increasing .thread-text h2 {
         font-size: 25px;
         font-weight: 600;
     }
 }
+
 @media (max-width:570px) {
-    .Increasing .thread-text .output img{
+    .Increasing .thread-text .output img {
         pointer-events: none;
         width: 10%;
-        display:block;
+        display: block;
         margin: auto;
     }
-    .Increasing .thread-text button{
+
+    .Increasing .thread-text button {
         margin-top: 40px !important;
         display: block;
         margin: auto;
         padding: 10px 20px 10px 20px;
         width: 80%;
     }
-    .Increasing .thread-text h1{
+
+    .Increasing .thread-text h1 {
         font-size: 28px;
         font-weight: 800;
         text-align: center;
         padding: 0px 0px 40px 0px;
     }
-    .Increasing .thread-text h4{
+
+    .Increasing .thread-text h4 {
         text-align: center;
     }
-    .Increasing .thread-text p{
+
+    .Increasing .thread-text p {
         text-align: center;
     }
-    .Increasing .thread-text h2{
+
+    .Increasing .thread-text h2 {
         text-align: center;
     }
-    .Increasing .thread-text .output p{
+
+    .Increasing .thread-text .output p {
         text-align: center;
         font-size: 13px !important;
     }
 }
+
 @media (max-width:520px) {
-    .Increasing .imagess{
+    .Increasing .imagess {
         padding: 70px 0 0 0;
         display: none;
     }
-    .Increasing{
+
+    .Increasing {
         padding: 80px 0px 30px 0px;
     }
 }
+
 /**Increasing Ends**/
 
 /**Communication**/
-.communication{
+.communication {
     padding: 100px 0px 50px 0px;
     background-color: #FCFCFE;
 }
-.communication .el-icon-message img{
+
+.communication .el-icon-message img {
     width: 100%;
     display: block;
     margin: auto;
 }
-.communication .thread-text{
+
+.communication .thread-text {
     padding: 0px 0px 0px 40px;
 }
-.communication .thread-text h4{
+
+.communication .thread-text h4 {
     font-size: 13px;
     text-transform: uppercase;
     font-weight: 600;
     color: #A7A5A3;
     padding: 0px 0px 5px 0px;
 }
-.communication .thread-text h2{
+
+.communication .thread-text h2 {
     font-size: 25px;
     font-weight: 600;
     line-height: 1.5;
 }
-.communication .thread-text p{
+
+.communication .thread-text p {
     font-size: 17px;
     line-height: 1.5;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
 }
-.communication .thread-text .output{
+
+.communication .thread-text .output {
     padding: 20px 0 0 0;
 }
-.communication .thread-text .output img{
+
+.communication .thread-text .output img {
     pointer-events: none;
     width: 40%;
     display: inline-block;
     margin: auto;
 }
-.communication .thread-text .output p{
+
+.communication .thread-text .output p {
     font-size: 14px !important;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
 }
-.communication .thread-text button{
+
+.communication .thread-text button {
     margin-top: 40px !important;
     display: inline-block;
     margin: auto;
@@ -1253,113 +1491,142 @@ header nav .offcanvas-header button i{
     font-size: 12px;
     color: #70418F;
 }
-.communication .thread-text button:hover{
+
+.communication .thread-text button:hover {
     background-color: #70418F;
     color: #fff;
 }
-.communication .el-icon-message img{
+
+.communication .el-icon-message img {
     display: block;
     margin: auto;
     width: 80%;
 }
+
 .communication .el-icon-message .pulse {
     animation: pulse 3s infinite ease-in-out alternate;
 }
+
 @media (max-width:1200px) {
-    .communication .thread-text{
+    .communication .thread-text {
         padding: 0px 0px 0px 1px;
     }
-    .hide{
+
+    .hide {
         display: none;
     }
-    .display{
+
+    .display {
         display: block !important;
     }
 }
-.display{
+
+.display {
     display: none;
 }
+
 @media (max-width:990px) {
-    .communication .el-icon-message{
+    .communication .el-icon-message {
         padding: 100px 0 0 0;
     }
-    .communication .el-icon-message img{
+
+    .communication .el-icon-message img {
         display: block;
         margin: auto;
         width: 75%;
     }
 }
+
 @keyframes pulse {
-    from { transform: scale(1.1); }
-    to { transform: scale(1.2); }
-} 
+    from {
+        transform: scale(1.1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
 @media (max-width:756px) {
-    .communication .thread-text h1{
+    .communication .thread-text h1 {
         font-size: 32px;
         font-weight: 800;
         text-align: center;
         padding: 0px 0px 50px 0px;
     }
-    .communication .thread-text h2{
+
+    .communication .thread-text h2 {
         font-size: 25px;
         font-weight: 600;
     }
 }
+
 @media (max-width:570px) {
-    .communication .thread-text .output img{
+    .communication .thread-text .output img {
         pointer-events: none;
         width: 10%;
-        display:block;
+        display: block;
         margin: auto;
     }
-    .communication .thread-text button{
+
+    .communication .thread-text button {
         margin-top: 40px !important;
         display: block;
         margin: auto;
         padding: 10px 20px 10px 20px;
         width: 80%;
     }
-    .communication .thread-text h1{
+
+    .communication .thread-text h1 {
         font-size: 28px;
         font-weight: 800;
         text-align: center;
         padding: 0px 0px 40px 0px;
     }
-    .communication .thread-text h4{
+
+    .communication .thread-text h4 {
         text-align: center;
     }
-    .communication .thread-text p{
+
+    .communication .thread-text p {
         text-align: center;
     }
-    .communication .thread-text h2{
+
+    .communication .thread-text h2 {
         text-align: center;
     }
-    .communication .thread-text .output p{
+
+    .communication .thread-text .output p {
         text-align: center;
         font-size: 13px !important;
     }
 }
+
 @media (max-width:520px) {
-    .communication .el-icon-message{
+    .communication .el-icon-message {
         padding: 70px 0 0 0;
     }
-    .communication{
+
+    .communication {
         padding: 80px 0px 30px 0px;
     }
 }
+
 /**Communication Ends**/
 
 /**Editable**/
-.Editable{
+.Editable {
     padding: 80px 0px 50px 0px;
 }
-.Editable .thread-text h1{
+
+.Editable .thread-text h1 {
     font-size: 40px;
     font-weight: 800;
     text-align: center;
     padding: 0px 0px 80px 0px;
 }
-.Editable .thread-text h4{
+
+.Editable .thread-text h4 {
     font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
@@ -1367,34 +1634,40 @@ header nav .offcanvas-header button i{
     letter-spacing: 00.25rem;
     padding: 0px 0px 5px 0px;
 }
-.Editable .thread-text h2{
+
+.Editable .thread-text h2 {
     font-size: 25px;
     font-weight: 600;
     line-height: 1.5;
 }
-.Editable .thread-text p{
+
+.Editable .thread-text p {
     font-size: 17px;
     line-height: 1.5;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
 }
-.Editable .thread-text .output{
+
+.Editable .thread-text .output {
     padding: 20px 0 0 0;
 }
-.Editable .thread-text .output img{
+
+.Editable .thread-text .output img {
     pointer-events: none;
     width: 40%;
     display: inline-block;
     margin: auto;
 }
-.Editable .thread-text .output p{
+
+.Editable .thread-text .output p {
     font-size: 14px !important;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
 }
-.Editable .thread-text button{
+
+.Editable .thread-text button {
     margin-top: 40px !important;
     display: inline-block;
     margin: auto;
@@ -1406,103 +1679,129 @@ header nav .offcanvas-header button i{
     font-size: 12px;
     color: #70418F;
 }
-.Editable .thread-text button:hover{
+
+.Editable .thread-text button:hover {
     background-color: #70418F;
     color: #fff;
 }
-.Editable .imagess img{
+
+.Editable .imagess img {
     display: block;
     margin: auto;
     width: 80%;
 }
+
 .Editable .imagess .pulse {
     animation: pulse 3s infinite ease-in-out alternate;
 }
+
 @media (max-width:990px) {
-    .Editable .imagess{
+    .Editable .imagess {
         padding: 100px 0 0 0;
     }
-    .Editable .imagess img{
+
+    .Editable .imagess img {
         display: block;
         margin: auto;
         width: 75%;
     }
 }
+
 @keyframes pulse {
-    from { transform: scale(1.1); }
-    to { transform: scale(1.2); }
-} 
+    from {
+        transform: scale(1.1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
 @media (max-width:756px) {
-    .Editable .thread-text h1{
+    .Editable .thread-text h1 {
         font-size: 32px;
         font-weight: 800;
         text-align: center;
         padding: 0px 0px 50px 0px;
     }
-    .Editable .thread-text h2{
+
+    .Editable .thread-text h2 {
         font-size: 25px;
         font-weight: 600;
     }
 }
+
 @media (max-width:570px) {
-    .Editable .thread-text .output img{
+    .Editable .thread-text .output img {
         pointer-events: none;
         width: 10%;
-        display:block;
+        display: block;
         margin: auto;
     }
-    .Editable .thread-text button{
+
+    .Editable .thread-text button {
         margin-top: 40px !important;
         display: block;
         margin: auto;
         padding: 10px 20px 10px 20px;
         width: 80%;
     }
-    .Editable .thread-text h1{
+
+    .Editable .thread-text h1 {
         font-size: 28px;
         font-weight: 800;
         text-align: center;
         padding: 0px 0px 40px 0px;
     }
-    .Editable .thread-text h4{
+
+    .Editable .thread-text h4 {
         text-align: center;
     }
-    .Editable .thread-text p{
+
+    .Editable .thread-text p {
         text-align: center;
     }
-    .Editable .thread-text h2{
+
+    .Editable .thread-text h2 {
         text-align: center;
     }
-    .Editable .thread-text .output p{
+
+    .Editable .thread-text .output p {
         text-align: center;
         font-size: 13px !important;
     }
 }
+
 @media (max-width:520px) {
-    .Editable .imagess{
+    .Editable .imagess {
         padding: 70px 0 0 0;
         display: none;
     }
-    .Editable{
+
+    .Editable {
         padding: 80px 0px 30px 0px;
     }
 }
+
 /**Editable Ends**/
 
 /**SEEMLESS**/
-.Seemless{
+.Seemless {
     padding: 100px 0px 50px 0px;
     background-color: #FCFCFE;
 }
-.Seemless .el-icon-message img{
+
+.Seemless .el-icon-message img {
     width: 100%;
     display: block;
     margin: auto;
 }
-.Seemless .thread-text{
+
+.Seemless .thread-text {
     padding: 0px 0px 0px 40px;
 }
-.Seemless .thread-text h4{
+
+.Seemless .thread-text h4 {
     font-size: 13px;
     text-transform: uppercase;
     font-weight: 600;
@@ -1510,34 +1809,40 @@ header nav .offcanvas-header button i{
     letter-spacing: 00.25rem;
     padding: 0px 0px 5px 0px;
 }
-.Seemless .thread-text h2{
+
+.Seemless .thread-text h2 {
     font-size: 25px;
     font-weight: 600;
     letter-spacing: 00.1rem;
 }
-.Seemless .thread-text p{
+
+.Seemless .thread-text p {
     font-size: 17px;
     line-height: 1.5;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
 }
-.Seemless .thread-text .output{
+
+.Seemless .thread-text .output {
     padding: 20px 0 0 0;
 }
-.Seemless .thread-text .output img{
+
+.Seemless .thread-text .output img {
     pointer-events: none;
     width: 40%;
     display: inline-block;
     margin: auto;
 }
-.Seemless .thread-text .output p{
+
+.Seemless .thread-text .output p {
     font-size: 14px !important;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
 }
-.Seemless .thread-text button{
+
+.Seemless .thread-text button {
     margin-top: 40px !important;
     display: inline-block;
     margin: auto;
@@ -1549,341 +1854,421 @@ header nav .offcanvas-header button i{
     font-size: 12px;
     color: #70418F;
 }
-.Seemless .thread-text button:hover{
+
+.Seemless .thread-text button:hover {
     background-color: #70418F;
     color: #fff;
 }
-.Seemless .el-icon-message img{
+
+.Seemless .el-icon-message img {
     display: block;
     margin: auto;
     width: 80%;
 }
+
 .Seemless .el-icon-message .pulse {
     animation: pulse 3s infinite ease-in-out alternate;
 }
+
 @media (max-width:1200px) {
-    .Seemless .thread-text{
+    .Seemless .thread-text {
         padding: 0px 0px 0px 1px;
     }
-    .hide{
+
+    .hide {
         display: none;
     }
-    .display{
+
+    .display {
         display: block !important;
     }
 }
-.display{
+
+.display {
     display: none;
 }
+
 @media (max-width:990px) {
-    .Seemless .el-icon-message{
+    .Seemless .el-icon-message {
         padding: 100px 0 0 0;
     }
-    .Seemless .el-icon-message img{
+
+    .Seemless .el-icon-message img {
         display: block;
         margin: auto;
         width: 75%;
     }
 }
+
 @keyframes pulse {
-    from { transform: scale(1.1); }
-    to { transform: scale(1.2); }
-} 
+    from {
+        transform: scale(1.1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
 @media (max-width:756px) {
-    .Seemless .thread-text h1{
+    .Seemless .thread-text h1 {
         font-size: 32px;
         font-weight: 800;
         text-align: center;
         padding: 0px 0px 50px 0px;
     }
-    .Seemless .thread-text h2{
+
+    .Seemless .thread-text h2 {
         font-size: 25px;
         font-weight: 600;
     }
 }
+
 @media (max-width:570px) {
-    .Seemless .thread-text .output img{
+    .Seemless .thread-text .output img {
         pointer-events: none;
         width: 10%;
-        display:block;
+        display: block;
         margin: auto;
     }
-    .Seemless .thread-text button{
+
+    .Seemless .thread-text button {
         margin-top: 40px !important;
         display: block;
         margin: auto;
         padding: 10px 20px 10px 20px;
         width: 80%;
     }
-    .Seemless .thread-text h1{
+
+    .Seemless .thread-text h1 {
         font-size: 28px;
         font-weight: 800;
         text-align: center;
         padding: 0px 0px 40px 0px;
     }
-    .Seemless .thread-text h4{
+
+    .Seemless .thread-text h4 {
         text-align: center;
     }
-    .Seemless .thread-text p{
+
+    .Seemless .thread-text p {
         text-align: center;
     }
-    .Seemless .thread-text h2{
+
+    .Seemless .thread-text h2 {
         text-align: center;
     }
-    .Seemless .thread-text .output p{
+
+    .Seemless .thread-text .output p {
         text-align: center;
         font-size: 13px !important;
     }
 }
+
 @media (max-width:520px) {
-    .Seemless .el-icon-message{
+    .Seemless .el-icon-message {
         padding: 70px 0 0 0;
     }
-    .Seemless{
+
+    .Seemless {
         padding: 80px 0px 30px 0px;
     }
 }
+
 /**SEEMLESS Ends**/
 
 /**Features **/
-.Features{
+.Features {
     padding: 100px 0px 100px 0px;
 }
-.Features .btn-text h1{
+
+.Features .btn-text h1 {
     text-align: center;
     font-weight: 600;
     margin-bottom: 0;
     margin-top: 0;
     font-size: 35px;
 }
-.Features .btn-text  p{
+
+.Features .btn-text p {
     padding: 10px 0 0 0;
     text-align: center;
     color: #424242;
 }
-.Features .alert{
+
+.Features .alert {
     padding: 60px 0 0 0;
 }
-.Features .aler{
+
+.Features .aler {
     padding: 40px 0 0 0;
 }
-.Features .Amet img{
+
+.Features .Amet img {
     width: 100%;
 }
-.Features .Amet{
+
+.Features .Amet {
     padding: 20px;
 }
-.Features .Amet .drag{
+
+.Features .Amet .drag {
     padding: 0px 0px 0px 5px;
 }
-.Features .Amet .drag h1{
+
+.Features .Amet .drag h1 {
     font-size: 18px;
     padding: 25px 0 0 0;
     font-weight: 700;
 }
-.Features .Amet .drag p{
+
+.Features .Amet .drag p {
     padding: 10px 0px 0 0px;
     color: #5E5B5B;
 }
-.Features .Amet:hover{
+
+.Features .Amet:hover {
     padding: 20px;
     background: #FFFFFF;
     box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
     border-radius: 20px;
 }
+
 @media (max-width:1200px) {
-    .Features .Amet img{
+    .Features .Amet img {
         width: 100%;
     }
-    .Features .alert{
+
+    .Features .alert {
         padding: 20px 0 0 0;
     }
-    .Features .Amet:hover{
+
+    .Features .Amet:hover {
         padding: 1px;
     }
-    .Features .aler{
+
+    .Features .aler {
         padding: 20px 0 0 0;
     }
-    .Features .btn-text h1{
+
+    .Features .btn-text h1 {
         text-align: center;
         font-weight: 600;
         margin-bottom: 0;
         margin-top: 0;
         font-size: 25px;
     }
-    .Features .btn-text  p{
+
+    .Features .btn-text p {
         padding: 0px 0 0 0;
         text-align: center;
         color: #424242;
     }
-    
+
 }
+
 @media (max-width:520px) {
-    .Features .Amet img{
+    .Features .Amet img {
         width: 100%;
     }
-    .Features .alert{
+
+    .Features .alert {
         padding: 0px 0 0 0;
     }
-    .Features .aler{
+
+    .Features .aler {
         padding: 0px 0 0 0;
     }
-    .Features .btn-text h1{
+
+    .Features .btn-text h1 {
         text-align: center;
         font-weight: 700;
         margin-bottom: 0;
         margin-top: 0;
     }
-    .Features .Amet:hover{
+
+    .Features .Amet:hover {
         border: 1px solid #70418F;
     }
 }
+
 /**Features Ends**/
 
 /**Choose**/
-.choose{
+.choose {
     padding: 80px 0px 10px 0px;
     background: #FDF8FF;
 }
-.choose .text-btn-fot h1{
+
+.choose .text-btn-fot h1 {
     text-align: center;
     font-style: normal;
     font-size: 35px;
     font-weight: 600;
 }
-.choose .text-btn-fot p{
+
+.choose .text-btn-fot p {
     text-align: center;
     padding: 0px 0px 100px 0;
     font-size: 14px;
 }
-.choose .text-btn h1{
+
+.choose .text-btn h1 {
     font-style: normal;
     font-size: 25px;
     font-weight: 600;
 }
-.choose .menu-list{
+
+.choose .menu-list {
     padding: 0px 0 0 0;
 }
-.choose .menu-list a{
+
+.choose .menu-list a {
     text-decoration: none;
     color: #000;
 }
-.choose .menu-image-holder{
+
+.choose .menu-image-holder {
     padding: 0px 0 0 0;
 }
-.choose .menu-image-holder img{
+
+.choose .menu-image-holder img {
     width: 100%;
     display: block;
     margin: auto;
 }
-.choose .text-btn p{
+
+.choose .text-btn p {
     font-size: 15px;
     color: #000;
     line-height: 2;
     padding: 0 0 0px 0;
 }
-.mobile{
+
+.mobile {
     display: none;
 }
-.choosing .text-lent h1{
+
+.choosing .text-lent h1 {
     font-size: 20px;
     font-weight: 800;
     text-align: center;
     color: #000;
 }
-.choosing .text-lent p{
+
+.choosing .text-lent p {
     text-align: center;
     font-size: 17px;
     padding: 0px 0px 15px 0px;
 }
-.choose .parent .menu-list li{
+
+.choose .parent .menu-list li {
     list-style-type: none;
     text-decoration: none;
 }
-.choosing{
+
+.choosing {
     padding: 0px 0px 100px 0px;
     background: #FDF8FF;
 }
+
 @media (max-width:1000px) {
-    .choose .text-btn-fot p{
+    .choose .text-btn-fot p {
         padding: 0px 0px 30px 0;
     }
-    .choose .menu-image-holder img{
+
+    .choose .menu-image-holder img {
         display: none;
     }
-    .hide{
+
+    .hide {
         display: none;
     }
-    .parent{
+
+    .parent {
         display: none;
     }
-    .choose .text-btn p{
+
+    .choose .text-btn p {
         padding: 0 0 30px 0;
     }
-    .mobile{
+
+    .mobile {
         display: block;
     }
-    .choose{
+
+    .choose {
         padding: 80px 0px 0px 0px !important;
         background: #FDF8FF;
     }
-    
+
 }
-@media (max-width:1000px){
-    .choosing .text-lent h1{
+
+@media (max-width:1000px) {
+    .choosing .text-lent h1 {
         font-size: 17px;
         font-weight: 800;
         text-align: center;
         color: #000;
     }
-    .choose .text-btn{
+
+    .choose .text-btn {
         display: none;
     }
-    .choosing .text-lent p{
+
+    .choosing .text-lent p {
         text-align: center;
         font-size: 14px;
         padding: 0px 0px 15px 0px;
     }
-    .choosing{
+
+    .choosing {
         padding: 0px 0px 50px 0px;
         background: #FDF8FF;
     }
 }
+
 /*about styling*/
 
 @media (max-width:1200px) {
-    .choose .tool{
+    .choose .tool {
         display: none;
     }
-    .choose .text-btn p{
+
+    .choose .text-btn p {
         margin-bottom: 10px;
         font-size: 17px;
     }
 }
+
 @media (max-width:520px) {
-    .choose{
+    .choose {
         padding: 50px 0px 50px 0px;
     }
 }
+
 /**Choose Ends**/
 
 /**Digital**/
-.digital{
+.digital {
     padding: 70px 0px 50px 0px;
     background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660574125/OjaFunnel-Images/digita_y86zk5.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
-.mount h1{
+
+.mount h1 {
     text-align: center;
     font-size: 35px;
     font-weight: 900;
     color: #fff;
 }
-.mount .level{
+
+.mount .level {
     padding: 50px 0 0 0;
 }
-.mount button{
+
+.mount button {
     width: 40%;
     border-radius: 10px;
     margin: auto;
@@ -1894,152 +2279,183 @@ header nav .offcanvas-header button i{
     color: #000;
     margin-left: 40px !important;
 }
+
 @media (max-width:1200px) {
-    .mount h1{
+    .mount h1 {
         text-align: center;
         font-size: 25px;
         font-weight: 900;
         color: #fff;
     }
-    .mount button{
+
+    .mount button {
         width: 50%;
         margin-bottom: 10px !important;
         display: block !important;
         margin: auto !important;
         margin-top: 10px !important;
     }
-    .mount .level{
+
+    .mount .level {
         padding: 40px 0 0 0;
     }
 }
- 
+
 /**Digital Ends**/
 
 /**Footer**/
-.footer{
+.footer {
     padding: 100px 0px 0px 0px;
 }
-.footer .kit-font img{
+
+.footer .kit-font img {
     width: 50%;
     display: inline-block;
     margin: auto;
 }
+
 .footer .quick {
     padding: 60px 0 0 0;
 }
-.footer .quick a{
+
+.footer .quick a {
     text-decoration: none;
     color: #000;
 }
-.footer .kit-font p{
+
+.footer .kit-font p {
     padding: 10px 0 0 0;
     color: #000;
     font-size: 15px;
     text-align: left;
 }
-.footer .quick h1{
+
+.footer .quick h1 {
     font-size: 25px;
     margin-top: 0;
     padding: 0 0 20px 0;
     margin-bottom: 0;
     font-weight: 700;
 }
-.footer .quick ul li{
+
+.footer .quick ul li {
     list-style: none;
     color: #000;
     font-size: 15px;
     margin-left: -30px;
     padding: 0 0 8px;
 }
+
 @media (max-width:900px) {
-    .footer .kit-font img{
+    .footer .kit-font img {
         width: 40%;
-        display:block;
+        display: block;
         margin: auto;
     }
-    .paff li{
+
+    .paff li {
         text-align: center;
     }
-    .footer .kit-font p{
-       text-align: center;
+
+    .footer .kit-font p {
+        text-align: center;
     }
-    .digital{
+
+    .digital {
         padding: 55px 0px 55px 0px;
     }
+
     .footer .quick {
         padding: 20px 0 0 0;
     }
-    .footer .quick h1{
+
+    .footer .quick h1 {
         text-align: center;
     }
-    .footer .quick ul li{
+
+    .footer .quick ul li {
         text-align: center;
     }
-    .footer .search-bar{
+
+    .footer .search-bar {
         width: 60%;
         display: block !important;
         margin: auto;
     }
-    .footer .last-fot{
+
+    .footer .last-fot {
         padding: 50px 0 0 0;
     }
-    .footer .logo-details{
+
+    .footer .logo-details {
         display: block !important;
         margin: auto !important;
         width: 40%;
         padding: 40px 0 0 0 !important;
     }
 }
+
 @media (max-width:768px) {
-    .footer .logo-details{
+    .footer .logo-details {
         display: block !important;
         margin: auto !important;
         width: 50%;
         padding: 40px 0 0 0 !important;
     }
-    .footer{
+
+    .footer {
         padding: 50px 0px 0px 0px;
     }
-    .footer .quick h1{
+
+    .footer .quick h1 {
         padding: 0 0 15px 0;
     }
 }
+
 @media (max-width:500px) {
-    .footer .logo-details{
+    .footer .logo-details {
         display: block !important;
         margin: auto !important;
         width: 60% !important;
         padding: 40px 0 0 0 !important;
     }
-    .footer .search-bar{
+
+    .footer .search-bar {
         width: 80%;
         display: block !important;
         margin: auto;
     }
 }
+
 @media (max-width:400px) {
-    .footer .logo-details{
+    .footer .logo-details {
         display: block !important;
         margin: auto !important;
         width: 70% !important;
         padding: 40px 0 0 0 !important;
     }
 }
-.footer.search-bar .input-group>.form-control, .input-group>.form-select {
+
+.footer.search-bar .input-group>.form-control,
+.input-group>.form-select {
     position: relative;
     flex: 1 1 auto;
     width: 0.5%;
     min-width: 0;
 }
-.footer .search-bar .input-group>.form-control, .input-group>.form-select:focus{
-    outline:0px !important;
-    -webkit-appearance:none;
+
+.footer .search-bar .input-group>.form-control,
+.input-group>.form-select:focus {
+    outline: 0px !important;
+    -webkit-appearance: none;
     box-shadow: none !important;
     border: 1px solid #714091;
 }
-.footer .search-bar .input-group>.form-control::placeholder{
+
+.footer .search-bar .input-group>.form-control::placeholder {
     font-size: 13px;
 }
+
 .footer .search-bar .input-group-text {
     display: flex;
     align-items: center;
@@ -2051,10 +2467,11 @@ header nav .offcanvas-header button i{
     text-align: center;
     cursor: pointer;
     white-space: nowrap;
-    border:none;
+    border: none;
     background-color: #714091;
     border-radius: 0.25rem;
 }
+
 .footer .search-bar .form-control {
     display: block;
     width: 10%;
@@ -2066,12 +2483,14 @@ header nav .offcanvas-header button i{
     color: #212529;
     background-color: #fff;
     background-clip: padding-box;
-    border:none;
+    border: none;
 }
-.footer .last-fot{
+
+.footer .last-fot {
     padding: 80px 0 0 0;
 }
-.footer .last-fot h1{
+
+.footer .last-fot h1 {
     text-align: center;
     font-size: 25px;
     color: #000;
@@ -2079,30 +2498,37 @@ header nav .offcanvas-header button i{
     font-weight: 400;
     font-size: 30px;
 }
-.footer .last-fott{
+
+.footer .last-fott {
     padding: 20px 0 0 0;
 }
-.footer .last-fott h1{
+
+.footer .last-fott h1 {
     text-align: center;
     font-size: 17px;
     color: #000;
     font-style: normal;
     font-weight: 400;
 }
-.footer .last-fot a{
+
+.footer .last-fot a {
     text-decoration: none;
     color: #000;
 }
-.footer .top .media-icons{
+
+.footer .top .media-icons {
     display: flex;
 }
-.footer .logo-details{
+
+.footer .logo-details {
     padding: 50px 0px 0px 65px;
 }
-.footer .top .media-icons{
+
+.footer .top .media-icons {
     padding: 0px 0px 30px 0;
 }
-.footer .top .media-icons a{
+
+.footer .top .media-icons a {
     height: 40px;
     width: 40px;
     margin: 0 25px;
@@ -2114,198 +2540,240 @@ header nav .offcanvas-header button i{
     text-decoration: none;
     transition: all 0.4s ease;
 }
+
 @media (max-width:1300px) {
-    .footer .top .media-icons a{
+    .footer .top .media-icons a {
         margin: 0 8px;
     }
 }
-.footer li{
+
+.footer li {
     list-style-type: none;
     padding-left: -10px;
     font-size: 13px;
 }
-.footer li a{
+
+.footer li a {
     text-decoration: none;
     color: #000;
 }
-.footer li a:hover{
+
+.footer li a:hover {
     text-decoration: underline;
 }
-.top .media-icons a:nth-child(1){
+
+.top .media-icons a:nth-child(1) {
     background: #4267B2;
 }
-.top .media-icons a:nth-child(1):hover{
+
+.top .media-icons a:nth-child(1):hover {
     color: #4267B2;
     background: #fff;
 }
-.top .media-icons a:nth-child(2){
+
+.top .media-icons a:nth-child(2) {
     background: #1DA1F2;
 }
-.top .media-icons a:nth-child(2):hover{
+
+.top .media-icons a:nth-child(2):hover {
     color: #1DA1F2;
     background: #fff;
 }
-.top .media-icons a:nth-child(3){
+
+.top .media-icons a:nth-child(3) {
     background: #E1306C;
 }
-.top .media-icons a:nth-child(3):hover{
+
+.top .media-icons a:nth-child(3):hover {
     color: #E1306C;
     background: #fff;
 }
-.top .media-icons a:nth-child(4){
+
+.top .media-icons a:nth-child(4) {
     background: #0077B5;
 }
-.top .media-icons a:nth-child(4):hover{
+
+.top .media-icons a:nth-child(4):hover {
     color: #0077B5;
     background: #fff;
 }
-.top .media-icons a:nth-child(5){
+
+.top .media-icons a:nth-child(5) {
     background: #FF0000;
 }
-.top .media-icons a:nth-child(5):hover{
+
+.top .media-icons a:nth-child(5):hover {
     color: #FF0000;
     background: #fff;
 }
-.footer .copy{
+
+.footer .copy {
     text-align: center;
     padding: 30px 0 0 0;
     font-size: 14px;
 }
+
 /**Footer Ends**/
 
 /**Contact-us**/
-.cont-welcome{
+.cont-welcome {
     padding: 150px 0px 120px 0px;
     /* background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660749209/OjaFunnel-Images/contact_q1fl8l.jpg);
     background-size: cover;
     background-repeat: no-repeat; */
-    background-color:#2B8DE6;
+    background-color: #2B8DE6;
 }
-.cont-welcome .text h1{
+
+.cont-welcome .text h1 {
     text-align: center;
     font-size: 30px;
     font-weight: 900;
     color: #fff;
 }
-.cont-welcome .text p{
+
+.cont-welcome .text p {
     text-align: center;
     color: #fff;
     font-size: 14px;
     font-weight: 500;
 }
-.Phone{
+
+.Phone {
     margin-top: -70px;
     padding: 0 0 50px 0px;
 }
-.Phone .btn-call{
+
+.Phone .btn-call {
     background-color: #FFFFFF;
     border-radius: 10px;
     box-shadow: 1px 4px 30px rgba(10, 0, 0, 0.09);
     padding: 0px 0px 0px 0px;
     margin-bottom: 30px;
 }
+
 .Phone .btn-call .rep {
     padding: 30px 20px 20px 20px;
 
 }
-.Phone .btn-call .rep img{
+
+.Phone .btn-call .rep img {
     width: 17%;
     display: block;
     margin: auto;
 }
-.Phone .btn-call .rep .tect{
+
+.Phone .btn-call .rep .tect {
     width: 15% !important;
 }
-.Phone .btn-call .rep .tectt{
+
+.Phone .btn-call .rep .tectt {
     width: 12% !important;
 }
-.Phone .btn-call .rep h6{
+
+.Phone .btn-call .rep h6 {
     padding: 20px 0px 0px 0;
     font-size: 15px;
     font-weight: 700;
     color: #000;
     text-align: center;
 }
-.Phone .btn-call .rep .line{
+
+.Phone .btn-call .rep .line {
     text-align: center;
     font-size: 13px;
     color: #A7A4A4;
 }
+
 @media (max-width:1000px) {
-    .Phone .btn-call{
-    margin-bottom: 20px;
+    .Phone .btn-call {
+        margin-bottom: 20px;
     }
-    .location .btn-loval iframe{
+
+    .location .btn-loval iframe {
         width: 100%;
         height: 250px !important;
     }
+
     .location .btn-lovall {
         border-radius: 10px;
         width: 100%;
         padding: 20px 0px 0px 0px !important;
     }
-    .Phone .btn-call .rep img{
+
+    .Phone .btn-call .rep img {
         width: 15%;
         display: block;
         margin: auto;
     }
-    .Phone .btn-call .rep .tect{
+
+    .Phone .btn-call .rep .tect {
         width: 14% !important;
     }
-    .Phone .btn-call .rep .tectt{
+
+    .Phone .btn-call .rep .tectt {
         width: 12% !important;
     }
-    .location .btn-lovall h5{
+
+    .location .btn-lovall h5 {
         font-size: 20px;
         font-weight: 600;
         padding: 30px 0px 20px 0px !important;
         margin-top: 20px;
     }
 }
+
 @media (max-width:520px) {
-    .location{
+    .location {
         padding: 10px 0px 10px 0px;
     }
 }
-.location{
+
+.location {
     padding: 20px 0px 50px 0px;
 }
-.location .btn-loval h5{
+
+.location .btn-loval h5 {
     font-size: 20px;
     font-weight: 600;
     padding: 0px 0px 20px 0px;
 }
-.location .btn-loval iframe{
+
+.location .btn-loval iframe {
     width: 100%;
     height: 410px;
 }
-.location .btn-lovall h5{
+
+.location .btn-lovall h5 {
     font-size: 20px;
     font-weight: 600;
     padding: 0px 0px 20px 0px;
     margin-top: -20px;
 }
-.location .btn-lovall{
+
+.location .btn-lovall {
     border-radius: 10px;
     width: 100%;
     padding: 20px 0px 0px 50px;
 }
+
 .location .btn-lovall .Visit .login {
     background-color: #fff;
     border-radius: 10px;
     width: 100%;
     padding: 0px 0px 0px 0px;
 }
-.location .btn-lovall .Visit .login label{
+
+.location .btn-lovall .Visit .login label {
     font-size: 13px;
     margin-bottom: -0px;
     z-index: 999 !important;
     position: relative;
     background-color: #fff;
     margin-left: 30px;
-    padding: 0px 5px 0px 5px ;
+    padding: 0px 5px 0px 5px;
 }
-.location .btn-lovall .Visit .login input{
+
+.location .btn-lovall .Visit .login input {
     display: block;
     width: 100%;
     margin-top: -10px;
@@ -2317,7 +2785,8 @@ header nav .offcanvas-header button i{
     font-size: 16px;
     transition: 0.6s;
 }
-.location .btn-lovall .Visit .login textarea{
+
+.location .btn-lovall .Visit .login textarea {
     display: block;
     width: 100%;
     margin-top: -10px;
@@ -2329,15 +2798,18 @@ header nav .offcanvas-header button i{
     font-size: 16px;
     transition: 0.6s;
 }
-.location .btn-lovall .Visit input::placeholder{
+
+.location .btn-lovall .Visit input::placeholder {
     font-size: 10px !important;
     color: #999797;
 }
-.location .btn-lovall .Visit textarea::placeholder{
+
+.location .btn-lovall .Visit textarea::placeholder {
     font-size: 10px !important;
     color: #999797;
 }
-.location .btn-lovall .Visit .login .bi{
+
+.location .btn-lovall .Visit .login .bi {
     position: absolute;
     margin-top: 1px;
     margin-left: 15px;
@@ -2346,7 +2818,8 @@ header nav .offcanvas-header button i{
     padding-top: 0px;
     color: #000;
 }
-.location .btn-lovall .Visit .login button{
+
+.location .btn-lovall .Visit .login button {
     width: 100%;
     padding: 10px 10px 10px 10px !important;
     text-align: center;
@@ -2356,47 +2829,55 @@ header nav .offcanvas-header button i{
     color: #fff;
     border-radius: 10px;
 }
+
 /**Contact-us Ends**/
 
 /**Faqs**/
-.faq-welcome{
+.faq-welcome {
     padding: 150px 0px 50px 0px;
     /* background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660749209/OjaFunnel-Images/contact_q1fl8l.jpg);
     background-size: cover;
     background-repeat: no-repeat; */
-    background-color:#2B8DE6;
+    background-color: #2B8DE6;
 }
-.faq-welcome .text h1{
+
+.faq-welcome .text h1 {
     text-align: center;
     font-size: 30px;
     font-weight: 900;
     color: #fff;
 }
-.faq-welcome .text p{
+
+.faq-welcome .text p {
     text-align: center;
     color: #fff;
     font-size: 14px;
     font-weight: 500;
 }
-.Ferent{
+
+.Ferent {
     padding: 100px 0px 30px 0px;
 }
-.Ferent .btn-area{
+
+.Ferent .btn-area {
     width: 100%;
 }
-.Ferent .btn-area .tagged{
+
+.Ferent .btn-area .tagged {
     padding: 10px 0px 10px 0px;
     border-radius: 10px 10px 0px 0px;
     background-color: #fff;
     border: 1px solid #E0E0E0;
 }
-.Ferent .btn-area .tagged h1{
+
+.Ferent .btn-area .tagged h1 {
     font-size: 25px;
     font-weight: 500;
     margin-top: 0;
     margin-bottom: 0;
     padding: 0px 0px 0px 20px;
 }
+
 .Ferent .cate .accordion-button:focus {
     z-index: 3;
     outline: 0;
@@ -2404,56 +2885,65 @@ header nav .offcanvas-header button i{
     outline: none !important;
     box-shadow: none !important;
 }
-.Ferent .cate .accordion-item :hover{
+
+.Ferent .cate .accordion-item :hover {
     background-color: #70418F;
     color: #fff;
 }
-.Ferent .cate .accordion-header{
+
+.Ferent .cate .accordion-header {
     font-size: 12px !important;
 }
+
 .Ferent .cate .accordion-item {
-    border: none!important;
+    border: none !important;
 }
-.Ferent .expand{
+
+.Ferent .expand {
     padding: 0px 0px 20px 0px;
     border-radius: 0px 0px 10px 10px;
     background-color: #fff;
     border: 1px solid #E0E0E0;
     font-size: 12px !important;
 }
-.Ferent .cate .accordion-button::after{
+
+.Ferent .cate .accordion-button::after {
     color: #fff !important;
 }
+
 .Ferent .accord .accordion-item {
     border: 1px solid #E0E0E0 !important;
     padding: 5px;
     margin: 0px;
     margin-bottom: 10px;
-    outline:0px !important;
-    -webkit-appearance:none;
+    outline: 0px !important;
+    -webkit-appearance: none;
     box-shadow: none !important;
     border-radius: 6px;
     background: #FFFFFF;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
 }
-.Ferent .accord .accordion-body{
+
+.Ferent .accord .accordion-body {
     font-size: 15px !important;
 }
+
 .Ferent .accord .accordion-button {
     position: relative;
     display: flex;
     align-items: center;
     width: 100%;
     padding: 1rem 1.25rem;
-    font-size:15px !important;
+    font-size: 15px !important;
     color: #212529;
     text-align: left;
     background-color: #fff;
     border: 0;
     border-radius: 0;
     overflow-anchor: none;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,border-radius .15s ease;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, border-radius .15s ease;
 }
+
 .Ferent .accord .accordion-button:focus {
     z-index: 3;
     outline: 0;
@@ -2461,85 +2951,102 @@ header nav .offcanvas-header button i{
     outline: none !important;
     box-shadow: none !important;
 }
+
 .accordion-button:not(.collapsed) {
     color: #000 !important;
     background-color: #fff !important;
     box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
 }
-.Ferent .accord.accordion-item  input:focus{
-    outline:0px !important;
-    -webkit-appearance:none;
+
+.Ferent .accord.accordion-item input:focus {
+    outline: 0px !important;
+    -webkit-appearance: none;
     box-shadow: none !important;
 }
-.faq-text{
+
+.faq-text {
     border: 1px solid #e7f1ff;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 10px;
 }
-.faq .faq-text h6{
+
+.faq .faq-text h6 {
     font-size: 20px;
 }
-.faq .faq-text .line-rule{
+
+.faq .faq-text .line-rule {
     width: 50px;
-    height: 3px;    
+    height: 3px;
     background-color: #000;
 }
-.faq .faq-text .gene{
+
+.faq .faq-text .gene {
     margin-top: 30px;
     padding: 10px 0px 10px 10px;
 }
-.faq .faq-text p{
+
+.faq .faq-text p {
     font-size: 15px;
     padding: 10px 0px 10px 10px;
 }
+
 @media (max-width:1000px) {
-    .Ferent .btn-area{
+    .Ferent .btn-area {
         margin-bottom: 20px;
     }
 }
+
 /**Faqs Ends**/
 
 /**Privacy**/
-.privacy{
+.privacy {
     padding: 100px 0px 100px 0px;
 }
-.privacy .text{
+
+.privacy .text {
     margin-bottom: 20px;
 }
-.privacy .text h1{
+
+.privacy .text h1 {
     font-size: 25px;
     font-weight: 800;
 }
-.privacy .text p{
+
+.privacy .text p {
     font-size: 13px;
     line-height: 2;
 }
+
 @media (max-width:800px) {
-    .privacy{
+    .privacy {
         padding: 50px 0px 50px 0px;
     }
 }
+
 /**Privacy Ends**/
 
 /** Email-Section**/
-.email-section{
+.email-section {
     padding: 140px 0px 70px 0px;
     background: linear-gradient(94.78deg, #373EA4 1.04%, #6D54B2 81.78%);
 }
-.email-section .btn-text h1{
+
+.email-section .btn-text h1 {
     padding: 50px 0px 0px 0px;
     font-size: 40px;
     font-weight: 900;
     color: #fff;
 }
-.email-section .btn-text p{
+
+.email-section .btn-text p {
     padding: 10px 0px 0px 0px;
     font-size: 20px;
     font-weight: 500;
     color: #fff;
 }
-.email-section .btn-text button{
+
+.email-section .btn-text button {
     margin-top: 20px;
     padding: 15px 40px 15px 40px;
     border: 1px solid #fff;
@@ -2548,50 +3055,58 @@ header nav .offcanvas-header button i{
     background: 0 0;
     font-size: 15px;
 }
-.email-section .context img{
+
+.email-section .context img {
     width: 100%;
     display: block;
     margin: auto;
 }
+
 @media (max-width:1300px) {
-    .email-section .btn-text h1{
+    .email-section .btn-text h1 {
         padding: 50px 0px 0px 0px;
         font-size: 40px;
         font-weight: 900;
         color: #fff;
     }
-    .email-section{
+
+    .email-section {
         padding: 140px 0px 50px 0px;
     }
 }
+
 @media (max-width:1226px) {
-    .email-section .btn-text h1{
+    .email-section .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 35px;
         font-weight: 900;
         color: #fff;
     }
 }
+
 @media (max-width:1000px) {
-    .email-section .btn-text h1{
+    .email-section .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 40px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .email-section .btn-text p{
+
+    .email-section .btn-text p {
         text-align: center;
     }
-    .email-section .btn-text button{
+
+    .email-section .btn-text button {
         display: block;
         margin: auto;
         margin-bottom: 15px;
         padding: 15px 60px 15px 60px;
     }
 }
+
 @media (max-width:780px) {
-    .email-section .btn-text h1{
+    .email-section .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 35px;
         font-weight: 900;
@@ -2599,51 +3114,59 @@ header nav .offcanvas-header button i{
         text-align: center;
     }
 }
+
 @media (max-width:520px) {
-    .email-section .btn-text h1{
+    .email-section .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 33px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .email-section .btn-text button{
+
+    .email-section .btn-text button {
         font-size: 12px;
     }
-    .email-section .btn-text p{
+
+    .email-section .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 18px;
         font-weight: 500;
         color: #fff;
     }
-    .email-section{
+
+    .email-section {
         padding: 100px 0px 70px 0px;
     }
 }
+
 @media (max-width:450px) {
-    .email-section .btn-text h1{
+    .email-section .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 26px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .email-section .btn-text p{
+
+    .email-section .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 16px;
         font-weight: 500;
         color: #fff;
     }
 }
+
 @media (max-width:370px) {
-    .email-section .btn-text h1{
+    .email-section .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 25px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .email-section .btn-text p{
+
+    .email-section .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 15px;
         font-weight: 400;
@@ -2653,23 +3176,26 @@ header nav .offcanvas-header button i{
 
 /** Email-Section Ends**/
 /** Chat-Automation**/
-.chat-automation{
+.chat-automation {
     padding: 140px 0px 70px 0px;
-    background: linear-gradient(94.78deg, #34BAC3 1.04%, #6897DD 81.78%);   
+    background: linear-gradient(94.78deg, #34BAC3 1.04%, #6897DD 81.78%);
 }
-.chat-automation .btn-text h1{
+
+.chat-automation .btn-text h1 {
     padding: 50px 0px 0px 0px;
     font-size: 40px;
     font-weight: 900;
     color: #fff;
 }
-.chat-automation .btn-text p{
+
+.chat-automation .btn-text p {
     padding: 10px 0px 0px 0px;
     font-size: 20px;
     font-weight: 500;
     color: #fff;
 }
-.chat-automation .btn-text button{
+
+.chat-automation .btn-text button {
     margin-top: 20px;
     padding: 15px 40px 15px 40px;
     border: 1px solid #fff;
@@ -2678,50 +3204,58 @@ header nav .offcanvas-header button i{
     background: 0 0;
     font-size: 15px;
 }
-.chat-automation .context img{
+
+.chat-automation .context img {
     width: 100%;
     display: block;
     margin: auto;
 }
+
 @media (max-width:1300px) {
-    .chat-automation .btn-text h1{
+    .chat-automation .btn-text h1 {
         padding: 50px 0px 0px 0px;
         font-size: 40px;
         font-weight: 900;
         color: #fff;
     }
-    .chat-automation{
+
+    .chat-automation {
         padding: 140px 0px 50px 0px;
     }
 }
+
 @media (max-width:1226px) {
-    .chat-automation .btn-text h1{
+    .chat-automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 35px;
         font-weight: 900;
         color: #fff;
     }
 }
+
 @media (max-width:1000px) {
-    .chat-automation .btn-text h1{
+    .chat-automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 40px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .chat-automation .btn-text p{
+
+    .chat-automation .btn-text p {
         text-align: center;
     }
-    .chat-automation .btn-text button{
+
+    .chat-automation .btn-text button {
         display: block;
         margin: auto;
         margin-bottom: 15px;
         padding: 15px 60px 15px 60px;
     }
 }
+
 @media (max-width:780px) {
-    .chat-automation .btn-text h1{
+    .chat-automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 35px;
         font-weight: 900;
@@ -2729,51 +3263,59 @@ header nav .offcanvas-header button i{
         text-align: center;
     }
 }
+
 @media (max-width:520px) {
-    .chat-automation .btn-text h1{
+    .chat-automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 33px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .chat-automation .btn-text button{
+
+    .chat-automation .btn-text button {
         font-size: 12px;
     }
-    .chat-automation .btn-text p{
+
+    .chat-automation .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 18px;
         font-weight: 500;
         color: #fff;
     }
-    .chat-automation{
+
+    .chat-automation {
         padding: 100px 0px 70px 0px;
     }
 }
+
 @media (max-width:450px) {
-    .chat-automation .btn-text h1{
+    .chat-automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 26px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .chat-automation .btn-text p{
+
+    .chat-automation .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 16px;
         font-weight: 500;
         color: #fff;
     }
 }
+
 @media (max-width:370px) {
-    .chat-automation .btn-text h1{
+    .chat-automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 25px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .chat-automation .btn-text p{
+
+    .chat-automation .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 15px;
         font-weight: 400;
@@ -2784,23 +3326,26 @@ header nav .offcanvas-header button i{
 /** Chat-Automation Ends**/
 
 /** Automation-Section**/
-.Automation{
+.Automation {
     padding: 140px 0px 70px 0px;
-    background-color: #2B8DE6;  
+    background-color: #2B8DE6;
 }
-.Automation .btn-text h1{
+
+.Automation .btn-text h1 {
     padding: 50px 0px 0px 0px;
     font-size: 40px;
     font-weight: 900;
     color: #fff;
 }
-.Automation .btn-text p{
+
+.Automation .btn-text p {
     padding: 10px 0px 0px 0px;
     font-size: 20px;
     font-weight: 500;
     color: #fff;
 }
-.Automation .btn-text button{
+
+.Automation .btn-text button {
     margin-top: 20px;
     padding: 15px 40px 15px 40px;
     border: 1px solid #fff;
@@ -2809,50 +3354,58 @@ header nav .offcanvas-header button i{
     background: 0 0;
     font-size: 15px;
 }
-.Automation .context img{
+
+.Automation .context img {
     width: 100%;
     display: block;
     margin: auto;
 }
+
 @media (max-width:1300px) {
-    .Automation .btn-text h1{
+    .Automation .btn-text h1 {
         padding: 50px 0px 0px 0px;
         font-size: 40px;
         font-weight: 900;
         color: #fff;
     }
-    .Automation{
+
+    .Automation {
         padding: 140px 0px 50px 0px;
     }
 }
+
 @media (max-width:1226px) {
-    .Automation .btn-text h1{
+    .Automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 35px;
         font-weight: 900;
         color: #fff;
     }
 }
+
 @media (max-width:1000px) {
-    .Automation .btn-text h1{
+    .Automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 40px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .Automation .btn-text p{
+
+    .Automation .btn-text p {
         text-align: center;
     }
-    .Automation .btn-text button{
+
+    .Automation .btn-text button {
         display: block;
         margin: auto;
         margin-bottom: 15px;
         padding: 15px 60px 15px 60px;
     }
 }
+
 @media (max-width:780px) {
-    .Automation .btn-text h1{
+    .Automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 35px;
         font-weight: 900;
@@ -2860,51 +3413,59 @@ header nav .offcanvas-header button i{
         text-align: center;
     }
 }
+
 @media (max-width:520px) {
-    .Automation .btn-text h1{
+    .Automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 33px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .Automation .btn-text button{
+
+    .Automation .btn-text button {
         font-size: 12px;
     }
-    .Automation .btn-text p{
+
+    .Automation .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 18px;
         font-weight: 500;
         color: #fff;
     }
-    .Automation{
+
+    .Automation {
         padding: 100px 0px 70px 0px;
     }
 }
+
 @media (max-width:450px) {
-    .Automation .btn-text h1{
+    .Automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 20px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .Automation .btn-text p{
+
+    .Automation .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 14px;
         font-weight: 500;
         color: #fff;
     }
 }
+
 @media (max-width:370px) {
-    .Automation .btn-text h1{
+    .Automation .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 21px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .Automation .btn-text p{
+
+    .Automation .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 15px;
         font-weight: 400;
@@ -2915,23 +3476,26 @@ header nav .offcanvas-header button i{
 /** Automation-Section Ends**/
 
 /** Page-Builder **/
-.page-builder{
+.page-builder {
     padding: 140px 0px 70px 0px;
-    background: linear-gradient(85.46deg, #A219D8 -3.83%, #E656DA 82.54%);   
+    background: linear-gradient(85.46deg, #A219D8 -3.83%, #E656DA 82.54%);
 }
-.page-builder .btn-text h1{
+
+.page-builder .btn-text h1 {
     padding: 50px 0px 0px 0px;
     font-size: 40px;
     font-weight: 900;
     color: #fff;
 }
-.page-builder .btn-text p{
+
+.page-builder .btn-text p {
     padding: 10px 0px 0px 0px;
     font-size: 20px;
     font-weight: 500;
     color: #fff;
 }
-.page-builder .btn-text button{
+
+.page-builder .btn-text button {
     margin-top: 20px;
     padding: 15px 40px 15px 40px;
     border: 1px solid #fff;
@@ -2940,50 +3504,58 @@ header nav .offcanvas-header button i{
     background: 0 0;
     font-size: 15px;
 }
-.page-builder .context img{
+
+.page-builder .context img {
     width: 100%;
     display: block;
     margin: auto;
 }
+
 @media (max-width:1300px) {
-    .page-builder .btn-text h1{
+    .page-builder .btn-text h1 {
         padding: 50px 0px 0px 0px;
         font-size: 40px;
         font-weight: 900;
         color: #fff;
     }
-    .page-builder{
+
+    .page-builder {
         padding: 140px 0px 50px 0px;
     }
 }
+
 @media (max-width:1226px) {
-    .page-builder .btn-text h1{
+    .page-builder .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 35px;
         font-weight: 900;
         color: #fff;
     }
 }
+
 @media (max-width:1000px) {
-    .page-builder .btn-text h1{
+    .page-builder .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 40px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .page-builder .btn-text p{
+
+    .page-builder .btn-text p {
         text-align: center;
     }
-    .page-builder .btn-text button{
+
+    .page-builder .btn-text button {
         display: block;
         margin: auto;
         margin-bottom: 15px;
         padding: 15px 60px 15px 60px;
     }
 }
+
 @media (max-width:780px) {
-    .page-builder .btn-text h1{
+    .page-builder .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 35px;
         font-weight: 900;
@@ -2991,57 +3563,66 @@ header nav .offcanvas-header button i{
         text-align: center;
     }
 }
+
 @media (max-width:520px) {
-    .page-builder .btn-text h1{
+    .page-builder .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 33px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .page-builder .btn-text button{
+
+    .page-builder .btn-text button {
         font-size: 12px;
     }
-    .page-builder .btn-text p{
+
+    .page-builder .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 18px;
         font-weight: 500;
         color: #fff;
     }
-    .page-builder{
+
+    .page-builder {
         padding: 100px 0px 70px 0px;
     }
 }
+
 @media (max-width:450px) {
-    .page-builder .btn-text h1{
+    .page-builder .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 26px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .page-builder .btn-text p{
+
+    .page-builder .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 16px;
         font-weight: 500;
         color: #fff;
     }
 }
+
 @media (max-width:370px) {
-    .page-builder .btn-text h1{
+    .page-builder .btn-text h1 {
         padding: 40px 0px 0px 0px;
         font-size: 25px;
         font-weight: 900;
         color: #fff;
         text-align: center;
     }
-    .page-builder .btn-text p{
+
+    .page-builder .btn-text p {
         padding: 10px 0px 0px 0px;
         font-size: 15px;
         font-weight: 400;
         color: #fff;
     }
 }
+
 /** Page-Builder Ends**/
 
 /** Automation-Section **/
@@ -3061,7 +3642,7 @@ header nav .offcanvas-header button i{
     right: 0;
     bottom: 0;
     width: 100%;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0, 0, 0, 0.75);
     z-index: 99999;
 }
 
@@ -3076,24 +3657,180 @@ header nav .offcanvas-header button i{
 }
 
 .loading-content {
-	position: relative;
-	border: 16px solid #f3f3f3; /* Light grey */
-	border-top: 16px solid #70418F; /* Blue */
-	border-radius: 50%;
-	width: 50px;
-	height: 50px;
+    position: relative;
+    border: 16px solid #f3f3f3;
+    /* Light grey */
+    border-top: 16px solid #70418F;
+    /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
     margin: 2em;
-    display: inline-block; 
+    display: inline-block;
     vertical-align: middle;
-	animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
+
 /* Pricing */
-.Pricing{
+.Pricing {
     padding: 100px 0px;
 }
+
+.Pricing .pricing-intro h1 {
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+    padding: 0px 0px 30px 0px;
+}
+
+.price-switcher-container {
+    margin-bottom: 40px !important;
+    display: block;
+    margin: auto;
+}
+
+.price-switcher {
+    display: flex;
+    align-self: flex-start;
+}
+
+@media (max-width:992px) {
+    .price-switcher {
+        display: block;
+        width: 50%;
+        margin: auto;
+        text-align: center;
+    }
+    .price-switcher-period__yearly:not(.active)::after{
+        display: none;
+    }
+    .price-switcher-title {
+        text-align: center;
+    }
+}
+
+.price-switcher-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #142D63;
+}
+
+.price-switcher-period {
+    font-size: 18px;
+    padding: 11px 20px;
+    color: #1BA0FF;
+    background: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.price-switcher-period__monthly {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.price-switcher-period__yearly {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.price-switcher-period.active {
+    background-color: #1BA0FF;
+    color: #fff;
+    cursor: default;
+}
+
+.price-switcher-period__yearly:not(.active)::after {
+    content: ' ';
+    background: url(https://d1yei2z3i6k35z.cloudfront.net/161/60effbf72221b_image24.png);
+    background-size: cover;
+    height: 100px;
+    width: 89px;
+    position: absolute;
+    top: -76px;
+    left: 51px;
+}
+
+.Pricing .message {
+    text-align: center;
+}
+
+.Pricing .message p {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px 0px 10px 0px;
+}
+
+.Pricing .message h1 {
+    font-size: 22px;
+    font-weight: 600;
+    padding: 10px 0px 10px 0px;
+}
+
+.Pricing .message h1 span {
+    font-size: 15px;
+}
+
+.Pricing .message button {
+    background: rgb(0, 160, 255);
+    border: 3px solid rgb(0, 160, 255);
+    color: rgb(255, 255, 255);
+    width: auto;
+    padding: 5px 15px;
+    font-size: 12px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+.table> :not(caption)>*>* {
+    padding: 0.7rem 0.7rem !important;
+    border-bottom-width: 0.5px !important;
+    box-shadow: none !important;
+}
+
+.responsive {
+    margin-top: 30px !important;
+    border-color: rgb(203, 244, 255) !important;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 5px !important;
+}
+
+.responsive thead {
+    font-size: 14px;
+}
+
+.responsive th {
+    border-right: 1px solid rgb(203, 244, 255) !important;
+    font-size: 14px;
+}
+
+.responsive thead {
+    border-bottom: 1px solid rgb(203, 244, 255) !important;
+}
+
+.responsive tbody {
+    border-bottom: 1px solid rgb(203, 244, 255) !important;
+}
+
+.responsive tr {
+    text-align: center;
+}
+
+.whatapp {
+    border-bottom: none !important;
+}
+
 /* Pricing Ends*/
