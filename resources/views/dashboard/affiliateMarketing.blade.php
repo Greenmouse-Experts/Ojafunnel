@@ -93,20 +93,17 @@
                                             <th>Type</th>
                                             <th>Commission (%)</th>
                                             <th>Affiliate Link</th>
-                                            <th>Status </th>
-                                            <th>Sales</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
+                                    @foreach($referrals as $referral)
                                     <tbody>
                                         <tr>
                                             <th scope="row">1</th>
-                                            <td>Hamzat</td>
-                                            <td>Level 1</td>
+                                            <td>{{$referral->first_name}} {{$referral->last_name}}</td>
+                                            <td>Tier 1</td>
                                             <td>10%</td>
-                                            <td>chukka/affiliatelink</td>
-                                            <td>Active</td>
-                                            <td>Active</td>
+                                            <td>{{Auth::user()->affiliate_link}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -121,29 +118,8 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Hamzat</td>
-                                            <td>Level 2</td>
-                                            <td>10%</td>
-                                            <td>chukka/affiliatelink</td>
-                                            <td>Active</td>
-                                            <td>Active</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Options
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                        <li><a class="dropdown-item" href="#">Enable</a></li>
-                                                        <li><a class="dropdown-item" href="#">Disable</a></li>
-                                                        <li><a class="dropdown-item" href="#">Delete</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
                                     </tbody>
+                                    @endforeach
                                 </table>
                             </div>
 
