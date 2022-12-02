@@ -26,7 +26,6 @@
         <!-- Footer -->
             @includeIf('layouts.frontend-footer')
         <!-- Footer Ends -->         
-
         <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
         <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
         <script src="{{URL::asset('assets/js/main.js')}}"></script>
