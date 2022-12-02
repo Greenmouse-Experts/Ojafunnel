@@ -11,6 +11,8 @@ Route::get('pages/{page}', [App\Http\Controllers\PageController::class, 'viewPag
     Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
     // Faqs
     Route::get('/faqs', [App\Http\Controllers\HomePageController::class, 'faqs'])->name('faqs');
+     // pricing
+     Route::get('/pricing', [App\Http\Controllers\HomePageController::class, 'pricing'])->name('pricing');
     // Contact Us
     Route::get('/contact', [App\Http\Controllers\HomePageController::class, 'contact'])->name('contact');
     // Login

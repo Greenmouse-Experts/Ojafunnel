@@ -21,6 +21,13 @@ class HomePageController extends Controller
     {
         return view('frontend.faqs');
     }
+
+    //  Pring
+    public function pricing()
+    {
+        return view('frontend.pricing');
+    }
+
     // Contact-Us
     public function contact()
     {

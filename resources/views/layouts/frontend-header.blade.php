@@ -192,6 +192,11 @@
                             </ul>
                         </li>
                         <li class="nav-item">
+                            <a href="{{route('pricing')}}" class="nav-link {{ (request()->is('pricing')) ? 'active' : '' }}" class="routers">
+                                Pricing
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route('faqs')}}" class="nav-link {{ (request()->is('faqs')) ? 'active' : '' }}" class="routers">
                                 FAQs
                             </a>

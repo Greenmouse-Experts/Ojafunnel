@@ -3092,3 +3092,8 @@ header nav .offcanvas-header button i{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+/* Pricing */
+.Pricing{
+    padding: 100px 0px;
+}
+/* Pricing Ends*/
