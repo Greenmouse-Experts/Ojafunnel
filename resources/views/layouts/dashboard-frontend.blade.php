@@ -202,7 +202,27 @@
     <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
 
+    <script>
+        // pricing switch button
+        let pricingIsYearly = false;
+        $('.js-switch-button-period').on('click', function(e) {
+            e.preventDefault();
+            $(this).parent().toggleClass('-yearly');
+            pricingIsYearly = !pricingIsYearly;
 
+            if (pricingIsYearly) {
+                $('.js-price-big-wrapper').addClass('-yearly');
+                $('.js-price-big-wrapper-month').addClass('-monthly');
+                $('.price-switcher-period__monthly').removeClass('active');
+                $('.price-switcher-period__yearly').addClass('active');
+            } else {
+                $('.js-price-big-wrapper').removeClass('-yearly');
+                $('.js-price-big-wrapper-month').removeClass('-monthly');
+                $('.price-switcher-period__monthly').addClass('active');
+                $('.price-switcher-period__yearly').removeClass('active');
+            }
+        });
+    </script>
     <!-- email automation chart -->
     <script>
         var options = {

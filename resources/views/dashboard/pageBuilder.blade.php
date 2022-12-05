@@ -56,7 +56,7 @@
                             </a>
                         </div>
                         <div class="text-center mt-3 text-purp">
-                            <h5>Blank Canvas</h5>
+                            <h5>Blank Template</h5>
                         </div>
                     </div>
                 </div>
