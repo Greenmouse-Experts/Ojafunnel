@@ -470,6 +470,9 @@ body {
   border-radius: 10px 10px 0px 0px;
   width: 100%;
   background-color: grey;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .arisse img{
   width: 100%;

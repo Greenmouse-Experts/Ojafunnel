@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('user_id');
             $table->string('name')->nullable();
             $table->string('title')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->text('body')->nullable();
             $table->unsignedTinyInteger('listable')->default(1);
             $table->text('gjs_data')->nullable();
