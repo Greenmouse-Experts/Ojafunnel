@@ -471,7 +471,8 @@ body {
   width: 100%;
   background-color: grey;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .arisse img{
   width: 100%;
