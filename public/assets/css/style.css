@@ -2449,7 +2449,6 @@ header nav .offcanvas-header button i {
 .footer .search-bar .input-group>.form-control,
 .input-group>.form-select:focus {
     outline: 0px !important;
-    -webkit-appearance: none;
     box-shadow: none !important;
     border: 1px solid #714091;
 }
@@ -2918,7 +2917,6 @@ header nav .offcanvas-header button i {
     margin: 0px;
     margin-bottom: 10px;
     outline: 0px !important;
-    -webkit-appearance: none;
     box-shadow: none !important;
     border-radius: 6px;
     background: #FFFFFF;
@@ -2961,7 +2959,6 @@ header nav .offcanvas-header button i {
 
 .Ferent .accord.accordion-item input:focus {
     outline: 0px !important;
-    -webkit-appearance: none;
     box-shadow: none !important;
 }
 
@@ -3712,9 +3709,11 @@ header nav .offcanvas-header button i {
         margin: auto;
         text-align: center;
     }
-    .price-switcher-period__yearly:not(.active)::after{
+
+    .price-switcher-period__yearly:not(.active)::after {
         display: none;
     }
+
     .price-switcher-title {
         text-align: center;
     }
@@ -3747,6 +3746,12 @@ header nav .offcanvas-header button i {
     border-bottom-right-radius: 5px;
 }
 
+.price-switcher-period:hover {
+    background-color: #1BA0FF;
+    color: #fff;
+    cursor: default;
+}
+
 .price-switcher-period.active {
     background-color: #1BA0FF;
     color: #fff;
@@ -3773,6 +3778,28 @@ header nav .offcanvas-header button i {
     font-weight: 500;
     padding: 10px 0px 10px 0px;
 }
+
+.-monthly {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, 0);
+    transition: 150ms ease-out all;
+}
+
+.-yearly .-hide {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, 0);
+}
+
+.-monthly {
+    position: absolute;
+    opacity: 1;
+    visibility: hidden;
+    transform: translate(0, 20px);
+}
+
 
 .Pricing .message h1 {
     font-size: 22px;
@@ -3832,6 +3859,14 @@ header nav .offcanvas-header button i {
 
 .whatapp {
     border-bottom: none !important;
+}
+
+.-hide {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(0, 20px);
+    transition: 150ms ease-out all;
 }
 
 /* Pricing Ends*/

@@ -57,6 +57,7 @@ Route::prefix('{username}')->group(function() {
     Route::get('/test', [App\Http\Controllers\HomePageController::class, 'test']);
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('user.dashboard');
+        Route::get('/upgrade', [App\Http\Controllers\DashboardController::class, 'upgrade'])->name('user.upgrade');
         Route::prefix('/email-marketing')->group(function () {
             Route::get('/email-checker', [App\Http\Controllers\DashboardController::class, 'email_checker'])->name('user.email.checker');
             Route::get('/email-campaign', [App\Http\Controllers\DashboardController::class, 'email_campaign'])->name('user.email.campaign');

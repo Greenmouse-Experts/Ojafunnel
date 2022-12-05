@@ -170,6 +170,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function upgrade($username)
+    {
+        return view('dashboard.upgrade', [
+            'username' => $username
+        ]);
+    }
+
     public function choose_temp($username)
     {
         return view('dashboard.funnelBuilder', [

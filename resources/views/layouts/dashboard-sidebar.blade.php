@@ -124,6 +124,12 @@
                         <span key="t-chat">Reports & Analysis</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{route('user.upgrade', Auth::user()->username)}}">
+                    <i class="bi bi-tags"></i>
+                        <span key="t-chat">Upgrade</span>
+                    </a>
+                </li>
                 <li class="qeustion">
                     <a href="{{route('user.help', Auth::user()->username)}}">
                         <i class="bi bi-question-diamond-fill"></i>
