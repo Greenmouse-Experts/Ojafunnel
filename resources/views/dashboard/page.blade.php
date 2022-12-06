@@ -1,4 +1,4 @@
-<style type="text/css">
+<!-- <style type="text/css">
 	{!! $page->css !!}
 </style>
-{!! $page->html !!}
+{!! $page->html !!} -->

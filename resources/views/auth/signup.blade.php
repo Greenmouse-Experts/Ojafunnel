@@ -36,8 +36,8 @@
         <section class="register">
             <div class="container-fuild">
                 <div class="row">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-4" >
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6" >
                         <div class="sign">
                             <form class="sign-div" action="{{ route('register')}}" method="post">
                                 @csrf
@@ -143,11 +143,10 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-6">
-                        <div class="http">
+                    <div class="col-lg-3">
+                        <!-- <div class="http">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1662630837/OjaFunnel-Images/signup-image_ecquqt.png" draggable="false">
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
