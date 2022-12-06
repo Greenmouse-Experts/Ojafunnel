@@ -51,9 +51,7 @@
                     <h1>
                         $0/<span>month</span>
                     </h1>
-                    <a href="">
-                        <button>START FOR FREE</button>
-                    </a>
+                    <a href="{{route('signup')}}">START FOR FREE</a>
                 </div>
             </div>
             <div class="col-lg-2">
@@ -71,9 +69,7 @@
                             $200/<span>yearly</span> 
                         </h1>
                     </div>
-                    <a href="">
-                        <button>START FOR FREE</button>
-                    </a>
+                    <a href="{{route('signup')}}">START FOR FREE</a>
                 </div>
             </div>
             <div class="col-lg-2">
@@ -91,9 +87,7 @@
                             $1000/<span>yearly</span> 
                         </h1>
                     </div>
-                    <a href="">
-                        <button>START FOR FREE</button>
-                    </a>
+                    <a href="{{route('signup')}}">START FOR FREE</a>
                 </div>
             </div>
             <div class="col-lg-2">
@@ -111,9 +105,7 @@
                             $2000/<span>yearly</span> 
                         </h1>
                     </div>
-                    <a href="">
-                        <button>START FOR FREE</button>
-                    </a>
+                    <a href="{{route('signup')}}">START FOR FREE</a>
                 </div>
             </div>
             <div class="col-lg-2">
@@ -131,8 +123,8 @@
                             $3000/<span>yearly</span> 
                         </h1>
                     </div>
-                    <a href="">
-                        <button>START FOR FREE</button>
+                    <a href="{{route('signup')}}">
+                        START FOR FREE
                     </a>
                 </div>
             </div>
@@ -151,9 +143,7 @@
                             $4500/<span>yearly</span> 
                         </h1>
                     </div>
-                    <a href="">
-                        <button>START FOR FREE</button>
-                    </a>
+                    <a href="{{route('signup')}}">START FOR FREE</a>
                 </div>
             </div>
             <div class="row">
@@ -184,21 +174,12 @@
                                     </tr>
                                     <tr>
                                         <th scope="row" class="whatapp">Whatsapp</th>
-                                        <td>14 daily</td>
-                                        <td>100 daily</td>
-                                        <td>1000 daily</td>
-                                        <td>2000 daily</td>
-                                        <td>3000 daily</td>
-                                        <td>Unlimited daily</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"></th>
-                                        <td>1 WhatsApp</td>
-                                        <td>2 WhatsApp</td>
-                                        <td>3 WhatsApp</td>
-                                        <td>4 WhatsApp</td>
-                                        <td>5 WhatsApp</td>
-                                        <td>6 WhatsApp</td>
+                                        <td>14 daily <br> 1 WhatsApp</td>
+                                        <td>100 daily <br> 2 WhatsApp</td>
+                                        <td>1000 daily <br> 3 WhatsApp</td>
+                                        <td>2000 daily <br> 4 WhatsApp</td>
+                                        <td>3000 daily <br> 5 WhatsApp</td>
+                                        <td>Unlimited daily <br> 6 WhatsApp</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Email</th>
@@ -256,30 +237,12 @@
                                     </tr>
                                     <tr>
                                         <th scope="row" class="whatapp">Upload list</th>
-                                        <td>Can upload</td>
-                                        <td>Can upload</td>
-                                        <td>Can upload</td>
-                                        <td>Can upload</td>
-                                        <td>Can upload</td>
-                                        <td>Can upload List</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"></th>
-                                        <td>list but wont work for email </td>
-                                        <td>list but wont work for email </td>
-                                        <td>list but wont work for email </td>
-                                        <td>list but wont work for email</td>
-                                        <td>and it will work for email </td>
-                                        <td>and it will work for email </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Upload List</th>
-                                        <td>wont work for email  </td>
-                                        <td>wont work for email  </td>
-                                        <td>wont work for email  </td>
-                                        <td>list but wont work for email</td>
-                                        <td>it will work for email </td>
-                                        <td>it will work for email</td>
+                                        <td>Can upload list but wont work for email</td>
+                                        <td>Can upload list but wont work for email</td>
+                                        <td>Can upload list but wont work for email</td>
+                                        <td>Can upload list but wont work for email</td>
+                                        <td>Can upload list and it will work for email</td>
+                                        <td>Can upload List and it will work for email</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Use your own email server (AWS, etc)</th>

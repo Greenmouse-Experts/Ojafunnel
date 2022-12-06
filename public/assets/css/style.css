@@ -3746,11 +3746,11 @@ header nav .offcanvas-header button i {
     border-bottom-right-radius: 5px;
 }
 
-.price-switcher-period:hover {
+/* .price-switcher-period:hover {
     background-color: #1BA0FF;
     color: #fff;
     cursor: default;
-}
+} */
 
 .price-switcher-period.active {
     background-color: #1BA0FF;
@@ -3811,7 +3811,7 @@ header nav .offcanvas-header button i {
     font-size: 15px;
 }
 
-.Pricing .message button {
+.Pricing .message a {
     background: rgb(0, 160, 255);
     border: 3px solid rgb(0, 160, 255);
     color: rgb(255, 255, 255);
@@ -3820,6 +3820,7 @@ header nav .offcanvas-header button i {
     font-size: 12px;
     border-radius: 5px;
     margin-bottom: 30px;
+    text-decoration: none;
 }
 
 .table> :not(caption)>*>* {

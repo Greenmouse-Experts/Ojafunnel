@@ -49,6 +49,7 @@
                                     </a>
                                     <h4 class="mb-0 mt-5">Verify Your Account</h4>
                                     <p class="pt-1 opacity-50">Before proceeding, please check your email for a verification code.</p>
+                                    <p class="pt-1 opacity-50">If you don't hear from us within the next few minutes, please make sure to check your spam folder or use a different email address</p>
                                     <form class="sign-div" method="POST" action="{{ route('email.confirmation', Crypt::encrypt($user->id))}}">
                                     @csrf
                                         <div class="row">
@@ -63,7 +64,7 @@
                                             <div class="col-md-12 mb-3">
                                                 <button type="submit">Verify Account</button>
                                             </div>
-                                        </div>
+                                        </div> 
                                     </form>
                                     <div class="text-center">
                                         <form method="POST" action="{{ route('email.verify.resend', Crypt::encrypt($user->email)) }}">
