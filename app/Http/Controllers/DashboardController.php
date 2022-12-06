@@ -177,6 +177,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function transaction($username)
+    {
+        return view('dashboard.transaction', [
+            'username' => $username
+        ]);
+    }
+
     public function choose_temp($username)
     {
         return view('dashboard.funnelBuilder', [

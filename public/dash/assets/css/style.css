@@ -1879,11 +1879,11 @@ textarea{
   border-bottom-right-radius: 5px;
 }
 
-.price-switcher-period:hover {
+/* .price-switcher-period:hover {
   background-color: #1BA0FF;
   color: #fff;
   cursor: default;
-}
+} */
 
 .price-switcher-period.active {
   background-color: #1BA0FF;

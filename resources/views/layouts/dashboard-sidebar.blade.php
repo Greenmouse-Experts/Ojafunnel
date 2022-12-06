@@ -83,7 +83,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('user.transaction', Auth::user()->username)}}">
                         <i class="bi bi-bank2"></i>
                         <span key="t-chat">Transaction</span>
                     </a>
@@ -132,7 +132,7 @@
                 </li>
                 <li>
                     <a href="{{route('user.upgrade', Auth::user()->username)}}">
-                    <i class="bi bi-tags"></i>
+                    <i class="bi bi-send-check-fill"></i>
                         <span key="t-chat">Upgrade</span>
                     </a>
                 </li>

@@ -36,7 +36,7 @@
             <section class="login">
                 <div class="container-fuild">
                     <div class="row">
-                        <div class="col-lg-1"></div>
+                        <div class="col-lg-4"></div>
                         <div class="col-lg-4">
                             <div class="row">
                                 <div class="col-md-12">
@@ -100,14 +100,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-7">
-                            <div class="btn-divv">
+                        <div class="col-lg-4">
+                            <!-- <div class="btn-divv">
                                 <div class="portlog">
                                     <a href="/">
                                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1662630837/OjaFunnel-Images/signup-image_ecquqt.png" draggable="false">
                                     </a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

@@ -24,9 +24,6 @@ class AuthController extends Controller
             // 'password.regex' => 'Password must be more than 8 characters long, should contain at least 1 Uppercase, 1 Lowercase and  1 number',
         ];
 
-
-        // dd($request->referral_link);
-
         $this->validate($request, [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],

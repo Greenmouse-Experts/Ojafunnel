@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('referral_link')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('plans')->nullable();
+            $table->string('plan')->default('Free');
             $table->enum('status', ['active', 'inactive'])->default('active')->index();
             $table->string('password');
             $table->rememberToken();

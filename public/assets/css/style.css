@@ -466,8 +466,8 @@ header nav .offcanvas-header button i {
 }
 
 .register .sign .sign-div img {
-    width: 130px;
-    display: inline-block;
+    width: 150px;
+    display:block;
     margin: auto;
 }
 
@@ -484,6 +484,7 @@ header nav .offcanvas-header button i {
     padding: 20px 0px 20px 0px;
     color: #000;
     font-size: 25px;
+    text-align: center;
     font-weight: 600;
 }
 
