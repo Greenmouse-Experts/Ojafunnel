@@ -72,6 +72,10 @@
         @includeIf('layouts.dashboard-sidebar')
         <!-- Sidebar Ends -->
 
+        <!-- Sidebar -->
+        @includeIf('layouts.dashboard-footer')
+        <!-- Sidebar Ends -->
+
         <!-- Page-Content -->
         @yield('page-content')
         <!-- Page-Content Ends -->
