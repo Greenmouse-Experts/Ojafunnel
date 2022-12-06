@@ -32,7 +32,7 @@ class EmailCampaignController extends Controller
                 return back()->with([
                     'type' => 'danger',
                     'message' => $responseBody->error
-                ]);1
+                ]);
             }
             if($responseBody->status == 'valid')
             {

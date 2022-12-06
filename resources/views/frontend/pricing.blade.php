@@ -37,8 +37,8 @@
                 <div class="price-switcher-container">
                     <div class="price-switcher-title">Choose your<br> billing period</div>
                     <div class="price-switcher">
-                        <div class="price-switcher-period price-switcher-period__monthly active" id="checbox" onclick="check()">Monthly</div>
-                        <div class="price-switcher-period price-switcher-period__yearly">Annually</div>
+                        <div class="price-switcher-period price-switcher-period__monthly active js-switch-button-period">Monthly</div>
+                        <div class="price-switcher-period price-switcher-period__yearly js-switch-button-period">Annually</div>
                     </div>
                 </div>
             </div>
@@ -61,9 +61,16 @@
                     <p>
                         STARTER
                     </p>
-                    <h1>
-                        $100/<span>month</span>
-                    </h1>
+                    <div class="js-price-big-wrapper-month">
+                        <h1 class="">
+                            $100/<span>monthly</span> 
+                        </h1>
+                    </div>
+                    <div class="js-price-big-wrapper">
+                        <h1 class="-yearly -hide">
+                            $200/<span>yearly</span> 
+                        </h1>
+                    </div>
                     <a href="">
                         <button>START FOR FREE</button>
                     </a>
@@ -74,9 +81,16 @@
                     <p>
                         STANDARD
                     </p>
-                    <h1>
-                        $200/<span>month</span>
-                    </h1>
+                    <div class="js-price-big-wrapper-month">
+                        <h1 class="">
+                            $500/<span>monthly</span> 
+                        </h1>
+                    </div>
+                    <div class="js-price-big-wrapper">
+                        <h1 class="-yearly -hide">
+                            $1000/<span>yearly</span> 
+                        </h1>
+                    </div>
                     <a href="">
                         <button>START FOR FREE</button>
                     </a>
@@ -87,9 +101,16 @@
                     <p>
                         ESSENCIAL
                     </p>
-                    <h1>
-                        $300/<span>month</span>
-                    </h1>
+                    <div class="js-price-big-wrapper-month">
+                        <h1 class="">
+                            $1500/<span>monthly</span> 
+                        </h1>
+                    </div>
+                    <div class="js-price-big-wrapper">
+                        <h1 class="-yearly -hide">
+                            $2000/<span>yearly</span> 
+                        </h1>
+                    </div>
                     <a href="">
                         <button>START FOR FREE</button>
                     </a>
@@ -100,9 +121,16 @@
                     <p>
                         PREMIUM
                     </p>
-                    <h1>
-                        $400/<span>month</span>
-                    </h1>
+                    <div class="js-price-big-wrapper-month">
+                        <h1 class="">
+                            $2500/<span>monthly</span> 
+                        </h1>
+                    </div>
+                    <div class="js-price-big-wrapper">
+                        <h1 class="-yearly -hide">
+                            $3000/<span>yearly</span> 
+                        </h1>
+                    </div>
                     <a href="">
                         <button>START FOR FREE</button>
                     </a>
@@ -113,9 +141,16 @@
                     <p>
                         ENTERPRISE
                     </p>
-                    <h1>
-                        $500/<span>month</span>
-                    </h1>
+                    <div class="js-price-big-wrapper-month">
+                        <h1 class="">
+                            $4000/<span>monthly</span> 
+                        </h1>
+                    </div>
+                    <div class="js-price-big-wrapper">
+                        <h1 class="-yearly -hide">
+                            $4500/<span>yearly</span> 
+                        </h1>
+                    </div>
                     <a href="">
                         <button>START FOR FREE</button>
                     </a>
@@ -265,5 +300,4 @@
     </div>
 </section>
 <!-- Pricing Ends -->
-
 @endsection

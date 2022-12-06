@@ -38,6 +38,27 @@
                 $(".menu-list .menu-page .text-btn a").mouseout( function() {
                 $( '.menu-image-holder img' ).attr("src","https://res.cloudinary.com/greenmouse-tech/image/upload/v1660737789/OjaFunnel-Images/Stripe_bfhh6m_yk9kmo-removebg-preview_jih215.png");
                 });
+
+        // 
+        // pricing switch button
+    let pricingIsYearly = false;
+    $('.js-switch-button-period').on('click', function(e){
+      e.preventDefault();
+      $(this).parent().toggleClass('-yearly');
+      pricingIsYearly = !pricingIsYearly;
+  
+      if(pricingIsYearly){
+        $('.js-price-big-wrapper').addClass('-yearly');
+        $('.js-price-big-wrapper-month').addClass('-monthly');
+        $('.price-switcher-period__monthly').removeClass('active');
+        $('.price-switcher-period__yearly').addClass('active');
+      } else {
+        $('.js-price-big-wrapper').removeClass('-yearly');
+        $('.js-price-big-wrapper-month').removeClass('-monthly');
+        $('.price-switcher-period__monthly').addClass('active');
+        $('.price-switcher-period__yearly').removeClass('active'); 
+      }
+    });
         </script>
     </body>
 </html>

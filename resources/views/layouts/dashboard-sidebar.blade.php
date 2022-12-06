@@ -83,6 +83,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="#">
+                        <i class="bi bi-bank2"></i>
+                        <span key="t-chat">Transaction</span>
+                    </a>
+                </li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-chat-dots-fill"></i>
                         <span key="t-chat">Chat Automation</span>
@@ -110,7 +116,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bi bi-code-square"></i>
+                        <i class="bi bi-tags-fill"></i>
                         <span key="t-chat">Integration</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -122,6 +128,12 @@
                     <a href="{{route('user.reports.analysis', Auth::user()->username)}}">
                         <i class="bi bi-bar-chart-fill"></i>
                         <span key="t-chat">Reports & Analysis</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('user.upgrade', Auth::user()->username)}}">
+                    <i class="bi bi-tags"></i>
+                        <span key="t-chat">Upgrade</span>
                     </a>
                 </li>
                 <li class="qeustion">

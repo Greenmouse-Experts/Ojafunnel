@@ -737,7 +737,7 @@ body[data-sidebar=dark] #sidebar-menu ul li ul.sub-menu li a:hover {
     color: #000;
 }
 body[data-sidebar=dark].vertical-collpsed {
-    min-height: 1760px;
+    min-height:auto;
 }
 body[data-sidebar=dark].vertical-collpsed .vertical-menu #sidebar-menu>ul>li:hover>a {
     background: #F5E6FE;

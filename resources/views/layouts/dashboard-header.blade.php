@@ -36,8 +36,22 @@
                 </button>
             </div>
         </div>
-
         <div class="d-flex">
+        <div class="float-end pushing">
+            <div class="dropdown">
+                <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-wallet me-1"></i> <span class="d-none d-sm-inline-block">Wallet <i class="mdi mdi-chevron-down"></i></span></button>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-md">
+                    <div class="dropdown-item-text">
+                        <div>
+                            <p class="text-muted mb-2">Available Balance</p>
+                            <h5 class="mb-0">₦500</h5>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-divider"></div>
+                </div>
+            </div>
+        </div>
             <div class="dropdown d-inline-block d-lg-none ms-2">
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="mdi mdi-magnify"></i>
@@ -129,7 +143,7 @@
                     @if(Auth::user()->photo)
                     <img class="rounded-circle header-profile-user" src="{{Auth::user()->photo}}" alt="{{Auth::user()->first_name}}" width="100%">
                     @else
-                    <span class="rounded-circle header-profile-user" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">{{ ucfirst(substr(Auth::user()->first_name, 0, 1)) }} {{ ucfirst(substr(Auth::user()->last_name, 0, 1)) }}</span>  
+                    <span class="rounded-circle header-profile-user" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">{{ ucfirst(substr(Auth::user()->first_name, 0, 1)) }} {{ ucfirst(substr(Auth::user()->last_name, 0, 1)) }}</span>
                     @endif
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">

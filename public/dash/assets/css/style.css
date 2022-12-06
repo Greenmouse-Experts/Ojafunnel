@@ -1811,3 +1811,161 @@ textarea{
   top: 120px;
   right: 23px;
  }
+
+ /* Pricing */
+.Pricing {
+  padding: 30px 0px;
+}
+
+.Pricing .pricing-intro h1 {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  padding: 0px 0px 30px 0px;
+}
+
+.price-switcher-container {
+  margin-bottom: 40px !important;
+  display: block;
+  margin: auto;
+}
+
+.price-switcher {
+  display: flex;
+  align-self: flex-start;
+}
+
+@media (max-width:992px) {
+  .price-switcher {
+      display: block;
+      width: 50%;
+      margin: auto;
+      text-align: center;
+  }
+
+  .price-switcher-period__yearly:not(.active)::after {
+      display: none;
+  }
+
+  .price-switcher-title {
+      text-align: center;
+  }
+}
+
+.price-switcher-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #142D63;
+}
+
+.price-switcher-period {
+  font-size: 18px;
+  padding: 11px 20px;
+  color: #1BA0FF;
+  background: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.price-switcher-period__monthly {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.price-switcher-period__yearly {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.price-switcher-period:hover {
+  background-color: #1BA0FF;
+  color: #fff;
+  cursor: default;
+}
+
+.price-switcher-period.active {
+  background-color: #1BA0FF;
+  color: #fff;
+  cursor: default;
+}
+
+.price-switcher-period__yearly:not(.active)::after {
+  content: ' ';
+  background: url(https://d1yei2z3i6k35z.cloudfront.net/161/60effbf72221b_image24.png);
+  background-size: cover;
+  height: 100px;
+  width: 89px;
+  position: absolute;
+  top: -76px;
+  left: 51px;
+}
+
+.Pricing .message {
+  text-align: center;
+}
+
+.Pricing .message p {
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 0px 10px 0px;
+}
+
+.-monthly {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, 0);
+  transition: 150ms ease-out all;
+}
+
+.-yearly .-hide {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, 0);
+}
+
+.-monthly {
+  position: absolute;
+  opacity: 1;
+  visibility: hidden;
+  transform: translate(0, 20px);
+}
+
+
+.Pricing .message h1 {
+  font-size: 22px;
+  font-weight: 600;
+  padding: 10px 0px 10px 0px;
+}
+
+.Pricing .message h1 span {
+  font-size: 15px;
+}
+
+.Pricing .message button {
+  background: rgb(0, 160, 255);
+  border: 3px solid rgb(0, 160, 255);
+  color: rgb(255, 255, 255);
+  width: auto;
+  padding: 5px 15px;
+  font-size: 12px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+.-hide {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(0, 20px);
+  transition: 150ms ease-out all;
+}
+.pushing{
+  padding: 15px 0 0 0 !important;
+}
+.pushing button{
+  background-color: #713F93 !important;
+  color: #fff !important;
+  border: none !important;
+}
