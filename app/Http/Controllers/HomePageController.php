@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plan;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -25,7 +26,11 @@ class HomePageController extends Controller
     //  Pring
     public function pricing()
     {
-        return view('frontend.pricing');
+        $plans = Plan::latest()->get();
+
+        return view('frontend.pricing', [
+            'plans' => $plans
+        ]);
     }
 
     // Contact-Us

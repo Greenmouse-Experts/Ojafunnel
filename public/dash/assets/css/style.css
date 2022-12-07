@@ -1944,7 +1944,7 @@ textarea{
   font-size: 15px;
 }
 
-.Pricing .message button {
+.Pricing .message a, .Pricing .message button {
   background: rgb(0, 160, 255);
   border: 3px solid rgb(0, 160, 255);
   color: rgb(255, 255, 255);

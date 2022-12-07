@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Integration;
 use App\Models\Mailinglist;
 use App\Models\Page;
+use App\Models\Plan;
 use App\Models\SmsAutomation;
 use App\Models\Subscriber;
 use App\Models\User;
@@ -172,8 +173,30 @@ class DashboardController extends Controller
 
     public function upgrade($username)
     {
+        $user = User::findorfail(Auth::user()->id);
+
+        $plan = Plan::where('id', $user->plan)->first();
+        $plans = Plan::latest()->get();
+
         return view('dashboard.upgrade', [
-            'username' => $username
+            'username' => $username,
+            'plan' => $plan,
+            'plans' => $plans
+        ]);
+    }
+
+    public function upgrade_account($username, $id, $amount)
+    {
+        $id = Crypt::decrypt($id);
+        $amount = Crypt::decrypt($amount);
+
+        $user = User::findorfail(Auth::user()->id);
+        $plan = Plan::where('id', $id)->first();
+
+        return view('dashboard.makePayment', [
+            'amount' => $amount,
+            'user' => $user,
+            'plan' => $plan
         ]);
     }
 

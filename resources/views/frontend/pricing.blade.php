@@ -43,109 +43,26 @@
                 </div>
             </div>
             <div class="col-lg-4"></div>
+            @foreach($plans as $plan)
             <div class="col-lg-2">
                 <div class="message">
                     <p>
-                        Free
-                    </p>
-                    <h1>
-                        $0/<span>month</span>
-                    </h1>
-                    <a href="{{route('signup')}}">START FOR FREE</a>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="message">
-                    <p>
-                        STARTER
+                        {{strtoupper($plan->name)}}
                     </p>
                     <div class="js-price-big-wrapper-month">
                         <h1 class="">
-                            $100/<span>monthly</span> 
+                            {{$plan->currency}}{{$plan->monthly_amount}}/<span>monthly</span> 
                         </h1>
                     </div>
                     <div class="js-price-big-wrapper">
                         <h1 class="-yearly -hide">
-                            $200/<span>yearly</span> 
+                            {{$plan->currency}}{{$plan->yearly_amount}}/<span>yearly</span> 
                         </h1>
                     </div>
                     <a href="{{route('signup')}}">START FOR FREE</a>
                 </div>
             </div>
-            <div class="col-lg-2">
-                <div class="message">
-                    <p>
-                        STANDARD
-                    </p>
-                    <div class="js-price-big-wrapper-month">
-                        <h1 class="">
-                            $500/<span>monthly</span> 
-                        </h1>
-                    </div>
-                    <div class="js-price-big-wrapper">
-                        <h1 class="-yearly -hide">
-                            $1000/<span>yearly</span> 
-                        </h1>
-                    </div>
-                    <a href="{{route('signup')}}">START FOR FREE</a>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="message">
-                    <p>
-                        ESSENCIAL
-                    </p>
-                    <div class="js-price-big-wrapper-month">
-                        <h1 class="">
-                            $1500/<span>monthly</span> 
-                        </h1>
-                    </div>
-                    <div class="js-price-big-wrapper">
-                        <h1 class="-yearly -hide">
-                            $2000/<span>yearly</span> 
-                        </h1>
-                    </div>
-                    <a href="{{route('signup')}}">START FOR FREE</a>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="message">
-                    <p>
-                        PREMIUM
-                    </p>
-                    <div class="js-price-big-wrapper-month">
-                        <h1 class="">
-                            $2500/<span>monthly</span> 
-                        </h1>
-                    </div>
-                    <div class="js-price-big-wrapper">
-                        <h1 class="-yearly -hide">
-                            $3000/<span>yearly</span> 
-                        </h1>
-                    </div>
-                    <a href="{{route('signup')}}">
-                        START FOR FREE
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="message">
-                    <p>
-                        ENTERPRISE
-                    </p>
-                    <div class="js-price-big-wrapper-month">
-                        <h1 class="">
-                            $4000/<span>monthly</span> 
-                        </h1>
-                    </div>
-                    <div class="js-price-big-wrapper">
-                        <h1 class="-yearly -hide">
-                            $4500/<span>yearly</span> 
-                        </h1>
-                    </div>
-                    <a href="{{route('signup')}}">START FOR FREE</a>
-                </div>
-            </div>
+            @endforeach
             <div class="row">
                 <div class="col-lg-12">
                     <div class="table-rep-plugin responsive">

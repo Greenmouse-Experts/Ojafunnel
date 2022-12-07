@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendCodeResetPassword;
+use App\Models\Plan;
 use App\Models\ResetCodePassword;
 use App\Models\User;
 use App\Notifications\SendMagicLinkNotification;
@@ -42,29 +43,52 @@ class AuthController extends Controller
 
             $referrer_id = User::where('affiliate_link', $request->referral_link)->first();
 
-            $user = User::create([
-                'user_type' => 'User',
-                'affiliate_link' => config('app.name').'-'.strtolower($request->username),
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'username' => strtolower($request->username),
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
-                'password' => Hash ::make($request->password),
-                'referral_link' => $referrer_id->id
-            ]);
+            $plan = Plan::where('name', 'Free')->first();
+
+            if($plan)
+            {
+                $user = User::create([
+                    'user_type' => 'User',
+                    'affiliate_link' => config('app.name').'-'.strtolower($request->username),
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'username' => strtolower($request->username),
+                    'email' => $request->email,
+                    'phone_number' => $request->phone_number,
+                    'password' => Hash ::make($request->password),
+                    'referral_link' => $referrer_id->id,
+                    'plan' => $plan->id
+                ]);
+            } else {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Admin yet to add plans! Try again later.'
+                ]);
+            }
+            
         } else {
-            $user = User::create([
-                'user_type' => 'User',
-                'affiliate_link' => config('app.name').'-'.strtolower($request->username),
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'username' => strtolower($request->username),
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
-                'password' => Hash ::make($request->password),
-                'referral_link' => $request->referral_link
-            ]);
+            $plan = Plan::where('name', 'Free')->first();
+
+            if($plan)
+            {
+                $user = User::create([
+                    'user_type' => 'User',
+                    'affiliate_link' => config('app.name').'-'.strtolower($request->username),
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'username' => strtolower($request->username),
+                    'email' => $request->email,
+                    'phone_number' => $request->phone_number,
+                    'password' => Hash ::make($request->password),
+                    'referral_link' => $request->referral_link,
+                    'plan' => $plan->id
+                ]);
+            } else {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Admin yet to add plans! Try again later.'
+                ]);
+            }
         }
         
 
