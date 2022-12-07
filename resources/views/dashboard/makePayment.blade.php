@@ -10,16 +10,16 @@
       metadata: {
          custom_fields: [
             {
-                user_id: {{$user->id}},
                 plan_id: {{$plan->id}},
             }
          ]
       },
       callback: function(response){
-        //   alert('success. transaction ref is ' + response.reference);
+        // var_dump('success. transaction ref is ' + response.reference);
         //   alert(response);
-          alert(JSON.stringify(response));
-          
+        let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ':response', Crypt::encrypt($amount)]) }}';
+        url = url.replace(':response', response.reference);
+        window.location.href=url;
       },
       onClose: function(){
           alert('window closed');

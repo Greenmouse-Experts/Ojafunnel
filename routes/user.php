@@ -40,5 +40,5 @@ Route::prefix('user')->group(function () {
     Route::post('/page/builder/delete/{id}', [App\Http\Controllers\PageController::class, 'page_builder_delete'])->name('user.page.builder.delete');
 
     // Account Upgrade
-    // Route::get('/upgrade/account/{amount}', [App\Http\Controllers\AccountUpgradeController::class, 'upgrade_account'])->name('user.upgrade.account');
+    Route::get('/upgrade/account/confirm/{plan_id}/{response}/{amount}', [App\Http\Controllers\AccountUpgradeController::class, 'upgrade_account_confirm'])->name('user.upgrade.account.confirm');
 });

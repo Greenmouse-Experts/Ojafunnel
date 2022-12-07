@@ -60,6 +60,7 @@ Route::prefix('{username}')->group(function() {
         Route::get('/upgrade', [App\Http\Controllers\DashboardController::class, 'upgrade'])->name('user.upgrade');
         Route::get('/upgrade/account/{id}/{amount}', [App\Http\Controllers\DashboardController::class, 'upgrade_account'])->name('user.upgrade.account');
         Route::get('/transaction', [App\Http\Controllers\DashboardController::class, 'transaction'])->name('user.transaction');
+        Route::get('/subscription', [App\Http\Controllers\DashboardController::class, 'subscription'])->name('user.subscription');
         Route::prefix('/email-marketing')->group(function () {
             Route::get('/email-checker', [App\Http\Controllers\DashboardController::class, 'email_checker'])->name('user.email.checker');
             Route::get('/email-campaign', [App\Http\Controllers\DashboardController::class, 'email_campaign'])->name('user.email.campaign');

@@ -48,7 +48,7 @@
                         </p>
                         <div class="js-price-big-wrapper-month">
                             <h1 class="">
-                                ₦{{$singleplan->monthly_amount}}/<span>monthly</span>
+                                {{$singleplan->currency}}{{$singleplan->monthly_amount}}/<span>monthly</span>
                             </h1>
                             @if($singleplan->name == $plan->name)
                             <a href="#" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="js-price-big-wrapper">
                             <h1 class="-yearly -hide">
-                                ₦{{$singleplan->yearly_amount}}/<span>yearly</span>
+                                {{$singleplan->currency}}{{$singleplan->yearly_amount}}/<span>yearly</span>
                             </h1>
                             @if($singleplan->name == $plan->name)
                             <a class="-yearly -hide" href="#" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
