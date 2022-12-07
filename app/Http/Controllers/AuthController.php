@@ -350,9 +350,14 @@ class AuthController extends Controller
         }
     }
 
-    public function admin_login()
+    // public function admin_login()
+    // {
+    //     return view('auth.admin_login');
+    // }
+
+    public function adminlogin()
     {
-        return view('auth.admin_login');
+        return view('auth.admin');
     }
 
     public function post_admin_login(Request $request)

@@ -127,4 +127,10 @@ Route::prefix('{username}')->group(function() {
         });
     });
 });
-    
+
+
+     // Admin Login
+     Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlogin'])->name('adminlogin');
+
+     // Admin Login
+     Route::get('/admin/welcome', [App\Http\Controllers\AdminController::class, 'adminwelcome'])->name('adminwelcome');

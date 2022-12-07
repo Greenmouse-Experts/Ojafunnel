@@ -85,7 +85,7 @@
                 <li>
                     <a href="{{route('user.transaction', Auth::user()->username)}}">
                         <i class="bi bi-bank2"></i>
-                        <span key="t-chat">Transaction</span>
+                        <span key="t-chat">Transactions</span>
                     </a>
                 </li>
                 <li>
