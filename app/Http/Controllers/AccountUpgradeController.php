@@ -20,4 +20,14 @@ class AccountUpgradeController extends Controller
             'user' => $user
         ]);
     }
+
+    public function upgrade_account_confirm($plan_id, $response, $amount)
+    {
+        $planId = Crypt::decrypt($plan_id);
+        $Amount = Crypt::decrypt($amount);
+
+        dd($planId, $response, $Amount);
+
+        $user = User::findorfail(Auth::user()->id);
+    }
 }

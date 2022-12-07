@@ -207,6 +207,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function subscription($username)
+    {
+        return view('dashboard.subscription', [
+            'username' => $username
+        ]);
+    }
+
     public function choose_temp($username)
     {
         return view('dashboard.funnelBuilder', [

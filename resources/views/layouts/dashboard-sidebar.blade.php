@@ -89,6 +89,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('user.subscription', Auth::user()->username)}}">
+                        <i class="bi bi-bank2"></i>
+                        <span key="t-chat">Subscriptions</span>
+                    </a>
+                </li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-chat-dots-fill"></i>
                         <span key="t-chat">Chat Automation</span>
