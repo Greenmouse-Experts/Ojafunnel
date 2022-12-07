@@ -95,6 +95,9 @@
     <!-- apexcharts -->
     <script src="{{URL::asset('admin/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
 
+    <!-- Saas dashboard init -->
+    <script src="{{URL::asset('admin/assets/js/pages/saas-dashboard.init.js')}}"></script>
+
     <!-- adminboard init -->
     <script src="{{URL::asset('admin/assets/js/pages/datatables.init.js')}}"></script>
     <script src="{{URL::asset('admin/assets/js/pages/dashboard.init.js')}}"></script>

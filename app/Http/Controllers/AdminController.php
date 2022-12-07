@@ -16,4 +16,9 @@ class AdminController extends Controller
     {
         return view('admin.adminwelcome');
     }
+
+    public function viewlist()
+    {
+        return view('admin.viewlist');
+    }
 }
