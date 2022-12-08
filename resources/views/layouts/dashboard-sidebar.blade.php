@@ -90,7 +90,7 @@
                 </li>
                 <li>
                     <a href="{{route('user.subscription', Auth::user()->username)}}">
-                        <i class="bi bi-bank2"></i>
+                    <i class="bi bi-award-fill"></i>
                         <span key="t-chat">Subscriptions</span>
                     </a>
                 </li>

@@ -44,7 +44,7 @@
                     <div class="dropdown-item-text">
                         <div>
                             <p class="text-muted mb-2">Available Balance</p>
-                            <h5 class="mb-0">₦500</h5>
+                            <h5 class="mb-0">₦500</h5> <button data-bs-toggle="modal" data-bs-target="#emailConfirm">Deposit Now</button>
                         </div>
                     </div>
 
@@ -162,3 +162,49 @@
         </div>
     </div>
 </header>
+
+<!-- email confirm modal -->
+<div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Provide Us Your Amount Below
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form>
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label>Amount</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Enter Your Amount" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                            Continue
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->

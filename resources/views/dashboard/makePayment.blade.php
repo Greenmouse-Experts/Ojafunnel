@@ -50,7 +50,52 @@
                     </div>
                 </div>
             </div>
-            <div class="row Pricing">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="annoyed">
+                        <h1>
+                            <i class="bi bi-check2"></i> Space for up tp 5,000 contacts
+                        </h1>
+                        <h1>
+                            <i class="bi bi-check2"></i>  Unlimited emails sent
+                        </h1>
+                        <h1>
+                            <i class="bi bi-check2"></i> 10 Sales Funnels
+                        </h1>
+                        <h1>
+                            <i class="bi bi-check2"></i> 5 Courses
+                        </h1>
+                        <h1>
+                            <i class="bi bi-check2"></i> Unlimited Students
+                        </h1>
+                        <h1>
+                            <i class="bi bi-check2"></i> 10 A/B Tests
+                        </h1>
+                        <h1>
+                            <i class="bi bi-check2"></i> Unlimited file storage space
+                        </h1>
+                        <h1>
+                            <i class="bi bi-check2"></i> sales of physical products
+                        </h1>
+                        <h1>
+                            <i class="bi bi-check2"></i> 10 Automations Rules
+                        </h1>
+                        <h1>
+                            <i class="bi bi-check2"></i> Affiliate program management
+                        </h1>
+                        <h1>
+                            <i class="bi bi-check2"></i> 7 Days a week customer support
+                        </h1>
+                        <button type="button" onclick="payWithPaystack()">
+                            <script src="https://js.paystack.co/v1/inline.js"></script>
+                            PAY
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-8"></div>
+            </div>
+            <!-- <div class="row Pricing">
                 <div class="col-lg-12">
                     <div class="pricing-intro">
                         <h1>
@@ -61,7 +106,7 @@
                         </h1>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- end page title -->
         </div>
     </div>
