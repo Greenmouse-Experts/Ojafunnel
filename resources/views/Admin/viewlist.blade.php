@@ -33,6 +33,35 @@
                 </div>
                 <div class="row mt-1"></div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-body card">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="transactions-all-tab" role="tabpanel">
+                                <div class="table-responsive" data-simplebar style="max-height: 330px;">
+                                    <table class="table align-middle table-nowrap">
+                                        <thead class="tread">
+                                            <tr>
+                                                <th>S/N</th>
+                                                <th>Mailing List Name </th>
+                                                <th>No of Contacts </th>
+                                                <th>Email</th>
+                                                <th>Phone Number</th>
+                                                <th>Status</th>
+                                                <th>Date Created</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

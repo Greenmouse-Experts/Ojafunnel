@@ -136,3 +136,4 @@ Route::prefix('{username}')->group(function() {
      // Admin Login
      Route::get('/admin/welcome', [App\Http\Controllers\AdminController::class, 'adminwelcome'])->name('adminwelcome');
      Route::get('/admin/viewlist', [App\Http\Controllers\AdminController::class, 'viewlist'])->name('viewlist');
+     Route::get('/admin/viewmessage', [App\Http\Controllers\AdminController::class, 'viewmessage'])->name('viewmessage');
