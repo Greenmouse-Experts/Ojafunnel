@@ -27,23 +27,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-3">Recent Transaction</h4>
-
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-bs-toggle="tab" href="#all-order" role="tab">
-                                        All Orders
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#processing" role="tab">
-                                        Processing
-                                    </a>
-                                </li>
-                            </ul>
-
-                            <!-- Tab panes -->
+                            <h4 class="card-title mb-3">All Transaction</h4>
                             <div class="tab-content p-3">
                                 <div class="tab-pane active" id="all-order" role="tabpanel">
 
@@ -51,88 +35,34 @@
                                         <table class="table table-hover datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Type</th>
-                                                    <th scope="col">Trade No</th>
+                                                    <th scope="col">Transaction Date</th>
                                                     <th scope="col">Amount</th>
-                                                    <th scope="col">Balance</th>
+                                                    <th scope="col">Transaction Reference No</th>
                                                     <th scope="col">Status</th>
                                                 </tr>
 
                                             </thead>
 
+                                            @foreach($transactions as $transaction)
                                             <tbody>
                                                 <tr>
-                                                    <td>06 Dec, 2022</td>
-                                                    <td>Paid</td>
-                                                    <td>Bitcoin</td>
-                                                    <td>1.00952 BTC</td>
-                                                    <td>$ 9067.62</td>
+                                                    <td>{{$transaction->created_at->toDayDateTimeString()}}</td>
+                                                    <td>₦{{number_format($transaction->amount, 2)}}</td>
+                                                    <td>{{$transaction->reference}}</td>
                                                     <td>
-                                                        <span class="badge bg-success font-size-10">Completed</span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>06 Dec, 2022</td>
-                                                    <td>Paid</td>
-                                                    <td>Ethereum</td>
-                                                    <td>0.00413 ETH</td>
-                                                    <td>$ 2123.01</td>
-                                                    <td>
-                                                        <span class="badge bg-success font-size-10">Completed</span>
+                                                        @if($transaction->status == "Top Up")
+                                                        <span class="badge bg-success font-size-10">{{$transaction->status}} <i class="mdi mdi-arrow-up me-1"></i></span>
+                                                        @else
+                                                        <span class="badge bg-danger font-size-10">{{$transaction->status}} <i class="mdi mdi-arrow-down me-1"></i></span>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             </tbody>
+                                            @endforeach
                                         </table>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="processing" role="tabpanel">
-                                    <div>
-                                        <div class="table-responsive mt-3">
-                                            <table class="table table-hover datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Date</th>
-                                                        <th scope="col">Type</th>
-                                                        <th scope="col">Trade No</th>
-                                                        <th scope="col">Amount</th>
-                                                        <th scope="col">Balance</th>
-                                                        <th scope="col">Status</th>
-                                                    </tr>
-
-                                                </thead>
-
-                                                <tbody>
-                                                    <tr>
-                                                        <td>03 Mar, 2020</td>
-                                                        <td>Buy</td>
-                                                        <td>Bitcoin</td>
-                                                        <td>1.00952 BTC</td>
-                                                        <td>$ 9067.62</td>
-                                                        <td>
-                                                            <span class="badge bg-success font-size-10">Completed</span>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>04 Mar, 2020</td>
-                                                        <td>Sell</td>
-                                                        <td>Ethereum</td>
-                                                        <td>0.00413 ETH</td>
-                                                        <td>$ 2123.01</td>
-                                                        <td>
-                                                            <span class="badge bg-success font-size-10">Completed</span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

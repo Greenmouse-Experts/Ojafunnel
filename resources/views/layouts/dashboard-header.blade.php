@@ -10,9 +10,11 @@
         amount: document.getElementById("amount").value * 100,
         ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
         callback: function(response){
-            var_dump('success. transaction ref is ' + response.reference);
-            //   alert(response);
-            // window.location.href=url;
+            // alert(JSON.stringify(response))
+            let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
+            url = url.replace(':response', response.reference);
+            url = url.replace(':amount', document.getElementById("amount").value);
+            document.location.href=url;
         },
         onClose: function(){
             alert('window closed');
@@ -68,7 +70,7 @@
                         <div class="dropdown-item-text">
                             <div>
                                 <p class="text-muted mb-2">Available Balance</p>
-                                <h5 class="mb-0">₦500</h5> <button data-bs-toggle="modal" data-bs-target="#emailConfirm">Deposit Now</button>
+                                <h5 class="mb-0">₦{{number_format(Auth::user()->wallet, 2)}}</h5> <button data-bs-toggle="modal" data-bs-target="#emailConfirm">Deposit Now</button>
                             </div>
                         </div>
 

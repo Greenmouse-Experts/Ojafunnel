@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('referral_link')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('plan')->nullable();
+            $table->string('wallet')->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active')->index();
             $table->string('password');
             $table->rememberToken();

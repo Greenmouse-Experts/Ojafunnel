@@ -11,6 +11,16 @@ use Ramsey\Uuid\Type\Integer;
 
 class IntegrationController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
+    
     public function integration_create(Request $request)
     {
         if($request->type == 'Twilio')

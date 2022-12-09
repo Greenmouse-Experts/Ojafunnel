@@ -93,7 +93,7 @@
                                             <th>Type</th>
                                             <th>Commission (%)</th>
                                             <th>Affiliate Link</th>
-                                            <th>Actions</th>
+                                            <!-- <th>Actions</th> -->
                                         </tr>
                                     </thead>
                                     @foreach($referrals as $referral)
@@ -103,8 +103,8 @@
                                             <td>{{$referral->first_name}} {{$referral->last_name}}</td>
                                             <td>Tier 1</td>
                                             <td>10%</td>
-                                            <td>{{Auth::user()->affiliate_link}}</td>
-                                            <td>
+                                            <td>{{ route('signup', ['ref' => Auth::user()->affiliate_link]) }}</td>
+                                            <!-- <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Options
@@ -116,7 +116,7 @@
                                                         <li><a class="dropdown-item" href="#">Delete</a></li>
                                                     </ul>
                                                 </div>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     </tbody>
                                     @endforeach

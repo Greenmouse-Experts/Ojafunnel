@@ -29,6 +29,7 @@ class User extends Authenticatable
         'phone_number',
         'referral_link',
         'plan',
+        'wallet',
         'password',
     ];
 

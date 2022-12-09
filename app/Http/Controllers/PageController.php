@@ -13,6 +13,16 @@ class PageController extends Controller
 {
     use EditorTrait;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
+    
     public function page_builder_create()
     {   
         Page::create([

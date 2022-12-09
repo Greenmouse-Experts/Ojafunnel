@@ -7,13 +7,6 @@
       email: '{{$user->email}}',
       amount: {{$amount}} * 100,
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-      metadata: {
-         custom_fields: [
-            {
-                plan_id: {{$plan->id}},
-            }
-         ]
-      },
       callback: function(response){
         // var_dump('success. transaction ref is ' + response.reference);
         //   alert(response);
@@ -55,37 +48,38 @@
                 <div class="col-lg-8">
                     <div class="annoyed">
                         <h1>
-                            <i class="bi bi-check2"></i> Space for up tp 5,000 contacts
+                            <i class="bi bi-check2"></i> <b>SMS:</b> *
                         </h1>
                         <h1>
-                            <i class="bi bi-check2"></i>  Unlimited emails sent
+                            <i class="bi bi-check2"></i> <b>WhatsApp:</b> 2 WhatsApp
                         </h1>
                         <h1>
-                            <i class="bi bi-check2"></i> 10 Sales Funnels
+                            <i class="bi bi-check2"></i> <b>Email:</b> 1000 daily
                         </h1>
                         <h1>
-                            <i class="bi bi-check2"></i> 5 Courses
+                            <i class="bi bi-check2"></i> <b>Page builder: </b> 10
                         </h1>
                         <h1>
-                            <i class="bi bi-check2"></i> Unlimited Students
+                            <i class="bi bi-check2"></i> <B>Custom domain:</B> No
                         </h1>
                         <h1>
-                            <i class="bi bi-check2"></i> 10 A/B Tests
+                            <i class="bi bi-check2"></i> <b>Funnel builder:</b> No
                         </h1>
                         <h1>
-                            <i class="bi bi-check2"></i> Unlimited file storage space
+                            <i class="bi bi-check2"></i> <b>LMS:</b> No
                         </h1>
                         <h1>
-                            <i class="bi bi-check2"></i> sales of physical products
+
+                            <i class="bi bi-check2"></i> <b>Ecommerce Products:</b> No
                         </h1>
                         <h1>
-                            <i class="bi bi-check2"></i> 10 Automations Rules
+
+                            <i class="bi bi-check2"></i> <b> Upload list:</b> Can upload list but wont work for email
                         </h1>
+
                         <h1>
-                            <i class="bi bi-check2"></i> Affiliate program management
-                        </h1>
-                        <h1>
-                            <i class="bi bi-check2"></i> 7 Days a week customer support
+
+                            <i class="bi bi-check2"></i> <b>Use your own email server (AWS, etc):</b> No
                         </h1>
                         <button type="button" onclick="payWithPaystack()">
                             <script src="https://js.paystack.co/v1/inline.js"></script>
