@@ -129,11 +129,16 @@ Route::prefix('{username}')->group(function() {
     });
 });
 
+    // Admin Login
+    Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlogin'])->name('adminlogin');
 
-     // Admin Login
-     Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlogin'])->name('adminlogin');
-
-     // Admin Login
-     Route::get('/admin/welcome', [App\Http\Controllers\AdminController::class, 'adminwelcome'])->name('adminwelcome');
-     Route::get('/admin/viewlist', [App\Http\Controllers\AdminController::class, 'viewlist'])->name('viewlist');
-     Route::get('/admin/viewmessage', [App\Http\Controllers\AdminController::class, 'viewmessage'])->name('viewmessage');
+    // Admin Login
+    Route::get('/admin/welcome', [App\Http\Controllers\AdminController::class, 'adminwelcome'])->name('adminwelcome');
+    Route::get('/admin/view_users', [App\Http\Controllers\AdminController::class, 'view_users'])->name('view_users');
+    Route::get('/admin/add_plans', [App\Http\Controllers\AdminController::class, 'add_plans'])->name('add_plans');
+    Route::get('/admin/manage_plans', [App\Http\Controllers\AdminController::class, 'manage_plans'])->name('manage_plans');
+    Route::get('/admin/viewmessage', [App\Http\Controllers\AdminController::class, 'viewmessage'])->name('viewmessage');
+    Route::get('/admin/transactions', [App\Http\Controllers\AdminController::class, 'transactions'])->name('transactions');
+    Route::get('/admin/subscriptions', [App\Http\Controllers\AdminController::class, 'subscriptions'])->name('subscriptions');
+    Route::get('/admin/security', [App\Http\Controllers\AdminController::class, 'security'])->name('security');
+    Route::get('/admin/general', [App\Http\Controllers\AdminController::class, 'general'])->name('general');

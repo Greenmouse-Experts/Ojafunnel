@@ -12,15 +12,12 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="has-arrow">
-                    <i class="bx bx-share-alt"></i>
-                        <span key="t-dashboards">Subscribers</span>
+                    <a href="{{route('view_users')}}">
+                        <i class="bi bi-person-check"></i>
+                        <span key="t-dashboards">Users</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('viewlist')}}" key="t-full-calendar">View Mailing List</a></li>
-                    </ul>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="#" class="has-arrow">
                         <i class="bi bi-envelope-open-fill"></i>
                         <span key="t-dashboards">Messages</span>
@@ -28,12 +25,16 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('viewmessage')}}" key="t-full-calendar">View Message</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li>
-                    <a href="#">
-                        <i class="bi bi-envelope-open-fill"></i>
+                    <a href="#" class="has-arrow">
+                        <i class="bi bi-plus-circle-fill"></i>
                         <span key="t-dashboards">Plans</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('add_plans')}}" key="t-full-calendar">Add Plan</a></li>
+                        <li><a href="{{route('manage_plans')}}" key="t-full-calendar">Manage Plan</a></li>
+                    </ul>
                 </li>
                  <li>
                     <a href="#" class="has-arrow">
@@ -63,13 +64,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('transactions')}}">
                         <i class="bi bi-bank2"></i>
                         <span key="t-chat">Transactions</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('subscriptions')}}">
                     <i class="bi bi-award-fill"></i>
                         <span key="t-chat">Subscriptions</span>
                     </a>
@@ -101,13 +102,23 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow">
+                    <a href="javascript: void(0);" class="has-arrow mb-4">
                         <i class="bi bi-tags-fill"></i>
                         <span key="t-chat">Integration</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="#" key="t-tui-calendar">Create Integrations</a></li>
                         <li><a href="#" key="t-tui-calendar">Manage Integrations</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="has-arrow">
+                        <i class="bi bi-gear-wide-connected"></i>
+                        <span key="t-chat">Settings</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('general')}}" key="t-tui-calendar">General</a></li>
+                        <li><a href="{{route('security')}}" key="t-full-calendar">Security</a></li>
                     </ul>
                 </li>
             </ul>

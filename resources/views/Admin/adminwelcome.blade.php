@@ -102,7 +102,146 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    <tr>
 
+                                                        <td><a href="javascript: void(0);" class="text-body fw-bold">#11</a> </td>
+                                                        <td>Hamzat</td>
+                                                        <td>
+                                                            greenmousetest@gmail.com
+                                                        </td>
+                                                        <td>
+                                                            1234567890
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-pill badge-soft-success font-size-11">active</span>
+                                                        </td>
+                                                        <td>
+                                                            Dec 10 2022
+                                                        </td>
+                                                        <td>
+                                                            <ul class="list-unstyled hstack gap-1 mb-0">
+
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                                    <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td><a href="javascript: void(0);" class="text-body fw-bold">#12</a> </td>
+                                                        <td>Promise</td>
+                                                        <td>
+                                                            greenmousetest@gmail.com
+                                                        </td>
+                                                        <td>
+                                                            1234567890
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-pill badge-soft-success font-size-11">active</span>
+                                                        </td>
+                                                        <td>
+                                                            Dec 10 2022
+                                                        </td>
+                                                        <td>
+                                                            <ul class="list-unstyled hstack gap-1 mb-0">
+
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                                    <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td><a href="javascript: void(0);" class="text-body fw-bold">#13</a> </td>
+                                                        <td>Adeleke</td>
+                                                        <td>
+                                                            greenmousetest@gmail.com
+                                                        </td>
+                                                        <td>
+                                                            1234567890
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-pill badge-soft-success font-size-11">active</span>
+                                                        </td>
+                                                        <td>
+                                                            Dec 10 2022
+                                                        </td>
+                                                        <td>
+                                                            <ul class="list-unstyled hstack gap-1 mb-0">
+
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                                    <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td><a href="javascript: void(0);" class="text-body fw-bold">#14</a> </td>
+                                                        <td>Fuad</td>
+                                                        <td>
+                                                            greenmousetest@gmail.com
+                                                        </td>
+                                                        <td>
+                                                            1234567890
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-pill badge-soft-success font-size-11">active</span>
+                                                        </td>
+                                                        <td>
+                                                            Dec 10 2022
+                                                        </td>
+                                                        <td>
+                                                            <ul class="list-unstyled hstack gap-1 mb-0">
+
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                                    <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td><a href="javascript: void(0);" class="text-body fw-bold">#15</a> </td>
+                                                        <td>Daneil</td>
+                                                        <td>
+                                                            greenmousetest@gmail.com
+                                                        </td>
+                                                        <td>
+                                                            1234567890
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-pill badge-soft-success font-size-11">active</span>
+                                                        </td>
+                                                        <td>
+                                                            Dec 10 2022
+                                                        </td>
+                                                        <td>
+                                                            <ul class="list-unstyled hstack gap-1 mb-0">
+
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                                    <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -122,12 +261,6 @@
                                 <table class="table align-middle table-nowrap mb-0">
                                     <thead class="tread">
                                         <tr>
-                                            <th style="width: 20px;">
-                                                <div class="form-check font-size-16 align-middle">
-                                                    <input class="form-check-input" type="checkbox" id="transactionCheck01">
-                                                    <label class="form-check-label" for="transactionCheck01"></label>
-                                                </div>
-                                            </th>
                                             <th class="align-middle">Order ID</th>
                                             <th class="align-middle">Billing Name</th>
                                             <th class="align-middle">Date</th>
@@ -139,12 +272,6 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input class="form-check-input" type="checkbox" id="transactionCheck02">
-                                                    <label class="form-check-label" for="transactionCheck02"></label>
-                                                </div>
-                                            </td>
                                             <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2540</a> </td>
                                             <td>Neal Matthews</td>
                                             <td>
@@ -168,12 +295,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input class="form-check-input" type="checkbox" id="transactionCheck03">
-                                                    <label class="form-check-label" for="transactionCheck03"></label>
-                                                </div>
-                                            </td>
+
                                             <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2541</a> </td>
                                             <td>Jamal Burnett</td>
                                             <td>
@@ -197,12 +319,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input class="form-check-input" type="checkbox" id="transactionCheck04">
-                                                    <label class="form-check-label" for="transactionCheck04"></label>
-                                                </div>
-                                            </td>
+
                                             <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2542</a> </td>
                                             <td>Juan Mitchell</td>
                                             <td>
@@ -225,12 +342,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input class="form-check-input" type="checkbox" id="transactionCheck05">
-                                                    <label class="form-check-label" for="transactionCheck05"></label>
-                                                </div>
-                                            </td>
+
                                             <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2543</a> </td>
                                             <td>Barry Dick</td>
                                             <td>
@@ -253,12 +365,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input class="form-check-input" type="checkbox" id="transactionCheck06">
-                                                    <label class="form-check-label" for="transactionCheck06"></label>
-                                                </div>
-                                            </td>
+
                                             <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2544</a> </td>
                                             <td>Ronald Taylor</td>
                                             <td>
@@ -281,12 +388,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <div class="form-check font-size-16">
-                                                    <input class="form-check-input" type="checkbox" id="transactionCheck07">
-                                                    <label class="form-check-label" for="transactionCheck07"></label>
-                                                </div>
-                                            </td>
+
                                             <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2545</a> </td>
                                             <td>Jacob Hunter</td>
                                             <td>
@@ -320,4 +422,26 @@
     </div>
     <!-- End Page-content -->
 </div>
+<!-- Modal -->
+<div class="modal fade" id="jobDelete" tabindex="-1" aria-labelledby="jobDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body px-4 py-5 text-center">
+                <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="avatar-sm mb-4 mx-auto">
+                    <div class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3">
+                        <i class="mdi mdi-trash-can-outline"></i>
+                    </div>
+                </div>
+                <p class="text-muted font-size-16 mb-4">Are you sure you want to permanently erase the job.</p>
+
+                <div class="hstack gap-2 justify-content-center mb-0">
+                    <button type="button" class="btn btn-danger">Delete Now</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

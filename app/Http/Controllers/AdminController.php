@@ -17,13 +17,44 @@ class AdminController extends Controller
             return view('admin.adminwelcome');
         }
 
-        public function viewlist()
+        public function view_users()
         {
-            return view('admin.viewlist');
+            return view('admin.view-users');
         }
 
+        public function add_plans()
+        {
+            return view('admin.add-plans');
+        }
+
+        public function  manage_plans()
+        {
+            return view('admin.manage-plans');
+        }
+       
         public function viewmessage()
         {
             return view('admin.viewmessages');
         }
+
+        public function transactions()
+        {
+            return view('admin.transaction');
+        }
+
+        public function subscriptions()
+        {
+            return view('admin.subscriptions');
+        }
+
+        public function security()
+        {
+            return view('admin.securitySettings');
+        }
+
+        public function general()
+        {
+            return view('admin.generalSettings');
+        }
+        
 }
