@@ -109,7 +109,7 @@ header nav .dropdown-content {
 }
 
 header nav .dropdown-content h4 {
-    font-size: 16px;
+    font-size: 13px;
     margin-top: 0;
     font-weight: 600;
     margin-bottom: 0;
@@ -152,15 +152,13 @@ header nav .dropdown-content .btn-area {
 }
 
 header nav .dropdown-content p {
-    font-size: 14px;
+    font-size: 13px;
     padding: 0px 0px 0px 10px;
 }
 
 header nav .dropdown-content .btn-area:hover {
-    background-color: #F2E0FE;
-    color: #000;
+    color: #714091;
     transition: 0.5s;
-    padding: 9px 0px 9px 0px;
 }
 
 .btn-area .bi:hover {
@@ -201,8 +199,7 @@ header nav .dropdown-content .col-lg-3 .routers:hover a {
 }
 
 header nav .dropdown-content .col-lg-3 a:hover {
-    background-color: #F2E0FE;
-    color: #000;
+    color: #70418F;
     font-size: 16px;
     font-weight: 600;
 }
@@ -795,6 +792,7 @@ header nav .offcanvas-header button i {
     margin-top: 20px;
     background-color: #70418F;
     color: #fff;
+    font-size: 12px;
     border-radius: 4px;
 }
 
@@ -1260,27 +1258,27 @@ header nav .offcanvas-header button i {
 
 .Increasing .thread-text h1 {
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 600;
     text-align: center;
     padding: 0px 0px 100px 0px;
 }
 
 .Increasing .thread-text h4 {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
     color: #A7A5A3;
     padding: 0px 0px 5px 0px;
 }
 
 .Increasing .thread-text h2 {
-    font-size: 27px;
-    font-weight: 600;
+    font-size: 25px;
+    font-weight: 500;
     line-height: 1.5;
 }
 
 .Increasing .thread-text p {
-    font-size: 17px;
+    font-size: 13px;
     margin-bottom: 0;
     margin-top: 0;
     line-height: 1.5;
@@ -1293,13 +1291,13 @@ header nav .offcanvas-header button i {
 
 .Increasing .thread-text .output img {
     pointer-events: none;
-    width: 40%;
+    width: 35%;
     display: inline-block;
     margin: auto;
 }
 
 .Increasing .thread-text .output p {
-    font-size: 14px !important;
+    font-size: 13px !important;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
@@ -1443,20 +1441,20 @@ header nav .offcanvas-header button i {
 .communication .thread-text h4 {
     font-size: 13px;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 500;
     color: #A7A5A3;
     padding: 0px 0px 5px 0px;
 }
 
 .communication .thread-text h2 {
     font-size: 25px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.5;
 }
 
 .communication .thread-text p {
-    font-size: 17px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 2;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
@@ -1468,13 +1466,13 @@ header nav .offcanvas-header button i {
 
 .communication .thread-text .output img {
     pointer-events: none;
-    width: 40%;
+    width: 35%;
     display: inline-block;
     margin: auto;
 }
 
 .communication .thread-text .output p {
-    font-size: 14px !important;
+    font-size: 13px !important;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
@@ -1558,7 +1556,7 @@ header nav .offcanvas-header button i {
 
     .communication .thread-text h2 {
         font-size: 25px;
-        font-weight: 600;
+        font-weight: 500;
     }
 }
 
@@ -1622,14 +1620,14 @@ header nav .offcanvas-header button i {
 
 .Editable .thread-text h1 {
     font-size: 40px;
-    font-weight: 800;
+    font-weight: 500;
     text-align: center;
     padding: 0px 0px 80px 0px;
 }
 
 .Editable .thread-text h4 {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
     color: #A7A5A3;
     letter-spacing: 00.25rem;
@@ -1638,13 +1636,13 @@ header nav .offcanvas-header button i {
 
 .Editable .thread-text h2 {
     font-size: 25px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.5;
 }
 
 .Editable .thread-text p {
-    font-size: 17px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 2;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
@@ -1656,13 +1654,13 @@ header nav .offcanvas-header button i {
 
 .Editable .thread-text .output img {
     pointer-events: none;
-    width: 40%;
+    width: 35%;
     display: inline-block;
     margin: auto;
 }
 
 .Editable .thread-text .output p {
-    font-size: 14px !important;
+    font-size: 13px !important;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
@@ -1813,13 +1811,13 @@ header nav .offcanvas-header button i {
 
 .Seemless .thread-text h2 {
     font-size: 25px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 00.1rem;
 }
 
 .Seemless .thread-text p {
-    font-size: 17px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 2;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
@@ -1831,13 +1829,13 @@ header nav .offcanvas-header button i {
 
 .Seemless .thread-text .output img {
     pointer-events: none;
-    width: 40%;
+    width: 35%;
     display: inline-block;
     margin: auto;
 }
 
 .Seemless .thread-text .output p {
-    font-size: 14px !important;
+    font-size: 12px !important;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
@@ -1954,6 +1952,7 @@ header nav .offcanvas-header button i {
 
     .Seemless .thread-text p {
         text-align: center;
+        font-size: 13px;
     }
 
     .Seemless .thread-text h2 {
@@ -1985,7 +1984,7 @@ header nav .offcanvas-header button i {
 
 .Features .btn-text h1 {
     text-align: center;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 0;
     margin-top: 0;
     font-size: 30px;
@@ -1999,11 +1998,11 @@ header nav .offcanvas-header button i {
 }
 
 .Features .alert {
-    padding: 60px 0 0 0;
+    padding: 10px 0 0 0;
 }
 
 .Features .aler {
-    padding: 40px 0 0 0;
+    padding: 25px 0 0 0;
 }
 
 .Features .Amet img {
@@ -2021,13 +2020,13 @@ header nav .offcanvas-header button i {
 .Features .Amet .drag h1 {
     font-size: 15px;
     padding: 25px 0 0 0;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .Features .Amet .drag p {
-    padding: 10px 0px 0 0px;
+    padding: 5px 0px 0 0px;
     color: #5E5B5B;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .Features .Amet:hover {
@@ -2106,8 +2105,8 @@ header nav .offcanvas-header button i {
 .choose .text-btn-fot h1 {
     text-align: center;
     font-style: normal;
-    font-size: 35px;
-    font-weight: 600;
+    font-size: 30px;
+    font-weight: 500;
 }
 
 .choose .text-btn-fot p {
@@ -2118,7 +2117,7 @@ header nav .offcanvas-header button i {
 
 .choose .text-btn h1 {
     font-style: normal;
-    font-size: 25px;
+    font-size: 17px;
     font-weight: 600;
 }
 
@@ -2142,7 +2141,7 @@ header nav .offcanvas-header button i {
 }
 
 .choose .text-btn p {
-    font-size: 15px;
+    font-size: 13px;
     color: #000;
     line-height: 2;
     padding: 0 0 0px 0;
@@ -2153,8 +2152,8 @@ header nav .offcanvas-header button i {
 }
 
 .choosing .text-lent h1 {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 13px;
+    font-weight: 500;
     text-align: center;
     color: #000;
 }
@@ -2262,8 +2261,8 @@ header nav .offcanvas-header button i {
 
 .mount h1 {
     text-align: center;
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 25px;
+    font-weight: 600;
     color: #fff;
 }
 
@@ -2280,7 +2279,8 @@ header nav .offcanvas-header button i {
     border: 1px solid #fff;
     background-color: #fff;
     color: #000;
-    margin-left: 40px !important;
+    font-size: 13px;
+    margin-left: 30px !important;
 }
 
 @media (max-width:1200px) {
@@ -2329,7 +2329,7 @@ header nav .offcanvas-header button i {
 .footer .kit-font p {
     padding: 10px 0 0 0;
     color: #000;
-    font-size: 14px;
+    font-size: 13px;
     text-align: left;
 }
 
@@ -2503,8 +2503,16 @@ header nav .offcanvas-header button i {
 .footer .last-fott {
     padding: 20px 0 0 0;
 }
+.footer .last-fott a {
+    text-decoration: none;
+    color: #000;
+    font-size: 13px;
+    margin-bottom: 10px;
+    padding: 0 0 10px 0px;
+}
 
 .footer .last-fott h1 {
+    padding: 5px 0 0 0;
     text-align: center;
     font-size: 13px;
     color: #000;
@@ -2542,9 +2550,16 @@ header nav .offcanvas-header button i {
     transition: all 0.4s ease;
 }
 
-@media (max-width:1300px) {
+/* @media (max-width:1300px) {
     .footer .top .media-icons a {
         margin: 0 8px;
+    }
+} */
+@media (max-width:992px) {
+    .footer .top .media-icons a {
+        margin: 0 8px;
+        display: block;
+        margin: auto;
     }
 }
 
@@ -2628,14 +2643,14 @@ header nav .offcanvas-header button i {
 .cont-welcome .text h1 {
     text-align: center;
     font-size: 30px;
-    font-weight: 900;
+    font-weight: 600;
     color: #fff;
 }
 
 .cont-welcome .text p {
     text-align: center;
     color: #fff;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
 }
 
@@ -2845,14 +2860,14 @@ header nav .offcanvas-header button i {
 .faq-welcome .text h1 {
     text-align: center;
     font-size: 30px;
-    font-weight: 900;
+    font-weight: 600;
     color: #fff;
 }
 
 .faq-welcome .text p {
     text-align: center;
     color: #fff;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
 }
 
@@ -3009,7 +3024,7 @@ header nav .offcanvas-header button i {
 
 .privacy .text h1 {
     font-size: 25px;
-    font-weight: 800;
+    font-weight: 500;
 }
 
 .privacy .text p {
