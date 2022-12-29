@@ -1190,23 +1190,19 @@ header nav .offcanvas-header button i {
 }
 
 @media (max-width:520px) {
-    .welcome .accelerate h1 {
-        font-weight: 800;
-        font-size: 35px;
-    }
 
     .welcome .accelerate h3 {
         text-align: center;
         font-weight: 500;
         padding: 0 0 20px 0px;
-        font-size: 15px !important;
+        font-size: 13px !important;
     }
 }
 
 @media (max-width:430px) {
     .welcome .accelerate h1 {
-        font-weight: 800;
-        font-size: 30px;
+        font-weight: 600;
+        font-size: 25px;
     }
 
     .welcome .accelerate h3 {
@@ -1220,21 +1216,17 @@ header nav .offcanvas-header button i {
         border-radius: 10px;
         width: 70%;
         margin: auto;
-        font-weight: 700;
         margin-left: 50px !important;
         margin-bottom: 10px !important;
     }
 }
 
 @media (max-width:380px) {
-    .welcome .accelerate h1 {
-        font-weight: 900;
-    }
 
     .welcome .accelerate h3 {
         text-align: center;
         font-weight: 500;
-        font-size: 17px;
+        font-size: 13px;
     }
 
     .welcome .accelerate .btn-curve button {
@@ -1242,7 +1234,7 @@ header nav .offcanvas-header button i {
         border-radius: 10px;
         width: 70%;
         margin: auto;
-        font-weight: 700;
+
         margin-left: 50px !important;
         margin-bottom: 10px !important;
     }
@@ -1356,7 +1348,7 @@ header nav .offcanvas-header button i {
 @media (max-width:756px) {
     .Increasing .thread-text h1 {
         font-size: 32px;
-        font-weight: 800;
+        font-weight: 600;
         text-align: center;
         padding: 0px 0px 50px 0px;
     }
@@ -1384,8 +1376,8 @@ header nav .offcanvas-header button i {
     }
 
     .Increasing .thread-text h1 {
-        font-size: 28px;
-        font-weight: 800;
+        font-size: 25px;
+        font-weight: 600;
         text-align: center;
         padding: 0px 0px 40px 0px;
     }
