@@ -13,19 +13,10 @@
                 </li>
                 <li>
                     <a href="{{route('view_users')}}">
-                        <i class="bi bi-person-check"></i>
+                    <i class="bi bi-person-circle"></i>
                         <span key="t-dashboards">Users</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="#" class="has-arrow">
-                        <i class="bi bi-envelope-open-fill"></i>
-                        <span key="t-dashboards">Messages</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('viewmessage')}}" key="t-full-calendar">View Message</a></li>
-                    </ul>
-                </li> -->
                 <li>
                     <a href="#" class="has-arrow">
                         <i class="bi bi-plus-circle-fill"></i>
@@ -36,31 +27,27 @@
                         <li><a href="{{route('manage_plans')}}" key="t-full-calendar">Manage Plan</a></li>
                     </ul>
                 </li>
-                 <li>
+                <li>
+                    <a href="{{route('subscriptions')}}">
+                        <i class="bi bi-person-check"></i>
+                        <span key="t-dashboards">Subscriptions</span>
+                    </a>
+                </li>
+                <li>
                     <a href="#" class="has-arrow">
-                    <i class="bi bi-envelope-check-fill"></i>
+                        <i class="bi bi-envelope-check-fill"></i>
                         <span key="t-dashboards">Email Marketing</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="#" key="t-full-calendar">View Email Checker</a></li>
-                    </ul>
-                    <ul class="sub-menu" aria-expanded="false">
                         <li><a href="#" key="t-full-calendar">View Email Campaign</a></li>
-                    </ul>
-                    <ul class="sub-menu" aria-expanded="false">
                         <li><a href="#" key="t-full-calendar">View Automation Campaign</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
-                    <i class="fa-solid fa-building-circle-check"></i>
-                        <span key="t-dashboards">Funnel Builder</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="bi bi-calendar-range-fill"></i>
-                        <span key="t-chat">Page Builder</span>
+                    <a href="{{route('vendorlist')}}">
+                    <i class="bi bi-card-checklist"></i>
+                        <span key="t-dashboards">Vendor list</span>
                     </a>
                 </li>
                 <li>
@@ -70,9 +57,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('subscriptions')}}">
-                    <i class="bi bi-award-fill"></i>
-                        <span key="t-chat">Subscriptions</span>
+                    <a href="#">
+                        <i class="bi bi-receipt"></i>
+                        <span key="t-chat">Sales Analytics</span>
                     </a>
                 </li>
                 <li>
@@ -102,7 +89,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow mb-4">
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-tags-fill"></i>
                         <span key="t-chat">Integration</span>
                     </a>
@@ -114,10 +101,10 @@
                 <li>
                     <a href="#" class="has-arrow">
                         <i class="bi bi-gear-wide-connected"></i>
-                        <span key="t-chat">Settings</span>
+                        <span key="t-dashboards">Settings</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('general')}}" key="t-tui-calendar">General</a></li>
+                        <li><a href="{{route('general')}}" key="t-full-calendar">General</a></li>
                         <li><a href="{{route('security')}}" key="t-full-calendar">Security</a></li>
                     </ul>
                 </li>

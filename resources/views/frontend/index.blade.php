@@ -560,7 +560,7 @@
                     <div class="menu-list top-header">
                         <div class="menu-page">
                             <div class="text-btn">
-                                <a href="" data-src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660737789/OjaFunnel-Images/Stripe_bfhh6m_yk9kmo-removebg-preview_jih215.png" draggable="false">
+                                <a href="" class="rat" data-src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660737789/OjaFunnel-Images/Stripe_bfhh6m_yk9kmo-removebg-preview_jih215.png" draggable="false">
                                     <h1>
                                         All in one tool
                                     </h1>

@@ -1038,9 +1038,9 @@ header nav .offcanvas-header button i {
 
 .welcome .accelerate h1 {
     text-align: center;
-    font-weight: 800;
+    font-weight: 600;
     margin-top: 0;
-    font-size: 55px;
+    font-size: 45px;
     margin-bottom: 0;
     color: #ffffff;
     padding: 0px 0px 5px 0px;
@@ -1049,7 +1049,7 @@ header nav .offcanvas-header button i {
 .welcome .accelerate h3 {
     text-align: center;
     font-weight: 500;
-    font-size: 18px !important;
+    font-size: 14px !important;
     color: #ffffff;
     line-height: 1.5;
     letter-spacing: 00.10rem;
@@ -1068,7 +1068,6 @@ header nav .offcanvas-header button i {
     color: #fff;
     background-color: #5180EA;
     margin: auto;
-    font-weight: 700;
     margin-left: 10px !important;
 }
 
@@ -1114,8 +1113,8 @@ header nav .offcanvas-header button i {
 @media (max-width:1399px) {
     .welcome .accelerate h1 {
         text-align: center;
-        font-weight: 800;
-        font-size: 50px;
+        font-weight: 600;
+        font-size: 40px;
         margin-top: 0;
         margin-bottom: 0;
         color: #ffffff;
@@ -1134,8 +1133,8 @@ header nav .offcanvas-header button i {
         margin-bottom: 10px !important;
     } */
     .welcome .accelerate h1 {
-        font-weight: 800;
-        font-size: 40px;
+        font-weight: 600;
+        font-size: 35px;
     }
 
     .welcome {
@@ -1150,10 +1149,10 @@ header nav .offcanvas-header button i {
 }
 
 @media (max-width:1000px) {
-    .welcome .accelerate h1 {
-        font-weight: 800;
-        font-size: 40px;
-    }
+    /* .welcome .accelerate h1 {
+        font-weight: 600;
+        font-size: 30px;
+    } */
 
     .welcome .accelerate .images {
         display: none;
@@ -1174,8 +1173,8 @@ header nav .offcanvas-header button i {
 
 @media (max-width:768px) {
     .welcome .accelerate h1 {
-        font-weight: 800;
-        font-size: 40px;
+        font-weight: 600;
+        font-size: 30px;
     }
 
     /* .welcome .accelerate .btn-curve button{
@@ -2138,6 +2137,10 @@ header nav .offcanvas-header button i {
     width: 100%;
     display: block;
     margin: auto;
+}
+.choose .rat{
+    width: 80% !; 
+
 }
 
 .choose .text-btn p {

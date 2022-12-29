@@ -74,8 +74,128 @@
 
                                         <div class="flex-shrink-0 align-self-center">
                                             <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
-                                                <span class="avatar-title rounded-circle bg-primary">
+                                                <span class="avatar-title rounded-circle bg-success">
                                                     <i class="bi bi-person-check font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">Vendor List</p>
+                                            <h4 class="mb-0">50</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-warning">
+                                                <i class="bi bi-bag-check font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">Affiliate List</p>
+                                            <h4 class="mb-0">80</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-dark">
+                                                <i class="bi bi-patch-check font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">Sales Analytics</p>
+                                            <h4 class="mb-0">10</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                <i class="bi bi-bag-plus font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">Affiliate Payment</p>
+                                            <h4 class="mb-0">21</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-success">
+                                                <i class="bi bi-wallet2 font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">Birthday Modules</p>
+                                            <h4 class="mb-0">25</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-info">
+                                                <i class="bi bi-box2-heart font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">List Management</p>
+                                            <h4 class="mb-0">100</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-secondary">
+                                                <i class="bi bi-bag-plus font-size-24"></i>
                                                 </span>
                                             </div>
                                         </div>

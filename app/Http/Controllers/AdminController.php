@@ -56,5 +56,20 @@ class AdminController extends Controller
         {
             return view('admin.generalSettings');
         }
+
+        public function subscribtions()
+        {
+            return view('admin.subscribtions');
+        }
+
+        public function vendorlist()
+        {
+            return view('admin.vendorList');
+        }
+
+        public function vendordetails()
+        {
+            return view('admin.vendorDetails');
+        }
         
 }
