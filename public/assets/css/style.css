@@ -464,7 +464,7 @@ header nav .offcanvas-header button i {
 
 .register .sign .sign-div img {
     width: 150px;
-    display:block;
+    display: block;
     margin: auto;
 }
 
@@ -2130,8 +2130,9 @@ header nav .offcanvas-header button i {
     display: block;
     margin: auto;
 }
-.choose .rat{
-    width: 80% !; 
+
+.choose .rat {
+    width: 80% !;
 
 }
 
@@ -2498,6 +2499,7 @@ header nav .offcanvas-header button i {
 .footer .last-fott {
     padding: 20px 0 0 0;
 }
+
 .footer .last-fott a {
     text-decoration: none;
     color: #000;
