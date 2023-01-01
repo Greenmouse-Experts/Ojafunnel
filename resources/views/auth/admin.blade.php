@@ -83,13 +83,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <!-- <div class="btn-divv">
-                                <div class="portlog">
-                                    <a href="/">
-                                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1662630837/OjaFunnel-Images/signup-image_ecquqt.png" draggable="false">
-                                    </a>
-                                </div>
-                            </div> -->
+                           
                         </div>
                     </div>
                 </div>
