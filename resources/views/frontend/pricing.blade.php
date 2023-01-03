@@ -1,7 +1,6 @@
 @extends('layouts.frontend')
 
 @section('page-content')
-
 <!-- faq-welcome Ends -->
 <section class="faq-welcome">
     <div class="container">
