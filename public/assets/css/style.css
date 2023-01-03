@@ -2268,7 +2268,7 @@ header nav .offcanvas-header button i {
 }
 
 .mount button {
-    width: 30%;
+    width: 40%;
     border-radius: 10px;
     margin: auto;
     padding: 15px 0px 15px 0px;
@@ -2289,7 +2289,7 @@ header nav .offcanvas-header button i {
     }
 
     .mount button {
-        width: 30%;
+        width: 50%;
         margin-bottom: 10px !important;
         display: block !important;
         margin: auto !important;
