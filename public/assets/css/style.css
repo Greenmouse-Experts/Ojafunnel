@@ -2126,7 +2126,7 @@ header nav .offcanvas-header button i {
 }
 
 .choose .menu-image-holder img {
-    width: 100%;
+    width: 80%;
     display: block;
     margin: auto;
 }
@@ -2259,15 +2259,16 @@ header nav .offcanvas-header button i {
     text-align: center;
     font-size: 25px;
     font-weight: 600;
+    line-height: 1.4;
     color: #fff;
 }
 
 .mount .level {
-    padding: 50px 0 0 0;
+    padding: 40px 0 0 0;
 }
 
 .mount button {
-    width: 40%;
+    width: 30%;
     border-radius: 10px;
     margin: auto;
     padding: 15px 0px 15px 0px;
@@ -2288,7 +2289,7 @@ header nav .offcanvas-header button i {
     }
 
     .mount button {
-        width: 50%;
+        width: 30%;
         margin-bottom: 10px !important;
         display: block !important;
         margin: auto !important;
@@ -2334,7 +2335,7 @@ header nav .offcanvas-header button i {
     margin-top: 0;
     padding: 0 0 20px 0;
     margin-bottom: 0;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .footer .quick ul li {
@@ -2490,7 +2491,7 @@ header nav .offcanvas-header button i {
 
 .footer .last-fot h1 {
     text-align: center;
-    font-size: 22px;
+    font-size: 18px;
     color: #000;
     font-style: normal;
     font-weight: 500;
