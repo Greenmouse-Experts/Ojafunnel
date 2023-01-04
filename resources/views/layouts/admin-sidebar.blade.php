@@ -51,8 +51,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('affliatelist')}}">
-                        <i class="bi bi-person-vcard"></i>
+                    <a href="{{route('affiliateList')}}">
+                        <i class="bi bi-person-lines-fill"></i>
                         <span key="t-dashboards">Affiliate list</span>
                     </a>
                 </li>

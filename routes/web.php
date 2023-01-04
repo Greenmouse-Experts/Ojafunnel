@@ -145,4 +145,4 @@ Route::prefix('{username}')->group(function() {
     Route::get('/admin/subscribtions', [App\Http\Controllers\AdminController::class, 'subscribtions'])->name('subscribtions');
     Route::get('/admin/vendorlist', [App\Http\Controllers\AdminController::class, 'vendorlist'])->name('vendorlist');
     Route::get('/admin/vendordetails', [App\Http\Controllers\AdminController::class, 'vendordetails'])->name('vendordetails');
-    Route::get('/admin/affliatelist', [App\Http\Controllers\AdminController::class, 'affliatelist'])->name('affliatelist');
+    Route::get('/admin/affiliateList', [App\Http\Controllers\AdminController::class, 'affiliateList'])->name('affiliateList');
