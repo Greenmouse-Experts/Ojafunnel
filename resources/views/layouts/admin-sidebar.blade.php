@@ -51,6 +51,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('affliatelist')}}">
+                        <i class="bi bi-person-vcard"></i>
+                        <span key="t-dashboards">Affiliate list</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{route('transactions')}}">
                         <i class="bi bi-bank2"></i>
                         <span key="t-chat">Transactions</span>

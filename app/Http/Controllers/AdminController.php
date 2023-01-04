@@ -71,5 +71,10 @@ class AdminController extends Controller
         {
             return view('admin.vendorDetails');
         }
+
+        public function affilatelist()
+        {
+            return view('admin.affiliateList');
+        }
         
 }
