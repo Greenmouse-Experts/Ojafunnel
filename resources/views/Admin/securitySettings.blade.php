@@ -29,7 +29,7 @@
                     </div>
                     <div class="d-flex account-nav">
                         <p class="ps-0 me-3">
-                            <a href="#" class="text-decoration-none text-dark">General</a>
+                            <a href="{{route('general')}}" class="text-decoration-none text-dark">General</a>
                         </p>
                         <p class="active ps-0 ms-5">Security</p>
                     </div>

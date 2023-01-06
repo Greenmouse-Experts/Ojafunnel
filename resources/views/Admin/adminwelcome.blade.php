@@ -95,7 +95,7 @@
                                         <div class="flex-shrink-0 align-self-center">
                                             <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                                 <span class="avatar-title rounded-circle bg-warning">
-                                                <i class="bi bi-bag-check font-size-24"></i>
+                                                    <i class="bi bi-bag-check font-size-24"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -115,7 +115,7 @@
                                         <div class="flex-shrink-0 align-self-center">
                                             <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                                 <span class="avatar-title rounded-circle bg-dark">
-                                                <i class="bi bi-patch-check font-size-24"></i>
+                                                    <i class="bi bi-patch-check font-size-24"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -135,7 +135,7 @@
                                         <div class="flex-shrink-0 align-self-center">
                                             <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                                 <span class="avatar-title rounded-circle bg-primary">
-                                                <i class="bi bi-bag-plus font-size-24"></i>
+                                                    <i class="bi bi-bag-plus font-size-24"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -155,7 +155,7 @@
                                         <div class="flex-shrink-0 align-self-center">
                                             <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                                 <span class="avatar-title rounded-circle bg-success">
-                                                <i class="bi bi-wallet2 font-size-24"></i>
+                                                    <i class="bi bi-wallet2 font-size-24"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -175,7 +175,7 @@
                                         <div class="flex-shrink-0 align-self-center">
                                             <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                                 <span class="avatar-title rounded-circle bg-info">
-                                                <i class="bi bi-box2-heart font-size-24"></i>
+                                                    <i class="bi bi-box2-heart font-size-24"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -195,7 +195,7 @@
                                         <div class="flex-shrink-0 align-self-center">
                                             <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                                 <span class="avatar-title rounded-circle bg-secondary">
-                                                <i class="bi bi-bag-plus font-size-24"></i>
+                                                    <i class="bi bi-bag-plus font-size-24"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -205,7 +205,15 @@
                         </div>
                         <div class="col-md-12">
                             <div class="card-body card">
-                                <h4 class="card-title mb-4">View Users</h4>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <h4 class="card-title mb-3">View Users</h4>
+                                </div>
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-3 mb-3">
+                                    <input type="search" class="form-control" id="searchInput" placeholder="Search for ...">
+                                </div>
+                            </div>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="transactions-all-tab" role="tabpanel">
                                         <div class="table-responsive" data-simplebar style="max-height: 330px;">
@@ -376,7 +384,15 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Recent Transaction</h4>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <h4 class="card-title mb-3">Recent Transaction</h4>
+                                </div>
+                                <div class="col-lg-6"></div>
+                                <div class="col-lg-3 mb-3">
+                                    <input type="search" class="form-control" id="searchInput" placeholder="Search for ...">
+                                </div>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table align-middle table-nowrap mb-0">
                                     <thead class="tread">

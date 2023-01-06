@@ -33,7 +33,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row g-3">
+                            <div class="row">
                                 <div class="col-lg-3">
                                     <h4 class="card-title mb-3">Affiliate List</h4>
                                 </div>
@@ -161,7 +161,7 @@
                         <i class="mdi mdi-trash-can-outline"></i>
                     </div>
                 </div>
-                <p class="text-muted font-size-16 mb-4">Are you sure you want to permanently delete this Users.</p>
+                <p class="text-muted font-size-16 mb-4">Are you sure you want to permanently delete this User.</p>
 
                 <div class="hstack gap-2 justify-content-center mb-0">
                     <button type="button" class="btn btn-danger">Delete Now</button>
@@ -183,7 +183,7 @@
                         <i class="bi bi-check2-all"></i>
                     </div>
                 </div>
-                <p class="text-muted font-size-16 mb-4">Are you sure you want to Activate this Users.</p>
+                <p class="text-muted font-size-16 mb-4">Are you sure you want to Activate this User.</p>
 
                 <div class="hstack gap-2 justify-content-center mb-0">
                     <button type="button" class="btn btn-danger">Activate Now</button>
