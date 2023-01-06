@@ -119,7 +119,6 @@
                 </li>
             </ul>
         </div>
-        <!-- Sidebar -->
     </div>
 </div>
 <!-- Left Sidebar End -->
