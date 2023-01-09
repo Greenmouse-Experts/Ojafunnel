@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">Transaction Histroy</h4>
+                        <h4 class="mb-sm-0 font-size-18">Transactions Histroy</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
@@ -24,7 +24,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Transaction Histroy</h4>
+                            <h4 class="font-600">Transactions Histroy</h4>
                         </div>
                     </div>
                 </div>
@@ -34,18 +34,18 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-3">Recent Transaction</h4>
+                            <h4 class="card-title mb-3">Transactions</h4>
 
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-bs-toggle="tab" href="#all-order" role="tab">
-                                        All Orders
+                                        All
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#processing" role="tab">
-                                        Processing
+                                        Recent Transaction
                                     </a>
                                 </li>
                             </ul>
@@ -58,36 +58,37 @@
                                         <table class="table table-hover datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Type</th>
-                                                    <th scope="col">Trade No</th>
-                                                    <th scope="col">Amount</th>
-                                                    <th scope="col">Balance</th>
-                                                    <th scope="col">Status</th>
+                                                    <th class="align-middle">Order ID</th>
+                                                    <th class="align-middle">Billing Name</th>
+                                                    <th class="align-middle">Date</th>
+                                                    <th class="align-middle">Total</th>
+                                                    <th class="align-middle">Payment Status</th>
+                                                    <th class="align-middle">Payment Method</th>
+                                                    <th class="align-middle">View Details</th>
                                                 </tr>
-
                                             </thead>
 
                                             <tbody>
                                                 <tr>
-                                                    <td>06 Dec, 2022</td>
-                                                    <td>Paid</td>
-                                                    <td>Bitcoin</td>
-                                                    <td>1.00952 BTC</td>
-                                                    <td>$ 9067.62</td>
+                                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2540</a> </td>
+                                                    <td>Neal Matthews</td>
                                                     <td>
-                                                        <span class="badge bg-success font-size-10">Completed</span>
+                                                        07 Oct, 2019
                                                     </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>06 Dec, 2022</td>
-                                                    <td>Paid</td>
-                                                    <td>Ethereum</td>
-                                                    <td>0.00413 ETH</td>
-                                                    <td>$ 2123.01</td>
                                                     <td>
-                                                        <span class="badge bg-success font-size-10">Completed</span>
+                                                        $400
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge badge-pill badge-soft-success font-size-11">Paid</span>
+                                                    </td>
+                                                    <td>
+                                                        <i class="fab fa-cc-mastercard me-1"></i> Mastercard
+                                                    </td>
+                                                    <td>
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                            View Details
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -100,38 +101,62 @@
                                             <table class="table table-hover datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Date</th>
-                                                        <th scope="col">Type</th>
-                                                        <th scope="col">Trade No</th>
-                                                        <th scope="col">Amount</th>
-                                                        <th scope="col">Balance</th>
-                                                        <th scope="col">Status</th>
+                                                        <th class="align-middle">Order ID</th>
+                                                        <th class="align-middle">Billing Name</th>
+                                                        <th class="align-middle">Date</th>
+                                                        <th class="align-middle">Total</th>
+                                                        <th class="align-middle">Payment Status</th>
+                                                        <th class="align-middle">Payment Method</th>
+                                                        <th class="align-middle">View Details</th>
                                                     </tr>
 
                                                 </thead>
 
                                                 <tbody>
                                                     <tr>
-                                                        <td>03 Mar, 2020</td>
-                                                        <td>Buy</td>
-                                                        <td>Bitcoin</td>
-                                                        <td>1.00952 BTC</td>
-                                                        <td>$ 9067.62</td>
+                                                        <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2540</a> </td>
+                                                        <td>Neal Matthews</td>
                                                         <td>
-                                                            <span class="badge bg-success font-size-10">Completed</span>
+                                                            07 Oct, 2019
+                                                        </td>
+                                                        <td>
+                                                            $400
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-pill badge-soft-success font-size-11">Paid</span>
+                                                        </td>
+                                                        <td>
+                                                            <i class="fab fa-cc-mastercard me-1"></i> Mastercard
+                                                        </td>
+                                                        <td>
+                                                            <!-- Button trigger modal -->
+                                                            <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                                View Details
+                                                            </button>
                                                         </td>
                                                     </tr>
-
                                                     <tr>
-                                                        <td>04 Mar, 2020</td>
-                                                        <td>Sell</td>
-                                                        <td>Ethereum</td>
-                                                        <td>0.00413 ETH</td>
-                                                        <td>$ 2123.01</td>
-                                                        <td>
-                                                            <span class="badge bg-success font-size-10">Completed</span>
-                                                        </td>
-                                                    </tr>
+                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2540</a> </td>
+                                            <td>Neal Matthews</td>
+                                            <td>
+                                                07 Oct, 2019
+                                            </td>
+                                            <td>
+                                                $400
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-pill badge-soft-success font-size-11">Paid</span>
+                                            </td>
+                                            <td>
+                                                <i class="fab fa-cc-mastercard me-1"></i> Visa
+                                            </td>
+                                            <td>
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                    View Details
+                                                </button>
+                                            </td>
+                                        </tr>
                                                 </tbody>
                                             </table>
                                         </div>
