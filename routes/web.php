@@ -75,6 +75,9 @@ Route::prefix('{username}')->group(function() {
             Route::get('/automation-campaign', [App\Http\Controllers\DashboardController::class, 'automation_campaign'])->name('user.automation.campaign');
             Route::get('/edittemplate', [App\Http\Controllers\DashboardController::class, 'edit_template'])->name('user.edit.template');
         });
+        Route::prefix('/list')->group(function () {
+            Route::get('/list', [App\Http\Controllers\DashboardController::class, 'create_list'])->name('user.create.list');
+        });
         Route::prefix('/subscribers')->group(function () {
             Route::get('/mailing-list', [App\Http\Controllers\DashboardController::class, 'mailing_list'])->name('user.mailing.list');
             Route::get('/mailing-list/contacts/{id}', [App\Http\Controllers\DashboardController::class, 'contact'])->name('user.contact');

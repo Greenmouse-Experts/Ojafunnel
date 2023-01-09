@@ -42,6 +42,15 @@
                   </li>
                 </ul>
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                    <i class="bi bi-list-task"></i>
+                        <span key="t-chat">List</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('user.create.list', Auth::user()->username)}}" key="t-tui-calendar">Create List</a></li>
+                    </ul>
+                </li>
+                <li>
                 <a
                   href="#"
                   id="emailmarketDrop"

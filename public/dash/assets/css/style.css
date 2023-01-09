@@ -2008,3 +2008,6 @@ textarea{
   display: block;
   margin: auto;
 }
+.Edit span{
+  color: red;
+}

@@ -414,7 +414,7 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-3"></div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="alert"></div>
                 <div class="Amet">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-a_xw1cgy.png" draggable="false">
@@ -428,7 +428,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="alert"></div>
                 <div class="Amet">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-b_lsapko.png" draggable="false">
@@ -442,7 +442,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="alert"></div>
                 <div class="Amet">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-c_smgnoy.png" draggable="false">
@@ -456,7 +456,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="alert"></div>
                 <div class="Amet">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399347/OjaFunnel-Images/a-d_x64ndk.png" draggable="false">
@@ -470,7 +470,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="aler"></div>
                 <div class="Amet">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-e_vdadip.png" draggable="false">
@@ -484,7 +484,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="aler"></div>
                 <div class="Amet">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399345/OjaFunnel-Images/a-f_tci9io.png" draggable="false">
@@ -498,7 +498,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="aler"></div>
                 <div class="Amet">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/d-g_hrzx6u.png" draggable="false">
@@ -512,7 +512,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="aler"></div>
                 <div class="Amet">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-i_buv2lk.png" draggable="false">

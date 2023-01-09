@@ -237,20 +237,6 @@
         </div>
     </div>
     <!-- End Page-content ---->
-
-    <footer class="footer border-0 bg-transparent mt-5">
-        <div class="container-fluid mt-5">
-            <div class="row text-center bg-white mt-5">
-                <div class="text-center py-4">
-                    Copyright ©
-                    <script>
-                        document.write(new Date().getFullYear());
-                    </script>
-                    Ojafunnel | All Right Reserved
-                </div>
-            </div>
-        </div>
-    </footer>
 </div>
 <!-- END layout-wrapper -->
 
