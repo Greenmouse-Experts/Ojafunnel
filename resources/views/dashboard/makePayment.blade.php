@@ -1,22 +1,13 @@
 @extends('layouts.dashboard-frontend')
 <!-- place below the html form -->
 <script>
-  function payWithPaystack(){
+  function paySubscriptionWithPaystack(){
     var handler = PaystackPop.setup({
       key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
       email: '{{$user->email}}',
       amount: {{$amount}} * 100,
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-      metadata: {
-         custom_fields: [
-            {
-                plan_id: {{$plan->id}},
-            }
-         ]
-      },
       callback: function(response){
-        // var_dump('success. transaction ref is ' + response.reference);
-        //   alert(response);
         let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ':response', Crypt::encrypt($amount)]) }}';
         url = url.replace(':response', response.reference);
         window.location.href=url;
@@ -76,39 +67,21 @@
                             <i class="bi bi-check2"></i> <b>LMS:</b> No
                         </h1>
                         <h1>
-
                             <i class="bi bi-check2"></i> <b>Ecommerce Products:</b> No
                         </h1>
                         <h1>
-
                             <i class="bi bi-check2"></i> <b> Upload list:</b> Can upload list but wont work for email
                         </h1>
-
                         <h1>
-
                             <i class="bi bi-check2"></i> <b>Use your own email server (AWS, etc):</b> No
                         </h1>
-                        <button type="button" onclick="payWithPaystack()">
-                            <script src="https://js.paystack.co/v1/inline.js"></script>
+                        <button type="button" onclick="paySubscriptionWithPaystack()">
                             PAY
                         </button>
                     </div>
                 </div>
                 <div class="col-lg-8"></div>
             </div>
-            <!-- <div class="row Pricing">
-                <div class="col-lg-12">
-                    <div class="pricing-intro">
-                        <h1>
-                            <form>
-                                <script src="https://js.paystack.co/v1/inline.js"></script>
-                                <button type="button" onclick="payWithPaystack()"> Pay </button> 
-                            </form>
-                        </h1>
-                    </div>
-                </div>
-            </div> -->
-            <!-- end page title -->
         </div>
     </div>
     <!-- End Page-content -->

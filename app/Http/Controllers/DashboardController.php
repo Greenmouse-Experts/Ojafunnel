@@ -8,6 +8,7 @@ use App\Models\Page;
 use App\Models\Plan;
 use App\Models\SmsAutomation;
 use App\Models\Subscriber;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -208,8 +209,11 @@ class DashboardController extends Controller
 
     public function transaction($username)
     {
+        $transactions = Transaction::latest()->where('user_id', Auth::user()->id)->get();
+
         return view('dashboard.transaction', [
-            'username' => $username
+            'username' => $username,
+            'transactions' => $transactions
         ]);
     }
 

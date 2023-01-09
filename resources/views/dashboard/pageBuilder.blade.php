@@ -134,48 +134,48 @@
                                             </div>
                                         </div>
                                         <!--Edit Input end modal -->
-                                        <!-- Modal START -->
-                                        <div class="modal fade" id="Delete-{{$page->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content pb-3">
-                                                    <div class="modal-header border-bottom-0">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body ">
-                                                        <div class="row">
-                                                            <div class="Editt">
-                                                                <form method="POST" action="{{ route('user.page.builder.delete', Crypt::encrypt($page->id))}}">
-                                                                    @csrf
-                                                                    <div class="form">
-                                                                        <p><b>Delete Contact</b></p>
-                                                                        <div class="row">
-                                                                            <div class="col-lg-12">
-                                                                                <p>This action cannot be undone. This will permanently delete {{$page->name}} page.</p>
-                                                                                <label>Please type DELETE to confirm.</label>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12 mb-4">
-                                                                                        <input type="text" name="delete_field" class="input" required>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-12 mb-4">
-                                                                                <div class="boding">
-                                                                                    <button type="submit" class="form-btn">
-                                                                                        I understand this consquences, Delete Mailing List
-                                                                                    </button>
+                                    </div>
+                                    <!-- Modal START -->
+                                    <div class="modal fade" id="Delete-{{$page->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content pb-3">
+                                                <div class="modal-header border-bottom-0">
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body ">
+                                                    <div class="row">
+                                                        <div class="Editt">
+                                                            <form method="POST" action="{{ route('user.page.builder.delete', Crypt::encrypt($page->id))}}">
+                                                                @csrf
+                                                                <div class="form">
+                                                                    <p><b>Delete Contact</b></p>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12">
+                                                                            <p>This action cannot be undone. This will permanently delete {{$page->name}} page.</p>
+                                                                            <label>Please type DELETE to confirm.</label>
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 mb-4">
+                                                                                    <input type="text" name="delete_field" class="input" required>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <div class="boding">
+                                                                                <button type="submit" class="form-btn">
+                                                                                    I understand this consquences, Delete Mailing List
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                </form>
-                                                            </div>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- end modal -->
                                     </div>
+                                    <!-- end modal -->
                                 </div>
                             </a>
                         </div>

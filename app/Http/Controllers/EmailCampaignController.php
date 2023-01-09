@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class EmailCampaignController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
+    
     //
     public function email_campaign_checker(Request $request)
     {

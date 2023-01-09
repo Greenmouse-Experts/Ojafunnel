@@ -1,3 +1,29 @@
+<!-- place below the html form -->
+<script>
+    var paymentForm = document.getElementById('paymentForm');
+    paymentForm.addEventListener("submit", payWithPaystack, false);
+
+    function payWithPaystack(){
+        var handler = PaystackPop.setup({
+        key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
+        email: '{{Auth::user()->email}}',
+        amount: document.getElementById("amount").value * 100,
+        ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+        callback: function(response){
+            // alert(JSON.stringify(response))
+            let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
+            url = url.replace(':response', response.reference);
+            url = url.replace(':amount', document.getElementById("amount").value);
+            document.location.href=url;
+        },
+        onClose: function(){
+            alert('window closed');
+        }
+        });
+    handler.openIframe();
+  }
+</script>
+
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
@@ -37,21 +63,21 @@
             </div>
         </div>
         <div class="d-flex">
-        <div class="float-end pushing">
-            <div class="dropdown">
-                <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-wallet me-1"></i> <span class="d-none d-sm-inline-block">Wallet <i class="mdi mdi-chevron-down"></i></span></button>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-md">
-                    <div class="dropdown-item-text">
-                        <div>
-                            <p class="text-muted mb-2">Available Balance</p>
-                            <h5 class="mb-0">₦500</h5> <button data-bs-toggle="modal" data-bs-target="#emailConfirm">Deposit Now</button>
+            <div class="float-end pushing">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-wallet me-1"></i> <span class="d-none d-sm-inline-block">Wallet <i class="mdi mdi-chevron-down"></i></span></button>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-md">
+                        <div class="dropdown-item-text">
+                            <div>
+                                <p class="text-muted mb-2">Available Balance</p>
+                                <h5 class="mb-0">₦{{number_format(Auth::user()->wallet, 2)}}</h5> <button data-bs-toggle="modal" data-bs-target="#emailConfirm">Deposit Now</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider"></div>
+                    </div>
                 </div>
             </div>
-        </div>
             <div class="dropdown d-inline-block d-lg-none ms-2">
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="mdi mdi-magnify"></i>
@@ -176,13 +202,14 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="Edit-level">
-                        <form>
+                        <form id="paymentForm">
+                            @csrf
                             <div class="form">
                                 <div class="col-lg-12">
                                     <label>Amount</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Enter Your Amount" class="input" required>
+                                            <input type="number" placeholder="Enter Your Amount" id="amount" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -193,8 +220,8 @@
                                         </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
-                                            Continue
+                                        <button class="form-btn btn px-4" type="button" onclick="payWithPaystack()" style="color: #ffffff; background-color: #714091">
+                                            Proceed To Payment
                                         </button>
                                     </div>
                                 </div>
