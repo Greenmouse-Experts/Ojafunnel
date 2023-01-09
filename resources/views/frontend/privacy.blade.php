@@ -16,7 +16,6 @@
      </div>
  </section>
  <!-- faq-welcome Ends -->
-
  <!-- Privacy -->
  <section class="privacy">
      <div class="container">

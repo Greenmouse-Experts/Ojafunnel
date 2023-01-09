@@ -153,13 +153,9 @@
                                                                 <div class="col-lg-12">
                                                                     <div class="row">
                                                                         @if($integrations->isEmpty())
-                                                                        <div class="col-md-6">
-                                                                            <div class="circle">
-                                                                                <img src="{{URL::asset('dash/assets/image/image 789.png')}}" draggable="false" alt="">
-                                                                                Zapier
-                                                                            </div>
-                                                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#smsSuccess">
-                                                                                <input type="radio" name="Zapier" value="Zapier">
+                                                                        <div class="col-12">
+                                                                            <div class="circle" style="padding: 20px 20px 20px 2px; text-align: center;">
+                                                                                No SMS Integration Gateway Added
                                                                             </div>
                                                                         </div>
                                                                         @else

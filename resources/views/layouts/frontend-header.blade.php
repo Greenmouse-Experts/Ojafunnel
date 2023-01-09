@@ -35,7 +35,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('emailmarketing')}}">
-                                                        Email Marketing <i class="bi bi-arrow-right-short"></i>
+                                                        Email Marketing 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -45,7 +45,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="">
-                                                        Affiliate Marketing <i class="bi bi-arrow-right-short"></i>
+                                                        Affiliate Marketing 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -55,7 +55,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="">
-                                                        Ecommerce <i class="bi bi-arrow-right-short"></i>
+                                                        Ecommerce 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -71,7 +71,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="">
-                                                        Funnel Builder <i class="bi bi-arrow-right-short"></i>
+                                                        Funnel Builder 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -81,7 +81,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('pagebuilder')}}">
-                                                        Page Builder <i class="bi bi-arrow-right-short"></i>
+                                                        Page Builder 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -97,7 +97,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('marketauto')}}">
-                                                        Automations <i class="bi bi-arrow-right-short"></i>
+                                                        Automations 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -107,7 +107,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('chatautomation')}}">
-                                                        Chat Automations <i class="bi bi-arrow-right-short"></i>
+                                                        Chat Automations 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -123,7 +123,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="">
-                                                        API Integrations <i class="bi bi-arrow-right-short"></i>
+                                                        API Integrations 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -136,56 +136,56 @@
                                 <li>
                                     <a href="{{route('marketauto')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Email Marketing
+                                             Email Marketing
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Affiliate Marketing
+                                             Affiliate Marketing
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Ecommerce
+                                             Ecommerce
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Funnel Builder
+                                             Funnel Builder
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{route('pagebuilder')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Page Builder
+                                             Page Builder
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{route('marketauto')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Marketing Automations
+                                             Marketing Automations
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{route('chatautomation')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Chat Automations
+                                             Chat Automations
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> API Integrations
+                                             API Integrations
                                         </a>
                                     </a>
                                 </li>

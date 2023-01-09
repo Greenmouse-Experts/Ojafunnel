@@ -85,28 +85,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="row paff">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-4 text-center">
-                        <li>
-                            <a href="{{route('privacy')}}">
+            </div>
+            <div class="col-lg-12">
+                <div class="last-fott text-center">
+                        <a href="{{route('privacy')}}">
                                 Privacy Policy
                             </a>
-                        </li>
-                    </div>
-                    <div class="col-sm-4 text-center">
-                        <li>
+                            |
                             <a href="{{route('terms')}}">
                                 Terms & Condition
                             </a>
-                        </li>
-                    </div>
-                    <div class="col-sm-2"></div>
-                </div>
-            </div>
-            <div class="col-lg-3"></div>
-            <div class="col-lg-12">
-                <div class="last-fott">
                     <h1>
                         Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
                     </h1>

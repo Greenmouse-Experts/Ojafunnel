@@ -142,3 +142,11 @@ Route::prefix('{username}')->group(function() {
     Route::get('/admin/subscriptions', [App\Http\Controllers\AdminController::class, 'subscriptions'])->name('subscriptions');
     Route::get('/admin/security', [App\Http\Controllers\AdminController::class, 'security'])->name('security');
     Route::get('/admin/general', [App\Http\Controllers\AdminController::class, 'general'])->name('general');
+    Route::get('/admin/subscribtions', [App\Http\Controllers\AdminController::class, 'subscribtions'])->name('subscribtions');
+    Route::get('/admin/vendorlist', [App\Http\Controllers\AdminController::class, 'vendorlist'])->name('vendorlist');
+    Route::get('/admin/vendordetails', [App\Http\Controllers\AdminController::class, 'vendordetails'])->name('vendordetails');
+    Route::get('/admin/affiliateList', [App\Http\Controllers\AdminController::class, 'affiliateList'])->name('affiliateList');
+    Route::get('/admin/product', [App\Http\Controllers\AdminController::class, 'product'])->name('product');
+    Route::get('/admin/addProduct', [App\Http\Controllers\AdminController::class, 'addProduct'])->name('addProduct');
+    Route::get('/admin/productDetails', [App\Http\Controllers\AdminController::class, 'productDetails'])->name('productDetails');
+    Route::get('/admin/viewCart', [App\Http\Controllers\AdminController::class, 'viewCart'])->name('viewCart');

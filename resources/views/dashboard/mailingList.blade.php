@@ -40,7 +40,7 @@
                 <div class="col-lg-4">
                     <div class="card account-head">
                         <div class="all-create py-2">
-                            <button data-bs-toggle="modal" data-bs-target="#emailConfirm">+ Create Mailing List </button>
+                            <button data-bs-toggle="modal" data-bs-target="#mailinglist">+ Create Mailing List </button>
                         </div>
                     </div>
                 </div>
@@ -162,7 +162,7 @@
 <!-- END layout-wrapper -->
 
 <!-- Modal START -->
-<div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+<div class="modal fade" id="mailinglist" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content pb-3">
             <div class="modal-header border-bottom-0">

@@ -1,5 +1,4 @@
 @extends('layouts.frontend')
-
 @section('page-content')
     <!-- Contact-us Ends -->
         <section class="cont-welcome">
@@ -19,7 +18,6 @@
             </div>
         </section>
     <!-- Contact-us Ends -->
-
     <!-- Phone Line -->
         <section class="Phone">
             <div class="container">

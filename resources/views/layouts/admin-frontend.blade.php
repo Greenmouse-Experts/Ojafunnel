@@ -107,6 +107,21 @@
     <!-- App js -->
     <script src="{{URL::asset('admin/assets/js/app.js')}}"></script>
 
+    <!-- Ion Range Slider-->
+    <script src="{{URL::asset('admin/assets/libs/ion-rangeslider/js/ion.rangeSlider.min.js')}}"></script>
+
+    <!-- init js -->
+    <script src="{{URL::asset('admin/assets/js/pages/product-filter-range.init.js')}}"></script>
+
+    <!-- select 2 plugin -->
+    <script src="{{URL::asset('admin/assets/libs/select2/js/select2.min.js')}}"></script>
+
+    <!-- dropzone plugin -->
+    <script src="{{URL::asset('admin/assets/libs/dropzone/min/dropzone.min.js')}}"></script>
+
+    <!-- init js -->
+    <script src="{{URL::asset('admin/assets/js/pages/ecommerce-select2.init.js')}}"></script>
+
     <!-- Required datatable js -->
     <script src="{{URL::asset('admin/assets/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
@@ -120,6 +135,7 @@
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
+
 
     <script>
         // pricing switch button

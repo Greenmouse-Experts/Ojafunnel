@@ -1,7 +1,6 @@
 @extends('layouts.frontend')
 
 @section('page-content')
-
 <!-- Welcome -->
 <section class="welcome">
     <div class="container">
@@ -560,7 +559,7 @@
                     <div class="menu-list top-header">
                         <div class="menu-page">
                             <div class="text-btn">
-                                <a href="" data-src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660737789/OjaFunnel-Images/Stripe_bfhh6m_yk9kmo-removebg-preview_jih215.png" draggable="false">
+                                <a href="" class="rat" data-src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660737789/OjaFunnel-Images/Stripe_bfhh6m_yk9kmo-removebg-preview_jih215.png" draggable="false">
                                     <h1>
                                         All in one tool
                                     </h1>
@@ -601,40 +600,6 @@
     </div>
 </section>
 <!-- Choose Ends -->
-
-<!-- <section class="choose">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="layout">
-                            <img class="hide" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660737789/OjaFunnel-Images/Stripe_bfhh6m_yk9kmo-removebg-preview_jih215.png" alt="">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="">
-                            <h1 class="myDIV">
-                                All in one tool
-                            </h1>
-                            <p class="myDIV">
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint. ullamco est sit aliqua dolor do amet sint ullamco est sit aliqua dolor do 
-                            </p>
-                            <h1>
-                                Create Personalized Journeys
-                            </h1>
-                            <p>
-                                Send the right message at the right time and develop a personalized journey for each person. Automate tasks and increase your team’s productivity
-                            </p>
-                            <h1>
-                                Payments integration for you
-                            </h1>
-                            <p>
-                                Integrate directly with the most popular, trusted and secured payment processors around the world to accept payment globally into your bank accounts.                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-
 <!-- Choose -->
 <section class="choosing">
     <div class="container">
