@@ -188,9 +188,14 @@
     <script src="{{URL::asset('dash/assets/js/pages/dashboard.init.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
-
+     <!-- apexcharts init -->
+     <script src="{{URL::asset('dash/assets/js/pages/apexcharts.init.js')}}"></script>
     <!-- App js -->
     <script src="{{URL::asset('dash/assets/js/app.js')}}"></script>
+     <!-- echarts js -->
+     <script src="{{URL::asset('dash/assets/libs/echarts/echarts.min.js')}}"></script>
+     <!-- echarts init -->
+     <script src="{{URL::asset('dash/assets/js/pages/echarts.init.js')}}"></script>
 
     <!-- Required datatable js -->
     <script src="{{URL::asset('dash/assets/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
