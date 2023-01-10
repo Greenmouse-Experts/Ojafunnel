@@ -84,6 +84,14 @@ class DashboardController extends Controller
             'username' => $username
         ]);
     }
+
+    public function view_list($username)
+    {
+        return view('dashboard.viewList', [
+            'username' => $username
+        ]);
+    }
+
     public function email_automation($username)
     {
         return view('dashboard.emailAutomation', [

@@ -915,7 +915,7 @@ body {
 .whitee .and{
   font-size: 11px;
   text-align: center;
-}  
+}
 .boding{
   margin-top: 20px;
 }
@@ -1159,7 +1159,7 @@ body {
 }
 .Editt .form{
   padding: 0  ;
-} 
+}
 .name ul li{
   list-style-type: none;
   float: left;
@@ -1801,7 +1801,7 @@ textarea{
   animation: spin 1s infinite;
   display:inline-block;
  }
- 
+
  @keyframes spin { 100% { -webkit-transform: rotate(360deg);transform-origin:5px 5px } }
 
 
@@ -2010,4 +2010,9 @@ textarea{
 }
 .Edit span{
   color: red;
+}
+.send input
+{
+    width: 5% !important;
+    float: right;
 }

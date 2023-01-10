@@ -34,6 +34,8 @@
                   <li>
                     <a href="{{route('user.email.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Campaign</a>
                   </li>
+                  <li><a href="{{route('user.create.list', Auth::user()->username)}}" key="t-tui-calendar">Create Mail List</a></li>
+                        <li><a href="{{route('user.view.list', Auth::user()->username)}}" key="t-tui-calendar">View Mail List</a></li>
                   <li>
                     <a href="{{route('user.edit.template', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Automation</a>
                   </li>
@@ -41,15 +43,16 @@
                     <a href="{{route('user.automation.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2">Automation Campaign</a>
                   </li>
                 </ul>
-                <li>
+                <!-- <li>
                     <a href="javascript: void(0);" class="has-arrow">
                     <i class="bi bi-list-task"></i>
                         <span key="t-chat">List</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.create.list', Auth::user()->username)}}" key="t-tui-calendar">Create List</a></li>
+                        <li><a href="{{route('user.view.list', Auth::user()->username)}}" key="t-tui-calendar">View List</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li>
                 <a
                   href="#"

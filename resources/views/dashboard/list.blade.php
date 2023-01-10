@@ -172,8 +172,16 @@
                                     <b class="mb-sm-0 font-size-15">Settings</b>
                                 </p>
                                 <p>
-                                    <b>Subscribtions</b>
+                                    <b>Subscriptions</b>
                                 </p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="send">
+                                            Send subscription confirmation email (Double Opt-in) <input type="checkbox">
+                                        </p>
+                                        <b></b>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
