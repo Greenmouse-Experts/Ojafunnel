@@ -37,7 +37,9 @@
                 <div class="col-lg-4">
                     <div class="card account-head">
                         <div class="all-create py-2">
-                            <button data-bs-toggle="modal" data-bs-target="#emailConfirm">+ Create List  </button>
+                            <a href="#">
+                                <button>+ Create List  </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -174,12 +176,39 @@
                                 <p>
                                     <b>Subscriptions</b>
                                 </p>
-                                <div class="row">
+                                <div class="row mb-4">
                                     <div class="col-md-6">
                                         <p class="send">
-                                            Send subscription confirmation email (Double Opt-in) <input type="checkbox">
+                                            Send subscription confirmation email (Double Opt-in)
+                                             <input type="checkbox">
+                                             <div class="when">When people subscribe to your list, send them a subscription confirmation email.</div>
                                         </p>
-                                        <b></b>
+                                        <p class="send">
+                                            Send unsubscribe notification to subscribers
+                                             <input type="checkbox">
+                                             <div class="when">Send subscribers a final “Goodbye” email to let them know they have unsubscribed.</div>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="send">
+                                            Send a final welcome email
+                                             <input type="checkbox">
+                                             <div class="when">When people opt-in to your list, send them an email welcoming them to your list. The final welcome email can be edited in the List -> Forms / Pages management</div>
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="tell mb-4">
+                                    <b class="mb-sm-0 font-size-15">Sending servers</b>
+                                </p>
+                                <div class="col-md-12 mb-4">
+                                    <p class="sending">
+                                        Use all sending servers
+                                         <input type="checkbox">
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                        <button type="submit" class="btn btn-success">Save</button>
                                     </div>
                                 </div>
                             </div>

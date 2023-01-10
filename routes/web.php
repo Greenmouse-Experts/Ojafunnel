@@ -78,6 +78,7 @@ Route::prefix('{username}')->group(function() {
         Route::prefix('/list')->group(function () {
             Route::get('/create-view', [App\Http\Controllers\DashboardController::class, 'create_list'])->name('user.create.list');
             Route::get('/view-list', [App\Http\Controllers\DashboardController::class, 'view_list'])->name('user.view.list');
+            Route::get('/list-performance', [App\Http\Controllers\DashboardController::class, 'list_performance'])->name('user.list.performance');
         });
         Route::prefix('/subscribers')->group(function () {
             Route::get('/mailing-list', [App\Http\Controllers\DashboardController::class, 'mailing_list'])->name('user.mailing.list');

@@ -78,6 +78,14 @@ class DashboardController extends Controller
             'username' => $username
         ]);
     }
+
+    public function list_performance($username)
+    {
+        return view('dashboard.listPerformance', [
+            'username' => $username
+        ]);
+    }
+
     public function create_list($username)
     {
         return view('dashboard.list', [
@@ -295,7 +303,7 @@ class DashboardController extends Controller
         ]);
     }
 
-    
+
     public function page_builder($username)
     {
         $pages = Page::latest()->where('user_id', Auth::user()->id)->get();
@@ -472,7 +480,7 @@ class DashboardController extends Controller
         //     dd($sms);
         // } catch(Exception $e) {
         //     dd($e);
-        // } 
+        // }
 
         /*
             Sending messages using our API

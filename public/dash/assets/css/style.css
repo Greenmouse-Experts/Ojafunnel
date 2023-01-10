@@ -2013,6 +2013,24 @@ textarea{
 }
 .send input
 {
-    width: 5% !important;
+    width: 8% !important;
     float: right;
+}
+.send{
+    font-size: 15px;
+    font-weight: 500;
+}
+.when{
+    margin-top: -17px;
+    font-size: 12px;
+}
+.sending input
+{
+    width: 5% !important;
+    float: left;
+   margin-top: 5px !important;
+}
+.sending{
+    font-size: 15px;
+    font-weight: 500;
 }

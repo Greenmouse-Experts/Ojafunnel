@@ -22,13 +22,22 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-8">
                     <div class="card account-head">
                         <div class="py-2">
                             <h4 class="font-500">View Mail List </h4>
                             <p>
                                 View and do many more with your mail list
                             </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card account-head">
+                        <div class="all-create py-2">
+                            <a href=" {{route('user.list.performance', Auth::user()->username)}}">
+                                <button class="btn btn-success">View statistic  </button>
+                            </a>
                         </div>
                     </div>
                 </div>
