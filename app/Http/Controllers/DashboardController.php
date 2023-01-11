@@ -86,6 +86,20 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function list_setting($username)
+    {
+        return view('dashboard.listSetting', [
+            'username' => $username
+        ]);
+    }
+
+    public function new_subscribers($username)
+    {
+        return view('dashboard.newSubscribers', [
+            'username' => $username
+        ]);
+    }
+
     public function create_list($username)
     {
         return view('dashboard.list', [
@@ -100,12 +114,48 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function list_subscribers($username)
+    {
+        return view('dashboard.listSubscribers', [
+            'username' => $username
+        ]);
+    }
+
+    public function import_subscribers($username)
+    {
+        return view('dashboard.ImportSubscribers', [
+            'username' => $username
+        ]);
+    }
+
+    public function export_subscribers($username)
+    {
+        return view('dashboard.exportSubscribers', [
+            'username' => $username
+        ]);
+    }
+
+    public function segments($username)
+    {
+        return view('dashboard.Segments', [
+            'username' => $username
+        ]);
+    }
+
+    public function create_segments($username)
+    {
+        return view('dashboard.createSegment', [
+            'username' => $username
+        ]);
+    }
+
     public function email_automation($username)
     {
         return view('dashboard.emailAutomation', [
             'username' => $username
         ]);
     }
+
     public function edit_template($username)
     {
         return view('dashboard.editemplate', [

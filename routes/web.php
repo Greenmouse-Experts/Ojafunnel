@@ -79,6 +79,13 @@ Route::prefix('{username}')->group(function() {
             Route::get('/create-view', [App\Http\Controllers\DashboardController::class, 'create_list'])->name('user.create.list');
             Route::get('/view-list', [App\Http\Controllers\DashboardController::class, 'view_list'])->name('user.view.list');
             Route::get('/list-performance', [App\Http\Controllers\DashboardController::class, 'list_performance'])->name('user.list.performance');
+            Route::get('/list-setting', [App\Http\Controllers\DashboardController::class, 'list_setting'])->name('user.list.setting');
+            Route::get('/list-subscribers', [App\Http\Controllers\DashboardController::class, 'list_subscribers'])->name('user.list.subscribers');
+            Route::get('/new-subscribers', [App\Http\Controllers\DashboardController::class, 'new_subscribers'])->name('user.new.subscribers');
+            Route::get('/import-subscribers', [App\Http\Controllers\DashboardController::class, 'import_subscribers'])->name('user.import.subscribers');
+            Route::get('/export-subscribers', [App\Http\Controllers\DashboardController::class, 'export_subscribers'])->name('user.export.subscribers');
+            Route::get('/segments', [App\Http\Controllers\DashboardController::class, 'segments'])->name('user.new.segments');
+            Route::get('/create-segments', [App\Http\Controllers\DashboardController::class, 'create_segments'])->name('user.create.segments');
         });
         Route::prefix('/subscribers')->group(function () {
             Route::get('/mailing-list', [App\Http\Controllers\DashboardController::class, 'mailing_list'])->name('user.mailing.list');
