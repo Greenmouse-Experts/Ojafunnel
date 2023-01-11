@@ -82,10 +82,20 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-xl-12">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h4 class="card-title lie"><i class="bi bi-people"></i></h4>
+                            <p>You have 1 subscribers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body border-bottom">
-                            <div class="row g-3">
+                            <!-- <div class="row g-3 mb-4">
                                 <div class="col-xxl-2 col-lg-6">
                                     <select class="form-control select2">
                                         <option>Email</option>
@@ -115,20 +125,32 @@
                                 <div class="col-xxl-4 col-lg-6">
                                     <input type="search" class="form-control" id="searchInput" placeholder="Type to Search ...">
                                 </div>
+                            </div> -->
+                            <div class="table-responsive mb-4">
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                    <thead class="tread">
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>First Name</th>
+                                            <th>Last Name </th>
+                                            <th>Email</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                           <td>1</td>
+                                           <td>Hamzat</td>
+                                           <td>Abdulazeez Adeleke</td>
+                                           <td>greenmouse@gmail.com</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
+                        </div>
                         </div>
 
                     </div><!--end card-->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h4 class="card-title lie"><i class="bi bi-people"></i></h4>
-                            <p>You have no subscribers</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

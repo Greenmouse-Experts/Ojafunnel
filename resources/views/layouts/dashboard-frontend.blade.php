@@ -210,7 +210,22 @@
     <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
+    <script>
+        function myFunction() {
+            // Get the text field
+            var copyText = document.getElementById("myInput");
 
+            // Select the text field
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText.value);
+
+            // Alert the copied text
+            alert("Copied the text: " + copyText.value);
+        }
+    </script>
     <script>
         // pricing switch button
         let pricingIsYearly = false;
