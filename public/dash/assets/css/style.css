@@ -2034,3 +2034,23 @@ textarea{
     font-size: 15px;
     font-weight: 500;
 }
+.lie i{
+    font-size: 35px;
+}
+.circle
+{
+    padding: 20px;
+    background-color:#713F93;
+    color: #fff;
+}
+@media (max-width:584px) {
+    .circle
+{
+    padding: 10px !important;
+    background-color:#713F93;
+    color: #fff;
+}
+}
+.circle .bi{
+    color: red;
+}
