@@ -35,10 +35,10 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card account-head">
+                    <div class="card account-head" style="padding-top: 25px;">
                         <div class="all-create py-2">
-                            <a href="#">
-                                <button>+ Create List  </button>
+                            <a href="{{route('user.view.list', Auth::user()->username)}}">
+                                <button>+ Mail List  </button>
                             </a>
                         </div>
                     </div>

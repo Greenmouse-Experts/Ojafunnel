@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card account-head">
+                    <div class="card account-head" style="padding-top: 45px;">
                         <div class="all-create py-2">
                             <a style="background-color: #000;
                             color: #fff;
@@ -95,7 +95,7 @@
                                                         <div class="progress-bar progress-bar-info" style="width: {{ $mailinglist->readCache('ClickedRate', 0) }}%">
                                                         </div>
                                                     </div>
-                                                    <span class="text-muted small">Clickk rate</span>
+                                                    <span class="text-muted small">Click rate</span>
                                                 </div>
                                             </td>
                                             {{-- <td>
@@ -113,7 +113,7 @@
                                                         person_add
                                                     </span>
                                                 </a>
-                                                <a href="#" role="button" class="btn btn-primary me-1" style="padding: 0.321em 0.75em">
+                                                <a href="{{ route('user.view.overview', ["username" => Auth::user()->username, "uid" => $mailinglist->uid]) }}" role="button" class="btn btn-primary me-1" style="padding: 0.321em 0.75em">
                                                     <span class="material-icons-outlined">
                                                         multiline_chart
                                                     </span> Statistics

@@ -382,11 +382,11 @@ class MailListController extends Controller
         event(new \App\Events\MailListUpdated($list));
 
         // authorize
-        if (\Gate::denies('read', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('read', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('lists.overview', [
+        return view('dashboard.listPerformance', [
             'list' => $list,
         ]);
     }
@@ -922,9 +922,9 @@ class MailListController extends Controller
         $list = \App\Models\MailList::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('read', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('read', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         $result = [
             'data' => [
