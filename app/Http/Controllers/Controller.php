@@ -16,4 +16,9 @@ class Controller extends BaseController
     // {
     //     return $user;
     // }
+
+    public function noMoreItem()
+    {
+        return view('noMoreItem');
+    }
 }
