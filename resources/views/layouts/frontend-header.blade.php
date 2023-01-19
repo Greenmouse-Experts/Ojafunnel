@@ -201,11 +201,11 @@
                                 FAQs
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="#" class="nav-link" class="routers">
                                 Resources
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a href="{{route('contact')}}" class="nav-link {{ (request()->is('contact')) ? 'active' : '' }}" class="routers">
                                 Contact
