@@ -104,6 +104,13 @@ class HomePageController extends Controller
         return view('frontend.chatautomation');
     }
 
+     // Chat Automation
+     public function ecommerce()
+     {
+         return view('frontend.Ecommerce');
+     }
+    
+
     public function test()
     {
         $curl = curl_init();

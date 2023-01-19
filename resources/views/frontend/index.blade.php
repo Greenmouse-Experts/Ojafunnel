@@ -402,8 +402,8 @@
 <section class="Features">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-3"></div>
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
                 <div class="btn-text">
                     <h1>
                         Enjoy All-In-One features to make your business run smoother
@@ -413,7 +413,7 @@
                     </p>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3"></div>
+            <div class="col-lg-2 col-md-2"></div>
             <div class="col-lg-3 col-md-6">
                 <div class="alert"></div>
                 <div class="Amet">
@@ -428,7 +428,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-12">
                 <div class="alert"></div>
                 <div class="Amet">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-b_lsapko.png" draggable="false">
@@ -507,8 +507,11 @@
                             Affiliate Module
                         </h1>
                         <p>
-                            Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently. Affiliates can market, sell your products and get commission.
+                            Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently.
                         </p>
+                        <!-- <p>
+                        Affiliates can market, sell your products and get commission.
+                        </p> -->
                     </div>
                 </div>
             </div>

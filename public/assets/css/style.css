@@ -1244,12 +1244,12 @@ header nav .offcanvas-header button i {
 
 /**Increasing**/
 .Increasing {
-    padding: 80px 0px 50px 0px;
+    padding: 80px 0px 80px 0px;
 }
 
 .Increasing .thread-text h1 {
     font-size: 30px;
-    font-weight: 600;
+    font-weight: 700;
     text-align: center;
     padding: 0px 0px 100px 0px;
 }
@@ -1264,12 +1264,12 @@ header nav .offcanvas-header button i {
 
 .Increasing .thread-text h2 {
     font-size: 25px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.5;
 }
 
 .Increasing .thread-text p {
-    font-size: 13px;
+    font-size: 15px;
     margin-bottom: 0;
     margin-top: 0;
     line-height: 1.5;
@@ -1415,7 +1415,7 @@ header nav .offcanvas-header button i {
 
 /**Communication**/
 .communication {
-    padding: 100px 0px 50px 0px;
+    padding: 100px 0px 80px 0px;
     background-color: #FCFCFE;
 }
 
@@ -1439,13 +1439,13 @@ header nav .offcanvas-header button i {
 
 .communication .thread-text h2 {
     font-size: 25px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.5;
 }
 
 .communication .thread-text p {
-    font-size: 13px;
-    line-height: 2;
+    font-size: 15px;
+    line-height: 1.5;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
@@ -1627,13 +1627,13 @@ header nav .offcanvas-header button i {
 
 .Editable .thread-text h2 {
     font-size: 25px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.5;
 }
 
 .Editable .thread-text p {
-    font-size: 13px;
-    line-height: 2;
+    font-size: 15px;
+    line-height: 1.5;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
@@ -1802,13 +1802,12 @@ header nav .offcanvas-header button i {
 
 .Seemless .thread-text h2 {
     font-size: 25px;
-    font-weight: 500;
-    letter-spacing: 00.1rem;
+    font-weight: 600;
 }
 
 .Seemless .thread-text p {
-    font-size: 13px;
-    line-height: 2;
+    font-size: 15px;
+    line-height: 1.5;
     margin-bottom: 0;
     margin-top: 0;
     color: #000;
@@ -1975,7 +1974,7 @@ header nav .offcanvas-header button i {
 
 .Features .btn-text h1 {
     text-align: center;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 0;
     margin-top: 0;
     font-size: 30px;
@@ -1984,8 +1983,9 @@ header nav .offcanvas-header button i {
 .Features .btn-text p {
     padding: 10px 0 0 0;
     text-align: center;
-    color: #424242;
-    font-size: 14px;
+    color: #000;
+    font-weight: 500;
+    font-size: 15px;
 }
 
 .Features .alert {
@@ -2001,7 +2001,7 @@ header nav .offcanvas-header button i {
 }
 
 .Features .Amet {
-    padding: 20px;
+    padding: 10px;
 }
 
 .Features .Amet .drag {
@@ -2011,17 +2011,18 @@ header nav .offcanvas-header button i {
 .Features .Amet .drag h1 {
     font-size: 15px;
     padding: 25px 0 0 0;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .Features .Amet .drag p {
-    padding: 5px 0px 0 0px;
-    color: #5E5B5B;
-    font-size: 12px;
+    padding: 0px 0px 0 0px;
+    color: #000;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 .Features .Amet:hover {
-    padding: 20px;
+    padding: 10px;
     background: #FFFFFF;
     box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
     border-radius: 20px;
@@ -2097,18 +2098,19 @@ header nav .offcanvas-header button i {
     text-align: center;
     font-style: normal;
     font-size: 30px;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .choose .text-btn-fot p {
     text-align: center;
     padding: 0px 0px 100px 0;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .choose .text-btn h1 {
     font-style: normal;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 600;
 }
 
@@ -2137,9 +2139,10 @@ header nav .offcanvas-header button i {
 }
 
 .choose .text-btn p {
-    font-size: 13px;
+    font-size: 15px;
     color: #000;
-    line-height: 2;
+    font-weight: 400;
+    line-height: 1.5;
     padding: 0 0 0px 0;
 }
 
@@ -2326,7 +2329,7 @@ header nav .offcanvas-header button i {
 .footer .kit-font p {
     padding: 10px 0 0 0;
     color: #000;
-    font-size: 13px;
+    font-size: 14px;
     text-align: left;
 }
 
@@ -2694,8 +2697,8 @@ header nav .offcanvas-header button i {
 
 .Phone .btn-call .rep .line {
     text-align: center;
-    font-size: 13px;
-    color: #A7A4A4;
+    font-size: 14px;
+    color: #000;
 }
 
 @media (max-width:1000px) {
@@ -3046,8 +3049,8 @@ header nav .offcanvas-header button i {
 
 .email-section .btn-text h1 {
     padding: 50px 0px 0px 0px;
-    font-size: 40px;
-    font-weight: 900;
+    font-size: 30px;
+    font-weight: 700;
     color: #fff;
 }
 
@@ -3885,3 +3888,187 @@ header nav .offcanvas-header button i {
 }
 
 /* Pricing Ends*/
+
+/* Ecommerce Welcome Ends*/
+.Ecommerce {
+    padding: 160px 0px 100px 0px;
+    background: linear-gradient(100.67deg, #6734F8 10.04%, #9820F7 106%);
+}
+
+
+.Ecommerce .accelerate h1 {
+    text-align: center;
+    font-weight: 600;
+    margin-top: 0;
+    font-size: 45px;
+    margin-bottom: 0;
+    color: #ffffff;
+    padding: 30px 0px 15px 0px;
+}
+
+.Ecommerce .accelerate h3 {
+    padding: 20px 0px 20px 0px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 18px !important;
+    color: #ffffff;
+    line-height: 1.5;
+}
+
+.Ecommerce .accelerate .btn-curve {
+    padding: 20px 0px 0px 0px;
+}
+
+.Ecommerce .accelerate .btn-curve button {
+    border: 1px solid #ffffff;
+    padding: 15px 30px 15px 30px;
+    border-radius: 10px;
+    display: inline-block;
+    width: 45%;
+    color: #fff;
+    background-color: #7F2AF7;
+    margin: auto;
+    margin-left: 10px !important;
+}
+
+.Ecommerce .accelerate .btn-curve button:hover {
+    background-color: #000;
+    border: none;
+}
+
+@media (max-width:1399px) {
+    .Ecommerce .accelerate h1 {
+        text-align: center;
+        font-weight: 600;
+        font-size: 40px;
+        margin-top: 0;
+        margin-bottom: 0;
+        color: #ffffff;
+        padding: 0px 0px 5px 0px;
+    }
+}
+
+@media (max-width:1200px) {
+    .Ecommerce .accelerate h1 {
+        font-weight: 600;
+        font-size: 35px;
+    }
+
+    .Ecommerce {
+        padding: 150px 0px 50px 0px;
+    }
+
+    .Ecommerce .accelerate .images {
+        padding: 80px 0px 0px 0px;
+    }
+}
+
+@media (max-width:1000px) {
+    /* .Ecommerce .accelerate h1 {
+        font-weight: 600;
+        font-size: 30px;
+    } */
+
+    .btn-curve {
+        display: block !important;
+        margin: auto !important;
+        width: 100%;
+    }
+}
+
+@media (max-width:768px) {
+    .Ecommerce .accelerate h1 {
+        font-weight: 600;
+        font-size: 30px;
+    }
+}
+
+@media (max-width:520px) {
+
+    .Ecommerce .accelerate h3 {
+        text-align: center;
+        font-weight: 500;
+        padding: 0 0 20px 0px;
+        font-size: 13px !important;
+    }
+}
+
+@media (max-width:430px) {
+    .Ecommerce .accelerate h1 {
+        font-weight: 600;
+        font-size: 25px;
+    }
+
+    .Ecommerce .accelerate h3 {
+        text-align: center;
+        font-weight: 400;
+        padding: 10px 0 0 0;
+    }
+
+    .Ecommerce .accelerate .btn-curve button {
+        padding: 10px 30px 10px 30px;
+        border-radius: 10px;
+        width: 70%;
+        margin: auto;
+        margin-left: 50px !important;
+        margin-bottom: 10px !important;
+    }
+}
+
+@media (max-width:380px) {
+
+    .Ecommerce .accelerate h3 {
+        text-align: center;
+        font-weight: 500;
+        font-size: 13px;
+    }
+
+    .Ecommerce .accelerate .btn-curve button {
+        padding: 10px 30px 10px 30px;
+        border-radius: 10px;
+        width: 70%;
+        margin: auto;
+
+        margin-left: 50px !important;
+        margin-bottom: 10px !important;
+    }
+}
+/* Ecommerce Welcome*/
+
+/* Ecommerce Build*/
+.Build{
+    padding: 100px 0px 60px 0px;
+}
+.Build .text-center h1{
+    font-size: 25px;
+    font-weight: 700;
+    padding: 0px 0px 60px 0px;
+}
+.Build .bording{
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+.Build .bording span{
+   font-size: 16px;
+   font-weight: 600;
+   margin: 0px 5px;
+}
+.Build .bording p{
+    margin-top: 0;
+    padding: 10px 0px 0px 50px;
+    font-size: 15px;
+    color: #000;
+    margin-bottom: 0;
+ }
+ @media (max-width:548px) {
+    .Build{
+        padding:80px 10px !important;
+    }
+    .Build .text-center h1{
+        font-weight: 600;
+        padding: 0px 0px 40px 0px;
+    }
+ }
+/* Ecommerce Build*/

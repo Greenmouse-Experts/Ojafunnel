@@ -37,6 +37,10 @@ Route::get('/emailmarketing', [App\Http\Controllers\HomePageController::class, '
 Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
 // });
 
+// Ecommerce Frontend
+Route::get('/ecommerce', [App\Http\Controllers\HomePageController::class, 'ecommerce'])->name('ecommerce');
+// });
+
 //User Authentications
 Route::prefix('auth')->group(function () {
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');

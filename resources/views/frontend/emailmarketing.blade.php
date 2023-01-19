@@ -42,7 +42,7 @@
                             <a class="nav-link dropdown-toggle {{ (request()->is('features*')) ? 'active' : '' }}" href="#">
                                 Features
                             </a>
-                            <div class="dropdown-content container desktop-dropdown">
+                             <div class="dropdown-content container desktop-dropdown">
                                 <div class="row">
                                     <div class="col-lg-3">
                                         <div class="upload">
@@ -53,7 +53,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('emailmarketing')}}">
-                                                        Email Marketing <i class="bi bi-arrow-right-short"></i>
+                                                        Email Marketing 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -63,7 +63,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="">
-                                                        Affiliate Marketing <i class="bi bi-arrow-right-short"></i>
+                                                        Affiliate Marketing 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -73,7 +73,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="">
-                                                        Ecommerce <i class="bi bi-arrow-right-short"></i>
+                                                        Ecommerce 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -89,7 +89,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="">
-                                                        Funnel Builder <i class="bi bi-arrow-right-short"></i>
+                                                        Funnel Builder 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -99,7 +99,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('pagebuilder')}}">
-                                                        Page Builder <i class="bi bi-arrow-right-short"></i>
+                                                        Page Builder 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -115,7 +115,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('marketauto')}}">
-                                                        Automations <i class="bi bi-arrow-right-short"></i>
+                                                        Automations 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -125,7 +125,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('chatautomation')}}">
-                                                        Chat Automations <i class="bi bi-arrow-right-short"></i>
+                                                        Chat Automations 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -141,7 +141,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="">
-                                                        API Integrations <i class="bi bi-arrow-right-short"></i>
+                                                        API Integrations 
                                                     </a>
                                                 </h4>
                                             </div>
@@ -539,129 +539,115 @@
     <!-- Digital Ends -->
     <!-- Footter -->
     <section class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="kit-font">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png">
-                        <p>
-                            Amet minim mollit non deserunt ullamco est sit aliqua dolor do Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
-                        </p>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="kit-font">
+                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png">
+                    <p>
+                        Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
+                    </p>
                 </div>
-                <div class="col-lg-2">
-                    <div class="quick">
-                        <h1>
-                            Quick Link
-                        </h1>
-                        <ul>
-                            <li>
-                                Products
-                            </li>
-                            <li>
-                                Features
-                            </li>
-                            <li>
-                                Pricing
-                            </li>
-                            <li>
-                                Resources
-                            </li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="quick">
+                    <h1>
+                        Quick Link
+                    </h1>
+                    <ul>
+                        <li>
+                            Products
+                        </li>
+                        <li>
+                            Features
+                        </li>
+                        <li>
+                            Pricing
+                        </li>
+                        <li>
+                            Resources
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-lg-2">
-                    <div class="quick">
-                        <h1>
-                            Contact
-                        </h1>
-                        <ul>
-                            <li>
-                                8, Address street
-                            </li>
-                            <li>
-                                0815530260
-                            </li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="quick">
+                    <h1>
+                        Contact
+                    </h1>
+                    <ul>
+                        <li>
+                            8, Address street
+                        </li>
+                        <li>
+                            0815530260
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-lg-4">
-                    <div class="quick">
-                        <h1>
-                            Newsletter
-                        </h1>
-                        <ul>
-                            <li>
-                                Get News & Updates
-                            </li>
-                        </ul>
-                        <form class="search-bar">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Your email Address">
-                                <span class="input-group-text" id="basic-addon2">Subscribe</span>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="last-fot">
-                        <h1>
-                            Helping thousands of businesses succeed,<a href="sign-up">
-                                join us
-                            </a>
-                        </h1>
-                    </div>
-                </div>
-                <div class="col-lg-3"></div>
-                <div class="col-lg-6">
-                    <div class="top">
-                        <div class="logo-details">
-                            <div class="media-icons">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#"><i class="fab fa-youtube"></i></a>
-                            </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="quick">
+                    <h1>
+                        Newsletter
+                    </h1>
+                    <ul>
+                        <li>
+                            Get News & Updates
+                        </li>
+                    </ul>
+                    <form class="search-bar">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Your email Address">
+                            <span class="input-group-text" id="basic-addon2">Subscribe</span>
                         </div>
-                    </div>
-                    <div class="row paff">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-3">
-                            <li>
-                                <a href="{{route('privacy')}}">
-                                    Privacy Policy
-                                </a>
-                            </li>
-                        </div>
-                        <div class="col-sm-3">
-                            <li>
-                                <a href="Term">
-                                    Terms & Condition
-                                </a>
-                            </li>
-                        </div>
-                        <div class="col-sm-3">
-
-                        </div>
-                    </div>
+                    </form>
                 </div>
-                <div class="col-lg-3"></div>
-                <div class="col-lg-12">
-                    <div class="last-fott">
-                        <h1>
-                            Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
-                        </h1>
+            </div>
+            <div class="col-lg-12">
+                <div class="last-fot">
+                    <h1>
+                        Helping thousands of businesses succeed,<a href="sign-up">
+                            join us
+                        </a>
+                    </h1>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="top">
+                    <div class="logo-details">
+                        <div class="media-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-12">
+                <div class="last-fott text-center">
+                        <a href="{{route('privacy')}}">
+                                Privacy Policy
+                            </a>
+                            |
+                            <a href="{{route('terms')}}">
+                                Terms & Condition
+                            </a>
+                    <h1>
+                        Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
+                    </h1>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
     <!-- Footter Ends -->
 
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
-    <script src="{{URL::asset('assets/js/main.js"')}}></script>
+    <script src="{{URL::asset('assets/js/main.js')}}"></script>
         <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </body>
 
