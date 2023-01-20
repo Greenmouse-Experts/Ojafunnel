@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
     <title> Page Builder | {{config('app.name')}} </title>
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
@@ -19,7 +19,7 @@
 <body>
     <!-- Header -->
     <header class="market">
-        <nav style="background: linear-gradient(100.67deg, #6734F8 10.04%, #9820F7 106%);" class="navbar navbar-expand-lg fixed-top" id="header-scroll">
+        <nav style="background: linear-gradient(101.28deg, #3C40A5 -7.37%, #208FF7 142.82%);" class="navbar navbar-expand-lg fixed-top" id="header-scroll">
             <div class="container">
                 <a href="{{route('index')}}" class="navbar-brand">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660222222/OjaFunnel-Images/lo_dwxa54.png" draggable="false" alt="OjaFunnel">
@@ -248,21 +248,20 @@
     <!-- Header Ends -->
 
     <!-- Ecommerce Welcome -->
-    <section class="Ecommerce">
+    <section class="Ecommerce" style="background: linear-gradient(101.28deg, #3C40A5 -7.37%, #208FF7 142.82%);">
         <div class="container">
             <div class="row">
                 <div class="col-lg-1"></div>
                 <div class="col-lg-10">
                     <div class="accelerate">
                         <h1>
-                            Create A Smart Online Store To Sell Your Products Online
+                            Increase revenue by converting your visitors into paying customers
                         </h1>
                         <div class="row">
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
                                 <h3>
-                                    Get more sales and customers for your business by creating an online store for your business with Ojafunnel.
-
+                                    Design and launch automated, sales-driving funnels to attract customers online, generate leads, and more
                                 </h3>
                             </div>
                             <div class="col-md-2"></div>
@@ -275,7 +274,7 @@
                                         <button style="background-color: #fff; "><a href="{{route('signup')}}" style="color: #000;">
                                                 Get Started
                                             </a></button>
-                                        <button>See Demo</button>
+                                        <button style="background: #2F63CA;">See Demo</button>
                                     </div>
                                 </div>
                                 <div class="col-md-3"></div>
@@ -290,164 +289,198 @@
     <!-- Ecommerce Welcome Ends -->
 
     <!-- Ecommerce Build -->
-    <section class="Build">
+    <!-- <section class="Build">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <h1>
+                                Build your brands online presence
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="bording">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Launch for free</span>
+                            <p>
+                                Create a website with a product catalog at no cost—you only pay when you make a sale.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4  mb-4">
+                        <div class="bording">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Find new customers</span>
+                            <p>
+                                Drive traffic and e-commerce sales with the free, powerful marketing tools that come with your store.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4  mb-4">
+                        <div class="bording">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Own your brand</span>
+                            <p>
+                                Create a seamless brand experience across the web with ojafunnel and with our intuitive design tools.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+    <!--Ecommerce Build Ends -->
+
+
+    <!-- Increasing -->
+    <section class="Increasing" style="background: #FCFCFE !important;">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="text-center">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="thread-text">
                         <h1>
-                            Build your brands online presence
+                            Maximum your online potential with our funnels
                         </h1>
+
                     </div>
                 </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="bording">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Launch for free</span>
-                        <p>
-                            Create a website with a product catalog at no cost—you only pay when you make a sale.
-                        </p>
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="imagess">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674210493/OjaFunnel-Images/Group_46926_1_bq9n0d.png" draggable="false">
                     </div>
                 </div>
-                <div class="col-lg-4  mb-4">
-                    <div class="bording">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Find new customers</span>
-                        <p>
-                            Drive traffic and e-commerce sales with the free, powerful marketing tools that come with your store.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-4  mb-4">
-                    <div class="bording">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Own your brand</span>
-                        <p>
-                            Create a seamless brand experience across the web with ojafunnel and with our intuitive design tools.
-                        </p>
+                <div class="col-lg-6">
+                    <div class="thread-text">
+                        <h4>
+                            automated flow
+                        </h4>
+                        <h2 class="mb-4">
+                            Do more with our funnel builder
+                        </h2>
+                        <div class="bording mb-4">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Drag, drop and connect</span>
+                            <p>
+                                Easily drag the different events into the canvas and connect the flow with arrows.
+                            </p>
+                        </div>
+                        <div class="bording mb-4">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Runs on autopilot for you, 24-7-365</span>
+                            <p>
+                                Ojafunnel automates your sales funnels, running 24/7 for maximum conversion
+                            </p>
+                        </div>
+                        <div class="bording mb-4">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Funnel Templates </span>
+                            <p>
+                                We have pre-build funnels for different businesses already set for you
+                            </p>
+                        </div>
+                        <div class="bording mb-4">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Flow mapping</span>
+                            <p>
+                                Set the flow of your funnel, ie set the page that comes first, second and third.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!--Ecommerce Build Ends -->
-
-
-    <!-- Increasing -->
-        <section class="Increasing" style="background: #FCFCFE !important;">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-6">
-                        <div class="thread-text">
-                            <h4>
-                                UPSELLS
-                            </h4>
-                            <h2>
-                                Double your sales by maximizing every order
-                            </h2>
-                            <p>
-                                Significantly increase revenue by utilizing one-click upsells, added purchase options at checkout, abandoned cart recovery, and other advanced features.
-                            </p>
-                            <button>
-                                Explore
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="imagess">
-                            <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     <!-- Increasing Ends -->
 
     <!-- Communication -->
-        <section class="communication hide" style="background: #fff !important;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="el-icon-message">
-                            <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false" alt="">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="thread-text">
-                            <h4>
-                                Payout Checkout
-                            </h4>
-                            <h2>
-                                Integrated lightning-fast checkout
-                            </h2>
-                            <p>
-                                Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
-                            </p>
+    <section class="communication hide" style="background: #fff !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="thread-text">
+                        <h4>
+                            generate LEADS
+                        </h4>
+                        <h2>
+                            Move leads through your funnel with emails
+                        </h2>
+                        <p>
+                            Set funnels to take your customer engagement to the next level by using automated emails to send personalized follow-ups for your leads
+                        </p>
+                        <a href="{{route('signup')}}">
                             <button>
                                 Explore Now
                             </button>
-                        </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="el-icon-message">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674210058/OjaFunnel-Images/Rectangle_19421_lfrihj.png" draggable="false" alt="">
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
     <!-- Communication Ends -->
 
     <!-- Communication -->
-        <section class="communication display">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="thread-text">
-                            <h4>
-                                Payout Checkout
-                            </h4>
-                            <h2>
-                                Integrated lightning-fast checkout
-                            </h2>
-                            <p>
-                                Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
-                            </p>
+    <section class="communication display">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="thread-text">
+                        <h4>
+                            generate LEADS
+                        </h4>
+                        <h2>
+                            Move leads through your funnel with emails
+                        </h2>
+                        <p>
+                            Set funnels to take your customer engagement to the next level by using automated emails to send personalized follow-ups for your leads
+                        </p>
+                        <a href="{{route('signup')}}">
                             <button>
                                 Explore Now
                             </button>
-                        </div>
+                        </a>
                     </div>
+                </div>
+                <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674210058/OjaFunnel-Images/Rectangle_19421_lfrihj.png" draggable="false" alt="">
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
     <!-- Communication Ends -->
 
     <!-- Increasing -->
-        <section class="Increasing" style="background: #FCFCFE !important;">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-6">
-                        <div class="thread-text">
-                            <h4>
-                                PAGES AND PRODUCTS 
-                            </h4>
-                            <h2>
-                                Boost conversions with a unique page for every product
-                            </h2>
-                            <p>
-                                Set up your store easily by picking a template. Customize it with ease. Then publish. You’ll be ready to start accepting orders in minutes. 
-                            </p>
-                            <button>
-                                Explore
-                            </button>
-                        </div>
+    <section class="Increasing" style="background: #FCFCFE !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="imagess">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
                     </div>
-                    <div class="col-lg-6">
-                        <div class="imagess">
-                            <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
-                        </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="thread-text">
+                        <h4>
+                            Funnel cloning
+                        </h4>
+                        <h2>
+                            Share your built funnels with others
+                        </h2>
+                        <p>
+                            With our funnel cloning ability, we allow you to clone other users funnel if the funnel is shared with other users.
+                        </p>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
     <!-- Increasing Ends -->
 
     <!-- Features -->
@@ -458,11 +491,8 @@
                 <div class="col-lg-8">
                     <div class="btn-text">
                         <h1>
-                        Built-in features for your business
+                            Awesome features for funnels
                         </h1>
-                        <p>
-                        Get more sales and customers for your business with our awesome features 
-                        </p>
                     </div>
                 </div>
                 <div class="col-lg-2"></div>
@@ -472,10 +502,10 @@
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
-                            Integrated checkout 
+                                Pre-built funnels
                             </h1>
                             <p>
-                            Accept payments for your products from anywhere in the world   
+                                We have ready made funnels you can choose from and edit easily
                             </p>
                         </div>
                     </div>
@@ -486,10 +516,10 @@
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
-                            Quizzes
+                                Funnel flow mapping
                             </h1>
                             <p>
-                            Create quizzes to test your students understanding of the material
+                                You can rearrange your funnels to choose which pages comes first, second, etc
                             </p>
                         </div>
                     </div>
@@ -500,52 +530,10 @@
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
-                            1-click upsells
+                                Cloning Ability
                             </h1>
                             <p>
-                            Gives your students and customers an opportunity to buy more from you
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                            LMS Feature
-                            </h1>
-                            <p>
-                            Use the platform for handle course management, quizzes and assessments.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                            Custom domain
-                            </h1>
-                            <p>
-                            Get custom domain, or easily link your existing website to Ojafunnel 
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                            Abandoned cart recovery
-                            </h1>
-                            <p>
-                            Triggered mails to give your lead another chance to buy from you.
+                                We give the ability to clone any other users funnels you love
                             </p>
                         </div>
                     </div>
@@ -554,6 +542,40 @@
         </div>
     </section>
     <!-- Features Ends -->
+
+    <!-- Digital -->
+    <section class="digital">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mount">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <h1>
+                                    Engage customers and grow your business with emails marketing features!
+                                </h1>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <div class="level"></div>
+                                <a href="{{route('signup')}}">
+                                    <button>
+                                        Sign up
+                                    </button>
+                                </a>
+                                <button style="background-color: #527EEB; color: #fff;">
+                                    See Demo
+                                </button>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="footer">
         <div class="container">
@@ -660,7 +682,6 @@
             </div>
         </div>
     </section>
-    
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/main.js')}}"></script>

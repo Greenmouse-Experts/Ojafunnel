@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <nav style="background:linear-gradient(85.46deg, #A219D8 -3.83%, #E656DA 82.54%);" class="navbar navbar-expand-lg fixed-top" id="header-scroll">
+    <header class="market">
+        <nav style="background: linear-gradient(101.28deg, #6997DD -7.37%, #39B7C5 142.82%);" class="navbar navbar-expand-lg fixed-top" id="header-scroll">
         <div class="container">
            <a href="{{route('index')}}" class="navbar-brand">
         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660222222/OjaFunnel-Images/lo_dwxa54.png" draggable="false" alt="OjaFunnel">
@@ -246,17 +246,17 @@
     </header>
     <!-- Header Ends -->
 
-    <!-- Page-Builder -->
-    <section class="page-builder">
+    <!-- Email-Section -->
+    <section class="email-section" style="background: linear-gradient(101.28deg, #6997DD -7.37%, #39B7C5 142.82%);">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="btn-text">
                         <h1>
-                            Convert prospects with stunning pre built page templates
+                        Integrate your favourite tools to do more with Ojafunnel  
                         </h1>
                         <p>
-                            Building landing pages, pre sales pages, sales page, opt-in page, thank you page, and more with ease.
+                            Take your marketing further when you connect to your favorite apps and web services
                         </p>
                         <button style="background-color: #fff;color:#000">
                             Get Started
@@ -274,7 +274,7 @@
             </div>
         </div>
     </section>
-    <!-- Page Builder  Ends-->
+    <!-- Email-Section Ends -->
 
     <!-- Increasing -->
     <section class="Increasing">
@@ -284,7 +284,7 @@
                 <div class="col-lg-10">
                     <div class="thread-text">
                         <h1>
-                            Simplified Page Builder
+                            Automations that keep you going
                         </h1>
                     </div>
                 </div>
@@ -292,13 +292,13 @@
                 <div class="col-lg-6">
                     <div class="thread-text">
                         <h4>
-                            Create and build
+                            Customer Journey
                         </h4>
                         <h2>
-                            Build your landing pages easily with customizable templates
+                            Build more customized path for your customers
                         </h2>
                         <p>
-                            Select a customizable template that best fits your business needs and the look you're going for or use our drag and drop editor to create a unique landing page from scratch.
+                            Create personalized, automated marketing workflows for each of your customers. Deliver relevant messages to your customers based on who they are and how they interact with your business.
                         </p>
                        <a href="{{route('signup')}}">
                             <button>
@@ -309,7 +309,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="imagess">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143194/OjaFunnel-Images/image_817_efjb8z.png" draggable="false">
                     </div>
                 </div>
             </div>
@@ -323,19 +323,19 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143192/OjaFunnel-Images/Rectangle_18980_frbwgn.png" draggable="false" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="thread-text">
                         <h4>
-                            SEGMENTATION
+                            Schedule Emails
                         </h4>
                         <h2>
-                            Grow your audience and keep it organized
+                            Send emails automatically at the best time, every time
                         </h2>
                         <p>
-                            Landing pages make it easy to capture your visitors’ contact information and move them to the next stage of your funnel. Use segmentation to track your leads lifecycle and follow-up with relevant messaging.
+                            Take out the guesswork and automatically send emails at the best time, every time. Our data determines when your customers are most likely to engage so you can send at just the right time.
                         </p>
                         <a href="{{route('signup')}}">
                             <button>
@@ -356,13 +356,13 @@
                 <div class="col-lg-6">
                     <div class="thread-text">
                         <h4>
-                            SEGMENTATION
+                            Schedule Emails
                         </h4>
                         <h2>
-                            Grow your audience and keep it organized
+                            Send emails automatically at the best time, every time
                         </h2>
                         <p>
-                            Landing pages make it easy to capture your visitors’ contact information and move them to the next stage of your funnel. Use segmentation to track your leads lifecycle and follow-up with relevant messaging.
+                            Take out the guesswork and automatically send emails at the best time, every time. Our data determines when your customers are most likely to engage so you can send at just the right time.
                         </p>
                         <a href="{{route('signup')}}">
                             <button>
@@ -373,7 +373,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143192/OjaFunnel-Images/Rectangle_18980_frbwgn.png" draggable="false" alt="">
                     </div>
                 </div>
             </div>
@@ -388,13 +388,13 @@
                 <div class="col-lg-6">
                     <div class="thread-text">
                         <h4>
-                            REPORTS AND ANALYSIS
+                            Transactional email
                         </h4>
                         <h2>
-                            Get reports on visitors, clicks, conversions and more
+                            Easily set trigger based messages and follow ups
                         </h2>
                         <p>
-                            Find what is high converting, ie visitors, clicks, conversions, and revenue, as well as track what content or offerings are most interesting to different audience segments.
+                            Set SMS , and emails that will be delivered to subscribers based on the action the subscriber took or not. Update customers with personalized transactional emails.
                         </p>
                        <a href="{{route('signup')}}">
                             <button>
@@ -405,13 +405,149 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="imagess">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143191/OjaFunnel-Images/Rectangle_18981_wx7fzo.png" draggable="false">
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- Editable Ends -->
+
+    <!-- Features -->
+    <section class="Features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="btn-text">
+                        <h1>
+                            Marketing automation features for you
+                        </h1>
+                        <p>
+                            Amet minim mollit non deserunt ullamco est sit aliqua
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-2"></div>
+                <div class="col-lg-4">
+                    <div class="alert"></div>
+                    <div class="Amet">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
+                        <div class="drag">
+                            <h1>
+                                Page templates
+                            </h1>
+                            <p>
+                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="alert"></div>
+                    <div class="Amet">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
+                        <div class="drag">
+                            <h1>
+                                Optin Pages
+                            </h1>
+                            <p>
+                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="alert"></div>
+                    <div class="Amet">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
+                        <div class="drag">
+                            <h1>
+                                Order forms
+                            </h1>
+                            <p>
+                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="aler"></div>
+                    <div class="Amet">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
+                        <div class="drag">
+                            <h1>
+                                Quiz Automation
+                            </h1>
+                            <p>
+                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="aler"></div>
+                    <div class="Amet">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
+                        <div class="drag">
+                            <h1>
+                                Integrations
+                            </h1>
+                            <p>
+                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="aler"></div>
+                    <div class="Amet">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
+                        <div class="drag">
+                            <h1>
+                                Reports & Analysis
+                            </h1>
+                            <p>
+                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Features Ends -->
+
+    <!-- Digital -->
+    <section class="digital">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mount">
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <h1>
+                                    Enhance your marketing by sending the right message at the right time
+                                </h1>
+                                <div class="level"></div>
+                               <a href="{{route('signup')}}">
+                                    <button>
+                                        Sign up
+                                    </button>
+                                </a>
+                                <button style="background-color: #527EEB; color: #fff;">
+                                    See Demo
+                                </button>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Digital Ends -->
     <!-- Footter -->
     <section class="footer">
     <div class="container">
@@ -519,9 +655,11 @@
     </div>
 </section>
     <!-- Footter Ends -->
+
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
-    <script src="{{URL::asset('assets/js/main.js"')}}></script>
+    <script src="{{URL::asset('assets/js/main.js')}}"></script>
         <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </body>
+
 </html>

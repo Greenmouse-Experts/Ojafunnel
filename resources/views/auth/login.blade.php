@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
         <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -66,6 +67,7 @@
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-file-lock"></i>
                                                                 <input type="password" placeholder="Enter your prefered password" name="password" class="input">
+                                                                <i class="toggle-password fa fa-fw fa-eye-slash" title="Toggle to show/hide password"></i>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -119,6 +121,18 @@
             $("form").submit(function() {
                 $('#loader').show();
             });
+        });
+    </script>
+    <script>
+            // Script for Show/Hide Password 
+            $(".toggle-password").click(function() {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            input = $(this).parent().find("input");
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
         });
     </script>
 </html>

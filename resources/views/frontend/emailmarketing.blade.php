@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="assets/images/Logo-fav.png" type="image/x-icon">
+     <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
     <title> Page Builder | {{config('app.name')}} </title>
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
@@ -42,7 +42,7 @@
                             <a class="nav-link dropdown-toggle {{ (request()->is('features*')) ? 'active' : '' }}" href="#">
                                 Features
                             </a>
-                             <div class="dropdown-content container desktop-dropdown">
+                            <div class="dropdown-content container desktop-dropdown">
                                 <div class="row">
                                     <div class="col-lg-3">
                                         <div class="upload">
@@ -154,71 +154,72 @@
                                 <li>
                                     <a href="{{route('marketauto')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Email Marketing
+                                             Email Marketing
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Affiliate Marketing
+                                             Affiliate Marketing
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Ecommerce
+                                             Ecommerce
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Funnel Builder
+                                             Funnel Builder
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{route('pagebuilder')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Page Builder
+                                             Page Builder
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{route('marketauto')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Marketing Automations
+                                             Marketing Automations
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{route('chatautomation')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Chat Automations
+                                             Chat Automations
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> API Integrations
+                                             API Integrations
                                         </a>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item">
+                            <a href="{{route('pricing')}}" class="nav-link {{ (request()->is('pricing')) ? 'active' : '' }}" class="routers">
+                                Pricing
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route('faqs')}}" class="nav-link {{ (request()->is('faqs')) ? 'active' : '' }}" class="routers">
                                 FAQs
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" class="routers">
-                                Resources
-                            </a>
-                        </li>
+                        <!-- -->
                         <li class="nav-item">
                             <a href="{{route('contact')}}" class="nav-link {{ (request()->is('contact')) ? 'active' : '' }}" class="routers">
                                 Contact
@@ -299,14 +300,16 @@
                         <p>
                             Create personalized, automated marketing workflows for each of your customers. Deliver relevant messages to your customers based on who they are and how they interact with your business.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                       <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="imagess">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143194/OjaFunnel-Images/image_817_efjb8z.png" draggable="false">
                     </div>
                 </div>
             </div>
@@ -320,7 +323,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143192/OjaFunnel-Images/Rectangle_18980_frbwgn.png" draggable="false" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -334,9 +337,11 @@
                         <p>
                             Take out the guesswork and automatically send emails at the best time, every time. Our data determines when your customers are most likely to engage so you can send at just the right time.
                         </p>
-                        <button>
-                            Explore Now
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                     </div>
                 </div>
             </div>
@@ -359,14 +364,16 @@
                         <p>
                             Take out the guesswork and automatically send emails at the best time, every time. Our data determines when your customers are most likely to engage so you can send at just the right time.
                         </p>
-                        <button>
-                            Explore Now
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143192/OjaFunnel-Images/Rectangle_18980_frbwgn.png" draggable="false" alt="">
                     </div>
                 </div>
             </div>
@@ -389,14 +396,16 @@
                         <p>
                             Set SMS , and emails that will be delivered to subscribers based on the action the subscriber took or not. Update customers with personalized transactional emails.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                       <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="imagess">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143191/OjaFunnel-Images/Rectangle_18981_wx7fzo.png" draggable="false">
                     </div>
                 </div>
             </div>
@@ -423,7 +432,7 @@
                 <div class="col-lg-4">
                     <div class="alert"></div>
                     <div class="Amet">
-                        <img src="" alt="Picture" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
                                 Page templates
@@ -437,7 +446,7 @@
                 <div class="col-lg-4">
                     <div class="alert"></div>
                     <div class="Amet">
-                        <img src="" alt="Picture" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
                                 Optin Pages
@@ -451,7 +460,7 @@
                 <div class="col-lg-4">
                     <div class="alert"></div>
                     <div class="Amet">
-                        <img src="" alt="Picture" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
                                 Order forms
@@ -465,7 +474,7 @@
                 <div class="col-lg-4">
                     <div class="aler"></div>
                     <div class="Amet">
-                        <img src="" alt="Picture" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
                                 Quiz Automation
@@ -479,7 +488,7 @@
                 <div class="col-lg-4">
                     <div class="aler"></div>
                     <div class="Amet">
-                        <img src="" alt="Picture" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
                                 Integrations
@@ -493,7 +502,7 @@
                 <div class="col-lg-4">
                     <div class="aler"></div>
                     <div class="Amet">
-                        <img src="" alt="Picture" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
                                 Reports & Analysis
@@ -522,9 +531,11 @@
                                     Enhance your marketing by sending the right message at the right time
                                 </h1>
                                 <div class="level"></div>
-                                <button>
-                                    Sign up
-                                </button>
+                               <a href="{{route('signup')}}">
+                                    <button>
+                                        Sign up
+                                    </button>
+                                </a>
                                 <button style="background-color: #527EEB; color: #fff;">
                                     See Demo
                                 </button>
@@ -606,9 +617,9 @@
             <div class="col-lg-12">
                 <div class="last-fot">
                     <h1>
-                        Helping thousands of businesses succeed,<a href="sign-up">
-                            join us
-                        </a>
+                        Helping thousands of businesses succeed,<a href="{{route('login')}}">
+                                join us
+                            </a>
                     </h1>
                 </div>
             </div>

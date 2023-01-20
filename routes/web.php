@@ -32,14 +32,22 @@ Route::get('/privacy', [App\Http\Controllers\HomePageController::class, 'privacy
 // Terms
 Route::get('/terms', [App\Http\Controllers\HomePageController::class, 'terms'])->name('terms');
 // EmailMarkeying
-Route::get('/emailmarketing', [App\Http\Controllers\HomePageController::class, 'emailmarketing'])->name('emailmarketing');
+Route::get('/features/emailmarketing', [App\Http\Controllers\HomePageController::class, 'emailmarketing'])->name('emailmarketing');
 // Chat Automation
-Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
+Route::get('/features/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
+// });
+// Ecommerce Frontend
+Route::get('/features/ecommerce', [App\Http\Controllers\HomePageController::class, 'ecommerce'])->name('ecommerce');
 // });
 
-// Ecommerce Frontend
-Route::get('/ecommerce', [App\Http\Controllers\HomePageController::class, 'ecommerce'])->name('ecommerce');
+// Funnel Bulder Frontend
+Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::class, 'funnelbuilder'])->name('funnelbuilder');
 // });
+
+// Integration Frontend
+Route::get('/features/integrations', [App\Http\Controllers\HomePageController::class, 'integrations'])->name('integrations');
+// });
+
 
 //User Authentications
 Route::prefix('auth')->group(function () {

@@ -66,9 +66,9 @@
             <div class="col-lg-12">
                 <div class="last-fot">
                     <h1>
-                        Helping thousands of businesses succeed,<a href="sign-up">
-                            join us
-                        </a>
+                        Helping thousands of businesses succeed,<a href="{{route('login')}}">
+                                join us
+                            </a>
                     </h1>
                 </div>
             </div>

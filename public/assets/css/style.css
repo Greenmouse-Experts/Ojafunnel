@@ -54,7 +54,7 @@ button a:hover {
 
 /*********Header Nav*********/
 header nav {
-    background-color: #2B8DE6;
+    background-color: #3883E6;
     padding: 10px 10px 10px 10px !important;
     margin-top: -10px;
 }
@@ -524,6 +524,18 @@ header nav .offcanvas-header button i {
     transition: 0.6s;
 }
 
+.register .sign .sign-div .toggle-password {
+    float: right;
+    position: relative;
+    top: -28px;
+    right: 15px;
+    cursor: pointer;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: -40px;
+}
+
+
 .register .sign .sign-div input:hover {
     border: 1px solid #70418F !important;
 }
@@ -768,6 +780,16 @@ header nav .offcanvas-header button i {
     font-size: 16px;
     transition: 0.6s;
 }
+.login .btn-div .sidelist .sign-div .toggle-password {
+    float: right;
+    position: relative;
+    top: -28px;
+    right: 15px;
+    cursor: pointer;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: -40px;
+}
 
 .login .btn-div .sidelist .sign-div ::placeholder {
     font-size: 12px;
@@ -935,6 +957,18 @@ header nav .offcanvas-header button i {
     transition: 0.6s;
 }
 
+.Fogotten .btn-div .sidelist .sign-div .toggle-password {
+    float: right;
+    position: relative;
+    top: -28px;
+    right: 15px;
+    cursor: pointer;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: -40px;
+}
+
+
 .Fogotten .btn-div .sidelist .sign-div ::placeholder {
     font-size: 10px;
     color: #999797;
@@ -1010,29 +1044,21 @@ header nav .offcanvas-header button i {
 /**Welcome**/
 .welcome {
     padding: 150px 0px 50px 0px;
-    background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660223434/OjaFunnel-Images/home_rstv52.jpg);
-    background-position-y: -80px;
-    background-repeat: no-repeat;
-    background-size: contain;
+   
 }
-
-@media (max-width:1994px) {
-    .welcome {
-        padding: 150px 0px 50px 0px;
-        background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660223434/OjaFunnel-Images/home_rstv52.jpg);
-        background-position-y: -80px;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
+.welcome {
+    padding: 150px 0px 50px 0px;
+    background: linear-gradient(180.03deg, #149BE4 0.03%, rgba(74, 20, 228, 0.72) 103.37%);
+    background-position-y: -250px;
+    background-repeat: no-repeat;
 }
 
 @media (max-width:1600px) {
     .welcome {
         padding: 150px 0px 50px 0px;
-        background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660223434/OjaFunnel-Images/home_rstv52.jpg);
-        background-position-y: -80px;
+        background: linear-gradient(180.03deg, #149BE4 0.03%, rgba(74, 20, 228, 0.72) 103.37%);
+        background-position-y: -250px;
         background-repeat: no-repeat;
-        background-size: contain;
     }
 }
 
@@ -1049,10 +1075,9 @@ header nav .offcanvas-header button i {
 .welcome .accelerate h3 {
     text-align: center;
     font-weight: 500;
-    font-size: 14px !important;
+    font-size: 15px !important;
     color: #ffffff;
     line-height: 1.5;
-    letter-spacing: 00.10rem;
 }
 
 .welcome .accelerate .btn-curve {
@@ -1991,6 +2016,11 @@ header nav .offcanvas-header button i {
 .Features .alert {
     padding: 10px 0 0 0;
 }
+.Features .optic{
+    display: inline-block;
+    margin: auto;
+    width: 100px !important;
+}
 
 .Features .aler {
     padding: 25px 0 0 0;
@@ -2080,9 +2110,11 @@ header nav .offcanvas-header button i {
         margin-bottom: 0;
         margin-top: 0;
     }
-
     .Features .Amet:hover {
-        border: 1px solid #70418F;
+        padding: 10px;
+        background: #FFFFFF;
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
+        border-radius: 20px;
     }
 }
 
@@ -2139,10 +2171,10 @@ header nav .offcanvas-header button i {
 }
 
 .choose .text-btn p {
-    font-size: 15px;
+    font-size: 13.5px;
     color: #000;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 1.6;
     padding: 0 0 0px 0;
 }
 
@@ -2638,7 +2670,7 @@ header nav .offcanvas-header button i {
     /* background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660749209/OjaFunnel-Images/contact_q1fl8l.jpg);
     background-size: cover;
     background-repeat: no-repeat; */
-    background-color: #2B8DE6;
+    background-color: #3883e6;
 }
 
 .cont-welcome .text h1 {
@@ -2855,7 +2887,7 @@ header nav .offcanvas-header button i {
     /* background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660749209/OjaFunnel-Images/contact_q1fl8l.jpg);
     background-size: cover;
     background-repeat: no-repeat; */
-    background-color: #2B8DE6;
+    background-color:#3883E6 !important;
 }
 
 .faq-welcome .text h1 {
@@ -3043,13 +3075,14 @@ header nav .offcanvas-header button i {
 
 /** Email-Section**/
 .email-section {
-    padding: 140px 0px 70px 0px;
+    padding: 140px 0px 50px 0px;
     background: linear-gradient(94.78deg, #373EA4 1.04%, #6D54B2 81.78%);
 }
 
 .email-section .btn-text h1 {
     padding: 50px 0px 0px 0px;
     font-size: 30px;
+    line-height: 1.6;
     font-weight: 700;
     color: #fff;
 }
@@ -4072,3 +4105,18 @@ header nav .offcanvas-header button i {
     }
  }
 /* Ecommerce Build*/
+
+/* Funnel Bulider */
+ .bording span{
+   font-size: 16px;
+   font-weight: 600;
+   margin: 0px 5px;
+}
+ .bording p{
+    margin-top: 0;
+    padding: 0px 0px 0px 60px;
+    font-size: 15px;
+    color: #000;
+    margin-bottom: 0;
+ }
+/* Funnel Builder Ends */

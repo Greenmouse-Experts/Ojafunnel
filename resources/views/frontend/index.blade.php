@@ -164,9 +164,11 @@
                             </div>
                         </div>
                     </div>
-                    <button>
-                        Explore Now
-                    </button>
+                   <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                 </div>
             </div>
         </div>
@@ -215,9 +217,11 @@
                             </div>
                         </div>
                     </div>
-                    <button>
-                        Explore Now
-                    </button>
+                   <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -332,9 +336,11 @@
                             </div>
                         </div>
                     </div>
-                    <button>
-                        Explore Now
-                    </button>
+                   <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                 </div>
             </div>
         </div>
@@ -383,9 +389,11 @@
                             </div>
                         </div>
                     </div>
-                    <button>
-                        Explore Now
-                    </button>
+                   <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                 </div>
             </div>
             <div class="col-lg-6">

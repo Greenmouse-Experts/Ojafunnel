@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="assets/images/Logo-fav.png" type="image/x-icon">
+     <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
     <title> Page Builder | {{config('app.name')}} </title>
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
@@ -42,7 +42,7 @@
                             <a class="nav-link dropdown-toggle {{ (request()->is('features*')) ? 'active' : '' }}" href="#">
                                 Features
                             </a>
-                             <div class="dropdown-content container desktop-dropdown">
+                            <div class="dropdown-content container desktop-dropdown">
                                 <div class="row">
                                     <div class="col-lg-3">
                                         <div class="upload">
@@ -154,71 +154,72 @@
                                 <li>
                                     <a href="{{route('marketauto')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Email Marketing
+                                             Email Marketing
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Affiliate Marketing
+                                             Affiliate Marketing
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Ecommerce
+                                             Ecommerce
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Funnel Builder
+                                             Funnel Builder
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{route('pagebuilder')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Page Builder
+                                             Page Builder
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{route('marketauto')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Marketing Automations
+                                             Marketing Automations
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{route('chatautomation')}}" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Chat Automations
+                                             Chat Automations
                                         </a>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="index" class="routers">
                                         <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> API Integrations
+                                             API Integrations
                                         </a>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item">
+                            <a href="{{route('pricing')}}" class="nav-link {{ (request()->is('pricing')) ? 'active' : '' }}" class="routers">
+                                Pricing
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route('faqs')}}" class="nav-link {{ (request()->is('faqs')) ? 'active' : '' }}" class="routers">
                                 FAQs
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" class="routers">
-                                Resources
-                            </a>
-                        </li>
+                        <!-- -->
                         <li class="nav-item">
                             <a href="{{route('contact')}}" class="nav-link {{ (request()->is('contact')) ? 'active' : '' }}" class="routers">
                                 Contact
@@ -606,9 +607,9 @@
             <div class="col-lg-12">
                 <div class="last-fot">
                     <h1>
-                        Helping thousands of businesses succeed,<a href="sign-up">
-                            join us
-                        </a>
+                        Helping thousands of businesses succeed,<a href="{{route('login')}}">
+                                join us
+                            </a>
                     </h1>
                 </div>
             </div>
