@@ -3524,14 +3524,15 @@ header nav .offcanvas-header button i {
 
 /** Page-Builder **/
 .page-builder {
-    padding: 140px 0px 70px 0px;
+    padding: 140px 0px 30px 0px;
     background: linear-gradient(85.46deg, #A219D8 -3.83%, #E656DA 82.54%);
 }
 
 .page-builder .btn-text h1 {
     padding: 50px 0px 0px 0px;
-    font-size: 40px;
-    font-weight: 900;
+    font-size: 30px;
+    line-height: 1.6;
+    font-weight: 800;
     color: #fff;
 }
 
