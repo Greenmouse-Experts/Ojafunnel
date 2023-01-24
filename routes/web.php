@@ -44,6 +44,11 @@ Route::get('/features/ecommerce', [App\Http\Controllers\HomePageController::clas
 Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::class, 'funnelbuilder'])->name('funnelbuilder');
 // });
 
+// Affiliate Marketing
+Route::get('/features/affiliate', [App\Http\Controllers\HomePageController::class, 'affiliate'])->name('affiliate');
+// });
+
+
 // Integration Frontend
 Route::get('/features/integrations', [App\Http\Controllers\HomePageController::class, 'integrations'])->name('integrations');
 // });

@@ -19,7 +19,7 @@
 <body>
     <!-- Header -->
     <header class="market">
-        <nav style="background: linear-gradient(101.28deg, #6997DD -7.37%, #39B7C5 142.82%);" class="navbar navbar-expand-lg fixed-top" id="header-scroll">
+        <nav style="background: linear-gradient(101.28deg, #BF69DD -7.37%, #39B7C5 142.82%);" class="navbar navbar-expand-lg fixed-top" id="header-scroll">
             <div class="container">
                 <a href="{{route('index')}}" class="navbar-brand">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660222222/OjaFunnel-Images/lo_dwxa54.png" draggable="false" alt="OjaFunnel">
@@ -74,7 +74,7 @@
                                             <div>
                                                 <div class="btn-area">
                                                     <h4>
-                                                        <a href="">
+                                                        <a href="{{route('ecommerce')}}">
                                                             Ecommerce
                                                         </a>
                                                     </h4>
@@ -156,72 +156,71 @@
                                     <li>
                                         <a href="{{route('marketauto')}}" class="routers">
                                             <a class="dropdown-item">
-                                                Email Marketing
+                                                <i class="bi bi-arrow-right-short"></i> Email Marketing
                                             </a>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="index" class="routers">
                                             <a class="dropdown-item">
-                                                Affiliate Marketing
+                                                <i class="bi bi-arrow-right-short"></i> Affiliate Marketing
                                             </a>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="index" class="routers">
                                             <a class="dropdown-item">
-                                                Ecommerce
+                                                <i class="bi bi-arrow-right-short"></i> Ecommerce
                                             </a>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="index" class="routers">
                                             <a class="dropdown-item">
-                                                Funnel Builder
+                                                <i class="bi bi-arrow-right-short"></i> Funnel Builder
                                             </a>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{route('pagebuilder')}}" class="routers">
                                             <a class="dropdown-item">
-                                                Page Builder
+                                                <i class="bi bi-arrow-right-short"></i> Page Builder
                                             </a>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{route('marketauto')}}" class="routers">
                                             <a class="dropdown-item">
-                                                Marketing Automations
+                                                <i class="bi bi-arrow-right-short"></i> Marketing Automations
                                             </a>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{route('chatautomation')}}" class="routers">
                                             <a class="dropdown-item">
-                                                Chat Automations
+                                                <i class="bi bi-arrow-right-short"></i> Chat Automations
                                             </a>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="index" class="routers">
                                             <a class="dropdown-item">
-                                                API Integrations
+                                                <i class="bi bi-arrow-right-short"></i> API Integrations
                                             </a>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('pricing')}}" class="nav-link {{ (request()->is('pricing')) ? 'active' : '' }}" class="routers">
-                                    Pricing
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{route('faqs')}}" class="nav-link {{ (request()->is('faqs')) ? 'active' : '' }}" class="routers">
                                     FAQs
                                 </a>
                             </li>
-                            <!-- -->
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" class="routers">
+                                    Resources
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="{{route('contact')}}" class="nav-link {{ (request()->is('contact')) ? 'active' : '' }}" class="routers">
                                     Contact
@@ -248,321 +247,241 @@
     </header>
     <!-- Header Ends -->
 
-    <!-- Email-Section -->
-    <section class="email-section" style="background: linear-gradient(101.28deg, #6997DD -7.37%, #39B7C5 142.82%);">
+    <!-- Ecommerce Welcome -->
+    <section class="Ecommerce" style="background: linear-gradient(101.28deg, #BF69DD -7.37%, #39B7C5 142.82%);">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="btn-text">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">
+                    <div class="accelerate">
                         <h1>
-                            Integrate your favourite tools to do more with Ojafunnel
+                            Become an Ojafunnel affiliate today
                         </h1>
-                        <p>
-                            Take your marketing further when you connect to your favorite apps and web services
-                        </p>
-                        <button style="background-color: #fff;color:#000">
-                            Get Started
-                        </button>
-                        <button>
-                            See Demo
-                        </button>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="context">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661267657/OjaFunnel-Images/banner_ajpxfj.png" draggable="false">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Email-Section Ends -->
-
-    <!-- Increasing -->
-    <section class="Increasing">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
-                    <div class="thread-text">
-                        <h1>
-                            Integration to make you market smarter and grow faster
-                        </h1>
-                    </div>
-                </div>
-                <div class="col-lg-2"></div>
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                            MAKE PAYMENT
-                        </h4>
-                        <h2>
-                            Payment gateway integration for easier and faster payment
-                        </h2>
-                        <p>
-                            Integrate payment gateways into your website or e-commerce platform to allow customers to make payments directly on your site from anywhere
-                        </p>
-                        <a href="{{route('signup')}}">
-                            <button>
-                                Explore Now
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="imagess">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674484537/OjaFunnel-Images/Group_46927_cz5uib.jpg" draggable="false">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="Increasing" style="background-color: #FCFCFE;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8 mb-4">
-                    <div class="thread-text text-center">
-                        <h4>
-                            communication
-                        </h4>
-                        <h2>
-                            Emails and SMS gateway integrations
-                        </h2>
-                        <p>
-                            Mass email and sms integrations to deliver your mailing campaigns to your users. We integrate with sendgrid, twilo, and more.
-                        </p>
-                        <a href="{{route('signup')}}">
-                            <button>
-                                Explore Now
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-2"></div>
-                <div class="col-lg-3" style="margin-top: 30px;">
-                    <div>
-                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674485176/OjaFunnel-Images/Rectangle_19429_1_wcbgrq.jpg" draggable="false" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-3"  style="margin-top: 30px;">
-                    <div>
-                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674485176/OjaFunnel-Images/Rectangle_19429_1_wcbgrq.jpg" draggable="false" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-3" style="margin-top: 30px;">
-                    <div>
-                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674485176/OjaFunnel-Images/Rectangle_19429_1_wcbgrq.jpg" draggable="false" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-3"  style="margin-top: 30px;">
-                    <div>
-                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674485176/OjaFunnel-Images/Rectangle_19429_1_wcbgrq.jpg" draggable="false" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Increasing Ends -->
-
-    <!-- Communication -->
-    <section class="communication hide" style="background-color: #fff;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143192/OjaFunnel-Images/Rectangle_18980_frbwgn.png" draggable="false" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                        REPORTS AND ANALYSIS
-                        </h4>
-                        <h2>
-                        Reach customers and enhance sales 
-                        </h2>
-                        <p>
-                        Integrate tools that help you market smarter, and also give you the ability to scale faster and stay ahead of the competition.
-                        </p>
-                        <a href="{{route('signup')}}">
-                            <button>
-                                Explore Now
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Communication Ends -->
-
-    <!-- Communication -->
-    <section class="communication display">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                    <h4>
-                        REPORTS AND ANALYSIS
-                        </h4>
-                        <h2>
-                        Reach customers and enhance sales 
-                        </h2>
-                        <p>
-                        Integrate tools that help you market smarter, and also give you the ability to scale faster and stay ahead of the competition.
-                        </p>
-                        <a href="{{route('signup')}}">
-                            <button>
-                                Explore Now
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143192/OjaFunnel-Images/Rectangle_18980_frbwgn.png" draggable="false" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Communication Ends -->
-
-
-    <!-- Features -->
-    <section class="Features">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
-                    <div class="btn-text">
-                        <h1>
-                        Do more with our Integrations 
-                        </h1>
-                    </div>
-                </div>
-                <div class="col-lg-2"></div>
-                <div class="col-lg-4">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Page templates
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <h3>
+                                    Earn some percentages % on any refers. We are growing fast. Let us share our success with you!
+                                </h3>
+                            </div>
+                            <div class="col-md-2"></div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Optin Pages
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Order forms
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Quiz Automation
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Integrations
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Reports & Analysis
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Features Ends -->
-
-    <!-- Digital -->
-        <section class="digital">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="mount">
+                        <div class="btn-curve">
                             <div class="row">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-6">
-                                    <h1>
-                                    Engage customers and grow your business with emails marteting features! 
-                                    </h1>
-                                    <div class="level"></div>
-                                    <a href="{{route('signup')}}">
-                                        <button>
-                                            Sign up
-                                        </button>
-                                    </a>
-                                    <button style="background-color: #527EEB; color: #fff;">
-                                        See Demo
-                                    </button>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <div>
+                                        <button style="background-color: #fff; display: block !important; margin:auto  !important; "><a href="{{route('signup')}}" style="color: #000;">
+                                                Join the Affiliate program
+                                            </a></button>
+                                    </div>
                                 </div>
-                                <div class="col-md-3"></div>
+                                <div class="col-md-2"></div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-1"></div>
             </div>
-        </section>
+        </div>
+    </section>
+    <!-- Ecommerce Welcome Ends -->
+
+    <!-- Ecommerce Build -->
+    <section class="Build">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <h1>
+                            Enjoy different tiers of Affiliate System
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4 text-center">
+                    <div class="bond"></div>
+                    <div class="Affilate">
+                        <h4>
+                            1 tier Affiliate
+                        </h4>
+                        <h1>
+                            Merchant to System
+                        </h1>
+                        <p>
+                            Earn commission on every user that registers using your referral link with Ojafunnel
+                        </p>
+                        <a href="#">
+                            <button>
+                                Sign up
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4  text-center">
+                    <div class="bond" style="background-color: #A648E4;"></div>
+                    <div class="Affilate">
+                        <h4>
+                            2 tier Affiliate
+                        </h4>
+                        <h1>
+                            Merchant to Customers
+                        </h1>
+                        <p>
+                            Earn commission through a downline of the referrals on your created website
+                        </p>
+                        <a href="#">
+                            <button>
+                                Sign up
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Ecommerce Build Ends -->
+
+    <!-- Fear -->
+    <section class="Fear">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4>
+                        Affiliate
+                    </h4>
+                    <h1>
+                        Build your passive income with Ojafunnel
+                    </h1>
+                </div>
+                <div class="col-lg-6">
+                    <div><img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674572502/OjaFunnel-Images/Vector_juubcp.png" draggable="false" alt=""></div>
+                    <div class="child">
+                        Get lifetime commission for each customer you refer.
+                    </div>
+                    <div><img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674572502/OjaFunnel-Images/Vector_juubcp.png" draggable="false" alt=""></div>
+                    <div class="child">
+                        Get 30% lifetime recurring commission.
+                    </div>
+                    <div><img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674572502/OjaFunnel-Images/Vector_juubcp.png" draggable="false" alt=""></div>
+                    <div class="child">
+                        15% DISCOUNT for your referrals' first purchase.
+                    </div>
+                    <div><img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674572502/OjaFunnel-Images/Vector_juubcp.png" draggable="false" alt=""></div>
+                    <div class="child">
+                        We have extended 60 days cookies
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Fear -->
+    <!-- Fear -->
+    <section class="Fear" style="background-color: #FCFCFE;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div><img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674572502/OjaFunnel-Images/Vector_juubcp.png" draggable="false" alt=""></div>
+                    <div class="child">
+                        Top class industry solution for online marketing.
+                    </div>
+                    <div><img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674572502/OjaFunnel-Images/Vector_juubcp.png" draggable="false" alt=""></div>
+                    <div class="child">
+                        High converting Free Forever plans.
+                    </div>
+                    <div><img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674572502/OjaFunnel-Images/Vector_juubcp.png" draggable="false" alt=""></div>
+                    <div class="child">
+                        Competitively priced paid plans & flexibility.
+                    </div>
+                    <div><img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674572502/OjaFunnel-Images/Vector_juubcp.png" draggable="false" alt=""></div>
+                    <div class="child">
+                        Special Discounts for Affiliates integrating Ojafunnel plans
+                    </div>
+                </div>
+                <div class="col-lg-6 hide">
+                    <h4>
+                        Affiliate
+                    </h4>
+                    <h1>
+                        Reasons to become affiliate
+                        & promote GetResponse
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Fear -->
+
+    <!--FAQ Page-->
+    <main class="faqPage">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2>You have questions ? We've got answers</h2>
+                </div>
+                <div class="col-lg-10">
+                    <div class="faq-box">
+                        <details>
+                            <summary>What is an affiliate marketing program ?</summary>
+                            <div class="faq-content">
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores magnam totam illo perspiciatis nemo asperiores similique voluptatem maiores qui voluptas?</p>
+                            </div>
+                        </details>
+                        <details>
+                            <summary>How much can I earn? </summary>
+                            <div class="faq-content">
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores magnam totam illo perspiciatis nemo asperiores similique voluptatem maiores qui voluptas?</p>
+                            </div>
+                        </details>
+                        <details>
+                            <summary>How to get commissions with your affiliate link? </summary>
+                            <div class="faq-content">
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores magnam totam illo perspiciatis nemo asperiores similique voluptatem maiores qui voluptas?</p>
+                            </div>
+                        </details>
+                        <details>
+                            <summary>Can anyone join the affiliate program ? </summary>
+                            <div class="faq-content">
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores magnam totam illo perspiciatis nemo asperiores similique voluptatem maiores qui voluptas?</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- End Page-Content -->
+
+    <!-- Digital -->
+    <section class="digital">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mount">
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <h1>
+                                    Engage customers and grow your business with emails marteting features!
+                                </h1>
+                                <div class="level"></div>
+                                <a href="{{route('signup')}}">
+                                    <button>
+                                        Sign up
+                                    </button>
+                                </a>
+                                <button style="background-color: #527EEB; color: #fff;">
+                                    See Demo
+                                </button>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Digital Ends -->
-    <!-- Footter -->
+
     <section class="footer">
         <div class="container">
             <div class="row">
@@ -668,7 +587,6 @@
             </div>
         </div>
     </section>
-    <!-- Footter Ends -->
 
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>

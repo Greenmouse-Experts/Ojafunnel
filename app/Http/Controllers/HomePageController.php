@@ -114,6 +114,12 @@ class HomePageController extends Controller
         return view('frontend.FunnelBuilder');
     }
 
+    // Affiliate Marketing
+    public function affiliate()
+    {
+        return view('frontend.AffiliateMarketing');
+    }
+
     // Integration
     public function integrations()
     {
