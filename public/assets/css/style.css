@@ -780,6 +780,7 @@ header nav .offcanvas-header button i {
     font-size: 16px;
     transition: 0.6s;
 }
+
 .login .btn-div .sidelist .sign-div .toggle-password {
     float: right;
     position: relative;
@@ -1044,8 +1045,9 @@ header nav .offcanvas-header button i {
 /**Welcome**/
 .welcome {
     padding: 150px 0px 50px 0px;
-   
+
 }
+
 .welcome {
     padding: 150px 0px 50px 0px;
     background: linear-gradient(180.03deg, #149BE4 0.03%, rgba(74, 20, 228, 0.72) 103.37%);
@@ -2016,7 +2018,8 @@ header nav .offcanvas-header button i {
 .Features .alert {
     padding: 10px 0 0 0;
 }
-.Features .optic{
+
+.Features .optic {
     display: inline-block;
     margin: auto;
     width: 100px !important;
@@ -2110,6 +2113,7 @@ header nav .offcanvas-header button i {
         margin-bottom: 0;
         margin-top: 0;
     }
+
     .Features .Amet:hover {
         padding: 10px;
         background: #FFFFFF;
@@ -2887,7 +2891,7 @@ header nav .offcanvas-header button i {
     /* background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660749209/OjaFunnel-Images/contact_q1fl8l.jpg);
     background-size: cover;
     background-repeat: no-repeat; */
-    background-color:#3883E6 !important;
+    background-color: #3883E6 !important;
 }
 
 .faq-welcome .text h1 {
@@ -3064,6 +3068,7 @@ header nav .offcanvas-header button i {
     font-size: 13px;
     line-height: 2;
 }
+
 @media (max-width:800px) {
     .privacy {
         padding: 50px 0px 50px 0px;
@@ -4066,83 +4071,98 @@ header nav .offcanvas-header button i {
         margin-bottom: 10px !important;
     }
 }
+
 /* Ecommerce Welcome*/
 
 /* Ecommerce Build*/
-.Build{
+.Build {
     padding: 100px 0px 60px 0px;
 }
-.Build .text-center h1{
+
+.Build .text-center h1 {
     font-size: 25px;
     font-weight: 700;
     padding: 0px 0px 60px 0px;
 }
-.Build .bording{
+
+.Build .bording {
     padding: 15px;
     background-color: #fff;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
 }
-.Build .bording span{
-   font-size: 16px;
-   font-weight: 600;
-   margin: 0px 5px;
+
+.Build .bording span {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0px 5px;
 }
-.Build .bording p{
+
+.Build .bording p {
     margin-top: 0;
     padding: 10px 0px 0px 50px;
     font-size: 15px;
     color: #000;
     margin-bottom: 0;
- }
- @media (max-width:548px) {
-    .Build{
-        padding:80px 10px !important;
+}
+
+@media (max-width:548px) {
+    .Build {
+        padding: 80px 10px !important;
     }
-    .Build .text-center h1{
+
+    .Build .text-center h1 {
         font-weight: 600;
         padding: 0px 0px 40px 0px;
     }
- }
+}
+
 /* Ecommerce Build*/
 
 /* Funnel Bulider */
- .bording span{
-   font-size: 16px;
-   font-weight: 600;
-   margin: 0px 5px;
+.bording span {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0px 5px;
 }
- .bording p{
+
+.bording p {
     margin-top: 0;
     padding: 0px 0px 0px 60px;
     font-size: 15px;
     color: #000;
     margin-bottom: 0;
- }
+}
+
 /* Funnel Builder Ends */
-.Build .bond{
+.Build .bond {
     padding: 3px;
     background-color: #5969FD;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
     border-radius: 10px 10px 0px 0px;
 }
-.Build .Affilate{
+
+.Build .Affilate {
     padding: 30px 20px;
     border-radius: 0px 0px 10px 10px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
 }
-.Build .Affilate h4{
+
+.Build .Affilate h4 {
     font-size: 15px;
 }
-.Build .Affilate h1{
+
+.Build .Affilate h1 {
     font-size: 20px;
     padding: 0px 0px 15px 0px !important;
 }
-.Build .Affilate p{
-   margin-top: 0 !important;
-   margin-bottom: 0 !important;
+
+.Build .Affilate p {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
-.Build button{
+
+.Build button {
     margin-top: 30px;
     border-radius: 5px;
     padding: 10px 20px;
@@ -4150,9 +4170,11 @@ header nav .offcanvas-header button i {
     border: none;
     background-color: #714091;
 }
-.Fear{
+
+.Fear {
     padding: 80px 0px 0px 0px;
 }
+
 .Fear h1 {
     font-size: 27px;
     font-weight: 600;
@@ -4166,39 +4188,47 @@ header nav .offcanvas-header button i {
     color: #A7A5A3;
     padding: 0px 0px 5px 0px;
 }
+
 @media (max-width:991px) {
     .Fear {
         padding: 20px 0px 0px 0px;
     }
+
     .Fear h1 {
         font-size: 27px;
         font-weight: 600;
         padding: 0px 0px 10px 0px;
     }
-    .Fear .hide{
+
+    .Fear .hide {
         display: none;
     }
-    
+
 }
-.Fear img{
+
+.Fear img {
     width: 16px;
 }
-.Fear .child{
+
+.Fear .child {
     margin-top: -25px;
-   padding-left: 30px;
-   margin-bottom: 5px;
+    padding-left: 30px;
+    margin-bottom: 5px;
 }
-.faqPage{
+
+.faqPage {
     width: 100%;
     padding: 80px 10px 80px 10px;
-    color:#000;
+    color: #000;
 }
-.faqPage h2{
+
+.faqPage h2 {
     font-weight: 600;
     color: #000;
     font-size: 25px;
     padding: 0 0 40px 0;
 }
+
 .faqPage summary {
     font-size: 17px;
     font-weight: 500;
@@ -4214,7 +4244,8 @@ header nav .offcanvas-header button i {
     position: relative;
     border: 1px solid #acacac;
 }
-.faqPage .faq-content{
+
+.faqPage .faq-content {
     background-color: #ffffff;
     padding: 25px 15px 15px 15px;
     margin-top: -16px;
@@ -4227,41 +4258,50 @@ header nav .offcanvas-header button i {
     font-size: 18px;
     font-weight: 400;
 }
-.faqPage details > summary::after {
+
+.faqPage details>summary::after {
     position: absolute;
     content: "+";
     right: 20px;
 }
-.faqPage details[open] > summary{
+
+.faqPage details[open]>summary {
     border-radius: 5px 5px 0px 0px;
     border: 1px solid #c8c8c873;
 }
-.faqPage details[open] > summary::after {
+
+.faqPage details[open]>summary::after {
     position: absolute;
     content: "-";
     right: 20px;
 }
-.faqPage details > .faq-section summary::-webkit-details-marker {
+
+.faqPage details>.faq-section summary::-webkit-details-marker {
     display: none;
 }
-.faqPage .faq-bottom{
+
+.faqPage .faq-bottom {
     margin-top: 50px;
 }
-.faqPage .faq-bottom  p{
+
+.faqPage .faq-bottom p {
     font-size: 17px;
 }
-.faqPage .faq-bottom .btn-message-us{
+
+.faqPage .faq-bottom .btn-message-us {
     padding: 10px 25px;
     background-color: #E20001;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
 }
-.faqPage .faq-bottom .btn-message-us:hover{
+
+.faqPage .faq-bottom .btn-message-us:hover {
     background-color: #a00000;
     transition: 0.6s;
 }
-@media(max-width: 550px){
+
+@media(max-width: 550px) {
     .faqPage summary {
         font-size: 17px;
         font-weight: 500;
