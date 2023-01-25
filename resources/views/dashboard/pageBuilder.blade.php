@@ -41,7 +41,7 @@
                     <div class="col-md-3">
                         <div class="pageXX pageAdd">
                             <div class="small-circle">
-                                <a href="{{route('user.page.builder.create')}}" class="text-white text-decoration-none">
+                                <a data-bs-toggle="modal" data-bs-target="#template" class="text-white text-decoration-none" style="cursor: pointer;">
                                     <h5 class="pt-2">
                                         +
                                     </h5>
@@ -54,7 +54,7 @@
                     </div>
                     @foreach($pages as $page)
                     <div class="col-md-3">
-                        <a href="{{route('user.page.builder.view.editor', [Auth::user()->username, $page->id])}}" class="text-white text-decoration-none">
+                        <a href="{{route('user.page.builder.view.editor', [Auth::user()->username, Crypt::encrypt($page->id)])}}" class="text-white text-decoration-none">
                             <div class="pageX" style="color:#000 !important;">
                                 <div class="page-top" style="background-image: url({{$page->thumbnail}});"></div>
                                 <div class="p-3 text-dark">
@@ -187,4 +187,66 @@
         </div>
     </div>
 <!-- END layout-wrapper -->
+
+
+<!-- Modal START -->
+<div class="modal fade" id="template" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content pb-3">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="Editt">
+                        <form method="POST" action="{{route('user.page.builder.create')}}">
+                            {{ csrf_field() }}
+                            <div class="form">
+                                <p>
+                                    <b>
+                                        New Page
+                                    </b>
+                                </p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>Page Name </label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Page Name" name="page_name" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>File Folder</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="File Folder" name="file_folder" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>File Name </label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="File Name" name="file_name" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mb-4">
+                                        <div class="boding">
+                                            <button type="submit">
+                                                Proceed
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
 @endsection

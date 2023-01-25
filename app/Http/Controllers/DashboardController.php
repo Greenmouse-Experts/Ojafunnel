@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Funnel;
+use App\Models\FunnelPage;
 use App\Models\Integration;
 use App\Models\Mailinglist;
 use App\Models\Page;
@@ -78,12 +80,84 @@ class DashboardController extends Controller
             'username' => $username
         ]);
     }
+
+    public function list_performance($username)
+    {
+        return view('dashboard.listPerformance', [
+            'username' => $username
+        ]);
+    }
+
+    public function list_setting($username)
+    {
+        return view('dashboard.listSetting', [
+            'username' => $username
+        ]);
+    }
+
+    public function new_subscribers($username)
+    {
+        return view('dashboard.newSubscribers', [
+            'username' => $username
+        ]);
+    }
+
+    public function create_list($username)
+    {
+        return view('dashboard.list', [
+            'username' => $username
+        ]);
+    }
+
+    public function view_list($username)
+    {
+        return view('dashboard.viewList', [
+            'username' => $username
+        ]);
+    }
+
+    public function list_subscribers($username)
+    {
+        return view('dashboard.listSubscribers', [
+            'username' => $username
+        ]);
+    }
+
+    public function import_subscribers($username)
+    {
+        return view('dashboard.ImportSubscribers', [
+            'username' => $username
+        ]);
+    }
+
+    public function export_subscribers($username)
+    {
+        return view('dashboard.exportSubscribers', [
+            'username' => $username
+        ]);
+    }
+
+    public function segments($username)
+    {
+        return view('dashboard.Segments', [
+            'username' => $username
+        ]);
+    }
+
+    public function create_segments($username)
+    {
+        return view('dashboard.createSegment', [
+            'username' => $username
+        ]);
+    }
+
     public function email_automation($username)
     {
         return view('dashboard.emailAutomation', [
             'username' => $username
         ]);
     }
+
     public function edit_template($username)
     {
         return view('dashboard.editemplate', [
@@ -220,15 +294,25 @@ class DashboardController extends Controller
 
     public function choose_temp($username)
     {
+        $funnels = Funnel::latest()->where('user_id', Auth::user()->id)->get();
+        
         return view('dashboard.funnelBuilder', [
-            'username' => $username
+            'username' => $username,
+            'funnels' => $funnels
         ]);
     }
 
-    public function use_template($username)
+    public function view_funnel_pages($username, $id)
     {
-        return view('dashboard.useTemplate', [
-            'username' => $username
+        $id = Crypt::decrypt($id);
+        
+        $funnel = Funnel::findorfail($id);
+        $pages = FunnelPage::latest()->where('user_id', Auth::user()->id)->get();
+        
+        return view('dashboard.viewFunnelPage', [
+            'username' => $username,
+            'funnel' => $funnel,
+            'pages' => $pages
         ]);
     }
 
@@ -281,7 +365,7 @@ class DashboardController extends Controller
         ]);
     }
 
-    
+
     public function page_builder($username)
     {
         $pages = Page::latest()->where('user_id', Auth::user()->id)->get();
@@ -518,7 +602,7 @@ class DashboardController extends Controller
         //     dd($sms);
         // } catch(Exception $e) {
         //     dd($e);
-        // } 
+        // }
 
         /*
             Sending messages using our API

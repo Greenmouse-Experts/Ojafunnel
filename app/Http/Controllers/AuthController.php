@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\SendCodeResetPassword;
 use App\Models\Plan;
 use App\Models\ResetCodePassword;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Notifications\SendMagicLinkNotification;
 use App\Notifications\SendVerificationCode;
@@ -142,12 +143,12 @@ class AuthController extends Controller
                             'ref_bonus' => $user_wallet->ref_bonus + $earnings,
                         ]);
                     //create history
-                    // Tp_Transactioon::create([
-                    //     'user_id' => $entry->id,
-                    //     'plan' => "Credit",
-                    //     'amount' => $earnings,
-                    //     'type' => "Ref_bonus",
-                    // ]);
+                    Transaction::create([
+                        'user_id' => $entry->id,
+                        'amount' => $earnings,
+                        'reference' => 'referralbonus',
+                        'status' => 'Referral Bonus',
+                    ]);
                 } elseif ($level == 2) {
                     $earnings = 10 * $deposit_amount / 100;
                     //add earnings to ancestor balance
@@ -157,6 +158,13 @@ class AuthController extends Controller
                             'wallet' => $user_wallet->wallet + $earnings,
                             'ref_bonus' => $user_wallet->ref_bonus + $earnings,
                         ]);
+                    //create history
+                    Transaction::create([
+                        'user_id' => $entry->id,
+                        'amount' => $earnings,
+                        'reference' => 'referralbonus',
+                        'status' => 'Referral Bonus',
+                    ]);
                 } elseif ($level == 3) {
                     $earnings = 5 * $deposit_amount / 100;
                     //add earnings to ancestor balance
@@ -166,6 +174,13 @@ class AuthController extends Controller
                             'wallet' => $user_wallet->wallet + $earnings,
                             'ref_bonus' => $user_wallet->ref_bonus + $earnings,
                         ]);
+                    //create history
+                    Transaction::create([
+                        'user_id' => $entry->id,
+                        'amount' => $earnings,
+                        'reference' => 'referralbonus',
+                        'status' => 'Referral Bonus',
+                    ]);
                 } elseif ($level == 4) {
                     //dd('here4');
                     $earnings = 5 * $deposit_amount / 100;
@@ -175,6 +190,13 @@ class AuthController extends Controller
                         ->update([
                             'wallet' => $user_wallet->wallet + $earnings,
                             'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                        ]);
+                        //create history
+                        Transaction::create([
+                            'user_id' => $entry->id,
+                            'amount' => $earnings,
+                            'reference' => 'referralbonus',
+                            'status' => 'Referral Bonus',
                         ]);
                 }
 

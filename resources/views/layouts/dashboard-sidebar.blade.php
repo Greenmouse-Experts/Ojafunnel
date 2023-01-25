@@ -35,6 +35,12 @@
                     <a href="{{route('user.email.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Campaign</a>
                   </li>
                   <li>
+                    <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Lists</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{route('user.create.list', Auth::user()->username)}}" key="t-tui-calendar">Create Mail List</a>
+                        </li>
+                        <li><a href="{{route('user.view.list', Auth::user()->username)}}" key="t-tui-calendar">View Mail List</a></li>
+                    </ul>
                     <a href="{{route('user.edit.template', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Automation</a>
                   </li>
                   <li>

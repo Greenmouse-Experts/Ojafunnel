@@ -75,6 +75,18 @@ Route::prefix('{username}')->group(function() {
             Route::get('/automation-campaign', [App\Http\Controllers\DashboardController::class, 'automation_campaign'])->name('user.automation.campaign');
             Route::get('/edittemplate', [App\Http\Controllers\DashboardController::class, 'edit_template'])->name('user.edit.template');
         });
+        Route::prefix('/list')->group(function () {
+            Route::get('/create-view', [App\Http\Controllers\DashboardController::class, 'create_list'])->name('user.create.list');
+            Route::get('/view-list', [App\Http\Controllers\DashboardController::class, 'view_list'])->name('user.view.list');
+            Route::get('/list-performance', [App\Http\Controllers\DashboardController::class, 'list_performance'])->name('user.list.performance');
+            Route::get('/list-setting', [App\Http\Controllers\DashboardController::class, 'list_setting'])->name('user.list.setting');
+            Route::get('/list-subscribers', [App\Http\Controllers\DashboardController::class, 'list_subscribers'])->name('user.list.subscribers');
+            Route::get('/new-subscribers', [App\Http\Controllers\DashboardController::class, 'new_subscribers'])->name('user.new.subscribers');
+            Route::get('/import-subscribers', [App\Http\Controllers\DashboardController::class, 'import_subscribers'])->name('user.import.subscribers');
+            Route::get('/export-subscribers', [App\Http\Controllers\DashboardController::class, 'export_subscribers'])->name('user.export.subscribers');
+            Route::get('/segments', [App\Http\Controllers\DashboardController::class, 'segments'])->name('user.new.segments');
+            Route::get('/create-segments', [App\Http\Controllers\DashboardController::class, 'create_segments'])->name('user.create.segments');
+        });
         Route::prefix('/subscribers')->group(function () {
             Route::get('/mailing-list', [App\Http\Controllers\DashboardController::class, 'mailing_list'])->name('user.mailing.list');
             Route::get('/mailing-list/contacts/{id}', [App\Http\Controllers\DashboardController::class, 'contact'])->name('user.contact');
@@ -88,8 +100,8 @@ Route::prefix('{username}')->group(function() {
         });
         Route::prefix('/funnel-builder')->group(function () {
             Route::get('/choose-temp', [App\Http\Controllers\DashboardController::class, 'choose_temp'])->name('user.choose.temp');
-            Route::get('/choose-temp/use-template', [App\Http\Controllers\DashboardController::class, 'use_template'])->name('user.use.template');
-            Route::get('/choose-temp/product-recommendation', [App\Http\Controllers\DashboardController::class, 'product_recall'])->name('user.product.recall');
+            Route::get('/choose-temp/funnel/pages/{id}', [App\Http\Controllers\DashboardController::class, 'view_funnel_pages'])->name('user.view.funnel.pages');
+            Route::get('page-builder/{page}/editor', [App\Http\Controllers\PageController::class, 'viewFunnelEditor'])->name('user.funnel.builder.view.editor');
             Route::get('/choose-temp/take-quiz', [App\Http\Controllers\DashboardController::class, 'take_quiz'])->name('user.take.quiz');
             Route::get('/choose-temp/face-shape', [App\Http\Controllers\DashboardController::class, 'face_shape'])->name('user.face.shape');
             Route::get('/choose-temp/choose-diamond', [App\Http\Controllers\DashboardController::class, 'choose_diamond'])->name('user.choose.diamond');

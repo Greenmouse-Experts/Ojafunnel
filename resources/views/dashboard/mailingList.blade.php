@@ -8,7 +8,6 @@
     <div class="page-content">
         <!-- container-fluid -->
         <div class="container-fluid">
-            <!-- start page title -->
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
@@ -24,8 +23,6 @@
                     </div>
                 </div>
             </div>
-            <!-- end page title -->
-            <!-- start page title -->
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card account-head">
@@ -64,15 +61,9 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    @if($mailinglists->isEmpty())
+                                    
                                     <tbody>
-                                        <tr>
-                                            <td class="align-enter text-dark font-15" colspan="7">No Mailing List Added.</td>
-                                        </tr>
-                                    </tbody>
-                                    @else
-                                    @foreach($mailinglists as $key => $mailinglist)
-                                    <tbody>
+                                        @foreach($mailinglists as $key => $mailinglist)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>{{$mailinglist->mailinglist_name}}</td>
@@ -145,9 +136,8 @@
                                                 <!-- end modal -->
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
-                                    @endforeach
-                                    @endif
                                 </table>
                             </div>
                         </div>
@@ -157,7 +147,6 @@
             </div>
         </div>
     </div>
-    <!-- End Page-content -->
 </div>
 <!-- END layout-wrapper -->
 
@@ -203,6 +192,6 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 <!-- end modal -->
 @endsection

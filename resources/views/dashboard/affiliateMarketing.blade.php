@@ -55,7 +55,7 @@
                                     {{$referrals->count()}}
                                 </h2>
                                 <p>
-                                    No of Affiliates
+                                    No of Direct Affiliates
                                 </p>
                             </div>
                         </div>

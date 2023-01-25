@@ -18,12 +18,8 @@ class Page extends Model implements Editable
         'title',
         'thumbnail',
         'body',
-        'listable',
-        'gjs_data'
+        'file_name',
+        'folder',
+        'file_location'
     ];
-
-    public function scopeListable($query)
-    {
-        return $query->where('listable', 1);
-    }
 }
