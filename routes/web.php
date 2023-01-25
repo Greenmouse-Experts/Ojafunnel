@@ -8,34 +8,51 @@ Route::get('pages/{page}/editor', [App\Http\Controllers\PageController::class, '
 Route::get('pages/{page}', [App\Http\Controllers\PageController::class, 'viewPage'])->name('user.page.builder.view.page');
 
 // Route::domain(config('app.domain_url'))->group(function() {
-    Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
-    // Faqs
-    Route::get('/faqs', [App\Http\Controllers\HomePageController::class, 'faqs'])->name('faqs');
-     // pricing
-     Route::get('/pricing', [App\Http\Controllers\HomePageController::class, 'pricing'])->name('pricing');
-    // Contact Us
-    Route::get('/contact', [App\Http\Controllers\HomePageController::class, 'contact'])->name('contact');
-    // Login
-    Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])->name('login');
-    // Sign In
-    Route::get('/signup', [App\Http\Controllers\HomePageController::class, 'signup'])->name('signup');
-    // Email Verification
-    Route::get('/emailverification', [App\Http\Controllers\HomePageController::class, 'emailverification'])->name('emailverification');
-    // Forgot Password
-    Route::get('/forgot', [App\Http\Controllers\HomePageController::class, 'forgot'])->name('forgot');
-    // Market Automation
-    Route::get('/features/marketauto', [App\Http\Controllers\HomePageController::class, 'marketauto'])->name('marketauto');
-    // Page Builder
-    Route::get('/features/pagebuilder', [App\Http\Controllers\HomePageController::class, 'pagebuilder'])->name('pagebuilder');
-    // Privacy
-    Route::get('/privacy', [App\Http\Controllers\HomePageController::class, 'privacy'])->name('privacy');
-    // Terms
-    Route::get('/terms', [App\Http\Controllers\HomePageController::class, 'terms'])->name('terms');
-    // EmailMarkeying
-    Route::get('/emailmarketing', [App\Http\Controllers\HomePageController::class, 'emailmarketing'])->name('emailmarketing');
-    // Chat Automation
-    Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
+Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
+// Faqs
+Route::get('/faqs', [App\Http\Controllers\HomePageController::class, 'faqs'])->name('faqs');
+// pricing
+Route::get('/pricing', [App\Http\Controllers\HomePageController::class, 'pricing'])->name('pricing');
+// Contact Us
+Route::get('/contact', [App\Http\Controllers\HomePageController::class, 'contact'])->name('contact');
+// Login
+Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])->name('login');
+// Sign In
+Route::get('/signup', [App\Http\Controllers\HomePageController::class, 'signup'])->name('signup');
+// Email Verification
+Route::get('/emailverification', [App\Http\Controllers\HomePageController::class, 'emailverification'])->name('emailverification');
+// Forgot Password
+Route::get('/forgot', [App\Http\Controllers\HomePageController::class, 'forgot'])->name('forgot');
+// Market Automation
+Route::get('/features/marketauto', [App\Http\Controllers\HomePageController::class, 'marketauto'])->name('marketauto');
+// Page Builder
+Route::get('/features/pagebuilder', [App\Http\Controllers\HomePageController::class, 'pagebuilder'])->name('pagebuilder');
+// Privacy
+Route::get('/privacy', [App\Http\Controllers\HomePageController::class, 'privacy'])->name('privacy');
+// Terms
+Route::get('/terms', [App\Http\Controllers\HomePageController::class, 'terms'])->name('terms');
+// EmailMarkeying
+Route::get('/features/emailmarketing', [App\Http\Controllers\HomePageController::class, 'emailmarketing'])->name('emailmarketing');
+// Chat Automation
+Route::get('/features/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
 // });
+// Ecommerce Frontend
+Route::get('/features/ecommerce', [App\Http\Controllers\HomePageController::class, 'ecommerce'])->name('ecommerce');
+// });
+
+// Funnel Bulder Frontend
+Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::class, 'funnelbuilder'])->name('funnelbuilder');
+// });
+
+// Affiliate Marketing
+Route::get('/features/affiliate', [App\Http\Controllers\HomePageController::class, 'affiliate'])->name('affiliate');
+// });
+
+
+// Integration Frontend
+Route::get('/features/integrations', [App\Http\Controllers\HomePageController::class, 'integrations'])->name('integrations');
+// });
+
 
 //User Authentications
 Route::prefix('auth')->group(function () {
@@ -44,7 +61,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/email/verify/resend/{email}', [App\Http\Controllers\AuthController::class, 'email_verify_resend'])->name('email.verify.resend');
     Route::post('/email/confirm/{token}', [App\Http\Controllers\AuthController::class, 'registerConfirm'])->name('email.confirmation');
     Route::post('/user/login', [App\Http\Controllers\AuthController::class, 'user_login'])->name('user.login');
-    Route::post('/password/forget',  [App\Http\Controllers\AuthController::class, 'forget_password'])->name('user.forget.password');
+    Route::post('/password/forget', [App\Http\Controllers\AuthController::class, 'forget_password'])->name('user.forget.password');
     Route::get('/reset/password/email/{email}', [App\Http\Controllers\AuthController::class, 'password_reset_email'])->name('user.reset.password');
     Route::post('update/password/reset/', [App\Http\Controllers\AuthController::class, 'reset_password'])->name('user.update.password');
 });
@@ -52,8 +69,8 @@ Route::prefix('auth')->group(function () {
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 // User Dashboard
-Route::prefix('{username}')->group(function() {
-// Route::domain('{username}.' . config('app.domain_url'))->group(function () {
+Route::prefix('{username}')->group(function () {
+    // Route::domain('{username}.' . config('app.domain_url'))->group(function () {
     Route::get('/test', [App\Http\Controllers\HomePageController::class, 'test']);
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('user.dashboard');
@@ -61,32 +78,38 @@ Route::prefix('{username}')->group(function() {
         Route::get('/upgrade/account/{id}/{amount}', [App\Http\Controllers\DashboardController::class, 'upgrade_account'])->name('user.upgrade.account');
         Route::get('/transaction', [App\Http\Controllers\DashboardController::class, 'transaction'])->name('user.transaction');
         Route::get('/subscription', [App\Http\Controllers\DashboardController::class, 'subscription'])->name('user.subscription');
-        Route::prefix('/email-marketing')->group(function () {
-            Route::get('/email-checker', [App\Http\Controllers\DashboardController::class, 'email_checker'])->name('user.email.checker');
-            Route::get('/email-campaign', [App\Http\Controllers\DashboardController::class, 'email_campaign'])->name('user.email.campaign');
-            Route::get('/email-campaign/email-campaign', [App\Http\Controllers\DashboardController::class, 'email_Ecampaign'])->name('user.email.Ecampaign');
-            Route::get('/email-campaign/email-layout', [App\Http\Controllers\DashboardController::class, 'email_layout'])->name('user.email.layout');
-            Route::get('/email-campaign/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
-            Route::get('/email-campaign/email-preview', [App\Http\Controllers\DashboardController::class, 'email_preview'])->name('user.email.preview');
-            Route::get('/email-campaign/email-design', [App\Http\Controllers\DashboardController::class, 'email_design'])->name('user.email.design');
-            // Route::get('/email-campaign/email-layout', [App\Http\Controllers\DashboardController::class, 'email_layout'])->name('user.email.layout');
-            // Route::get('/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
-            Route::get('/email-automation', [App\Http\Controllers\DashboardController::class, 'email_automation'])->name('user.email.automation');
-            Route::get('/automation-campaign', [App\Http\Controllers\DashboardController::class, 'automation_campaign'])->name('user.automation.campaign');
-            Route::get('/edittemplate', [App\Http\Controllers\DashboardController::class, 'edit_template'])->name('user.edit.template');
-        });
-        Route::prefix('/list')->group(function () {
-            Route::get('/create-view', [App\Http\Controllers\DashboardController::class, 'create_list'])->name('user.create.list');
-            Route::get('/view-list', [App\Http\Controllers\DashboardController::class, 'view_list'])->name('user.view.list');
-            Route::get('/list-performance', [App\Http\Controllers\DashboardController::class, 'list_performance'])->name('user.list.performance');
-            Route::get('/list-setting', [App\Http\Controllers\DashboardController::class, 'list_setting'])->name('user.list.setting');
-            Route::get('/list-subscribers', [App\Http\Controllers\DashboardController::class, 'list_subscribers'])->name('user.list.subscribers');
-            Route::get('/new-subscribers', [App\Http\Controllers\DashboardController::class, 'new_subscribers'])->name('user.new.subscribers');
-            Route::get('/import-subscribers', [App\Http\Controllers\DashboardController::class, 'import_subscribers'])->name('user.import.subscribers');
-            Route::get('/export-subscribers', [App\Http\Controllers\DashboardController::class, 'export_subscribers'])->name('user.export.subscribers');
-            Route::get('/segments', [App\Http\Controllers\DashboardController::class, 'segments'])->name('user.new.segments');
-            Route::get('/create-segments', [App\Http\Controllers\DashboardController::class, 'create_segments'])->name('user.create.segments');
-        });
+        Route::prefix('/email-marketing')->group(
+            function () {
+                    Route::get('/email-checker', [App\Http\Controllers\DashboardController::class, 'email_checker'])->name('user.email.checker');
+                    Route::get('/email-campaign', [App\Http\Controllers\DashboardController::class, 'email_campaign'])->name('user.email.campaign');
+                    Route::get('/email-campaign/email-campaign', [App\Http\Controllers\DashboardController::class, 'email_Ecampaign'])->name('user.email.Ecampaign');
+                    Route::get('/email-campaign/email-layout', [App\Http\Controllers\DashboardController::class, 'email_layout'])->name('user.email.layout');
+                    Route::get('/email-campaign/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
+                    Route::get('/email-campaign/email-preview', [App\Http\Controllers\DashboardController::class, 'email_preview'])->name('user.email.preview');
+                    Route::get('/email-campaign/email-design', [App\Http\Controllers\DashboardController::class, 'email_design'])->name('user.email.design');
+                    // Route::get('/email-campaign/email-layout', [App\Http\Controllers\DashboardController::class, 'email_layout'])->name('user.email.layout');
+                    // Route::get('/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
+                    Route::get('/email-automation', [App\Http\Controllers\DashboardController::class, 'email_automation'])->name('user.email.automation');
+                    Route::get('/automation-campaign', [App\Http\Controllers\DashboardController::class, 'automation_campaign'])->name('user.automation.campaign');
+                    Route::get('/edittemplate', [App\Http\Controllers\DashboardController::class, 'edit_template'])->name('user.edit.template');
+                }
+        );
+        Route::prefix('/list')->group(
+            function () {
+                    Route::get('/create-view', [App\Http\Controllers\Mail\MailListController::class, 'create'])->name('user.create.list');
+                    Route::post('/create-view/store', [App\Http\Controllers\Mail\MailListController::class, 'store'])->name('user.create_list');
+                    Route::get('/view-list', [App\Http\Controllers\Mail\MailListController::class, 'index'])->name('user.view.list');
+                    Route::get('/list-overview/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'overview'])->name('user.view.overview');
+                    Route::get('/list-performance', [App\Http\Controllers\DashboardController::class, 'list_performance'])->name('user.list.performance');
+                    Route::get('/list-setting', [App\Http\Controllers\DashboardController::class, 'list_setting'])->name('user.list.setting');
+                    Route::get('/list-subscribers', [App\Http\Controllers\DashboardController::class, 'list_subscribers'])->name('user.list.subscribers');
+                    Route::get('/new-subscribers', [App\Http\Controllers\DashboardController::class, 'new_subscribers'])->name('user.new.subscribers');
+                    Route::get('/import-subscribers', [App\Http\Controllers\DashboardController::class, 'import_subscribers'])->name('user.import.subscribers');
+                    Route::get('/export-subscribers', [App\Http\Controllers\DashboardController::class, 'export_subscribers'])->name('user.export.subscribers');
+                    Route::get('/segments', [App\Http\Controllers\DashboardController::class, 'segments'])->name('user.new.segments');
+                    Route::get('/create-segments', [App\Http\Controllers\DashboardController::class, 'create_segments'])->name('user.create.segments');
+                }
+        );
         Route::prefix('/subscribers')->group(function () {
             Route::get('/mailing-list', [App\Http\Controllers\DashboardController::class, 'mailing_list'])->name('user.mailing.list');
             Route::get('/mailing-list/contacts/{id}', [App\Http\Controllers\DashboardController::class, 'contact'])->name('user.contact');
@@ -141,24 +164,24 @@ Route::prefix('{username}')->group(function() {
     });
 });
 
-    // Admin Login
-    Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlogin'])->name('adminlogin');
+// Admin Login
+Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlogin'])->name('adminlogin');
 
-    // Admin Login
-    Route::get('/admin/welcome', [App\Http\Controllers\AdminController::class, 'adminwelcome'])->name('adminwelcome');
-    Route::get('/admin/view_users', [App\Http\Controllers\AdminController::class, 'view_users'])->name('view_users');
-    Route::get('/admin/add_plans', [App\Http\Controllers\AdminController::class, 'add_plans'])->name('add_plans');
-    Route::get('/admin/manage_plans', [App\Http\Controllers\AdminController::class, 'manage_plans'])->name('manage_plans');
-    Route::get('/admin/viewmessage', [App\Http\Controllers\AdminController::class, 'viewmessage'])->name('viewmessage');
-    Route::get('/admin/transactions', [App\Http\Controllers\AdminController::class, 'transactions'])->name('transactions');
-    Route::get('/admin/subscriptions', [App\Http\Controllers\AdminController::class, 'subscriptions'])->name('subscriptions');
-    Route::get('/admin/security', [App\Http\Controllers\AdminController::class, 'security'])->name('security');
-    Route::get('/admin/general', [App\Http\Controllers\AdminController::class, 'general'])->name('general');
-    Route::get('/admin/subscribtions', [App\Http\Controllers\AdminController::class, 'subscribtions'])->name('subscribtions');
-    Route::get('/admin/vendorlist', [App\Http\Controllers\AdminController::class, 'vendorlist'])->name('vendorlist');
-    Route::get('/admin/vendordetails', [App\Http\Controllers\AdminController::class, 'vendordetails'])->name('vendordetails');
-    Route::get('/admin/affiliateList', [App\Http\Controllers\AdminController::class, 'affiliateList'])->name('affiliateList');
-    Route::get('/admin/product', [App\Http\Controllers\AdminController::class, 'product'])->name('product');
-    Route::get('/admin/addProduct', [App\Http\Controllers\AdminController::class, 'addProduct'])->name('addProduct');
-    Route::get('/admin/productDetails', [App\Http\Controllers\AdminController::class, 'productDetails'])->name('productDetails');
-    Route::get('/admin/viewCart', [App\Http\Controllers\AdminController::class, 'viewCart'])->name('viewCart');
+// Admin Login
+Route::get('/admin/welcome', [App\Http\Controllers\AdminController::class, 'adminwelcome'])->name('adminwelcome');
+Route::get('/admin/view_users', [App\Http\Controllers\AdminController::class, 'view_users'])->name('view_users');
+Route::get('/admin/add_plans', [App\Http\Controllers\AdminController::class, 'add_plans'])->name('add_plans');
+Route::get('/admin/manage_plans', [App\Http\Controllers\AdminController::class, 'manage_plans'])->name('manage_plans');
+Route::get('/admin/viewmessage', [App\Http\Controllers\AdminController::class, 'viewmessage'])->name('viewmessage');
+Route::get('/admin/transactions', [App\Http\Controllers\AdminController::class, 'transactions'])->name('transactions');
+Route::get('/admin/subscriptions', [App\Http\Controllers\AdminController::class, 'subscriptions'])->name('subscriptions');
+Route::get('/admin/security', [App\Http\Controllers\AdminController::class, 'security'])->name('security');
+Route::get('/admin/general', [App\Http\Controllers\AdminController::class, 'general'])->name('general');
+Route::get('/admin/subscribtions', [App\Http\Controllers\AdminController::class, 'subscribtions'])->name('subscribtions');
+Route::get('/admin/vendorlist', [App\Http\Controllers\AdminController::class, 'vendorlist'])->name('vendorlist');
+Route::get('/admin/vendordetails', [App\Http\Controllers\AdminController::class, 'vendordetails'])->name('vendordetails');
+Route::get('/admin/affiliateList', [App\Http\Controllers\AdminController::class, 'affiliateList'])->name('affiliateList');
+Route::get('/admin/product', [App\Http\Controllers\AdminController::class, 'product'])->name('product');
+Route::get('/admin/addProduct', [App\Http\Controllers\AdminController::class, 'addProduct'])->name('addProduct');
+Route::get('/admin/productDetails', [App\Http\Controllers\AdminController::class, 'productDetails'])->name('productDetails');
+Route::get('/admin/viewCart', [App\Http\Controllers\AdminController::class, 'viewCart'])->name('viewCart');

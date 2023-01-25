@@ -67,7 +67,7 @@
         <!-- Header -->
         @includeIf('layouts.admin-header')
         <!-- Header Ends -->
-
+        
         <!-- Sidebar -->
         @includeIf('layouts.admin-sidebar')
         <!-- Sidebar Ends -->

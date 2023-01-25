@@ -103,6 +103,28 @@ class HomePageController extends Controller
     {
         return view('frontend.chatautomation');
     }
+    // Ecommerce
+    public function ecommerce()
+    {
+        return view('frontend.Ecommerce');
+    }
+    // Funnel Builder
+    public function funnelbuilder()
+    {
+        return view('frontend.FunnelBuilder');
+    }
+
+    // Affiliate Marketing
+    public function affiliate()
+    {
+        return view('frontend.AffiliateMarketing');
+    }
+
+    // Integration
+    public function integrations()
+    {
+        return view('frontend.Integration');
+    }
 
     public function test()
     {

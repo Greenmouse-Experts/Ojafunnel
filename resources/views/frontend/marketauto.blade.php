@@ -56,9 +56,11 @@
                         <p>
                             Create emails just the way you want them. Choose from pre-designed Ojafunnel email templates or design your own with our drag-and-drop features. You do not need technical skills or HTML knowledge to create a template.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                       <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -91,9 +93,11 @@
                         <p>
                             Send the right message at the right time and develop a personalized journey for each person. Combine email automation with other marketing features on Ojafunnel to send customized messages at exactly the right time. 
                         </p>
-                        <button>
-                            Explore Now
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                     </div>
                 </div>
             </div>
@@ -116,9 +120,11 @@
                         <p>
                             Send the right message at the right time and develop a personalized journey for each person. Combine email automation with other marketing features on Ojafunnel to send customized messages at exactly the right time. 
                         </p>
-                        <button>
-                            Explore Now
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -146,9 +152,11 @@
                         <p>
                             Organize your subscribers with tags so you can send targeted emails to the right audiences by using tag. for example add the tag ‘smallbusiness’ subscribers on a particular list.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                       <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -181,9 +189,11 @@
                         <p>
                             Our service provides statistics about opens and clicks so you can monitor the results and improve your email campaigns
                         </p>
-                        <button>
-                            Explore Now
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                     </div>
                 </div>
             </div>
@@ -206,9 +216,11 @@
                         <p>
                             Our service provides statistics about opens and clicks so you can monitor the results and improve your email campaigns
                         </p>
-                        <button>
-                            Explore Now
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                       </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -338,9 +350,11 @@
                                     Enhance your marketing by sending the right message at the right time 
                                 </h1>
                                 <div class="level"></div>
-                                <button>
-                                    Sign up
-                                </button>
+                               <a href="{{route('signup')}}">
+                                    <button>
+                                        Sign up
+                                    </button>
+                                </a>
                                 <button style="background-color: #527EEB; color: #fff;">
                                     See Demo
                                 </button>

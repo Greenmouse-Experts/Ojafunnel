@@ -14,7 +14,7 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row begin">
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="">
@@ -25,8 +25,29 @@
                                 View and edit your mailing list
                             </p>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="Editt">
+                            <div class="form">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label>Your Affiliate Link</label>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <input type="text" value=" {{ route('signup', ['ref' => Auth::user()->affiliate_link]) }}" name="name" id="myInput" class="input mov" readonly
+                                                    required>
+                                            </div>
+                                            <div class="col-md-1">
+                                            <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i
+                                                    class="mdi mdi-content-copy"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row">
+                            <div class="col-md-5">
                                 <div>
                                     <div class="">
                                         <div style="margin-bottom: 10px;">
@@ -34,15 +55,20 @@
                                         </div>
                                         <div class="d-flex border-in align-items-center">
                                             <div class="d-flex ps-3 pt-2" style="color: #714091; background: #efd7ff">
-                                                <p class="mb-2">
-                                                    {{ route('signup', ['ref' => Auth::user()->affiliate_link]) }}
+                                                <p class="mb-2" id="myInput" onclick="copyFunction()">
+                                                   
                                                 </p>
                                             </div>
+                                            <div class="vr"></div>
+                                            <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="Copy" class="btn btn-secondary"><i
+                                                    class="mdi mdi-content-copy"></i></button>
+                                            <div class="vr"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

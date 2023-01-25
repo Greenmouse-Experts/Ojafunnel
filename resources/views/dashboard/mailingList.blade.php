@@ -16,7 +16,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
-                                <li class="breadcrumb-item active">Mailing List</li>
+                                <li class="breadcrumb-item active"> Mailing List</li>
                             </ol>
                         </div>
 
@@ -35,9 +35,13 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="card account-head">
+                    <div class="card account-head" style="padding-top: 45px;">
                         <div class="all-create py-2">
-                            <button data-bs-toggle="modal" data-bs-target="#mailinglist">+ Create Mailing List </button>
+                            <a style="background-color: #000;
+                            color: #fff;
+                            border: none;
+                            padding: 11px 20px 11px 20px;
+" href="{{route('user.create.list', Auth::user()->username)}}">+ Create Mailing List </a>
                         </div>
                     </div>
                 </div>
@@ -53,10 +57,10 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Mailing List Name </th>
-                                            <th>No of Contacts </th>
-                                            <th>Email</th>
-                                            <th>Phone Number</th>
-                                            <th>Status</th>
+                                            <th>Subscribers </th>
+                                            <th>Open Rate </th>
+                                            <th>Click Rate </th>
+                                            {{-- <th>Status</th> --}}
                                             <th>Date Created</th>
                                             <th>Action</th>
                                         </tr>
@@ -66,20 +70,49 @@
                                         @foreach($mailinglists as $key => $mailinglist)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
-                                            <td>{{$mailinglist->mailinglist_name}}</td>
-                                            <td>{{$mailinglist->no_of_contacts}}</td>
-                                            <td>{{$mailinglist->email}}</td>
-                                            <td>{{$mailinglist->phone_number}}</td>
+                                            <td>{{$mailinglist->name}}</td>
+                                            <td>{{ number_with_delimiter($mailinglist->readCache('SubscriberCount', 0)) }}</td>
                                             <td>
+                                                <div class="single-stat-box pull-left ml-20">
+                                                    <span class="no-margin text-primary stat-num">{{ $mailinglist->openUniqRate() }}%</span>
+                                                    <div class="progress progress-xxs">
+                                                        <div class="progress-bar progress-bar-info" style="width: {{ $mailinglist->readCache('UniqOpenRate', 0) }}%">
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-muted small">Open rate</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="single-stat-box pull-left ml-20">
+                                                    <span class="no-margin text-primary stat-num">{{ $mailinglist->readCache('ClickedRate', 0) }}%</span>
+                                                    <div class="progress progress-xxs">
+                                                        <div class="progress-bar progress-bar-info" style="width: {{ $mailinglist->readCache('ClickedRate', 0) }}%">
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-muted small">Click rate</span>
+                                                </div>
+                                            </td>
+                                            {{-- <td>
                                                 @if($mailinglist->status == 'Active')
                                                 <span class="text-success">{{$mailinglist->status}}</span>
                                                 @else
                                                 <span class="text-danger">{{$mailinglist->status}}</span>
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <td>{{$mailinglist->created_at->toDayDateTimeString()}}</td>
                                             <td>
-                                                <div class="dropdown">
+                                                <a href="#" data-popup="tooltip"
+                                                    title="{{ trans('messages.create_subscriber') }}" role="button" class="btn btn-secondary btn-icon " style="padding: 0.321em 0.75em">
+                                                    <span class="material-icons-outlined">
+                                                        person_add
+                                                    </span>
+                                                </a>
+                                                <a href="{{ route('user.view.overview', ["username" => Auth::user()->username, "uid" => $mailinglist->uid]) }}" role="button" class="btn btn-primary me-1" style="padding: 0.321em 0.75em">
+                                                    <span class="material-icons-outlined">
+                                                        multiline_chart
+                                                    </span> Statistics
+                                                </a>
+                                                {{-- <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Options
                                                     </button>
@@ -132,7 +165,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <!-- end modal -->
                                             </td>
                                         </tr>

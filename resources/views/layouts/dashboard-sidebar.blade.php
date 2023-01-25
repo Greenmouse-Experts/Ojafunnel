@@ -137,6 +137,24 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="#">
+                        <i class="bi bi-bar-chart-fill"></i>
+                        <span key="t-chat">Learning Management</span>
+                    </a>
+                </li>
+                <!-- <li>
+                    <a href="#">
+                        <i class="bi bi-bar-chart-fill"></i>
+                        <span key="t-chat">Birthday Modules</span>
+                    </a>
+                </li> -->
+                <!-- <li>
+                    <a href="#">
+                        <i class="bi bi-bar-chart-fill"></i>
+                        <span key="t-chat">Sales Analytics</span>
+                    </a>
+                </li> -->
+                <li>
                     <a href="{{route('user.reports.analysis', Auth::user()->username)}}">
                         <i class="bi bi-bar-chart-fill"></i>
                         <span key="t-chat">Reports & Analysis</span>
@@ -148,12 +166,12 @@
                         <span key="t-chat">Upgrade</span>
                     </a>
                 </li>
-                <li class="qeustion">
+                <!-- <li class="qeustion">
                     <a href="{{route('user.help', Auth::user()->username)}}">
                         <i class="bi bi-question-diamond-fill"></i>
                         <span key="t-chat">Help</span>
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-gear-wide-connected"></i>
