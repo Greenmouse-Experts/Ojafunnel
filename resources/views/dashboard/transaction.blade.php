@@ -50,7 +50,7 @@
                                                     <td>₦{{number_format($transaction->amount, 2)}}</td>
                                                     <td>{{$transaction->reference}}</td>
                                                     <td>
-                                                        @if($transaction->status == "Top Up")
+                                                        @if($transaction->status == "Top Up" OR $transaction->status == "Referral Bonus")
                                                         <span class="badge bg-success font-size-10">{{$transaction->status}} <i class="mdi mdi-arrow-up me-1"></i></span>
                                                         @else
                                                         <span class="badge bg-danger font-size-10">{{$transaction->status}} <i class="mdi mdi-arrow-down me-1"></i></span>

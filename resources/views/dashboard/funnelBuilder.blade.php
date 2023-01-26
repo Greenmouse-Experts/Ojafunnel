@@ -20,10 +20,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="all-create">
-                                <button>
-                                    <!-- <a href="{{route('user.send.broadcast', Auth::user()->username)}}"> -->
+                                <button data-bs-toggle="modal" data-bs-target="#template">
                                     + Create New Funnel
-                                    </a>
                                 </button>
                             </div>
                         </div>
@@ -46,18 +44,6 @@
                         <p class="ps-0 active">
                             <a href="#" class="text-decoration-none text-dark">All</a>
                         </p>
-                        <p>
-                        <a href="#" class="text-decoration-none text-dark">Quiz</a>
-                        </p>
-                        <p>
-                            <a href="#" class="text-decoration-none text-dark">Online Form </a>
-                        </p>
-                        <p>
-                            <a href="#" class="text-decoration-none text-dark">Survey</a>
-                        </p>
-                        <p>
-                            <a href="#" class="text-decoration-none text-dark">Lead Page</a>
-                        </p>
                     </div>
                     <div class="acc-border"></div>
                 </div>
@@ -65,46 +51,44 @@
             <!-- store data information-->
 
             <div class="row">
-                <div class="col-md-3">
-                    <div class="pageXX pageAdd">
-                        <div class="small-circle">
-                            <h5 class="pt-2">
-                                <a href="#" class="text-white text-decoration-none">+</a>
-                            </h5>
-                        </div>
-                        <div class="text-center mt-3 text-purp">
-                            <h5>Blank Canvas</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="pageX">
-                        <a href="{{route('user.use.template', Auth::user()->username)}}">
-                            <div class="page-top"></div>
-                            <div class="p-3">
-                                <h6>Sales Lead Form</h6>
-                                <p>Ecommerce</p>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-3">Folder Storage</h4>
+                            <div class="table-responsive mt-2">
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">S/N</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Folder Name</th>
+                                            <th scope="col">Number of Pages</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach($funnels as $funnel)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$funnel->created_at->toDayDateTimeString()}}</td>
+                                            <td>{{$funnel->folder}}</td>
+                                            <td>{{\App\Models\FunnelPage::where('folder_id', $funnel->id)->count()}}</td>
+                                            <td>
+                                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Options
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li><a class="dropdown-item" href="{{route('user.view.funnel.pages', [Auth::user()->username, Crypt::encrypt($funnel->id)])}}">View Pages</a></li>
+                                                    <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$funnel->id}}">Delete</a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="pageX">
-                        <a href="{{route('user.product.recall', Auth::user()->username)}}">
-                            <div class="page-top"></div>
-                            <div class="p-3">
-                                <h6>Product Recommendation</h6>
-                                <p>Empower</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="pageX">
-                        <div class="page-top"></div>
-                        <div class="p-3">
-                            <h6>Discounted Purch</h6>
-                            <p>Education</p>
                         </div>
                     </div>
                 </div>
@@ -115,4 +99,49 @@
     <!-- End Page-content -->
 </div>
 <!-- END layout-wrapper -->
+
+<!-- Modal START -->
+<div class="modal fade" id="template" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content pb-3">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="Editt">
+                        <form method="POST" action="{{route('user.funnel.builder.create.folder')}}">
+                            {{ csrf_field() }}
+                            <div class="form">
+                                <p>
+                                    <b>
+                                        Funnel Folder
+                                    </b>
+                                </p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>File Folder</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="File Folder" name="file_folder" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mb-4">
+                                        <div class="boding">
+                                            <button type="submit">
+                                                Proceed
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+<!-- end modal -->
 @endsection

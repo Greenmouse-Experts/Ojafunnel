@@ -1,6 +1,11 @@
 @extends('layouts.dashboard-frontend')
 
 @section('page-content')
+@inject('uc', 'App\Http\Controllers\DashboardController')
+@php
+    $array = \App\Models\User::all();
+    $usr = Auth::user()->id;
+@endphp
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -76,7 +81,7 @@
                                     {{$referrals->count()}}
                                 </h2>
                                 <p>
-                                    No Of Refferals
+                                    No of Direct Affiliates
                                 </p>
                             </div>
                         </div>
@@ -87,10 +92,10 @@
                         <div class="card-body">
                             <div class="affliate">
                                 <h2>
-                                    0
+                                    ₦{{number_format(Auth::user()->ref_bonus, 2)}}
                                 </h2>
                                 <p>
-                                    No Of Affiliates
+                                    Referral Bonus
                                 </p>
                             </div>
                         </div>
@@ -103,10 +108,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title text-purpp"><a href="">
-                                    Affiliates
-                                </a> <span style="float: right;"><a href="">
-                                        My Affiliate Link
-                                    </a></span></h4>
+                                    Affiliates</h4>
                             <p class="card-title-desc">
 
                             </p>
@@ -115,37 +117,18 @@
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
-                                            <th>Affiliate</th>
-                                            <th>Type</th>
+                                            <th>Name</th>
+                                            <th>Affiliate Type</th>
+                                            <th>Level</th>
                                             <th>Commission (%)</th>
-                                            <th>Affiliate Link</th>
-                                            <!-- <th>Actions</th> -->
+                                            <th>Referred By</th>
+                                            <th>Status</th>
+                                            <th>Joined Date</th>
                                         </tr>
                                     </thead>
-                                    @foreach($referrals as $referral)
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>{{$referral->first_name}} {{$referral->last_name}}</td>
-                                            <td>Tier 1</td>
-                                            <td>10%</td>
-                                            <td>{{ route('signup', ['ref' => Auth::user()->affiliate_link]) }}</td>
-                                            <!-- <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Options
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="#">Edit/a></li>
-                                                        <li><a class="dropdown-item" href="#">Enable</a></li>
-                                                        <li><a class="dropdown-item" href="#">Disable</a></li>
-                                                        <li><a class="dropdown-item" href="#">Delete</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td> -->
-                                        </tr>
+                                    <tbody id="myTable">
+                                    {!! $uc->getdownlines($array,$usr) !!}
                                     </tbody>
-                                    @endforeach
                                 </table>
                             </div>
 

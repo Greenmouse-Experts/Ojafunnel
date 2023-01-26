@@ -65,15 +65,9 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    @if($mailinglists->isEmpty())
+                                    
                                     <tbody>
-                                        <tr>
-                                            <td class="align-enter text-dark font-15" colspan="7">No Mailing List Added.</td>
-                                        </tr>
-                                    </tbody>
-                                    @else
-                                    @foreach($mailinglists as $key => $mailinglist)
-                                    <tbody>
+                                        @foreach($mailinglists as $key => $mailinglist)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>{{$mailinglist->name}}</td>
@@ -123,64 +117,65 @@
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li><a class="dropdown-item" href="{{route('user.contact', [Auth::user()->username, Crypt::encrypt($mailinglist->id)])}}">Add Contact</a></li>
-                                                @if($mailinglist->status == 'Active')
-                                                <li><a class="dropdown-item" href="{{route('user.subscriber.mailing.disable', Crypt::encrypt($mailinglist->id))}}">Disable</a></li>
-                                                @else
-                                                <li><a class="dropdown-item" href="{{route('user.subscriber.mailing.enable', Crypt::encrypt($mailinglist->id))}}">Enable</a></li>
-                                                @endif
-                                                <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$mailinglist->id}}">Delete</a></li>
-                                                </ul>
-                            </div>
-                            <!-- Modal START -->
-                            <div class="modal fade" id="delete-{{$mailinglist->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content pb-3">
-                                        <div class="modal-header border-bottom-0">
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body ">
-                                            <div class="row">
-                                                <div class="Editt">
-                                                    <form method="POST" action="{{ route('user.subscriber.mailing.delete', Crypt::encrypt($mailinglist->id))}}">
-                                                        @csrf
-                                                        <div class="form">
-                                                            <p><b>Delete Contact</b></p>
-                                                            <div class="row">
-                                                                <div class="col-lg-12">
-                                                                    <p>This action cannot be undone. This will permanently delete {{$mailinglist->mailinglist_name}} mailing list.</p>
-                                                                    <label>Please type DELETE to confirm.</label>
-                                                                    <div class="row">
-                                                                        <div class="col-md-12 mb-4">
-                                                                            <input type="text" name="delete_field" class="input" required>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12 mb-4">
-                                                                    <div class="boding">
-                                                                        <button type="submit" class="form-btn">
-                                                                            I understand this consquences, Delete Mailing List
-                                                                        </button>
+                                                        @if($mailinglist->status == 'Active')
+                                                        <li><a class="dropdown-item" href="{{route('user.subscriber.mailing.disable', Crypt::encrypt($mailinglist->id))}}">Disable</a></li>
+                                                        @else
+                                                        <li><a class="dropdown-item" href="{{route('user.subscriber.mailing.enable', Crypt::encrypt($mailinglist->id))}}">Enable</a></li>
+                                                        @endif
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$mailinglist->id}}">Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                                <!-- Modal START -->
+                                                <div class="modal fade" id="delete-{{$mailinglist->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content pb-3">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body ">
+                                                                <div class="row">
+                                                                    <div class="Editt">
+                                                                        <form method="POST" action="{{ route('user.subscriber.mailing.delete', Crypt::encrypt($mailinglist->id))}}">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <p><b>Delete Contact</b></p>
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12">
+                                                                                        <p>This action cannot be undone. This will permanently delete {{$mailinglist->mailinglist_name}} mailing list.</p>
+                                                                                        <label>Please type DELETE to confirm.</label>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 mb-4">
+                                                                                                <input type="text" name="delete_field" class="input" required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <div class="boding">
+                                                                                            <button type="submit" class="form-btn">
+                                                                                                I understand this consquences, Delete Mailing List
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-                            <!-- end modal -->
-                            </td>
-                            </tr>
-                            </tbody>
-                            @endforeach
-                            @endif
-                            </table>
+                                                    </div>
+                                                </div> --}}
+                                                <!-- end modal -->
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!--end col-->
             </div>
             <!--end col-->
         </div>
