@@ -10,7 +10,7 @@
             <div class="container-fluid">
                 <!-- start page title -->
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12">+
                     <div class="start">
                             <div class="row">
                                 <div class="col-md-6">
@@ -144,7 +144,7 @@
                 <!-- /product & stores -->
                 <!-- email campaign -->
                 <div class="email-campaign-row justify-content-between">
-                    <div class="border border-danger campaign-div">
+                    <div class="campaign-div">
                         <div class="row mb-4">
                             <div class="col-6 font-500">
                                 <h4>Email Campaign</h4>
@@ -211,7 +211,7 @@
                             <div class="row mt-4 align-items-center">
                                 <div class="col-11 row">
                                     <div class="chat-img col-2 gx-2">
-                                        <img src="{{URL::asset('dash/assets/images/users/avatar-3.jpg')}}" alt="" width="100%" />
+                                        <img src="{{URL::asset('dash/assets/images/users/avatar-6.jpg')}}" alt="" width="100%" />
                                     </div>
                                     <div class="col-9 gx-3">
                                         <h5 class="font-500 mb-1">Eke Sandra</h5>
@@ -223,7 +223,7 @@
                             <div class="row mt-4 align-items-center">
                                 <div class="col-11 row">
                                     <div class="chat-img col-2 gx-2">
-                                        <img src="/{{URL::asset('dash/assets/images/users/avatar-2.jpg')}}" alt="" width="100%" />
+                                        <img src="{{URL::asset('dash/assets/images/users/avatar-4.jpg')}}" alt="" width="100%" />
                                     </div>
                                     <div class="col-9 gx-3">
                                         <h5 class="fw-bold mb-1">Promise Eze</h5>

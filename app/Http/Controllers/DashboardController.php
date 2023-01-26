@@ -400,6 +400,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function sentcampaigns($username)
+    {
+        return view('dashboard.SentCampaign', [
+            'username' => $username
+        ]);
+    }
+
     public function my_store($username)
     {
         return view('dashboard.myStore', [

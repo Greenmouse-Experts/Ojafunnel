@@ -117,7 +117,6 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.my.store', Auth::user()->username)}}" key="t-tui-calendar">My Store</a></li>
-                        <li><a href="{{route('user.create.course', Auth::user()->username)}}" key="t-full-calendar">Create Course</a></li>
                     </ul>
                 </li>
                 <li>
@@ -137,10 +136,13 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="bi bi-bar-chart-fill"></i>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bi bi-book-half"></i>
                         <span key="t-chat">Learning Management</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="#" key="t-tui-calendar">Create Course</a></li>
+                    </ul>
                 </li>
                 <!-- <li>
                     <a href="#">

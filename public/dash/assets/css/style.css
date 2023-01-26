@@ -140,6 +140,8 @@ body {
   text-decoration: underline;
 }
 .content-top-div {
+  margin-left: 10px;
+  margin-right: 10px;
   display: grid;
   grid-template-columns: 22% 22% 22% 22%;
   justify-content: space-between;
@@ -147,6 +149,8 @@ body {
 @media (max-width: 1000px) {
   .content-top-div {
     display: block;
+    margin-left: 1px;
+    margin-right: 1px;
   }
   .email-campaign-row {
     display: block !important;
@@ -172,7 +176,7 @@ body {
   display: grid;
   grid-template-columns: 49% 49%;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 15px;
 }
 .products-div,
 .sales-analysis {
@@ -187,11 +191,12 @@ body {
   border-radius: 10px;
 }
 .email-campaign-row {
-  margin-top: 30px;
+  margin-top: 25px;
+  margin-bottom: 20px;
 }
 .email-campaign-row {
   display: grid;
-  grid-template-columns: 58% 38%;
+  grid-template-columns: 60% 38%;
 }
 .campaign-div,
 .recent-msg {
@@ -209,7 +214,7 @@ body {
   background: green;
 }
 .chat-img img {
-  border-radius: 50%;
+  border-radius: 30%;
 }
 /* start Ends */
 .dashboard-footer {
