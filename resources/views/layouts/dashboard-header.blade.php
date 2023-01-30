@@ -25,6 +25,7 @@
 </script> --}}
 
 <header id="page-topbar">
+    @include('sweetalert::alert')
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->

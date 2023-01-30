@@ -1,14 +1,15 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Acelle\Model\Template;
-use Acelle\Library\Rss;
-use Acelle\Model\Setting;
+use App\Models\Template;
+use App\Library\Rss;
+use App\Models\Setting;
 use App;
 use File;
-use Acelle\Library\Tool;
+use App\Library\Tool;
 
 class TemplateController extends Controller
 {
@@ -205,7 +206,7 @@ class TemplateController extends Controller
             }
         }
 
-        echo trans('messages.templates.deleted', [ 'deleted' => $deleted, 'total' => $total]);
+        echo trans('messages.templates.deleted', ['deleted' => $deleted, 'total' => $total]);
     }
 
     /**
@@ -353,12 +354,12 @@ class TemplateController extends Controller
      */
     public function uploadTemplateAssets(Request $request, $uid)
     {
-        $template = Template::findByUid($uid);
+        $template = Template::findByUid($request->uid);
 
         // authorize
-        if (!$request->user()->customer->can('update', $template)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $template)) {
+        //     return $this->notAuthorized();
+        // }
 
         if ($request->assetType == 'upload') {
             $assetUrl = $template->uploadAsset($request->file('file'));
@@ -414,7 +415,7 @@ class TemplateController extends Controller
     public function builderTemplates(Request $request)
     {
         // category
-        $category = \Acelle\Model\TemplateCategory::findByUid($request->category_uid);
+        $category = \App\Models\TemplateCategory::findByUid($request->category_uid);
 
         // sort, pagination
         $templates = $category->templates()->shared()->search($request->keyword)
@@ -531,7 +532,7 @@ class TemplateController extends Controller
 
         if ($request->isMethod('post')) {
             foreach ($request->categories as $key => $value) {
-                $category = \Acelle\Model\TemplateCategory::findByUid($key);
+                $category = \App\Models\TemplateCategory::findByUid($key);
                 if ($value == 'true') {
                     $template->addCategory($category);
                 } else {

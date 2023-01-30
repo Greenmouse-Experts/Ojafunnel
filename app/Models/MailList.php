@@ -46,6 +46,7 @@ use App\Jobs\ExportSubscribersJob;
 use App\Jobs\VerifyMailListJob;
 use League\Csv\Writer;
 use App\Library\Traits\HasUid;
+use Illuminate\Support\Arr;
 
 class MailList extends Model
 {
@@ -211,6 +212,7 @@ class MailList extends Model
 
     public function uploadCsv(\Illuminate\Http\UploadedFile $httpFile)
     {
+        //dd($httpFile);
         $filename = "import-" . uniqid() . ".csv";
 
         // store it to storage/
@@ -1162,13 +1164,15 @@ class MailList extends Model
                 // create a temporary table containing the input subscribers
                 $tmpTable = table('__tmp_subscribers');
                 // @todo: hard-coded charset and COLLATE
-                $tmpFields = implode(',', array_map(
-                    function ($field) {
-                        return "`{$field}` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci";
-                    }
-                    ,
-                    $availableFields
-                )
+                $tmpFields = implode(
+                    ',',
+                    array_map(
+                        function ($field) {
+                            return "`{$field}` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci";
+                        }
+                        ,
+                        $availableFields
+                    )
                 );
 
                 // Drop table, create table and create index
@@ -1180,7 +1184,9 @@ class MailList extends Model
                 // extract only fields whose name matches TAG NAME of MailList
                 $data = collect($batch)->map(
                     function ($r) use ($availableFields) {
-                        $record = array_only($r, $availableFields);
+
+                        $record = Arr::only($r, $availableFields);
+                        //dd($record);
                         if (!is_null($record['email'])) {
                             // replace the non-break space (not a normal space) as well as all other spaces
                             $record['email'] = strtolower(preg_replace('/[ \s*]*/', '', trim($record['email'])));
@@ -1199,6 +1205,7 @@ class MailList extends Model
                     }
                 )->toArray();
 
+                //dd('he');
                 // make the import data table unique by email
                 $data = array_unique_by(
                     $data,
@@ -1207,8 +1214,9 @@ class MailList extends Model
                     }
                 );
 
+
                 // validate amd remove invalid records
-                $data = array_where(
+                $data = Arr::where(
                     $data,
                     function ($record) use (&$failed, $invalidRecordCallback) {
                         list($valid, $errors) = $this->validateCsvRecord($record);
@@ -1306,7 +1314,6 @@ class MailList extends Model
             if (!is_null($progressCallback)) {
                 $progressCallback($processed, $total, $failed, $message = $e->getMessage());
             }
-
             // Is is weird that, in certain case, the $e->getMessage() string is too long, making the job "hang";
             throw new Exception(substr($e->getMessage(), 0, 512));
         } finally {
@@ -1341,7 +1348,7 @@ class MailList extends Model
         each_batch($results, $batchSize = 100, false, function ($batch) use ($availableFields, $callback) {
             $data = collect($batch)->map(
                 function ($r) use ($availableFields) {
-                    $record = array_only($r, $availableFields);
+                    $record = Arr::only($r, $availableFields);
                     if (!is_null($record['email'])) {
                         // replace the non-break space (not a normal space) as well as all other spaces
                         $record['email'] = strtolower(preg_replace('/[ \s*]*/', '', trim($record['email'])));

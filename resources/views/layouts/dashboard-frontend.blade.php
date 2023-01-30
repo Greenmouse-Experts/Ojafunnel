@@ -10,6 +10,9 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <!-- Bootstrap Css -->
     <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -18,22 +21,56 @@
     <link href="{{URL::asset('dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{URL::asset('dash/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('core/dropzone/dropzone.css') }}" rel="stylesheet" type="text/css">
     <!-- Font Css-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/4.2.7/css/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/4.2.7/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-light.min.css" />
     <!-- DataTables -->
     <link href="{{URL::asset('dash/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{URL::asset('dash/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src=" http://localhost:8001/core/js/autofill.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/4.2.7/js/tooltipster.bundle.min.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('core/numeric/jquery.numeric.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('core/validate/jquery.validate.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/autofill.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/validate.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/UrlAutofill.js') }}"></script>
+    <script type="text/javascript" src="{{URL::asset('dash/assets/js/functions.js')}}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/link.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/box.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/popup.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/group-manager.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/sidebar.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/sidebar.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/list.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/anotify.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/dialog.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/iframe_modal.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('dash/assets/js/search.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('core/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('core/js/editor.js') }}"></script>
+
+    <!-- Dropzone -->
+	<script type="text/javascript" src="{{ URL::asset('core/dropzone/dropzone.js') }}"></script>
+
+    <!-- App Css-->
+    {{-- <script src=" http://localhost:8001/core/js/autofill.js"></script> --}}
+    <script type="text/javascript" src="{{ URL::asset('core/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('core/datetime/anytime.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('core/datetime/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('core/datetime/pickadate/picker.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('core/datetime/pickadate/picker.date.js') }}"></script>
 
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script>
@@ -59,9 +96,33 @@
                 x.style.display = "none";
             }
         }
+
+
+        function frequencyChange(){
+            var frq = document.getElementById("selectFrenquncy");
+            var value = frq.value;
+            console.log(value);
+            if(value == 'daily'){
+                document.getElementById('end_period').style.display = 'block';
+            }
+            if(value == 'monthly'){
+                document.getElementById('end_period').style.display = 'block';
+            }
+            if(value == 'yearly'){
+                document.getElementById('end_period').style.display = 'block';
+            }
+            if(value == 'custom'){
+                document.getElementById('end_period').style.display = 'block';
+                document.getElementById('frq_custom').style.display = 'block';
+            }
+            if(value == 'onetime'){
+                document.getElementById('end_period').style.display = 'none';
+                document.getElementById('frq_custom').style.display = 'none';
+            }
+        }
     </script>
 </head>
-
+@include('layouts.core._script_vars')
 <body data-sidebar="dark" data-layout-mode="light">
     <!-- Alerts  Start-->
     <div style="position: fixed; top: 20px; right: 20px; z-index: 100000; width: auto;">
@@ -180,8 +241,9 @@
     </div>
 
     <!-- JAVASCRIPT -->
-    <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
-    <script src="{{URL::asset('dash/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    {{-- <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> --}}
+    <script type="text/javascript" src="{{ URL::asset('core/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{URL::asset('dash/assets/libs/metismenu/metisMenu.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>

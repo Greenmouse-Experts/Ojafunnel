@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,16 +13,16 @@ class CampaignsListsSegment extends Model
      */
     public function campaign()
     {
-        return $this->belongsTo('Acelle\Model\Campaign');
+        return $this->belongsTo('App\Models\Campaign');
     }
 
     public function mailList()
     {
-        return $this->belongsTo('Acelle\Model\MailList');
+        return $this->belongsTo('App\Models\MailList');
     }
 
     public function segment()
     {
-        return $this->belongsTo('Acelle\Model\Segment');
+        return $this->belongsTo('App\Models\Segment');
     }
 }

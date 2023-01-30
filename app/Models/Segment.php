@@ -6,24 +6,24 @@
  * Model class for list segment
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 
 class Segment extends Model
 {
@@ -35,7 +35,8 @@ class Segment extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'matching',
+        'name',
+        'matching',
     ];
 
     /**
@@ -62,12 +63,12 @@ class Segment extends Model
      */
     public function mailList()
     {
-        return $this->belongsTo('Acelle\Model\MailList');
+        return $this->belongsTo('App\Models\MailList');
     }
 
     public function segmentConditions()
     {
-        return $this->hasMany('Acelle\Model\SegmentCondition');
+        return $this->hasMany('App\Models\SegmentCondition');
     }
 
     /**
@@ -78,12 +79,12 @@ class Segment extends Model
     public static function filter($request)
     {
         $user = $request->user();
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
         $query = self::select('segments.*')->where('segments.mail_list_id', '=', $list->id);
 
         // Keyword
         if (!empty(trim($request->keyword))) {
-            $query = $query->where('name', 'like', '%'.$request->keyword.'%');
+            $query = $query->where('name', 'like', '%' . $request->keyword . '%');
         }
 
         return $query;
@@ -219,65 +220,65 @@ class Segment extends Model
                         if ($type == 'number') {
                             $cond = sprintf('CAST(sf%s.value AS SIGNED) = CAST(%s AS SIGNED)', $number, db_quote($keyword));
                         } else {
-                            $cond = 'LOWER(sf'.$number.'.value) = '.db_quote($keyword);
+                            $cond = 'LOWER(sf' . $number . '.value) = ' . db_quote($keyword);
                         }
                         break;
                     case 'not_equal':
                         if ($type == 'number') {
                             $cond = sprintf('CAST(sf%s.value AS SIGNED) != CAST(%s AS SIGNED)', $number, db_quote($keyword));
                         } else {
-                            $cond = 'LOWER(sf'.$number.'.value) != '.db_quote($keyword);
+                            $cond = 'LOWER(sf' . $number . '.value) != ' . db_quote($keyword);
                         }
                         break;
                     case 'contains':
-                        $cond = 'LOWER(sf'.$number.'.value) LIKE '.db_quote('%'.$keyword.'%');
+                        $cond = 'LOWER(sf' . $number . '.value) LIKE ' . db_quote('%' . $keyword . '%');
                         break;
                     case 'not_contains':
-                        $cond = 'LOWER(sf'.$number.'.value) NOT LIKE '.db_quote('%'.$keyword.'%');
+                        $cond = 'LOWER(sf' . $number . '.value) NOT LIKE ' . db_quote('%' . $keyword . '%');
                         break;
                     case 'starts':
-                        $cond = 'LOWER(sf'.$number.'.value) LIKE '.db_quote('%'.$keyword.'%');
+                        $cond = 'LOWER(sf' . $number . '.value) LIKE ' . db_quote('%' . $keyword . '%');
                         break;
                     case 'ends':
-                        $cond = 'LOWER(sf'.$number.'.value) LIKE '.db_quote('%'.$keyword.'%');
+                        $cond = 'LOWER(sf' . $number . '.value) LIKE ' . db_quote('%' . $keyword . '%');
                         break;
                     case 'greater':
                         if ($type == 'number') {
                             $cond = sprintf('CAST(sf%s.value AS SIGNED) > CAST(%s AS SIGNED)', $number, db_quote($keyword));
                         } else {
-                            $cond = 'sf'.$number.'.value > '.db_quote($keyword);
+                            $cond = 'sf' . $number . '.value > ' . db_quote($keyword);
                         }
                         break;
                     case 'less':
                         if ($type == 'number') {
                             $cond = sprintf('CAST(sf%s.value AS SIGNED) < CAST(%s AS SIGNED)', $number, db_quote($keyword));
                         } else {
-                            $cond = 'sf'.$number.'.value < '.db_quote($keyword);
+                            $cond = 'sf' . $number . '.value < ' . db_quote($keyword);
                         }
 
                         break;
                     case 'not_starts':
-                        $cond = 'sf'.$number.'.value NOT LIKE '.db_quote($keyword.'%');
+                        $cond = 'sf' . $number . '.value NOT LIKE ' . db_quote($keyword . '%');
                         break;
                     case 'not_ends':
-                        $cond = 'LOWER(sf'.$number.'.value) NOT LIKE '.db_quote('%'.$keyword);
+                        $cond = 'LOWER(sf' . $number . '.value) NOT LIKE ' . db_quote('%' . $keyword);
                         break;
                     case 'not_blank':
-                        $cond = '(LOWER(sf'.$number.".value) != '' AND LOWER(sf".$number.'.value) IS NOT NULL)';
+                        $cond = '(LOWER(sf' . $number . ".value) != '' AND LOWER(sf" . $number . '.value) IS NOT NULL)';
                         break;
                     case 'blank':
-                        $cond = '(LOWER(sf'.$number.".value) = '' OR LOWER(sf".$number.'.value) IS NULL)';
+                        $cond = '(LOWER(sf' . $number . ".value) = '' OR LOWER(sf" . $number . '.value) IS NULL)';
                         break;
                     default:
-                        throw new \Exception("Unknown segment condition type (operator): ".$condition->operator);
+                        throw new \Exception("Unknown segment condition type (operator): " . $condition->operator);
                 }
 
                 // add to joins array
                 $joins[] = [
-                    'table' => \DB::raw(\DB::getTablePrefix().'subscriber_fields as sf'.$number),
+                    'table' => \DB::raw(\DB::getTablePrefix() . 'subscriber_fields as sf' . $number),
                     'ons' => [
-                        [\DB::raw('sf'.$number.'.subscriber_id'), \DB::raw(\DB::getTablePrefix().'subscribers.id')],
-                        [\DB::raw('sf'.$number.'.field_id'), \DB::raw($condition->field_id)],
+                        [\DB::raw('sf' . $number . '.subscriber_id'), \DB::raw(\DB::getTablePrefix() . 'subscribers.id')],
+                        [\DB::raw('sf' . $number . '.field_id'), \DB::raw($condition->field_id)],
                     ],
                 ];
 
@@ -287,19 +288,19 @@ class Segment extends Model
                 switch ($condition->operator) {
                     case 'verification_equal':
                         // add condition
-                        $conditions[] = '('.\DB::getTablePrefix()."subscribers.verification_status = '".$condition->value."')";
+                        $conditions[] = '(' . \DB::getTablePrefix() . "subscribers.verification_status = '" . $condition->value . "')";
                         break;
                     case 'verification_not_equal':
                         // add condition
-                        $conditions[] = '('.\DB::getTablePrefix().'subscribers.verification_status IS NULL OR '.\DB::getTablePrefix()."subscribers.verification_status != '".$condition->value."')";
+                        $conditions[] = '(' . \DB::getTablePrefix() . 'subscribers.verification_status IS NULL OR ' . \DB::getTablePrefix() . "subscribers.verification_status != '" . $condition->value . "')";
                         break;
                     case 'tag_contains':
                         // add condition
-                        $conditions[] = '('.\DB::getTablePrefix().'subscribers.tags LIKE '.db_quote('%"'.$keyword.'"%').')';
+                        $conditions[] = '(' . \DB::getTablePrefix() . 'subscribers.tags LIKE ' . db_quote('%"' . $keyword . '"%') . ')';
                         break;
                     case 'tag_not_contains':
                         // add condition
-                        $conditions[] = '('.\DB::getTablePrefix().'subscribers.tags NOT LIKE '.db_quote('%"'.$keyword.'"%').')';
+                        $conditions[] = '(' . \DB::getTablePrefix() . 'subscribers.tags NOT LIKE ' . db_quote('%"' . $keyword . '"%') . ')';
                         break;
                     case 'last_open_email_less_than_days':
                         // IMPORTANT: NO LEFT JOIN HERE
@@ -318,7 +319,7 @@ class Segment extends Model
                         $conditions[] = sprintf('(%s IN (SELECT s.id FROM %s s LEFT JOIN %s l ON s.id = l.subscriber_id LEFT JOIN %s o ON l.message_id = o.message_id WHERE DATEDIFF(now(), o.created_at) > %s OR o.created_at IS NULL))', table('subscribers.id'), table('subscribers'), table('tracking_logs'), table('click_logs'), db_quote($keyword));
                         break;
                     default:
-                        throw new \Exception("Unknown segment condition type (operator): ".$condition->operator);
+                        throw new \Exception("Unknown segment condition type (operator): " . $condition->operator);
                 }
             }
         }
@@ -343,7 +344,7 @@ class Segment extends Model
      */
     public function subscribers($request = null)
     {
-        $query = \Acelle\Model\Subscriber::select('subscribers.*');
+        $query = \App\Models\Subscriber::select('subscribers.*');
         $query = Subscriber::filter($query, $request);
 
         $conditions = $this->getSubscribersConditions();
@@ -366,7 +367,7 @@ class Segment extends Model
         $query = $query->where('subscribers.mail_list_id', $this->mail_list_id);
         // var_dump($conditions['conditions']);die();
         if (!empty($conditions['conditions'])) {
-            $query = $query->whereRaw('('.$conditions['conditions'].')');
+            $query = $query->whereRaw('(' . $conditions['conditions'] . ')');
         }
 
         // filters
@@ -421,7 +422,7 @@ class Segment extends Model
      */
     public function updateCacheDelayed()
     {
-        dispatch(new \Acelle\Jobs\UpdateSegmentJob($this));
+        dispatch(new \App\Jobs\UpdateSegmentJob($this));
     }
 
     /**

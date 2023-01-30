@@ -1,10 +1,12 @@
+// @inject('uc', 'App\Http\Controllers\PageController')
 function ucFirst(str) {
   if (!str) return str;
 
   return str[0].toUpperCase() + str.slice(1);
 }
 
-let mediaScanUrl = 'scan.php';
+var root = window.location.protocol + '//' + window.location.host;
+mediaScanUrl =  root + '/general/builder/scan/file';
 
 class MediaModal {
 	constructor (modal = true)
@@ -104,7 +106,7 @@ class MediaModal {
 		this.filemanager = null;
 		this.breadcrumbs = null;
 		this.fileList = null;
-		this.mediaPath = "/public/media/";
+		this.mediaPath = "";
 		this.type = "single";
 	}
 	
@@ -190,7 +192,7 @@ class MediaModal {
 
 		// Start by fetching the file data from scan.php with an AJAX request
 		$.get(mediaScanUrl, function(data) {
-		//$.get('/this.filemanager/scan.php', function(data) {
+		// $.get("{{route('user.general.builder.scan')}}", function(data) {
 			
 
 			 _this.response = [data],
@@ -466,10 +468,15 @@ _
 					formData.append("file", file);
 					formData.append("mediaPath", Vvveb.MediaModal.mediaPath + Vvveb.MediaModal.currentPath);
 					formData.append("onlyFilename", true);
-		
+
+					$.ajaxSetup({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						}
+					})
 					$.ajax({
 						type: "POST",
-						url: 'upload.php',//set your server side upload script url
+						url: "/general/builder/upload/file",//set your server side upload script url
 						data: formData,
 						processData: false,
 						contentType: false,

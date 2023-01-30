@@ -13,13 +13,18 @@
 	<base href="">
 	<title>{{config('app.name')}}</title>
 
+	 <!-- CSRF Token -->
+	 <meta name="csrf-token" content="{{ csrf_token() }}">
+
 	<link href="{{URL::asset('builder/css/editor.css')}}" rel="stylesheet">
 </head>
 
 <body>
 	<div id="vvveb-builder">
 		<div id="top-panel">
-			<img src="{{URL::asset('dash/assets/images/Logo-fav.png')}}" alt="{{config('app.name')}}" height="22" class="float-start" id="logo">
+			<a href="{{route('user.page.builder', Auth::user()->username)}}">
+				<img src="{{URL::asset('dash/assets/images/Logo-fav.png')}}" alt="{{config('app.name')}}" height="22" class="float-start" id="logo">
+			</a>
 
 			<div class="btn-group float-start" role="group">
 				<button class="btn btn-light" title="Toggle file manager" id="toggle-file-manager-btn" data-vvveb-action="toggleFileManager" data-bs-toggle="button" aria-pressed="false">
@@ -59,7 +64,7 @@
 					<i class="la la-expand-arrows-alt"></i>
 				</button>
 
-				<button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download" data-v-download="index.html">
+				<button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download" data-v-download="{{$page->file_location}}">
 					<i class="la la-download"></i>
 				</button>
 
@@ -67,15 +72,15 @@
 
 
 			<div class="btn-group me-3 float-end" role="group">
-				<form action="{{route('user.page.builder.save.page', Crypt::encrypt($page->id))}}">
-					{{ csrf_field() }}
-				</form>
-				<button class="btn btn-primary btn-icon" title="Export (Ctrl + E)" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="{{route('user.page.builder.save.page', Crypt::encrypt($page->id))}}" type="submit" data-v-vvveb-shortcut="ctrl+e">
+				<input id="id" name="id" value="{{$page->id}}" hidden>
+				<button class="btn btn-primary btn-icon" title="Export (Ctrl + E)" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="{{ route('user.page.builder.save.page') }}" data-v-vvveb-shortcut="ctrl+e">
 					<i class="la la-save"></i> <span data-v-gettext>Save page</span>
 				</button>
 			</div>
 
 			<div class="btn-group float-end me-3 responsive-btns" role="group">
+				<a href="{{$page->file_location}}" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
+
 				<button id="mobile-view" data-view="mobile" class="btn btn-light" title="Mobile view" data-vvveb-action="viewport">
 					<i class="la la-mobile"></i>
 				</button>
@@ -89,7 +94,6 @@
 				</button>
 
 			</div>
-
 		</div>
 
 		<div id="left-panel">
@@ -881,7 +885,6 @@
 			</div>
 		</script>
 
-
 		<script id="vvveb-input-toggle" type="text/html">
 			<div class="toggle">
 				<input type="checkbox" name="{%=key%}" value="{%=on%}" {%if (off) { %} data-value-off="{%=off%}" {% } %} {%if (on) { %} data-value-on="{%=on%}" {% } %} class="toggle-checkbox" id="{%=key%}">
@@ -895,7 +898,6 @@
 		<script id="vvveb-input-header" type="text/html">
 			<h6 class="header">{%=header%}</h6>
 		</script>
-
 
 		<script id="vvveb-input-select" type="text/html">
 			<div>
@@ -1596,20 +1598,11 @@
 			var pages = [
 				{
 					name: "{{$page->name}}",
-					title: "{{$page->name}}",
+					title: "{{$page->title}}",
 					url: "{{$page->file_location}}",
 					file: "{{$page->file_location}}",
 					// assets: ["{{config('app.url')}}/builder/demo/narrow-jumbotron/narrow-jumbotron.css"]
-				},
-				// {
-				// 	name: "narrow-jumbotron",
-				// 	title: "Jumbotron",
-				// 	url: "{{config('app.url')}}/builder/demo/narrow-jumbotron/index.html",
-				// 	file: "{{config('app.url')}}/builder/demo/narrow-jumbotron/index.html",
-				// 	assets: ["{{config('app.url')}}/builder/demo/narrow-jumbotron/narrow-jumbotron.css"]
-				// },
-				//uncomment php code below and rename file to .php extension to load saved html files in the editor or use editor.php
-			];
+				},];
 
 			Vvveb.FileManager.addPages(pages);
 			//Vvveb.FileManager.loadPage("landing-page");

@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Library;
+namespace App\Library;
 
 use Exception;
 
@@ -60,7 +60,7 @@ class HookManager
 
     public function isEmpty($name)
     {
-        return ! array_key_exists($name, $this->hooks);
+        return !array_key_exists($name, $this->hooks);
     }
 
     public function installFromDir($name)

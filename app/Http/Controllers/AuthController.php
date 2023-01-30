@@ -505,4 +505,9 @@ class AuthController extends Controller
         return redirect('/');
         // return Redirect::to('http://localhost:8000');
     }
+
+    public function general_builder_scan()
+    {
+        dd('yes');
+    }
 }

@@ -6,39 +6,39 @@
  * Model class for template
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Validator;
 use ZipArchive;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 use Illuminate\Validation\ValidationException;
 use KubAT\PhpSimple\HtmlDomParser;
-use Acelle\Library\Tool;
-use Acelle\Library\StringHelper;
+use App\Library\Tool;
+use App\Library\StringHelper;
 use DOMDocument;
 use File;
 use Exception;
 use Closure;
 use League\Pipeline\PipelineBuilder;
-use Acelle\Library\HtmlHandler\TransformWidgets;
-use function Acelle\Helpers\getAppHost;
+use App\Library\HtmlHandler\TransformWidgets;
+use function App\Helpers\getAppHost;
 
 class Template extends Model
 {
@@ -53,7 +53,12 @@ class Template extends Model
      * @var array
      */
     protected $fillable = [
-        'uid', 'name', 'content', 'builder', 'is_default', 'theme'
+        'uid',
+        'name',
+        'content',
+        'builder',
+        'is_default',
+        'theme'
     ];
 
     /**
@@ -70,12 +75,12 @@ class Template extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     public function admin()
     {
-        return $this->belongsTo('Acelle\Model\Admin');
+        return $this->belongsTo('App\Models\Admin');
     }
 
     /**
@@ -83,7 +88,7 @@ class Template extends Model
      */
     public function categories()
     {
-        return $this->belongsToMany('Acelle\Model\TemplateCategory', 'templates_categories', 'template_id', 'category_id');
+        return $this->belongsToMany('App\Models\TemplateCategory', 'templates_categories', 'template_id', 'category_id');
     }
 
     /**
@@ -93,7 +98,7 @@ class Template extends Model
      */
     public function scopeCategoryUid($query, $uid)
     {
-        $category = \Acelle\Model\TemplateCategory::findByUid($uid);
+        $category = \App\Models\TemplateCategory::findByUid($uid);
         // Category
         if ($category) {
             $query = $query->whereHas('categories', function ($q) use ($category) {
@@ -129,7 +134,7 @@ class Template extends Model
     {
         // Keyword
         if (!empty($keyword)) {
-            $query = $query->where('name', 'like', '%'.trim($keyword).'%');
+            $query = $query->where('name', 'like', '%' . trim($keyword) . '%');
         }
     }
 
@@ -168,7 +173,7 @@ class Template extends Model
         if (isset($list)) {
             foreach ($list->fields as $field) {
                 if ($field->tag != 'EMAIL') {
-                    $tags[] = ['name' => 'SUBSCRIBER_'.$field->tag, 'required' => false];
+                    $tags[] = ['name' => 'SUBSCRIBER_' . $field->tag, 'required' => false];
                 }
             }
         }
@@ -285,7 +290,7 @@ class Template extends Model
         $copy->save();
 
         // Copy directory
-        \Acelle\Helpers\pcopy($this->getStoragePath(), $copy->getStoragePath());
+        \App\Helpers\pcopy($this->getStoragePath(), $copy->getStoragePath());
 
         // Important: save before adding categories
         foreach ($this->categories as $category) {
@@ -323,7 +328,7 @@ class Template extends Model
                 if ($object != '.' && $object != '..') {
                     if (!is_dir(join_paths($directory, $object))) {
                         if (preg_match('/\.html?$/i', $object)) {
-                            $indexFile = $directory.'/'.$object;
+                            $indexFile = $directory . '/' . $object;
                             break;
                         }
                     }
@@ -380,7 +385,7 @@ class Template extends Model
         }
 
         // move file to temp place
-        $tmpPath = storage_path('tmp/uploaded_template_'.$user->id.'_'.time());
+        $tmpPath = storage_path('tmp/uploaded_template_' . $user->id . '_' . time());
         $tmpName = $request->file('file')->getClientOriginalName();
         $request->file('file')->move($tmpPath, $tmpName);
         $tmpZip = join_paths($tmpPath, $tmpName);
@@ -422,7 +427,7 @@ class Template extends Model
     {
         // Get real path for our folder
         $rootPath = $this->getStoragePath();
-        $outputPath = join_paths('/tmp/', $this->uid.'.zip');
+        $outputPath = join_paths('/tmp/', $this->uid . '.zip');
 
         // Initialize archive object
         $zip = new ZipArchive();
@@ -432,7 +437,7 @@ class Template extends Model
         /** @var SplFileInfo[] $files */
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($rootPath),
-            RecursiveIteratorIterator::LEAVES_ONLY
+                RecursiveIteratorIterator::LEAVES_ONLY
         );
 
         foreach ($files as $name => $file) {
@@ -512,9 +517,10 @@ class Template extends Model
         }
 
         if ($this->getThumbName()) {
-            return \Acelle\Helpers\generatePublicPath($this->getStoragePath($this->getThumbName())) . '?' . filemtime($this->getStoragePath($this->getThumbName()));
+            return \App\Helpers\generatePublicPath($this->getStoragePath($this->getThumbName())) . '?' . filemtime($this->getStoragePath($this->getThumbName()));
         } else {
             return url('images/placeholder.jpg');
+            //return \App\Helpers\generatePublicPath($this->getStoragePath($this->getThumbName())) . '?' . filemtime($this->getStoragePath($this->getThumbName()));
         }
     }
 
@@ -550,7 +556,7 @@ class Template extends Model
         $url = parse_url($url, PHP_URL_PATH);
 
         // Clean up subdirectory, leaving the url as '/assets/path/file.jpg' only
-        $subdirectory = \Acelle\Helpers\getAppSubdirectory();
+        $subdirectory = \App\Helpers\getAppSubdirectory();
         if ($subdirectory) {
             // Make sure $subdirectory looks like '/subdir' ==> with a leading slash but without trailing one
             $subdirectory = rtrim(join_paths('/', $subdirectory), '/');
@@ -586,7 +592,7 @@ class Template extends Model
     public function getContentWithUntransformedAssetsUrls($untransformUserAssets = false, $processUserAssetCallback = null)
     {
         // Clean up subdirectory, leaving the url as '/assets/path/file.jpg' only
-        $subdirectory = \Acelle\Helpers\getAppSubdirectory();
+        $subdirectory = \App\Helpers\getAppSubdirectory();
         if ($subdirectory) {
             // Make sure $subdirectory looks like: '/subdir'
             // i.e. with a leading slash but without trailing one
@@ -739,7 +745,7 @@ class Template extends Model
             } else {
                 // URL is a relative path like "images/banner.jpg"
                 // Transform relative URLs to PUBLIC ABSOLUTE URLs with leading slash /
-                $url = \Acelle\Helpers\generatePublicPath(
+                $url = \App\Helpers\generatePublicPath(
                     $this->getStoragePath($url),
                     $absolute = ($withHost) ? true : false
                 );
@@ -789,20 +795,20 @@ class Template extends Model
             foreach ($items as $item) {
                 // $element->find('.woo-items')[0]->innertext = 'dddddd';
                 $itemsHtml[] = '
-                    <div class="woo-col-item mb-4 mt-4 col-md-' . (12/$display) . '">
+                    <div class="woo-col-item mb-4 mt-4 col-md-' . (12 / $display) . '">
                         <div class="">
                             <div class="img-col mb-3">
                                 <div class="d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <a style="width:100%" href="'.$item["link"].'" class="mr-4"><img width="100%" src="'.($item["image"] ? $item["image"] : url('images/cart_item.svg')).'" style="max-height:200px;max-width:100%;" /></a>
+                                    <a style="width:100%" href="' . $item["link"] . '" class="mr-4"><img width="100%" src="' . ($item["image"] ? $item["image"] : url('images/cart_item.svg')) . '" style="max-height:200px;max-width:100%;" /></a>
                                 </div>
                             </div>
                             <div class="">
                                 <p class="font-weight-normal product-name mb-1">
-                                    <a style="color: #333;" href="'.$item["link"].'" class="mr-4">'.$item["name"].'</a>
+                                    <a style="color: #333;" href="' . $item["link"] . '" class="mr-4">' . $item["name"] . '</a>
                                 </p>
-                                <p class=" product-description">'.$item["description"].'</p>
-                                <p><strong>'.$item["price"].'</strong></p>
-                                <a href="'.$item["link"].'" style="background-color: #9b5c8f;
+                                <p class=" product-description">' . $item["description"] . '</p>
+                                <p><strong>' . $item["price"] . '</strong></p>
+                                <a href="' . $item["link"] . '" style="background-color: #9b5c8f;
     border-color: #9b5c8f;" class="btn btn-primary text-white">
                                     ' . trans('messages.automation.view_more') . '
                                 </a>
@@ -861,7 +867,7 @@ class Template extends Model
 
         // Store it
         file_put_contents($filepath, file_get_contents($base64));
-        $assetUrl = \Acelle\Helpers\generatePublicPath($filepath);
+        $assetUrl = \App\Helpers\generatePublicPath($filepath);
 
         return $assetUrl;
     }
@@ -879,14 +885,14 @@ class Template extends Model
         $content = file_get_contents($url);
 
         // Store it:
-        $arrContextOptions=array(
-            "ssl"=>array(
-                "verify_peer"=>false,
-                "verify_peer_name"=>false,
+        $arrContextOptions = array(
+            "ssl" => array(
+                "verify_peer" => false,
+                "verify_peer_name" => false,
             ),
         );
         file_put_contents($filepath, $content, false, stream_context_create($arrContextOptions));
-        $assetUrl = \Acelle\Helpers\generatePublicPath($filepath);
+        $assetUrl = \App\Helpers\generatePublicPath($filepath);
 
         return $assetUrl;
     }
@@ -902,7 +908,7 @@ class Template extends Model
 
         // Move uploaded file
         $file->move($this->getStoragePath(), $name);
-        $assetUrl = \Acelle\Helpers\generatePublicPath($this->getStoragePath($name));
+        $assetUrl = \App\Helpers\generatePublicPath($this->getStoragePath($name));
 
         return $assetUrl;
     }
@@ -940,8 +946,8 @@ class Template extends Model
         foreach ($tags as $tag) {
             $result[] = [
                 'type' => 'label',
-                'text' => '{'.$tag['name'].'}',
-                'tag' => '{'.$tag['name'].'}',
+                'text' => '{' . $tag['name'] . '}',
+                'tag' => '{' . $tag['name'] . '}',
                 'required' => true,
             ];
         }
@@ -1060,7 +1066,7 @@ class Template extends Model
     {
         // DELTEE categories
         TemplateCategory::query()->delete();
-        foreach (self::default() as $template) {
+        foreach (self::default () as $template) {
             $template->deleteAndCleanup();
         }
 
@@ -1076,113 +1082,135 @@ class Template extends Model
                 'name' => 'Blank',
                 'dir' => database_path('templates/basic/000-blank/6037a0a8583a7'),
                 'category' => $categoryBasic,
-            ], [
+            ],
+            [
                 'name' => 'Pricing Table',
                 'dir' => database_path('templates/basic/001-pricing-table/6037a2135b974'),
                 'category' => $categoryBasic,
-            ], [
+            ],
+            [
                 'name' => 'Lists & Tables',
                 'dir' => database_path('templates/basic/002-lists-tables/6037a2250a3a3'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => 'One column layout',
                 'dir' => database_path('templates/basic/003-1-column/6037a28418c95'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => '1-2 column layout',
                 'dir' => database_path('templates/basic/004-1-2-columns/6037a24ebdbd6'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => '1-2-1 column layout',
                 'dir' => database_path('templates/basic/005-1-2-1-columns/6037a2401b055'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => '1-3 column layout',
                 'dir' => database_path('templates/basic/006-1-3-columns/6037a275bf375'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => '1-3-1 column layout',
                 'dir' => database_path('templates/basic/007-1-3-1-columns/6037a25ddce80'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => '1-3-2 column layout',
                 'dir' => database_path('templates/basic/008-1-3-2-columns/6037a26b0a286'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => 'Two columns layout',
                 'dir' => database_path('templates/basic/009-2-columns/6037a2b67ed27'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => '2-1 column layout',
                 'dir' => database_path('templates/basic/010-2-1-columns/6037a2aa315d4'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => '2-1-2 column layout',
                 'dir' => database_path('templates/basic/011-2-1-2-columns/6037a29a35e05'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => 'Three columns layout',
                 'dir' => database_path('templates/basic/012-3-columns/6037a2dcb6c56'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => '3-1-3 column layout',
                 'dir' => database_path('templates/basic/013-3-1-3-columns/6037a2c3d7fa1'),
                 'category' => $categoryBasic,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => 'Abandoned Cart Email #2',
                 'dir' => database_path('templates/woos/001-woo-2/6037a26b0a200'),
                 'category' => $categoryWoo,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => 'Abandoned Cart Email #3',
                 'dir' => database_path('templates/woos/002-woo-3/6037a26b0a211'),
                 'category' => $categoryWoo,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => 'Abandoned Cart Email #4',
                 'dir' => database_path('templates/woos/003-woo-4/6037a26b0a244'),
                 'category' => $categoryWoo,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => 'Certified Yoga Therapist',
                 'dir' => database_path('templates/featured/001-yoga/52264e8382883'),
                 'category' => $categoryFeatured,
                 'builder' => true,
                 'theme' => 'yoga',
-            ], [
+            ],
+            [
                 'name' => 'The hunt is on!',
                 'dir' => database_path('templates/featured/002-sport/00464e8382883'),
                 'category' => $categoryFeatured,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => 'Give a gift. Change a life',
                 'dir' => database_path('templates/featured/003-give-away/01464e8382883'),
                 'category' => $categoryFeatured,
                 'builder' => true,
                 'theme' => 'kids',
-            ], [
+            ],
+            [
                 'name' => 'Gift Card!',
                 'dir' => database_path('templates/featured/004-yellow/5d7b527be2bd2'),
                 'category' => $categoryFeatured,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => 'Color Print - Your Print Companion',
                 'dir' => database_path('templates/featured/005-blue/5d7b526bbfd4c'),
                 'category' => $categoryFeatured,
                 'builder' => true,
-            ], [
+            ],
+            [
                 'name' => 'News Digest',
                 'dir' => database_path('templates/featured/000-04-rss-feed/6037a2356820zs'),
                 'category' => $categoryFeatured,
@@ -1220,7 +1248,7 @@ class Template extends Model
         $indexFile = join_paths($tmpDir, 'index.html');
 
         // Copy template folder to tmp place
-        \Acelle\Helpers\pcopy($this->getStoragePath(), $tmpDir);
+        \App\Helpers\pcopy($this->getStoragePath(), $tmpDir);
 
         // Transform templates URLs like src='/assets/base64/file.jpg' to src='file.jpg'
         $html = $this->getContentWithUntransformedAssetsUrls(
@@ -1228,7 +1256,7 @@ class Template extends Model
             function ($userAssetFile, &$basename) use ($tmpDir) {
                 $basename = StringHelper::generateUniqueName($tmpDir, $basename);
                 $copyPath = join_paths($tmpDir, $basename);
-                \Acelle\Helpers\pcopy($userAssetFile, $copyPath);
+                \App\Helpers\pcopy($userAssetFile, $copyPath);
             }
         );
 
