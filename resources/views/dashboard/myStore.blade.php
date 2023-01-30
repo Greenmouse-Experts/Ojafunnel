@@ -56,9 +56,9 @@
                                     <input type="color" value="#F8D3D3" />
                                     <input type="color" value="#F8FA8D" />
                                 </div>
-                                <!-- <div class="col-lg-4 text-end">
+                                <div class="col-lg-4 text-end">
                                     <a href="#" type="color" style="color: #714091">Choose another color</a>
-                                </div> -->
+                                </div>
                             </div>
                         </div>
                         <!-- store logo -->
