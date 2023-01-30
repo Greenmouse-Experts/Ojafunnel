@@ -7,49 +7,49 @@
  * This is the center of the application
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\Log as MailLog;
+use App\Library\Log as MailLog;
 use DB;
-use Acelle\Model\SendingServer;
+use App\Models\SendingServer;
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Formatter\LineFormatter;
 use Carbon\Carbon;
 use League\Csv\Writer;
-use Acelle\Library\StringHelper;
-use Acelle\Library\Tool;
-use Acelle\Model\Setting;
+use App\Library\StringHelper;
+use App\Library\Tool;
+use App\Models\Setting;
 use Validator;
 use File;
 use ZipArchive;
 use KubAT\PhpSimple\HtmlDomParser;
 use Exception;
-use Acelle\Library\Traits\HasTemplate;
-use Acelle\Jobs\LoadCampaign;
-use Acelle\Jobs\ScheduleCampaign;
+use App\Library\Traits\HasTemplate;
+use App\Jobs\LoadCampaign;
+use App\Jobs\ScheduleCampaign;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
-use Acelle\Library\RouletteWheel;
-use Acelle\Library\Traits\TrackJobs;
+use App\Library\RouletteWheel;
+use App\Library\Traits\TrackJobs;
 use Throwable;
-use Acelle\Library\Traits\HasUid;
-use Acelle\Events\CampaignUpdated;
+use App\Library\Traits\HasUid;
+use App\Events\CampaignUpdated;
 
 class Campaign extends Model
 {
@@ -92,7 +92,7 @@ class Campaign extends Model
      */
     public function defaultMailList()
     {
-        return $this->belongsTo('Acelle\Model\MailList', 'default_mail_list_id');
+        return $this->belongsTo('App\Models\MailList', 'default_mail_list_id');
     }
 
     /**
@@ -100,7 +100,7 @@ class Campaign extends Model
      */
     public function mailLists()
     {
-        return $this->belongsToMany('Acelle\Model\MailList', 'campaigns_lists_segments');
+        return $this->belongsToMany('App\Models\MailList', 'campaigns_lists_segments');
     }
 
     /**
@@ -108,7 +108,7 @@ class Campaign extends Model
      */
     public function campaignLinks()
     {
-        return $this->hasMany('Acelle\Model\CampaignLink');
+        return $this->hasMany('App\Models\CampaignLink');
     }
 
     /**
@@ -116,13 +116,13 @@ class Campaign extends Model
      */
     public function trackingDomain()
     {
-        return $this->belongsTo('Acelle\Model\TrackingDomain', 'tracking_domain_id');
+        return $this->belongsTo('App\Models\TrackingDomain', 'tracking_domain_id');
     }
 
     /**
      * Get campaign validation rules.
      */
-    public function rules($request=null)
+    public function rules($request = null)
     {
         $rules = array(
             'name' => 'required',
@@ -151,7 +151,7 @@ class Campaign extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     /**
@@ -161,7 +161,7 @@ class Campaign extends Model
      */
     public function trackingLogs()
     {
-        return $this->hasMany('Acelle\Model\TrackingLog');
+        return $this->hasMany('App\Models\TrackingLog');
     }
 
     /**
@@ -226,7 +226,7 @@ class Campaign extends Model
      */
     public function listsSegments()
     {
-        return $this->hasMany('Acelle\Model\CampaignsListsSegment');
+        return $this->hasMany('App\Models\CampaignsListsSegment');
     }
 
     /**
@@ -300,7 +300,7 @@ class Campaign extends Model
             ini_set('max_execution_time', 0);
             ini_set('memory_limit', '-1');
         } catch (\Exception $e) {
-            MailLog::warning('Cannot reset max_execution_time: '.$e->getMessage());
+            MailLog::warning('Cannot reset max_execution_time: ' . $e->getMessage());
         }
     }
 
@@ -386,13 +386,16 @@ class Campaign extends Model
     public function trackMessage($response, $subscriber, $server, $msgId)
     {
         // @todo: customerneedcheck
-        $params = array_merge(array(
+        $params = array_merge(
+            array(
                 'campaign_id' => $this->id,
                 'message_id' => $msgId,
                 'subscriber_id' => $subscriber->id,
                 'sending_server_id' => $server->id,
                 'customer_id' => $this->customer->id,
-            ), $response);
+            ),
+            $response
+        );
 
         if (!isset($params['runtime_message_id'])) {
             $params['runtime_message_id'] = $msgId;
@@ -409,11 +412,19 @@ class Campaign extends Model
      */
     protected $fillable = [
         'name',
-        'subject', 'from_name', 'from_email',
-        'reply_to', 'track_open',
-        'track_click', 'sign_dkim', 'track_fbl',
-        'html', 'plain', 'template_source',
-        'tracking_domain_id', 'use_default_sending_server_from_email',
+        'subject',
+        'from_name',
+        'from_email',
+        'reply_to',
+        'track_open',
+        'track_click',
+        'sign_dkim',
+        'track_fbl',
+        'html',
+        'plain',
+        'template_source',
+        'tracking_domain_id',
+        'use_default_sending_server_from_email',
     ];
 
     /**
@@ -519,8 +530,9 @@ class Campaign extends Model
      */
     public function unsubscribe_url_valid()
     {
-        if ($this->type != 'plain-text' &&
-           $this->customer->getOption('unsubscribe_url_required') == 'yes' &&
+        if (
+            $this->type != 'plain-text' &&
+            $this->customer->getOption('unsubscribe_url_required') == 'yes' &&
             strpos($this->getTemplateContent(), '{UNSUBSCRIBE_URL}') == false
         ) {
             return false;
@@ -546,8 +558,10 @@ class Campaign extends Model
         }
 
         // Step 2
-        if (!empty($this->name) && !empty($this->subject) && !empty($this->from_name)
-                && !empty($this->from_email) && !empty($this->reply_to)) {
+        if (
+            !empty($this->name) && !empty($this->subject) && !empty($this->from_name)
+            && !empty($this->from_email) && !empty($this->reply_to)
+        ) {
             $step = 2;
         } else {
             return $step;
@@ -605,7 +619,7 @@ class Campaign extends Model
     {
         // Keyword
         if (!empty(trim($keyword))) {
-            $query = $query->where('name', 'like', '%'.$keyword.'%');
+            $query = $query->where('name', 'like', '%' . $keyword . '%');
         }
     }
 
@@ -619,8 +633,8 @@ class Campaign extends Model
     public function log($name, $customer, $add_datas = [])
     {
         $data = [
-                'id' => $this->id,
-                'name' => $this->name,
+            'id' => $this->id,
+            'name' => $this->name,
         ];
 
         if (is_object($this->defaultMailList)) {
@@ -635,12 +649,12 @@ class Campaign extends Model
 
         $data = array_merge($data, $add_datas);
 
-        \Acelle\Model\Log::create([
-                                'customer_id' => $customer->id,
-                                'type' => 'campaign',
-                                'name' => $name,
-                                'data' => json_encode($data),
-                            ]);
+        \App\Models\Log::create([
+            'customer_id' => $customer->id,
+            'type' => 'campaign',
+            'name' => $name,
+            'data' => json_encode($data),
+        ]);
     }
 
     /**
@@ -1009,7 +1023,7 @@ class Campaign extends Model
         }
 
         $records = $records->groupBy('campaigns.name', 'campaigns.id', 'campaigns.uid')
-                    ->orderBy('aggregate', 'desc');
+            ->orderBy('aggregate', 'desc');
 
         return $records->take($number);
     }
@@ -1021,7 +1035,7 @@ class Campaign extends Model
             ->join('tracking_logs', 'tracking_logs.campaign_id', '=', 'campaign_links.campaign_id')
             ->join('click_logs', function ($join) {
                 $join->on('click_logs.message_id', '=', 'tracking_logs.message_id')
-                ->on('click_logs.url', '=', 'campaign_links.url');
+                    ->on('click_logs.url', '=', 'campaign_links.url');
             });
 
         if (isset($customer)) {
@@ -1058,10 +1072,10 @@ class Campaign extends Model
     public function getTopOpenSubscribers($number = 5)
     {
         $query = $this->openLogs()->select('subscribers.email', 'subscribers.id')
-                        ->addSelect(DB::raw('count(*) as count'))
-                        ->join('subscribers', 'subscribers.id', '=', 'tracking_logs.subscriber_id')
-                        ->groupBy('subscribers.email', 'subscribers.id')
-                        ->orderBy('count', 'desc');
+            ->addSelect(DB::raw('count(*) as count'))
+            ->join('subscribers', 'subscribers.id', '=', 'tracking_logs.subscriber_id')
+            ->groupBy('subscribers.email', 'subscribers.id')
+            ->orderBy('count', 'desc');
 
         return $query->take($number);
     }
@@ -1248,8 +1262,8 @@ class Campaign extends Model
         $this->updateLinks();
 
         try {
-            MailLog::info('Sending test email for campaign `'.$this->name.'`');
-            MailLog::info('Sending test email to `'.$email.'`');
+            MailLog::info('Sending test email for campaign `' . $this->name . '`');
+            MailLog::info('Sending test email to `' . $email . '`');
 
             // @todo: only send a test message when campaign sufficient information is available
 
@@ -1298,8 +1312,10 @@ class Campaign extends Model
      * Re-send the campaign for sending.
      */
     public function resend($filter = 'not_receive') // not_receive | not_open | not_click
+
     {
         // clean up failed log so that they will be included in resend
+        //dd('hi');
         switch ($filter) {
             case 'not_receive':
                 $this->cleanupFailedLog();
@@ -1313,7 +1329,7 @@ class Campaign extends Model
                 $this->cleanupNotClickLog();
                 break;
             default:
-                throw new \Exception("Unknown campaign RESEND type: ".$filter);
+                throw new \Exception("Unknown campaign RESEND type: " . $filter);
                 break;
         }
 
@@ -1328,7 +1344,7 @@ class Campaign extends Model
     {
         // clean up failed log so that they will be included in resend
         $recipients = $this->trackingLogs()->failed();
-        MailLog::warning('Resend to those who failed to deliver: '.$recipients->count());
+        MailLog::warning('Resend to those who failed to deliver: ' . $recipients->count());
         $recipients->delete();
     }
 
@@ -1336,9 +1352,9 @@ class Campaign extends Model
     {
         // clean up failed log so that they will be included in resend
         $recipients = $this->trackingLogs()
-                         ->leftJoin('open_logs', 'tracking_logs.message_id', 'open_logs.message_id')
-                         ->whereNull('open_logs.id');
-        MailLog::warning('Resend to those who did not open: '.$recipients->count());
+            ->leftJoin('open_logs', 'tracking_logs.message_id', 'open_logs.message_id')
+            ->whereNull('open_logs.id');
+        MailLog::warning('Resend to those who did not open: ' . $recipients->count());
         $recipients->delete();
     }
 
@@ -1346,9 +1362,10 @@ class Campaign extends Model
     {
         // clean up failed log so that they will be included in resend
         $recipients = $this->trackingLogs()
-                         ->leftJoin('click_logs', 'tracking_logs.message_id', 'click_logs.message_id')
-                         ->whereNull('click_logs.id');
-        MailLog::warning('Resend to those who did not click: '.$recipients->count());
+            ->leftJoin('click_logs', 'tracking_logs.message_id', 'click_logs.message_id')
+            ->whereNull('click_logs.id');
+        //dd($recipients);
+        MailLog::warning('Resend to those who did not click: ' . $recipients->count());
         $recipients->delete();
     }
 
@@ -1372,8 +1389,8 @@ class Campaign extends Model
     public static function getTypeSelectOptions()
     {
         return [
-            ['text' => trans('messages.'.self::TYPE_REGULAR), 'value' => self::TYPE_REGULAR],
-            ['text' => trans('messages.'.self::TYPE_PLAIN_TEXT), 'value' => self::TYPE_PLAIN_TEXT],
+            ['text' => trans('messages.' . self::TYPE_REGULAR), 'value' => self::TYPE_REGULAR],
+            ['text' => trans('messages.' . self::TYPE_PLAIN_TEXT), 'value' => self::TYPE_PLAIN_TEXT],
         ];
     }
 
@@ -1390,7 +1407,7 @@ class Campaign extends Model
 
         if (isset($params['lists_segments'])) {
             foreach ($params['lists_segments'] as $key => $param) {
-                $rules['lists_segments.'.$key.'.mail_list_uid'] = 'required';
+                $rules['lists_segments.' . $key . '.mail_list_uid'] = 'required';
             }
         }
 
@@ -1694,7 +1711,7 @@ class Campaign extends Model
         }
 
         return $query->orderBy('open_logs.created_at', 'asc')->get()->groupBy(function ($date) {
-            return \Acelle\Library\Tool::dateTime($date->created_at)->format('H'); // grouping by hours
+            return \App\Library\Tool::dateTime($date->created_at)->format('H'); // grouping by hours
         });
     }
 
@@ -1715,7 +1732,7 @@ class Campaign extends Model
         }
 
         return $query->orderBy('click_logs.created_at', 'asc')->get()->groupBy(function ($date) {
-            return \Acelle\Library\Tool::dateTime($date->created_at)->format('H'); // grouping by hours
+            return \App\Library\Tool::dateTime($date->created_at)->format('H'); // grouping by hours
         });
     }
     public function fileInfo($filePath)
@@ -1723,7 +1740,7 @@ class Campaign extends Model
         $name = $filePath['filename'];
         $extension = $filePath['extension'];
 
-        return $name.'.'.$extension;
+        return $name . '.' . $extension;
     }
 
     public function fillAttributes($params)
@@ -1732,7 +1749,7 @@ class Campaign extends Model
 
         // Tacking domain
         if (isset($params['custom_tracking_domain']) && $params['custom_tracking_domain'] && isset($params['tracking_domain_uid'])) {
-            $tracking_domain = \Acelle\Model\TrackingDomain::findByUid($params['tracking_domain_uid']);
+            $tracking_domain = \App\Models\TrackingDomain::findByUid($params['tracking_domain_uid']);
             if (is_object($tracking_domain)) {
                 $this->tracking_domain_id = $tracking_domain->id;
             } else {
@@ -1755,7 +1772,7 @@ class Campaign extends Model
         preg_match('/\s*(?<score>[0-9\.\/]+)\s*/', $test, $score);
 
         if (!array_key_exists('score', $score)) {
-            throw new \Exception('Cannot get SpamScore: '.$test);
+            throw new \Exception('Cannot get SpamScore: ' . $test);
         }
 
         $score = $score['score'];
@@ -1779,7 +1796,7 @@ class Campaign extends Model
                 ];
             } elseif ($firstMatch) {
                 $lastRecord = end($json);
-                $lastRecord['desc'] .= ' '.trim($line);
+                $lastRecord['desc'] .= ' ' . trim($line);
                 // replace last record
                 $json[sizeof($json) - 1] = $lastRecord;
             }
@@ -1804,9 +1821,11 @@ class Campaign extends Model
 
         // Execute SPAMC
         $desc = [
-            0 => array('pipe', 'r'), // 0 is STDIN for process
-            1 => array('pipe', 'w'), // 1 is STDOUT for process
-            2 => array('pipe', 'w'),  // 2 is STDERR for process
+            0 => array('pipe', 'r'),
+            // 0 is STDIN for process
+            1 => array('pipe', 'w'),
+            // 1 is STDOUT for process
+            2 => array('pipe', 'w'), // 2 is STDERR for process
         ];
 
         // command to invoke markup engine
@@ -1835,7 +1854,7 @@ class Campaign extends Model
         proc_close($p);
 
         if (!empty($err) || empty($stdout)) {
-            throw new \Exception('Error: cannot get SpamScore: '.$stderr);
+            throw new \Exception('Error: cannot get SpamScore: ' . $stderr);
         }
 
         return $stdout;
@@ -1864,13 +1883,13 @@ class Campaign extends Model
      */
     public function generateTrackingLogCsv($logtype, $progressCallback = null)
     {
-        $tmpTableName = 'log_'.$this->uid.'_'.md5(rand());
-        $filePath = storage_path(join_paths('app', $tmpTableName.'.csv'));
+        $tmpTableName = 'log_' . $this->uid . '_' . md5(rand());
+        $filePath = storage_path(join_paths('app', $tmpTableName . '.csv'));
 
-        DB::statement('DROP TABLE IF EXISTS '.table($tmpTableName));
+        DB::statement('DROP TABLE IF EXISTS ' . table($tmpTableName));
 
         if ($logtype == 'open_logs') {
-            DB::statement('CREATE TEMPORARY TABLE '.table($tmpTableName).' AS SELECT
+            DB::statement('CREATE TEMPORARY TABLE ' . table($tmpTableName) . ' AS SELECT
                 c.name as campaign_name,
                 s.email as subscriber_email,
                 l.status as delivery_status,
@@ -1887,12 +1906,12 @@ class Campaign extends Model
                 ip.latitude,
                 ip.longitude,
                 ip.metro_code
-              FROM '.table('tracking_logs').' l
-              JOIN '.table('campaigns').' c ON l.campaign_id = c.id
-              JOIN '.table('subscribers').' s ON l.subscriber_id = s.id
-              JOIN '.table('open_logs').' o ON o.message_id = l.message_id
-              LEFT JOIN '.table('ip_locations').' ip ON ip.ip_address = o.ip_address
-              WHERE c.id = '.$this->id. ' ORDER BY c.name, l.created_at');
+              FROM ' . table('tracking_logs') . ' l
+              JOIN ' . table('campaigns') . ' c ON l.campaign_id = c.id
+              JOIN ' . table('subscribers') . ' s ON l.subscriber_id = s.id
+              JOIN ' . table('open_logs') . ' o ON o.message_id = l.message_id
+              LEFT JOIN ' . table('ip_locations') . ' ip ON ip.ip_address = o.ip_address
+              WHERE c.id = ' . $this->id . ' ORDER BY c.name, l.created_at');
 
             $headers = [
                 'campaign_name',
@@ -1913,7 +1932,7 @@ class Campaign extends Model
                 'metro_code',
             ];
         } elseif ($logtype == 'click_logs') {
-            DB::statement('CREATE TEMPORARY TABLE '.table($tmpTableName).' AS SELECT
+            DB::statement('CREATE TEMPORARY TABLE ' . table($tmpTableName) . ' AS SELECT
                 c.name as campaign_name,
                 s.email as subscriber_email,
                 l.status as delivery_status,
@@ -1931,12 +1950,12 @@ class Campaign extends Model
                 ip.latitude,
                 ip.longitude,
                 ip.metro_code
-              FROM '.table('tracking_logs').' l
-              JOIN '.table('campaigns').' c ON l.campaign_id = c.id
-              JOIN '.table('subscribers').' s ON l.subscriber_id = s.id
-              JOIN '.table('click_logs').' ck ON ck.message_id = l.message_id
-              LEFT JOIN '.table('ip_locations').' ip ON ip.ip_address = ck.ip_address
-              WHERE c.id = '.$this->id. ' ORDER BY c.name, l.created_at');
+              FROM ' . table('tracking_logs') . ' l
+              JOIN ' . table('campaigns') . ' c ON l.campaign_id = c.id
+              JOIN ' . table('subscribers') . ' s ON l.subscriber_id = s.id
+              JOIN ' . table('click_logs') . ' ck ON ck.message_id = l.message_id
+              LEFT JOIN ' . table('ip_locations') . ' ip ON ip.ip_address = ck.ip_address
+              WHERE c.id = ' . $this->id . ' ORDER BY c.name, l.created_at');
 
             $headers = [
                 'campaign_name',
@@ -1958,7 +1977,7 @@ class Campaign extends Model
                 'metro_code',
             ];
         } elseif ($logtype == 'unsubscribe_logs') {
-            DB::statement('CREATE TEMPORARY TABLE '.table($tmpTableName).' AS SELECT
+            DB::statement('CREATE TEMPORARY TABLE ' . table($tmpTableName) . ' AS SELECT
                 c.name as campaign_name,
                 s.email as subscriber_email,
                 l.status as delivery_status,
@@ -1975,12 +1994,12 @@ class Campaign extends Model
                 ip.latitude,
                 ip.longitude,
                 ip.metro_code
-              FROM '.table('tracking_logs').' l
-              JOIN '.table('campaigns').' c ON l.campaign_id = c.id
-              JOIN '.table('subscribers').' s ON l.subscriber_id = s.id
-              JOIN '.table('unsubscribe_logs').' u ON u.message_id = l.message_id
-              LEFT JOIN '.table('ip_locations').' ip ON ip.ip_address = u.ip_address
-              WHERE c.id = '.$this->id. ' ORDER BY c.name, l.created_at');
+              FROM ' . table('tracking_logs') . ' l
+              JOIN ' . table('campaigns') . ' c ON l.campaign_id = c.id
+              JOIN ' . table('subscribers') . ' s ON l.subscriber_id = s.id
+              JOIN ' . table('unsubscribe_logs') . ' u ON u.message_id = l.message_id
+              LEFT JOIN ' . table('ip_locations') . ' ip ON ip.ip_address = u.ip_address
+              WHERE c.id = ' . $this->id . ' ORDER BY c.name, l.created_at');
 
             $headers = [
                 'campaign_name',
@@ -2001,7 +2020,7 @@ class Campaign extends Model
                 'metro_code',
             ];
         } elseif ($logtype == 'feedback_logs') {
-            DB::statement('CREATE TEMPORARY TABLE '.table($tmpTableName).' AS SELECT
+            DB::statement('CREATE TEMPORARY TABLE ' . table($tmpTableName) . ' AS SELECT
                 c.name AS campaign_name,
                 s.email AS subscriber_email,
                 l.status AS delivery_status,
@@ -2009,11 +2028,11 @@ class Campaign extends Model
                 f.created_at AS feedback_at,
                 f.feedback_type AS feedback_type,
                 f.raw_feedback_content AS feedback_content
-              FROM '.table('tracking_logs').' l
-              JOIN '.table('campaigns').' c ON l.campaign_id = c.id
-              JOIN '.table('subscribers').' s ON l.subscriber_id = s.id
-              JOIN '.table('feedback_logs').' f ON f.message_id = l.message_id
-              WHERE c.id = '.$this->id. ' ORDER BY c.name, l.created_at');
+              FROM ' . table('tracking_logs') . ' l
+              JOIN ' . table('campaigns') . ' c ON l.campaign_id = c.id
+              JOIN ' . table('subscribers') . ' s ON l.subscriber_id = s.id
+              JOIN ' . table('feedback_logs') . ' f ON f.message_id = l.message_id
+              WHERE c.id = ' . $this->id . ' ORDER BY c.name, l.created_at');
 
             $headers = [
                 'campaign_name',
@@ -2025,7 +2044,7 @@ class Campaign extends Model
                 'feedback_content',
             ];
         } elseif ($logtype == 'bounce_logs') {
-            DB::statement('CREATE TEMPORARY TABLE '.table($tmpTableName).' AS SELECT
+            DB::statement('CREATE TEMPORARY TABLE ' . table($tmpTableName) . ' AS SELECT
                 c.name AS campaign_name,
                 s.email AS subscriber_email,
                 l.status AS delivery_status,
@@ -2033,11 +2052,11 @@ class Campaign extends Model
                 b.created_at AS bounce_at,
                 b.bounce_type AS bounce_type,
                 b.raw AS bounce_content
-              FROM '.table('tracking_logs').' l
-              JOIN '.table('campaigns').' c ON l.campaign_id = c.id
-              JOIN '.table('subscribers').' s ON l.subscriber_id = s.id
-              JOIN '.table('bounce_logs').' b ON b.message_id = l.message_id
-              WHERE c.id = '.$this->id. ' ORDER BY c.name, l.created_at');
+              FROM ' . table('tracking_logs') . ' l
+              JOIN ' . table('campaigns') . ' c ON l.campaign_id = c.id
+              JOIN ' . table('subscribers') . ' s ON l.subscriber_id = s.id
+              JOIN ' . table('bounce_logs') . ' b ON b.message_id = l.message_id
+              WHERE c.id = ' . $this->id . ' ORDER BY c.name, l.created_at');
 
             $headers = [
                 'campaign_name',
@@ -2049,15 +2068,15 @@ class Campaign extends Model
                 'bounce_content',
             ];
         } elseif ($logtype == 'tracking_logs') {
-            DB::statement('CREATE TEMPORARY TABLE '.table($tmpTableName).' AS SELECT
+            DB::statement('CREATE TEMPORARY TABLE ' . table($tmpTableName) . ' AS SELECT
                 c.name AS campaign_name,
                 s.email AS subscriber_email,
                 l.status AS delivery_status,
                 l.created_at AS sent_at
-              FROM '.table('tracking_logs').' l
-              JOIN '.table('campaigns').' c ON l.campaign_id = c.id
-              JOIN '.table('subscribers').' s ON l.subscriber_id = s.id
-              WHERE c.id = '.$this->id. ' ORDER BY c.name, l.created_at');
+              FROM ' . table('tracking_logs') . ' l
+              JOIN ' . table('campaigns') . ' c ON l.campaign_id = c.id
+              JOIN ' . table('subscribers') . ' s ON l.subscriber_id = s.id
+              WHERE c.id = ' . $this->id . ' ORDER BY c.name, l.created_at');
 
             $headers = [
                 'campaign_name',
@@ -2066,7 +2085,7 @@ class Campaign extends Model
                 'sent_at',
             ];
         } else {
-            throw new \Exception('Unknown export type: '.$logtype);
+            throw new \Exception('Unknown export type: ' . $logtype);
         }
 
         $total = DB::table($tmpTableName)->count();
@@ -2079,13 +2098,13 @@ class Campaign extends Model
 
         for ($i = 0; $i < $pages; $i += 1) {
             $items = DB::table($tmpTableName)->select('*')
-                                             ->limit($limit)
-                                             ->offset($i)
-                                             ->get()
-                                             ->map(function ($r) {
-                                                 return (array) $r;
-                                             })
-                                             ->toArray();
+                ->limit($limit)
+                ->offset($i)
+                ->get()
+                ->map(function ($r) {
+                    return (array) $r;
+                })
+                ->toArray();
             $csv->insertAll($items);
 
             // callback progress
@@ -2196,20 +2215,20 @@ class Campaign extends Model
             foreach ($items as $item) {
                 // $element->find('.woo-items')[0]->innertext = 'dddddd';
                 $itemsHtml[] = '
-                    <div class="woo-col-item mb-4 mt-4 col-md-' . (12/$display) . '">
+                    <div class="woo-col-item mb-4 mt-4 col-md-' . (12 / $display) . '">
                         <div class="">
                             <div class="img-col mb-3">
                                 <div class="d-flex align-items-center justify-content-center" style="height: 200px;">
-                                    <a style="width:100%" href="'.$item["link"].'" class="mr-4"><img width="100%" src="'.($item["image"] ? $item["image"] : url('images/cart_item.svg')).'" style="max-height:200px;max-width:100%;" /></a>
+                                    <a style="width:100%" href="' . $item["link"] . '" class="mr-4"><img width="100%" src="' . ($item["image"] ? $item["image"] : url('images/cart_item.svg')) . '" style="max-height:200px;max-width:100%;" /></a>
                                 </div>
                             </div>
                             <div class="">
                                 <p class="font-weight-normal product-name mb-1">
-                                    <a style="color: #333;" href="'.$item["link"].'" class="mr-4">'.$item["name"].'</a>
+                                    <a style="color: #333;" href="' . $item["link"] . '" class="mr-4">' . $item["name"] . '</a>
                                 </p>
-                                <p class=" product-description">'.$item["description"].'</p>
-                                <p><strong>'.$item["price"].'</strong></p>
-                                <a href="'.$item["link"].'" style="background-color: #9b5c8f;
+                                <p class=" product-description">' . $item["description"] . '</p>
+                                <p><strong>' . $item["price"] . '</strong></p>
+                                <a href="' . $item["link"] . '" style="background-color: #9b5c8f;
     border-color: #9b5c8f;" class="btn btn-primary text-white">
                                     ' . trans('messages.automation.view_more') . '
                                 </a>
@@ -2279,7 +2298,7 @@ class Campaign extends Model
                 $join->on('tracking_logs.subscriber_id', 'subscribers.id');
             }
         )->leftJoin('bounce_logs', 'tracking_logs.message_id', 'bounce_logs.message_id')
-         ->leftJoin('feedback_logs', 'tracking_logs.message_id', 'feedback_logs.message_id');
+            ->leftJoin('feedback_logs', 'tracking_logs.message_id', 'feedback_logs.message_id');
 
         $query->select(DB::raw(strtr("
             CASE WHEN `%bounce_logs`.`id` IS NOT NULL THEN '%bounced'
@@ -2305,19 +2324,19 @@ class Campaign extends Model
             END
             AS delivery_status
         ", [
-            '%sent' => self::DELIVERY_STATUS_SENT,
-            '%failed' => self::DELIVERY_STATUS_FAILED,
-            '%new' => self::DELIVERY_STATUS_NEW,
-            '%skipped' => self::DELIVERY_STATUS_SKIPPED,
-            '%bounced' => self::DELIVERY_STATUS_BOUNCED,
-            '%feedback' => self::DELIVERY_STATUS_FEEDBACK,
-            '%subscribed' => Subscriber::STATUS_SUBSCRIBED,
-            '%deliverable' => Subscriber::VERIFICATION_STATUS_DELIVERABLE,
-            '%tracking_logs' => table('tracking_logs'),
-            '%subscribers' => table('subscribers'),
-            '%bounce_logs' => table('bounce_logs'),
-            '%feedback_logs' => table('feedback_logs')
-        ])));
+                '%sent' => self::DELIVERY_STATUS_SENT,
+                '%failed' => self::DELIVERY_STATUS_FAILED,
+                '%new' => self::DELIVERY_STATUS_NEW,
+                '%skipped' => self::DELIVERY_STATUS_SKIPPED,
+                '%bounced' => self::DELIVERY_STATUS_BOUNCED,
+                '%feedback' => self::DELIVERY_STATUS_FEEDBACK,
+                '%subscribed' => Subscriber::STATUS_SUBSCRIBED,
+                '%deliverable' => Subscriber::VERIFICATION_STATUS_DELIVERABLE,
+                '%tracking_logs' => table('tracking_logs'),
+                '%subscribers' => table('subscribers'),
+                '%bounce_logs' => table('bounce_logs'),
+                '%feedback_logs' => table('feedback_logs')
+            ])));
 
         return $query;
     }
@@ -2336,6 +2355,7 @@ class Campaign extends Model
     {
         // Available sending servers
         $sendingServersPool = $this->defaultMailList->getSendingServers();
+        //sendingServersPool
 
         // Set up sending servers' webhooks before launching
         foreach ($sendingServersPool as $serverId => $fitness) {
@@ -2363,6 +2383,7 @@ class Campaign extends Model
             $subscribers = $this->subscribersToSend()->limit($loadLimit)->get();
             foreach ($subscribers as $subscriber) {
                 $serverId = RouletteWheel::take($sendingServersPool);
+                //dd($sendingServersPool);
                 $server = SendingServer::find($serverId)->mapType();
 
                 $callback($this, $subscriber, $server);
@@ -2392,8 +2413,8 @@ class Campaign extends Model
     {
         // Retrieve subscribers to send!
         $query = $this->subscribers([])
-                ->whereRaw(sprintf(table('subscribers').'.email NOT IN (SELECT email FROM %s t JOIN %s s ON t.subscriber_id = s.id WHERE t.campaign_id = %s)', table('tracking_logs'), table('subscribers'), $this->id))
-                ->subscribed();
+            ->whereRaw(sprintf(table('subscribers') . '.email NOT IN (SELECT email FROM %s t JOIN %s s ON t.subscriber_id = s.id WHERE t.campaign_id = %s)', table('tracking_logs'), table('subscribers'), $this->id))
+            ->subscribed();
 
         return $query;
     }
@@ -2431,23 +2452,24 @@ class Campaign extends Model
                 // WHERE...
                 if (!empty($conds['conditions'])) {
                     // IMPORTANT: segment condition does not include list_id constraints
-                    $conds['conditions'] = '('.table('subscribers.mail_list_id').' = '.$lists_segment->mail_list_id.' AND ('.$conds['conditions'].'))';
+                    $conds['conditions'] = '(' . table('subscribers.mail_list_id') . ' = ' . $lists_segment->mail_list_id . ' AND (' . $conds['conditions'] . '))';
 
                     $conditions[] = $conds['conditions'];
                 }
             } else {
                 // Entire list
-                $conditions[] = '('.table('subscribers.mail_list_id').' = '.$lists_segment->mail_list_id.')';
+                $conditions[] = '(' . table('subscribers.mail_list_id') . ' = ' . $lists_segment->mail_list_id . ')';
             }
         }
 
         if (!empty($conditions)) {
-            $query = $query->whereRaw('('.implode(' OR ', $conditions).')');
+            $query = $query->whereRaw('(' . implode(' OR ', $conditions) . ')');
         }
 
         // Filters
         $filters = isset($params['filters']) ? $params['filters'] : null;
-        if ((isset($filters) && (isset($filters['open']) || isset($filters['click']) || isset($filters['tracking_status'])))
+        if (
+            (isset($filters) && (isset($filters['open']) || isset($filters['click']) || isset($filters['tracking_status'])))
         ) {
             $query = $query->leftJoin('tracking_logs', 'tracking_logs.subscriber_id', '=', 'subscribers.id');
             $query = $query->whereNotNull('tracking_logs.id');
@@ -2475,8 +2497,8 @@ class Campaign extends Model
             foreach (explode(' ', trim($params['keyword'])) as $keyword) {
                 $query = $query->leftJoin('subscriber_fields', 'subscribers.id', '=', 'subscriber_fields.subscriber_id');
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('subscribers.email', 'like', '%'.$keyword.'%')
-                        ->orWhere('subscriber_fields.value', 'like', '%'.$keyword.'%');
+                    $q->orwhere('subscribers.email', 'like', '%' . $keyword . '%')
+                        ->orWhere('subscriber_fields.value', 'like', '%' . $keyword . '%');
                 });
             }
         }
@@ -2502,7 +2524,7 @@ class Campaign extends Model
 
         $formatter = new LineFormatter("[%datetime%] %channel%.%level_name%: %message%\n");
 
-        $logfile = storage_path(join_paths('logs', php_sapi_name(), '/campaign-'.$this->uid.'.log'));
+        $logfile = storage_path(join_paths('logs', php_sapi_name(), '/campaign-' . $this->uid . '.log'));
         $stream = new RotatingFileHandler($logfile, 0, Logger::DEBUG);
         $stream->setFormatter($formatter);
 
@@ -2546,11 +2568,12 @@ class Campaign extends Model
     public function schedule()
     {
         // Delete previous ScheduleCampaign jobs
+
         $this->cancelAndDeleteJobs(ScheduleCampaign::class);
 
         // Schedule Job initialize
         $scheduler = (new ScheduleCampaign($this))->delay($this->run_at);
-
+        //dd($scheduler);
         // Dispatch using the method provided by TrackJobs
         // to also generate job-monitor record
         $this->dispatchWithMonitor($scheduler);
@@ -2598,7 +2621,7 @@ class Campaign extends Model
                         // Launch over and over again until there is no subscribers left to send
                         // Because each LoadCampaign jobs only load a fixed number of subscribers
                         $this->updateCache();
-                        $this->logger()->warning('Launch another batch of '.$count);
+                        $this->logger()->warning('Launch another batch of ' . $count);
                         $this->launch();
                     } else {
                         $this->logger()->warning('No contact left, campaign finishes successfully!');
@@ -2611,7 +2634,7 @@ class Campaign extends Model
             },
             function (Batch $batch, Throwable $e) {
                 // CATCH callback
-                $errorMsg = "Campaign stopped. ".$e->getMessage()."\n".$e->getTraceAsString();
+                $errorMsg = "Campaign stopped. " . $e->getMessage() . "\n" . $e->getTraceAsString();
                 $this->logger()->info($errorMsg);
                 $this->setError($errorMsg);
             },

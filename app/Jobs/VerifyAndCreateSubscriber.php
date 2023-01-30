@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
 use Illuminate\Bus\Batchable;
 use Monolog\Logger;
@@ -15,7 +15,7 @@ class VerifyAndCreateSubscriber extends Base
     public $timeout = 120;
 
     protected $list;
-    protected $attributes; // Example: /home/acelle/storage/app/tmp/import-000000.csv
+    protected $attributes; // Example: /home/App/storage/app/tmp/import-000000.csv
     protected $logger;
     protected $jobMonitor;
 
@@ -71,7 +71,7 @@ class VerifyAndCreateSubscriber extends Base
 
         $verifa = $subscriber->verify($verifier);
         if ($verifa->isDeliverable() || $verifa->isUnknown()) {
-            $this->done(trans('vimport::messages.import.success.message', [ 'email' => $subscriber->email, 'server' => $verifier->name ]));
+            $this->done(trans('vimport::messages.import.success.message', ['email' => $subscriber->email, 'server' => $verifier->name]));
         } else {
             // In case of failure, delete the newly created contact
             // Throw exception to log
@@ -117,7 +117,7 @@ class VerifyAndCreateSubscriber extends Base
                 $failed += 1;
             }
 
-            $notice = trans('vimport::messages.import.progress.message', [ 'imported' => $processed, 'failed' => $failed ]);
+            $notice = trans('vimport::messages.import.progress.message', ['imported' => $processed, 'failed' => $failed]);
 
             $jobMonitor->updateJsonData([
                 'processed' => $processed,

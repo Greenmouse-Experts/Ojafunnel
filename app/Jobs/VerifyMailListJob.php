@@ -1,10 +1,10 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
-use Acelle\Model\MailList;
+use App\Model\MailList;
 use Exception;
-use Acelle\Library\Traits\Trackable;
+use App\Library\Traits\Trackable;
 use Illuminate\Bus\Batchable;
 
 class VerifyMailListJob extends Base

@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
 use Exception;
 

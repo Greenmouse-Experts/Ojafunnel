@@ -129,6 +129,7 @@ class Customer extends Model
 
     public function campaigns()
     {
+        //dd('hi');
         return $this->hasMany('App\Models\Campaign')->orderBy('created_at', 'desc');
     }
 

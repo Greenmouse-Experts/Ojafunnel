@@ -32,7 +32,7 @@
                     >
                   </li>
                   <li>
-                    <a href="{{route('user.email.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Campaign</a>
+                    <a href="{{route('user.campaign.overview', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Campaign</a>
                   </li>
                   <li>
                     <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Lists</a>
@@ -106,6 +106,7 @@
                         <span key="t-chat">Chat Automation</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('user.automation.contact_list', Auth::user()->username)}}" key="t-tui-calendar">Contact List</a></li>
                         <li><a href="{{route('user.sms.automation', Auth::user()->username)}}" key="t-tui-calendar">SMS Automation</a></li>
                         <li><a href="{{route('user.whatsapp.automation', Auth::user()->username)}}" key="t-tui-calendar">Whatsapp Automation</a></li>
                     </ul>

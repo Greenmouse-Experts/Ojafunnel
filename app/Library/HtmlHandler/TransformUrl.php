@@ -1,11 +1,11 @@
 <?php
 
-namespace Acelle\Library\HtmlHandler;
+namespace App\Library\HtmlHandler;
 
 use League\Pipeline\StageInterface;
-use Acelle\Library\StringHelper;
-use Acelle\Model\TrackingDomain;
-use Acelle\Model\Template;
+use App\Library\StringHelper;
+use App\Models\TrackingDomain;
+use App\Models\Template;
 use Exception;
 
 class TransformUrl implements StageInterface

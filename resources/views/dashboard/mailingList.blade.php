@@ -70,7 +70,7 @@
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>{{$mailinglist->name}}</td>
-                                            <td>{{ number_with_delimiter($mailinglist->readCache('SubscriberCount', 0)) }}</td>
+                                            <td><span class="no-margin text-primary stat-num">{{$mailinglist->subscribers->count() }}</span></td>
                                             <td>
                                                 <div class="single-stat-box pull-left ml-20">
                                                     <span class="no-margin text-primary stat-num">{{ $mailinglist->openUniqRate() }}%</span>

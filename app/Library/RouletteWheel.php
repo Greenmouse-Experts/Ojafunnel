@@ -20,7 +20,7 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Library;
+namespace App\Library;
 
 class RouletteWheel
 {
@@ -31,6 +31,7 @@ class RouletteWheel
      */
     public static function take($a)
     {
+        //dd($a);
         $sum = 0.0;
         $total = array_sum(array_values($a));
         $r = self::frandom();
@@ -48,8 +49,9 @@ class RouletteWheel
             $sum = $newsum;
         }
 
+
         // just in case
-        return array_keys($a)[sizeof($a) - 1];
+        //return array_keys($a)[sizeof($a) - 1];
     }
 
     /**

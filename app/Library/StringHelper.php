@@ -6,21 +6,21 @@
  * Provide string helper methods
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
- * @category   Acelle Library
+ * @category   App Library
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Library;
+namespace App\Library;
 
 use DOMDocument;
 use DomXpath;
@@ -42,7 +42,7 @@ class StringHelper
             return null;
         }
 
-        return str_replace(['+','/','='], ['-','_',''], base64_encode($string));
+        return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($string));
     }
 
     /**
@@ -59,7 +59,7 @@ class StringHelper
             return null;
         }
 
-        return base64_decode(str_replace(['-','_'], ['+','/'], $string));
+        return base64_decode(str_replace(['-', '_'], ['+', '/'], $string));
     }
 
     /**
@@ -102,9 +102,9 @@ class StringHelper
         if ($test) {
             // generate a test MessageId for a test email
             // then replace the uniqid() with 0*13
-            return time().rand(100000, 999999).'.0000000000000@'.$domain;
+            return time() . rand(100000, 999999) . '.0000000000000@' . $domain;
         } else {
-            return time().rand(100000, 999999).'.'.uniqid().'@'.$domain;
+            return time() . rand(100000, 999999) . '.' . uniqid() . '@' . $domain;
         }
     }
 
@@ -211,7 +211,7 @@ class StringHelper
     // Remove from string, use for email addresses
     public static function removeUTF8BOM($text)
     {
-        $bom = pack('H*','EFBBBF');
+        $bom = pack('H*', 'EFBBBF');
 
         // Standard method
         $text = preg_replace("/^$bom/", '', $text);
@@ -219,7 +219,7 @@ class StringHelper
         // More destructive method, as the first method may miss the following ones with more than one BOM:
         // ﻿﻿madrevgra@aol.com
         // ﻿﻿madrasathleticclub@yahoo.com
-        $text = str_replace("\xEF\xBB\xBF",'',$text);
+        $text = str_replace("\xEF\xBB\xBF", '', $text);
         return $text;
     }
 
@@ -464,7 +464,7 @@ class StringHelper
     public static function saveHTMLWithUTF8AndDoctype($document)
     {
         $output = htmlspecialchars_decode(rawurldecode($document->saveHTML($document->documentElement)));
-        $output = '<!DOCTYPE html>'.$output; // saveHTML(params) removes DOCTYPE
+        $output = '<!DOCTYPE html>' . $output; // saveHTML(params) removes DOCTYPE
         return $output;
     }
 
@@ -491,7 +491,7 @@ class StringHelper
     public static function makeTrackingPixel($msgId)
     {
         $url = route('openTrackingUrl', ['message_id' => StringHelper::base64UrlEncode($msgId)], true);
-        return '<img src="'.$url.'" width="0" height="0" alt="" style="visibility:hidden" />';
+        return '<img src="' . $url . '" width="0" height="0" alt="" style="visibility:hidden" />';
     }
 
     public static function generateUniqueName($directory, $name)
@@ -510,7 +510,7 @@ class StringHelper
             }
 
             $base = preg_replace($regxp, '', $name);
-            $newName = $base.'_'.$count.$fileExt;
+            $newName = $base . '_' . $count . $fileExt;
             $path = join_paths($directory, $newName);
             $count += 1;
         }

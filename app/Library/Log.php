@@ -20,11 +20,12 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Library;
+namespace App\Library;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
+use Illuminate\Support\Facades\Log as Logg;
 
 /**
  * Read configuration settings
@@ -42,7 +43,7 @@ class Log
      */
     public static function debug($message)
     {
-        self::$logger->debug($message);
+        Logg::debug($message);
     }
 
     /**
@@ -52,7 +53,8 @@ class Log
      */
     public static function info($message)
     {
-        self::$logger->info($message);
+        //dd($message);
+        Logg::info($message);
     }
 
     /**
@@ -62,7 +64,7 @@ class Log
      */
     public static function notice($message)
     {
-        self::$logger->notice($message);
+        Logg::notice($message);
     }
 
     /**
@@ -72,7 +74,7 @@ class Log
      */
     public static function warning($message)
     {
-        self::$logger->warning($message);
+        Logg::warning($message);
     }
 
     /**
@@ -82,7 +84,7 @@ class Log
      */
     public static function error($message)
     {
-        self::$logger->error($message);
+        Logg::error($message);
     }
 
     /**
@@ -92,7 +94,7 @@ class Log
      */
     public static function critical($message)
     {
-        self::$logger->critical($message);
+        Logg::critical($message);
     }
 
     /**
@@ -102,7 +104,7 @@ class Log
      */
     public static function alert($message)
     {
-        self::$logger->alert($message);
+        Logg::alert($message);
     }
 
     /**
@@ -112,7 +114,7 @@ class Log
      */
     public static function emergency($message)
     {
-        self::$logger->emergency($message);
+        Logg::emergency($message);
     }
 
     /**
@@ -123,14 +125,14 @@ class Log
     public static function fork()
     {
         $pid = getmypid();
-        $output = '[%datetime%] #'.$pid." %level_name%: %message%\n";
+        $output = '[%datetime%] #' . $pid . " %level_name%: %message%\n";
         $formatter = new LineFormatter($output);
 
         $stream = new StreamHandler(self::$path, Logger::INFO);
         $stream->setFormatter($formatter);
 
         self::$logger = new Logger('mailer');
-        self::$logger->pushHandler($stream);
+        Logg::pushHandler($stream);
     }
 
     /**
@@ -141,14 +143,14 @@ class Log
     public static function configure($path)
     {
         $pid = getmypid();
-        $output = '[%datetime%] #'.$pid." %level_name%: %message%\n";
+        $output = '[%datetime%] #' . $pid . " %level_name%: %message%\n";
         $formatter = new LineFormatter($output);
 
         $stream = new StreamHandler($path, Logger::INFO);
         $stream->setFormatter($formatter);
 
         self::$logger = new Logger('mailer');
-        self::$logger->pushHandler($stream);
+        Logg::pushHandler($stream);
         self::$path = $path;
     }
 
@@ -160,7 +162,7 @@ class Log
     public static function create($path, $name = 'default')
     {
         $pid = getmypid();
-        $output = '[%datetime%] #'.$pid." %level_name%: %message%\n";
+        $output = '[%datetime%] #' . $pid . " %level_name%: %message%\n";
         $formatter = new LineFormatter($output);
 
         $stream = new StreamHandler($path, Logger::INFO);

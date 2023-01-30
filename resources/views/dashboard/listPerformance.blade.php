@@ -54,39 +54,8 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <ul class="nav nav-tabs nav-tabs-custom">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#"><i class="bi bi-graph-up"></i> Overview</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{route('user.list.setting', Auth::user()->username)}}"><i class="bi bi-gear"></i> Setting</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <div class="dropdown">
-                                            <a class="nav-link" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="bi bi-person-check"></i> Subscribers <i class="bi bi-caret-up"></i>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="{{route('user.list.subscribers', Auth::user()->username)}}">View all</a></li>
-                                            <li><a class="dropdown-item" href="{{route('user.new.subscribers', Auth::user()->username)}}">Add</a></li>
-                                            <li><a class="dropdown-item" href="{{route('user.import.subscribers', Auth::user()->username)}}">Import</a></li>
-                                             <li><a class="dropdown-item" href="{{route('user.export.subscribers', Auth::user()->username)}}">Export</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="bi bi-layout-three-columns"></i> Segment</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="bi bi-card-checklist"></i> Manage list fields</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="bi bi-columns"></i> Form / Pages</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="bi bi-envelope-check"></i> Email Verifications</a>
-                                    </li>
-                                </ul>
+                                @include('dashboard.list.list-layout')
+                            </div>
                         </div>
                     </div>
                 </div>

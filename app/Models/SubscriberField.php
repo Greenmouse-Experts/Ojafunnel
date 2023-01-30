@@ -6,24 +6,24 @@
  * Model class for subscriber custom fields
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\Traits\QueryHelper;
+use App\Library\Traits\QueryHelper;
 
 class SubscriberField extends Model
 {
@@ -34,7 +34,9 @@ class SubscriberField extends Model
      * @var array
      */
     protected $fillable = [
-        'field_id', 'subscriber_id', 'value',
+        'field_id',
+        'subscriber_id',
+        'value',
     ];
 
     /**
@@ -44,6 +46,6 @@ class SubscriberField extends Model
      */
     public function field()
     {
-        return $this->belongsTo('Acelle\Model\Field');
+        return $this->belongsTo('App\Models\Field');
     }
 }

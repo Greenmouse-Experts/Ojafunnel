@@ -1,11 +1,11 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Model\Source;
+use App\Models\Source;
 use File;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 
 class Product extends Model
 {
@@ -23,13 +23,13 @@ class Product extends Model
     // belongs to customer
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     // belongs to source
     public function source()
     {
-        return $this->belongsTo('Acelle\Model\Source');
+        return $this->belongsTo('App\Models\Source');
     }
 
     public function scopeFilter($query, $attribute, $value)
@@ -43,7 +43,7 @@ class Product extends Model
         if (!empty(trim($keyword))) {
             foreach (explode(' ', trim($keyword)) as $k) {
                 $query = $query->where(function ($q) use ($k) {
-                    $q->orwhere('products.title', 'like', '%'.strtolower($k).'%');
+                    $q->orwhere('products.title', 'like', '%' . strtolower($k) . '%');
                 });
             }
         }
@@ -64,7 +64,7 @@ class Product extends Model
     public function getImageUrl()
     {
         if (file_exists($this->getImagePath())) {
-            return \Acelle\Helpers\generatePublicPath($this->getImagePath());
+            return \App\Helpers\generatePublicPath($this->getImagePath());
         } else {
             return \URL::asset('images/no-product-image.png');
         }

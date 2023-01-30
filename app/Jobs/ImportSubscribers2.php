@@ -1,13 +1,13 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
 use Illuminate\Bus\Batchable;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
 use Exception;
-use Acelle\Library\Traits\Trackable;
+use App\Library\Traits\Trackable;
 
 class ImportSubscribers2 extends Base
 {
@@ -17,7 +17,7 @@ class ImportSubscribers2 extends Base
     public $timeout = 7200;
 
     protected $list;
-    protected $file; // Example: /home/acelle/storage/app/tmp/import-000000.csv
+    protected $file; // Example: /home/App/storage/app/tmp/import-000000.csv
 
     /**
      * Create a new job instance.

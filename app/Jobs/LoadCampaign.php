@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -9,10 +9,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Acelle\Model\Campaign;
-use Acelle\Model\Subscriber;
+use App\Models\Campaign;
+use App\Models\Subscriber;
 use Illuminate\Support\Carbon;
-use Acelle\Library\Traits\Trackable;
+use App\Library\Traits\Trackable;
 
 class LoadCampaign implements ShouldQueue
 {

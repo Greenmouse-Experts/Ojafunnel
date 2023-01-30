@@ -1,10 +1,10 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Model\Product;
-use Acelle\Library\Traits\HasUid;
+use App\Models\Product;
+use App\Library\Traits\HasUid;
 
 class Source extends Model
 {
@@ -27,7 +27,7 @@ class Source extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     /**
@@ -37,7 +37,7 @@ class Source extends Model
      */
     public function mailList()
     {
-        return $this->belongsTo('Acelle\Model\MailList');
+        return $this->belongsTo('App\Models\MailList');
     }
 
     /**
@@ -47,7 +47,7 @@ class Source extends Model
      */
     public function products()
     {
-        return $this->hasMany('Acelle\Model\Product');
+        return $this->hasMany('App\Models\Product');
     }
 
     /**
@@ -88,7 +88,7 @@ class Source extends Model
         if (!empty(trim($keyword))) {
             foreach (explode(' ', trim($keyword)) as $k) {
                 $query = $query->where(function ($q) use ($k) {
-                    $q->orwhere('sources.type', 'like', '%'.strtolower($k).'%');
+                    $q->orwhere('sources.type', 'like', '%' . strtolower($k) . '%');
                 });
             }
         }
@@ -136,7 +136,7 @@ class Source extends Model
      */
     public function classMapping()
     {
-        $class = '\\Acelle\\Model\\' . $this->type;
+        $class = '\\App\\Model\\' . $this->type;
         return $class::find($this->id);
     }
 
@@ -152,13 +152,13 @@ class Source extends Model
         }
 
         // contact
-        $contact = new \Acelle\Model\Contact();
+        $contact = new \App\Models\Contact();
         $contact->address_1 = 'empty';
         $contact->country_id = $this->customer->country_id;
         $contact->save();
 
         // list
-        $list = new \Acelle\Model\MailList();
+        $list = new \App\Models\MailList();
         $list->customer_id = $this->customer_id;
         $list->contact_id = $contact->id;
         $list->name = trans('messages.source.list.default_name', [

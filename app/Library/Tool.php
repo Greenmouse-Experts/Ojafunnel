@@ -20,7 +20,7 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Library;
+namespace App\Library;
 
 use ZipArchive;
 use RecursiveIteratorIterator;
@@ -111,8 +111,8 @@ class Tool
         foreach (timezone_identifiers_list() as $key => $zone) {
             date_default_timezone_set($zone);
             $zones_array[$key]['zone'] = $zone;
-            $zones_array[$key]['text'] = '(GMT'.date('P', $timestamp).') '.$zones_array[$key]['zone'];
-            $zones_array[$key]['order'] = str_replace('-', '1', str_replace('+', '2', date('P', $timestamp))).$zone;
+            $zones_array[$key]['text'] = '(GMT' . date('P', $timestamp) . ') ' . $zones_array[$key]['zone'];
+            $zones_array[$key]['order'] = str_replace('-', '1', str_replace('+', '2', date('P', $timestamp))) . $zone;
         }
 
         // sort by offset
@@ -137,6 +137,24 @@ class Tool
         }
 
         return $arr;
+    }
+
+    public static function uploadImage($file): string
+    {
+        $path = 'mms/';
+        $upload_path = public_path($path);
+
+        if (!file_exists($upload_path)) {
+            mkdir($upload_path, 0777, true);
+        }
+
+        $filename = 'mms_' . time() . '.' . $file->getClientOriginalExtension();
+
+        // save to server
+        $file->move($upload_path, $filename);
+        //dd(asset('/mms') . '/' . $filename);
+        return asset('/mms') . '/' . $filename;
+
     }
 
     /**
@@ -178,7 +196,7 @@ class Tool
         if ($value > 1) {
             for ($i = 0; $i < strlen($phrase); ++$i) {
                 if ($i == strlen($phrase) - 1) {
-                    $plural .= ($phrase[$i] == 'y' && $phrase != 'day') ? 'ies' : (($phrase[$i] == 's' || $phrase[$i] == 'x' || $phrase[$i] == 'z' || $phrase[$i] == 'ch' || $phrase[$i] == 'sh') ? $phrase[$i].'es' : $phrase[$i].'s');
+                    $plural .= ($phrase[$i] == 'y' && $phrase != 'day') ? 'ies' : (($phrase[$i] == 's' || $phrase[$i] == 'x' || $phrase[$i] == 'z' || $phrase[$i] == 'ch' || $phrase[$i] == 'sh') ? $phrase[$i] . 'es' : $phrase[$i] . 's');
                 } else {
                     $plural .= $phrase[$i];
                 }
@@ -491,7 +509,7 @@ class Tool
         }
 
         if (exec_enabled()) {
-            $exec_script = $path.' '.base_path().'/php_bin_test.php 2>&1';
+            $exec_script = $path . ' ' . base_path() . '/php_bin_test.php 2>&1';
             $result = exec($exec_script, $output);
         } else {
             $result = 'ok';
@@ -522,7 +540,8 @@ class Tool
                 'text' => trans('messages.async_job_type'),
                 'description' => trans('messages.async_job_type_desc'),
                 'value' => 'async',
-                'disabled' => true, //exec_enabled(),
+                'disabled' => true,
+                //exec_enabled(),
                 'tooltip' => (!exec_enabled() ? 'Your server does not support async' : ''),
             ];
         }
@@ -672,18 +691,20 @@ class Tool
     public static function showReCaptcha($errors = null)
     {
         ?>
-            <div class="recaptcha-box">
-                <script src='https://www.google.com/recaptcha/api.js?hl=<?php echo language_code() ?>'></script>
-                <div class="g-recaptcha" data-sitekey="6LfyISoTAAAAABJV8zycUZNLgd0sj-sBFjctzXKw"></div>
-                <?php if (isset($errors) && $errors->has('recaptcha_invalid')) {
-            ?>
-                    <span class="help-block text-danger">
-                        <strong><?php echo $errors->first('recaptcha_invalid'); ?></strong>
-                    </span>
-                <?php
-        } ?>
-            </div>
-        <?php
+        <div class="recaptcha-box">
+            <script src='https://www.google.com/recaptcha/api.js?hl=<?php echo language_code() ?>'></script>
+            <div class="g-recaptcha" data-sitekey="6LfyISoTAAAAABJV8zycUZNLgd0sj-sBFjctzXKw"></div>
+            <?php if (isset($errors) && $errors->has('recaptcha_invalid')) {
+                ?>
+                <span class="help-block text-danger">
+                    <strong>
+                        <?php echo $errors->first('recaptcha_invalid'); ?>
+                    </strong>
+                </span>
+            <?php
+            } ?>
+        </div>
+    <?php
     }
 
     /**
@@ -699,11 +720,14 @@ class Tool
 
         // Check recaptch
         $client = new \GuzzleHttp\Client(['verify' => false]);
-        $res = $client->post('https://www.google.com/recaptcha/api/siteverify', ['verify' => false, 'form_params' => [
-            'secret' => '6LfyISoTAAAAAC0hJ916unwi0m_B0p7fAvCRK4Kp',
-            'remoteip' => $request->ip(),
-            'response' => $request->all()['g-recaptcha-response'],
-        ]]);
+        $res = $client->post('https://www.google.com/recaptcha/api/siteverify', [
+            'verify' => false,
+            'form_params' => [
+                'secret' => '6LfyISoTAAAAAC0hJ916unwi0m_B0p7fAvCRK4Kp',
+                'remoteip' => $request->ip(),
+                'response' => $request->all()['g-recaptcha-response'],
+            ]
+        ]);
 
         return json_decode($res->getBody(), true)['success'];
     }
@@ -820,7 +844,7 @@ class Tool
         /** @var SplFileInfo[] $files */
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($folder),
-            RecursiveIteratorIterator::LEAVES_ONLY
+                RecursiveIteratorIterator::LEAVES_ONLY
         );
 
         foreach ($files as $name => $file) {

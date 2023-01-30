@@ -11,6 +11,7 @@ use App\Events\MailListSubscription;
 use App\Models\Setting;
 use App\Models\MailModel\Customer;
 use Exception;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MailListController extends Controller
 {
@@ -195,13 +196,13 @@ class MailListController extends Controller
     {
         // Generate info
         $customer = $request->user()->customer;
-        $list = \App\Models\MailList::findByUid($uid);
+        $list = \App\Models\MailList::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $list)) {
-            return $this->notAuthorized();
-        }
-
+        // if (\Gate::denies('update', $list)) {
+        //     return $this->notAuthorized();
+        // }
+        //dd($list);
         // Get old post values
         if (null !== $request->old()) {
             $list->fill($request->old());
@@ -227,7 +228,7 @@ class MailListController extends Controller
 
         $allowedSingleOptin = Setting::isYes('list.allow_single_optin');
 
-        return view('lists.edit', [
+        return view('dashboard.listSetting', [
             'list' => $list,
             'allowedSingleOptin' => $allowedSingleOptin
         ]);
@@ -248,9 +249,9 @@ class MailListController extends Controller
         $list = \App\Models\MailList::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         // validate and save posted data
         if ($request->isMethod('patch')) {
@@ -281,9 +282,10 @@ class MailListController extends Controller
             $list->log('updated', $request->user()->customer);
 
             // Redirect to my lists page
-            $request->session()->flash('alert-success', trans('messages.list.updated'));
+            //$request->session()->flash('alert-success', trans('messages.list.updated'));
+            Alert::success('Success', 'Mail List Updated Successfully');
 
-            return redirect()->action('MailListController@edit', $list->uid);
+            return back();
         }
     }
 

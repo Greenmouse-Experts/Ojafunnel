@@ -1,10 +1,10 @@
 <?php
 
-namespace Acelle\Library\Traits;
+namespace App\Library\Traits;
 
 use Illuminate\Contracts\Bus\Dispatcher;
 use Exception;
-use Acelle\Model\JobMonitor;
+use App\Models\JobMonitor;
 
 trait Trackable
 {

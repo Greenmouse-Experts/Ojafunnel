@@ -1,8 +1,8 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
-use Acelle\Library\Traits\Trackable;
+use App\Library\Traits\Trackable;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
@@ -23,7 +23,7 @@ class ImportSubscribersJob extends Base
 
     // @todo this should better be a constant
     protected $list;
-    protected $file; // Example: /home/acelle/storage/app/tmp/import-000000.csv
+    protected $file; // Example: /home/App/storage/app/tmp/import-000000.csv
 
     /**
      * Create a new job instance.
@@ -57,7 +57,7 @@ class ImportSubscribersJob extends Base
     {
         // Use a logger to log failed
         $formatter = new LineFormatter("[%datetime%] %channel%.%level_name%: %message%\n");
-        $logfile = $this->file.".log";
+        $logfile = $this->file . ".log";
         $stream = new StreamHandler($logfile, Logger::DEBUG);
         $stream->setFormatter($formatter);
 
@@ -76,7 +76,7 @@ class ImportSubscribersJob extends Base
         $this->list->import(
             $this->file,
             function ($processed, $total, $failed, $message) use ($logger) {
-                $percentage = ($total && $processed) ? (int)($processed*100/$total) : 0;
+                $percentage = ($total && $processed) ? (int) ($processed * 100 / $total) : 0;
 
                 $this->monitor->updateJsonData([
                     'percentage' => $percentage,

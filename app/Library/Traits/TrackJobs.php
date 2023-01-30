@@ -22,7 +22,9 @@ trait TrackJobs
     // OTHERWISE BATCH_ID OR JOB_ID MAY NOT BE AVAILABLE
     public function dispatchWithMonitor($job)
     {
+
         $jobType = get_class($job);
+
         $monitor = JobMonitor::makeInstance($this, $jobType); // QUEUED status
 
         // actually save
@@ -38,6 +40,7 @@ trait TrackJobs
         // Destroy closure attributes which cannot be serialized
         $job->eventAfterDispatched = null; // Destroy the closure
 
+        dd($job);
         // Actually dispatch
         $dispatchedJobId = app(Dispatcher::class)->dispatch($job);
 

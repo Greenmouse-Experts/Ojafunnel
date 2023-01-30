@@ -1,8 +1,8 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
-use Acelle\Library\Log as MailLog;
+use App\Library\Log as MailLog;
 
 class SendConfirmationEmailJob extends Base
 {

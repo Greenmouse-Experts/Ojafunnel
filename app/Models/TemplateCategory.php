@@ -1,9 +1,9 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 
 class TemplateCategory extends Model
 {
@@ -23,6 +23,6 @@ class TemplateCategory extends Model
      */
     public function templates()
     {
-        return $this->belongsToMany('Acelle\Model\Template', 'templates_categories', 'category_id', 'template_id');
+        return $this->belongsToMany('App\Models\Template', 'templates_categories', 'category_id', 'template_id');
     }
 }

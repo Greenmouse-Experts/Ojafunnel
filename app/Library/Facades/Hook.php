@@ -1,9 +1,9 @@
 <?php
 
-namespace Acelle\Library\Facades;
+namespace App\Library\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Acelle\Library\HookManager;
+use App\Library\HookManager;
 
 class Hook extends Facade
 {
