@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -26,6 +25,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone_number')->nullable();
             $table->string('referral_link')->nullable();
+            $table->string('ref_bonus')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('plan')->nullable();
             $table->unsignedInteger('customer_id')->nullable()->index('mailusers_customer_id_foreign');
