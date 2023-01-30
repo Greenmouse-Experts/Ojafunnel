@@ -22,47 +22,47 @@
                 <div class="commerce-con">
                     <form action="">
                         <!-- store name -->
-                        <div class="mb-5 mt-2">
-                            <div class="account-input-div">
-                                <input type="text" class="rounded" placeholder="Enter your shop name" required />
-                                <div class="label-text fs-6">Store</div>
-                            </div>
-                        </div>
-                        <!-- store description -->
-                        <div class="mt-5 mb-3">
-                            <div class="account-input-div">
-                                <textarea type="text" style="height: 100px" class="rounded w-100 p-2 py-3" placeholder="Enter your shop description" required></textarea>
-                                <div class="label-text fs-6">Store Description</div>
-                            </div>
-                        </div>
-                        <!-- store name -->
-                        <div class="mt-3">
-                            <label for="Name" class="fs-5 mt-3">Store Name</label>
-                            <div class="d-flex border-in align-items-center">
-                                <div class="w-50 d-flex ps-3 pt-2" style="color: #714091; background: #efd7ff">
-                                    <p class="mb-2">https://chuka.ojafunnel.cc/store</p>
+                        <div>
+                            <div class="Editt">
+                                <div class="form">
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-4">
+                                            <label for="Name">Store Name</label>
+                                            <input type="text" placeholder="Enter your shop name" required />
+                                        </div>
+                                        <div class="col-lg-12 mb-4">
+                                            <label for="Name">Store Description</label>
+                                            <textarea name="" id="" cols="30" rows="10" placeholder="Enter your shop description" required></textarea>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <label for="Name">Store Name</label>
+                                            <input type="text" value=" https://chuka.ojafunnel.cc/store" name="name" id="myInput" class="input mov" readonly required>
+                                        </div>
+                                        <div class="col-md-1 mt-3 mb-3">
+                                            <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <!-- store theme -->
-                        <div class="mt-5">
+                        <div class="hihj">
                             <label for="theme" class="fs-5"> Store Theme </label>
                             <div class="row mt-2 justify-content-between">
-                                <div class="col-lg-6 theme-select">
-                                    <input type="radio" name="color" id="blue" />
-                                    <input type="radio" name="color" id="purple" />
-                                    <input type="radio" name="color" id="green" />
-                                    <input type="radio" name="color" id="pink" />
-                                    <input type="radio" name="color" id="brown" />
-                                    <input type="radio" name="color" id="navy" />
+                                <div class="col-lg-7 theme-select">
+                                    <input type="color" value="#8DA5FA" />
+                                    <input type="color" value="#F88DFA" />
+                                    <input type="color" value="#8DFA98" />
+                                    <input type="color" value="#F8D3D3" />
+                                    <input type="color" value="#F8FA8D" />
                                 </div>
                                 <div class="col-lg-4 text-end">
-                                    <a href="#" style="color: #714091">Choose another color</a>
+                                    <a href="#" type="color" style="color: #714091">Choose another color</a>
                                 </div>
                             </div>
                         </div>
                         <!-- store logo -->
-                        <div class="mt-5">
+                        <div class="mt-5 hihj">
                             <label for="logo" class="fs-5 mb-3"> Store Logo </label>
                             <div class="logo-input border-in w-full px-5 py-4 pb-5">
                                 <p>upload your store logo</p>
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <!-- buttons -->
-                        <div class="row justify-content-between mt-5">
+                        <div class="row hihj justify-content-between mt-5">
                             <div class="col-6">
                                 <a href="#" class="text-decoration-none">
                                     <button class="btn px-3" style="color: #714091; border: 1px solid #714091">

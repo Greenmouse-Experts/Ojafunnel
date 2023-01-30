@@ -2874,6 +2874,8 @@ textarea.bulk-delete {
   text-decoration: underline;
 }
 .content-top-div {
+  margin-left: 10px;
+  margin-right: 10px;
   display: grid;
   grid-template-columns: 22% 22% 22% 22%;
   justify-content: space-between;
@@ -2881,6 +2883,8 @@ textarea.bulk-delete {
 @media (max-width: 1000px) {
   .content-top-div {
     display: block;
+    margin-left: 1px;
+    margin-right: 1px;
   }
   .email-campaign-row {
     display: block !important;
@@ -2906,7 +2910,7 @@ textarea.bulk-delete {
   display: grid;
   grid-template-columns: 49% 49%;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 15px;
 }
 .products-div,
 .sales-analysis {
@@ -2921,11 +2925,12 @@ textarea.bulk-delete {
   border-radius: 10px;
 }
 .email-campaign-row {
-  margin-top: 30px;
+  margin-top: 25px;
+  margin-bottom: 20px;
 }
 .email-campaign-row {
   display: grid;
-  grid-template-columns: 58% 38%;
+  grid-template-columns: 60% 38%;
 }
 .campaign-div,
 .recent-msg {
@@ -2943,7 +2948,7 @@ textarea.bulk-delete {
   background: green;
 }
 .chat-img img {
-  border-radius: 50%;
+  border-radius: 30%;
 }
 /* start Ends */
 .dashboard-footer {
@@ -3032,14 +3037,15 @@ textarea.bulk-delete {
   overflow: hidden;
   border-radius: 50%;
 }
-
+.hihj{
+  padding: 0px 20px;
+}
 /* e-commerce section styling */
 .commerce-con {
   width: 60%;
   margin: auto;
   background-color: #ffffff;
-  margin-top: 40px;
-  padding: 30px 35px;
+  padding: 20px 5px;
   border-radius: 10px;
 }
 @media (max-width: 1000px) {
@@ -3067,7 +3073,7 @@ textarea.bulk-delete {
 .logo-file {
   width: 50%;
   margin: auto;
-}
+}    
 .logo-input2 {
   border-style: dashed;
   overflow: hidden;
@@ -3076,11 +3082,17 @@ textarea.bulk-delete {
   display: flex;
   justify-content: space-between;
 }
+.labe{
+  border-radius: 50px !important;
+}
 .theme-select input {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  color: blue;
+  border: none !important;
+  padding: 2px;
+  background-color: #fff;
+}
+.theme-select input:focus{
+  outline: none;
+  border: none;
 }
 
 .store-table {

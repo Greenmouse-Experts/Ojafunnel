@@ -44,7 +44,7 @@
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
-                                                    <a href="">
+                                                    <a href="{{route('affiliate')}}">
                                                         Affiliate Marketing 
                                                     </a>
                                                 </h4>
@@ -54,7 +54,7 @@
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
-                                                    <a href="">
+                                                    <a href="{{route('ecommerce')}}">
                                                         Ecommerce 
                                                     </a>
                                                 </h4>
@@ -70,7 +70,7 @@
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
-                                                    <a href="">
+                                                    <a href="{{route('funnelbuilder')}}">
                                                         Funnel Builder 
                                                     </a>
                                                 </h4>
@@ -122,7 +122,7 @@
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
-                                                    <a href="">
+                                                    <a href="{{route('integrations')}}">
                                                         API Integrations 
                                                     </a>
                                                 </h4>
@@ -141,21 +141,21 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="index" class="routers">
+                                    <a href="{{route('affiliate')}}" class="routers">
                                         <a class="dropdown-item">
                                              Affiliate Marketing
                                         </a>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="index" class="routers">
+                                    <a href="{{route('ecommerce')}}" class="routers">
                                         <a class="dropdown-item">
                                              Ecommerce
                                         </a>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="index" class="routers">
+                                    <a href="{{route('funnelbuilder')}}" class="routers">
                                         <a class="dropdown-item">
                                              Funnel Builder
                                         </a>
@@ -183,7 +183,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="index" class="routers">
+                                    <a href="{{route('integrations')}}" class="routers">
                                         <a class="dropdown-item">
                                              API Integrations
                                         </a>

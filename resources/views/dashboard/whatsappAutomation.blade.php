@@ -33,6 +33,55 @@
                                 </div>
                             </div>
                         </div>
+<<<<<<< HEAD
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs nav-tabs-custom">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#">New Campaign</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('user.receive.message', Auth::user()->username)}}">Recieved Messages</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Sent Campaigns</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('user.auto.reply', Auth::user()->username)}}">Auto Reply</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">View Broadcast </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Settings</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="Edit">
+                            <div class="form">
+                                <div class="row">
+                                    <p class="tell mb-4">
+                                        <b>
+                                            Sender Accounts
+                                        </b> <br>
+                                        <span>
+                                            Add one or more whatsapp number to start your automation
+                                        </span>
+                                    </p>
+                                    <div class="col-lg-12">
+                                        <label>Whatsapp Number</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
+                                            </div>
+=======
                         {{-- <div class="py-2">
                             <h4 class="font-600">WhatsApp Automation</h4>
                             <p>
@@ -188,17 +237,18 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
+>>>>>>> 7207286e5441ec516159c115bbccc604a6c73443
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-md-9"></div>
-                                        <div class="col-md-3">
-                                            <div class="boding">
-                                                <button data-bs-toggle="modal" data-bs-target="#emailConfirm">
-                                                    Add New Number
-                                                </button>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-md-8"></div>
+                                            <div class="col-md-4">
+                                                <div class="boding">
+                                                    <button data-bs-toggle="modal" data-bs-target="#emailConfirm">
+                                                        Add New
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -206,42 +256,44 @@
                             </div>
                         </div>
                     </div>
-                    <div class="Edit">
-                        <div class="form">
-                            <div class="row">
-                                <p class="tell mb-4">
-                                    <b>
-                                        Sending Configuration
-                                    </b> <br>
-                                    <span>
-                                        Reduce the chances of geting blocked by setting the speed for bulk
-                                        messages
-                                    </span>
-                                </p>
-                                <div class="col-lg-12">
-                                    <label>Connection Speed :</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <select>
-                                                <option>
-                                                    Fast
-                                                </option>
-                                                <option> Low </option>
-                                                <option> Medium </option>
-                                            </select>
+                    <div class="col-lg-6">
+                        <div class="Edit">
+                            <div class="form">
+                                <div class="row">
+                                    <p class="tell mb-4">
+                                        <b>
+                                            Sending Configuration
+                                        </b> <br>
+                                        <span>
+                                            Reduce the chances of geting blocked by setting the speed for bulk
+                                            messages
+                                        </span>
+                                    </p>
+                                    <div class="col-lg-12">
+                                        <label>Connection Speed :</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <select>
+                                                    <option>
+                                                        Fast
+                                                    </option>
+                                                    <option> Low </option>
+                                                    <option> Medium </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-md-9"></div>
-                                        <div class="col-md-3">
-                                            <div class="boding">
-                                                <button>
-                                                    <a href="" style="color: #fff;">
-                                                        Update Setting
-                                                    </a>
-                                                </button>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-md-8"></div>
+                                            <div class="col-md-4">
+                                                <div class="boding">
+                                                    <button>
+                                                        <a href="" style="color: #fff;">
+                                                            Update Setting
+                                                        </a>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -249,14 +301,17 @@
                             </div>
                         </div>
                     </div>
+<<<<<<< HEAD
+                </div>
+=======
                 </div> --}}
                 <div class="col-lg-2"></div>
+>>>>>>> 7207286e5441ec516159c115bbccc604a6c73443
             </div>
         </div>
     </div>
-</div>
-<!-- End Page-content -->
-<!-- email confirm modal -->
+    <!-- End Page-content -->
+    <!-- email confirm modal -->
     <div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -274,8 +329,7 @@
                                     <label>Phone Number</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="tel" placeholder="+234 800 000 0000" name="name" class="input"
-                                                required>
+                                            <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -283,8 +337,7 @@
                                     <label>Description</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <textarea name="" placeholder="Enter a description, eg for book sales" id=""
-                                                cols="30" rows="5"></textarea>
+                                            <textarea name="" placeholder="Enter a description, eg for book sales" id="" cols="30" rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -297,8 +350,7 @@
                                     </div>
                                     <div class="col-6 text-end">
                                         <a href="#" class="text-decoration-none">
-                                            <button class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                >
+                                            <button class="btn px-4" style="color: #ffffff; background-color: #714091">
                                                 Save Number
                                             </button>
                                         </a>
@@ -311,6 +363,11 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+    <!-- end modal -->
+
+    @endsection
+=======
 <!-- end modal -->
 <style>
     .btn-list{
@@ -330,3 +387,4 @@
     }
 </style>
 @endsection
+>>>>>>> 7207286e5441ec516159c115bbccc604a6c73443

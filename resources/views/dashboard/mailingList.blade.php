@@ -94,14 +94,13 @@
                                             {{-- <td>
                                                 @if($mailinglist->status == 'Active')
                                                 <span class="text-success">{{$mailinglist->status}}</span>
-                                                @else
-                                                <span class="text-danger">{{$mailinglist->status}}</span>
-                                                @endif
+                                            @else
+                                            <span class="text-danger">{{$mailinglist->status}}</span>
+                                            @endif
                                             </td> --}}
                                             <td>{{$mailinglist->created_at->toDayDateTimeString()}}</td>
                                             <td>
-                                                <a href="#" data-popup="tooltip"
-                                                    title="{{ trans('messages.create_subscriber') }}" role="button" class="btn btn-secondary btn-icon " style="padding: 0.321em 0.75em">
+                                                <a href="#" data-popup="tooltip" title="{{ trans('messages.create_subscriber') }}" role="button" class="btn btn-secondary btn-icon " style="padding: 0.321em 0.75em">
                                                     <span class="material-icons-outlined">
                                                         person_add
                                                     </span>
@@ -177,8 +176,10 @@
                 </div>
                 <!--end col-->
             </div>
+            <!--end col-->
         </div>
     </div>
+</div>
 </div>
 <!-- END layout-wrapper -->
 
@@ -224,6 +225,6 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 <!-- end modal -->
 @endsection
