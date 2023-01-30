@@ -58,12 +58,12 @@
                             <div class="pageX" style="color:#000 !important;">
                                 <div class="page-top" style="background-image: url({{$page->thumbnail}});"></div>
                                 <div class="p-3 text-dark">
-                                    <h6>{{$page->name}}</h6>
                                     @if($page->title)
                                     <p>{{$page->title}}</p>
                                     @else
                                     <p>Title</p>
                                     @endif
+                                    <h6>{{$page->name}}</h6>
                                     <div class="list">
                                         <ul class="list-unstyled hstack gap-3 mb-0">
                                             <li title="Edit">
@@ -91,10 +91,16 @@
                                                                 @csrf
                                                                 <div class="form">
                                                                     <div class="col-lg-12">
+                                                                        <label>Title</label>
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 mb-4">
+                                                                                <input type="text" name="title" class="input" value="{{$page->title}}">
+                                                                            </div>
+                                                                        </div>
                                                                         <label>Page Name</label>
                                                                         <div class="row">
                                                                             <div class="col-md-12 mb-4">
-                                                                                <input type="text" placeholder="Your Page Name" name="name" class="input" value="{{$page->name}}">
+                                                                                <input type="text" name="name" class="input" value="{{preg_replace('/\\.[^.\\s]{3,4}$/', '', $page->name)}}">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-lg-12">
@@ -102,14 +108,6 @@
                                                                             <div class="row">
                                                                                 <div class="col-md-12 mb-4">
                                                                                     <input type="file" name="thumbnail" class="input">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-12">
-                                                                            <label>Title</label>
-                                                                            <div class="row">
-                                                                                <div class="col-md-12 mb-4">
-                                                                                    <textarea cols="5" rows="10" valu="{{$page->title}}" name="title">{{$page->title}}</textarea>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -209,10 +207,10 @@
                                 </p>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <label>Page Name </label>
+                                        <label> Title </label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Page Name" name="page_name" class="input" required>
+                                                <input type="text" placeholder="Title" name="title" class="input" required>
                                             </div>
                                         </div>
                                     </div>

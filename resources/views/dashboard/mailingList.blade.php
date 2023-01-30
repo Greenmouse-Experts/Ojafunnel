@@ -40,8 +40,7 @@
                             <a style="background-color: #000;
                             color: #fff;
                             border: none;
-                            padding: 11px 20px 11px 20px;
-" href="{{route('user.create.list', Auth::user()->username)}}">+ Create Mailing List </a>
+                            padding: 11px 20px 11px 20px;" href="{{route('user.create.list', Auth::user()->username)}}">+ Create Mailing List </a>
                         </div>
                     </div>
                 </div>
