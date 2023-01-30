@@ -52,7 +52,7 @@ class SendSms extends Command
         //collect recurring campaign and check status
         $recurring = SmsCampaign::where('schedule_type', 'recurring')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
         $onetime = SmsCampaign::where('schedule_type', 'onetime')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
-
+        //\Log::info(['hi', $onetime , $fromDate, $toDate]);
         if($onetime->count() > 0){
             foreach ($onetime as $sms) {
                 if ($sms->schedule_time < Carbon::now()->toDateTimeString()) {
