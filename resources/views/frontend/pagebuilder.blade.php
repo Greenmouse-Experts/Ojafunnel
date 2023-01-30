@@ -1,237 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="assets/images/Logo-fav.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
     <title> Page Builder | {{config('app.name')}} </title>
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 </head>
+
 <body>
     <!-- Header -->
     <header>
         <nav style="background:linear-gradient(85.46deg, #A219D8 -3.83%, #E656DA 82.54%);" class="navbar navbar-expand-lg fixed-top" id="header-scroll">
-        <div class="container">
-           <a href="{{route('index')}}" class="navbar-brand">
-        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660222222/OjaFunnel-Images/lo_dwxa54.png" draggable="false" alt="OjaFunnel">
-        </a>
-            <button class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="offcanvas offcanvas-end" tabindex="-100" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                    <button data-bs-dismiss="offcanvas">
-                        <i class="bi bi-x-square"></i>
-                    </button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-center flex-grow-1">
-                        <li class="nav-item">
-                            <a href="{{route('index')}}" class="nav-link {{ (request()->is('/')) ? 'active' : '' }}" class="routers">
-                                Home
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle {{ (request()->is('features*')) ? 'active' : '' }}" href="#">
-                                Features
-                            </a>
-                            <div class="dropdown-content container desktop-dropdown">
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <div class="upload">
-                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/growth_pb0d7g.png" draggable="false">
-                                            <span>MARKETING</span>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('emailmarketing')}}">
-                                                        Email Marketing <i class="bi bi-arrow-right-short"></i>
-                                                    </a>
-                                                </h4>
+            <div class="container">
+                <a href="{{route('index')}}" class="navbar-brand">
+                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660222222/OjaFunnel-Images/lo_dwxa54.png" draggable="false" alt="OjaFunnel">
+                </a>
+                <button class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-100" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <button data-bs-dismiss="offcanvas">
+                            <i class="bi bi-x-square"></i>
+                        </button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-center flex-grow-1">
+                            <li class="nav-item">
+                                <a href="{{route('index')}}" class="nav-link {{ (request()->is('/')) ? 'active' : '' }}" class="routers">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle {{ (request()->is('features*')) ? 'active' : '' }}" href="#">
+                                    Features
+                                </a>
+                                <div class="dropdown-content container desktop-dropdown">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="upload">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/growth_pb0d7g.png" draggable="false">
+                                                <span>MARKETING</span>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="">
-                                                        Affiliate Marketing <i class="bi bi-arrow-right-short"></i>
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('emailmarketing')}}">
+                                                            Email Marketing
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="">
-                                                        Ecommerce <i class="bi bi-arrow-right-short"></i>
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="">
+                                                            Affiliate Marketing
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="upload">
-                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/globe_wpfoop.png" draggable="false">
-                                            <span>CREATE AND DESIGN</span>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="">
-                                                        Funnel Builder <i class="bi bi-arrow-right-short"></i>
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="">
+                                                            Ecommerce
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('pagebuilder')}}">
-                                                        Page Builder <i class="bi bi-arrow-right-short"></i>
-                                                    </a>
-                                                </h4>
+                                        <div class="col-lg-3">
+                                            <div class="upload">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/globe_wpfoop.png" draggable="false">
+                                                <span>CREATE AND DESIGN</span>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="upload">
-                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/setting_kzwd29.png" draggable="false">
-                                            <span>AUTOMATIONS</span>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('marketauto')}}">
-                                                        Automations <i class="bi bi-arrow-right-short"></i>
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="">
+                                                            Funnel Builder
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('chatautomation')}}">
-                                                        Chat Automations <i class="bi bi-arrow-right-short"></i>
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('pagebuilder')}}">
+                                                            Page Builder
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="upload">
-                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254551/OjaFunnel-Images/plugin_g09fa1.png" draggable="false">
-                                            <span>MORE</span>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="">
-                                                        API Integrations <i class="bi bi-arrow-right-short"></i>
-                                                    </a>
-                                                </h4>
+                                        <div class="col-lg-3">
+                                            <div class="upload">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/setting_kzwd29.png" draggable="false">
+                                                <span>AUTOMATIONS</span>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('marketauto')}}">
+                                                            Automations
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            </div>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('chatautomation')}}">
+                                                            Chat Automations
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="upload">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254551/OjaFunnel-Images/plugin_g09fa1.png" draggable="false">
+                                                <span>MORE</span>
+                                            </div>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="">
+                                                            API Integrations
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <ul class="dropdown-menu mobile-dropdown" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Email Marketing
+                                <ul class="dropdown-menu mobile-dropdown" aria-labelledby="navbarDropdown">
+                                    <li>
+                                        <a href="{{route('marketauto')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Email Marketing
+                                            </a>
                                         </a>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="index" class="routers">
-                                        <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Affiliate Marketing
+                                    </li>
+                                    <li>
+                                        <a href="index" class="routers">
+                                            <a class="dropdown-item">
+                                                Affiliate Marketing
+                                            </a>
                                         </a>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="index" class="routers">
-                                        <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Ecommerce
+                                    </li>
+                                    <li>
+                                        <a href="index" class="routers">
+                                            <a class="dropdown-item">
+                                                Ecommerce
+                                            </a>
                                         </a>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="index" class="routers">
-                                        <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Funnel Builder
+                                    </li>
+                                    <li>
+                                        <a href="index" class="routers">
+                                            <a class="dropdown-item">
+                                                Funnel Builder
+                                            </a>
                                         </a>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('pagebuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Page Builder
+                                    </li>
+                                    <li>
+                                        <a href="{{route('pagebuilder')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Page Builder
+                                            </a>
                                         </a>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Marketing Automations
+                                    </li>
+                                    <li>
+                                        <a href="{{route('marketauto')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Marketing Automations
+                                            </a>
                                         </a>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('chatautomation')}}" class="routers">
-                                        <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> Chat Automations
+                                    </li>
+                                    <li>
+                                        <a href="{{route('chatautomation')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Chat Automations
+                                            </a>
                                         </a>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="index" class="routers">
-                                        <a class="dropdown-item">
-                                            <i class="bi bi-arrow-right-short"></i> API Integrations
+                                    </li>
+                                    <li>
+                                        <a href="index" class="routers">
+                                            <a class="dropdown-item">
+                                                API Integrations
+                                            </a>
                                         </a>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('faqs')}}" class="nav-link {{ (request()->is('faqs')) ? 'active' : '' }}" class="routers">
-                                FAQs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" class="routers">
-                                Resources
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('contact')}}" class="nav-link {{ (request()->is('contact')) ? 'active' : '' }}" class="routers">
-                                Contact
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="login-div">
-                        <a href="{{route('login')}}" class="btn-login">Login</a>
-                        <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('pricing')}}" class="nav-link {{ (request()->is('pricing')) ? 'active' : '' }}" class="routers">
+                                    Pricing
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('faqs')}}" class="nav-link {{ (request()->is('faqs')) ? 'active' : '' }}" class="routers">
+                                    FAQs
+                                </a>
+                            </li>
+                            <!-- -->
+                            <li class="nav-item">
+                                <a href="{{route('contact')}}" class="nav-link {{ (request()->is('contact')) ? 'active' : '' }}" class="routers">
+                                    Contact
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="login-div">
+                            <a href="{{route('login')}}" class="btn-login">Login</a>
+                            <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </nav>
         <div class="offcanvas offcanvas-end offcanvas-contact-hambuger" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
             <div class="offcanvas-header">
@@ -299,9 +302,11 @@
                         <p>
                             Select a customizable template that best fits your business needs and the look you're going for or use our drag and drop editor to create a unique landing page from scratch.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -334,9 +339,11 @@
                         <p>
                             Landing pages make it easy to capture your visitors’ contact information and move them to the next stage of your funnel. Use segmentation to track your leads lifecycle and follow-up with relevant messaging.
                         </p>
-                        <button>
-                            Explore Now
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -359,9 +366,11 @@
                         <p>
                             Landing pages make it easy to capture your visitors’ contact information and move them to the next stage of your funnel. Use segmentation to track your leads lifecycle and follow-up with relevant messaging.
                         </p>
-                        <button>
-                            Explore Now
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -389,9 +398,11 @@
                         <p>
                             Find what is high converting, ie visitors, clicks, conversions, and revenue, as well as track what content or offerings are most interesting to different audience segments.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -411,7 +422,7 @@
                     <div class="kit-font">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png">
                         <p>
-                            Amet minim mollit non deserunt ullamco est sit aliqua dolor do Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
+                            Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                         </p>
                     </div>
                 </div>
@@ -472,7 +483,7 @@
                 <div class="col-lg-12">
                     <div class="last-fot">
                         <h1>
-                            Helping thousands of businesses succeed,<a href="sign-up">
+                            Helping thousands of businesses succeed,<a href="{{route('login')}}">
                                 join us
                             </a>
                         </h1>
@@ -491,30 +502,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row paff">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-3">
-                            <li>
-                                <a href="{{route('privacy')}}">
-                                    Privacy Policy
-                                </a>
-                            </li>
-                        </div>
-                        <div class="col-sm-3">
-                            <li>
-                                <a href="Term">
-                                    Terms & Condition
-                                </a>
-                            </li>
-                        </div>
-                        <div class="col-sm-3">
-
-                        </div>
-                    </div>
                 </div>
-                <div class="col-lg-3"></div>
                 <div class="col-lg-12">
-                    <div class="last-fott">
+                    <div class="last-fott text-center">
+                        <a href="{{route('privacy')}}">
+                            Privacy Policy
+                        </a>
+                        |
+                        <a href="{{route('terms')}}">
+                            Terms & Condition
+                        </a>
                         <h1>
                             Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
                         </h1>
@@ -526,7 +523,8 @@
     <!-- Footter Ends -->
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
-    <script src="{{URL::asset('assets/js/main.js"')}}></script>
+    <script src="{{URL::asset('assets/js/main.js')}}"></script>
         <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </body>
+
 </html>

@@ -40,8 +40,7 @@
                             <a style="background-color: #000;
                             color: #fff;
                             border: none;
-                            padding: 11px 20px 11px 20px;
-" href="{{route('user.create.list', Auth::user()->username)}}">+ Create Mailing List </a>
+                            padding: 11px 20px 11px 20px;" href="{{route('user.create.list', Auth::user()->username)}}">+ Create Mailing List </a>
                         </div>
                     </div>
                 </div>
@@ -65,15 +64,9 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    @if($mailinglists->isEmpty())
+                                    
                                     <tbody>
-                                        <tr>
-                                            <td class="align-enter text-dark font-15" colspan="7">No Mailing List Added.</td>
-                                        </tr>
-                                    </tbody>
-                                    @else
-                                    @foreach($mailinglists as $key => $mailinglist)
-                                    <tbody>
+                                        @foreach($mailinglists as $key => $mailinglist)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>{{$mailinglist->name}}</td>
@@ -175,9 +168,8 @@
                                                 <!-- end modal -->
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
-                                    @endforeach
-                                    @endif
                                 </table>
                             </div>
                         </div>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Funnel;
+use App\Models\FunnelPage;
 use App\Models\Integration;
 use App\Models\Mailinglist;
 use App\Models\Page;
@@ -293,15 +295,25 @@ class DashboardController extends Controller
 
     public function choose_temp($username)
     {
+        $funnels = Funnel::latest()->where('user_id', Auth::user()->id)->get();
+        
         return view('dashboard.funnelBuilder', [
-            'username' => $username
+            'username' => $username,
+            'funnels' => $funnels
         ]);
     }
 
-    public function use_template($username)
+    public function view_funnel_pages($username, $id)
     {
-        return view('dashboard.useTemplate', [
-            'username' => $username
+        $id = Crypt::decrypt($id);
+        
+        $funnel = Funnel::findorfail($id);
+        $pages = FunnelPage::latest()->where('user_id', Auth::user()->id)->get();
+        
+        return view('dashboard.viewFunnelPage', [
+            'username' => $username,
+            'funnel' => $funnel,
+            'pages' => $pages
         ]);
     }
 
@@ -641,6 +653,66 @@ class DashboardController extends Controller
         return view('dashboard.securitySettings', [
             'username' => $username
         ]);
+    }
+
+    public function getdownlines($array, $parent = 0, $level = 1)
+    {
+        $referedMembers = '';
+        foreach ($array as $key => $entry) {
+            if ($entry->referral_link == $parent) {
+
+                if ($level == 1) {
+                    $levelQuote = "Direct Referral";
+                } else {
+                    $levelQuote = "Indirect Referral";
+                }
+
+                $referedMembers .= "
+              <tr>
+              <td> $key </td>
+              <td> $entry->first_name $entry->last_name</td>
+              <td> $levelQuote </td>" .
+                    '<td><a href="javascript: void(0);" class="badge badge-soft-primary font-size-11 m-1">' . "Tier " . $level . "</a></td>" .
+                    '<td>' . "10%" .'</td>' .
+                    '<td>' . $this->getUserParent($entry->id) . '</td>' .
+                    '<td>' . $this->getUserStatus($entry->id) . '</td>
+              <td>' . $this->getUserRegDate($entry->id) . '</td>
+              </tr>';
+
+                $referedMembers .= $this->getdownlines($array, $entry->id, $level + 1);
+            }
+
+            if ($level == 5) {
+                break;
+            }
+        }
+        return $referedMembers;
+    }
+
+    //Get user Parent
+    function getUserParent($id)
+    {
+        $user = User::where('id', $id)->first();
+        $parent = User::where('id', $user->referral_link)->first();
+        if ($parent) {
+            return "$parent->first_name $parent->last_name";
+        } else {
+            return "null";
+        }
+    }
+
+    function getUserStatus($id)
+    {
+        $user = User::where('id', $id)->first();
+
+        return $user->status;
+    }
+
+    function getUserRegDate($id)
+    {
+        $user = User::where('id', $id)->first();
+
+        return $user->created_at;
     }
 
     public function test()

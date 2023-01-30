@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\SendCodeResetPassword;
 use App\Models\Plan;
 use App\Models\ResetCodePassword;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Notifications\SendMagicLinkNotification;
 use App\Notifications\SendVerificationCode;
@@ -49,7 +50,7 @@ class AuthController extends Controller
             {
                 $user = User::create([
                     'user_type' => 'User',
-                    'affiliate_link' => config('app.name').'-'.strtolower($request->username),
+                    'affiliate_link' => $this->referrer_id_generate(9),
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
                     'username' => strtolower($request->username),
@@ -59,6 +60,13 @@ class AuthController extends Controller
                     'referral_link' => $referrer_id->id,
                     'plan' => $plan->id
                 ]);
+
+                $subscribe_amount = 10000;
+                $array = User::all();
+                $parent = $user->id;
+                
+                $this->getAncestors($array, $subscribe_amount, $parent);
+
             } else {
                 return back()->with([
                     'type' => 'danger',
@@ -73,7 +81,7 @@ class AuthController extends Controller
             {
                 $user = User::create([
                     'user_type' => 'User',
-                    'affiliate_link' => config('app.name').'-'.strtolower($request->username),
+                    'affiliate_link' => $this->referrer_id_generate(7),
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
                     'username' => strtolower($request->username),
@@ -91,7 +99,6 @@ class AuthController extends Controller
             }
         }
         
-
         $code = mt_rand(100000, 999999);
 
         $user->update([
@@ -105,8 +112,105 @@ class AuthController extends Controller
             'type' => 'success',
             'message' => 'Registration Successful, Please verify your account!'
         ]); 
-        
+    }
+
+    function referrer_id_generate($input, $strength = 9) 
+    {
+        $input = '01234567899876543210';
+        $input_length = strlen($input);
+        $random_string = '';
+        for($i = 0; $i < $strength; $i++) {
+            $random_character = $input[mt_rand(0, $input_length - 1)];
+            $random_string .= $random_character;
+        }
     
+        return $random_string;
+    }
+
+    function getAncestors($array, $deposit_amount, $parent = 0, $level = 1)
+    {
+        $referedMembers = '';
+        $parent = User::where('id', $parent)->first();
+        foreach ($array as $entry) {
+            if ($entry->id == $parent->referral_link) {
+                if ($level == 1) {
+                    $earnings = 30 * $deposit_amount / 100;
+                    //add earnings to ancestor balance
+                    $user_wallet = User::where('id', $entry->id)->first();
+                    User::where('id', $entry->id)
+                        ->update([
+                            'wallet' => $user_wallet->wallet + $earnings,
+                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                        ]);
+                    //create history
+                    Transaction::create([
+                        'user_id' => $entry->id,
+                        'amount' => $earnings,
+                        'reference' => 'referralbonus',
+                        'status' => 'Referral Bonus',
+                    ]);
+                } elseif ($level == 2) {
+                    $earnings = 10 * $deposit_amount / 100;
+                    //add earnings to ancestor balance
+                    $user_wallet = User::where('id', $entry->id)->first();
+                    User::where('id', $entry->id)
+                        ->update([
+                            'wallet' => $user_wallet->wallet + $earnings,
+                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                        ]);
+                    //create history
+                    Transaction::create([
+                        'user_id' => $entry->id,
+                        'amount' => $earnings,
+                        'reference' => 'referralbonus',
+                        'status' => 'Referral Bonus',
+                    ]);
+                } elseif ($level == 3) {
+                    $earnings = 5 * $deposit_amount / 100;
+                    //add earnings to ancestor balance
+                    $user_wallet = User::where('id', $entry->id)->first();
+                    User::where('id', $entry->id)
+                        ->update([
+                            'wallet' => $user_wallet->wallet + $earnings,
+                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                        ]);
+                    //create history
+                    Transaction::create([
+                        'user_id' => $entry->id,
+                        'amount' => $earnings,
+                        'reference' => 'referralbonus',
+                        'status' => 'Referral Bonus',
+                    ]);
+                } elseif ($level == 4) {
+                    //dd('here4');
+                    $earnings = 5 * $deposit_amount / 100;
+                    //add earnings to ancestor balance
+                    $user_wallet = User::where('id', $entry->id)->first();
+                    User::where('id', $entry->id)
+                        ->update([
+                            'wallet' => $user_wallet->wallet + $earnings,
+                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                        ]);
+                        //create history
+                        Transaction::create([
+                            'user_id' => $entry->id,
+                            'amount' => $earnings,
+                            'reference' => 'referralbonus',
+                            'status' => 'Referral Bonus',
+                        ]);
+                }
+
+                if ($level == 5) {
+                    break;
+                }
+
+                //$referedMembers .= '- ' . $entry->name . '- Level: '. $level. '- Commission: '.$earnings.'<br/>';
+                $referedMembers .= $this->getAncestors($array, $deposit_amount, $entry->id, $level + 1);
+
+            }
+        }
+
+        return $referedMembers;
     }
 
     public function verify_account($email)
@@ -400,5 +504,10 @@ class AuthController extends Controller
 
         return redirect('/');
         // return Redirect::to('http://localhost:8000');
+    }
+
+    public function general_builder_scan()
+    {
+        dd('yes');
     }
 }
