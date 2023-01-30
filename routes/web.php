@@ -140,6 +140,9 @@ Route::prefix('{username}')->group(function () {
             Route::get('/sms-automation/newsms', [App\Http\Controllers\DashboardController::class, 'newsms'])->name('user.new.sms');
             Route::get('/whatsapp-automation', [App\Http\Controllers\DashboardController::class, 'whatsapp_automation'])->name('user.whatsapp.automation');
             Route::get('/whatsapp-automation/sendbroadcast', [App\Http\Controllers\DashboardController::class, 'sendbroadcast'])->name('user.send.broadcast');
+            Route::get('/whatsapp-automation/sentcampaigns', [App\Http\Controllers\DashboardController::class, 'sentcampaigns'])->name('user.sent.campaigns');
+            Route::get('/whatsapp-automation/receive-message', [App\Http\Controllers\DashboardController::class, 'receive_message'])->name('user.receive.message');
+            Route::get('/whatsapp-automation/auto-reply', [App\Http\Controllers\DashboardController::class, 'auto_reply'])->name('user.auto.reply');
         });
         Route::prefix('/ecommerce')->group(function () {
             Route::get('/my-store', [App\Http\Controllers\DashboardController::class, 'my_store'])->name('user.my.store');

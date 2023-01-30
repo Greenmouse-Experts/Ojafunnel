@@ -43,13 +43,13 @@
                                     <a class="nav-link active" href="#">New Campaign</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Recieved Messages</a>
+                                    <a class="nav-link" href="{{route('user.receive.message', Auth::user()->username)}}">Recieved Messages</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Sent Campaigns</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Auto Reply</a>
+                                    <a class="nav-link" href="{{route('user.auto.reply', Auth::user()->username)}}">Auto Reply</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">View Broadcast </a>

@@ -303,14 +303,15 @@ body {
   overflow: hidden;
   border-radius: 50%;
 }
-
+.hihj{
+  padding: 0px 20px;
+}
 /* e-commerce section styling */
 .commerce-con {
   width: 60%;
   margin: auto;
   background-color: #ffffff;
-  margin-top: 40px;
-  padding: 30px 35px;
+  padding: 20px 5px;
   border-radius: 10px;
 }
 @media (max-width: 1000px) {
@@ -338,7 +339,7 @@ body {
 .logo-file {
   width: 50%;
   margin: auto;
-}
+}    
 .logo-input2 {
   border-style: dashed;
   overflow: hidden;
@@ -347,11 +348,17 @@ body {
   display: flex;
   justify-content: space-between;
 }
+.labe{
+  border-radius: 50px !important;
+}
 .theme-select input {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  color: blue;
+  border: none !important;
+  padding: 2px;
+  background-color: #fff;
+}
+.theme-select input:focus{
+  outline: none;
+  border: none;
 }
 
 .store-table {
