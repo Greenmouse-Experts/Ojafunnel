@@ -47,7 +47,7 @@
                     <a href="{{route('user.automation.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2">Automation Campaign</a>
                   </li>
                 </ul>
-                <li>
+                <!-- <li>
                 <a
                   href="#"
                   id="emailmarketDrop"
@@ -66,6 +66,7 @@
                     >
                   </li>
                 </ul>
+                </li> -->
                 <li>
                     <a href="#" class="has-arrow">
                     <i class="bi bi-envelope"></i>

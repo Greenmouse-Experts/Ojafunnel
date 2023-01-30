@@ -102,8 +102,9 @@
                                         </tr>
                                     </tbody>
                                 @else
-                                @foreach($contact_lists as $key => $item)
+                                
                                 <tbody>
+                                    @foreach($contact_lists as $key => $item)
                                     <tr>
                                         <th scope="row">{{$loop->iteration}}</th>
                                         <td>
@@ -303,8 +304,8 @@
                                         <!-- <td>{{$smsAutomation->opens}}</td> -->
                                         <td>{{$smsAutomation->unsubscribed}}</td> --}}
                                     </tr>
+                                    @endforeach
                                 </tbody>
-                                @endforeach
                                 @endif
                             </table>
                         </div>
