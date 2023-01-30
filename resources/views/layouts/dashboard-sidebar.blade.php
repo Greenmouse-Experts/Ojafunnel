@@ -7,47 +7,38 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
                     <a href="{{route('user.dashboard', Auth::user()->username)}}">
-                    <i class="bi bi-grid"></i>
-                    <span key="t-dashboards">Dashboard</span>
+                        <i class="bi bi-grid"></i>
+                        <span key="t-dashboards">Dashboard</span>
                     </a>
                 </li>
                 <!-- email marketing -->
                 <li>
-                <!-- class="has-arrow waves-effect" -->
-                <a
-                  href="#"
-                  id="emailmarketDrop"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  class="has-arrow"
-                >
-                  <i class="bi bi-envelope-paper"></i>
-                  <span key="t-layouts">Email Marketing </span>
-                </a>
-                <ul class="sub-menu p mt-1" aria-labelledby="emailmarketDrop">
-                  <li>
-                    <a href="{{route('user.email.checker', Auth::user()->username)}}" key="t-vertical" class=""
-                      >Email Checker</a
-                    >
-                  </li>
-                  <li>
-                    <a href="{{route('user.campaign.overview', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Campaign</a>
-                  </li>
-                  <li>
-                    <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Lists</a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{route('user.create.list', Auth::user()->username)}}" key="t-tui-calendar">Create Mail List</a>
+                    <!-- class="has-arrow waves-effect" -->
+                    <a href="#" id="emailmarketDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="has-arrow">
+                        <i class="bi bi-envelope-paper"></i>
+                        <span key="t-layouts">Email Marketing </span>
+                    </a>
+                    <ul class="sub-menu p mt-1" aria-labelledby="emailmarketDrop">
+                        <li>
+                            <a href="{{route('user.email.checker', Auth::user()->username)}}" key="t-vertical" class="">Email Checker</a>
                         </li>
-                        <li><a href="{{route('user.view.list', Auth::user()->username)}}" key="t-tui-calendar">View Mail List</a></li>
+                        <li>
+                            <a href="{{route('user.campaign.overview', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Campaign</a>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Lists</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="{{route('user.create.list', Auth::user()->username)}}" key="t-tui-calendar">Create Mail List</a>
+                                </li>
+                                <li><a href="{{route('user.view.list', Auth::user()->username)}}" key="t-tui-calendar">View Mail List</a></li>
+                            </ul>
+                            <a href="{{route('user.edit.template', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Automation</a>
+                        </li>
+                        <li>
+                            <a href="{{route('user.automation.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2">Automation Campaign</a>
+                        </li>
                     </ul>
-                    <a href="{{route('user.edit.template', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Automation</a>
-                  </li>
-                  <li>
-                    <a href="{{route('user.automation.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2">Automation Campaign</a>
-                  </li>
-                </ul>
-                <!-- <li>
+                    <!-- <li>
                 <a
                   href="#"
                   id="emailmarketDrop"
@@ -69,7 +60,7 @@
                 </li> -->
                 <li>
                     <a href="#" class="has-arrow">
-                    <i class="bi bi-envelope"></i>
+                        <i class="bi bi-envelope"></i>
                         <span key="t-dashboards">Messages</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -79,31 +70,31 @@
                 </li>
                 <li>
                     <a href="{{route('user.choose.temp', Auth::user()->username)}}">
-                    <i class="bi bi-building"></i>
+                        <i class="bi bi-building"></i>
                         <span key="t-chat">Funnel Builder</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('user.page.builder', Auth::user()->username)}}">
-                    <i class="bi bi-calendar2-check"></i>
+                        <i class="bi bi-calendar2-check"></i>
                         <span key="t-chat">Page Builder</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('user.transaction', Auth::user()->username)}}">
-                    <i class="bi bi-bank"></i>
+                        <i class="bi bi-bank"></i>
                         <span key="t-chat">Transactions</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('user.subscription', Auth::user()->username)}}">
-                    <i class="bi bi-award"></i>
+                        <i class="bi bi-award"></i>
                         <span key="t-chat">Subscriptions</span>
                     </a>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                    <i class="bi bi-chat-dots"></i>
+                        <i class="bi bi-chat-dots"></i>
                         <span key="t-chat">Automation</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -114,7 +105,7 @@
                 </li>
                 <li>
                     <a href="#" class="has-arrow">
-                    <i class="bi bi-cart2"></i>
+                        <i class="bi bi-cart2"></i>
                         <span key="t-chat">Ecommerce</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -123,13 +114,13 @@
                 </li>
                 <li>
                     <a href="{{route('user.affiliate.marketing', Auth::user()->username)}}">
-                    <i class="bi bi-bookmark"></i>
+                        <i class="bi bi-bookmark"></i>
                         <span key="t-chat">Affiliate Marketing </span>
                     </a>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                    <i class="bi bi-tag"></i>
+                        <i class="bi bi-tag"></i>
                         <span key="t-chat">Integration</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -139,7 +130,7 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                    <i class="bi bi-book"></i>
+                        <i class="bi bi-book"></i>
                         <span key="t-chat">Learning Management</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -148,7 +139,7 @@
                 </li>
                 <li>
                     <a href="#">
-                    <i class="bi bi-balloon"></i>
+                        <i class="bi bi-balloon"></i>
                         <span key="t-chat">Birthday Modules</span>
                     </a>
                 </li>
@@ -166,13 +157,13 @@
                 </li>
                 <li>
                     <a href="{{route('user.upgrade', Auth::user()->username)}}">
-                    <i class="bi bi-send-check"></i>
+                        <i class="bi bi-send-check"></i>
                         <span key="t-chat">Upgrade</span>
                     </a>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                    <i class="bi bi-sliders2"></i>
+                        <i class="bi bi-sliders2"></i>
                         <span key="t-chat">Settings</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">

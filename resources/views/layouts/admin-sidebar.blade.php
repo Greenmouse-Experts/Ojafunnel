@@ -7,19 +7,19 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
                     <a href="{{route('adminwelcome')}}">
-                        <i class="bi bi-grid-fill"></i>
-                        <span key="t-dashboards">Dashboards</span>
+                        <i class="bi bi-grid"></i>
+                        <span key="t-dashboards">Dashboard</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('view_users')}}">
-                        <i class="bi bi-person-circle"></i>
+                        <i class="bi bi-person"></i>
                         <span key="t-dashboards">Users</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="has-arrow">
-                        <i class="bi bi-plus-circle-fill"></i>
+                        <i class="bi bi-plus-circle"></i>
                         <span key="t-dashboards">Plans</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -35,7 +35,7 @@
                 </li>
                 <li>
                     <a href="#" class="has-arrow">
-                        <i class="bi bi-envelope-check-fill"></i>
+                        <i class="bi bi-envelope-check"></i>
                         <span key="t-chat">Email Marketing</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -52,19 +52,19 @@
                 </li>
                 <li>
                     <a href="{{route('affiliateList')}}">
-                        <i class="bi bi-person-lines-fill"></i>
+                        <i class="bi bi-view-list"></i>
                         <span key="t-dashboards">Affiliate list</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('transactions')}}">
-                        <i class="bi bi-bank2"></i>
+                        <i class="bi bi-bank"></i>
                         <span key="t-chat">Transactions</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="has-arrow">
-                        <i class="fa-solid fa-dumpster"></i>
+                        <i class="bi bi-cart2"></i>
                         <span key="t-chat">Ecommerce</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -83,8 +83,8 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bi bi-chat-dots-fill"></i>
-                        <span key="t-chat">Chat Automation</span>
+                        <i class="bi bi-chat-dots"></i>
+                        <span key="t-chat">Automation</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="#" key="t-tui-calendar">SMS Automation</a></li>
@@ -93,13 +93,13 @@
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fa-solid fa-dumpster"></i>
+                        <i class="bi bi-bookmark"></i>
                         <span key="t-chat">Affiliate Marketing </span>
                     </a>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bi bi-tags-fill"></i>
+                        <i class="bi bi-tags"></i>
                         <span key="t-chat">Integration</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -108,8 +108,29 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bi bi-book"></i>
+                        <span key="t-chat">Learning Management</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="#" key="t-tui-calendar">View Course</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bi bi-balloon"></i>
+                        <span key="t-chat">Birthday Modules</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bi bi-receipt"></i>
+                        <span key="t-chat">Sales Analytics</span>
+                    </a>
+                </li>
+                <li>
                     <a href="#" class="has-arrow">
-                        <i class="bi bi-gear-wide-connected"></i>
+                    <i class="bi bi-sliders2"></i>
                         <span key="t-dashboards">Settings</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
