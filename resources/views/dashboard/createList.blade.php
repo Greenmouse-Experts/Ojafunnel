@@ -145,8 +145,6 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <p class="send">
-                                                Send subscription confirmation email (Double Opt-in)
-
                                                  @if ($allowedSingleOptin)
                                                     @include('helpers.form_control', [
                                                         'type' => 'checkbox',
@@ -160,19 +158,17 @@
                                                 @else
                                                     <input type="hidden" name="subscribe_confirmation" value="1" />
                                                 @endif
-                                                 <div class="when">When people subscribe to your list, send them a subscription confirmation email.</div>
                                             </p>
                                             <p class="send">
-                                                Send unsubscribe notification to subscribers
                                                 @include('helpers.form_control', ['type' => 'checkbox', 'name' => 'unsubscribe_notification', 'value' => $list->unsubscribe_notification, 'options' => [false,true], 'help_class' => 'list', 'rules' => App\Models\MailList::$rules])
-                                                 <div class="when">Send subscribers a final “Goodbye” email to let them know they have unsubscribed.</div>
+
                                             </p>
                                         </div>
                                         <div class="col-md-6">
                                             <p class="send">
-                                                Send a final welcome email
+
                                                 @include('helpers.form_control', ['type' => 'checkbox', 'name' => 'send_welcome_email', 'value' => $list->send_welcome_email, 'options' => [false,true], 'help_class' => 'list', 'rules' => App\Models\MailList::$rules])
-                                                 <div class="when">When people opt-in to your list, send them an email welcoming them to your list. The final welcome email can be edited in the List -> Forms / Pages management</div>
+
                                             </p>
                                         </div>
                                     </div>

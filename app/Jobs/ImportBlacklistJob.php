@@ -1,9 +1,9 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
-use Acelle\Model\Blacklist;
-use Acelle\Library\Traits\Trackable;
+use App\Model\Blacklist;
+use App\Library\Traits\Trackable;
 use Exception;
 
 class ImportBlacklistJob extends Base
@@ -49,7 +49,7 @@ class ImportBlacklistJob extends Base
         ]);
 
         Blacklist::import($this->filepath, $this->customer, function ($processed, $total, $failed, $message) {
-            $percentage = ($total && $processed) ? (int)($processed*100/$total) : 0;
+            $percentage = ($total && $processed) ? (int) ($processed * 100 / $total) : 0;
 
             $this->monitor->updateJsonData([
                 'percentage' => $percentage,

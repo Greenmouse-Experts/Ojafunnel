@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -8,9 +8,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Acelle\Model\Campaign;
+use App\Models\Campaign;
 use Illuminate\Support\Carbon;
-use Acelle\Library\Traits\Trackable;
+use App\Library\Traits\Trackable;
 
 class ScheduleCampaign implements ShouldQueue
 {
@@ -52,7 +52,7 @@ class ScheduleCampaign implements ShouldQueue
             $this->campaign->logger()->info("Launch campaign ---------------------->");
             $this->campaign->launch();
         } catch (\Throwable $e) {
-            $errorMsg = "Error scheduling campaign: ".$e->getMessage()."\n".$e->getTraceAsString();
+            $errorMsg = "Error scheduling campaign: " . $e->getMessage() . "\n" . $e->getTraceAsString();
             $this->campaign->setError($errorMsg);
 
             // To set the job to failed

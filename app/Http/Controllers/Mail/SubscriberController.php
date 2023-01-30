@@ -1,14 +1,16 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Acelle\Library\Log as MailLog;
-use Acelle\Model\EmailVerificationServer;
-use Acelle\Model\MailList;
-use Acelle\Model\Subscriber;
-use Acelle\Model\JobMonitor;
-use Acelle\Library\Facades\Hook;
+use App\Library\Log as MailLog;
+use App\Models\EmailVerificationServer;
+use App\Models\MailList;
+use App\Models\Subscriber;
+use App\Models\JobMonitor;
+use App\Library\Facades\Hook;
+use Auth;
 
 class SubscriberController extends Controller
 {
@@ -34,9 +36,10 @@ class SubscriberController extends Controller
      */
     public function index(Request $request)
     {
-        $list = MailList::findByUid($request->list_uid);
+        $list = MailList::findByUid($request->uid);
 
-        return view('subscribers.index', [
+
+        return view('dashboard.listSubscribers', [
             'list' => $list
         ]);
     }
@@ -51,10 +54,10 @@ class SubscriberController extends Controller
         $list = MailList::findByUid($request->list_uid);
 
         // authorize
-        if (\Gate::denies('read', $list)) {
-            return;
-        }
-
+        // if (\Gate::denies('read', $list)) {
+        //     return;
+        // }
+        dd($request);
         $subscribers = $this->search($list, $request);
         // $total = distinctCount($subscribers);
         $total = $subscribers->count();
@@ -78,14 +81,14 @@ class SubscriberController extends Controller
      */
     public function create(Request $request)
     {
-        $list = MailList::findByUid($request->list_uid);
-        $subscriber = new \Acelle\Model\Subscriber();
+        $list = MailList::findByUid($request->uid);
+        $subscriber = new \App\Models\Subscriber();
         $subscriber->mail_list_id = $list->id;
 
         // authorize
-        if (\Gate::denies('create', $subscriber)) {
-            return $this->noMoreItem();
-        }
+        // if (\Gate::denies('create', $subscriber)) {
+        //     return $this->noMoreItem();
+        // }
 
         // Get old post values
         $values = [];
@@ -99,7 +102,7 @@ class SubscriberController extends Controller
             }
         }
 
-        return view('subscribers.create', [
+        return view('dashboard.newSubscribers', [
             'list' => $list,
             'subscriber' => $subscriber,
             'values' => $values,
@@ -115,13 +118,13 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
-        $list = MailList::findByUid($request->list_uid);
+        $list = MailList::findByUid($request->uid);
         $customer = $request->user()->customer;
 
-        if (!$customer->user->can('addMoreSubscribers', [ $list, $more = 1 ])) {
-            return $this->noMoreItem();
-        }
-
+        // if (!$customer->user->can('addMoreSubscribers', [$list, $more = 1])) {
+        //     return $this->noMoreItem();
+        // }
+        //dd('hii');
         // Validate & and create subscriber
         // Throw ValidationError exception in case of failure
         list($validator, $subscriber) = $list->subscribe($request, Subscriber::SUBSCRIPTION_TYPE_ADDED);
@@ -133,8 +136,8 @@ class SubscriberController extends Controller
         }
 
         // Redirect to my lists page
-        $request->session()->flash('alert-success', trans('messages.subscriber.created'));
-        return redirect()->action('SubscriberController@index', $list->uid);
+        //$request->session()->flash('alert-success', trans('messages.subscriber.created'));
+        return redirect()->back()->with('alert-success', trans('messages.subscriber.created'));
     }
 
     /**
@@ -158,7 +161,7 @@ class SubscriberController extends Controller
     public function edit(Request $request)
     {
         $list = MailList::findByUid($request->list_uid);
-        $subscriber = \Acelle\Model\Subscriber::findByUid($request->uid);
+        $subscriber = \App\Models\Subscriber::findByUid($request->uid);
 
         // authorize
         if (\Gate::denies('update', $subscriber)) {
@@ -199,7 +202,7 @@ class SubscriberController extends Controller
     {
         $customer = $request->user()->customer;
         $list = MailList::findByUid($request->list_uid);
-        $subscriber = \Acelle\Model\Subscriber::findByUid($request->uid);
+        $subscriber = \App\Models\Subscriber::findByUid($request->uid);
 
         // authorize
         if (\Gate::denies('update', $subscriber)) {
@@ -225,7 +228,7 @@ class SubscriberController extends Controller
             // Update field
             $subscriber->updateFields($request->all());
 
-            event(new \Acelle\Events\MailListUpdated($subscriber->mailList));
+            event(new \App\Events\MailListUpdated($subscriber->mailList));
 
             // Log
             $subscriber->log('updated', $customer);
@@ -248,11 +251,12 @@ class SubscriberController extends Controller
     {
         $customer = $request->user()->customer;
         $uids = $request->uids;
+        //dd($uids);
 
         if (!is_array($request->uids)) {
             $uids = explode(',', $request->uids);
         }
-        $subscribers = \Acelle\Model\Subscriber::whereIn('uid', $uids);
+        $subscribers = \App\Models\Subscriber::whereIn('uid', $uids);
         $list = MailList::findByUid($request->list_uid);
 
         // Select all items
@@ -268,23 +272,17 @@ class SubscriberController extends Controller
         // actually delete the subscriber
         foreach ($subscribers->get() as $subscriber) {
             // authorize
-            if (\Gate::allows('delete', $subscriber)) {
-                $subscriber->delete();
-
-                // Log
-                $subscriber->log('deleted', $customer);
-            }
+            $subscriber->delete();
+            // Log
+            $subscriber->log('deleted', $customer);
         }
 
         foreach ($lists as $list) {
-            event(new \Acelle\Events\MailListUpdated($list));
+            event(new \App\Events\MailListUpdated($list));
         }
 
         // Redirect to my lists page
-        return response()->json([
-            "status" => 'success',
-            "message" => trans('messages.subscribers.deleted'),
-        ]);
+        return redirect()->back()->with("message", trans('messages.subscribers.deleted'));
     }
 
     /**
@@ -302,7 +300,7 @@ class SubscriberController extends Controller
         if ($request->select_tool == 'all_items') {
             $subscribers = $this->search($list, $request);
         } else {
-            $subscribers = \Acelle\Model\Subscriber::whereIn(
+            $subscribers = \App\Models\Subscriber::whereIn(
                 'uid',
                 is_array($request->uids) ? $request->uids : explode(',', $request->uids)
             );
@@ -317,7 +315,7 @@ class SubscriberController extends Controller
                 ]);
 
                 // update MailList cache
-                event(new \Acelle\Events\MailListUpdated($subscriber->mailList));
+                event(new \App\Events\MailListUpdated($subscriber->mailList));
 
                 // Log
                 $subscriber->log('subscribed', $customer);
@@ -343,7 +341,7 @@ class SubscriberController extends Controller
         if ($request->select_tool == 'all_items') {
             $subscribers = $this->search($list, $request);
         } else {
-            $subscribers = \Acelle\Model\Subscriber::whereIn(
+            $subscribers = \App\Models\Subscriber::whereIn(
                 'uid',
                 is_array($request->uids) ? $request->uids : explode(',', $request->uids)
             );
@@ -361,7 +359,7 @@ class SubscriberController extends Controller
                 $subscriber->log('unsubscribed', $customer);
 
                 // update MailList cache
-                event(new \Acelle\Events\MailListUpdated($subscriber->mailList));
+                event(new \App\Events\MailListUpdated($subscriber->mailList));
             }
         }
 
@@ -379,29 +377,29 @@ class SubscriberController extends Controller
     public function import(Request $request)
     {
         $customer = $request->user()->customer;
-        $list = MailList::findByUid($request->list_uid);
+        $list = MailList::findByUid($request->uid);
         $currentJob = $list->importJobs()->first();
 
         // authorize
-        if (\Gate::denies('import', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('import', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         $importNotifications = Hook::execute('list_import_notifications');
 
         // GET, has a current job
         if ($currentJob) {
-            return view('subscribers.import', [
+            return view('dashboard.importSubscribers', [
                 'list' => $list,
                 'currentJobUid' => $currentJob->uid,
-                'progressCheckUrl' => action('SubscriberController@importProgress', ['job_uid' => $currentJob->uid, 'list_uid' => $list->uid]),
-                'cancelUrl' => action('SubscriberController@cancelImport', ['job_uid' => $currentJob->uid]),
-                'logDownloadUrl' => action('SubscriberController@downloadImportLog', ['job_uid' => $currentJob->uid]),
+                'progressCheckUrl' => route('user.importProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid, 'list_uid' => $list->uid]),
+                'cancelUrl' => route('user.cancelImport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+                'logDownloadUrl' => route('user.downloadImportLog', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
                 'importNotifications' => $importNotifications,
             ]);
-        // GET, do not have any job
+            // GET, do not have any job
         } else {
-            return view('subscribers.import', [
+            return view('dashboard.importSubscribers', [
                 'list' => $list,
                 'importNotifications' => $importNotifications,
             ]);
@@ -414,8 +412,10 @@ class SubscriberController extends Controller
         $list = MailList::findByUid($request->list_uid);
 
         // Upload to server
-        // Example of outcome: /home/acelle/storage/app/tmp/import-000000.csv
+        // Example of outcome: /home/App/storage/app/tmp/import-000000.csv
+        //dd($request->file('file'));
         $filepath = $list->uploadCsv($request->file('file'));
+        //dd($filepath);
 
         // Use the default way if there is no other plugin
         Hook::registerIfEmpty('dispatch_list_import_job', function ($list, $filepath) {
@@ -426,11 +426,11 @@ class SubscriberController extends Controller
         $currentJob = Hook::perform('dispatch_list_import_job', [$list, $filepath]);
 
         // Return the job information
-        return response()->json([
+        return redirect()->back()->with([
             'currentJobUid' => $currentJob->uid,
-            'progressCheckUrl' => action('SubscriberController@importProgress', ['job_uid' => $currentJob->uid, 'list_uid' => $list->uid]),
-            'cancelUrl' => action('SubscriberController@cancelImport', ['job_uid' => $currentJob->uid]),
-            'logDownloadUrl' => action('SubscriberController@downloadImportLog', ['job_uid' => $currentJob->uid]),
+            'progressCheckUrl' => route('user.importProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid, 'list_uid' => $list->uid]),
+            'cancelUrl' => route('user.cancelImport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+            'logDownloadUrl' => route('user.downloadImportLog', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
         ]);
     }
 
@@ -517,27 +517,27 @@ class SubscriberController extends Controller
      */
     public function export(Request $request)
     {
-        $list = MailList::findByUid($request->list_uid);
+        $list = MailList::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('export', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('export', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         $currentJob = $list->exportJobs()->first();
 
         // GET, has a current job
         if ($currentJob) {
-            return view('subscribers.export', [
+            return view('dashboard.exportSubscribers', [
                 'list' => $list,
                 'currentJobUid' => $currentJob->uid,
-                'progressCheckUrl' => action('SubscriberController@exportProgress', ['job_uid' => $currentJob->uid]),
-                'cancelUrl' => action('SubscriberController@cancelExport', ['job_uid' => $currentJob->uid]),
-                'downloadUrl' => action('SubscriberController@downloadExportedFile', ['job_uid' => $currentJob->uid]),
+                'progressCheckUrl' => route('user.exportProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+                'cancelUrl' => route('user.cancelExport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+                'downloadUrl' => route('user.downloadExportedFile', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
             ]);
-        // GET, do not have any job
+            // GET, do not have any job
         } else {
-            return view('subscribers.export', [
+            return view('dashboard.exportSubscribers', [
                 'list' => $list
             ]);
         }
@@ -554,9 +554,9 @@ class SubscriberController extends Controller
         // Return the job information
         return response()->json([
             'currentJobUid' => $currentJob->uid,
-            'progressCheckUrl' => action('SubscriberController@exportProgress', ['job_uid' => $currentJob->uid]),
-            'cancelUrl' => action('SubscriberController@cancelExport', ['job_uid' => $currentJob->uid]),
-            'downloadUrl' => action('SubscriberController@downloadExportedFile', ['job_uid' => $currentJob->uid]),
+            'progressCheckUrl' => route('user.exportProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+            'cancelUrl' => route('user.cancelExport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+            'downloadUrl' => route('user.downloadExportedFile', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
         ]);
     }
 
@@ -594,7 +594,7 @@ class SubscriberController extends Controller
         if ($request->select_tool == 'all_items') {
             $subscribers = $this->search($from_list, $request)->select('subscribers.*');
         } else {
-            $subscribers = \Acelle\Model\Subscriber::whereIn(
+            $subscribers = \App\Models\Subscriber::whereIn(
                 'uid',
                 is_array($request->uids) ? $request->uids : explode(',', $request->uids)
             );
@@ -608,7 +608,7 @@ class SubscriberController extends Controller
         }
 
         // Trigger updating related campaigns cache
-        event(new \Acelle\Events\MailListUpdated($to_list));
+        event(new \App\Events\MailListUpdated($to_list));
 
         // Log
         $to_list->log('copied', $request->user()->customer, [
@@ -638,7 +638,7 @@ class SubscriberController extends Controller
         if ($request->select_tool == 'all_items') {
             $subscribers = $this->search($from_list, $request)->select('subscribers.*');
         } else {
-            $subscribers = \Acelle\Model\Subscriber::whereIn(
+            $subscribers = \App\Models\Subscriber::whereIn(
                 'uid',
                 is_array($request->uids) ? $request->uids : explode(',', $request->uids)
             );
@@ -652,8 +652,8 @@ class SubscriberController extends Controller
         }
 
         // Trigger updating related campaigns cache
-        event(new \Acelle\Events\MailListUpdated($from_list));
-        event(new \Acelle\Events\MailListUpdated($to_list));
+        event(new \App\Events\MailListUpdated($from_list));
+        event(new \App\Events\MailListUpdated($to_list));
 
         // Log
         $to_list->log('moved', $request->user()->customer, [
@@ -682,7 +682,7 @@ class SubscriberController extends Controller
         if ($request->select_tool == 'all_items') {
             $subscribers = $this->search($from_list, $request);
         } else {
-            $subscribers = \Acelle\Model\Subscriber::whereIn(
+            $subscribers = \App\Models\Subscriber::whereIn(
                 'uid',
                 is_array($request->uids) ? $request->uids : explode(',', $request->uids)
             );
@@ -709,7 +709,7 @@ class SubscriberController extends Controller
             $request->session()->flash('alert-success', trans('messages.verification.finish'));
 
             // update MailList cache
-            event(new \Acelle\Events\MailListUpdated($subscriber->mailList));
+            event(new \App\Events\MailListUpdated($subscriber->mailList));
 
             return redirect()->action('SubscriberController@edit', ['list_uid' => $request->list_uid, 'uid' => $subscriber->uid]);
         } catch (\Exception $e) {
@@ -747,9 +747,9 @@ class SubscriberController extends Controller
     {
         // Get current customer
         if ($request->uid != '0') {
-            $subscriber = \Acelle\Model\Subscriber::findByUid($request->uid);
+            $subscriber = \App\Models\Subscriber::findByUid($request->uid);
         } else {
-            $subscriber = new \Acelle\Model\Subscriber();
+            $subscriber = new \App\Models\Subscriber();
         }
         if (!empty($subscriber->imagePath())) {
             $img = \Image::make($subscriber->imagePath());
@@ -769,7 +769,7 @@ class SubscriberController extends Controller
      */
     public function resendConfirmationEmail(Request $request)
     {
-        $subscribers = \Acelle\Model\Subscriber::whereIn(
+        $subscribers = \App\Models\Subscriber::whereIn(
             'uid',
             is_array($request->uids) ? $request->uids : explode(',', $request->uids)
         );
@@ -781,7 +781,7 @@ class SubscriberController extends Controller
         }
 
         // Launch re-sending job
-        dispatch_now(new \Acelle\Jobs\SendConfirmationEmailJob($subscribers->get(), $list));
+        dispatch_now(new \App\Jobs\SendConfirmationEmailJob($subscribers->get(), $list));
 
         // Redirect to my lists page
         echo trans('messages.subscribers.resend_confirmation_email.being_sent');
@@ -942,7 +942,7 @@ class SubscriberController extends Controller
     {
         // init
         $list = MailList::findByUid($request->list_uid);
-        $subscribers = \Acelle\Model\Subscriber::whereIn('uid', $request->uids);
+        $subscribers = \App\Models\Subscriber::whereIn('uid', $request->uids);
 
         // Select all items
         if ($request->select_tool == 'all_items') {
@@ -951,7 +951,7 @@ class SubscriberController extends Controller
 
         // validate and save posted data
         if ($request->isMethod('post')) {
-            $validator = \Acelle\Model\Subscriber::assginValues($subscribers, $request);
+            $validator = \App\Models\Subscriber::assginValues($subscribers, $request);
 
             // redirect if fails
             if ($validator->fails()) {

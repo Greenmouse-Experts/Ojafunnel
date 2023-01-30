@@ -22,21 +22,16 @@
                                 </button></a>
                         </div>
                     </div>
-                    <div class="d-flex account-nav">
-                        <p class="ps-0 active">Sent SMS</p>
-                        <p>
-                            <a href="#" class="text-decoration-none text-dark">Scheduled SMS</a>
-                        </p>
-                    </div>
+
                     <div class="acc-border"></div>
                 </div>
             </div>
             <!-- store data information-->
-            <div class="container">
+            <div class="">
                 <div class="store-table">
                     <div class="table-head row pt-4">
-                        <div class="col-lg-6">
-                            <h4>Sent SMS</h4>
+                        <div class="col-lg-12">
+                            <h4>Campaigns</h4>
                         </div>
                         <!-- <div class="col-lg-6 search-item">
                             <div class="bg-light search-store border-in flex">
@@ -51,12 +46,14 @@
                                 <tr>
                                     <th scope="col">S/N</th>
                                     <th scope="col">Campaign Name</th>
-                                    <th scope="col">Date Sent</th>
-                                    <th scope="col">SMS Sent</th>
-                                    <th scope="col">Delivered</th>
-                                    <th scope="col">Not Delivered</th>
+                                    <th scope="col">Contact</th>
+                                    <th scope="col">Sent</th>
+                                    <th scope="col">Failed</th>
+                                    <th scope="col">Campaign Type</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
                                     <!-- <th scope="col">Opens</th> -->
-                                    <th scope="col">Unsubscribed</th>
+                                    {{-- <th scope="col">Unsubscribed</th> --}}
                                 </tr>
                             </thead>
                             @if($smsAutomations->isEmpty())
@@ -66,17 +63,63 @@
                                     </tr>
                                 </tbody>
                             @else
-                            @foreach($smsAutomations as $key => $smsAutomation)
+                            @foreach($smsAutomations as $key => $campaign)
                             <tbody>
                                 <tr>
                                     <th scope="row">{{$loop->iteration}}</th>
-                                    <td>{{$smsAutomation->campaign_name}}</td>
-                                    <td>{{$smsAutomation->created_at->toDayDateTimeString()}}</td>
+                                    <td>
+                                        <p class='text-bold-600'> {{$campaign->title}} </p>
+                                        <p class='text-muted'>Created at: {{$campaign->created_at->toDayDateTimeString()}}</p>
+                                    </td>
+                                    <td>
+                                        {{ $campaign->readCache('ContactCount') }}
+                                    </td>
+                                    <td>
+                                        {{ $campaign->readCache('DeliveredCount') }}
+                                    </td>
+                                    <td>
+                                        {{ $campaign->readCache('FailedDeliveredCount') }}
+                                    </td>
+                                    <td>
+                                        {!!$campaign->getCampaignType()!!}
+                                    </td>
+                                    <td>
+                                        {!!$campaign->getStatus()!!}
+                                    </td>
+                                    <td>
+                                        <div class="dropdown dropstart">
+                                            <button class="btn-list dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">
+                                                        Overview
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" type="button" >
+                                                        Edit
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" type="button" >
+                                                        Pause
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" type="button">
+                                                        Delete
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    {{-- <td>{{$smsAutomation->created_at->toDayDateTimeString()}}</td>
                                     <td>{{$smsAutomation->sms_sent}}</td>
                                     <td>{{$smsAutomation->delivered}}</td>
                                     <td>{{$smsAutomation->not_delivered}}</td>
                                     <!-- <td>{{$smsAutomation->opens}}</td> -->
-                                    <td>{{$smsAutomation->unsubscribed}}</td>
+                                    <td>{{$smsAutomation->unsubscribed}}</td> --}}
                                 </tr>
                             </tbody>
                             @endforeach
@@ -90,5 +133,23 @@
     </div>
     <!-- End Page-content -->
 </div>
+
+<style>
+    .btn-list{
+        border: 0;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: #7b7676;
+    }
+    .btn-list .material-icons-outlined{
+        font-size: 16px;
+    }
+    .dropdown-item .material-icons-outlined{
+        font-size: 15px;
+    }
+    .dropdown{
+        display: inline;
+    }
+</style>
 <!-- END layout-wrapper -->
 @endsection

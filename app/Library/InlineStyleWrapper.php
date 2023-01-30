@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Library;
+namespace App\Library;
 
 use Symfony\Component\CssSelector\Exception\ParseException;
 
@@ -290,8 +290,10 @@ class InlineStyleWrapper
     public function getScoreForSelector($selector)
     {
         return array(
-            preg_match_all('/#\w/i', $selector, $result), // ID's
-            preg_match_all('/\.\w/i', $selector, $result), // Classes
+            preg_match_all('/#\w/i', $selector, $result),
+            // ID's
+            preg_match_all('/\.\w/i', $selector, $result),
+            // Classes
             preg_match_all('/^\w|\ \w|\(\w|\:[^not]/i', $selector, $result) // Tags
         );
     }
@@ -341,8 +343,10 @@ class InlineStyleWrapper
     private function _mergeStyles(array $styleA, array $styleB)
     {
         foreach ($styleB as $prop => $val) {
-            if (!isset($styleA[$prop])
-                || substr(str_replace(" ", "", strtolower($styleA[$prop])), -10) !== "!important") {
+            if (
+                !isset($styleA[$prop])
+                || substr(str_replace(" ", "", strtolower($styleA[$prop])), -10) !== "!important"
+            ) {
                 $styleA[$prop] = $val;
             }
         }

@@ -1,24 +1,24 @@
 <?php
 
-namespace Acelle\Library\Traits;
+namespace App\Library\Traits;
 
-use Acelle\Model\Template;
+use App\Models\Template;
 use Exception;
-use Acelle\Library\ExtendedSwiftMessage;
-use Acelle\Model\Setting;
-use Acelle\Library\StringHelper;
+use App\Library\ExtendedSwiftMessage;
+use App\Models\Setting;
+use App\Library\StringHelper;
 use League\Pipeline\PipelineBuilder;
-use Acelle\Library\HtmlHandler\ParseRss;
-use Acelle\Library\HtmlHandler\ReplaceBareLineFeed;
-use Acelle\Library\HtmlHandler\AppendHtml;
-use Acelle\Library\HtmlHandler\TransformTag;
-use Acelle\Library\HtmlHandler\InjectTrackingPixel;
-use Acelle\Library\HtmlHandler\MakeInlineCss;
-use Acelle\Library\HtmlHandler\TransformUrl;
-use Acelle\Library\HtmlHandler\TransformWidgets;
-use Acelle\Library\HtmlHandler\AddDoctype;
-use Acelle\Library\HtmlHandler\RemoveTitleTag;
-use Acelle\Library\Lockable;
+use App\Library\HtmlHandler\ParseRss;
+use App\Library\HtmlHandler\ReplaceBareLineFeed;
+use App\Library\HtmlHandler\AppendHtml;
+use App\Library\HtmlHandler\TransformTag;
+use App\Library\HtmlHandler\InjectTrackingPixel;
+use App\Library\HtmlHandler\MakeInlineCss;
+use App\Library\HtmlHandler\TransformUrl;
+use App\Library\HtmlHandler\TransformWidgets;
+use App\Library\HtmlHandler\AddDoctype;
+use App\Library\HtmlHandler\RemoveTitleTag;
+use App\Library\Lockable;
 use File;
 use Cache;
 
@@ -29,7 +29,7 @@ trait HasTemplate
      */
     public function template()
     {
-        return $this->belongsTo('Acelle\Model\Template');
+        return $this->belongsTo('App\Models\Template');
     }
 
     /**
@@ -150,11 +150,11 @@ trait HasTemplate
         }
 
         $headers = array(
-            'X-Acelle-Campaign-Id' => $this->uid,
-            'X-Acelle-Subscriber-Id' => $subscriber->uid,
-            'X-Acelle-Customer-Id' => $this->customer->uid,
-            'X-Acelle-Message-Id' => $msgId,
-            'X-Acelle-Sending-Server-Id' => $server->uid,
+            'X-App-Campaign-Id' => $this->uid,
+            'X-App-Subscriber-Id' => $subscriber->uid,
+            'X-App-Customer-Id' => $this->customer->uid,
+            'X-App-Message-Id' => $msgId,
+            'X-App-Sending-Server-Id' => $server->uid,
             'Precedence' => 'bulk',
         );
 
@@ -188,7 +188,7 @@ trait HasTemplate
     {
         // build the message
         $customHeaders = $this->getCustomHeaders($subscriber, $this);
-        $msgId = $customHeaders['X-Acelle-Message-Id'];
+        $msgId = $customHeaders['X-App-Message-Id'];
 
         $message = new ExtendedSwiftMessage();
         $message->setId($msgId);

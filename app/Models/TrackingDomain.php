@@ -6,33 +6,33 @@
  * Model class for sending domains
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\MtaSync;
+use App\Library\MtaSync;
 use Mika56\SPFCheck\SPFCheck;
 use Mika56\SPFCheck\DNSRecordGetterDirect;
 use Mika56\SPFCheck\DNSRecordGetter;
 use GuzzleHttp\Client;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 use Validator;
 use Exception;
-use Acelle\Library\StringHelper;
-use function Acelle\Helpers\getAppHost;
+use App\Library\StringHelper;
+use function App\Helpers\getAppHost;
 
 class TrackingDomain extends Model
 {
@@ -48,7 +48,7 @@ class TrackingDomain extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     /**
@@ -82,7 +82,8 @@ class TrackingDomain extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'scheme'
+        'name',
+        'scheme'
     ];
 
     public static function createFromRequest($request)
@@ -148,7 +149,7 @@ class TrackingDomain extends Model
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('tracking_domains.name', 'like', '%'.$keyword.'%');
+                    $q->orwhere('tracking_domains.name', 'like', '%' . $keyword . '%');
                 });
             }
         }
@@ -207,12 +208,12 @@ class TrackingDomain extends Model
 
     public function getUrl()
     {
-        return $this->scheme.'://'.$this->name;
+        return $this->scheme . '://' . $this->name;
     }
 
     public function getVerificationUrl()
     {
-        return $this->getUrl().route('appkey', [], false);
+        return $this->getUrl() . route('appkey', [], false);
     }
 
     public function setVerified()
@@ -244,7 +245,7 @@ class TrackingDomain extends Model
             $client = new Client(['verify' => false]);
             $response = $client->request('GET', $this->getVerificationUrl());
 
-            if ((string)$response->getBody() == get_app_identity()) {
+            if ((string) $response->getBody() == get_app_identity()) {
                 $this->setVerified();
                 $this->save();
             } else {
@@ -272,7 +273,7 @@ class TrackingDomain extends Model
     public function buildTrackingUrl(string $url)
     {
         if (!parse_url($url, PHP_URL_HOST)) {
-            throw new Exception('Cannot build tracking URL with "'.$url.'", a valid URL is required (with leading http:// or https:// or //');
+            throw new Exception('Cannot build tracking URL with "' . $url . '", a valid URL is required (with leading http:// or https:// or //');
         }
 
         // Already a tracking domain

@@ -1,8 +1,8 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
-use Acelle\Library\Traits\Trackable;
+use App\Library\Traits\Trackable;
 use Exception;
 
 class ExportSubscribersJob extends Base

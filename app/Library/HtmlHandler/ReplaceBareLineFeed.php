@@ -1,9 +1,9 @@
 <?php
 
-namespace Acelle\Library\HtmlHandler;
+namespace App\Library\HtmlHandler;
 
 use League\Pipeline\StageInterface;
-use Acelle\Library\StringHelper;
+use App\Library\StringHelper;
 
 class ReplaceBareLineFeed implements StageInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
@@ -8,12 +8,12 @@ use JsonPath\JsonObject;
 use Validator;
 use ZipArchive;
 use Illuminate\Validation\ValidationException;
-use Acelle\Library\Tool;
+use App\Library\Tool;
 use Composer\Autoload\ClassLoader;
 use App;
-use Acelle\Library\Facades\Hook;
+use App\Library\Facades\Hook;
 use Illuminate\Support\Facades\File;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 use Exception;
 
 class Plugin extends Model
@@ -27,7 +27,9 @@ class Plugin extends Model
 
     protected $fillable = ['name', 'title', 'description', 'version'];
     protected $requiredKeys = [
-        'name', 'version', 'app_version'
+        'name',
+        'version',
+        'app_version'
     ];
 
     /**
@@ -50,9 +52,9 @@ class Plugin extends Model
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('plugins.name', 'like', '%'.$keyword.'%')
-                        ->orWhere('plugins.description', 'like', '%'.$keyword.'%')
-                        ->orWhere('plugins.version', 'like', '%'.$keyword.'%');
+                    $q->orwhere('plugins.name', 'like', '%' . $keyword . '%')
+                        ->orWhere('plugins.description', 'like', '%' . $keyword . '%')
+                        ->orWhere('plugins.version', 'like', '%' . $keyword . '%');
                 });
             }
         }
@@ -138,7 +140,7 @@ class Plugin extends Model
         }
 
         // move file to temp place
-        $tmp_path = storage_path('tmp/uploaded_plugin_'.time());
+        $tmp_path = storage_path('tmp/uploaded_plugin_' . time());
         $file_name = $request->file('file')->getClientOriginalName();
         $request->file('file')->move($tmp_path, $file_name);
         $tmp_zip = join_paths($tmp_path, $file_name);
@@ -156,7 +158,7 @@ class Plugin extends Model
         unlink($tmp_zip);
 
         // read plugin file
-        if (!is_file($configFile = $tmp_path.'/composer.json')) {
+        if (!is_file($configFile = $tmp_path . '/composer.json')) {
             throw new \Exception('Invalid plugin package. No meta data found');
         }
 
@@ -228,7 +230,7 @@ class Plugin extends Model
         }
 
         // move file to temp place
-        $tmp_path = storage_path('tmp/uploaded_plugin_'.time());
+        $tmp_path = storage_path('tmp/uploaded_plugin_' . time());
         $file_name = $request->file('file')->getClientOriginalName();
         $request->file('file')->move($tmp_path, $file_name);
         $tmp_zip = join_paths($tmp_path, $file_name);
@@ -246,7 +248,7 @@ class Plugin extends Model
         unlink($tmp_zip);
 
         // read plugin file
-        if (!is_file($configFile = $tmp_path.'/composer.json')) {
+        if (!is_file($configFile = $tmp_path . '/composer.json')) {
             throw new \Exception('Invalid plugin package. No meta data found');
         }
 
@@ -292,8 +294,8 @@ class Plugin extends Model
         $plugin = self::where('name', '=', $config['name'])->first();
         // ->where('type', '=', $config['type'])
         if (!$plugin) {
-            $plugin = new \Acelle\Model\Plugin();
-            $plugin->status = \Acelle\Model\Plugin::STATUS_ACTIVE;
+            $plugin = new \App\Models\Plugin();
+            $plugin->status = \App\Models\Plugin::STATUS_ACTIVE;
         }
         $plugin->name = $config['name'];
         $plugin->title = $config['title'];
@@ -378,11 +380,11 @@ class Plugin extends Model
         /*
         $exist = self::where('name', $config['name'])->first();
         if ($exist && !isset($config['overwrite'])) {
-            if (version_compare($exist->version, $config['version'], '>')) {
-                throw new \Exception("A newer version of the {$config['name']} plugin already exists ({$exist->version}), do you want to replace it?");
-            } else {
-                throw new \Exception("Are you sure you want to overwrite the plugin {$config['name']}, version {$exist->version} with the newer one ({$config['version']})");
-            }
+        if (version_compare($exist->version, $config['version'], '>')) {
+        throw new \Exception("A newer version of the {$config['name']} plugin already exists ({$exist->version}), do you want to replace it?");
+        } else {
+        throw new \Exception("Are you sure you want to overwrite the plugin {$config['name']}, version {$exist->version} with the newer one ({$config['version']})");
+        }
         }
         */
 
@@ -391,17 +393,17 @@ class Plugin extends Model
         $requiredVersion = $config['app_version'];
         $checked = version_compare($currentVersion, $requiredVersion, '>=');
         if (!$checked) {
-            throw new \Exception("The uploaded plugin requires Acelle platform version {$requiredVersion} or higher. The current version is {$currentVersion}");
+            throw new \Exception("The uploaded plugin requires App platform version {$requiredVersion} or higher. The current version is {$currentVersion}");
         }
 
         // // Check license type
         // if (empty(Setting::get('license_type'))) {
-        //     throw new \Exception("The uploaded plugin requires a valid license of Acelle to proceed");
+        //     throw new \Exception("The uploaded plugin requires a valid license of App to proceed");
         // }
 
         // // Check license type
         // if (Setting::get('license_type') != 'extended') {
-        //     throw new \Exception("The uploaded plugin requires an 'Extended' license of Acelle to proceed, your current license is 'Regular'");
+        //     throw new \Exception("The uploaded plugin requires an 'Extended' license of App to proceed, your current license is 'Regular'");
         // }
     }
 
@@ -434,7 +436,7 @@ class Plugin extends Model
 
     public function activate()
     {
-        $hookName = 'activate_plugin_'.$this->name;
+        $hookName = 'activate_plugin_' . $this->name;
         Hook::execute($hookName);
 
         $this->status = self::STATUS_ACTIVE;
@@ -501,7 +503,7 @@ class Plugin extends Model
         foreach ($activePlugins as $plugin) {
             // $boot = $plugin->isActive();
             $boot = true; // need its route registration
-            $errorTitle = 'Cannot load plugin '.$plugin->name;
+            $errorTitle = 'Cannot load plugin ' . $plugin->name;
 
             try {
                 Notification::cleanupDuplicateNotifications($errorTitle);
@@ -546,7 +548,8 @@ class Plugin extends Model
         if (
             array_key_exists('extra', $composerJson) &&
             array_key_exists('laravel', $composerJson['extra']) &&
-            array_key_exists('providers', $composerJson['extra']['laravel'])) {
+            array_key_exists('providers', $composerJson['extra']['laravel'])
+        ) {
             $serviceProviders = $composerJson['extra']['laravel']['providers'];
         }
 
@@ -567,7 +570,7 @@ class Plugin extends Model
         $composer = $plugin->getComposerJson();
 
         if ($plugin->name != $composer['name']) {
-            throw new \Exception("Plugin name in composer.json is expected to be '{$plugin->name}', found '".$composer['name']."'");
+            throw new \Exception("Plugin name in composer.json is expected to be '{$plugin->name}', found '" . $composer['name'] . "'");
         }
 
         $plugin->title = $composer['title'];
@@ -587,7 +590,7 @@ class Plugin extends Model
         foreach ($possibleFileNames as $file) {
             $absPath = $this->getStoragePath($file);
             if (file_exists($absPath)) {
-                return \Acelle\Helpers\generatePublicPath($absPath);
+                return \App\Helpers\generatePublicPath($absPath);
             }
         }
 
@@ -608,7 +611,7 @@ class Plugin extends Model
 
     public function deleteAndCleanup()
     {
-        Hook::execute('delete_plugin_'.$this->name);
+        Hook::execute('delete_plugin_' . $this->name);
 
         $this->deletePluginDirectory();
 
