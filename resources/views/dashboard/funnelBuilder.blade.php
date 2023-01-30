@@ -25,15 +25,6 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <select name="pageTemp" id="" class="px-3 py-2 bg-light rounded mt-3">
-                                <option value="top" disabled selected value>
-                                    Content Type
-                                </option>
-                                <option value="tempOne">Use Cases</option>
-                                <option value="tempTwo">Industry</option>
-                            </select>
-                        </div>
                         <!-- <div class="col-md-3">
                             <div class="form">
                                 <input type="text">
@@ -76,6 +67,7 @@
                                             <td>{{$funnel->folder}}</td>
                                             <td>{{\App\Models\FunnelPage::where('folder_id', $funnel->id)->count()}}</td>
                                             <td>
+                                            <div class="dropdown-center">
                                                 <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                     Options
                                                 </button>
@@ -84,6 +76,7 @@
                                                     <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit-{{$funnel->id}}">Edit</a></li>
                                                     <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$funnel->id}}">Delete</a></li>
                                                 </ul>
+                                            </div>
                                                 <!-- Modal START -->
                                                 <div class="modal fade" id="edit-{{$funnel->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">

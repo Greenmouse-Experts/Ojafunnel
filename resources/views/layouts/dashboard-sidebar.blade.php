@@ -7,8 +7,8 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
                     <a href="{{route('user.dashboard', Auth::user()->username)}}">
-                    <i class="bi bi-grid-fill"></i>
-                    <span key="t-dashboards">Dashboards</span>
+                    <i class="bi bi-grid"></i>
+                    <span key="t-dashboards">Dashboard</span>
                     </a>
                 </li>
                 <!-- email marketing -->
@@ -22,7 +22,7 @@
                   aria-expanded="false"
                   class="has-arrow"
                 >
-                  <i class="bi bi-envelope-paper-fill"></i>
+                  <i class="bi bi-envelope-paper"></i>
                   <span key="t-layouts">Email Marketing </span>
                 </a>
                 <ul class="sub-menu p mt-1" aria-labelledby="emailmarketDrop">
@@ -56,7 +56,7 @@
                   aria-expanded="false"
                   class="has-arrow"
                 >
-                <i class="bx bx-share-alt"></i>
+                <i class="bi bi-share"></i>
                   <span key="t-layouts">Subscribers</span>
                 </a>
                 <ul class="sub-menu p mt-1" aria-labelledby="emailmarketDrop">
@@ -68,7 +68,7 @@
                 </ul>
                 <li>
                     <a href="#" class="has-arrow">
-                        <i class="bi bi-envelope-open-fill"></i>
+                    <i class="bi bi-envelope"></i>
                         <span key="t-dashboards">Messages</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -78,32 +78,32 @@
                 </li>
                 <li>
                     <a href="{{route('user.choose.temp', Auth::user()->username)}}">
-                        <i class="fa-solid fa-building-circle-check"></i>
+                    <i class="bi bi-building"></i>
                         <span key="t-chat">Funnel Builder</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('user.page.builder', Auth::user()->username)}}">
-                        <i class="bi bi-calendar-range-fill"></i>
+                    <i class="bi bi-calendar2-check"></i>
                         <span key="t-chat">Page Builder</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('user.transaction', Auth::user()->username)}}">
-                        <i class="bi bi-bank2"></i>
+                    <i class="bi bi-bank"></i>
                         <span key="t-chat">Transactions</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('user.subscription', Auth::user()->username)}}">
-                    <i class="bi bi-award-fill"></i>
+                    <i class="bi bi-award"></i>
                         <span key="t-chat">Subscriptions</span>
                     </a>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bi bi-chat-dots-fill"></i>
-                        <span key="t-chat">Chat Automation</span>
+                    <i class="bi bi-chat-dots"></i>
+                        <span key="t-chat">Automation</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.automation.contact_list', Auth::user()->username)}}" key="t-tui-calendar">Contact List</a></li>
@@ -113,7 +113,7 @@
                 </li>
                 <li>
                     <a href="#" class="has-arrow">
-                        <i class="fa-solid fa-dumpster"></i>
+                    <i class="bi bi-cart2"></i>
                         <span key="t-chat">Ecommerce</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -122,13 +122,13 @@
                 </li>
                 <li>
                     <a href="{{route('user.affiliate.marketing', Auth::user()->username)}}">
-                        <i class="fa-solid fa-dumpster"></i>
+                    <i class="bi bi-bookmark"></i>
                         <span key="t-chat">Affiliate Marketing </span>
                     </a>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bi bi-tags-fill"></i>
+                    <i class="bi bi-tag"></i>
                         <span key="t-chat">Integration</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -138,46 +138,40 @@
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bi bi-book-half"></i>
+                    <i class="bi bi-book"></i>
                         <span key="t-chat">Learning Management</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="#" key="t-tui-calendar">Create Course</a></li>
                     </ul>
                 </li>
-                <!-- <li>
+                <li>
                     <a href="#">
-                        <i class="bi bi-bar-chart-fill"></i>
+                    <i class="bi bi-balloon"></i>
                         <span key="t-chat">Birthday Modules</span>
                     </a>
-                </li> -->
-                <!-- <li>
+                </li>
+                <li>
                     <a href="#">
-                        <i class="bi bi-bar-chart-fill"></i>
+                        <i class="bi bi-receipt"></i>
                         <span key="t-chat">Sales Analytics</span>
                     </a>
-                </li> -->
+                </li>
                 <li>
                     <a href="{{route('user.reports.analysis', Auth::user()->username)}}">
-                        <i class="bi bi-bar-chart-fill"></i>
+                        <i class="bi bi-bar-chart"></i>
                         <span key="t-chat">Reports & Analysis</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('user.upgrade', Auth::user()->username)}}">
-                    <i class="bi bi-send-check-fill"></i>
+                    <i class="bi bi-send-check"></i>
                         <span key="t-chat">Upgrade</span>
                     </a>
                 </li>
-                <!-- <li class="qeustion">
-                    <a href="{{route('user.help', Auth::user()->username)}}">
-                        <i class="bi bi-question-diamond-fill"></i>
-                        <span key="t-chat">Help</span>
-                    </a>
-                </li> -->
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bi bi-gear-wide-connected"></i>
+                    <i class="bi bi-sliders2"></i>
                         <span key="t-chat">Settings</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
