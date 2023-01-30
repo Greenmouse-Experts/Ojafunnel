@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Library\HtmlHandler;
+namespace App\Library\HtmlHandler;
 
 use League\Pipeline\StageInterface;
 use SimpleXMLElement;

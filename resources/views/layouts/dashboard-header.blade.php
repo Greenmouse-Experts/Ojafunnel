@@ -1,5 +1,5 @@
 <!-- place below the html form -->
-{{-- <script>
+<script>
     var paymentForm = document.getElementById('paymentForm');
     paymentForm.addEventListener("submit", payWithPaystack, false);
 
@@ -22,9 +22,10 @@
         });
     handler.openIframe();
   }
-</script> --}}
+</script>
 
 <header id="page-topbar">
+    @include('sweetalert::alert')
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->

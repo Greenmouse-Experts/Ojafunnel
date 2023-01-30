@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -9,10 +9,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Acelle\Model\Subscriber;
-use Acelle\Library\QuotaManager;
-use Acelle\Library\Exception\NoCreditsLeft;
-use Acelle\Library\Exception\QuotaExceeded;
+use App\Model\Subscriber;
+use App\Library\QuotaManager;
+use App\Library\Exception\NoCreditsLeft;
+use App\Library\Exception\QuotaExceeded;
 use Exception;
 
 class SendMessage implements ShouldQueue
@@ -90,8 +90,8 @@ class SendMessage implements ShouldQueue
             // Count related quota trackers
             // Important: sacrisfy server credits, put quota check for server before that of subscription
             // Otherwise, it may cost 1 subscription's credit (shown to user) every time the job is release back to queue
-            QuotaManager::with($this->server, 'send')->enforce();  // First
-            QuotaManager::with($subscription, 'send')->enforce();  // Later
+            QuotaManager::with($this->server, 'send')->enforce(); // First
+            QuotaManager::with($subscription, 'send')->enforce(); // Later
 
             // Actually send (or throw an exception)
             $sent = $this->server->send($message);

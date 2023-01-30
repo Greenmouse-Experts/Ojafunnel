@@ -1,11 +1,11 @@
 <?php
 
-namespace Acelle\Library\HtmlHandler;
+namespace App\Library\HtmlHandler;
 
 use League\Pipeline\StageInterface;
-use Acelle\Library\StringHelper;
-use Acelle\Model\Template;
-use Acelle\Model\Product;
+use App\Library\StringHelper;
+use App\Models\Template;
+use App\Models\Product;
 use Exception;
 
 class TransformWidgets implements StageInterface
@@ -33,12 +33,12 @@ class TransformWidgets implements StageInterface
         $_this = $this;
         return StringHelper::updateHtml($html, function ($dom) use ($_this) {
             $finder = new \DOMXPath($dom);
-            $classname="product-list-widget";
+            $classname = "product-list-widget";
             $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
 
             foreach ($nodes as $node) {
                 $pList = $node->getElementsByTagName('products')[0];
-                $pHtml =  Product::generateWidgetProductListHtmlContent([
+                $pHtml = Product::generateWidgetProductListHtmlContent([
                     'count' => $node->getAttribute('data-count'),
                     'cols' => $node->getAttribute('data-cols'),
                     'sort' => $node->getAttribute('data-sort'),
@@ -55,7 +55,7 @@ class TransformWidgets implements StageInterface
         $_this = $this;
         return StringHelper::updateHtml($html, function ($dom) use ($_this) {
             $finder = new \DOMXPath($dom);
-            $classname="product-widget";
+            $classname = "product-widget";
             $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
 
             foreach ($nodes as $node) {
@@ -69,7 +69,7 @@ class TransformWidgets implements StageInterface
 
                     $_this->update_html($dom, $node, $html);
                 } else {
-                    $_this->update_html($dom, $node, '<div class="alert alert-warning text-center">'.trans('messages.template.no_product_selected').'</div>');
+                    $_this->update_html($dom, $node, '<div class="alert alert-warning text-center">' . trans('messages.template.no_product_selected') . '</div>');
                 }
             }
         });
@@ -77,7 +77,7 @@ class TransformWidgets implements StageInterface
 
     public function get_inner_html($node)
     {
-        $innerHTML= '';
+        $innerHTML = '';
         $children = $node->childNodes;
         foreach ($children as $child) {
             $innerHTML .= $child->ownerDocument->saveXML($child);

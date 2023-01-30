@@ -1,7 +1,8 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class SegmentController extends Controller
@@ -13,7 +14,7 @@ class SegmentController extends Controller
      */
     public function index(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
 
         return view('segments.index', [
             'list' => $list,
@@ -27,8 +28,8 @@ class SegmentController extends Controller
      */
     public function listing(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $segments = \Acelle\Model\Segment::search($request)->paginate($request->per_page);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $segments = \App\Models\Segment::search($request)->paginate($request->per_page);
 
         foreach ($segments as $segment) {
             $segment->updateCacheDelayed();
@@ -47,8 +48,8 @@ class SegmentController extends Controller
      */
     public function create(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $segment = new \Acelle\Model\Segment();
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $segment = new \App\Models\Segment();
         $segment->mail_list_id = $list->id;
 
         // authorize
@@ -62,7 +63,7 @@ class SegmentController extends Controller
 
             $segment->segmentConditions = collect();
             foreach ($request->old()['conditions'] as $key => $item) {
-                $condition = new \Acelle\Model\SegmentCondition();
+                $condition = new \App\Models\SegmentCondition();
                 $condition->uid = $key;
                 $condition->fill($item);
                 $segment->segmentConditions->push($condition);
@@ -85,8 +86,8 @@ class SegmentController extends Controller
     public function store(Request $request)
     {
         $user = $request->user();
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $segment = new \Acelle\Model\Segment();
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $segment = new \App\Models\Segment();
         $segment->mail_list_id = $list->id;
 
         // authorize
@@ -96,16 +97,16 @@ class SegmentController extends Controller
 
         // validate and save posted data
         if ($request->isMethod('post')) {
-            $rules = \Acelle\Model\Segment::$rules;
+            $rules = \App\Models\Segment::$rules;
 
             // addtion validates
             $empty = false;
             if (isset($request->conditions)) {
                 foreach ($request->conditions as $key => $param) {
-                    $rules['conditions.'.$key.'.field_id'] = 'required';
-                    $rules['conditions.'.$key.'.operator'] = 'required';
+                    $rules['conditions.' . $key . '.field_id'] = 'required';
+                    $rules['conditions.' . $key . '.operator'] = 'required';
                     if (!in_array($param['operator'], ['blank', 'not_blank'])) {
-                        $rules['conditions.'.$key.'.value'] = 'required';
+                        $rules['conditions.' . $key . '.value'] = 'required';
                     }
                 }
             } else {
@@ -124,10 +125,10 @@ class SegmentController extends Controller
 
             // save conditions
             foreach ($request->conditions as $key => $param) {
-                $condition = new \Acelle\Model\SegmentCondition();
+                $condition = new \App\Models\SegmentCondition();
                 $condition->fill($param);
                 $condition->segment_id = $segment->id;
-                $field = \Acelle\Model\Field::findByUid($param['field_id']);
+                $field = \App\Models\Field::findByUid($param['field_id']);
                 if (is_object($field)) {
                     $condition->field_id = $field->id;
                 } else {
@@ -167,8 +168,8 @@ class SegmentController extends Controller
      */
     public function subscribers(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $segment = \Acelle\Model\Segment::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $segment = \App\Models\Segment::findByUid($request->uid);
 
         return view('segments.subscribers', [
             'subscribers' => $segment->subscribers(),
@@ -186,8 +187,8 @@ class SegmentController extends Controller
      */
     public function listing_subscribers(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $segment = \Acelle\Model\Segment::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $segment = \App\Models\Segment::findByUid($request->uid);
 
         $subscribers = $segment->subscribers($request);
         $total = $subscribers->count();
@@ -214,8 +215,8 @@ class SegmentController extends Controller
      */
     public function edit(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $segment = \Acelle\Model\Segment::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $segment = \App\Models\Segment::findByUid($request->uid);
 
         // authorize
         if (\Gate::denies('update', $segment)) {
@@ -228,7 +229,7 @@ class SegmentController extends Controller
 
             $segment->segmentConditions = collect([]);
             foreach ($request->old()['conditions'] as $key => $item) {
-                $condition = new \Acelle\Model\SegmentCondition();
+                $condition = new \App\Models\SegmentCondition();
                 $condition->uid = $key;
                 $condition->fill($item);
                 $segment->segmentConditions->push($condition);
@@ -252,8 +253,8 @@ class SegmentController extends Controller
     public function update(Request $request, $id)
     {
         $user = $request->user();
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $segment = \Acelle\Model\Segment::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $segment = \App\Models\Segment::findByUid($request->uid);
 
         // authorize
         if (\Gate::denies('update', $segment)) {
@@ -262,16 +263,16 @@ class SegmentController extends Controller
 
         // validate and save posted data
         if ($request->isMethod('patch')) {
-            $rules = \Acelle\Model\Segment::$rules;
+            $rules = \App\Models\Segment::$rules;
 
             // addtion validates
             $empty = false;
             if (isset($request->conditions)) {
                 foreach ($request->conditions as $key => $param) {
-                    $rules['conditions.'.$key.'.field_id'] = 'required';
-                    $rules['conditions.'.$key.'.operator'] = 'required';
+                    $rules['conditions.' . $key . '.field_id'] = 'required';
+                    $rules['conditions.' . $key . '.operator'] = 'required';
                     if (!in_array($param['operator'], ['blank', 'not_blank'])) {
-                        $rules['conditions.'.$key.'.value'] = 'required';
+                        $rules['conditions.' . $key . '.value'] = 'required';
                     }
                 }
             } else {
@@ -290,10 +291,10 @@ class SegmentController extends Controller
             // save conditions
             $segment->segmentConditions()->delete();
             foreach ($request->conditions as $key => $param) {
-                $condition = new \Acelle\Model\SegmentCondition();
+                $condition = new \App\Models\SegmentCondition();
                 $condition->fill($param);
                 $condition->segment_id = $segment->id;
-                $field = \Acelle\Model\Field::findByUid($param['field_id']);
+                $field = \App\Models\Field::findByUid($param['field_id']);
                 if (is_object($field)) {
                     $condition->field_id = $field->id;
                 } else {
@@ -325,7 +326,7 @@ class SegmentController extends Controller
      */
     public function delete(Request $request)
     {
-        $items = \Acelle\Model\Segment::whereIn(
+        $items = \App\Models\Segment::whereIn(
             'uid',
             is_array($request->uids) ? $request->uids : explode(',', $request->uids)
         );
@@ -358,7 +359,7 @@ class SegmentController extends Controller
      */
     public function sample_condition(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
 
         return view('segments._sample_condition', [
             'list' => $list,
@@ -374,7 +375,7 @@ class SegmentController extends Controller
      */
     public function selectBox(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
 
         return view('segments._select_box', [
             'options' => collect($list->readCache('SegmentSelectOptions', [])),
@@ -391,7 +392,7 @@ class SegmentController extends Controller
      */
     public function conditionValueControl(Request $request)
     {
-        $field = \Acelle\Model\Field::findByUid($request->field_uid);
+        $field = \App\Models\Field::findByUid($request->field_uid);
 
         return view('segments._condition_value_control', [
             'operator' => $request->operator,

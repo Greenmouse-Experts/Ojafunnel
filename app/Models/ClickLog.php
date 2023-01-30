@@ -6,25 +6,25 @@
  * Model class for click logs
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Events\CampaignUpdated;
-use Acelle\Library\StringHelper;
+use App\Events\CampaignUpdated;
+use App\Library\StringHelper;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 
@@ -89,12 +89,12 @@ class ClickLog extends Model
 
     private static function validateUrl($url)
     {
-        $value = [ 'url' => $url ];
-        $rules = [ 'url' => 'required|url' ];
+        $value = ['url' => $url];
+        $rules = ['url' => 'required|url'];
         $validator = Validator::make($value, $rules);
 
         if ($validator->fails()) {
-            throw new Exception('Invalid URL: '.$url);
+            throw new Exception('Invalid URL: ' . $url);
         }
     }
 
@@ -105,7 +105,7 @@ class ClickLog extends Model
      */
     public function trackingLog()
     {
-        return $this->belongsTo('Acelle\Model\TrackingLog', 'message_id', 'message_id');
+        return $this->belongsTo('App\Models\TrackingLog', 'message_id', 'message_id');
     }
 
     /**
@@ -138,11 +138,11 @@ class ClickLog extends Model
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('campaigns.name', 'like', '%'.$keyword.'%')
-                        ->orwhere('click_logs.ip_address', 'like', '%'.$keyword.'%')
-                        ->orwhere('click_logs.url', 'like', '%'.$keyword.'%')
-                        ->orwhere('sending_servers.name', 'like', '%'.$keyword.'%')
-                        ->orwhere('subscribers.email', 'like', '%'.$keyword.'%');
+                    $q->orwhere('campaigns.name', 'like', '%' . $keyword . '%')
+                        ->orwhere('click_logs.ip_address', 'like', '%' . $keyword . '%')
+                        ->orwhere('click_logs.url', 'like', '%' . $keyword . '%')
+                        ->orwhere('sending_servers.name', 'like', '%' . $keyword . '%')
+                        ->orwhere('subscribers.email', 'like', '%' . $keyword . '%');
                 });
             }
         }

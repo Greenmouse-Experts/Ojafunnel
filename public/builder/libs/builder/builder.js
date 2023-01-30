@@ -1823,16 +1823,23 @@ Vvveb.Builder = {
 	saveAjax: function(fileName, startTemplateUrl, callback, saveUrl)
 	{
 		var data = {};
+		// var id = $('#id').val();
+		data["id"] = $("input[name=id]").val();
 		data["file"] = (fileName && fileName != "") ? fileName : Vvveb.FileManager.getCurrentFileName();
 		data["startTemplateUrl"] = startTemplateUrl;
 		if (!startTemplateUrl || startTemplateUrl == null)
 		{
 			data["html"] = this.getHtml();
 		}
-
+		
+		$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        })
 		$.ajax({
 			type: "POST",
-			url: saveUrl,//set your server side save script url
+			url: saveUrl, //set your server side save script url
 			data: data,
 			cache: false,
 			success: function (data) {

@@ -4,18 +4,18 @@
  * Globally available helper methods.
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
 /**
@@ -27,7 +27,7 @@
  */
 function table($name)
 {
-    return \DB::getTablePrefix().$name;
+    return \DB::getTablePrefix() . $name;
 }
 
 /**
@@ -98,7 +98,7 @@ function join_paths()
     $paths = array();
     foreach (func_get_args() as $arg) {
         if (preg_match('/http:\/\//i', $arg)) {
-            throw new \Exception('Path contains http://! Use `join_url` instead. Error for '.implode('/', func_get_args()));
+            throw new \Exception('Path contains http://! Use `join_url` instead. Error for ' . implode('/', func_get_args()));
         }
 
         if ($arg !== '') {
@@ -238,7 +238,7 @@ function isSiteDemo()
 function language_code()
 {
     // Get default language code from setting
-    $default_language = \Acelle\Model\Language::find(\Acelle\Model\Setting::get('default_language'));
+    $default_language = \App\Models\Language::find(\App\Models\Setting::get('default_language'));
 
     if (isset($_COOKIE['last_language_code'])) {
         $language_code = $_COOKIE['last_language_code'];
@@ -258,7 +258,7 @@ function language_code()
  */
 function language()
 {
-    return \Acelle\Model\Language::where('code', '=', language_code())->first();
+    return \App\Models\Language::where('code', '=', language_code())->first();
 }
 
 /**
@@ -302,7 +302,7 @@ function Dot2LongIPv6($IPaddr)
     while ($bits >= 0) {
         $bin = sprintf('%08b', (ord($int[$bits])));
         if ($ipv6long) {
-            $ipv6long = $bin.$ipv6long;
+            $ipv6long = $bin . $ipv6long;
         } else {
             $ipv6long = $bin;
         }
@@ -333,9 +333,9 @@ function optimized_paginate($builder, $perPage = 15, $columns = null, $pageName 
     $results = $total ? $builder->forPage($page, $perPage)->get($columns) : collect([]);
 
     return new \Illuminate\Pagination\LengthAwarePaginator($results, $total, $perPage, $page, [
-    'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(),
-    'pageName' => $pageName,
-  ]);
+        'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(),
+        'pageName' => $pageName,
+    ]);
 }
 
 /**
@@ -476,7 +476,7 @@ function format_number($number)
  *
  * @return string
  */
-function format_price($price, $format = '{PRICE}', $html=false)
+function format_price($price, $format = '{PRICE}', $html = false)
 {
     if ($html) {
         $html = str_replace('{PRICE}', ' <span class="p-amount">' . format_number($price) . '</span> ', $format);
@@ -500,15 +500,15 @@ function isInitiated()
 function formatSizeUnits($bytes)
 {
     if ($bytes >= 1073741824) {
-        $bytes = number_format($bytes / 1073741824, 2).' GB';
+        $bytes = number_format($bytes / 1073741824, 2) . ' GB';
     } elseif ($bytes >= 1048576) {
-        $bytes = number_format($bytes / 1048576, 2).' MB';
+        $bytes = number_format($bytes / 1048576, 2) . ' MB';
     } elseif ($bytes >= 1024) {
-        $bytes = number_format($bytes / 1024, 2).' KB';
+        $bytes = number_format($bytes / 1024, 2) . ' KB';
     } elseif ($bytes > 1) {
-        $bytes = $bytes.' bytes';
+        $bytes = $bytes . ' bytes';
     } elseif ($bytes == 1) {
-        $bytes = $bytes.' byte';
+        $bytes = $bytes . ' byte';
     } else {
         $bytes = '0 bytes';
     }
@@ -533,7 +533,7 @@ function rand_item($arr)
  */
 function toDateString($datetime)
 {
-    return \Acelle\Library\Tool::dateTime($datetime)->format('Y-m-d');
+    return \App\Library\Tool::dateTime($datetime)->format('Y-m-d');
 }
 
 /**
@@ -543,7 +543,7 @@ function toDateString($datetime)
  */
 function toTimeString($datetime)
 {
-    return \Acelle\Library\Tool::dateTime($datetime)->format('h:i A');
+    return \App\Library\Tool::dateTime($datetime)->format('h:i A');
 }
 
 /**
@@ -558,7 +558,7 @@ function checkEmail($email)
 
 function demo_auth()
 {
-    $auth = \Acelle\Model\User::getAuthenticateFromFile();
+    $auth = \App\Models\User::getAuthenticateFromFile();
 
     return [
         'email' => isset($auth['email']) ? $auth['email'] : '',
@@ -577,7 +577,7 @@ function quoteDotEnvValue($value)
 
     if ($containsSharp) {
         $value = str_replace('"', '\"', $value);
-        $value = '"'.$value.'"';
+        $value = '"' . $value . '"';
     }
 
     return $value;
@@ -632,7 +632,7 @@ function controllerAction()
 {
     // GET FROM SCREEN OPTION
     $controller = explode('\\', request()->route()->getAction()['controller']);
-    return $controller[count($controller)-1];
+    return $controller[count($controller) - 1];
 }
 
 /**
@@ -675,13 +675,13 @@ function cursorIterate($query, $orderBy, $size, $callback)
  * Convert html to inline.
  *
  * @todo not very OOP here, consider moving this to a Helper instead
-*/
+ */
 function makeInlineCss($html, array $cssFiles)
 {
     // disable warning when parsing html content
     libxml_use_internal_errors(true);
 
-    $htmldoc = new \Acelle\Library\InlineStyleWrapper($html);
+    $htmldoc = new \App\Library\InlineStyleWrapper($html);
 
     foreach ($cssFiles as $file) {
         // For safety, in case template is uploaded by user
@@ -700,7 +700,7 @@ function putPermanentEnv($arr = [])
     $config = file_get_contents($path);
 
     foreach ($arr as $key => $value) {
-        $escaped = preg_quote('='.env($key), '/');
+        $escaped = preg_quote('=' . env($key), '/');
         $config = preg_replace(
             "/^{$key}{$escaped}/m",
             "{$key}={$value}",
@@ -862,7 +862,7 @@ function getThemeColor($theme = false)
     return $colors[$theme];
 }
 
-function getThemeMode($mode, $auto='light')
+function getThemeMode($mode, $auto = 'light')
 {
     $themeMode = $mode;
 

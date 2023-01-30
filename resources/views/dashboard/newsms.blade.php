@@ -40,6 +40,7 @@
                     <div class="Edit">
                         <form method="POST" action="{{ route('user.sms.sendmessage.campaign')}}">
                             @csrf
+                            <input type="hidden" name="sms_type" value="plain">
                             <div class="form">
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -74,23 +75,23 @@
                                         <div class="col-8">
                                             <select name="mailinglist_id" class="bg-light w-100 py-2 rounded px-2 fs-6">
                                                 <option value="">Choose from mailing list</option>
-                                                @if($mailinglists->isEmpty())
+                                                @if($contact_lists->isEmpty())
                                                 <option value="">No Mailing List</option>
                                                 @else
-                                                @foreach($mailinglists as $mailinglist)
-                                                <option value="{{$mailinglist->id}}">{{$mailinglist->mailinglist_name}}</option>
+                                                @foreach($contact_lists as $contact_list)
+                                                <option value="{{$contact_list->id}}">{{$contact_list->name}}</option>
                                                 @endforeach
                                                 @endif
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    {{-- <div class="col-lg-12">
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <textarea name="contacts" cols="30" rows="5" placeholder="Add phone number manually E.g: +234 8000 111 333 "></textarea>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-12">
                                         <label>Opt Out Message </label>
                                         <div class="row">
@@ -108,19 +109,59 @@
                                                 <label style="margin-left: 0px"><input type="radio" name="message_timimg" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
                                             </div>
                                             <div class="col-md-4 col-6">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timimg" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule to</label>
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timimg" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-12" id="schedule" style="display: none;">
                                         <div class="row">
-                                            <div class="col-4 mt-4"></div>
-                                            <div class="col-4 mt-4">
+                                            <div class="col-md-6 mt-4">
+                                                <label for="Time">Date</label>
                                                 <input type="date" name="schedule_date" />
                                             </div>
-                                            <div class="col-4 mt-4">
+                                            <div class="col-md-6 mt-4">
+                                                <label for="Time">Time</label>
                                                 <input type="Time" name="schedule_time" />
+                                            </div>
+                                            <div class="col-md-12 mt-5">
+                                                <label for="">Frequency</label>
+                                                <select name="frequency_cycle" id="selectFrenquncy" onchange="frequencyChange()">
+                                                    <option value="onetime">One time</option>
+                                                    <option value="daily">Daily</option>
+                                                    <option value="monthly">Monthly</option>
+                                                    <option value="yearly">Yearly</option>
+                                                    <option value="custom">Custom</option>
+                                                </select>
+                                            </div>
+                                            <div id="frq_custom" class="col-md-12" style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-6 mt-5" >
+                                                        <label for="Frq_amount">Frequency Amount</label>
+                                                        <input type="text" name="frequency_amount" />
+                                                    </div>
+                                                    <div class="col-md-6 mt-5">
+                                                        <label for="Time">Frequency Unit</label>
+                                                        <select name="frequency_unit" >
+                                                            <option value="day">Day</option>
+                                                            <option value="week">Week</option>
+                                                            <option value="month">Month</option>
+                                                            <option value="year">Year</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="end_period" class="col-md-12" style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-6 mt-5" >
+                                                        <label for="Time">End Date</label>
+                                                        <input type="date" name="recurring_date" />
+                                                    </div>
+                                                    <div class="col-md-6 mt-5">
+                                                        <label for="Time">End Time</label>
+                                                        <input type="Time" name="recurring_time" />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

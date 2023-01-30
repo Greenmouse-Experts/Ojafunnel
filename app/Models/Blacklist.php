@@ -20,10 +20,10 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\Tool;
+use App\Library\Tool;
 use File;
 
 class Blacklist extends Model
@@ -36,7 +36,8 @@ class Blacklist extends Model
      * @var array
      */
     protected $fillable = [
-        'email', 'reason',
+        'email',
+        'reason',
     ];
 
     /**
@@ -101,7 +102,7 @@ class Blacklist extends Model
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('blacklists.email', 'like', '%'.$keyword.'%');
+                    $q->orwhere('blacklists.email', 'like', '%' . $keyword . '%');
                 });
             }
         }
@@ -193,7 +194,7 @@ class Blacklist extends Model
 
     public static function upload(\Illuminate\Http\UploadedFile $httpFile)
     {
-        $filename = "blacklst-import-".uniqid().".txt";
+        $filename = "blacklst-import-" . uniqid() . ".txt";
         $path = storage_path(self::IMPORT_TEMP_DIR);
 
         // store it to storage/
@@ -213,7 +214,7 @@ class Blacklist extends Model
         $email = trim(strtolower($email));
 
         if (Tool::isValidEmail($email)) {
-            $exist = self::global()->where('email', '=', $email)->count();
+            $exist = self::global ()->where('email', '=', $email)->count();
 
             if (!$exist) {
                 $blacklist = new self();

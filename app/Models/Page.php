@@ -17,8 +17,6 @@ class Page extends Model implements Editable
         'name',
         'title',
         'thumbnail',
-        'body',
-        'file_name',
         'folder',
         'file_location'
     ];

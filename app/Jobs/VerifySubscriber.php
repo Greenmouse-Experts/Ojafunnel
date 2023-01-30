@@ -1,12 +1,12 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
 use Illuminate\Bus\Batchable;
-use Acelle\Library\QuotaManager;
-use Acelle\Library\Exception\NoCreditsLeft;
-use Acelle\Library\Exception\QuotaExceeded;
-use Acelle\Library\Exception\VerificationTakesLongerThanNormal;
+use App\Library\QuotaManager;
+use App\Library\Exception\NoCreditsLeft;
+use App\Library\Exception\QuotaExceeded;
+use App\Library\Exception\VerificationTakesLongerThanNormal;
 use Exception;
 use Closure;
 

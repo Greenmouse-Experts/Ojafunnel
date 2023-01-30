@@ -1,9 +1,9 @@
 <?php
 
-namespace Acelle\Library\HtmlHandler;
+namespace App\Library\HtmlHandler;
 
 use League\Pipeline\StageInterface;
-use Acelle\Library\StringHelper;
+use App\Library\StringHelper;
 
 class TransformTag implements StageInterface
 {
@@ -45,7 +45,7 @@ class TransformTag implements StageInterface
 
         # Subscriber specific
         if (is_null($this->subscriber) || empty($this->msgId) || $this->campaign->isStdClassSubscriber($this->subscriber)) {
-            $sampleLink = route('campaign_message', [ 'message' => StringHelper::base64UrlEncode(trans('messages.email.test_link_note')) ]);
+            $sampleLink = route('campaign_message', ['username' => \Auth::user()->username, 'message' => StringHelper::base64UrlEncode(trans('messages.email.test_link_note'))]);
 
             if ($this->campaign->trackingDomain) {
                 $sampleLink = $this->campaign->trackingDomain->buildTrackingUrl($sampleLink);
@@ -59,7 +59,7 @@ class TransformTag implements StageInterface
             # Subscriber custom fields, including email
             $sample = '%PERSONALIZED-DATA%';
             foreach ($this->campaign->defaultMailList->fields as $field) {
-                $tags['SUBSCRIBER_'.$field->tag] = $sample;
+                $tags['SUBSCRIBER_' . $field->tag] = $sample;
                 $tags[$field->tag] = $sample;
             }
 
@@ -88,7 +88,7 @@ class TransformTag implements StageInterface
 
             # Subscriber custom fields
             foreach ($this->campaign->defaultMailList->fields as $field) {
-                $tags['SUBSCRIBER_'.$field->tag] = $this->subscriber->getValueByField($field);
+                $tags['SUBSCRIBER_' . $field->tag] = $this->subscriber->getValueByField($field);
                 $tags[$field->tag] = $this->subscriber->getValueByField($field);
             }
 
@@ -99,7 +99,7 @@ class TransformTag implements StageInterface
 
         // Actually transform the message
         foreach ($tags as $tag => $value) {
-            $html = str_replace('{'.$tag.'}', $value, $html);
+            $html = str_replace('{' . $tag . '}', $value, $html);
         }
 
         return $html;

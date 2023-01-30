@@ -12,6 +12,8 @@
     <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
 	<base href="">
 	<title>{{config('app.name')}}</title>
+    <!-- CSRF Token -->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<link href="{{URL::asset('builder/css/editor.css')}}" rel="stylesheet">
 </head>
@@ -19,7 +21,9 @@
 <body>
 	<div id="vvveb-builder">
 		<div id="top-panel">
-			<img src="{{URL::asset('dash/assets/images/Logo-fav.png')}}" alt="{{config('app.name')}}" height="22" class="float-start" id="logo">
+            <a href="{{route('user.choose.temp', Auth::user()->username)}}">
+				<img src="{{URL::asset('dash/assets/images/Logo-fav.png')}}" alt="{{config('app.name')}}" height="22" class="float-start" id="logo">
+			</a>
 
 			<div class="btn-group float-start" role="group">
 				<button class="btn btn-light" title="Toggle file manager" id="toggle-file-manager-btn" data-vvveb-action="toggleFileManager" data-bs-toggle="button" aria-pressed="false">
@@ -59,7 +63,7 @@
 					<i class="la la-expand-arrows-alt"></i>
 				</button>
 
-				<button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download" data-v-download="index.html">
+				<button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download" data-v-download="{{$currentpage->file_location}}">
 					<i class="la la-download"></i>
 				</button>
 
@@ -67,12 +71,15 @@
 
 
 			<div class="btn-group me-3 float-end" role="group">
-				<button class="btn btn-primary btn-icon" title="Export (Ctrl + E)" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="" type="submit" data-v-vvveb-shortcut="ctrl+e">
+                <input id="id" name="id" value="{{$currentpage->id}}" hidden>
+				<button class="btn btn-primary btn-icon" title="Export (Ctrl + E)" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="{{ route('user.funnel.builder.save.page') }}" type="submit" data-v-vvveb-shortcut="ctrl+e">
 					<i class="la la-save"></i> <span data-v-gettext>Save page</span>
 				</button>
 			</div>
 
 			<div class="btn-group float-end me-3 responsive-btns" role="group">
+                <a href="{{$currentpage->file_location}}" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
+
 				<button id="mobile-view" data-view="mobile" class="btn btn-light" title="Mobile view" data-vvveb-action="viewport">
 					<i class="la la-mobile"></i>
 				</button>
@@ -1405,8 +1412,8 @@
 		<div class="modal fade" id="new-page-modal" tabindex="-1" role="dialog">
 			<div class="modal-dialog" role="document">
 
-				<form action="save.php">
-
+				<form method="POST" action="{{route('user.funnel.builder.create.page')}}">
+                    {{ csrf_field() }}
 					<div class="modal-content">
 						<div class="modal-header">
 							<p class="modal-title text-primary"><i class="la la-lg la-file"></i> New page</p>
@@ -1416,27 +1423,11 @@
 						</div>
 
 						<div class="modal-body text">
-							<div class="mb-3 row" data-key="type">
-								<label class="col-sm-3 form-label">
-									Template
-									<abbr class="badge badge-pill badge-secondary" title="This template will be used as a start">?</abbr>
-								</label>
-								<div class="col-sm-9 input">
-									<div>
-										<select class="form-select" name="startTemplateUrl">
-											<option value="new-page-blank-template.html">Blank Template</option>
-											<option value="demo/narrow-jumbotron/index.html">Narrow jumbotron</option>
-											<option value="demo/album/index.html">Album</option>
-										</select>
-									</div>
-								</div>
-							</div>
-
 							<div class="mb-3 row" data-key="href">
-								<label class="col-sm-3 form-label">Page name</label>
+								<label class="col-sm-3 form-label">Title</label>
 								<div class="col-sm-9 input">
 									<div>
-										<input name="title" type="text" value="My page" class="form-control" placeholder="My page" required>
+										<input name="title" type="text" class="form-control" required>
 									</div>
 								</div>
 							</div>
@@ -1445,27 +1436,17 @@
 								<label class="col-sm-3 form-label">File name</label>
 								<div class="col-sm-9 input">
 									<div>
-										<input name="file" type="text" value="my-page.html" class="form-control" placeholder="my-page.html" required>
+                                        <input value="{{$funnel->folder}}" class="form-control" readonly>
+                                        <input value="{{$funnel->id}}" name="file_folder" hidden>
 									</div>
 								</div>
 							</div>
 
-							<!-- 
-							<div class="mb-3 row" data-key="href">     
-								<label class="col-sm-3 form-label">Url</label>      
-								<div class="col-sm-9 input">
-									<div>   
-										<input name="url" type="text" value="my-page.html" class="form-control" placeholder="/my-page.html" required>  
-									</div>
-								</div>     
-							</div>
-							-->
-
 							<div class="mb-3 row" data-key="href">
-								<label class="col-sm-3 form-label">Folder</label>
+								<label class="col-sm-3 form-label">File Folder</label>
 								<div class="col-sm-9 input">
 									<div>
-										<input name="folder" type="text" value="my-pages" class="form-control" placeholder="/" required>
+										<input name="file_folder" type="text" class="form-control" required>
 									</div>
 								</div>
 							</div>

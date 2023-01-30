@@ -1,16 +1,16 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Acelle\Model\MailList;
-use Acelle\Model\EmailVerificationServer;
-use Acelle\Events\MailListSubscription;
-use Acelle\Model\Setting;
-use Acelle\Model\Customer;
-use Acelle\Model\Product;
-use Acelle\Model\Source;
+use App\Models\MailList;
+use App\Models\EmailVerificationServer;
+use App\Events\MailListSubscription;
+use App\Models\Setting;
+use App\Models\Customer;
+use App\Models\Product;
+use App\Models\Source;
 
 class ProductController extends Controller
 {
@@ -65,7 +65,7 @@ class ProductController extends Controller
             })->toArray();
 
         $json = '{
-            "items": ' .json_encode($results). ',
+            "items": ' . json_encode($results) . ',
             "more": ' . (empty($results) ? 'false' : 'true') . '
         }';
 

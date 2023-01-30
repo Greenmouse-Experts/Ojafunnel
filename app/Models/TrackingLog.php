@@ -20,7 +20,7 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,27 +42,27 @@ class TrackingLog extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     public function campaign()
     {
-        return $this->belongsTo('Acelle\Model\Campaign');
+        return $this->belongsTo('App\Models\Campaign');
     }
 
     public function mailList()
     {
-        return $this->belongsTo('Acelle\Model\MailList');
+        return $this->belongsTo('App\Models\MailList');
     }
 
     public function sendingServer()
     {
-        return $this->belongsTo('Acelle\Model\SendingServer');
+        return $this->belongsTo('App\Models\SendingServer');
     }
 
     public function subscriber()
     {
-        return $this->belongsTo('Acelle\Model\Subscriber');
+        return $this->belongsTo('App\Models\Subscriber');
     }
 
     /**
@@ -94,10 +94,10 @@ class TrackingLog extends Model
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('campaigns.name', 'like', '%'.$keyword.'%')
-                        ->orwhere('tracking_logs.status', 'like', '%'.$keyword.'%')
-                        ->orwhere('sending_servers.name', 'like', '%'.$keyword.'%')
-                        ->orwhere('subscribers.email', 'like', '%'.$keyword.'%');
+                    $q->orwhere('campaigns.name', 'like', '%' . $keyword . '%')
+                        ->orwhere('tracking_logs.status', 'like', '%' . $keyword . '%')
+                        ->orwhere('sending_servers.name', 'like', '%' . $keyword . '%')
+                        ->orwhere('subscribers.email', 'like', '%' . $keyword . '%');
                 });
             }
         }

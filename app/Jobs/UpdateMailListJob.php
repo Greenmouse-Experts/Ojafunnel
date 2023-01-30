@@ -1,10 +1,10 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
-use Acelle\Library\Log as MailLog;
-use Acelle\Model\MailList;
-use Acelle\Model\Blacklist;
+use App\Library\Log as MailLog;
+use App\Models\MailList;
+use App\Models\Blacklist;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 
 class UpdateMailListJob extends Base implements ShouldBeUnique

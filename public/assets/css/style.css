@@ -3235,8 +3235,8 @@ header nav .offcanvas-header button i {
 
 .chat-automation .btn-text h1 {
     padding: 50px 0px 0px 0px;
-    font-size: 40px;
-    font-weight: 900;
+    font-size: 30px;
+    font-weight: 700;
     color: #fff;
 }
 
@@ -3380,13 +3380,13 @@ header nav .offcanvas-header button i {
 /** Automation-Section**/
 .Automation {
     padding: 140px 0px 70px 0px;
-    background-color: #2B8DE6;
+   background: #3884E7;
 }
 
 .Automation .btn-text h1 {
     padding: 50px 0px 0px 0px;
-    font-size: 40px;
-    font-weight: 900;
+    font-size: 30px;
+    font-weight: 700;
     color: #fff;
 }
 

@@ -17,10 +17,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'domain_url' => preg_replace('#^https?://#', '', rtrim(env('APP_URL'),'/')),
+    'domain_url' => preg_replace('#^https?://#', '', rtrim(env('APP_URL'), '/')),
 
     'url' => env('APP_URL'),
-    
+
     'zerobounce_api_key' => 'f19198c3787742cf823b4a3156d4b714',
 
     'log' => 'errorlog',
@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Africa/Lagos',
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'default',
 
     /*
     |--------------------------------------------------------------------------
@@ -164,9 +164,9 @@ return [
 
     'providers' => [
 
-        /*
-         * Laravel Framework Service Providers...
-         */
+            /*
+             * Laravel Framework Service Providers...
+             */
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -190,16 +190,16 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        /*
-         * Package Service Providers...
-         */
+            /*
+             * Package Service Providers...
+             */
 
-        /*
-         * Application Service Providers...
-         */
+            /*
+             * Application Service Providers...
+             */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+            // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
@@ -219,5 +219,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
+
+    'import_batch_size' => env('IMPORT_BATCH_SIZE', 9993),
 
 ];
