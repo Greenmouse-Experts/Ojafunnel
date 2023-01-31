@@ -72,36 +72,35 @@
                                             <td>{{$mailinglist->name}}</td>
                                             <td><span class="no-margin text-primary stat-num">{{$mailinglist->subscribers->count() }}</span></td>
                                             <td>
-                                                <div class="single-stat-box pull-left ml-20">
+                                                <!-- <div class="single-stat-box pull-left ml-20">
                                                     <span class="no-margin text-primary stat-num">{{ $mailinglist->openUniqRate() }}%</span>
                                                     <div class="progress progress-xxs">
                                                         <div class="progress-bar progress-bar-info" style="width: {{ $mailinglist->readCache('UniqOpenRate', 0) }}%">
                                                         </div>
                                                     </div>
                                                     <span class="text-muted small">Open rate</span>
-                                                </div>
+                                                </div> -->
                                             </td>
                                             <td>
-                                                <div class="single-stat-box pull-left ml-20">
+                                                <!-- <div class="single-stat-box pull-left ml-20">
                                                     <span class="no-margin text-primary stat-num">{{ $mailinglist->readCache('ClickedRate', 0) }}%</span>
                                                     <div class="progress progress-xxs">
                                                         <div class="progress-bar progress-bar-info" style="width: {{ $mailinglist->readCache('ClickedRate', 0) }}%">
                                                         </div>
                                                     </div>
                                                     <span class="text-muted small">Click rate</span>
-                                                </div>
+                                                </div> -->
                                             </td>
                                             {{-- <td>
                                                 @if($mailinglist->status == 'Active')
                                                 <span class="text-success">{{$mailinglist->status}}</span>
-                                                @else
-                                                <span class="text-danger">{{$mailinglist->status}}</span>
-                                                @endif
+                                            @else
+                                            <span class="text-danger">{{$mailinglist->status}}</span>
+                                            @endif
                                             </td> --}}
                                             <td>{{$mailinglist->created_at->toDayDateTimeString()}}</td>
                                             <td>
-                                                <a href="#" data-popup="tooltip"
-                                                    title="{{ trans('messages.create_subscriber') }}" role="button" class="btn btn-secondary btn-icon " style="padding: 0.321em 0.75em">
+                                                <a href="#" data-popup="tooltip" title="{{ trans('messages.create_subscriber') }}" role="button" class="btn btn-secondary btn-icon " style="padding: 0.321em 0.75em">
                                                     <span class="material-icons-outlined">
                                                         person_add
                                                     </span>
@@ -177,8 +176,10 @@
                 </div>
                 <!--end col-->
             </div>
+            <!--end col-->
         </div>
     </div>
+</div>
 </div>
 <!-- END layout-wrapper -->
 
@@ -224,6 +225,6 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 <!-- end modal -->
 @endsection

@@ -27,9 +27,6 @@ body {
   display: block;
   margin: auto;
 }
-
-.table-sub .label {
-}
 .table-sub .label {
     font-size: 10px;
     padding: 2px 8px;
@@ -207,7 +204,7 @@ body {
 
 [name="keyword"] + [class^="material-icons"] {
     color: #aaa;
-    font-size: 21px;å
+    font-size: 21px;
     display: inline-block;
     line-height: 10px;
     margin-left: -27px;
@@ -528,9 +525,7 @@ ul.modern-listing li .btn {
         width: 60px;
       height: 60px;
   }
-  .media-left .main {
 
-  }
   .media-left .main label {
         margin-bottom: 0px;
       font-size: 17px;
@@ -1772,9 +1767,6 @@ h2.mc-h2 {
 .slider.slider-horizontal {
   width: 100%;
 }
-.mc-progress-list {
-
-}
 .mc-progress-list li {
   list-style: none;
   margin-bottom: 25px;
@@ -1818,8 +1810,7 @@ h2.mc-h2 {
 .btn-view-password:hover {
     color: #000;
 }
-.btn-view-password.open {
-}
+
 input.has-eye {
   padding-right: 35px;
 }
@@ -1852,8 +1843,6 @@ input.has-eye {
 .inline-edit:hover {
   color: #007c89;
   border-color: #007c89;
-}
-.mc-text-lg {
 }
 .select2-container--disabled .select2-selection--single {
   background-color: #fafafa !important;
@@ -1970,8 +1959,6 @@ stat .stat-head {
     float: left;
     color: #333;
     padding-top: 3px;
-}
-.mc-modal-back i {
 }
 .mc-modal h6 {
   margin: 0;
@@ -2135,10 +2122,7 @@ margin-left: -13px;
 .price-header {
   height: 200px;
 }
-.price-item {
-}
-.price-table {
-}
+
 .price-table td {
   padding: 20px;
   vertical-align: top;
@@ -2171,9 +2155,7 @@ margin-left: -13px;
     display: block;
     font-size: 24px;
 }
-.mc-inline-list li desc {
 
-}
 .alert {
   font-weight: normal;
 }
@@ -2874,6 +2856,8 @@ textarea.bulk-delete {
   text-decoration: underline;
 }
 .content-top-div {
+  margin-left: 10px;
+  margin-right: 10px;
   display: grid;
   grid-template-columns: 22% 22% 22% 22%;
   justify-content: space-between;
@@ -2881,6 +2865,8 @@ textarea.bulk-delete {
 @media (max-width: 1000px) {
   .content-top-div {
     display: block;
+    margin-left: 1px;
+    margin-right: 1px;
   }
   .email-campaign-row {
     display: block !important;
@@ -2906,7 +2892,7 @@ textarea.bulk-delete {
   display: grid;
   grid-template-columns: 49% 49%;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 15px;
 }
 .products-div,
 .sales-analysis {
@@ -2921,11 +2907,12 @@ textarea.bulk-delete {
   border-radius: 10px;
 }
 .email-campaign-row {
-  margin-top: 30px;
+  margin-top: 25px;
+  margin-bottom: 20px;
 }
 .email-campaign-row {
   display: grid;
-  grid-template-columns: 58% 38%;
+  grid-template-columns: 60% 38%;
 }
 .campaign-div,
 .recent-msg {
@@ -2943,7 +2930,7 @@ textarea.bulk-delete {
   background: green;
 }
 .chat-img img {
-  border-radius: 50%;
+  border-radius: 30%;
 }
 /* start Ends */
 .dashboard-footer {
@@ -2957,10 +2944,11 @@ textarea.bulk-delete {
 /* my account styling */
 /* my account styling */
 .account-head {
-  padding: 20px 20px;
+  padding: 20px 10px;
+  margin-left: 2px;
 }
 .account-nav {
-  margin-top: 40px;
+  margin-top: 10px;
 }
 .account-nav .active {
   border-bottom: 4px solid #713f93;
@@ -3032,14 +3020,15 @@ textarea.bulk-delete {
   overflow: hidden;
   border-radius: 50%;
 }
-
+.hihj{
+  padding: 0px 20px;
+}
 /* e-commerce section styling */
 .commerce-con {
   width: 60%;
   margin: auto;
   background-color: #ffffff;
-  margin-top: 40px;
-  padding: 30px 35px;
+  padding: 20px 5px;
   border-radius: 10px;
 }
 @media (max-width: 1000px) {
@@ -3067,7 +3056,7 @@ textarea.bulk-delete {
 .logo-file {
   width: 50%;
   margin: auto;
-}
+}    
 .logo-input2 {
   border-style: dashed;
   overflow: hidden;
@@ -3076,17 +3065,23 @@ textarea.bulk-delete {
   display: flex;
   justify-content: space-between;
 }
+.labe{
+  border-radius: 50px !important;
+}
 .theme-select input {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  color: blue;
+  border: none !important;
+  padding: 2px;
+  background-color: #fff;
+}
+.theme-select input:focus{
+  outline: none;
+  border: none;
 }
 
 .store-table {
   background-color: #ffffff;
-  margin-top: 40px;
-  padding: 30px 35px;
+  margin-top: 10px;
+  padding: 10px 15px;
   border-radius: 10px;
 }
 .search-store {
@@ -3931,6 +3926,7 @@ textarea.bulk-delete {
   background-color: #fff;
   padding: 20px 20px 10px 20px;
   border-radius: 10px;
+  margin-bottom: 20px;
 }
 .curriculom p{
   padding: 0px 0px 10px 0px;

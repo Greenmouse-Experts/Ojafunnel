@@ -535,6 +535,27 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function sentcampaigns($username)
+    {
+        return view('dashboard.SentCampaign', [
+            'username' => $username
+        ]);
+    }
+
+    public function receive_message($username)
+    {
+        return view('dashboard.ReceiveMessage', [
+            'username' => $username
+        ]);
+    }
+
+    public function auto_reply($username)
+    {
+        return view('dashboard.AutoReply', [
+            'username' => $username
+        ]);
+    }
+
     public function my_store($username)
     {
         return view('dashboard.myStore', [

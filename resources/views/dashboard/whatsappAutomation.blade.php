@@ -9,9 +9,24 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row begin">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+                        <h4 class="mb-sm-0 font-size-18">WhatsApp Automation</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                                <li class="breadcrumb-item active">WhatsApp Automation</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-12">
-                    <div class="card account-head mb-4">
+                    <div class="card account-head">
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="py-2">
@@ -83,9 +98,9 @@
                                 </div>
                             </div> -->
                         </div>
-                        <div class="table-body mt-5 table-responsive">
+                        <div class="table-body mt-1 table-responsive">
                             <table id="datatable-buttons" class=" table table-bordered dt-responsive nowrap w-100">
-                                <thead class="fw-bold bg-light rounded-pill ">
+                                <thead class="fw-bold dark" style="background:#F5E6FE;">
                                     <tr>
                                         <th scope="col">S/N</th>
                                         <th scope="col">Campaign Name</th>
@@ -190,15 +205,15 @@
                                             <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-md-9"></div>
-                                        <div class="col-md-3">
-                                            <div class="boding">
-                                                <button data-bs-toggle="modal" data-bs-target="#emailConfirm">
-                                                    Add New Number
-                                                </button>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-md-8"></div>
+                                            <div class="col-md-4">
+                                                <div class="boding">
+                                                    <button data-bs-toggle="modal" data-bs-target="#emailConfirm">
+                                                        Add New
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -206,42 +221,44 @@
                             </div>
                         </div>
                     </div>
-                    <div class="Edit">
-                        <div class="form">
-                            <div class="row">
-                                <p class="tell mb-4">
-                                    <b>
-                                        Sending Configuration
-                                    </b> <br>
-                                    <span>
-                                        Reduce the chances of geting blocked by setting the speed for bulk
-                                        messages
-                                    </span>
-                                </p>
-                                <div class="col-lg-12">
-                                    <label>Connection Speed :</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <select>
-                                                <option>
-                                                    Fast
-                                                </option>
-                                                <option> Low </option>
-                                                <option> Medium </option>
-                                            </select>
+                    <div class="col-lg-6">
+                        <div class="Edit">
+                            <div class="form">
+                                <div class="row">
+                                    <p class="tell mb-4">
+                                        <b>
+                                            Sending Configuration
+                                        </b> <br>
+                                        <span>
+                                            Reduce the chances of geting blocked by setting the speed for bulk
+                                            messages
+                                        </span>
+                                    </p>
+                                    <div class="col-lg-12">
+                                        <label>Connection Speed :</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <select>
+                                                    <option>
+                                                        Fast
+                                                    </option>
+                                                    <option> Low </option>
+                                                    <option> Medium </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-md-9"></div>
-                                        <div class="col-md-3">
-                                            <div class="boding">
-                                                <button>
-                                                    <a href="" style="color: #fff;">
-                                                        Update Setting
-                                                    </a>
-                                                </button>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-md-8"></div>
+                                            <div class="col-md-4">
+                                                <div class="boding">
+                                                    <button>
+                                                        <a href="" style="color: #fff;">
+                                                            Update Setting
+                                                        </a>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -254,9 +271,8 @@
             </div>
         </div>
     </div>
-</div>
-<!-- End Page-content -->
-<!-- email confirm modal -->
+    <!-- End Page-content -->
+    <!-- email confirm modal -->
     <div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -274,8 +290,7 @@
                                     <label>Phone Number</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="tel" placeholder="+234 800 000 0000" name="name" class="input"
-                                                required>
+                                            <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -283,8 +298,7 @@
                                     <label>Description</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <textarea name="" placeholder="Enter a description, eg for book sales" id=""
-                                                cols="30" rows="5"></textarea>
+                                            <textarea name="" placeholder="Enter a description, eg for book sales" id="" cols="30" rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -297,8 +311,7 @@
                                     </div>
                                     <div class="col-6 text-end">
                                         <a href="#" class="text-decoration-none">
-                                            <button class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                >
+                                            <button class="btn px-4" style="color: #ffffff; background-color: #714091">
                                                 Save Number
                                             </button>
                                         </a>

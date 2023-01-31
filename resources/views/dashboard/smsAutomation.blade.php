@@ -8,10 +8,25 @@
     <div class="page-content">
         <!-- container-fluid -->
         <div class="container-fluid">
+        <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+                        <h4 class="mb-sm-0 font-size-18">SMS Campaigns</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                                <li class="breadcrumb-item active">SMS Campaigns</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             <!-- start page title -->
-            <div class="row card begin">
-                <div class="col-12 account-head">
-                    <div class="row py-2 justify-content-between align-items-center">
+            <div class="row card account-head">
+                <div class="col-12 ">
+                    <div class="row justify-content-between align-items-center">
                         <div class="col">
                             <h4 class="font-60">My SMS Campaigns</h4>
                             <p>View your sent and scheduled sms to your customers</p>
@@ -40,9 +55,9 @@
                             </div>
                         </div> -->
                     </div>
-                    <div class="table-body mt-5 table-responsive">
+                    <div class="table-body mt-1 table-responsive">
                         <table id="datatable-buttons" class=" table table-bordered dt-responsive nowrap w-100">
-                            <thead class="fw-bold bg-light rounded-pill ">
+                            <thead  class="fw-bold dark" style="background:#F5E6FE;">
                                 <tr>
                                     <th scope="col">S/N</th>
                                     <th scope="col">Campaign Name</th>
@@ -131,7 +146,6 @@
             <!-- end page title -->
         </div>
     </div>
-    <!-- End Page-content -->
 </div>
 
 <style>

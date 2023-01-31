@@ -64,7 +64,7 @@
                                             <div>
                                                 <div class="btn-area">
                                                     <h4>
-                                                        <a href="">
+                                                        <a href="{{route('affiliate')}}">
                                                             Affiliate Marketing
                                                         </a>
                                                     </h4>
@@ -90,7 +90,7 @@
                                             <div>
                                                 <div class="btn-area">
                                                     <h4>
-                                                        <a href="">
+                                                        <a href="{{route('funnelbuilder')}}">
                                                             Funnel Builder
                                                         </a>
                                                     </h4>
@@ -142,7 +142,7 @@
                                             <div>
                                                 <div class="btn-area">
                                                     <h4>
-                                                        <a href="">
+                                                        <a href="{{route('integrations')}}">
                                                             API Integrations
                                                         </a>
                                                     </h4>
@@ -156,71 +156,72 @@
                                     <li>
                                         <a href="{{route('marketauto')}}" class="routers">
                                             <a class="dropdown-item">
-                                                <i class="bi bi-arrow-right-short"></i> Email Marketing
+                                                Email Marketing
                                             </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="index" class="routers">
+                                        <a href="{{route('affiliate')}}" class="routers">
                                             <a class="dropdown-item">
-                                                <i class="bi bi-arrow-right-short"></i> Affiliate Marketing
+                                                Affiliate Marketing
                                             </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="index" class="routers">
+                                        <a href="{{route('ecommerce')}}" class="routers">
                                             <a class="dropdown-item">
-                                                <i class="bi bi-arrow-right-short"></i> Ecommerce
+                                                Ecommerce
                                             </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="index" class="routers">
+                                        <a href="{{route('funnelbuilder')}}" class="routers">
                                             <a class="dropdown-item">
-                                                <i class="bi bi-arrow-right-short"></i> Funnel Builder
+                                                Funnel Builder
                                             </a>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{route('pagebuilder')}}" class="routers">
                                             <a class="dropdown-item">
-                                                <i class="bi bi-arrow-right-short"></i> Page Builder
+                                                Page Builder
                                             </a>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{route('marketauto')}}" class="routers">
                                             <a class="dropdown-item">
-                                                <i class="bi bi-arrow-right-short"></i> Marketing Automations
+                                                Marketing Automations
                                             </a>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{route('chatautomation')}}" class="routers">
                                             <a class="dropdown-item">
-                                                <i class="bi bi-arrow-right-short"></i> Chat Automations
+                                                Chat Automations
                                             </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="index" class="routers">
+                                        <a href="{{route('integrations')}}" class="routers">
                                             <a class="dropdown-item">
-                                                <i class="bi bi-arrow-right-short"></i> API Integrations
+                                                API Integrations
                                             </a>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
+                                <a href="{{route('pricing')}}" class="nav-link {{ (request()->is('pricing')) ? 'active' : '' }}" class="routers">
+                                    Pricing
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('faqs')}}" class="nav-link {{ (request()->is('faqs')) ? 'active' : '' }}" class="routers">
                                     FAQs
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link" class="routers">
-                                    Resources
-                                </a>
-                            </li>
+                            <!-- -->
                             <li class="nav-item">
                                 <a href="{{route('contact')}}" class="nav-link {{ (request()->is('contact')) ? 'active' : '' }}" class="routers">
                                     Contact
@@ -595,16 +596,19 @@
                         </h1>
                         <ul>
                             <li>
-                                Products
+                                <a href="{{route('index')}}">Home</a>
                             </li>
                             <li>
-                                Features
+                                <a href="{{route('emailmarketing')}}">Features</a>
                             </li>
                             <li>
-                                Pricing
+                                <a href="{{route('pricing')}}"> Pricing</a>
                             </li>
                             <li>
-                                Resources
+                                <a href="{{route('faqs')}}">FAQs</a>
+                            </li>
+                            <li>
+                                <a href="{{route('contact')}}">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -636,8 +640,8 @@
                         </ul>
                         <form class="search-bar">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Your email Address">
-                                <span class="input-group-text" id="basic-addon2">Subscribe</span>
+                                <input type="email" class="form-control" placeholder="Your email Address" required>
+                                <span class="input-group-text" id="basic-addon2" type="submit" required>Subscribe</span>
                             </div>
                         </form>
                     </div>
