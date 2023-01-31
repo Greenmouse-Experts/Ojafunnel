@@ -16,16 +16,19 @@
                     </h1>
                     <ul>
                         <li>
-                            Products
+                            <a href="{{route('index')}}">Home</a>
                         </li>
                         <li>
-                            Features
+                            <a href="{{route('emailmarketing')}}">Features</a>
                         </li>
                         <li>
-                            Pricing
+                            <a href="{{route('pricing')}}"> Pricing</a>
                         </li>
                         <li>
-                            Resources
+                            <a href="{{route('faqs')}}">FAQs</a>
+                        </li>
+                        <li>
+                            <a href="{{route('contact')}}">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -57,8 +60,8 @@
                     </ul>
                     <form class="search-bar">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Your email Address">
-                            <span class="input-group-text" id="basic-addon2">Subscribe</span>
+                            <input type="email" class="form-control" placeholder="Your email Address" required>
+                            <span class="input-group-text" id="basic-addon2" type="submit" required>Subscribe</span>
                         </div>
                     </form>
                 </div>
