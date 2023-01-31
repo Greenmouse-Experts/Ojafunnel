@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             // $this->call(TestPageSeeder::class);
             $this->call(ContactListSeeder::class);
             $this->call(ContactNumberSeeder::class);
+            $this->call(PlanSeeder::class);
         }
     }
 }
