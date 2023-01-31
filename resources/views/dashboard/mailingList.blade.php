@@ -72,24 +72,24 @@
                                             <td>{{$mailinglist->name}}</td>
                                             <td><span class="no-margin text-primary stat-num">{{$mailinglist->subscribers->count() }}</span></td>
                                             <td>
-                                                <div class="single-stat-box pull-left ml-20">
+                                                <!-- <div class="single-stat-box pull-left ml-20">
                                                     <span class="no-margin text-primary stat-num">{{ $mailinglist->openUniqRate() }}%</span>
                                                     <div class="progress progress-xxs">
                                                         <div class="progress-bar progress-bar-info" style="width: {{ $mailinglist->readCache('UniqOpenRate', 0) }}%">
                                                         </div>
                                                     </div>
                                                     <span class="text-muted small">Open rate</span>
-                                                </div>
+                                                </div> -->
                                             </td>
                                             <td>
-                                                <div class="single-stat-box pull-left ml-20">
+                                                <!-- <div class="single-stat-box pull-left ml-20">
                                                     <span class="no-margin text-primary stat-num">{{ $mailinglist->readCache('ClickedRate', 0) }}%</span>
                                                     <div class="progress progress-xxs">
                                                         <div class="progress-bar progress-bar-info" style="width: {{ $mailinglist->readCache('ClickedRate', 0) }}%">
                                                         </div>
                                                     </div>
                                                     <span class="text-muted small">Click rate</span>
-                                                </div>
+                                                </div> -->
                                             </td>
                                             {{-- <td>
                                                 @if($mailinglist->status == 'Active')

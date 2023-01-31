@@ -5,25 +5,43 @@
   <div class="page-content">
     <!-- container-fluid -->
     <div class="container-fluid">
-      <!-- start page title -->
-      <div class="row mt-1">
-        <div class="col-12 account-head">
-          <div
-            class="row py-2 justify-content-between align-items-center"
-          >
-            <div class="col">
-              <h4 class="font-60">My Store</h4>
-              <p>All your shops and the products in them</p>
+      <div class="row">
+        <div class="col-12">
+          <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+            <h4 class="mb-sm-0 font-size-18">Create Store</h4>
+
+            <div class="page-title-right">
+              <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                <li class="breadcrumb-item active">Create Store</li>
+              </ol>
             </div>
-            <div class="col text-end">
-              <a href="ecommerce.html"
-                ><button
-                  class="btn px-3"
-                  style="color: #714091; border: 1px solid #714091"
-                >
-                  Create New Store
-                </button></a
-              >
+
+          </div>
+        </div>
+      </div>
+      <!-- start page title -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card account-head">
+            <div class="row">
+              <div class="col-md-9">
+                <div class="py-2">
+                  <h4 class="font-600">My Store</h4>
+                  <p>
+                    All your shops and the products in them
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="">
+                  <div class="all-create">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#createContactList">
+                      Create New Store
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -32,16 +50,12 @@
       <div class="container">
         <div class="store-table">
           <div class="table-head row pt-4">
-            <div class="col-lg-6"><h3>All Stores</h3></div>
+            <div class="col-lg-6">
+              <h3>All Stores</h3>
+            </div>
             <div class="col-lg-6 search-item">
               <div class="bg-light search-store border-in flex">
-                <input
-                  class="bg-light"
-                  type="search"
-                  placeholder="search by name"
-                  name="store"
-                  id=""
-                />
+                <input class="bg-light" type="search" placeholder="search by name" name="store" id="" />
                 <button><i class="bi bi-search"></i></button>
               </div>
             </div>
@@ -63,34 +77,22 @@
                   <td>Chukka Shoes</td>
                   <td>120</td>
                   <td>
-                    <a href="store.html" class="text-decoration-underline"
-                      >Preview</a
-                    >
+                    <a href="store.html" class="text-decoration-underline">Preview</a>
                   </td>
                   <td>
                     <div class="d-flex justify-content-center">
                       <ul class="list-unstyled d-flex">
                         <li class="px-1">
-                          <a href="#" class="text-decoration-none"
-                            >View Shop</a
-                          >
+                          <a href="#" class="text-decoration-none">View Shop</a>
                         </li>
                         <li class="px-1">
-                          <a href="#" class="text-decoration-none"
-                            >Edit Shop</a
-                          >
+                          <a href="#" class="text-decoration-none">Edit Shop</a>
                         </li>
                         <li class="px-1">
-                          <a href="#" class="text-decoration-none"
-                            >Manage Shop</a
-                          >
+                          <a href="#" class="text-decoration-none">Manage Shop</a>
                         </li>
                         <li class="px-1">
-                          <a
-                            href="#"
-                            class="text-decoration-none text-danger"
-                            >Delete Shop</a
-                          >
+                          <a href="#" class="text-decoration-none text-danger">Delete Shop</a>
                         </li>
                       </ul>
                     </div>
@@ -101,34 +103,22 @@
                   <td>Chukka Digital Books</td>
                   <td>12</td>
                   <td>
-                    <a href="store.html" class="text-decoration-underline"
-                      >Preview</a
-                    >
+                    <a href="store.html" class="text-decoration-underline">Preview</a>
                   </td>
                   <td>
                     <div class="d-flex justify-content-center">
                       <ul class="list-unstyled d-flex">
                         <li class="px-1">
-                          <a href="#" class="text-decoration-none"
-                            >View Shop</a
-                          >
+                          <a href="#" class="text-decoration-none">View Shop</a>
                         </li>
                         <li class="px-1">
-                          <a href="#" class="text-decoration-none"
-                            >Edit Shop</a
-                          >
+                          <a href="#" class="text-decoration-none">Edit Shop</a>
                         </li>
                         <li class="px-1">
-                          <a href="#" class="text-decoration-none"
-                            >Manage Shop</a
-                          >
+                          <a href="#" class="text-decoration-none">Manage Shop</a>
                         </li>
                         <li class="px-1">
-                          <a
-                            href="#"
-                            class="text-decoration-none text-danger"
-                            >Delete Shop</a
-                          >
+                          <a href="#" class="text-decoration-none text-danger">Delete Shop</a>
                         </li>
                       </ul>
                     </div>
@@ -137,40 +127,11 @@
               </tbody>
             </table>
           </div>
-          <div
-            class="row align-items-center table-footer mt-4 bg-light rounded-pill"
-          >
-            <div class="col-6 mt-2 fw-bold ps-4">
-              <p>132 products in total</p>
-            </div>
-            <div class="col-6 text-end">
-              <button
-                class="btn mx-4 fw-bold fs-4 btn-outline-dark py-0 px-2"
-              ></button>
-              <button
-                class="btn fw-bold fs-4 btn-outline-dark py-0 px-2"
-              ></button>
-            </div>
-          </div>
         </div>
       </div>
       <!-- end page title -->
     </div>
   </div>
   <!-- End Page-content -->
-
-  <footer class="footer border-0 bg-transparent mt-5">
-    <div class="container-fluid mt-5">
-      <div class="row text-center bg-white mt-5">
-        <div class="text-center py-4">
-          Copyright ©
-          <script>
-            document.write(new Date().getFullYear());
-          </script>
-          Ojafunnel | All Right Reserved
-        </div>
-      </div>
-    </div>
-  </footer>
 </div>
 @endsection
