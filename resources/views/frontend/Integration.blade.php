@@ -311,7 +311,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="imagess">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674484537/OjaFunnel-Images/Group_46927_cz5uib.jpg" draggable="false">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177008/OjaFunnel-Images/Group_46934_b7i8ji.png" draggable="false">
                     </div>
                 </div>
             </div>
@@ -342,22 +342,22 @@
                 <div class="col-lg-2"></div>
                 <div class="col-lg-3" style="margin-top: 30px;">
                     <div>
-                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674485176/OjaFunnel-Images/Rectangle_19429_1_wcbgrq.jpg" draggable="false" alt="">
+                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19429_dkzil0.png" draggable="false" alt="">
                     </div>
                 </div>
                 <div class="col-lg-3"  style="margin-top: 30px;">
                     <div>
-                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674485176/OjaFunnel-Images/Rectangle_19429_1_wcbgrq.jpg" draggable="false" alt="">
+                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19430_xwwm2k.png" draggable="false" alt="">
                     </div>
                 </div>
                 <div class="col-lg-3" style="margin-top: 30px;">
                     <div>
-                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674485176/OjaFunnel-Images/Rectangle_19429_1_wcbgrq.jpg" draggable="false" alt="">
+                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19431_abdoih.png" draggable="false" alt="">
                     </div>
                 </div>
                 <div class="col-lg-3"  style="margin-top: 30px;">
                     <div>
-                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674485176/OjaFunnel-Images/Rectangle_19429_1_wcbgrq.jpg" draggable="false" alt="">
+                        <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176680/OjaFunnel-Images/Group_46931_kbs6gz.png" draggable="false" alt="">
                     </div>
                 </div>
             </div>
@@ -371,7 +371,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143192/OjaFunnel-Images/Rectangle_18980_frbwgn.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177012/OjaFunnel-Images/Group_46933_rmafev.png" draggable="false" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -421,7 +421,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143192/OjaFunnel-Images/Rectangle_18980_frbwgn.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177012/OjaFunnel-Images/Group_46933_rmafev.png" draggable="false" alt="">
                     </div>
                 </div>
             </div>
@@ -436,95 +436,49 @@
             <div class="row">
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8">
-                    <div class="btn-text">
+                    <div class="btn-text mb-4">
                         <h1>
                         Do more with our Integrations 
                         </h1>
                     </div>
                 </div>
                 <div class="col-lg-2"></div>
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                     <div class="alert"></div>
                     <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Page templates
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177279/OjaFunnel-Images/Rectangle_19433_bn7ycr.png" alt="Picture" draggable="false">
+                        
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                     <div class="alert"></div>
                     <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Optin Pages
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177280/OjaFunnel-Images/Rectangle_19439_ekkfnx.png" alt="Picture" draggable="false">
+                        
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                     <div class="alert"></div>
                     <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Order forms
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177279/OjaFunnel-Images/Rectangle_19438_dzmrce.png" alt="Picture" draggable="false">
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
+                <div class="col-lg-2">
+                    <div class="alert"></div>
                     <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Quiz Automation
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19431_abdoih.png" alt="Picture" draggable="false">
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
+                <div class="col-lg-2">
+                    <div class="alert"></div>
                     <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Integrations
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19429_dkzil0.png" alt="Picture" draggable="false">
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
+                <div class="col-lg-2">
+                    <div class="alert"></div>
                     <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Reports & Analysis
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19430_xwwm2k.png" alt="Picture" draggable="false">
                     </div>
                 </div>
             </div>
@@ -564,110 +518,113 @@
     <!-- Digital Ends -->
     <!-- Footter -->
     <section class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="kit-font">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png">
-                        <p>
-                            Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
-                        </p>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="kit-font">
+                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png">
+                    <p>
+                        Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
+                    </p>
                 </div>
-                <div class="col-lg-2">
-                    <div class="quick">
-                        <h1>
-                            Quick Link
-                        </h1>
-                        <ul>
-                            <li>
-                                Products
-                            </li>
-                            <li>
-                                Features
-                            </li>
-                            <li>
-                                Pricing
-                            </li>
-                            <li>
-                                Resources
-                            </li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="quick">
+                    <h1>
+                        Quick Link
+                    </h1>
+                    <ul>
+                        <li>
+                            <a href="{{route('index')}}">Home</a>
+                        </li>
+                        <li>
+                            <a href="{{route('emailmarketing')}}">Features</a>
+                        </li>
+                        <li>
+                            <a href="{{route('pricing')}}"> Pricing</a>
+                        </li>
+                        <li>
+                            <a href="{{route('faqs')}}">FAQs</a>
+                        </li>
+                        <li>
+                            <a href="{{route('contact')}}">Contact</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-lg-2">
-                    <div class="quick">
-                        <h1>
-                            Contact
-                        </h1>
-                        <ul>
-                            <li>
-                                8, Address street
-                            </li>
-                            <li>
-                                0815530260
-                            </li>
-                        </ul>
-                    </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="quick">
+                    <h1>
+                        Contact
+                    </h1>
+                    <ul>
+                        <li>
+                            8, Address street
+                        </li>
+                        <li>
+                            0815530260
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-lg-4">
-                    <div class="quick">
-                        <h1>
-                            Newsletter
-                        </h1>
-                        <ul>
-                            <li>
-                                Get News & Updates
-                            </li>
-                        </ul>
-                        <form class="search-bar">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Your email Address">
-                                <span class="input-group-text" id="basic-addon2">Subscribe</span>
-                            </div>
-                        </form>
-                    </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="quick">
+                    <h1>
+                        Newsletter
+                    </h1>
+                    <ul>
+                        <li>
+                            Get News & Updates
+                        </li>
+                    </ul>
+                    <form class="search-bar">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email Address" required>
+                            <span class="input-group-text" id="basic-addon2" type="submit" required>Subscribe</span>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-lg-12">
-                    <div class="last-fot">
-                        <h1>
-                            Helping thousands of businesses succeed,<a href="{{route('login')}}">
+            </div>
+            <div class="col-lg-12">
+                <div class="last-fot">
+                    <h1>
+                        Helping thousands of businesses succeed,<a href="{{route('login')}}">
                                 join us
                             </a>
-                        </h1>
-                    </div>
+                    </h1>
                 </div>
-                <div class="col-lg-3"></div>
-                <div class="col-lg-6">
-                    <div class="top">
-                        <div class="logo-details">
-                            <div class="media-icons">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#"><i class="fab fa-youtube"></i></a>
-                            </div>
+            </div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="top">
+                    <div class="logo-details">
+                        <div class="media-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    <div class="last-fott text-center">
+            </div>
+            <div class="col-lg-12">
+                <div class="last-fott text-center">
                         <a href="{{route('privacy')}}">
-                            Privacy Policy
-                        </a>
-                        |
-                        <a href="{{route('terms')}}">
-                            Terms & Condition
-                        </a>
-                        <h1>
-                            Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
-                        </h1>
-                    </div>
+                                Privacy Policy
+                            </a>
+                            |
+                            <a href="{{route('terms')}}">
+                                Terms & Condition
+                            </a>
+                    <h1>
+                        Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
+                    </h1>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
     <!-- Footter Ends -->
 
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
