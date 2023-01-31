@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\OjaPlan;
 use App\Models\Plan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -66,6 +67,6 @@ class PlanSeeder extends Seeder
             ]
         ];
 
-        Plan::insert($createPlan);
+        OjaPlan::insert($createPlan);
     }
 }

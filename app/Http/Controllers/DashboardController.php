@@ -515,8 +515,6 @@ class DashboardController extends Controller
 
     }
 
-
-
     public function whatsapp_automation($username)
     {
         $whatsappAutomations = SmsCampaign::latest()->where('user_id', Auth::user()->id)->where('sms_type', 'whatsapp')->cursor();
