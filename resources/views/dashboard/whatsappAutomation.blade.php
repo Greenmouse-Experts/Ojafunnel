@@ -9,9 +9,24 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row begin">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+                        <h4 class="mb-sm-0 font-size-18">WhatsApp Automation</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                                <li class="breadcrumb-item active">WhatsApp Automation</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-12">
-                    <div class="card account-head mb-4">
+                    <div class="card account-head">
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="py-2">
@@ -33,55 +48,6 @@
                                 </div>
                             </div>
                         </div>
-<<<<<<< HEAD
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul class="nav nav-tabs nav-tabs-custom">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">New Campaign</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{route('user.receive.message', Auth::user()->username)}}">Recieved Messages</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Sent Campaigns</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{route('user.auto.reply', Auth::user()->username)}}">Auto Reply</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">View Broadcast </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Settings</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="Edit">
-                            <div class="form">
-                                <div class="row">
-                                    <p class="tell mb-4">
-                                        <b>
-                                            Sender Accounts
-                                        </b> <br>
-                                        <span>
-                                            Add one or more whatsapp number to start your automation
-                                        </span>
-                                    </p>
-                                    <div class="col-lg-12">
-                                        <label>Whatsapp Number</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
-                                            </div>
-=======
                         {{-- <div class="py-2">
                             <h4 class="font-600">WhatsApp Automation</h4>
                             <p>
@@ -132,9 +98,9 @@
                                 </div>
                             </div> -->
                         </div>
-                        <div class="table-body mt-5 table-responsive">
+                        <div class="table-body mt-1 table-responsive">
                             <table id="datatable-buttons" class=" table table-bordered dt-responsive nowrap w-100">
-                                <thead class="fw-bold bg-light rounded-pill ">
+                                <thead class="fw-bold dark" style="background:#F5E6FE;">
                                     <tr>
                                         <th scope="col">S/N</th>
                                         <th scope="col">Campaign Name</th>
@@ -237,7 +203,6 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
->>>>>>> 7207286e5441ec516159c115bbccc604a6c73443
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -301,12 +266,8 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-                </div>
-=======
                 </div> --}}
                 <div class="col-lg-2"></div>
->>>>>>> 7207286e5441ec516159c115bbccc604a6c73443
             </div>
         </div>
     </div>
@@ -363,11 +324,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-    <!-- end modal -->
-
-    @endsection
-=======
 <!-- end modal -->
 <style>
     .btn-list{
@@ -387,4 +343,3 @@
     }
 </style>
 @endsection
->>>>>>> 7207286e5441ec516159c115bbccc604a6c73443

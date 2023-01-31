@@ -26,8 +26,8 @@
             </div>
             <!-- end page title -->
             <!-- start page title -->
-            <div class="row card">
-                <div class="col-lg-12 account-head">
+            <div class="row card account-head">
+                <div class="col-lg-12">
                     <h4 class="font-500">New SMS Campaign</h4>
                     <p>
                         Send SMS to your new customer and those on your mailing list

@@ -9,9 +9,24 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row begin">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+                        <h4 class="mb-sm-0 font-size-18">Contact List</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                                <li class="breadcrumb-item active">Contact List</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-12">
-                    <div class="card account-head mb-4">
+                    <div class="card account-head">
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="py-2">
@@ -70,7 +85,7 @@
                 <div class="col-lg-2"></div>
                 <div class="">
                     <div class="store-table">
-                        <div class="table-head row pt-4">
+                        <div class="table-head row">
                             <div class="col-lg-12">
                                 <h4>Contact Lists</h4>
                             </div>
@@ -81,9 +96,9 @@
                                 </div>
                             </div> -->
                         </div>
-                        <div class="table-body mt-5 table-responsive">
+                        <div class="table-body mt-1 table-responsive">
                             <table id="datatable-buttons" class=" table table-bordered dt-responsive nowrap w-100">
-                                <thead class="fw-bold bg-light rounded-pill ">
+                                <thead class="fw-bold dark" style="background:#F5E6FE;">
                                     <tr>
                                         <th scope="col">S/N</th>
                                         <th scope="col">Name</th>
@@ -142,7 +157,7 @@
                                                                     <form action="{{route('user.automation.contact_add', ['username' => Auth::user()->username, 'list_id' => $item->id])}}" method="post">
                                                                         @csrf
                                                                         <div class="form">
-                                                                            <div class="col-lg-12">
+                                                                            <div class="cfContactsol-lg-12">
                                                                                 <label>Phone Number</label>
                                                                                 <div class="row">
                                                                                     <div class="col-md-12 mb-4">
