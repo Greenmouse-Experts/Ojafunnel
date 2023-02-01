@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
 
         if (config('app.env') === 'local') {
             // $this->call(TestPageSeeder::class);
-            $this->call(ContactListSeeder::class);
-            $this->call(ContactNumberSeeder::class);
+            // $this->call(ContactListSeeder::class);
+            // $this->call(ContactNumberSeeder::class);
             $this->call(PlanSeeder::class);
         }
     }
