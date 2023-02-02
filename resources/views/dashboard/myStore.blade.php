@@ -64,15 +64,15 @@
                         <div class="hihj">
                             <label for="theme" class="fs-5"> Store Theme </label>
                             <div class="row mt-2 justify-content-between">
-                                <div class="col-lg-7 theme-select">
+                                <div class="col-lg-6 theme-select">
                                     <input type="color" value="#8DA5FA" />
                                     <input type="color" value="#F88DFA" />
                                     <input type="color" value="#8DFA98" />
                                     <input type="color" value="#F8D3D3" />
                                     <input type="color" value="#F8FA8D" />
                                 </div>
-                                <div class="col-lg-4 text-end">
-                                    <a href="#" type="color" style="color: #714091">Choose another color</a>
+                                <div class="col-lg-6 text-end">
+                                    <a type="color" style="color: #714091">Choose another color</a>
                                 </div>
                             </div>
                         </div>

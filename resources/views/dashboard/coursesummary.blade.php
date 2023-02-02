@@ -7,25 +7,34 @@
         <div class="container-fluid">
             <!-- start page title -->
             <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+                        <h4 class="mb-sm-0 font-size-18">Course Summary</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                                <li class="breadcrumb-item active">Course Summary</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-12">
-                    <div class="card begin account-head mb-4">
+                    <div class="card account-head mb-4">
                         <div class="row">
-                            <div class="py-2">
-                                <h4 class="font-600">Course Summary</h4>
-                                <p>
-                                    Edit and preview how your course looks
-                                </p>
-                            </div>
-                            <div class="col-md-2">
+                        <div class="col-md-2">
                                 <ul class="list-unstyled mt-3">
                                     <li>
-                                        <a href="{{route('user.get.quiz')}}">
+                                        <a href="{{route('user.get.quiz', Auth::user()->username)}}">
                                             << Previous </a>
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-md-7"></div>
-                            <div class="col-md-3">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-2">
                                 <div class="save mt-2 mb-4">
                                     <button>
                                         <a href="">
@@ -33,6 +42,12 @@
                                         </a>
                                     </button>
                                 </div>
+                            </div>
+                            <div class="py-2">
+                                <h4 class="font-600">Course Summary</h4>
+                                <p>
+                                    Edit and preview how your course looks
+                                </p>
                             </div>
                             <div class="col-md-12">
                                 <div class="col-md-12">
@@ -42,12 +57,12 @@
                                             </li>
                                             </li>
                                             <li class="px-3 py-2 text-white bg-purp">
-                                                <a href="{{route('user.course.content')}}" class="text-decoration-none text-white">Course Content
+                                                <a href="{{route('user.course.content', Auth::user()->username)}}" class="text-decoration-none text-white">Course Content
                                                     >>
                                                 </a>
                                             </li>
                                             <li class="px-3 py-2 text-white bg-purp">
-                                                <a href="{{route('user.course.summary')}}" class="text-decoration-none text-white">Summary >>
+                                                <a href="{{route('user.course.summary', Auth::user()->username)}}" class="text-decoration-none text-white">Summary >>
                                                 </a>
                                             </li>
                                             <li class="px-3 py-2">
@@ -174,9 +189,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row justify-content-between mt-5">
+                        <div class="row course mt-3 mb-3">
                         <div class="col-6">
                             <a href="#" class="text-decoration-none">
                                 <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
@@ -184,12 +197,13 @@
                                 </button></a>
                         </div>
                         <div class="col-6 text-end">
-                            <a href="{{route('user.enroll.now')}}" class="text-decoration-none">
+                            <a href="{{route('user.enroll.now', Auth::user()->username)}}" class="text-decoration-none">
                                 <button class="btn px-4" style="color: #ffffff; background-color: #714091">
                                     Publish
                                 </button>
                             </a>
                         </div>
+                    </div>
                     </div>
                 </div>
                 <div class="col-lg-2">

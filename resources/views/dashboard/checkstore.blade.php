@@ -36,9 +36,11 @@
               <div class="col-md-3">
                 <div class="">
                   <div class="all-create">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#createContactList">
-                      Create New Store
-                    </button>
+                    <a href="{{route('user.my.store', Auth::user()->username)}}">
+                      <button>
+                      + Create New Store 
+                      </button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -69,7 +71,7 @@
                       <td>Chukka Shoes</td>
                       <td>120</td>
                       <td>
-                        <a href="store.html" class="text-decoration-underline">Preview</a>
+                        <a href="{{route('user.stores', Auth::user()->username)}}" class="text-decoration-underline">Preview</a>
                       </td>
                       <td>
                         <div class="dropdown dropstart">
