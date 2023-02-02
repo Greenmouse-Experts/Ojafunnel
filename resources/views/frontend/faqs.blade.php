@@ -1,22 +1,22 @@
 @extends('layouts.frontend')
 @section('page-content')
- <!-- faq-welcome Ends -->
-    <section class="faq-welcome">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="text">
-                        <h1>
-                            Frequently Asked Questions
-                        </h1>
-                        <p>
-                            Do you have questions and need answers, lets help. 
-                        </p>
+    <!-- faq-welcome Ends -->
+        <section class="faq-welcome">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text">
+                            <h1>
+                                Frequently Asked Questions
+                            </h1>
+                            <p>
+                                Do you have questions and need answers, lets help. 
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     <!-- faq-welcome Ends -->
 
     <!-- Ferent -->

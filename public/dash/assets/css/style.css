@@ -3068,10 +3068,26 @@ textarea.bulk-delete {
 .labe{
   border-radius: 50px !important;
 }
-.theme-select input {
-  border: none !important;
-  padding: 2px;
-  background-color: #fff;
+.theme-select input{
+  border: none;
+  border-radius: 50% !important;
+  padding: 25px
+  ;
+}
+.theme-select input:nth-child(1){
+  background-color: #8DA5FA;
+}
+.theme-select input:nth-child(2){
+  background-color: #F88DFA;
+}
+.theme-select input:nth-child(3){
+  background-color: #8DFA98;
+}
+.theme-select input:nth-child(4){
+  background-color: #F8D3D3;
+}
+.theme-select input:nth-child(5){
+  background-color: #F8FA8D;
 }
 .theme-select input:focus{
   outline: none;
@@ -3116,21 +3132,17 @@ textarea.bulk-delete {
 /* chukka stores styling */
 .hero-store {
   background: #f8d3d3;
-  height: 230px;
+  padding: 150px 0px;
   border-radius: 10px;
 }
-.found-con {
-  display: grid;
-  grid-template-columns: 20% 20% 20% 20%;
-  justify-content: space-between;
-}
+
 .founds {
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   margin-bottom: 20px;
 }
 .found-top {
-  height: 120px;
+  padding: 65px 0px;
   border-radius: 10px 10px 0px 0px;
   width: 100%;
   background: #d8d8d8;
@@ -4771,16 +4783,7 @@ textarea{
 .circle
 {
     padding: 20px;
-    background-color:#713F93;
     color: #fff;
-}
-@media (max-width:584px) {
-    .circle
-{
-    padding: 10px !important;
-    background-color:#713F93;
-    color: #fff;
-}
 }
 .circle .bi{
     color: red;

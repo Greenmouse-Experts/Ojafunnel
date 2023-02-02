@@ -25,12 +25,6 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="row">
-                            <div class="py-2">
-                                <h4 class="font-600">Set up your Curriculum</h4>
-                                <p>
-                                    Here’s where you add course content—like lectures, course sections, etc
-                                </p>
-                            </div>
                             <div class="col-md-2">
                                 <ul class="list-unstyled mt-3">
                                     <li>
@@ -39,8 +33,8 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-md-7"></div>
-                            <div class="col-md-3">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-2">
                                 <div class="save mt-2 mb-4">
                                     <button>
                                         <a href="#">
@@ -48,6 +42,12 @@
                                         </a>
                                     </button>
                                 </div>
+                            </div>
+                            <div class="py-2">
+                                <h4 class="font-600">Set up your Curriculum</h4>
+                                <p>
+                                    Here’s where you add course content—like lectures, course sections, etc
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -94,8 +94,6 @@
                                     <label>Course Name</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <!-- <input type="text" placeholder="Enter your course name" name="name"
-                                                        class="input" required> -->
                                             <select>
                                                 <option>
                                                     Week 1 : Scheme of work
@@ -113,7 +111,7 @@
                                                         </a>
                                                     </li>
                                                     <li class="text-purpp">
-                                                        <a href="{{route('user.get.quiz', Auth::user()->username)}})}}">
+                                                        <a href="{{route('user.get.quiz', Auth::user()->username)}}">
                                                             Add Quiz
                                                         </a>
                                                     </li>
@@ -175,6 +173,27 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="boding">
+                                    <button class="btn px-3" style="color: #714091; border:1px solid #714091; background:#fff;">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-3">
+                                <div class="boding">
+                                    <button style="background: #714091;">
+                                        <a href="{{route('user.course.summary', Auth::user()->username)}}" style="color: #fff;">
+                                            Save & Continue
+                                        </a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
                 <div class="col-lg-2">
@@ -185,156 +204,155 @@
     <!-- End Page-content -->
 </div>
 <!-- AddContent modal -->
-    <!-- <div class="modal fade" id="AddContent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content px-4 py-2">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel1">
-                        Kindly Add Content Below
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <!-- <div class="col-lg-2 col-md-2"></div> -->
-                        <div class="col-lg-12 col-md-12">
-                            <div class="form">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <label>Content Description</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <textarea name="" id="" cols="30" rows="5" placeholder="Start typing"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12">
-                            <div class="boding">
-                                <button>
-                                    Add Content
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-<!-- end modal -->
-
-<!-- email confirm modal -->
-    <!-- <div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content pb-3">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Add Content
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="whitee">
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
-                                    <p>
-                                        <b>
-                                            Video
-                                        </b>
-                                    </p>
-                                    <div class="and">
-                                        Upload and display your video content
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="white">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
-                                <p>
-                                    <b>
-                                        Audio
-                                    </b>
-                                </p>
-                                <div class="and">
-                                    Prefect learning for students who are on go
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="white">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
-                                <p>
-                                    <b>
-                                        Text
-                                    </b>
-                                </p>
-                                <div class="and">
-                                    Include bodies of text, images or external links
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="white">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
-                                <p>
-                                    <b>
-                                        PDF File
-                                    </b>
-                                </p>
-                                <div class="and">
-                                    Easily upload pdf content for your students
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="white">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
-                                <p>
-                                    <b>
-                                        Downloable File
-                                    </b>
-                                </p>
-                                <div class="and">
-                                    Distribute materials to your students
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="white">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
-                                <p>
-                                    <b>
-                                        Presentation
-                                    </b>
-                                </p>
-                                <div class="and">
-                                    Display slides with audio for your students
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-<!-- end modal -->
-<!-- email confirm modal -->
 <div class="modal fade" id="AddContent" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content px-4 py-2">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel1">
-                    Kindly Add Content
+                    Kindly Add Content Below
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- <div class="col-lg-2 col-md-2"></div> -->
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Content Description</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <textarea name="" id="" cols="30" rows="5" placeholder="Start typing"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="boding">
+                            <button>
+                                Add Content
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+<!-- email confirm modal -->
+<div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content pb-3">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Add Content
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="whitee">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
+                                <p>
+                                    <b>
+                                        Video
+                                    </b>
+                                </p>
+                                <div class="and">
+                                    Upload and display your video content
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="white">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
+                            <p>
+                                <b>
+                                    Audio
+                                </b>
+                            </p>
+                            <div class="and">
+                                Prefect learning for students who are on go
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="white">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
+                            <p>
+                                <b>
+                                    Text
+                                </b>
+                            </p>
+                            <div class="and">
+                                Include bodies of text, images or external links
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="white">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
+                            <p>
+                                <b>
+                                    PDF File
+                                </b>
+                            </p>
+                            <div class="and">
+                                Easily upload pdf content for your students
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="white">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
+                            <p>
+                                <b>
+                                    Downloable File
+                                </b>
+                            </p>
+                            <div class="and">
+                                Distribute materials to your students
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="white">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
+                            <p>
+                                <b>
+                                    Presentation
+                                </b>
+                            </p>
+                            <div class="and">
+                                Display slides with audio for your students
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+<!-- email confirm modal -->
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content px-4 py-2">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel1">
+                    Add Video
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -348,7 +366,26 @@
                                     <label>Title</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <textarea name="" id="" cols="30" rows="10"  placeholder="Start Typing" required></textarea>
+                                            <input type="text" placeholder="Enter your course name" name="email" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="">
+                                        <div class="logo-input border-in w-full px-5 py-4 pb-5">
+                                            <p>
+                                                <b>
+                                                    Upload your video
+                                                </b>
+                                            </p>
+                                            <div class="logo-input2 border-in py-5 px-3">
+                                                <div class="avatar">
+                                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664984753/OjaFunnel-Images/Vectoor_rbkrfl.png" alt="">
+                                                </div>
+                                                <div class="logo-file">
+                                                    <input type="file" accept="image" name="logo" id="" class="mt-4 w-100" />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

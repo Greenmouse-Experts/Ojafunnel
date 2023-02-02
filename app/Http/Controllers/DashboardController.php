@@ -570,7 +570,14 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function store($username)
+    public function shops($username)
+    {
+        return view('dashboard.Shops', [
+            'username' => $username
+        ]);
+    }
+
+    public function stores($username)
     {
         return view('dashboard.mystoree', [
             'username' => $username

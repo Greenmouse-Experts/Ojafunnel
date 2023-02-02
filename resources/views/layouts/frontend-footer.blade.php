@@ -91,13 +91,13 @@
             </div>
             <div class="col-lg-12">
                 <div class="last-fott text-center">
-                        <a href="{{route('privacy')}}">
-                                Privacy Policy
-                            </a>
-                            |
-                            <a href="{{route('terms')}}">
-                                Terms & Condition
-                            </a>
+                    <a href="{{route('privacy')}}">
+                        Privacy Policy
+                    </a>
+                        |
+                    <a href="{{route('terms')}}">
+                        Terms & Condition
+                    </a>
                     <h1>
                         Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
                     </h1>

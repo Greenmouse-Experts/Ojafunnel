@@ -131,7 +131,7 @@
                                     </a>
                                 </li>
                                 <li class="text-purpp">
-                                    <a href="{{route('user.enroll.cur')}}">
+                                    <a href="{{route('user.enroll.cur', Auth::user()->username)}}">
                                         Curriculum
                                     </a>
                                 </li>
