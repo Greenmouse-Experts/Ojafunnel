@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OjaPlan;
 use App\Models\Plan;
 use App\Models\User;
 use Exception;
@@ -26,7 +27,7 @@ class HomePageController extends Controller
     //  Pring
     public function pricing()
     {
-        $plans = Plan::latest()->get();
+        $plans = OjaPlan::latest()->get();
 
         return view('frontend.pricing', [
             'plans' => $plans

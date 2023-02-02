@@ -515,8 +515,6 @@ class DashboardController extends Controller
 
     }
 
-
-
     public function whatsapp_automation($username)
     {
         $whatsappAutomations = SmsCampaign::latest()->where('user_id', Auth::user()->id)->where('sms_type', 'whatsapp')->cursor();
@@ -572,7 +570,14 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function store($username)
+    public function shops($username)
+    {
+        return view('dashboard.Shops', [
+            'username' => $username
+        ]);
+    }
+
+    public function stores($username)
     {
         return view('dashboard.mystoree', [
             'username' => $username

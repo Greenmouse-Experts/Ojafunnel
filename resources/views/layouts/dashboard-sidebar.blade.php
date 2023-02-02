@@ -110,6 +110,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.my.store', Auth::user()->username)}}" key="t-tui-calendar">My Store</a></li>
+                        <li><a href="{{route('user.shops', Auth::user()->username)}}" key="t-tui-calendar">Shops</a></li>
                     </ul>
                 </li>
                 <li>
