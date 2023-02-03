@@ -3132,7 +3132,7 @@ textarea.bulk-delete {
 /* chukka stores styling */
 .hero-store {
   background: #f8d3d3;
-  padding: 150px 0px;
+  padding: 100px 0px;
   border-radius: 10px;
 }
 
@@ -3163,7 +3163,18 @@ textarea.bulk-delete {
     border-radius: 10px;
   }
 }
-
+.form-group input::placeholder{
+  font-size: 12px;
+  color: #000;
+}
+.form-group select::placeholder{
+  font-size: 12px;
+  color: #000;
+}
+.form-group textarea::placeholder{
+  font-size: 12px;
+  color: #000;
+}
 /* page build styling */
 /* page build styling */
 /* page build styling */
