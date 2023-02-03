@@ -11,7 +11,7 @@
         ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
         callback: function(response){
             // alert(JSON.stringify(response))
-            let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
+            // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
             url = url.replace(':response', response.reference);
             url = url.replace(':amount', document.getElementById("amount").value);
             document.location.href=url;

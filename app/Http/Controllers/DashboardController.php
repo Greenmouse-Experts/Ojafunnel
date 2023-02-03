@@ -577,6 +577,20 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function checkout($username)
+    {
+        return view('dashboard.Checkout', [
+            'username' => $username
+        ]);
+    }
+
+    public function cart($username)
+    {
+        return view('dashboard.Cart', [
+            'username' => $username
+        ]);
+    }
+
     public function stores($username)
     {
         return view('dashboard.mystoree', [
