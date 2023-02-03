@@ -8,8 +8,12 @@
   <meta content="Oja Funnel |  Dashboard" name="Oja Funnel |  Dashboard" />
   <!-- App favicon -->
   <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
+
+  <!-- App Css-->
+  <link href="{{URL::asset('dash/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
   <!-- Bootstrap Css -->
   <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <!-- Icons Css -->
   <link href="{{URL::asset('dash/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
   <!-- style Css -->
@@ -39,20 +43,20 @@
           <h3 class="mt-3 px-2">Chukka Shoes</h3>
         </div>
         <div class="col-4">
-          <div class="search-store w-75 bg-white border-in flex">
-            <input class="py-2 border-right" type="search" placeholder="search by name" name="store" id="" />
-            <button class="bg-white">
-              <i class="bi bi-search text-dark"></i>
-            </button>
-          </div>
+          <form class="app-search d-none d-lg-block">
+            <div class="position-relative">
+              <input type="text" class="form-control" placeholder="Search...">
+              <span class="bx bx-search-alt"></span>
+            </div>
+          </form>
         </div>
         <div class="col-3 d-flex align-items-center justify-content-between">
           <div>
             <a href="{{route('user.my.store', Auth::user()->username)}}">set up your own store</a>
           </div>
-          <div class="border px-4 py-2 d-flex align-items-center justify-content-center border-2 px-2 font-bold border-primary text-primary">
-            cart
-          </div>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <i class="bi bi-cart-check"></i> Cart
+          </button>
         </div>
       </div>
     </div>
@@ -146,7 +150,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 mb-5">
               <div class="founds">
                 <div class="found-top"></div>
                 <div class="p-2">
@@ -155,7 +159,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4  mb-5">
               <div class="founds">
                 <div class="found-top"></div>
                 <div class="p-2">
@@ -164,7 +168,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4  mb-5">
               <div class="founds">
                 <div class="found-top"></div>
                 <div class="p-2">
@@ -182,17 +186,40 @@
 
   <footer class="footer">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12 mb-2 mt-5">
-                <div class="text-center text-dark">Copyright © 
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script> {{config('app.name')}} | All Right Reserved
-                </div>
-            </div>
+      <div class="row">
+        <div class="col-sm-12 mb-2 mt-5">
+          <div class="text-center text-dark">Copyright ©
+            <script>
+              document.write(new Date().getFullYear())
+            </script> {{config('app.name')}} | All Right Reserved
+          </div>
         </div>
+      </div>
     </div>
-</footer>
+  </footer>
+  <!-- Button trigger modal -->
+
+ <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-side modal-top-right">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/#[[latestVersion]]#/mdb.min.css" rel="stylesheet" />
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/#[[latestVersion]]#/mdb.min.js"></script>
   <!-- JAVASCRIPT -->
   <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
   <script src="{{URL::asset('dash/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

@@ -104,13 +104,15 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#" class="has-arrow">
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-cart2"></i>
                         <span key="t-chat">Ecommerce</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.my.store', Auth::user()->username)}}" key="t-tui-calendar">My Store</a></li>
                         <li><a href="{{route('user.shops', Auth::user()->username)}}" key="t-tui-calendar">Shops</a></li>
+                        <li><a href="{{route('user.cart', Auth::user()->username)}}" key="t-tui-calendar">Cart</a></li>
+                        <li><a href="{{route('user.checkout', Auth::user()->username)}}" key="t-tui-calendar">Checkout</a></li>
                     </ul>
                 </li>
                 <li>

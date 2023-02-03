@@ -269,6 +269,8 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/my-store/storee', [App\Http\Controllers\DashboardController::class, 'store'])->name('user.store');
                         Route::get('/shops', [App\Http\Controllers\DashboardController::class, 'shops'])->name('user.shops');
                         Route::get('/stores', [App\Http\Controllers\DashboardController::class, 'stores'])->name('user.stores');
+                        Route::get('/checkout', [App\Http\Controllers\DashboardController::class, 'checkout'])->name('user.checkout');
+                        Route::get('/cart', [App\Http\Controllers\DashboardController::class, 'cart'])->name('user.cart');
                     }
             );
             Route::prefix('/Learning')->group(
