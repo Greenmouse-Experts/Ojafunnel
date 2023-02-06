@@ -39,8 +39,8 @@
     <div class="container">
       <div class="row justify-content-between align-items-center">
         <div class="col-4 d-flex align-items-center">
-          <img src="{{URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="40" />
-          <h3 class="mt-3 px-2">Chukka Shoes</h3>
+          <img src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="40" />
+          <h3 class="mt-3 px-2">{{$store->name}}</h3>
         </div>
         <div class="col-4">
           <form class="app-search d-none d-lg-block">
@@ -66,8 +66,8 @@
     <div class="container">
       <div class="hero-store d-flex align-items-center justify-content-center">
         <div class="text-center">
-          <img src="{{URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="60" />
-          <h3 class="mt-3 px-2">Chukka Shoes</h3>
+          <img src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="60" />
+          <h3 class="mt-3 px-2">{{$store->name}}</h3>
         </div>
       </div>
     </div>
