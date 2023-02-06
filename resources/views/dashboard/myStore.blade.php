@@ -35,7 +35,8 @@
             <!-- account container form -->
             <div class="container">
                 <div class="commerce-con">
-                    <form action="">
+                    <form action="{{route('user.store.create', Auth::user()->username)}}" method="post" enctype="multipart/form-data">
+                        @csrf
                         <!-- store name -->
                         <div>
                             <div class="Editt">
@@ -43,15 +44,15 @@
                                     <div class="row">
                                         <div class="col-lg-12 mb-4">
                                             <label for="Name">Store Name</label>
-                                            <input type="text" placeholder="Enter your shop name" required />
+                                            <input type="text" name="name" id="storeName" placeholder="Enter your shop name" required />
                                         </div>
                                         <div class="col-lg-12 mb-4">
                                             <label for="Name">Store Description</label>
-                                            <textarea name="" id="" cols="30" rows="10" placeholder="Enter your shop description" required></textarea>
+                                            <textarea name="description" id="" cols="30" rows="10" placeholder="Enter your shop description" required></textarea>
                                         </div>
                                         <div class="col-md-8">
                                             <label for="Name">Store Name</label>
-                                            <input type="text" value=" https://chuka.ojafunnel.cc/store" name="name" id="myInput" class="input mov" readonly required>
+                                            <input type="text" value=" http://shop.ojafunnel.test/" name="link" id="myInput" class="input mov" readonly required>
                                         </div>
                                         <div class="col-md-1 mt-3 mb-3">
                                             <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
@@ -65,39 +66,26 @@
                             <label for="theme" class="fs-5"> Store Theme </label>
                             <div class="row mt-2 justify-content-between">
                                 <div class="col-lg-6 theme-select">
-                                    <!-- <input type="radio" value="#8DA5FA" />
-                                    <input type="color" value="#F88DFA" />
-                                    <input type="color" value="#8DFA98" />
-                                    <input type="color" value="#F8D3D3" />
-                                    <input type="color" value="#F8FA8D" /> -->
-                                    <label class="amber">
-                                        <input type="radio" class="cotton" name="color" value="#FF5722">
-                                        <div class="layer"></div>
-                                        <div class="button"><span></span></div>
-                                    </label>
-                                    <label class="lime">
-                                        <input type="radio" name="color" class="cotton" value="#FFC107">
-                                        <div class="layer"></div>
-                                        <div class="button"><span></span></div>
-                                    </label>
-
-                                    <label class="teal">
-                                        <input type="radio" name="color" class="cotton" value="#009688">
-                                        <div class="layer"></div>
-                                        <div class="button"><span></span></div>
-                                    </label>
-
-                                    <label class="blue">
-                                        <input type="radio" name="color" class="cotton" value=" #2196F3">
-                                        <div class="layer"></div>
-                                        <div class="button"><span></span></div>
-                                    </label>
-
-                                    <label class="indigo">
-                                        <input type="radio" name="color" class="cotton" value="#3F51B5">
-                                        <div class="layer"></div>
-                                        <div class="button"><span></span></div>
-                                    </label>
+                                    <label class="container2">
+                                        <input type="radio" value="#00387d" name="theme">
+                                        <span class="rdio amber"></span>
+                                      </label>
+                                      <label class="container2">
+                                        <input type="radio" value="#00ff00" name="theme">
+                                        <span class="rdio lime"></span>
+                                      </label>
+                                      <label class="container2">
+                                        <input type="radio" value="#008080" name="theme">
+                                        <span class="rdio teal"></span>
+                                      </label>
+                                      <label class="container2">
+                                        <input type="radio" value="#010199" name="theme">
+                                        <span class="rdio blue"></span>
+                                      </label>
+                                      <label class="container2">
+                                        <input type="radio" value="#4b0082" name="theme">
+                                        <span class="rdio indigo"></span>
+                                      </label>
                                 </div>
                                 <div class="col-lg-6 text-end">
                                     <div class="baseColor">
@@ -126,13 +114,13 @@
                             <div class="row hihj justify-content-between mt-5">
                                 <div class="col-6">
                                     <a href="#" class="text-decoration-none">
-                                        <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="reset" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button></a>
                                 </div>
                                 <div class="col-6 text-end">
                                     <a href="ecommerce2.html" class="text-decoration-none">
-                                        <button class="btn px-4" style="color: #ffffff; background-color: #714091" data-bs-toggle="modal" data-bs-target="#onlineStore">
+                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091" data-bs-toggle="modal" data-bs-target="#onlineStore">
                                             Create Shop
                                         </button>
                                     </a>
@@ -172,6 +160,34 @@
     </div>
 </div>
 <!-- end modal -->
+
+<script>
+    $(document).ready(function(){
+
+      $("#storeName").keyup(function(){
+        if(document.getElementById('storeName').value.match(/\s/g)){
+            document.getElementById('storeName').value=document.getElementById('storeName').value.replace(/\s/g,'');
+        }
+        $("#myInput").val('http://store.ojafunnel.test/'+$("#storeName").val());
+      });
+    });
+</script>
+<script>
+    function myCopyFunction() {
+        // Get the text field
+        var copyText = document.getElementById("myInput");
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.value);
+
+        // Alert the copied text
+        //alert("Copied the text: " + copyText.value);
+    }
+</script>
 <!-- END layout-wrapper -->
 <script>
     let input = document.querySelectorAll("#baseColor");
@@ -191,99 +207,117 @@
     }
     input.forEach((input) => input.addEventListener("change", handleUpdate));
     input2.forEach((input2) => input2.addEventListener("change", handleUpdate));
-    
+
 </script>
 
-@endsection
 <style>
-    .button {
-        display: inline-block;
-        position: relative;
-        width: 50px;
-        height: 50px;
-        margin: 10px;
-        cursor: pointer;
+    /* The container */
+    .container2 {
+      display: inline;
+      position: relative;
+      padding-left: 35px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      font-size: 22px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
-    .button span {
-        display: block;
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        padding: 0;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        -o-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        border-radius: 100%;
-        background: #eeeeee;
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-        transition: ease .3s;
+    /* Hide the browser's default radio button */
+    .container2 input[type=radio] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
     }
 
-    .button span:hover {
-        padding: 10px;
+    /* Create a custom radio button */
+    .amber {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #00387d;
+      border-radius: 50%;
     }
 
-    .amber .button span {
-        background: #FFC107;
+    .lime {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #00ff00;
+      border-radius: 50%;
     }
 
-    .lime .button span {
-        background: #8BC34A;
+    .teal {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #008080;
+      border-radius: 50%;
+    }
+    .blue {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #010199;
+      border-radius: 50%;
     }
 
-    .teal .button span {
-        background: #009688;
+    .indigo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #4b0082;
+      border-radius: 50%;
     }
 
-    .blue .button span {
-        background: #2196F3;
+
+
+    /* On mouse-over, add a grey background color */
+    .container2:hover input ~ .rdio {
+      background-color: #ccc;
     }
 
-    .indigo .button span {
-        background: #3F51B5;
+    /* When the radio button is checked, add a blue background */
+    .container2 input:checked ~ .rdio {
+      background-color: #2196F3;
     }
 
-    .layer {
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: transparent;
-        /*transition: ease .3s;*/
-        z-index: -1;
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .rdio:after {
+      content: "";
+      position: absolute;
+      display: none;
     }
 
-    .orange input:checked~.layer {
-        background: #F4511E;
+    /* Show the indicator (dot/circle) when checked */
+    .container2 input:checked ~ .rdio:after {
+      display: block;
     }
 
-    .amber input:checked~.layer {
-        background: #FFB300;
+    /* Style the indicator (dot/circle) */
+    .container2 .rdio:after {
+         top: 9px;
+        left: 9px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
     }
 
-    .lime input:checked~.layer {
-        background: #7CB342;
-    }
 
-    .teal input:checked~.layer {
-        background: #00897B;
-    }
+    </style>
 
-    .blue input:checked~.layer {
-        background: #1E88E5;
-    }
+@endsection
 
-    .indigo input:checked~.layer {
-        background: #3949AB;
-    }
-
-    .cotton {
-        display: none;
-    }
-</style>
