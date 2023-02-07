@@ -600,7 +600,7 @@ class DashboardController extends Controller
 
     public function create_course($username)
     {
-        return view('dashboard.createCourse', [
+        return view('dashboard.lms.createCourse', [
             'username' => $username
         ]);
     }
@@ -612,9 +612,16 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function create_course_start($username)
+    {
+        return view('dashboard.lms.coursestart', [
+            'username' => $username
+        ]);
+    }
+
     public function course_content($username)
     {
-        return view('dashboard.coursecontent', [
+        return view('dashboard.lms.coursecontent', [
             'username' => $username
         ]);
     }
