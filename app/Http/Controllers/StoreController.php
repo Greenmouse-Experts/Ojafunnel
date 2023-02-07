@@ -59,4 +59,11 @@ class StoreController extends Controller
         $store = Store::latest()->where('name', $request->storename)->first();
         return view('dashboard.mystoree', compact('store'));
     }
+
+    public function available_product($username)
+    {
+        return view('dashboard.AvailableProduct', [
+            'username' => $username
+        ]);
+    }
 }
