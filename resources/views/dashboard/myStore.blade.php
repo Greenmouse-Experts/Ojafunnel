@@ -34,7 +34,7 @@
             </div>
             <!-- account container form -->
             <div class="container">
-                <div class="commerce-con">
+                <div class="commerce-con mb-4">
                     <form action="{{route('user.store.create', Auth::user()->username)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <!-- store name -->
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <!-- store theme -->
-                        <div class="hihj">
+                        <div class="hihj mb-4">
                             <label for="theme" class="fs-5"> Store Theme </label>
                             <div class="row mt-2 justify-content-between">
                                 <div class="col-lg-6 theme-select">
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="col-6 text-end">
                                     <a href="ecommerce2.html" class="text-decoration-none">
-                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091" data-bs-toggle="modal" data-bs-target="#onlineStore">
+                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
                                             Create Shop
                                         </button>
                                     </a>
@@ -135,7 +135,7 @@
 </div>
 
 <!-- SuccessModal -->
-<div class="modal fade" id="onlineStore" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="onlineStore" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content pb-3">
             <div class="modal-header border-bottom-0">
@@ -158,7 +158,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- end modal -->
 
 <script>

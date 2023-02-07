@@ -38,7 +38,7 @@
                   <div class="all-create">
                     <a href="{{route('user.my.store', Auth::user()->username)}}">
                       <button>
-                      + Create New Store 
+                      + Create New Store
                       </button>
                     </a>
                   </div>
@@ -69,9 +69,9 @@
                     <tr>
                       <th scope="row">1</th>
                       <td>Chukka Shoes</td>
-                      <td>120</td>
+                      <td> <a href="{{route('user.available.product', Auth::user()->username)}}" class="text-decoration-underline">2 Product</a></td>
                       <td>
-                        <a href="{{route('user.stores', Auth::user()->username)}}" class="text-decoration-underline">Preview</a>
+                        <a href="#" class="text-decoration-underline">Preview</a>
                       </td>
                       <td>
                         <div class="dropdown dropstart">

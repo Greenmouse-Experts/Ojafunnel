@@ -577,6 +577,7 @@ class DashboardController extends Controller
         ]);
     }
 
+
     public function checkout($username)
     {
         return view('dashboard.Checkout', [
