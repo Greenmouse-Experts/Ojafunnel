@@ -20,7 +20,6 @@
                                 <li class="breadcrumb-item active">Contact List</li>
                             </ol>
                         </div>
-
                     </div>
                 </div>
             </div>
