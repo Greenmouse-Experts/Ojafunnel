@@ -296,7 +296,7 @@ class DashboardController extends Controller
     public function choose_temp($username)
     {
         $funnels = Funnel::latest()->where('user_id', Auth::user()->id)->get();
-        
+
         return view('dashboard.funnelBuilder', [
             'username' => $username,
             'funnels' => $funnels
@@ -306,10 +306,10 @@ class DashboardController extends Controller
     public function view_funnel_pages($username, $id)
     {
         $id = Crypt::decrypt($id);
-        
+
         $funnel = Funnel::findorfail($id);
         $pages = FunnelPage::latest()->where('user_id', Auth::user()->id)->get();
-        
+
         return view('dashboard.viewFunnelPage', [
             'username' => $username,
             'funnel' => $funnel,
@@ -577,6 +577,7 @@ class DashboardController extends Controller
         ]);
     }
 
+
     public function checkout($username)
     {
         return view('dashboard.Checkout', [
@@ -600,14 +601,28 @@ class DashboardController extends Controller
 
     public function create_course($username)
     {
-        return view('dashboard.createCourse', [
+        return view('dashboard.lms.createCourse', [
+            'username' => $username
+        ]);
+    }
+
+    public function shop($username)
+    {
+        return view('dashboard.ShopCourse', [
+            'username' => $username
+        ]);
+    }
+
+    public function create_course_start($username)
+    {
+        return view('dashboard.lms.coursestart', [
             'username' => $username
         ]);
     }
 
     public function course_content($username)
     {
-        return view('dashboard.coursecontent', [
+        return view('dashboard.lms.coursecontent', [
             'username' => $username
         ]);
     }

@@ -27,20 +27,25 @@
                                 <table class="table align-middle mb-0 table-nowrap">
                                     <thead class="tread">
                                         <tr class="font-500">
-                                            <th scope="col">Product</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Images</th>
                                             <th scope="col">Product Description</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Total</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>
+                                                <h5 class="font-size-14 text-truncate"><a href="#" class="text-dark">Half sleeve T-shirt</a></h5>
+                                            </td>
+                                            <td>
                                                 <img src="{{URL::asset('dash/assets/images/product/img-1.png')}}" alt="product-img" title="product-img" class="avatar-md" />
                                             </td>
                                             <td>
-                                                <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Half sleeve T-shirt</a></h5>
+                                                <h5 class="font-size-14 text-truncate"><a href="#" class="text-dark">Lorem ipsum dolor sit amet consectetur <br> adipisicing elit. Iste, perferendis?</a></h5>
                                             </td>
                                             <td>
                                                 ₦ 100
@@ -53,13 +58,19 @@
                                             <td>
                                                 ₦ 500
                                             </td>
+                                            <td>
+                                                <a href="#CartDelete" data-bs-toggle="modal" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                            <img src="{{URL::asset('dash/assets/images/product/img-2.png')}}" alt="product-img" title="product-img" class="avatar-md" />
+                                                <h5 class="font-size-14 text-truncate"><a href="#" class="text-dark">Long long T-shirt</a></h5>
                                             </td>
                                             <td>
-                                                <h5 class="font-size-14 text-truncate"><a href="ecommerce-product-detail.html" class="text-dark">Glass </a></h5>
+                                                <img src="{{URL::asset('dash/assets/images/product/img-2.png')}}" alt="product-img" title="product-img" class="avatar-md" />
+                                            </td>
+                                            <td>
+                                                <h5 class="font-size-14 text-truncate"><a href="#" class="text-dark">Lorem ipsum dolor sit amet consectetur <br> adipisicing elit. Iste, perferendis?</a></h5>
                                             </td>
                                             <td>
                                                 ₦ 200
@@ -71,6 +82,9 @@
                                             </td>
                                             <td>
                                                 ₦ 1000
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" class="action-icon text-danger"> <i class="mdi mdi-trash-can font-size-18"></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -96,5 +110,28 @@
     </div>
     <!-- End Page-content -->
 </div>
+<!-- Modal -->
+<div class="modal fade" id="CartDelete" tabindex="-1" aria-labelledby="CartDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body px-4 py-5 text-center">
+                <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="avatar-sm mb-4 mx-auto">
+                    <div class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3">
+                        <i class="mdi mdi-trash-can-outline"></i>
+                    </div>
+                </div>
+                <p class="text-muted font-size-16 mb-4">Are you sure you want to permanently remove this Product.</p>
 
+                <div class="hstack gap-2 justify-content-center mb-0">
+                    <button type="button" class="btn btn-danger">Delete Now</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootrstrap touchspin -->
+<script src="{{URL::asset('dash/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>
+<script src="{{URL::asset('dash/assets/js/pages/ecommerce-cart.init.js')}}"></script>
 @endsection

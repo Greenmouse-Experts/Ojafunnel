@@ -3056,7 +3056,7 @@ textarea.bulk-delete {
 .logo-file {
   width: 50%;
   margin: auto;
-}    
+}
 .logo-input2 {
   border-style: dashed;
   overflow: hidden;
@@ -3139,7 +3139,22 @@ textarea.bulk-delete {
 .founds {
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 10px;
+  border-radius: 10px;
   margin-bottom: 20px;
+}
+.founds button{
+    padding: 10px 8px;
+    border: 1px solid #713f93;
+    background-color: #fff;
+    margin-top: -40px;
+    float: right;
+    border-radius: 5px;
+    color: #000;
+}
+.founds button:hover{
+    background-color: #713f93;
+    color: #fff;
 }
 .found-top {
   padding: 65px 0px;
@@ -3947,16 +3962,23 @@ textarea.bulk-delete {
 }
 .curriculom{
   background-color: #fff;
-  padding: 20px 20px 10px 20px;
+  padding: 30px 20px 10px 20px;
   border-radius: 10px;
   margin-bottom: 20px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+}
+.curriculom h1{
+    font-size: 20px;
+    font-weight: 600;
 }
 .curriculom p{
-  padding: 0px 0px 10px 0px;
-  border-bottom: 2px solid #D9D9D9;
+  padding: 0px 0px 0px 0px;
+  color: #000;
+    font-size: 14.5px;
+    margin-bottom: 5px;
 }
 .curriculom .write p{
-  padding: 0px 0px 5px 0px !important;
+  padding: 10px 0px 0px 0px !important;
   border-bottom: none !important;
 }
 .curriculom label{
@@ -3976,11 +3998,12 @@ textarea.bulk-delete {
   border: 1px solid #70418F;
   letter-spacing: 0.8px;
   background-color: #fff;
-  font-size: 12px;
+  font-size: 14px;
   transition: 0.6s;
 }
 .curriculom select option{
-  font-size: 12px;
+  font-size: 14px;
+  color: #000;
 }
 .curriculom button{
   margin-top: 10px;
@@ -4809,4 +4832,14 @@ textarea{
   .push{
     margin-top:10px !important;
   }
+}
+
+.assets{
+    margin-top: 30px;
+    padding:20px 10px;
+    border: 1px solid #efd7ff;
+}
+.assets h1{
+    font-size: 15px;
+    font-weight: 600;
 }
