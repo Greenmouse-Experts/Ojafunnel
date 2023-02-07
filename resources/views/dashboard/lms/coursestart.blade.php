@@ -49,7 +49,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="mt-4">
-                                                    
+
                                                     </div>
                                                 </div>
                                                 <div class="curriculom mt-3">
@@ -73,19 +73,14 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div id="appera">
-                                                        <div class="card-body" style="box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);">
-                                                            <p class="card-title-desc text-dark font-600">
-                                                                <i class="bi bi-info-circle" style="padding-right: 15px;"></i>Start putting together your course by creating sections, lectures and practice activities (quizzes, and assignments). Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
-                                                                <button type="button" style="float: right; background:#000; color:#fff;" onclick="myFunct()" class="btn-btn-danger">Dismiss</button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                   
                                                     <div class="mt-4">
-                                                    
+
                                                     </div>
                                                 </div>
-                                                <button type="button" style="float: right; background:#713F93 !important; color:#fff;" class="btn btn-btn-primary">Continue</button>
+                                                <a href="{{route('user.course.content', Auth::user()->username)}}">
+                                                    <button type="button" style="float: right; background:#713F93 !important; color:#fff;" class="btn btn-btn-primary">Continue</button>
+                                                </a>
                                             </form>
                                         </div>
                                         <div class="col-lg-2"></div>

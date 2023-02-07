@@ -21,212 +21,101 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title mb-4">Plan Your Course</h4>
-                            <div id="basic-example">
-                                <!-- Seller Details -->
-                                <h3>Curriculum</h3>
-                                <section>
-                                    <div class="row">
-                                        <div class="col-lg-2"></div>
-                                        <div class="col-lg-8">
-                                            <div class="curriculom mt-3">
-                                                <h1>
-                                                    What Category best fits the knowledge you will share ?
-                                                </h1>
-                                                <p class="mb-3">If you're not sure about the category, you can change it later</p>
-                                                <div class="write">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="row">
-                                                                <div class="col-md-12 mb-4">
-                                                                    <select>
-                                                                        <option>
-                                                                            Choose a category
-                                                                        </option>
-                                                                        <option>Finance & Accounting</option>
-                                                                        <option>Development </option>
-                                                                        <option>I don't know yet</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="appera">
-                                                    <div class="card-body" style="box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);">
-                                                        <p class="card-title-desc text-dark font-600">
-                                                            <i class="bi bi-info-circle" style="padding-right: 15px;"></i>Here’s where you add course content—like lectures, course sections, assignments, and more. Click a + icon on the left to get started.
-                                                            <button type="button" style="float: right; background:#000; color:#fff;" onclick="myFunct()" class="btn-btn-danger">Dismiss</button>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <p class="mt-4">
-                                                    Start putting together your course by creating sections, lectures and practice (quizzes, and assignments).
-                                                </p>
-                                                <p>
-                                                Start putting together your course by creating sections, lectures and practice activities <a href="#">(quizzes, and assignments)</a>. Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
-                                                </p>
-                                                <div class="mt-4">
-                                                
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2"></div>
-                                    </div>
-                                </section>
-
-                                <!-- Company Document -->
-                                <h3>Course Landing Page</h3>
-                                <section>
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="verticalnav-pancard-input">PAN Card</label>
-                                                    <input type="text" class="form-control" id="verticalnav-pancard-input" placeholder="Enter Your PAN Card No.">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="verticalnav-vatno-input">VAT/TIN No.</label>
-                                                    <input type="text" class="form-control" id="verticalnav-vatno-input" placeholder="Enter Your VAT/TIN No.">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="verticalnav-cstno-input">CST No.</label>
-                                                    <input type="text" class="form-control" id="verticalnav-cstno-input" placeholder="Enter Your CST No.">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="verticalnav-servicetax-input">Service Tax No.</label>
-                                                    <input type="text" class="form-control" id="verticalnav-servicetax-input" placeholder="Enter Your Service Tax No.">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="verticalnav-companyuin-input">Company UIN</label>
-                                                    <input type="text" class="form-control" id="verticalnav-companyuin-input" placeholder="Company UIN No.">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6">
-                                                <div class="mb-3">
-                                                    <label for="verticalnav-declaration-input">Declaration</label>
-                                                    <input type="text" class="form-control" id="verticalnav-Declaration-input" placeholder="Declaration Details">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </section>
-
-                                <!-- Bank Details -->
-                                <h3>Pricing</h3>
-                                <section>
-                                    <div>
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="mb-3">
-                                                        <label for="verticalnav-namecard-input">Name on Card</label>
-                                                        <input type="text" class="form-control" id="verticalnav-namecard-input" placeholder="Enter Your Name on Card">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6">
-                                                    <div class="mb-3">
-                                                        <label>Credit Card Type</label>
-                                                        <select class="form-select">
-                                                            <option selected>Select Card Type</option>
-                                                            <option value="AE">American Express</option>
-                                                            <option value="VI">Visa</option>
-                                                            <option value="MC">MasterCard</option>
-                                                            <option value="DI">Discover</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="mb-3">
-                                                        <label for="verticalnav-cardno-input">Credit Card Number</label>
-                                                        <input type="text" class="form-control" id="verticalnav-cardno-input" placeholder="Enter Your Card Number">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6">
-                                                    <div class="mb-3">
-                                                        <label for="verticalnav-card-verification-input">Card Verification Number</label>
-                                                        <input type="text" class="form-control" id="verticalnav-card-verification-input" placeholder="Card Verification Number">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="mb-3">
-                                                        <label for="verticalnav-expiration-input">Expiration Date</label>
-                                                        <input type="text" class="form-control" id="verticalnav-expiration-input" placeholder="Card Expiration Date">
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </form>
-                                    </div>
-                                </section>
-
-                                <!-- Confirm Details -->
-                                <h3>Promotions</h3>
-                                <section>
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-6">
-                                            <div class="text-center">
-                                                <div class="mb-4">
-                                                    <i class="mdi mdi-check-circle-outline text-success display-4"></i>
-                                                </div>
-                                                <div>
-                                                    <h5>Confirm Detail</h5>
-                                                    <p class="text-muted">If several languages coalesce, the grammar of the resulting</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <!-- Confirm Details -->
-                                <h3>Course Messages</h3>
-                                <section>
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-6">
-                                            <div class="text-center">
-                                                <div class="mb-4">
-                                                    <i class="mdi mdi-check-circle-outline text-success display-4"></i>
-                                                </div>
-                                                <div>
-                                                    <h5>Confirm Detail</h5>
-                                                    <p class="text-muted">If several languages coalesce, the grammar of the resulting</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
+            <div class="checkout-tabs">
+                <div class="row">
+                    <div class="col-xl-2 col-sm-3">
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active" id="v-pills-curriculum-tab" data-bs-toggle="pill" href="#v-pills-curriculum" role="tab" aria-controls="v-pills-curriculum" aria-selected="true">
+                                <i class="bi bi-card-checklist d-block check-nav-icon mt-4 mb-2"></i>
+                                <p class="fw-bold mb-4">Curriculum</p>
+                            </a>
+                            <a class="nav-link" id="v-pills-landingpage-tab" data-bs-toggle="pill" href="#v-pills-landingpage" role="tab" aria-controls="v-pills-landingpage" aria-selected="false">
+                                <i class="bx bx-money d-block check-nav-icon mt-4 mb-2"></i>
+                                <p class="fw-bold mb-4">Course Landing Page</p>
+                            </a>
+                            <a class="nav-link" id="v-pills-pricing-tab" data-bs-toggle="pill" href="#v-pills-pricing" role="tab" aria-controls="v-pills-pricing" aria-selected="false">
+                                <i class="bx bx-badge-check d-block check-nav-icon mt-4 mb-2"></i>
+                                <p class="fw-bold mb-4">Pricing</p>
+                            </a>
+                            <a class="nav-link" id="v-pills-promotion-tab" data-bs-toggle="pill" href="#v-pills-promotion" role="tab" aria-controls="v-pills-promotion" aria-selected="false">
+                                <i class="bi bi-person-check d-block check-nav-icon mt-4 mb-2"></i>
+                                <p class="fw-bold mb-4">Promotions</p>
+                            </a>
+                            <a class="nav-link" id="v-pills-message-tab" data-bs-toggle="pill" href="#v-pills-message" role="tab" aria-controls="v-pills-message" aria-selected="false">
+                                <i class="bi bi-envelope-check d-block check-nav-icon mt-4 mb-2"></i>
+                                <p class="fw-bold mb-4">Course messages</p>
+                            </a>
+                            <a class="nav-link" style="background-color: #70418F; color:#fff;">
+                                <p class="fw-bold mb-1 mt-2">Submit for Review</p>
+                            </a>
                         </div>
                     </div>
-                    <!-- end card -->
+                    <div class="col-xl-10 col-sm-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="tab-content" id="v-pills-tabContent">
+                                    <div class="tab-pane fade show active" id="v-pills-curriculum" role="tabpanel" aria-labelledby="v-pills-curriculum-tab">
+                                        <div>
+                                            <h4 class="card-title mb-4">Curriculum</h4>
+                                            <div id="appera">
+                                                <div class="card-body" style="box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);  line-height: 1.8;">
+                                                    <p class="card-title-desc text-dark font-600">
+                                                        <i class="bi bi-info-circle" style="padding-right: 15px;"></i>Start putting together your course by creating sections, lectures and practice activities (quizzes, and assignments). Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
+                                                        <button type="button" style="float: right;" onclick="myFunct()" class="btn btn-danger mt-3">Dismiss</button>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="font-500 mt-5">
+                                                <p>
+                                                Start putting together your course by creating sections, lectures and practice <a href="#">
+                                                (quizzes,and assignments)
+                                                </a>.
+                                                </p>
+                                                <p>
+                                                Start putting together your course by creating sections, lectures and practice activities <a href="#">
+                                                (quizzes,and assignments)
+                                                </a>. Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
+                                                </p>
+                                            </div>
+                                            <div class="assets">
+                                                <h1><b>Section 1:</b> <a href="javascript: void(0);" id="inline-username" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-type="text" class="text-dark" data-pk="1" data-title="Enter username">Introduction</a></h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="v-pills-landingpage" role="tabpanel" aria-labelledby="v-pills-landingpage-tab">
+                                        <div>
+                                            <h4 class="card-title">Course Landing Page</h4>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="v-pills-pricing" role="tabpanel" aria-labelledby="v-pills-pricing-tab">
+                                        <div>
+                                            <h4 class="card-title">Pricing</h4>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="v-pills-promotion" role="tabpanel" aria-labelledby="v-pills-promotion-tab">
+                                        <div>
+                                            <h4 class="card-title">Promotions</h4>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="v-pills-message" role="tabpanel" aria-labelledby="v-pills-message-tab">
+                                        <div>
+                                            <h4 class="card-title">Course messages</h4>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-sm-6">
+                                <a href="{{route('user.create.course', Auth::user()->username)}}" class="btn text-muted d-none d-sm-inline-block btn-link">
+                                    <i class="mdi mdi-arrow-left me-1"></i> Previous </a>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                    </div>
                 </div>
-                <!-- end col -->
             </div>
+            <!-- end row -->
         </div>
     </div>
 
@@ -240,6 +129,11 @@
             document.getElementById("appera").style.display = "none";
         }
     </script>
+     <!-- Init js-->
+     <script  type="text/javascript" src="{{URL::asset('dash/assets/js/pages/form-xeditable.init.js')}}"></script>
+     <!-- Plugins js -->
+     <script  type="text/javascript" src="{{URL::asset('dash/assets/libs/bootstrap-editable/js/index.js')}}"></script>
+        <script type="text/javascript" src="{{URL::asset('dash/assets/libs/moment/min/moment.min.js')}}"></script>
     <!-- Bootstrap Toasts Js -->
     <script type="text/javascript" src="{{URL::asset('dash/assets/js/pages/bootstrap-toastr.init.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('dash/assets/js/pages/form-wizard.init.js')}}"></script>

@@ -3139,7 +3139,22 @@ textarea.bulk-delete {
 .founds {
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 10px;
+  border-radius: 10px;
   margin-bottom: 20px;
+}
+.founds button{
+    padding: 10px 8px;
+    border: 1px solid #713f93;
+    background-color: #fff;
+    margin-top: -40px;
+    float: right;
+    border-radius: 5px;
+    color: #000;
+}
+.founds button:hover{
+    background-color: #713f93;
+    color: #fff;
 }
 .found-top {
   padding: 65px 0px;
@@ -4817,4 +4832,14 @@ textarea{
   .push{
     margin-top:10px !important;
   }
+}
+
+.assets{
+    margin-top: 30px;
+    padding:20px 10px;
+    border: 1px solid #efd7ff;
+}
+.assets h1{
+    font-size: 15px;
+    font-weight: 600;
 }

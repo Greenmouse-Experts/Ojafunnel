@@ -19,12 +19,6 @@
   <!-- style Css -->
   <link href="{{URL::asset('dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
   <!-- App Css-->
-  <!-- <link
-      href="{{URL::asset('dash/assets/css/app.min.css')}}"
-      id="app-style"
-      rel="stylesheet"
-      type="text/css"
-    /> -->
   <!-- Font Css-->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -54,9 +48,11 @@
           <div>
             <a href="{{route('user.my.store', Auth::user()->username)}}">set up your own store</a>
           </div>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            <i class="bi bi-cart-check"></i> Cart
-          </button>
+            <a href="{{route('user.cart', Auth::user()->username)}}">
+                <button type="button" class="btn btn-primary">
+                    <i class="bi bi-cart-check"></i>
+                </button>
+            </a>
         </div>
       </div>
     </div>
@@ -129,6 +125,7 @@
                 <div class="p-2">
                   <p class="font-500">Audio Book</p>
                   <p>10,000 NGN</p>
+                  <button><i class="bi bi-cart-check"></i> Add to Cart</button>
                 </div>
               </div>
             </div>
@@ -138,6 +135,7 @@
                 <div class="p-2">
                   <p class="font-500">Chukka Book</p>
                   <p>10,000 NGN</p>
+                  <button><i class="bi bi-cart-check"></i> Add to Cart</button>
                 </div>
               </div>
             </div>
@@ -147,6 +145,7 @@
                 <div class="p-2">
                   <p class="font-500">2 Steps</p>
                   <p>10,000 NGN</p>
+                  <button><i class="bi bi-cart-check"></i> Add to Cart</button>
                 </div>
               </div>
             </div>
@@ -156,6 +155,7 @@
                 <div class="p-2">
                   <p class="font-500">Audio Book</p>
                   <p>10,000 NGN</p>
+                  <button><i class="bi bi-cart-check"></i> Add to Cart</button>
                 </div>
               </div>
             </div>
@@ -165,6 +165,7 @@
                 <div class="p-2">
                   <p class="font-500">Chukka Book</p>
                   <p>10,000 NGN</p>
+                  <button><i class="bi bi-cart-check"></i> Add to Cart</button>
                 </div>
               </div>
             </div>
@@ -174,6 +175,7 @@
                 <div class="p-2">
                   <p class="font-500">2 Steps</p>
                   <p>10,000 NGN</p>
+                  <button><i class="bi bi-cart-check"></i> Add to Cart</button>
                 </div>
               </div>
             </div>
@@ -199,27 +201,8 @@
   </footer>
   <!-- Button trigger modal -->
 
- <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-side modal-top-right">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
-    </div>
-  </div>
-</div>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/#[[latestVersion]]#/mdb.min.css" rel="stylesheet" />
-  <!-- MDB -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/#[[latestVersion]]#/mdb.min.js"></script>
+
+
   <!-- JAVASCRIPT -->
   <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
   <script src="{{URL::asset('dash/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
