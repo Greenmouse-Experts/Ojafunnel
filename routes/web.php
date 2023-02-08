@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/page-builder/create', [App\Http\Controllers\PageController::class, 'page_builder_create'])->name('user.page.builder.create');
 Route::get('pages/{page}/editor', [App\Http\Controllers\PageController::class, 'viewEditor'])->name('user.page.builder.view.editor');
 Route::get('pages/{page}', [App\Http\Controllers\PageController::class, 'viewPage'])->name('user.page.builder.view.page');
-Route::get('/shop/{storename}', [App\Http\Controllers\StoreController::class, 'storeFront'])->name('user.stores.link');
-Route::get('cart/{storename}', [App\Http\Controllers\StoreController::class, 'cart'])->name('cart');
-Route::get('checkout/{storename}', [App\Http\Controllers\StoreController::class, 'checkout'])->name('checkout');
-Route::post('checkout/payment/{storename}', [App\Http\Controllers\StoreController::class, 'checkoutPayment'])->name('payment.checkout');
-Route::get('add-to-cart/{id}', [App\Http\Controllers\StoreController::class, 'addToCart'])->name('add.to.cart');
-Route::patch('update-cart', [App\Http\Controllers\StoreController::class, 'update'])->name('update.cart');
-Route::delete('remove-from-cart', [App\Http\Controllers\StoreController::class, 'remove'])->name('remove.from.cart');
+Route::get('/shop/{storename}', [App\Http\Controllers\StoreFrontController::class, 'storeFront'])->name('user.stores.link');
+Route::get('cart/{storename}', [App\Http\Controllers\StoreFrontController::class, 'cart'])->name('cart');
+Route::get('checkout/{storename}', [App\Http\Controllers\StoreFrontController::class, 'checkout'])->name('checkout');
+Route::post('checkout/payment/{storename}', [App\Http\Controllers\StoreFrontController::class, 'checkoutPayment'])->name('payment.checkout');
+Route::get('add-to-cart/{id}', [App\Http\Controllers\StoreFrontController::class, 'addToCart'])->name('add.to.cart');
+Route::patch('update-cart', [App\Http\Controllers\StoreFrontController::class, 'update'])->name('update.cart');
+Route::delete('remove-from-cart', [App\Http\Controllers\StoreFrontController::class, 'remove'])->name('remove.from.cart');
+Route::get('generatePdf', [App\Http\Controllers\StoreFrontController::class, 'Pdf'])->name('generate.pdf');
 // assets path for email
 Route::get('assets/{dirname}/{basename}', [
     function ($dirname, $basename) {
