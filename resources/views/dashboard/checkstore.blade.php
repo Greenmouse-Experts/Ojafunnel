@@ -61,6 +61,7 @@
                       <th>S/N</th>
                       <th>Store Name</th>
                       <th>Available Product</th>
+                      <th>Sales</th>
                       <th>Store Link</th>
                       <th>Actions</th>
                     </tr>
@@ -72,6 +73,7 @@
                             <th scope="row">{{$loop->iteration}}</th>
                             <td>{{$item->name}}</td>
                             <td> <a href="{{route('user.available.product', ['username' => Auth::user()->username, 'store_id' => $item->id])}}" class="text-decoration-underline">{{$item->product->count()}} Product</a></td>
+                            <td> <a href="{{route('user.sales', ['username' => Auth::user()->username, 'store_id' => $item->id])}}" class="text-decoration-underline">{{$item->order->count()}} Sales</a></td>
                             <td>
                               <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
                             </td>

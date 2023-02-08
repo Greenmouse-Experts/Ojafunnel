@@ -46,21 +46,28 @@
                                     <thead class="tread">
                                         <tr>
                                             <th scope="col">Order Id</th>
-                                            <th scope="col">Shop Name</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Amount</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col">Date</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                        </tr>
+                                        @foreach ($order as $item)
+                                            <tr>
+                                                <td>#{{$item->order_no}}</td>
+                                                <td>{{$item->quantity}}</td>
+                                                <td>₦{{number_format($item->amount, 2)}}</td>
+                                                <td>{{$item->status}}</td>
+                                                <td>{{$item->created_at->format('d M, Y')}}</td>
+                                                <td>
+                                                    <a href="{{route('user.order.details', ['username' => Auth::user()->username, 'id' => $item->id])}}">
+                                                        View
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
