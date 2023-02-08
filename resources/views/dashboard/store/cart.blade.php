@@ -248,7 +248,7 @@
 
       var ele = $(this);
       var quantity = ele.parents("tr").find(".quantity").val();
-      var rm = "{{ $details['rmQuan'] }}";
+      var rm = "{{ $details['rmQuan'] ?? 0 }}";
       if (quantity > parseInt(rm)) {
         ele.parents("tr").find(".quantity").val(parseInt(rm))
       }
