@@ -111,7 +111,14 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.my.store', Auth::user()->username)}}" key="t-tui-calendar">Create Store</a></li>
                         <li><a href="{{route('user.check.store', Auth::user()->username)}}" key="t-tui-calendar">My Store</a></li>
-                        <li><a href="{{route('user.shops', Auth::user()->username)}}" key="t-tui-calendar">Shops</a></li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Shops</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="{{route('user.shops', Auth::user()->username)}}" key="t-list">View Shop</a></li>
+                                <li><a href="{{route('user.sales', Auth::user()->username)}}" key="t-overview">View Sales</a></li>
+                                <li><a href="{{route('user.order.details', Auth::user()->username)}}" key="t-overview">Order Details</a></li>
+                            </ul>
+                        </li>
                         <!-- <li><a href="{{route('user.cart', Auth::user()->username)}}" key="t-tui-calendar">Cart</a></li>
                         <li><a href="{{route('user.checkout', Auth::user()->username)}}" key="t-tui-calendar">Checkout</a></li> -->
                     </ul>
@@ -135,7 +142,7 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-book"></i>
-                        <span key="t-chat">Sell & Digital Products</span>
+                        <span key="t-chat">Digital Products</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.create.course', Auth::user()->username)}}" key="t-tui-calendar">Create Course</a></li>

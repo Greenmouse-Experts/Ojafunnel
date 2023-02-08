@@ -120,6 +120,20 @@ class StoreController extends Controller
         return view('dashboard.AvailableProduct', compact('product', 'store_id', 'username'));
     }
 
+    public function sales($username)
+    {
+        return view('dashboard.sales', [
+            'username' => $username
+        ]);
+    }
+
+    public function order_details($username)
+    {
+        return view('dashboard.OrderDetails', [
+            'username' => $username
+        ]);
+    }
+
     public function addProduct(Request $request)
     {
         $request->validate([
