@@ -35,7 +35,7 @@
                                 <div class="col-lg-6"></div>
                                 <div class="col-lg-2">
                                     <div class="flex-shrink-0">
-                                        <a href="{{route('user.course.content', Auth::user()->username)}}" class="btn" style="background-color: #714091;color:#fff;">New Course <i class="bi bi-arrow-right-circle"></i></a>
+                                        <a href="{{route('user.create.course.start', Auth::user()->username)}}" class="btn" style="background-color: #714091;color:#fff;">New Course <i class="bi bi-arrow-right-circle"></i></a>
                                     </div>
                                 </div>
                             </div>
