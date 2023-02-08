@@ -7,6 +7,12 @@ Route::get('/page-builder/create', [App\Http\Controllers\PageController::class, 
 Route::get('pages/{page}/editor', [App\Http\Controllers\PageController::class, 'viewEditor'])->name('user.page.builder.view.editor');
 Route::get('pages/{page}', [App\Http\Controllers\PageController::class, 'viewPage'])->name('user.page.builder.view.page');
 Route::get('/shop/{storename}', [App\Http\Controllers\StoreController::class, 'storeFront'])->name('user.stores.link');
+Route::get('cart/{storename}', [App\Http\Controllers\StoreController::class, 'cart'])->name('cart');
+Route::get('checkout/{storename}', [App\Http\Controllers\StoreController::class, 'checkout'])->name('checkout');
+Route::post('checkout/payment/{storename}', [App\Http\Controllers\StoreController::class, 'checkoutPayment'])->name('payment.checkout');
+Route::get('add-to-cart/{id}', [App\Http\Controllers\StoreController::class, 'addToCart'])->name('add.to.cart');
+Route::patch('update-cart', [App\Http\Controllers\StoreController::class, 'update'])->name('update.cart');
+Route::delete('remove-from-cart', [App\Http\Controllers\StoreController::class, 'remove'])->name('remove.from.cart');
 // assets path for email
 Route::get('assets/{dirname}/{basename}', [
     function ($dirname, $basename) {
@@ -267,9 +273,14 @@ Route::prefix('{username}')->group(function () {
             Route::prefix('/ecommerce')->group(
                 function () {
                         Route::get('/my-store', [App\Http\Controllers\DashboardController::class, 'my_store'])->name('user.my.store');
-                        Route::get('/my-store/viewstore', [App\Http\Controllers\DashboardController::class, 'viewstore'])->name('user.check.store');
+                        Route::get('/my-store/viewstore', [App\Http\Controllers\StoreController::class, 'viewstore'])->name('user.check.store');
                         Route::post('/my-store/create', [App\Http\Controllers\StoreController::class, 'store'])->name('user.store.create');
+                        Route::post('/my-store/update/{id}', [App\Http\Controllers\StoreController::class, 'updateStore'])->name('user.store.update');
+                        Route::post('/my-store/delete/{id}', [App\Http\Controllers\StoreController::class, 'deleteStore'])->name('user.store.delete');
                         Route::get('/my-store/available-product', [App\Http\Controllers\StoreController::class, 'available_product'])->name('user.available.product');
+                        Route::post('/my-store/product/add/{store_id}', [App\Http\Controllers\StoreController::class, 'addProduct'])->name('user.store.product.add');
+                        Route::post('/my-store/product/update/{store_id}/{id}', [App\Http\Controllers\StoreController::class, 'updateProduct'])->name('user.store.product.update');
+                        Route::post('/my-store/product/delete/{id}', [App\Http\Controllers\StoreController::class, 'deleteProduct'])->name('user.store.product.delete');
                         // Route::get('/my-store/storee', [App\Http\Controllers\DashboardController::class, 'store'])->name('user.store');
                         Route::get('/shops', [App\Http\Controllers\StoreController::class, 'shops'])->name('user.shops');
                         Route::get('/stores', [App\Http\Controllers\DashboardController::class, 'stores'])->name('user.stores');

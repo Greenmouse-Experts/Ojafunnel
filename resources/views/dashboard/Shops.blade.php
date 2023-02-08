@@ -58,12 +58,12 @@
                                                 <div class="col-12">
                                                     <div>
                                                         <p class="text-muted mb-2 text-truncate">Products Available</p>
-                                                        <h5>112</h5>
+                                                        <h5>{{$item->product->count()}}</h5>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mt-4">
-                                                <a href="{{route('user.stores.link', $item->name)}}" class="text-decoration-underline text-reset">See Profile <i class="mdi mdi-arrow-right"></i></a>
+                                                <a href="{{route('user.stores.link', $item->name)}}" class="text-decoration-underline text-reset">Visit StoreFront <i class="mdi mdi-arrow-right"></i></a>
                                             </div>
                                         </div>
 
