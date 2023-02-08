@@ -119,17 +119,26 @@ class StoreController extends Controller
         return view('dashboard.AvailableProduct', compact('product', 'store_id', 'username'));
     }
 
-    public function sales($username)
+    public function sales(Request $request, $username)
     {
+        $order = StoreOrder::latest()->where('store_id', $request->store_id)->get();
+        $store = Store::findOrFail($request->store_id);
         return view('dashboard.sales', [
-            'username' => $username
+            'username' => $username,
+            'order' => $order,
+            'store' => $store,
         ]);
     }
 
-    public function order_details($username)
+    public function order_details(Request $request, $username)
     {
+        $order = StoreOrder::latest()->where('id', $request->id)->first();
+        //dd($order->store_id);
+        $store = Store::where('id', $order->store_id)->first();
         return view('dashboard.OrderDetails', [
-            'username' => $username
+            'username' => $username,
+            'order' => $order,
+            'store' => $store,
         ]);
     }
 

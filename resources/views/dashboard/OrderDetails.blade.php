@@ -31,42 +31,32 @@
                                 </div>
                             </div>
                             <div>
-                                <strong>Invoice Id -</strong>  #6
-                            </div>
-                            <div>
-                                <strong>Order Id -</strong> 162695CDFS
+                                <strong>Order Id -</strong> {{$order->order_no}}
                             </div>
                             <div class="mb-4">
-                                <strong>Order Date - </strong>03-06-2022
+                                <strong>Order Date - </strong>{{$order->created_at->format('d-m-Y')}}
                             </div>
                             <div class="table-responsive mb-3">
                                 <table class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr class="text-center">
-                                            <th scope="col"><b>From</b></th>
-                                            <th scope="col"><b>To</b></th>
+                                            <th scope="col"><b>Store</b></th>
+                                            <th scope="col"><b>Shipping To</b></th>
                                         </tr>
                                     </thead>
                                     <tbody class="text-center">
                                         <tr>
                                             <td>
-                                                Hamzat Abdulazeez
+                                               <img style="width: 40px;" src="{{Storage::url($store->logo)}}" alt=""> {{$store->name}}
                                             </td>
-                                            <td>
-                                                Adeleke Money
+                                            <td class="border-0" style="text-align: right">
+                                                <p><strong>Name: </strong>{{$order->user[0]->name}}</p>
+                                                <p><strong>Email: </strong>{{$order->user[0]->email}}</p>
+                                                <p><strong>Phone No: </strong>{{$order->user[0]->phone_no}}</p>
+                                                <p><strong>Address: </strong>{{$order->user[0]->address}}, <br>
+                                                    {{$order->user[0]->state}}, {{$order->user[0]->country}}
+                                                </p>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="border-0">
-                                               No:50 Ademola-street lagos state
-                                            </td>
-                                            <td>
-                                                No:50 Ogba-street lagos state
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Contact : 1234567890</td>
-                                            <td>Contact : 1234567890</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -82,7 +72,7 @@
                                     <tbody class="text-center">
                                         <tr>
                                             <td>
-                                            Cash On Delivery
+                                            {{$order->payment_method}}
                                             </td>
                                             <td>
                                             Free Shipping - Free Shipping
@@ -94,30 +84,35 @@
                             <div class="py-2 mt-3">
                                 <h3 class="font-size-15 fw-bold">Order summary</h3>
                             </div>
+                            @php
+                                $orderItem = \App\Models\OrderItem::where('store_order_id', $order->id)->get();
+                            @endphp
                             <div class="table-responsive">
                                 <table class="table table-nowrap">
                                     <thead>
                                         <tr>
                                             <th style="width: 70px;">No.</th>
                                             <th>Product Name</th>
+                                            <th>Image</th>
                                             <th>Price</th>
                                             <th>Qty</th>
                                             <th>Subtotal</th>
                                             <th>Tax Amount</th>
-                                            <th>Grand Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($orderItem as $item)
                                         <tr>
-                                            <td>01</td>
-                                            <td>Cloth</td>
-                                            <td>$100</td>
-                                            <td>1</td>
-                                            <td>$100</td>
-                                            <td>$5</td>
-                                            <td>$150</td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$item->product->name}}</td>
+                                            <td><img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset=""></td>
+                                            <td class="text-wrap" style="width: 330px;">{{$item->product->description}}</td>
+                                            <td>{{$item->quantity}}</td>
+                                            <td>₦{{$item->amount}}</td>
+                                            <td>₦{{number_format($item->quantity*$item->amount, 2)}}</td>
                                         </tr>
-                                        <tr>
+                                        @endforeach
+                                        {{-- <tr>
                                             <td colspan="6" class="border-0 text-end">
                                                 <strong>Sub Total:</strong>
                                             </td>
@@ -128,13 +123,13 @@
                                                 <strong>Tax (18%):</strong>
                                             </td>
                                             <td class="border-0">$13.00</td>
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
                                             <td colspan="6" class="border-0 text-end">
                                                 <strong>Total:</strong>
                                             </td>
                                             <td class="border-0">
-                                               <b>$1410.00</b>
+                                               <b>₦{{number_format($order->amount, )}}</b>
                                             </td>
                                         </tr>
                                     </tbody>
