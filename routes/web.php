@@ -282,6 +282,8 @@ Route::prefix('{username}')->group(function () {
                         Route::post('/my-store/product/add/{store_id}', [App\Http\Controllers\StoreController::class, 'addProduct'])->name('user.store.product.add');
                         Route::post('/my-store/product/update/{store_id}/{id}', [App\Http\Controllers\StoreController::class, 'updateProduct'])->name('user.store.product.update');
                         Route::post('/my-store/product/delete/{id}', [App\Http\Controllers\StoreController::class, 'deleteProduct'])->name('user.store.product.delete');
+                        Route::get('/shop/sales', [App\Http\Controllers\StoreController::class, 'sales'])->name('user.sales');
+                        Route::get('/shop/order-details', [App\Http\Controllers\StoreController::class, 'order_details'])->name('user.order.details');
                         // Route::get('/my-store/storee', [App\Http\Controllers\DashboardController::class, 'store'])->name('user.store');
                         Route::get('/shops', [App\Http\Controllers\StoreController::class, 'shops'])->name('user.shops');
                         Route::get('/stores', [App\Http\Controllers\DashboardController::class, 'stores'])->name('user.stores');
