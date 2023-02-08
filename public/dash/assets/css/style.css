@@ -3139,7 +3139,7 @@ textarea.bulk-delete {
 .founds {
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 10px;
+  padding: 38px 10px;
   border-radius: 10px;
   margin-bottom: 20px;
 }
@@ -3156,11 +3156,31 @@ textarea.bulk-delete {
     background-color: #713f93;
     color: #fff;
 }
+
+.founds a{
+    padding: 10px 8px;
+    border: 1px solid #713f93;
+    background-color: #fff;
+    margin-top: -40px;
+    float: right;
+    border-radius: 5px;
+    color: #000;
+}
+.founds a:hover{
+    background-color: #713f93;
+    color: #fff;
+}
+
 .found-top {
-  padding: 65px 0px;
+  padding: 10px 0px;
+  text-align: center;
   border-radius: 10px 10px 0px 0px;
   width: 100%;
   background: #d8d8d8;
+}
+
+.found-top img{
+    width: 180px;
 }
 
 /* email marketing */
