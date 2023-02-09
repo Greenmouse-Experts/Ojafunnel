@@ -4856,10 +4856,31 @@ textarea{
 
 .assets{
     margin-top: 30px;
-    padding:20px 10px;
+    padding:30px 20px;
     border: 1px solid #efd7ff;
 }
 .assets h1{
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
+}
+.actting{
+    margin-top: 10px;
+    padding:15px 20px 10px 20px;
+    border: 1px solid #efd7ff;
+}
+.tent{
+    margin-top: -30px !important;
+    padding:0px 20px 0px 20px;
+    border: 1px solid #efd7ff;
+}
+.asseting{
+    padding:15px 20px 10px 20px;
+    border-left:1px solid #efd7ff;
+    border-right: 1px solid #efd7ff;
+    border-bottom: 1px solid #efd7ff;
+}
+.asseting h1{
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 400;
 }
