@@ -4884,3 +4884,11 @@ textarea{
     font-size: 13px;
     font-weight: 400;
 }
+.visual p{
+    font-size: 13px;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.8;
+    font-weight: 500;
+    text-align: justify;
+}
