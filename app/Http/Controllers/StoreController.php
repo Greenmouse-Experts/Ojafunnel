@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderItem;
+use App\Models\OrderUser;
+use App\Models\StoreOrder;
 use App\Models\StoreProduct;
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Store;
 use Auth;
+use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 
 class StoreController extends Controller
@@ -106,13 +112,6 @@ class StoreController extends Controller
         return view('dashboard.checkstore', compact('username', 'store'));
     }
 
-    public function storeFront(Request $request)
-    {
-        $store = Store::latest()->where('name', $request->storename)->first();
-        $products = StoreProduct::latest()->where('store_id', $store->id)->get();
-        return view('dashboard.mystoree', compact('store', 'products'));
-    }
-
     public function available_product(Request $request, $username)
     {
         $product = StoreProduct::latest()->where('store_id', $request->store_id)->get();
@@ -120,17 +119,26 @@ class StoreController extends Controller
         return view('dashboard.AvailableProduct', compact('product', 'store_id', 'username'));
     }
 
-    public function sales($username)
+    public function sales(Request $request, $username)
     {
+        $order = StoreOrder::latest()->where('store_id', $request->store_id)->get();
+        $store = Store::findOrFail($request->store_id);
         return view('dashboard.sales', [
-            'username' => $username
+            'username' => $username,
+            'order' => $order,
+            'store' => $store,
         ]);
     }
 
-    public function order_details($username)
+    public function order_details(Request $request, $username)
     {
+        $order = StoreOrder::latest()->where('id', $request->id)->first();
+        //dd($order->store_id);
+        $store = Store::where('id', $order->store_id)->first();
         return view('dashboard.OrderDetails', [
-            'username' => $username
+            'username' => $username,
+            'order' => $order,
+            'store' => $store,
         ]);
     }
 
@@ -199,76 +207,5 @@ class StoreController extends Controller
             'type' => 'success',
             'message' => 'Product deleted successfully'
         ]);
-    }
-
-    public function cart(Request $request)
-    {
-        $store = Store::latest()->where('name', $request->storename)->first();
-        $products = StoreProduct::latest()->where('store_id', $store->id)->get();
-        return view('dashboard.store.cart', compact('store', 'products'));
-    }
-
-    public function checkout(Request $request)
-    {
-        $store = Store::latest()->where('name', $request->storename)->first();
-        $products = StoreProduct::latest()->where('store_id', $store->id)->get();
-        return view('dashboard.store.checkout', compact('store', 'products'));
-    }
-
-    public function addToCart($id)
-    {
-        $product = StoreProduct::findOrFail($id);
-
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                "name" => $product->name,
-                "quantity" => 1,
-                'rmQuan' => $product->quantity,
-                "price" => $product->price,
-                "description" => $product->description,
-                "image" => $product->image
-            ];
-        }
-
-        session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
-    }
-
-    public function update(Request $request)
-    {
-        $product = StoreProduct::findOrFail($request->id);
-
-        if ($request->id && $request->quantity) {
-            $cart = session()->get('cart');
-            $cart[$request->id]["quantity"] = $request->quantity;
-            session()->put('cart', $cart);
-            session()->flash('success', 'Cart updated successfully');
-        }
-    }
-
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-    public function remove(Request $request)
-    {
-        if ($request->id) {
-            $cart = session()->get('cart');
-            if (isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
-            }
-            session()->flash('success', 'Product removed successfully');
-        }
-    }
-
-    public function checkoutPayment(Request $request)
-    {
-        dd($request);
     }
 }

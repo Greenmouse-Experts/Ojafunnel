@@ -115,8 +115,8 @@
                             <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Shops</a>
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="{{route('user.shops', Auth::user()->username)}}" key="t-list">View Shop</a></li>
-                                <li><a href="{{route('user.sales', Auth::user()->username)}}" key="t-overview">View Sales</a></li>
-                                <li><a href="{{route('user.order.details', Auth::user()->username)}}" key="t-overview">Order Details</a></li>
+                                {{-- <li><a href="{{route('user.sales', Auth::user()->username)}}" key="t-overview">View Sales</a></li>
+                                <li><a href="{{route('user.order.details', Auth::user()->username)}}" key="t-overview">Order Details</a></li> --}}
                             </ul>
                         </li>
                         <!-- <li><a href="{{route('user.cart', Auth::user()->username)}}" key="t-tui-calendar">Cart</a></li>
