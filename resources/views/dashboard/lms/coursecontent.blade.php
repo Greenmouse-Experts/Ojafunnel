@@ -44,7 +44,7 @@
                                 <i class="bi bi-envelope-check d-block check-nav-icon mt-4 mb-2"></i>
                                 <p class="fw-bold mb-4">Course messages</p>
                             </a>
-                            <a class="nav-link" style="background-color: #70418F; color:#fff;">
+                            <a class="nav-link" style="background-color: #70418F; color:#fff;  cursor: pointer;">
                                 <p class="fw-bold mb-1 mt-2">Submit for Review</p>
                             </a>
                         </div>
@@ -247,7 +247,6 @@
                                         <div class="card shadow-none border mb-0">
                                             <div class="card-body">
                                                 <h4 class="card-title mb-4"><strong>Pricing</strong></h4>
-
                                                 <h4 class="card-title mb-2 mt-3">Ojafunnel Deals and List Price</h4>
                                                 <div class="visual">
                                                     <p>
@@ -270,32 +269,78 @@
                                                     </p>
                                                 </div>
                                                 <div class="Editt">
+                                                    <form>
+                                                        <div class="form">
+                                                            <div class="row">
+                                                                <div class="col-lg-2 mb-4">
+                                                                    <label for="Name">USD</label>
+                                                                    <select required>
+                                                                        <option>USD</option>
+                                                                        <option>AUD</option>
+                                                                        <Option>BRL</Option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-lg-3 mb-4">
+                                                                    <label for="Name">-- Select Level --</label>
+                                                                    <select required>
+                                                                        <option>Free</option>
+                                                                        <option>Tier 1</option>
+                                                                        <option>Tier 2</option>
+                                                                        <option>Tier 3</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-lg-1 mb-4 mt-1">
+                                                                    <a href="#" class="text-decoration-none">
+                                                                        <button type="submit" class="btn px-4" style="color: #714091; border: 1px solid #714091">
+                                                                            Save
+                                                                        </button>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="text-end mt-2">
+                                                                    <a href="#" class="text-decoration-none">
+                                                                        <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                                                            Submit
+                                                                        </button>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="v-pills-promotion" role="tabpanel" aria-labelledby="v-pills-promotion-tab">
+                                        <div class="card shadow-none border mb-0">
+                                            <div class="card-body">
+                                                <h4 class="card-title mb-4"><strong>Promotion</strong></h4>
+                                                <div class="visual">
+                                                    <p>
+                                                        We have updated the coupon system, and there is more to come. Announcing new free coupon limits.
+                                                    <div class="lamet float-end"><a href=""><strong><u>Create Coupon</u></strong></a></div>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-8">
+                                                    <div class="Editt">
                                                         <form>
                                                             <div class="form">
                                                                 <div class="row">
-                                                                    <div class="col-lg-2 mb-4">
-                                                                        <label for="Name">USD</label>
-                                                                        <select required>
-                                                                            <option>USD</option>
-                                                                            <option>AUD</option>
-                                                                            <Option>BRL</Option>
-                                                                        </select>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="Name">Coupons</label>
+                                                                        <input type="text" name="name" placeholder="You cannot create coupons for a free course" readonly required />
                                                                     </div>
-                                                                    <div class="col-lg-3 mb-4">
-                                                                        <label for="Name">-- Select Level --</label>
-                                                                        <select required>
-                                                                            <option>Free</option>
-                                                                            <option>Tier 1</option>
-                                                                            <option>Tier 2</option>
-                                                                            <option>Tier 3</option>
-                                                                        </select>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="Name">Active/Scheduled coupons</label>
+                                                                        <input type="text" name="name" placeholder="No coupon found" readonly required />
                                                                     </div>
-                                                                    <div class="col-lg-1 mb-4 mt-1">
-                                                                        <a href="#" class="text-decoration-none">
-                                                                            <button type="submit" class="btn px-4" style="color: #714091; border: 1px solid #714091">
-                                                                                Save
-                                                                            </button>
-                                                                        </a>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="Name">Expired coupons</label>
+                                                                        <input type="text" name="name" placeholder="No coupon found" readonly required />
                                                                     </div>
                                                                     <div class="text-end mt-2">
                                                                         <a href="#" class="text-decoration-none">
@@ -308,20 +353,51 @@
                                                             </div>
                                                         </form>
                                                     </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="v-pills-promotion" role="tabpanel" aria-labelledby="v-pills-promotion-tab">
-                                        <div class="card shadow-none border mb-0">
-                                            <div class="card-body">
-                                                promotion
+                                                </div>
+                                                <div class="col-sm-2"></div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-send" role="tabpanel" aria-labelledby="v-pills-send-tab">
                                         <div class="card shadow-none border mb-0">
                                             <div class="card-body">
-                                                Send Message
+                                                <h4 class="card-title mb-4"><strong>Course messages</strong></h4>
+                                                <div class="visual">
+                                                    <p>
+                                                        Write messages to your students (optional) that will be sent automatically when they join or complete your course to encourage students to engage with course content. If you do not wish to send a welcome or congratulations message, leave the text box blank.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-2"></div>
+                                                    <div class="col-sm-8">
+                                                        <div class="Editt">
+                                                            <form>
+                                                                <div class="form">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <label for="Name">Welcome Message</label>
+                                                                            <textarea name="description" id="" cols="30" rows="10" placeholder="Insert your welcome message" required></textarea>
+                                                                        </div>
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <label for="Name">Congratulations Message</label>
+                                                                            <textarea name="description" id="" cols="30" rows="10" placeholder="Insert your congratulation message" required></textarea>
+                                                                        </div>
+                                                                        <div class="text-end mt-2">
+                                                                            <a href="#" class="text-decoration-none">
+                                                                                <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                                                                    Submit
+                                                                                </button>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
