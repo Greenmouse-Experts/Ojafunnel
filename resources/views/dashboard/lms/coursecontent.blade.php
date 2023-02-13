@@ -84,12 +84,51 @@
                                                         <div class="float-end tent">
                                                             <div class="btn-group">
                                                                 <button class="btn dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    <b>Content</b>
+                                                                    <b><i class="bi bi-plus-lg"></i> Content</b>
                                                                 </button>
                                                                 <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="#">Video</a>
-                                                                    <a class="dropdown-item" href="#">Audio</a>
-                                                                    <a class="dropdown-item" href="#">Pdf</a>
+                                                                    <a class="dropdown-item" href="#" onclick="myPie()">Video</a>
+                                                                    <a class="dropdown-item" href="#" onclick="myAudio()">Audio</a>
+                                                                    <a class="dropdown-item" href="#" onclick="myPdf()">Pdf</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="vidoes" id="myDIV" style="display: none !important;">
+                                                        <div class="">
+                                                            <div class="row">
+                                                                <div class="col-sm-12 mb-2">
+                                                                    <form class="form">
+                                                                        <p>Select the main type of content. Files and links can be added as resources.</p>
+                                                                        <label for="Name">Attach Video</label>
+                                                                        <input type="file" accept="video/*" name="name" required />
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="vidoes" id="myAudio" style="display: none !important;">
+                                                        <div class="">
+                                                            <div class="row">
+                                                                <div class="col-sm-12 mb-2">
+                                                                    <form class="form">
+                                                                        <p>Select the main type of content. Files and links can be added as resources.</p>
+                                                                        <label for="Name">Attach Audio</label>
+                                                                        <input type="file" accept=".mp3,audio/*" name="name" required />
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="vidoes" id="myPdf" style="display: none !important;">
+                                                        <div class="">
+                                                            <div class="row">
+                                                                <div class="col-sm-12 mb-2">
+                                                                    <form class="form">
+                                                                        <p>Select the main type of content. Files and links can be added as resources.</p>
+                                                                        <label for="Name">Attach Pdf</label>
+                                                                        <input type="file" accept="application/pdf,application/vnd.ms-excel" name="name" required />
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -120,12 +159,51 @@
                                                                     <div class="float-end tent">
                                                                         <div class="btn-group">
                                                                             <button class="btn dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                <b>Content</b>
+                                                                                <b><i class="bi bi-plus-lg"></i> Content</b>
                                                                             </button>
                                                                             <div class="dropdown-menu">
-                                                                                <a class="dropdown-item" href="#">Video</a>
-                                                                                <a class="dropdown-item" href="#">Audio</a>
-                                                                                <a class="dropdown-item" href="#">Pdf</a>
+                                                                                <a class="dropdown-item" href="#" onclick="myFirst()">Video</a>
+                                                                                <a class="dropdown-item" href="#" onclick="mySecond()">Audio</a>
+                                                                                <a class="dropdown-item" href="#" onclick="myThird()">Pdf</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="vidoes" id="myFirst" style="display: none !important;">
+                                                                    <div class="">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12 mb-2">
+                                                                                <form class="form">
+                                                                                    <p>Select the main type of content. Files and links can be added as resources.</p>
+                                                                                    <label for="Name">Attach Audio</label>
+                                                                                    <input type="file" accept=".mp3,audio/*" name="name" required />
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="vidoes" id="mySecond" style="display: none !important;">
+                                                                    <div class="">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12 mb-2">
+                                                                                <form class="form">
+                                                                                    <p>Select the main type of content. Files and links can be added as resources.</p>
+                                                                                    <label for="Name">Attach Audio</label>
+                                                                                    <input type="file" accept=".mp3,audio/*" name="name" required />
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="vidoes" id="myThird" style="display: none !important;">
+                                                                    <div class="">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12 mb-2">
+                                                                                <form class="form">
+                                                                                    <p>Select the main type of content. Files and links can be added as resources.</p>
+                                                                                    <label for="Name">Attach Pdf</label>
+                                                                                    <input type="file" accept="application/pdf,application/vnd.ms-excel" name="name" required />
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -174,8 +252,8 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-sm-2"></div>
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-10">
                                                     <div class="Editt">
                                                         <form>
                                                             <div class="form">
@@ -223,23 +301,12 @@
                                                                         <label for="Name">Course image</label>
                                                                         <input type="file" name="quantity" required />
                                                                     </div>
-                                                                    <div class="col-lg-12 mb-4">
-                                                                        <label for="Name">Promotional video</label>
-                                                                        <input type="file" name="name" required />
-                                                                    </div>
-                                                                    <div class="text-end mt-2">
-                                                                        <a href="#" class="text-decoration-none">
-                                                                            <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
-                                                                                Submit
-                                                                            </button>
-                                                                        </a>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-1"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -289,7 +356,7 @@
                                                                         <option>Tier 3</option>
                                                                     </select>
                                                                 </div>
-                                                                <div class="col-lg-1 mb-4 mt-1">
+                                                                <div class="col-lg-1 mb-4 mt-2">
                                                                     <a href="#" class="text-decoration-none">
                                                                         <button type="submit" class="btn px-4" style="color: #714091; border: 1px solid #714091">
                                                                             Save
@@ -317,15 +384,15 @@
                                                 <div class="visual">
                                                     <p>
                                                         We have updated the coupon system, and there is more to come. Announcing new free coupon limits.
-                                                    <div class="lamet float-end"><a href=""><strong><u>Create Coupon</u></strong></a></div>
+                                                        <div class="lamet float-end"><a href=""><strong><u>Create Coupon</u></strong></a></div>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-sm-2"></div>
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-1"></div>
+                                                <div class="col-sm-10">
                                                     <div class="Editt">
                                                         <form>
                                                             <div class="form">
@@ -342,19 +409,12 @@
                                                                         <label for="Name">Expired coupons</label>
                                                                         <input type="text" name="name" placeholder="No coupon found" readonly required />
                                                                     </div>
-                                                                    <div class="text-end mt-2">
-                                                                        <a href="#" class="text-decoration-none">
-                                                                            <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
-                                                                                Submit
-                                                                            </button>
-                                                                        </a>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-1"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -410,6 +470,105 @@
         </div>
     </div>
 </div>
+<!-- end modal -->
+<script>
+    function myPie() {
+        var video = document.getElementById("myDIV");
+        var audio = document.getElementById("myAudio");
+        var pdf = document.getElementById("myPdf");
+        if (video.style.display === "none") {
+            video.style.display = "block";
+            audio.style.display = "none";
+            pdf.style.display = "none";
+        } else {
+            video.style.display = "none";
+            audio.style.display = "none";
+            pdf.style.display = "none";
+        }
+    }
+</script>
+<script>
+    function myFirst() {
+        var first = document.getElementById("myFirst");
+        var second = document.getElementById("mySecond");
+        var third = document.getElementById("myThird");
+        if (first.style.display === "none") {
+            first.style.display = "block";
+            second.style.display = "none";
+            third.style.display = "none";
+        } else {
+            first.style.display = "none";
+            second.style.display = "none";
+            third.style.display = "none";
+        }
+    }
+</script>
+<script>
+    function myAudio() {
+        var video = document.getElementById("myDIV");
+        var audio = document.getElementById("myAudio");
+        var pdf = document.getElementById("myPdf");
+        if (audio.style.display === "none") {
+            audio.style.display = "block";
+            video.style.display = "none";
+            pdf.style.display = "none";
+        } else {
+            audio.style.display = "none";
+            video.style.display = "none";
+            pdf.style.display = "none";
+        }
+    }
+</script>
+<script>
+    function mySecond() {
+        var first = document.getElementById("myFirst");
+        var second = document.getElementById("mySecond");
+        var third = document.getElementById("myThird");
+        if (second.style.display === "none") {
+            second.style.display = "block";
+            first.style.display = "none";
+            third.style.display = "none";
+        } else {
+            second.style.display = "none";
+            first.style.display = "none";
+            third.style.display = "none";
+        }
+    }
+</script>
+<script>
+    function myPdf() {
+        var pdf = document.getElementById("myPdf");
+        var video = document.getElementById("myDIV");
+        var audio = document.getElementById("myAudio");
+        if (pdf.style.display === "none") {
+            pdf.style.display = "block";
+            audio.style.display = "none";
+            video.style.display = "none";
+        } else {
+            pdf.style.display = "none";
+            audio.style.display = "none";
+            video.style.display = "none";
+        }
+    }
+</script>
+<script>
+    function myThird() {
+        var third = document.getElementById("myThird");
+        var first = document.getElementById("myFirst");
+        var second = document.getElementById("mySecond");
+        if (third.style.display === "none") {
+            third.style.display = "block";
+            second.style.display = "none";
+            first.style.display = "none";
+        } else {
+            third.style.display = "none";
+            second.style.display = "none";
+            first.style.display = "none";
+        }
+    }
+</script>
+
+
 <!-- jquery step -->
 <script type="text/javascript" src="{{URL::asset('dash/assets/libs/jquery-steps/build/jquery.steps.min.js')}}"></script>
 
@@ -428,8 +587,6 @@
 <script type="text/javascript" src="{{URL::asset('dash/assets/js/pages/bootstrap-toastr.init.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('dash/assets/js/pages/form-wizard.init.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('dash/assets/js/app.js')}}"></script>
-
-
 <!-- form repeater js -->
 <script src="{{URL::asset('dash/assets/libs/jquery.repeater/jquery.repeater.min.js')}}"></script>
 <script src="{{URL::asset('dash/assets/js/pages/form-repeater.int.js')}}"></script>
