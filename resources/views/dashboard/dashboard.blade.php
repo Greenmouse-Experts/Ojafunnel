@@ -357,13 +357,13 @@
 
                                         <div class="input-group bg-light rounded">
                                             <input type="email" class="form-control bg-transparent border-0" placeholder="Enter Email address" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                            
+
                                             <button class="btn btn-primary" type="button" id="button-addon2">
                                                 <i class="bx bxs-paper-plane"></i>
                                             </button>
-                                            
+
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>

@@ -122,7 +122,7 @@
                                 <div class="col-lg-4">
                                     <label>Email Message</label>
                                     <div class="row">
-                                        <div class="col-md-12 MB-2">
+                                        <div class="col-md-12 mb-4">
                                             <textarea name="" id="" placeholder="Enter the message you would like to send to the reciepient(s) details below " cols="30" rows="5"></textarea>
                                             <p class="emolj" style="font-size:15px"> &#128517; &#128512; &#128516; &#128525;</p>
                                         </div>
@@ -131,7 +131,7 @@
                                 <div class="col-lg-4">
                                     <label>SMS Message</label>
                                     <div class="row">
-                                        <div class="col-md-12 MB-2">
+                                        <div class="col-md-12 mb-4">
                                             <textarea name="" id="" placeholder="Enter the message you would like to send to the reciepient(s) details below " cols="30" rows="5"></textarea>
                                             <p class="emolj" style="font-size:15px"> &#128151; &#128525;</p>
                                         </div>
@@ -140,7 +140,7 @@
                                 <div class="col-lg-4">
                                     <label>WhatsApp Message</label>
                                     <div class="row">
-                                        <div class="col-md-12 MB-2">
+                                        <div class="col-md-12 mb-4">
                                             <textarea placeholder="Enter the message you would like to send to the reciepient(s) details below " cols="10" rows="5"></textarea>
                                             <p class="emolj" style="font-size:15px"> &#128512;</p>
                                         </div>
@@ -154,14 +154,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-4">
-                                    <div class="boding">
+                                    <div class="boding hide">
                                         <button data-bs-toggle="modal" data-bs-target="#emailConfirm">
                                             Schedule Time
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-4">
-                                    <div class="boding">
+                                    <div class="boding hide">
                                         <button data-bs-toggle="modal" data-bs-target="#emailConfirm">
                                             Schedule Time
                                         </button>

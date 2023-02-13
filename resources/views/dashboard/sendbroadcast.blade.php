@@ -18,35 +18,6 @@
                                 Send instant, scheduled or automated messages to your contact
                             </p>
                         </div>
-<<<<<<< HEAD
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <ul class="nav nav-tabs nav-tabs-custom">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{route('user.whatsapp.automation', Auth::user()->username)}}">New Campaign</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Recieved Messages</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{route('user.sent.campaigns', Auth::user()->username)}}">Sent Campaigns</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Auto Reply</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#">View Broadcast </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">Settings</a>
-                                    </li>
-                                </ul>
-                            </div>
-=======
                         <div class="d-flex account-nav">
                             <p class="ps-0 active">New Campaign</p>
                             <p>
@@ -64,7 +35,6 @@
                             <p class="ps-0">
                                 <a href="#" class="text-decoration-none text-dark">Settings</a>
                             </p>
->>>>>>> 7207286e5441ec516159c115bbccc604a6c73443
                         </div>
                     </div>
                 </div>
@@ -78,17 +48,6 @@
                                 <div class="row">
                                     <p class="tell mb-4">
                                         <b>
-<<<<<<< HEAD
-                                            Attach, images, videos, audios or files
-                                        </b>
-                                    </p>
-                                    <div class="logo-input2 border-in py-5 px-2">
-                                        <div class="avatar">
-                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664984753/OjaFunnel-Images/Vectoor_rbkrfl.png" alt="">
-                                        </div>
-                                        <div class="logo-file">
-                                            <input type="file" accept="image" name="logo" id="" class="mt-4 w-100" />
-=======
                                             Send Brodcast Messsage
                                         </b>
                                     </p>
@@ -98,7 +57,6 @@
                                             <div class="col-md-12 mb-4">
                                                 <input type="text" placeholder="Enter Campaign Name" name="campaign_name" class="input">
                                             </div>
->>>>>>> 7207286e5441ec516159c115bbccc604a6c73443
                                         </div>
                                     </div>
                                     <div class="col-lg-12">

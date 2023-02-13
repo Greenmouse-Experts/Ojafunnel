@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^6.2",
         "galbar/jsonpath": "^2.1",
         "grosv/laravel-passwordless-login": "^1.8",
@@ -25,7 +26,8 @@
         "php-http/message": "^1.13",
         "realrashid/sweet-alert": "^5.1",
         "twig/twig": "^3.5",
-        "twilio/sdk": "^6.43"
+        "twilio/sdk": "^6.43",
+        "unicodeveloper/laravel-paystack": "1.0.*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

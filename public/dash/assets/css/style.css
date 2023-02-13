@@ -3139,13 +3139,49 @@ textarea.bulk-delete {
 .founds {
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 38px 10px;
+  border-radius: 10px;
   margin-bottom: 20px;
 }
+.founds button{
+    padding: 10px 8px;
+    border: 1px solid #713f93;
+    background-color: #fff;
+    margin-top: -40px;
+    float: right;
+    border-radius: 5px;
+    color: #000;
+}
+.founds button:hover{
+    background-color: #713f93;
+    color: #fff;
+}
+
+.founds a{
+    padding: 10px 8px;
+    border: 1px solid #713f93;
+    background-color: #fff;
+    margin-top: -40px;
+    float: right;
+    border-radius: 5px;
+    color: #000;
+}
+.founds a:hover{
+    background-color: #713f93;
+    color: #fff;
+}
+
 .found-top {
-  padding: 65px 0px;
+  padding: 10px 0px;
+  text-align: center;
   border-radius: 10px 10px 0px 0px;
   width: 100%;
   background: #d8d8d8;
+}
+
+.found-top img{
+    width: 180px;
+    height: 180px;
 }
 
 /* email marketing */
@@ -4817,4 +4853,74 @@ textarea{
   .push{
     margin-top:10px !important;
   }
+}
+
+.assets{
+    margin-top: 30px;
+    padding:30px 20px;
+    border: 1px solid #efd7ff;
+}
+.assets h1{
+    font-size: 13px;
+    font-weight: 600;
+}
+.actting{
+    margin-top: 10px;
+    padding:15px 20px 10px 20px;
+    border: 1px solid #efd7ff;
+}
+.tent{
+    margin-top: -30px !important;
+    padding:0px 20px 0px 20px;
+    border: 1px solid #efd7ff;
+}
+.asseting{
+    padding:15px 20px 10px 20px;
+    border-left:1px solid #efd7ff;
+    border-right: 1px solid #efd7ff;
+    border-bottom: 1px solid #efd7ff;
+}
+.asseting h1{
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 400;
+}
+.visual p{
+    font-size: 13px;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.8;
+    font-weight: 500;
+    text-align: justify;
+}
+@media (max-width:1000px) {
+    .Editt {
+        padding: 0px 1px 1px 1px;
+        background-color: #fff;
+        border-radius: 7px;
+    }
+    .alert {
+        position: relative;
+        padding-left: 1px;
+    }
+    p {
+        margin-top: 0;
+        margin-bottom: 1px !important;
+    }
+    .Edit .hide{
+        display: none;
+    }
+    .tent {
+        margin-top: -30px !important;
+        padding: 0px 0px 0px 0px;
+        border: 1px solid #efd7ff;
+    }
+    .actting {
+        margin-top: 10px;
+        padding: 15px 5px 10px 5px;
+        border: 1px solid #efd7ff;
+    }
+}
+.Edit .hide{
+    display: block !important;
 }
