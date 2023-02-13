@@ -410,8 +410,6 @@
         </div>
     </div>
 </div>
-
-
 <!-- jquery step -->
 <script type="text/javascript" src="{{URL::asset('dash/assets/libs/jquery-steps/build/jquery.steps.min.js')}}"></script>
 
