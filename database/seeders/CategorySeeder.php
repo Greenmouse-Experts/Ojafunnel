@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class CategorySeeder extends Seeder
 {
@@ -15,19 +15,79 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('contact_numbers')->insert([
+        $createCategory = [
             [
-                'phone_number' => '+2348134211037',
-                'contact_list_id' => 1
+                'name' => 'Development',
+                'created_at' => now(),
+                'updated_at' =>now()
             ],
             [
-                'phone_number' => '+2348137457095',
-                'contact_list_id' => 1
+                'name' => 'Business',
+                'created_at' => now(),
+                'updated_at' =>now()
             ],
             [
-                'phone_number' => '+2347044792651',
-                'contact_list_id' => 1
+                'name' => 'Finance and Accounting',
+                'created_at' => now(),
+                'updated_at' =>now()
             ],
-        ]);
+            [
+                'name' => 'IT & Software',
+                'created_at' => now(),
+                'updated_at' =>now()
+            ],
+            [
+                'name' => 'Office Productivity',
+                'created_at' => now(),
+                'updated_at' =>now()
+            ],
+            [
+                'name' => 'Personal Development',
+                'created_at' => now(),
+                'updated_at' =>now()
+            ],
+            [
+                'name' => 'Design',
+                'created_at' => now(),
+                'updated_at' =>now()
+            ],
+            [
+                'name' => 'Marketing',
+                'created_at' => now(),
+                'updated_at' =>now()
+            ],
+            [
+                'name' => 'Lifestyle',
+                'created_at' => now(),
+                'updated_at' =>now()
+            ],
+            [
+                'name' => 'Photography & Video',
+                'created_at' => now(),
+                'updated_at' =>now()
+            ],
+            [
+                'name' => 'Health & Fitness',
+                'created_at' => now(),
+                'updated_at' =>now()
+            ],
+            [
+                'name' => 'Music',
+                'created_at' => now(),
+                'updated_at' =>now()
+            ],
+            [
+                'name' => 'Teaching & Academics',
+                'created_at' => now(),
+                'updated_at' =>now()
+            ],
+            [
+                'name' => "I don't know yet",
+                'created_at' => now(),
+                'updated_at' =>now()
+            ]
+        ];
+
+        Category::insert($createCategory);
     }
 }

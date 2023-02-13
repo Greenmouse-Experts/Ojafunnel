@@ -15,16 +15,14 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('uuid');
             $table->unsignedBigInteger('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('category_id')->unsigned()->references('id')->on('categories')->onDelete('cascade');
-            $table->string('title');
-            $table->string('subtitle');
-            $table->string('slug')->unique();
+            $table->string('title')->nullable();
+            $table->string('subtitle')->nullable();
             $table->text('description')->nullable();
             $table->string('language')->nullable();
             $table->string('image')->nullable();
-            $table->enum('level', ['all', 'beginner', 'intermediate', 'advanced']);
+            $table->enum('level', ['all', 'beginner', 'intermediate', 'advanced'])->nullable();
             $table->boolean('featured')->default(false);
             $table->decimal('price', 10,2)->default(0);
             $table->boolean('published')->default(false);
