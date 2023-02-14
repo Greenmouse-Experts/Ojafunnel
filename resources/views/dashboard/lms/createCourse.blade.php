@@ -42,20 +42,26 @@
                         </div>
                         <div class="category-course-list">
                             <ul>
+                                @foreach(\App\Models\Course::where('user_id', Auth::user()->id)->get() as $course)
                                 <li>
                                     <div class="course-box-2">
                                         <div class="course-image">
-                                            <a href="#">
+                                            <a href="{{route('user.course.content', [Auth::user()->username, Crypt::encrypt($course->id)])}}">
+                                                @if($course->image)
+                                                <img src="{{$course->image}}" alt="{{$course->title}}" width="200px">
+                                                <!-- <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%"> -->
+                                                @else
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%">
+                                                @endif
                                             </a>
                                         </div>
                                         <div class="course-details">
-                                            <a href="" class="course-title">Course Title</a>
+                                            <a href="" class="course-title">{{$course->title}}</a>
                                             <a href="" class="course-instructor">
-                                                <span class="instructor-name">Course Instructor</span>
+                                                <span class="instructor-name">{{Auth::user()->name}}</span>
                                             </a>
                                             <div class="course-subtitle">
-                                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde, natus? Cum, iste labore. Fugit ab pariatur vitae. Rem, maxime. Autem rerum recusandae facere voluptas, nam quas sit soluta corrupti ea.
+                                               {{$course->description}}
                                             </div>
                                             <div class="course-meta">
                                                 <span class="">
@@ -91,108 +97,7 @@
                                         </div>
                                     </div>
                                 </li>
-                            </ul>
-                        </div>
-                        <div class="category-course-list">
-                            <ul>
-                                <li>
-                                    <div class="course-box-2">
-                                        <div class="course-image">
-                                            <a href="#">
-                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%">
-                                            </a>
-                                        </div>
-                                        <div class="course-details">
-                                            <a href="" class="course-title">Course Title</a>
-                                            <a href="" class="course-instructor">
-                                                <span class="instructor-name">Course Instructor</span>
-
-                                            </a>
-                                            <div class="course-subtitle">
-                                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde, natus? Cum, iste labore. Fugit ab pariatur vitae. Rem, maxime. Autem rerum recusandae facere voluptas, nam quas sit soluta corrupti ea.
-                                            </div>
-                                            <div class="course-meta">
-                                                <span class="">
-                                                    <i class="fas fa-play-circle"></i>
-                                                    Lessons
-                                                </span>
-                                                <span class="">
-                                                    <i class="far fa-clock"></i>
-                                                    3 hours
-                                                </span>
-                                                <span class="">
-                                                    <i class="fas fa-closed-captioning"></i>English
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="course-price-rating">
-                                            <div class="course-price">
-                                                <span class="current-price">$500</span>
-                                            </div>
-                                            <div class="rating">
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star"></i>
-                                                <span class="d-inline-block average-rating">5</span>
-                                            </div>
-                                            <div class="rating-number">
-                                                Ratings
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="category-course-list">
-                            <ul>
-                                <li>
-                                    <div class="course-box-2">
-                                        <div class="course-image">
-                                            <a href="#">
-                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%">
-                                            </a>
-                                        </div>
-                                        <div class="course-details">
-                                            <a href="" class="course-title">Course Title</a>
-                                            <a href="" class="course-instructor">
-                                                <span class="instructor-name">Course Instructor</span>
-
-                                            </a>
-                                            <div class="course-subtitle">
-                                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde, natus? Cum, iste labore. Fugit ab pariatur vitae. Rem, maxime. Autem rerum recusandae facere voluptas, nam quas sit soluta corrupti ea.
-                                            </div>
-                                            <div class="course-meta">
-                                                <span class="">
-                                                    <i class="fas fa-play-circle"></i>
-                                                    Lessons
-                                                </span>
-                                                <span class="">
-                                                    <i class="far fa-clock"></i>
-                                                    3 hours
-                                                </span>
-                                                <span class="">
-                                                    <i class="fas fa-closed-captioning"></i>English
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="course-price-rating">
-                                            <div class="course-price">
-                                                <span class="current-price">$500</span>
-                                            </div>
-                                            <div class="rating">
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star"></i>
-                                                <span class="d-inline-block average-rating">5</span>
-                                            </div>
-                                            <div class="rating-number">
-                                                Ratings
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

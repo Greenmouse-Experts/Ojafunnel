@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->enum('level', ['all', 'beginner', 'intermediate', 'advanced'])->nullable();
             $table->boolean('featured')->default(false);
+            $table->string('currency')->nullable();
             $table->decimal('price', 10,2)->default(0);
             $table->boolean('published')->default(false);
             $table->boolean('approved')->default(false);
