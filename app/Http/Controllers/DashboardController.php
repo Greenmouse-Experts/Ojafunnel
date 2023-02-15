@@ -610,7 +610,7 @@ class DashboardController extends Controller
 
     public function shop($username)
     {
-        return view('dashboard.ShopCourse', [
+        return view('dashboard.lms.ShopCourse', [
             'username' => $username
         ]);
     }
@@ -716,6 +716,13 @@ class DashboardController extends Controller
     public function security($username)
     {
         return view('dashboard.securitySettings', [
+            'username' => $username
+        ]);
+    }
+
+    public function birthday($username)
+    {
+        return view('dashboard.birthday.birthday', [
             'username' => $username
         ]);
     }

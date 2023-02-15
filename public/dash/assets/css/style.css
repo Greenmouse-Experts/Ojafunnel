@@ -4838,7 +4838,7 @@ textarea{
 .circle
 {
     padding: 20px;
-    color: #fff;
+    color: #000;
 }
 .circle .bi{
     color: red;
@@ -4924,3 +4924,4 @@ textarea{
 .Edit .hide{
     display: block !important;
 }
+

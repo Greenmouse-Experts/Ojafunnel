@@ -303,6 +303,11 @@ Route::prefix('{username}')->group(function () {
                         // Route::get('/create-course/enroll-cur', [App\Http\Controllers\DashboardController::class, 'enroll_cur'])->name('user.enroll.cur');
                     }
             );
+            Route::prefix('/Birthday-Modules')->group(
+                function () {
+                        Route::get('/birthday', [App\Http\Controllers\DashboardController::class, 'birthday'])->name('user.create.birthday');
+                    }
+            );
             Route::get('/affiliate-marketing', [App\Http\Controllers\DashboardController::class, 'affiliate_marketing'])->name('user.affiliate.marketing');
             Route::get('/integration', [App\Http\Controllers\DashboardController::class, 'integration'])->name('user.integration');
             Route::get('/manage-integration', [App\Http\Controllers\DashboardController::class, 'manage_integration'])->name('user.manage_integration');

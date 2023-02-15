@@ -146,11 +146,11 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.create.course', Auth::user()->username)}}" key="t-tui-calendar">Create Course</a></li>
-                        <!-- <li><a href="{{route('user.shop.course', Auth::user()->username)}}" key="t-chat">Shop Course</a></li> -->
+                        <li><a href="{{route('user.shop.course', Auth::user()->username)}}" key="t-chat">Shop Course</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('user.create.birthday', Auth::user()->username)}}">
                         <i class="bi bi-balloon"></i>
                         <span key="t-chat">Birthday Modules</span>
                     </a>
