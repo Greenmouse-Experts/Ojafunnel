@@ -31,7 +31,8 @@
                                     <div class="row">
                                         <div class="col-lg-2"></div>
                                         <div class="col-lg-8">
-                                            <form>
+                                            <form method="post" action="{{route('user.start.course.creation')}}">
+                                                @csrf
                                                 <div class="curriculom mt-3">
                                                     <h1>
                                                     How about a working title?
@@ -42,7 +43,7 @@
                                                             <div class="col-lg-12">
                                                                 <div class="row">
                                                                     <div class="col-md-12 mb-4">
-                                                                        <input type="text" placeholder="e.g. Learn API Integration Using Vuejs and Laravel" name="title" class="form-control">
+                                                                        <input type="text" name="title" placeholder="e.g. Learn API Integration Using Vuejs and Laravel" name="title" class="form-control">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -62,11 +63,11 @@
                                                             <div class="col-lg-12">
                                                                 <div class="row">
                                                                     <div class="col-md-12 mb-4">
-                                                                        <select>
-                                                                            <option>Choose a category</option>
-                                                                            <option>Finance & Accounting</option>
-                                                                            <option>Development </option>
-                                                                            <option>I don't know yet</option>
+                                                                        <select name="category">
+                                                                            <option value="">Choose a category</option>
+                                                                            @foreach($categories as $category)
+                                                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                                                            @endforeach
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -78,9 +79,7 @@
 
                                                     </div>
                                                 </div>
-                                                <a href="{{route('user.course.content', Auth::user()->username)}}">
-                                                    <button type="button" style="float: right; background:#713F93 !important; color:#fff;" class="btn btn-btn-primary">Continue</button>
-                                                </a>
+                                                <button type="submit" style="float: right; background:#713F93 !important; color:#fff;" class="btn btn-btn-primary">Continue</button>
                                             </form>
                                         </div>
                                         <div class="col-lg-2"></div>

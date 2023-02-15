@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title')->unique();
+        Schema::create('videos', function (Blueprint $table) {
+            $table->id();
+            $table->integer('lesson_id')->unsigned()->references('id')->on('lessons')->onDelete('cascade');
+            $table->string('disk')->default('server');
+            $table->string('original_filename')->nullable();
+            $table->string('youtube_link')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('videos');
     }
 };
