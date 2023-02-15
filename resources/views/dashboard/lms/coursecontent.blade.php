@@ -737,9 +737,5 @@
 <!-- form repeater js -->
 <script src="{{URL::asset('dash/assets/libs/jquery.repeater/jquery.repeater.min.js')}}"></script>
 
-<<<<<<< HEAD
-@endsection
-=======
 <script src="{{URL::asset('dash/assets/js/pages/form-repeater.int.js')}}"></script>
 @endsection
->>>>>>> 97f9862 (uPDATE)
