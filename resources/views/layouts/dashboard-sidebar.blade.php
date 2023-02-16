@@ -119,6 +119,7 @@
                                 <li><a href="{{route('user.order.details', Auth::user()->username)}}" key="t-overview">Order Details</a></li> --}}
                             </ul>
                         </li>
+                        <li><a href="{{route('user.view.product', Auth::user()->username)}}" key="t-tui-calendar">Product</a></li>
                         <!-- <li><a href="{{route('user.cart', Auth::user()->username)}}" key="t-tui-calendar">Cart</a></li>
                         <li><a href="{{route('user.checkout', Auth::user()->username)}}" key="t-tui-calendar">Checkout</a></li> -->
                     </ul>
@@ -150,7 +151,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="{{route('user.create.birthday', Auth::user()->username)}}">
+                    <a href="#">
                         <i class="bi bi-balloon"></i>
                         <span key="t-chat">Birthday Modules</span>
                     </a>

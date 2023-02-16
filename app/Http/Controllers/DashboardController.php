@@ -630,7 +630,7 @@ class DashboardController extends Controller
         $finder = Crypt::decrypt($id);
 
         $course = Course::find($finder);
-        
+
         return view('dashboard.lms.coursecontent', [
             'username' => $username,
             'course' => $course
@@ -720,9 +720,9 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function birthday($username)
+    public function product($username)
     {
-        return view('dashboard.birthday.birthday', [
+        return view('dashboard.Product', [
             'username' => $username
         ]);
     }

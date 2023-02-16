@@ -284,7 +284,7 @@ Route::prefix('{username}')->group(function () {
                         Route::post('/my-store/product/delete/{id}', [App\Http\Controllers\StoreController::class, 'deleteProduct'])->name('user.store.product.delete');
                         Route::get('/shop/sales', [App\Http\Controllers\StoreController::class, 'sales'])->name('user.sales');
                         Route::get('/shop/order-details/{id}', [App\Http\Controllers\StoreController::class, 'order_details'])->name('user.order.details');
-                        // Route::get('/my-store/storee', [App\Http\Controllers\DashboardController::class, 'store'])->name('user.store');
+                        Route::get('/view/product', [App\Http\Controllers\DashboardController::class, 'product'])->name('user.view.product');
                         Route::get('/shops', [App\Http\Controllers\StoreController::class, 'shops'])->name('user.shops');
                         Route::get('/stores', [App\Http\Controllers\DashboardController::class, 'stores'])->name('user.stores');
                         Route::get('/checkout', [App\Http\Controllers\DashboardController::class, 'checkout'])->name('user.checkout');
@@ -301,11 +301,6 @@ Route::prefix('{username}')->group(function () {
                         // Route::get('/create-course/course-summary', [App\Http\Controllers\DashboardController::class, 'course_summary'])->name('user.course.summary');
                         // Route::get('/create-course/enroll-now', [App\Http\Controllers\DashboardController::class, 'enroll_now'])->name('user.enroll.now');
                             // Route::get('/create-course/enroll-cur', [App\Http\Controllers\DashboardController::class, 'enroll_cur'])->name('user.enroll.cur');
-                    }
-            );
-            Route::prefix('/Birthday-Modules')->group(
-                function () {
-                        Route::get('/birthday', [App\Http\Controllers\DashboardController::class, 'birthday'])->name('user.create.birthday');
                     }
             );
             Route::get('/affiliate-marketing', [App\Http\Controllers\DashboardController::class, 'affiliate_marketing'])->name('user.affiliate.marketing');
