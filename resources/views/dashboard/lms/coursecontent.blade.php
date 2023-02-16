@@ -718,12 +718,14 @@
 <!-- Plugins js -->
 <script type="text/javascript" src="{{URL::asset('dash/assets/libs/bootstrap-editable/js/index.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('dash/assets/libs/moment/min/moment.min.js')}}"></script>
+
 <!-- Bootstrap Toasts Js -->
 <script type="text/javascript" src="{{URL::asset('dash/assets/js/pages/bootstrap-toastr.init.js')}}"></script>
+
 <script type="text/javascript" src="{{URL::asset('dash/assets/js/pages/form-wizard.init.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('dash/assets/js/app.js')}}"></script>
 <!-- form repeater js -->
 <script src="{{URL::asset('dash/assets/libs/jquery.repeater/jquery.repeater.min.js')}}"></script>
-<script src="{{URL::asset('dash/assets/js/pages/form-repeater.int.js')}}"></script>
 
+<script src="{{URL::asset('dash/assets/js/pages/form-repeater.int.js')}}"></script>
 @endsection
