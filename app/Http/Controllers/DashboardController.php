@@ -642,6 +642,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function view_shops($username)
+    {
+        $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
+
+        return view('dashboard.lms.checkShops', compact('username', 'shop'));
+    }
+
     public function my_shops($username)
     {
         $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();

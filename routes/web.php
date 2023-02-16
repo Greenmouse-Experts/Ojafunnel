@@ -303,12 +303,8 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/create-course/start', [App\Http\Controllers\DashboardController::class, 'create_course_start'])->name('user.create.course.start');
                         Route::get('/create-course/course-content/{id}', [App\Http\Controllers\DashboardController::class, 'course_content'])->name('user.course.content');
                         Route::get('/create-shop', [App\Http\Controllers\DashboardController::class, 'create_shop'])->name('user.create.shop.course');
-<<<<<<< HEAD
+                        Route::get('/view-shops', [App\Http\Controllers\DashboardController::class, 'view_shops'])->name('user.view.course.shops');
                         Route::get('/my-shops', [App\Http\Controllers\DashboardController::class, 'my_shops'])->name('user.my.shops.course');
-=======
-                        Route::get('/my-shop/viewshop', [App\Http\Controllers\StoreController::class, 'viewshop'])->name('user.my.shop.course');
-                        Route::get('/shop/viewcart', [App\Http\Controllers\DashboardController::class, 'view_cart'])->name('user.add.cart');
->>>>>>> e332391a568809d76e88b03c3d341982239d9768
                         // Route::get('/create-course/get-quiz', [App\Http\Controllers\DashboardController::class, 'get_quiz'])->name('user.get.quiz');
                         // Route::get('/create-course/course-summary', [App\Http\Controllers\DashboardController::class, 'course_summary'])->name('user.course.summary');
                         // Route::get('/create-course/enroll-now', [App\Http\Controllers\DashboardController::class, 'enroll_now'])->name('user.enroll.now');

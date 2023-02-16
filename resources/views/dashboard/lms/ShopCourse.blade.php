@@ -193,7 +193,7 @@
                                     </ul>
                                 </div>
                                 <div class="popover-btns">
-                                    <a href="{{route('user.add.cart', Auth::user()->username)}}">
+                                    <a href="#">
                                         <button type="button" class="btn add-to-cart-btn addedToCart big-cart-button-1" id="1">
                                             Add To Cart
                                         </button>
@@ -258,7 +258,7 @@
                                     </ul>
                                 </div>
                                 <div class="popover-btns">
-                                    <a href="{{route('user.add.cart', Auth::user()->username)}}">
+                                    <a href="#">
                                         <button type="button" class="btn add-to-cart-btn addedToCart big-cart-button-1" id="1">
                                             Add To Cart
                                         </button>
@@ -323,7 +323,7 @@
                                     </ul>
                                 </div>
                                 <div class="popover-btns">
-                                    <a href="{{route('user.add.cart', Auth::user()->username)}}">
+                                    <a href="#">
                                         <button type="button" class="btn add-to-cart-btn addedToCart big-cart-button-1" id="1">
                                             Add To Cart
                                         </button>
