@@ -608,7 +608,14 @@ class DashboardController extends Controller
 
     public function shop($username)
     {
-        return view('dashboard.ShopCourse', [
+        return view('dashboard.lms.ShopCourse', [
+            'username' => $username
+        ]);
+    }
+
+    public function view_cart($username)
+    {
+        return view('dashboard.lms.AddCart', [
             'username' => $username
         ]);
     }

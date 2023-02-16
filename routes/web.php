@@ -299,6 +299,7 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/create-course/course-content/{id}', [App\Http\Controllers\DashboardController::class, 'course_content'])->name('user.course.content');
                         Route::get('/create-shop', [App\Http\Controllers\DashboardController::class, 'create_shop'])->name('user.create.shop.course');
                         Route::get('/my-shop/viewshop', [App\Http\Controllers\StoreController::class, 'viewshop'])->name('user.my.shop.course');
+                        Route::get('/shop/viewcart', [App\Http\Controllers\DashboardController::class, 'view_cart'])->name('user.add.cart');
                         // Route::get('/create-course/get-quiz', [App\Http\Controllers\DashboardController::class, 'get_quiz'])->name('user.get.quiz');
                         // Route::get('/create-course/course-summary', [App\Http\Controllers\DashboardController::class, 'course_summary'])->name('user.course.summary');
                         // Route::get('/create-course/enroll-now', [App\Http\Controllers\DashboardController::class, 'enroll_now'])->name('user.enroll.now');
