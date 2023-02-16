@@ -11,12 +11,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">Courses By Category</h4>
+                        <h4 class="mb-sm-0 font-size-18">Courses</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
-                                <li class="breadcrumb-item active">Courses By Category</li>
+                                <li class="breadcrumb-item active">Courses</li>
                             </ol>
                         </div>
 
@@ -48,7 +48,7 @@
                                         <div class="course-image">
                                             <a href="{{route('user.course.content', [Auth::user()->username, Crypt::encrypt($course->id)])}}">
                                                 @if($course->image)
-                                                <img src="{{$course->image}}" alt="{{$course->title}}" width="200px">
+                                                <img src="{{$course->image}}" alt="{{$course->title}}" style="    max-width: 100%; width: 600px;">
                                                 <!-- <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%"> -->
                                                 @else
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%">
@@ -68,31 +68,25 @@
                                                     <i class="fas fa-play-circle"></i>
                                                     Lessons
                                                 </span>
-                                                <span class="">
+                                                <!-- <span class="">
                                                     <i class="far fa-clock"></i>
                                                     3 hours
+                                                </span> -->
+                                                <span class="">
+                                                    <i class="fas fa-closed-captioning"></i>{{$course->language}}
                                                 </span>
                                                 <span class="">
-                                                    <i class="fas fa-closed-captioning"></i>English
-                                                </span>
-                                                <span class="">
-                                                <i class="fas fa-play-circle"></i>Draft or publish
+                                                    <i class="fas fa-play-circle"></i>@if($course->published == false)
+                                                    Unpublish
+                                                    @else
+                                                    Published
+                                                    @endif
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="course-price-rating">
+                                        <div class="course-price-rating mb-3">
                                             <div class="course-price">
-                                                <span class="current-price">$500</span>
-                                            </div>
-                                            <div class="rating">
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star"></i>
-                                                <span class="d-inline-block average-rating">5</span>
-                                            </div>
-                                            <div class="rating-number">
-                                                Ratings
+                                                <span class="current-price">{{$course->currency}} {{number_format($course->price, 2)}}</span>
                                             </div>
                                         </div>
                                     </div>
