@@ -4838,7 +4838,7 @@ textarea{
 .circle
 {
     padding: 20px;
-    color: #fff;
+    color: #000;
 }
 .circle .bi{
     color: red;
@@ -4923,4 +4923,14 @@ textarea{
 }
 .Edit .hide{
     display: block !important;
+}
+.last .images img{
+    width: 100%;
+    margin: auto;
+    border-radius: 10px;
+}
+.last {
+    padding: 0px 0px 10px 0px;
+    background-color: #fff;
+    border-radius: 7px;
 }

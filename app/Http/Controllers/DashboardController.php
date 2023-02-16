@@ -610,7 +610,7 @@ class DashboardController extends Controller
 
     public function shop($username)
     {
-        return view('dashboard.ShopCourse', [
+        return view('dashboard.lms.ShopCourse', [
             'username' => $username
         ]);
     }
@@ -630,7 +630,7 @@ class DashboardController extends Controller
         $finder = Crypt::decrypt($id);
 
         $course = Course::find($finder);
-        
+
         return view('dashboard.lms.coursecontent', [
             'username' => $username,
             'course' => $course
@@ -716,6 +716,13 @@ class DashboardController extends Controller
     public function security($username)
     {
         return view('dashboard.securitySettings', [
+            'username' => $username
+        ]);
+    }
+
+    public function product($username)
+    {
+        return view('dashboard.Product', [
             'username' => $username
         ]);
     }
