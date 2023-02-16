@@ -637,6 +637,20 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function create_shop($username)
+    {
+        return view('dashboard.lms.createshop', [
+            'username' => $username
+        ]);
+    }
+
+    public function viewshop($username)
+    {
+        return view('dashboard.checkstore', [
+            'username' => $username
+        ]);
+    }
+
     public function get_quiz($username)
     {
         return view('dashboard.getquiz', [

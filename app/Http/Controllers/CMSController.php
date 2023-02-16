@@ -428,4 +428,40 @@ class CMSController extends Controller
             'message' => "Field doesn't match, Try Again!"
         ]); 
     }
+
+    public function store(Request $request)
+    {
+        $request->validate(
+            [
+                'name' => 'required|unique:stores|max:255',
+                'description' => 'required',
+                'link' => 'required',
+                'theme' => 'required'
+            ],
+            [
+                'name.unique' => 'Store name has already been taken, please use another one!',
+            ]
+        );
+
+        if ($request->file('logo')) {
+            $image = $request->file('logo')->store(
+                'uploads/storeLogo/' . \Auth::user()->username,
+                'public'
+            );
+        }
+        $store = new Store();
+        $store->name = $request->name;
+        $store->description = $request->description;
+        $store->link = $request->link;
+        $store->logo = $image;
+        $store->theme = $request->theme;
+        $store->color = '#fff';
+        $store->user_id = \Auth::user()->id;
+        $store->save();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => $request->name . ' store created successfully'
+        ]);
+    }
 }
