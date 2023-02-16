@@ -60,10 +60,9 @@ Route::prefix('user')->group(function () {
     Route::post('/crm/save/course/{id}', [App\Http\Controllers\CMSController::class, 'save_course'])->name('user.save.course');
 
     Route::post('/crm/save/curriculum/{id}', [App\Http\Controllers\CMSController::class, 'save_curriculum'])->name('user.save.curriculum');
-    Route::post('/crm/update/curriculum/{id}', [App\Http\Controllers\CMSController::class, 'update_curriculum'])->name('user.update.curriculum');
-    Route::post('/crm/delete/curriculum/{id}', [App\Http\Controllers\CMSController::class, 'delete_curriculum'])->name('user.delete.curriculum');
+    Route::post('/crm/action/curriculum/{id}', [App\Http\Controllers\CMSController::class, 'action_curriculum'])->name('user.action.curriculum');
 
-    Route::post('/crm/save/lesson/{id}', [App\Http\Controllers\CMSController::class, 'save_lesson'])->name('user.save.lesson');
+    Route::post('/crm/save/lesson', [App\Http\Controllers\CMSController::class, 'save_lesson'])->name('user.save.lesson');
     Route::post('/crm/update/lesson/{id}', [App\Http\Controllers\CMSController::class, 'update_lesson'])->name('user.update.lesson');
     Route::post('/crm/delete/lesson/{id}', [App\Http\Controllers\CMSController::class, 'delete_lesson'])->name('user.delete.lesson');
 
