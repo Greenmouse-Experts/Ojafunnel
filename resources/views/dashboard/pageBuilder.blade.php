@@ -17,15 +17,6 @@
                                     Pick a ready made template to begin building your pages
                                 </p>
                             </div>
-                            <div class="col text-end">
-                                <select name="pageTemp" id="" class="px-3 py-2 bg-light rounded">
-                                    <option value="top" disabled selected value>
-                                        Select a category
-                                    </option>
-                                    <option value="tempOne">Option 1</option>
-                                    <option value="tempTwo">Option 2</option>
-                                </select>
-                            </div>
                         </div>
                         <div class="d-flex account-nav">
                             <ul class="list-unstyled d-flex justify-content-between w-100">
