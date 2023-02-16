@@ -284,7 +284,7 @@ Route::prefix('{username}')->group(function () {
                         Route::post('/my-store/product/delete/{id}', [App\Http\Controllers\StoreController::class, 'deleteProduct'])->name('user.store.product.delete');
                         Route::get('/shop/sales', [App\Http\Controllers\StoreController::class, 'sales'])->name('user.sales');
                         Route::get('/shop/order-details/{id}', [App\Http\Controllers\StoreController::class, 'order_details'])->name('user.order.details');
-                        Route::get('/view/product', [App\Http\Controllers\DashboardController::class, 'product'])->name('user.view.product');
+                        // Route::get('/my-store/storee', [App\Http\Controllers\DashboardController::class, 'store'])->name('user.store');
                         Route::get('/shops', [App\Http\Controllers\StoreController::class, 'shops'])->name('user.shops');
                         Route::get('/stores', [App\Http\Controllers\DashboardController::class, 'stores'])->name('user.stores');
                         Route::get('/checkout', [App\Http\Controllers\DashboardController::class, 'checkout'])->name('user.checkout');
@@ -296,11 +296,11 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/create-course', [App\Http\Controllers\DashboardController::class, 'create_course'])->name('user.create.course');
                         Route::get('/shop-course', [App\Http\Controllers\DashboardController::class, 'shop'])->name('user.shop.course');
                         Route::get('/create-course/start', [App\Http\Controllers\DashboardController::class, 'create_course_start'])->name('user.create.course.start');
-                        Route::get('/create-course/course-content/{id}', [App\Http\Controllers\DashboardController::class, 'course_content'])->name('user.course.content');
+                        Route::get('/create-course/course-content', [App\Http\Controllers\DashboardController::class, 'course_content'])->name('user.course.content');
                         // Route::get('/create-course/get-quiz', [App\Http\Controllers\DashboardController::class, 'get_quiz'])->name('user.get.quiz');
                         // Route::get('/create-course/course-summary', [App\Http\Controllers\DashboardController::class, 'course_summary'])->name('user.course.summary');
                         // Route::get('/create-course/enroll-now', [App\Http\Controllers\DashboardController::class, 'enroll_now'])->name('user.enroll.now');
-                            // Route::get('/create-course/enroll-cur', [App\Http\Controllers\DashboardController::class, 'enroll_cur'])->name('user.enroll.cur');
+                        // Route::get('/create-course/enroll-cur', [App\Http\Controllers\DashboardController::class, 'enroll_cur'])->name('user.enroll.cur');
                     }
             );
             Route::get('/affiliate-marketing', [App\Http\Controllers\DashboardController::class, 'affiliate_marketing'])->name('user.affiliate.marketing');
@@ -312,6 +312,16 @@ Route::prefix('{username}')->group(function () {
                 function () {
                         Route::get('/general', [App\Http\Controllers\DashboardController::class, 'general'])->name('user.general');
                         Route::get('/security', [App\Http\Controllers\DashboardController::class, 'security'])->name('user.security');
+                    }
+            );
+            Route::prefix('/birthday')->group(
+                function () {
+                        Route::get('/module', [App\Http\Controllers\DashboardController::class, 'main_module'])->name('user.main.list');
+                        Route::get('/manage-list', [App\Http\Controllers\DashboardController::class, 'manage_list'])->name('user.manage.list');
+                        Route::get('/individual-list', [App\Http\Controllers\DashboardController::class, 'individual_list'])->name('user.individual.list');
+                        Route::get('/manage-birthday', [App\Http\Controllers\DashboardController::class, 'manage_birthday'])->name('user.manage.birthday');
+                        Route::get('/create-birthday', [App\Http\Controllers\DashboardController::class, 'create_birthday'])->name('user.create.birthday');
+                        Route::get('/edit-birthday', [App\Http\Controllers\DashboardController::class, 'edit_birthday'])->name('user.edit.birthday');
                     }
             );
         }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Course;
 use App\Models\Funnel;
 use App\Models\FunnelPage;
 use App\Models\Integration;
@@ -610,30 +608,22 @@ class DashboardController extends Controller
 
     public function shop($username)
     {
-        return view('dashboard.lms.ShopCourse', [
+        return view('dashboard.ShopCourse', [
             'username' => $username
         ]);
     }
 
     public function create_course_start($username)
     {
-        $categories = Category::latest()->get();
-
         return view('dashboard.lms.coursestart', [
-            'username' => $username,
-            'categories' => $categories
+            'username' => $username
         ]);
     }
 
-    public function course_content($username, $id)
+    public function course_content($username)
     {
-        $finder = Crypt::decrypt($id);
-
-        $course = Course::find($finder);
-
         return view('dashboard.lms.coursecontent', [
-            'username' => $username,
-            'course' => $course
+            'username' => $username
         ]);
     }
 
@@ -720,9 +710,44 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function product($username)
+    public function main_module($username)
     {
-        return view('dashboard.Product', [
+        return view('dashboard.birthday.birthdayMain', [
+            'username' => $username
+        ]);
+    }
+
+    public function manage_list($username)
+    {
+        return view('dashboard.birthday.createList', [
+            'username' => $username
+        ]);
+    }
+
+    public function individual_list($username)
+    {
+        return view('dashboard.birthday.individualList', [
+            'username' => $username
+        ]);
+    }
+
+    public function manage_birthday($username)
+    {
+        return view('dashboard.birthday.birthdayManage', [
+            'username' => $username
+        ]);
+    }
+
+    public function create_birthday($username)
+    {
+        return view('dashboard.birthday.birthdayCreate', [
+            'username' => $username
+        ]);
+    }
+
+    public function edit_birthday($username)
+    {
+        return view('dashboard.birthday.birthdayEdit', [
             'username' => $username
         ]);
     }
