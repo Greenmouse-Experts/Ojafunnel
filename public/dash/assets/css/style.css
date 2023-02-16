@@ -4838,7 +4838,7 @@ textarea{
 .circle
 {
     padding: 20px;
-    color: #000;
+    color: #fff;
 }
 .circle .bi{
     color: red;
@@ -4857,7 +4857,7 @@ textarea{
 
 .assets{
     margin-top: 30px;
-    padding: 40px 20px;
+    padding:30px 20px;
     border: 1px solid #efd7ff;
 }
 .assets h1{
@@ -4870,7 +4870,7 @@ textarea{
     border: 1px solid #efd7ff;
 }
 .tent{
-    /* margin-top: -30px !important; */
+    margin-top: -30px !important;
     padding:0px 20px 0px 20px;
     border: 1px solid #efd7ff;
 }
@@ -4924,13 +4924,113 @@ textarea{
 .Edit .hide{
     display: block !important;
 }
-.last .images img{
-    width: 100%;
-    margin: auto;
-    border-radius: 10px;
+.birthday-module-banner{
+  margin: 10px 0px 0px;
+  padding: 0px 20px;
+  height: 200px;
+  width: 100%;
+  border-radius: 20px;
+  background-color: white;
+  background-image: linear-gradient(to bottom, rgba(4,0,36,.4), rgba(8, 8, 8, 0.9)),url('https://res.cloudinary.com/greenmouse-tech/image/upload/v1676468210/OjaFunnel-Images/birthday-removebg-preview_fhwma6.png');
+  background-size: cover;
+  background-position: center;
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  color: white;
 }
-.last {
-    padding: 0px 0px 10px 0px;
-    background-color: #fff;
-    border-radius: 7px;
+.birthday-calendar{
+  width: 200px;
+  height: 150px;
+  border-radius: 10px;
+  background-color: white;
+}
+.birthday-calendar .month{
+  border-radius: 10px 10px 0px 0px;
+  text-align: center;
+  padding: 5px 0px 0px 0px;
+  background-color:  #713f93;
+}
+.birthday-calendar .day{
+  text-align: center;
+  font-size: 40px;
+  margin: 0;
+  padding: 5px 0px 0px 0px;
+  color: black;
+}
+.birthday-calendar .word{
+  text-align: center;
+  margin: 0;
+  padding: 5px 0px 0px 0px;
+  color: #713f93;
+}
+.birthday-module-link{
+  border-radius: 20px;
+  background-color: white;
+  padding: 20px;
+  align-items: center;
+}
+.birthday-module-link p{
+  font-size: 20px;
+  font-weight: 600;
+}
+.birthday-contact{
+  padding: 20px 10px;
+  background-color: white;
+}
+.birthday-contact .main-text .topic{
+  font-size: 25px;
+  font-weight: 600;
+}
+.z-1000{
+  z-index: 10000;
+}
+.mybtnprimary{
+  background-color:  #713f93;
+  padding: 6px 20px;
+  color:white;
+  border: none;
+  border-radius: 5px;
+}
+.mybtncancel{
+  background-color:  red;
+  padding: 6px 20px;
+  color:white;
+  border: none;
+  border-radius: 5px;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+@media (max-width: 1000px) {
+  .birthday-module-link p{
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .birthday-module-banner{
+    margin: 10px 0px 0px;
+    padding: 0px 5px;
+    height: 200px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+  .birthday-calendar{
+    width:90px;
+    height: 90px;
+  }
+  .birthday-calendar .day{
+    text-align: center;
+    font-size: 20px;
+  }
+  .birthday-calendar .word{
+    text-align: center;
+    margin: 0;
+    padding: 5px 0px 0px 0px;
+    color: #713f93;
+  }
 }
