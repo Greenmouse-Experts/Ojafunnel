@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Course;
@@ -40,6 +41,7 @@ class CMSController extends Controller
 
         return redirect()->route('user.course.content', [Auth::user()->username, Crypt::encrypt($course->id)]);
     }
+
 
     public function save_course($id, Request $request)
     {
