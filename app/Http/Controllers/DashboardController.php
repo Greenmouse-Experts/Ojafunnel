@@ -8,6 +8,7 @@ use App\Models\Integration;
 use App\Models\Mailinglist;
 use App\Models\Page;
 use App\Models\Plan;
+use App\Models\Shop;
 use App\Models\SmsAutomation;
 use App\Models\SmsCampaign;
 use App\Models\Subscriber;
@@ -634,11 +635,11 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function viewshop($username)
+    public function my_shops($username)
     {
-        return view('dashboard.checkstore', [
-            'username' => $username
-        ]);
+        $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
+
+        return view('dashboard.lms.myShops', compact('username', 'shop'));
     }
 
     public function get_quiz($username)

@@ -8,6 +8,7 @@ use App\Models\Coupon;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Section;
+use App\Models\Shop;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,6 @@ class CMSController extends Controller
 
         return redirect()->route('user.course.content', [Auth::user()->username, Crypt::encrypt($course->id)]);
     }
-
 
     public function save_course($id, Request $request)
     {
@@ -429,39 +429,37 @@ class CMSController extends Controller
         ]); 
     }
 
-    public function store(Request $request)
+    public function create_shop(Request $request)
     {
         $request->validate(
             [
-                'name' => 'required|unique:stores|max:255',
+                'name' => 'required|unique:shops|max:255',
                 'description' => 'required',
                 'link' => 'required',
-                'theme' => 'required'
+                'theme' => 'required',
+                'logo' => 'required|mimes:jpeg,png,jpg',
             ],
             [
-                'name.unique' => 'Store name has already been taken, please use another one!',
+                'name.unique' => 'Shop name has already been taken, please use another one!',
             ]
         );
 
-        if ($request->file('logo')) {
-            $image = $request->file('logo')->store(
-                'uploads/storeLogo/' . \Auth::user()->username,
-                'public'
-            );
-        }
-        $store = new Store();
-        $store->name = $request->name;
-        $store->description = $request->description;
-        $store->link = $request->link;
-        $store->logo = $image;
-        $store->theme = $request->theme;
-        $store->color = '#fff';
-        $store->user_id = \Auth::user()->id;
-        $store->save();
+        $filename = request()->logo->getClientOriginalName();
+        request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+        Shop::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'link' => $request->link,
+            'logo' => '/storage/courseShopLogo/'.$filename,
+            'theme' => $request->theme,
+            'color' => '#fff',
+            'user_id' => Auth::user()->id,
+        ]);
 
         return back()->with([
             'type' => 'success',
-            'message' => $request->name . ' store created successfully'
+            'message' => $request->name . ' shop created successfully'
         ]);
     }
 }
