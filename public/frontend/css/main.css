@@ -1017,9 +1017,9 @@ input:focus {
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-    padding: 170px 0 130px;
+    padding: 130px 0 120px;
     color: #fff;
-    background-image:linear-gradient(50deg,  #0000005b, #0000005b), url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg);
+    background-image:linear-gradient(50deg,  #0000007e, #0000007e), url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg);
 }
 
 .home-banner-wrap {
@@ -1267,28 +1267,10 @@ input:focus {
 }
 
 .course-box .course-details .title {
-    display: block !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2;
-    -moz-line-clamp: 2;
-    -ms-line-clamp: 2;
-    -o-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    -moz-box-orient: vertical;
-    -ms-box-orient: vertical;
-    -o-box-orient: vertical;
-    box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
+
     font-weight: 600;
-    height: 36px;
-    min-height: 42px;
     font-size: 15px;
     color: #29303b;
-    margin-bottom: 10px;
-    line-height: 20px;
 }
 
 .course-box .course-details .instructors {
@@ -1307,15 +1289,14 @@ input:focus {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
-    min-height: 21px;
-    height: 21px;
-    font-size: 12px;
-    color: #686f7a;
+    margin-top: 5px;
+    font-size: 15px;
+    color: #000;
     margin-bottom: 5px;
 }
 
 .course-box .course-details .rating {
-    margin-bottom: 10px;
+    margin-top: 15px;
 }
 
 .course-box .course-details .rating i {
@@ -1686,7 +1667,7 @@ input:focus {
 }
 
 .course-popover-content .popover-btns {
-    margin-top: 50px;
+    margin-top: 40px;
     padding-right: 65px;
     position: relative;
     margin-bottom: 15px;
@@ -1694,19 +1675,20 @@ input:focus {
 
 .course-popover-content .popover-btns .add-to-cart-btn {
     width: 100%;
-    padding: 16px 12px;
+    padding: 14px 12px;
 }
 
 .addedToCart {
-    color: #ec5252;
+    color: #000;
     background-color: #ffffff;
-    border-color: #ec5252;
+    border-color: #EFD7FF;
+    border-radius: 5px;
 }
 
 .addedToCart:hover {
-    color: #ec5252;
-    background-color: #ffffff;
-    border-color: #ec5252;
+    color: #fff;
+    background-color: #713F93;
+    border-color: #713F93;
 }
 
 .course-popover-content .popover-btns .wishlist-btn {
@@ -1720,13 +1702,13 @@ input:focus {
 
 .course-popover-content .popover-btns .wishlist-btn i {
     color: transparent;
-    text-stroke: 1px #ec5252;
-    -webkit-text-stroke: 1px #ec5252;
+    text-stroke: 1px #000;
+    -webkit-text-stroke: 1px #000;
 }
 
 .course-popover-content .popover-btns .wishlist-btn.active i,
 .course-popover-content .popover-btns .wishlist-btn:hover i {
-    color: #ec5252;
+    color: #000;
 }
 
 .webui-popover.left > .webui-arrow,
@@ -4165,4 +4147,22 @@ section.purchase-history-list-area {
 .purchased a:hover,
 .purchased a:focus {
     background: #003440;
+}
+.TopMontain{
+    padding: 10px 0px;
+    background-color: #fff;
+}
+.TopMontain .course-carousel-title{
+    font-size: 20px;
+    color: #000;
+    margin: 0 0 10px;
+}
+.TopMontain .course-box{
+    box-shadow: 0px 0px 20px rgba(136, 136, 136, 0.219);
+    border-radius: 5px !important;
+}
+.TopMontain .course-image img{
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+    height: 180px;
 }
