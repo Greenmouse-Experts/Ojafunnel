@@ -8,12 +8,12 @@
       <div class="row">
         <div class="col-12">
           <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-            <h4 class="mb-sm-0 font-size-18">My Store</h4>
+            <h4 class="mb-sm-0 font-size-18">My shop</h4>
 
             <div class="page-title-right">
               <ol class="breadcrumb m-0">
                 <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
-                <li class="breadcrumb-item active">My Store</li>
+                <li class="breadcrumb-item active">My shop</li>
               </ol>
             </div>
 
@@ -27,18 +27,18 @@
             <div class="row">
               <div class="col-md-9">
                 <div class="py-2">
-                  <h4 class="font-600">My Store</h4>
+                  <h4 class="font-600">My Shop</h4>
                   <p>
-                    All your shops and the products in them
+                    All your shops and courses in them
                   </p>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="">
                   <div class="all-create">
-                    <a href="{{route('user.my.store', Auth::user()->username)}}">
+                    <a href="{{route('user.create.shop.course', Auth::user()->username)}}">
                       <button>
-                      + Create New Store
+                      + Create New shop
                       </button>
                     </a>
                   </div>
@@ -48,42 +48,40 @@
           </div>
         </div>
       </div>
-      <!-- store data information-->
+      <!-- shop data information-->
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title mb-4">All Stores</h4>
+              <h4 class="card-title mb-4">All shops</h4>
               <div class="table-responsive">
                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                   <thead class="tread">
                     <tr>
                       <th>S/N</th>
-                      <th>Store Name</th>
-                      <th>Available Product</th>
-                      <th>Sales</th>
-                      <th>Store Link</th>
+                      <th>shop Name</th>
+                      <!-- <th>Available Product</th>
+                      <th>Sales</th> -->
+                      <th>Shop Link</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @if($store->count() > 0)
-                        @foreach ($store as $item)
+                    @if($shop->count() > 0)
+                        @foreach ($shop as $item)
                         <tr>
                             <th scope="row">{{$loop->iteration}}</th>
                             <td>{{$item->name}}</td>
-                            <td> <a href="{{route('user.available.product', ['username' => Auth::user()->username, 'store_id' => $item->id])}}" class="text-decoration-underline">{{$item->product->count()}} Product</a></td>
-                            <td> <a href="{{route('user.sales', ['username' => Auth::user()->username, 'store_id' => $item->id])}}" class="text-decoration-underline">{{$item->order->count()}} Sales</a></td>
                             <td>
                               <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
                             </td>
                             <td>
-                                <button class="btn-list" data-bs-toggle="modal" data-bs-target="#editStore-{{$item->id}}">
-                                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Store" class="material-icons-outlined">
+                                <button class="btn-list" data-bs-toggle="modal" data-bs-target="#editshop-{{$item->id}}">
+                                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Edit shop" class="material-icons-outlined">
                                         edit
                                     </span>
                                 </button>
-                                <div class="modal fade" id="deleteStore-{{$item->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="deleteshop-{{$item->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" style="max-width: 35%">
                                         <div class="modal-content pb-3">
 
@@ -92,11 +90,11 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="Editt">
-                                                    <form action="{{route('user.store.delete', ['username' => Auth::user()->username, 'id' => $item->id])}}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{route('user.shop.delete', ['username' => Auth::user()->username, 'id' => $item->id])}}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="form">
                                                             <div class="row">
-                                                                <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to delete this store <br> ({{$item->name}})</h3>
+                                                                <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to delete this shop <br> ({{$item->name}})</h3>
                                                                 <div class="row justify-content-between">
                                                                     <div class="col-6">
                                                                         <a href="#" class="text-decoration-none">
@@ -121,13 +119,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn-list" data-bs-toggle="modal" data-bs-target="#deleteStore-{{$item->id}}">
-                                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Store" class="material-icons-outlined">
+                                <button class="btn-list" data-bs-toggle="modal" data-bs-target="#deleteshop-{{$item->id}}">
+                                    <span data-bs-toggle="tooltip" data-bs-placement="top" title="Delete shop" class="material-icons-outlined">
                                         delete
                                     </span>
                                 </button>
                                 {{-- modal --}}
-                                <div class="modal fade" id="editStore-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="editshop-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" style="max-width: 45%">
                                         <div class="modal-content pb-3">
 
@@ -137,23 +135,23 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="Editt">
-                                                    <form action="{{route('user.store.update', ['username' => Auth::user()->username, 'id' => $item->id])}}" method="post" enctype="multipart/form-data">
+                                                    <form action="{{route('user.shop.update', ['username' => Auth::user()->username, 'id' => $item->id])}}" method="post" enctype="multipart/form-data">
                                                         @csrf
-                                                        <!-- store name -->
+                                                        <!-- shop name -->
                                                         <div>
                                                             <div class="Editt">
                                                                 <div class="form">
                                                                     <div class="row">
                                                                         <div class="col-lg-12 mb-4">
-                                                                            <label for="Name">Store Name</label>
-                                                                            <input type="text" name="name" value="{{$item->name}}" id="storeName" placeholder="Enter your shop name" required />
+                                                                            <label for="Name">shop Name</label>
+                                                                            <input type="text" name="name" value="{{$item->name}}" id="shopName" placeholder="Enter your shop name" required />
                                                                         </div>
                                                                         <div class="col-lg-12 mb-4">
-                                                                            <label for="Name">Store Description</label>
+                                                                            <label for="Name">shop Description</label>
                                                                             <textarea name="description" id="" cols="30" rows="10" placeholder="Enter your shop description">{{$item->description}}</textarea>
                                                                         </div>
                                                                         <div class="col-md-8">
-                                                                            <label for="Name">Store Name</label>
+                                                                            <label for="Name">shop Name</label>
                                                                             <input type="text" value=" http://shop.ojafunnel.test/" name="link" id="myInput" class="input mov" readonly>
                                                                         </div>
                                                                         <div class="col-md-1 mt-3 mb-3">
@@ -163,9 +161,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- store theme -->
+                                                        <!-- shop theme -->
                                                         <div class="hihj mb-4">
-                                                            <label for="theme" class="fs-5"> Store Theme </label>
+                                                            <label for="theme" class="fs-5"> shop Theme </label>
                                                             <div class="row mt-2 justify-content-between">
                                                                 <div class="col-lg-6 theme-select">
                                                                     <label class="container2">
@@ -196,11 +194,11 @@
                                                                     </div>
                                                                 </div> --}}
                                                             </div>
-                                                            <!-- store logo -->
+                                                            <!-- shop logo -->
                                                             <div class="mt-5 hihj">
-                                                                <label for="logo" class="fs-5 mb-3"> Store Logo </label>
+                                                                <label for="logo" class="fs-5 mb-3"> shop Logo </label>
                                                                 <div class="logo-input border-in w-full px-5 py-1 pb-5">
-                                                                    <p>Update your store logo</p>
+                                                                    <p>Update your shop logo</p>
                                                                     <div class="logo-input2 border-in py-1 px-3">
                                                                         <div class="avatar-logo"></div>
                                                                         <div class="logo-file">
@@ -245,10 +243,10 @@
         </div>
       </div>
       <!-- <div class="container">
-        <div class="store-table">
+        <div class="shop-table">
           <div class="table-head row pt-4">
             <div class="col-lg-6">
-              <h3>All Stores</h3>
+              <h3>All shops</h3>
             </div>
           </div>
           <div class="table-body mt-5 table-responsive">
@@ -256,9 +254,9 @@
               <thead class="fw-bold bg-light rounded-pill">
                 <tr>
                   <th scope="col">S/N</th>
-                  <th scope="col">Store Name</th>
+                  <th scope="col">shop Name</th>
                   <th scope="col">Available Product</th>
-                  <th scope="col">Store Link</th>
+                  <th scope="col">shop Link</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -268,7 +266,7 @@
                   <td>Chukka Shoes</td>
                   <td>120</td>
                   <td>
-                    <a href="store.html" class="text-decoration-underline">Preview</a>
+                    <a href="shop.html" class="text-decoration-underline">Preview</a>
                   </td>
                   <td>
                     <div class="d-flex justify-content-center">
@@ -294,7 +292,7 @@
                   <td>Chukka Digital Books</td>
                   <td>12</td>
                   <td>
-                    <a href="store.html" class="text-decoration-underline">Preview</a>
+                    <a href="shop.html" class="text-decoration-underline">Preview</a>
                   </td>
                   <td>
                     <div class="d-flex justify-content-center">
@@ -326,11 +324,11 @@
   <script>
     $(document).ready(function(){
 
-      $("#storeName").keyup(function(){
-        if(document.getElementById('storeName').value.match(/\s/g)){
-            document.getElementById('storeName').value=document.getElementById('storeName').value.replace(/\s/g,'');
+      $("#shopName").keyup(function(){
+        if(document.getElementById('shopName').value.match(/\s/g)){
+            document.getElementById('shopName').value=document.getElementById('shopName').value.replace(/\s/g,'');
         }
-        $("#myInput").val('http://store.ojafunnel.test/'+$("#storeName").val());
+        $("#myInput").val('http://shop.ojafunnel.test/'+$("#shopName").val());
       });
     });
 </script>

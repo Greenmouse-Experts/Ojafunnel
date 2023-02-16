@@ -146,18 +146,15 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.create.course', Auth::user()->username)}}" key="t-tui-calendar">Create Course</a></li>
-                        <li><a href="{{route('user.shop.course', Auth::user()->username)}}" key="t-chat">Shop Course</a></li>
-                        <li><a href="{{route('user.create.shop.course', Auth::user()->username)}}" key="t-tui-calendar">Create Shop</a></li>
-                        <li><a href="{{route('user.my.shops.course', Auth::user()->username)}}" key="t-tui-calendar">My Shop</a></li>
+                        <!-- <li><a href="{{route('user.shop.course', Auth::user()->username)}}" key="t-chat">Shop Course</a></li> -->
                         <li>
                             <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Shops</a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{route('user.shops', Auth::user()->username)}}" key="t-list">View Shop</a></li>
-                                {{-- <li><a href="{{route('user.sales', Auth::user()->username)}}" key="t-overview">View Sales</a></li>
-                                <li><a href="{{route('user.order.details', Auth::user()->username)}}" key="t-overview">Order Details</a></li> --}}
+                                <li><a href="{{route('user.create.shop.course', Auth::user()->username)}}" key="t-tui-calendar">Create Shop</a></li>
+                                <li><a href="{{route('user.view.course.shops', Auth::user()->username)}}" key="t-tui-calendar">View Shops</a></li>
+                                <li><a href="{{route('user.my.shops.course', Auth::user()->username)}}" key="t-tui-calendar">My Shops</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" key="t-tui-calendar">Product</a></li>
                     </ul>
                 </li>
                 <li>

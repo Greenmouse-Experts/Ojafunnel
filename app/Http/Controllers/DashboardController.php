@@ -6,6 +6,7 @@ use App\Models\Funnel;
 use App\Models\FunnelPage;
 use App\Models\Integration;
 use App\Models\Mailinglist;
+use App\Models\OjaPlan;
 use App\Models\Page;
 use App\Models\Plan;
 use App\Models\Shop;
@@ -252,8 +253,8 @@ class DashboardController extends Controller
     {
         $user = User::findorfail(Auth::user()->id);
 
-        $plan = Plan::where('id', $user->plan)->first();
-        $plans = Plan::latest()->get();
+        $plan = OjaPlan::where('id', $user->plan)->first();
+        $plans = OjaPlan::latest()->get();
 
         return view('dashboard.upgrade', [
             'username' => $username,

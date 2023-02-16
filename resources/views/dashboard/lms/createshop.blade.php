@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="col-md-8">
                                             <label for="Name">Shop Name</label>
-                                            <input type="text" value=" http://shop.ojafunnel.test/" name="link" id="myInput" class="input mov" readonly required>
+                                            <input type="text" value="http://shop.ojafunnel.test/" name="link" id="myInput" class="input mov" readonly required>
                                         </div>
                                         <div class="col-md-1 mt-3 mb-3">
                                             <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
