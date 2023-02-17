@@ -643,6 +643,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function course_details($username)
+    {
+        return view('dashboard.lms.CourseDetails', [
+            'username' => $username
+        ]);
+    }
+
     public function view_shops($username)
     {
         $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
