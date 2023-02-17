@@ -146,11 +146,22 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.create.course', Auth::user()->username)}}" key="t-tui-calendar">Create Course</a></li>
-                        <!-- <li><a href="{{route('user.shop.course', Auth::user()->username)}}" key="t-chat">Shop Course</a></li> -->
+                        <li><a href="{{route('user.shop.course', Auth::user()->username)}}" key="t-chat">Shop Course</a></li>
+                        <li><a href="{{route('user.create.shop.course', Auth::user()->username)}}" key="t-tui-calendar">Create Shop</a></li>
+                        <li><a href="{{route('user.my.shop.course', Auth::user()->username)}}" key="t-tui-calendar">My Shop</a></li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Shops</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="{{route('user.shops', Auth::user()->username)}}" key="t-list">View Shop</a></li>
+                                {{-- <li><a href="{{route('user.sales', Auth::user()->username)}}" key="t-overview">View Sales</a></li>
+                                <li><a href="{{route('user.order.details', Auth::user()->username)}}" key="t-overview">Order Details</a></li> --}}
+                            </ul>
+                        </li>
+                        {{-- <li><a href="{{route('user.view.product', Auth::user()->username)}}" key="t-tui-calendar">Product</a></li> --}}
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('user.main.list', Auth::user()->username)}}">
                         <i class="bi bi-balloon"></i>
                         <span key="t-chat">Birthday Modules</span>
                     </a>

@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^6.2",
+        "cloudinary-labs/cloudinary-laravel": "^2.0",
         "galbar/jsonpath": "^2.1",
         "grosv/laravel-passwordless-login": "^1.8",
         "guzzlehttp/guzzle": "^7.5",

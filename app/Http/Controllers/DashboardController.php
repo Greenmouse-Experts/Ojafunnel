@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Course;
 use App\Models\Funnel;
 use App\Models\FunnelPage;
 use App\Models\Integration;
@@ -617,23 +615,29 @@ class DashboardController extends Controller
 
     public function create_course_start($username)
     {
-        $categories = Category::latest()->get();
-
         return view('dashboard.lms.coursestart', [
-            'username' => $username,
-            'categories' => $categories
+            'username' => $username
         ]);
     }
 
-    public function course_content($username, $id)
+    public function course_content($username)
     {
-        $finder = Crypt::decrypt($id);
-
-        $course = Course::find($finder);
-        
         return view('dashboard.lms.coursecontent', [
-            'username' => $username,
-            'course' => $course
+            'username' => $username
+        ]);
+    }
+
+    public function create_shop($username)
+    {
+        return view('dashboard.lms.createshop', [
+            'username' => $username
+        ]);
+    }
+
+    public function viewshop($username)
+    {
+        return view('dashboard.checkstore', [
+            'username' => $username
         ]);
     }
 
@@ -720,6 +724,7 @@ class DashboardController extends Controller
         ]);
     }
 
+
     public function getdownlines($array, $parent = 0, $level = 1)
     {
         $referedMembers = '';
@@ -738,7 +743,7 @@ class DashboardController extends Controller
               <td> $entry->first_name $entry->last_name</td>
               <td> $levelQuote </td>" .
                     '<td><a href="javascript: void(0);" class="badge badge-soft-primary font-size-11 m-1">' . "Tier " . $level . "</a></td>" .
-                    '<td>' . "10%" .'</td>' .
+                    '<td>' . "10%" . '</td>' .
                     '<td>' . $this->getUserParent($entry->id) . '</td>' .
                     '<td>' . $this->getUserStatus($entry->id) . '</td>
               <td>' . $this->getUserRegDate($entry->id) . '</td>
