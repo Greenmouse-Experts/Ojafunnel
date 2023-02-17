@@ -8,6 +8,7 @@ use App\Models\Coupon;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Section;
+use App\Models\Shop;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,6 @@ class CMSController extends Controller
 
         return redirect()->route('user.course.content', [Auth::user()->username, Crypt::encrypt($course->id)]);
     }
-
 
     public function save_course($id, Request $request)
     {
@@ -429,39 +429,193 @@ class CMSController extends Controller
         ]); 
     }
 
-    public function store(Request $request)
+    public function create_shop(Request $request)
     {
         $request->validate(
             [
-                'name' => 'required|unique:stores|max:255',
+                'name' => 'required|unique:shops|max:255',
                 'description' => 'required',
                 'link' => 'required',
-                'theme' => 'required'
+                'theme' => 'required',
+                'logo' => 'required|mimes:jpeg,png,jpg',
             ],
             [
-                'name.unique' => 'Store name has already been taken, please use another one!',
+                'name.unique' => 'Shop name has already been taken, please use another one!',
             ]
         );
 
-        if ($request->file('logo')) {
-            $image = $request->file('logo')->store(
-                'uploads/storeLogo/' . \Auth::user()->username,
-                'public'
-            );
+        $shops = Shop::latest()->where('user_id', Auth::user()->id)->get();
+
+        if ($shops->isEmpty()) {
+
+            $filename = request()->logo->getClientOriginalName();
+            request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+            Shop::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'link' => $request->link,
+                'logo' => '/storage/courseShopLogo/'.$filename,
+                'theme' => $request->theme,
+                'color' => '#fff',
+                'user_id' => Auth::user()->id,
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => $request->name . ' shop created successfully'
+            ]);
+
+        } else {
+            foreach ($shops as $shop) {
+                $user_id[] = $shop->user_id;
+            }
+            if (in_array(Auth::user()->id, $user_id)) {
+                
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'You already have a shop.'
+                ]);
+
+            } else {
+
+                $filename = request()->logo->getClientOriginalName();
+                request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+                Shop::create([
+                    'name' => $request->name,
+                    'description' => $request->description,
+                    'link' => $request->link,
+                    'logo' => '/storage/courseShopLogo/'.$filename,
+                    'theme' => $request->theme,
+                    'color' => '#fff',
+                    'user_id' => Auth::user()->id,
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => $request->name . ' shop created successfully'
+                ]);
+
+            }
         }
-        $store = new Store();
-        $store->name = $request->name;
-        $store->description = $request->description;
-        $store->link = $request->link;
-        $store->logo = $image;
-        $store->theme = $request->theme;
-        $store->color = '#fff';
-        $store->user_id = \Auth::user()->id;
-        $store->save();
+    }
+
+    public function update_shop(Request $request)
+    {   
+        $shop = Shop::findOrFail($request->id);
+
+        if($request->name == $shop->name)
+        {
+            $request->validate(
+                [
+                    'description' => 'required',
+                ]
+            );
+
+            if (request()->hasFile('logo')) {
+                $this->validate($request, [
+                    'logo' => 'required|mimes:jpeg,png,jpg',
+                ]);
+
+                $filename = request()->logo->getClientOriginalName();
+                if($shop->logo) {
+                    Storage::delete(str_replace("storage", "public", $shop->logo));
+                }
+                request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+                $shop->update([
+                    'description' => $request->description,
+                    'logo' => '/storage/courseShopLogo/'.$filename,
+                    'theme' => $request->theme,
+                    'color' => '#fff',
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => $request->name . ' shop updated successfully.'
+                ]);
+            }
+
+            $shop->update([
+                'description' => $request->description,
+                'theme' => $request->theme,
+                'color' => '#fff',
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => $request->name . ' shop updated successfully.'
+            ]);
+        } else {
+            $request->validate(
+                [
+                    'name' => 'required|unique:shops|max:255',
+                    'description' => 'required',
+                    'link' => 'required',
+                    'theme' => 'required',
+                ],
+                [
+                    'name.unique' => 'Shop name has already been taken, please use another one!',
+                ]
+            );
+
+            if (request()->hasFile('logo')) {
+                $this->validate($request, [
+                    'logo' => 'required|mimes:jpeg,png,jpg',
+                ]);
+
+                $filename = request()->logo->getClientOriginalName();
+                if($shop->logo) {
+                    Storage::delete(str_replace("storage", "public", $shop->logo));
+                }
+                request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+                $shop->update([
+                    'name' => $request->name,
+                    'description' => $request->description,
+                    'link' => $request->link,
+                    'logo' => '/storage/courseShopLogo/'.$filename,
+                    'theme' => $request->theme,
+                    'color' => '#fff',
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => $request->name . ' shop updated successfully.'
+                ]);
+            }
+
+            $shop->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'link' => $request->link,
+                'theme' => $request->theme,
+                'color' => '#fff',
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => $request->name . ' shop updated successfully.'
+            ]);
+        }
+
+        
+    }
+
+    public function delete_shop(Request $request)
+    {
+        $shop = Shop::findOrFail($request->id);
+
+        if($shop->logo) {
+            Storage::delete(str_replace("storage", "public", $shop->logo));
+        }
+
+        $shop->delete();
 
         return back()->with([
             'type' => 'success',
-            'message' => $request->name . ' store created successfully'
+            'message' => 'Shop deleted successfully'
         ]);
     }
 }

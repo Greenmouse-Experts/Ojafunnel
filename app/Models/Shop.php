@@ -11,10 +11,10 @@ class Shop extends Model
 
     protected $guarded = [];
 
-    public function course()
-    {
-        return $this->hasMany(Course::class);
-    }
+    // public function course()
+    // {
+    //     return $this->hasMany(Course::class);
+    // }
 
     // public function order()
     // {

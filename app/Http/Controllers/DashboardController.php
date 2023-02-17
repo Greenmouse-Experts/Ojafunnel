@@ -6,8 +6,10 @@ use App\Models\Funnel;
 use App\Models\FunnelPage;
 use App\Models\Integration;
 use App\Models\Mailinglist;
+use App\Models\OjaPlan;
 use App\Models\Page;
 use App\Models\Plan;
+use App\Models\Shop;
 use App\Models\SmsAutomation;
 use App\Models\SmsCampaign;
 use App\Models\Subscriber;
@@ -251,8 +253,8 @@ class DashboardController extends Controller
     {
         $user = User::findorfail(Auth::user()->id);
 
-        $plan = Plan::where('id', $user->plan)->first();
-        $plans = Plan::latest()->get();
+        $plan = OjaPlan::where('id', $user->plan)->first();
+        $plans = OjaPlan::latest()->get();
 
         return view('dashboard.upgrade', [
             'username' => $username,
@@ -608,7 +610,14 @@ class DashboardController extends Controller
 
     public function shop($username)
     {
-        return view('dashboard.ShopCourse', [
+        return view('dashboard.lms.ShopCourse', [
+            'username' => $username
+        ]);
+    }
+
+    public function view_cart($username)
+    {
+        return view('dashboard.lms.AddCart', [
             'username' => $username
         ]);
     }
@@ -634,11 +643,25 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function viewshop($username)
+    public function course_details($username)
     {
-        return view('dashboard.checkstore', [
+        return view('dashboard.lms.CourseDetails', [
             'username' => $username
         ]);
+    }
+
+    public function view_shops($username)
+    {
+        $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
+
+        return view('dashboard.lms.checkShops', compact('username', 'shop'));
+    }
+
+    public function my_shops($username)
+    {
+        $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
+
+        return view('dashboard.lms.myShops', compact('username', 'shop'));
     }
 
     public function get_quiz($username)
@@ -724,6 +747,13 @@ class DashboardController extends Controller
         ]);
     }
 
+
+    public function main_notify($username)
+    {
+        return view('dashboard.notification', [
+            'username' => $username
+        ]);
+    }
 
     public function getdownlines($array, $parent = 0, $level = 1)
     {

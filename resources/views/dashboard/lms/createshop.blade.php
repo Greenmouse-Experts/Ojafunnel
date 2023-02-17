@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="col-md-8">
                                             <label for="Name">Shop Name</label>
-                                            <input type="text" value=" http://shop.ojafunnel.test/" name="link" id="myInput" class="input mov" readonly required>
+                                            <input type="text" value="http://shop.ojafunnel.test/" name="link" id="myInput" class="input mov" readonly required>
                                         </div>
                                         <div class="col-md-1 mt-3 mb-3">
                                             <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
@@ -101,11 +101,11 @@
                             <div class="mt-5 hihj">
                                 <label for="logo" class="fs-5 mb-3"> Shop Logo </label>
                                 <div class="logo-input border-in w-full px-5 py-4 pb-5">
-                                    <p>upload your store logo</p>
+                                    <p>upload your shop logo</p>
                                     <div class="logo-input2 border-in py-5 px-3">
-                                        <div class="avatar-logo"></div>
+                                        <div class="avatar-logo"><img id="file-ip-1-preview" src="{{URL::asset('dash/assets/image/no-img.jpg')}}" alt="" width="100%" /></div>
                                         <div class="logo-file">
-                                            <input type="file" accept="image" name="logo" id="" class="mt-4 w-100" />
+                                            <input type="file" accept="image" name="logo" id="file-ip-1" class="mt-4 w-100" onchange="showPreview(event);" />
                                         </div>
                                     </div>
                                 </div>

@@ -7,6 +7,7 @@ Route::get('/page-builder/create', [App\Http\Controllers\PageController::class, 
 Route::get('pages/{page}/editor', [App\Http\Controllers\PageController::class, 'viewEditor'])->name('user.page.builder.view.editor');
 Route::get('pages/{page}', [App\Http\Controllers\PageController::class, 'viewPage'])->name('user.page.builder.view.page');
 Route::get('/shop/{storename}', [App\Http\Controllers\StoreFrontController::class, 'storeFront'])->name('user.stores.link');
+Route::get('/course/shop/{shopname}', [App\Http\Controllers\StoreFrontController::class, 'shopFront'])->name('user.shops.link');
 Route::get('cart/{storename}', [App\Http\Controllers\StoreFrontController::class, 'cart'])->name('cart');
 Route::get('checkout/{storename}', [App\Http\Controllers\StoreFrontController::class, 'checkout'])->name('checkout');
 Route::post('checkout/payment/{storename}', [App\Http\Controllers\StoreFrontController::class, 'checkoutPayment'])->name('payment.checkout');
@@ -14,6 +15,14 @@ Route::get('add-to-cart/{id}', [App\Http\Controllers\StoreFrontController::class
 Route::patch('update-cart', [App\Http\Controllers\StoreFrontController::class, 'update'])->name('update.cart');
 Route::delete('remove-from-cart', [App\Http\Controllers\StoreFrontController::class, 'remove'])->name('remove.from.cart');
 Route::get('generatePdf', [App\Http\Controllers\StoreFrontController::class, 'Pdf'])->name('generate.pdf');
+
+// Shop
+Route::get('/course/shop/{shopname}', [App\Http\Controllers\ShopFrontController::class, 'shopFront'])->name('user.shops.link');
+Route::get('/add/course/cart/{id}', [App\Http\Controllers\ShopFrontController::class, 'addCourseToCart'])->name('add.course.to.cart');
+Route::get('/course/cart/{shopname}', [App\Http\Controllers\ShopFrontController::class, 'course_cart'])->name('course.cart');
+Route::get('/course/checkout/{shopname}', [App\Http\Controllers\ShopFrontController::class, 'course_checkout'])->name('course.checkout');
+Route::patch('/course/update-cart', [App\Http\Controllers\ShopFrontController::class, 'course_update'])->name('course.update.cart');
+Route::post('/course/checkout/payment/{storename}', [App\Http\Controllers\ShopFrontController::class, 'courseCheckoutPayment'])->name('course.payment.checkout');
 // assets path for email
 Route::get('assets/{dirname}/{basename}', [
     function ($dirname, $basename) {
@@ -298,7 +307,11 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/create-course/start', [App\Http\Controllers\DashboardController::class, 'create_course_start'])->name('user.create.course.start');
                         Route::get('/create-course/course-content/{id}', [App\Http\Controllers\DashboardController::class, 'course_content'])->name('user.course.content');
                         Route::get('/create-shop', [App\Http\Controllers\DashboardController::class, 'create_shop'])->name('user.create.shop.course');
-                        Route::get('/my-shop/viewshop', [App\Http\Controllers\StoreController::class, 'viewshop'])->name('user.my.shop.course');
+                        Route::get('/view-shop', [App\Http\Controllers\DashboardController::class, 'view_shops'])->name('user.view.course.shops');
+                        Route::get('/my-shop', [App\Http\Controllers\DashboardController::class, 'my_shops'])->name('user.my.shops.course');
+                        Route::get('/course/checkout', [App\Http\Controllers\DashboardController::class, 'course_checkout'])->name('user.course.checkout');
+                        Route::get('/course/cart', [App\Http\Controllers\DashboardController::class, 'course_cart'])->name('user.course.cart');
+                        Route::get('/course-details', [App\Http\Controllers\DashboardController::class, 'course_details'])->name('user.course.details');
                         // Route::get('/create-course/get-quiz', [App\Http\Controllers\DashboardController::class, 'get_quiz'])->name('user.get.quiz');
                         // Route::get('/create-course/course-summary', [App\Http\Controllers\DashboardController::class, 'course_summary'])->name('user.course.summary');
                         // Route::get('/create-course/enroll-now', [App\Http\Controllers\DashboardController::class, 'enroll_now'])->name('user.enroll.now');
@@ -332,6 +345,11 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/edit-birthday/{id}', [App\Http\Controllers\BirthdayController::class, 'edit_birthday'])->name('user.edit.birthday');
                         Route::get('/delete-birthday/{id}', [App\Http\Controllers\BirthdayController::class, 'delete_birthday'])->name('user.delete.birthday');
                         Route::post('/create-birthday-automation', [App\Http\Controllers\BirthdayController::class, 'create_birthday_automation'])->name('user.create.birthday.automation');
+                    }
+            );
+            Route::prefix('/notification')->group(
+                function () {
+                        Route::get('/notification', [App\Http\Controllers\DashboardController::class, 'main_notify'])->name('user.main.notification');
                     }
             );
         }
