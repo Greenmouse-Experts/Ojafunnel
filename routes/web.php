@@ -331,12 +331,20 @@ Route::prefix('{username}')->group(function () {
             );
             Route::prefix('/birthday')->group(
                 function () {
-                        Route::get('/module', [App\Http\Controllers\DashboardController::class, 'main_module'])->name('user.main.list');
-                        Route::get('/manage-list', [App\Http\Controllers\DashboardController::class, 'manage_list'])->name('user.manage.list');
-                        Route::get('/individual-list', [App\Http\Controllers\DashboardController::class, 'individual_list'])->name('user.individual.list');
-                        Route::get('/manage-birthday', [App\Http\Controllers\DashboardController::class, 'manage_birthday'])->name('user.manage.birthday');
-                        Route::get('/create-birthday', [App\Http\Controllers\DashboardController::class, 'create_birthday'])->name('user.create.birthday');
-                        Route::get('/edit-birthday', [App\Http\Controllers\DashboardController::class, 'edit_birthday'])->name('user.edit.birthday');
+                        Route::get('/module', [App\Http\Controllers\BirthdayController::class, 'main_module'])->name('user.main.list');
+                        Route::post('/create-list', [App\Http\Controllers\BirthdayController::class, 'create_list'])->name('user.main.create.list');
+                        Route::post('/create-birthday-contact-list/{birthday_id}', [App\Http\Controllers\BirthdayController::class, 'birthday_create_contact_list'])->name('user.main.birthday.create.list');
+                        Route::post('/update-birthday-contact-list/{birthday_id}/{id}', [App\Http\Controllers\BirthdayController::class, 'birthday_update_contact_list'])->name('user.main.birthday.update.list');
+                        Route::post('/delete-birthday-contact-list/{birthday_id}/{id}', [App\Http\Controllers\BirthdayController::class, 'birthday_delete_contact_list'])->name('user.main.birthday.delete.list');
+                        Route::post('/update-list/{id}', [App\Http\Controllers\BirthdayController::class, 'update_list'])->name('user.main.update.list');
+                        Route::post('/delete-list/{id}', [App\Http\Controllers\BirthdayController::class, 'delete_list'])->name('user.main.delete.list');
+                        Route::get('/manage-list', [App\Http\Controllers\BirthdayController::class, 'manage_list'])->name('user.manage.list');
+                        Route::get('/individual-list/{id}', [App\Http\Controllers\BirthdayController::class, 'individual_list'])->name('user.individual.list');
+                        Route::get('/manage-birthday', [App\Http\Controllers\BirthdayController::class, 'manage_birthday'])->name('user.manage.birthday');
+                        Route::get('/create-birthday', [App\Http\Controllers\BirthdayController::class, 'create_birthday'])->name('user.create.birthday');
+                        Route::get('/edit-birthday/{id}', [App\Http\Controllers\BirthdayController::class, 'edit_birthday'])->name('user.edit.birthday');
+                        Route::get('/delete-birthday/{id}', [App\Http\Controllers\BirthdayController::class, 'delete_birthday'])->name('user.delete.birthday');
+                        Route::post('/create-birthday-automation', [App\Http\Controllers\BirthdayController::class, 'create_birthday_automation'])->name('user.create.birthday.automation');
                     }
             );
             Route::prefix('/notification')->group(
