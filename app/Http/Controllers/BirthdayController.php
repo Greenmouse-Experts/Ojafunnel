@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BirthdayAutomation;
 use App\Models\BirthdayContact;
 use App\Models\BirthdayContactList;
 use App\Models\Integration;
@@ -83,8 +84,10 @@ class BirthdayController extends Controller
 
     public function manage_birthday($username)
     {
+        $bm = BirthdayAutomation::latest()->where('user_id', Auth::user()->id)->get();
         return view('dashboard.birthday.birthdayManage', [
-            'username' => $username
+            'username' => $username,
+            'bm' => $bm,
         ]);
     }
 
@@ -139,6 +142,47 @@ class BirthdayController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Birthday List Deleted.'
+        ]);
+    }
+
+
+    public function create_birthday_automation(Request $request)
+    {
+        //dd($request->automation);
+        $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
+        $bm = new BirthdayAutomation();
+        $bm->user_id = Auth::user()->id;
+        $bm->birthday_contact_list_id = $request->birthday_list_id;
+        $bm->title = $request->title;
+        $bm->sms_type = $request->sms_type;
+        $bm->message = $request->message;
+        $bm->automation = json_encode($request->automation);
+        $bm->cache = json_encode([
+            'ContactCount' => $contact->count(),
+            'DeliveredCount' => 0,
+            'FailedDeliveredCount' => 0,
+            'NotDeliveredCount' => 0,
+        ]);
+        $bm->sender_name = $request->sender_name;
+        $bm->sending_server = $request->sending_server || '';
+        $bm->sender_id = $request->sender_id || '';
+        $bm->integration = $request->integration || '';
+        $bm->start_date = $request->start_date;
+        $bm->end_date = $request->end_date;
+        $bm->save();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Birthday Automation Created.'
+        ]);
+    }
+
+    public function delete_birthday(Request $request)
+    {
+        $bd = BirthdayAutomation::findOrFail($request->id)->delete();
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Birthday Automation deleted.'
         ]);
     }
 }

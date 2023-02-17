@@ -40,7 +40,8 @@
                 <div class='col-lg-2'></div>
                 <div class='p-3 bg-white col-lg-8'>
                     <div>
-                        <form  method="post">
+                        <form action="{{route('user.create.birthday.automation', Auth::user()->username)}}" method="post">
+                            @csrf
                             <div class="form">
                                 <div class="col-lg-12">
                                     <label>Message Title</label>
@@ -103,7 +104,7 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-5">
                                             <div class='d-flex mt-2 align-items-center'>
-                                                <input type='checkbox' id="email_select" onchange="emailAuto()" value="email automation" name="automation" class='w-auto mt-1 checkboxs' />
+                                                <input type='checkbox' id="email_select" onchange="emailAuto()" value="email automation" name="automation[1]" class='w-auto mt-1 checkboxs' />
                                                 <label class='w-auto '>Email Automation</label>
                                             </div>
                                             <div class="email_automation mt-2" style="display: none">
@@ -126,7 +127,7 @@
                                                 </div>
                                             </div>
                                             <div class='d-flex mt-3 align-items-center'>
-                                                <input type='checkbox' id="sms_select" onchange="smsAuto()" value="sms automation" name="automation" class='w-auto mt-1' />
+                                                <input type='checkbox' id="sms_select" onchange="smsAuto()" value="sms automation" name="automation[2]" class='w-auto mt-1' />
                                                 <label class='w-auto'>SMS Automation</label>
                                             </div>
                                             <div class="sms_automation mt-2" style="display: none">
@@ -149,7 +150,7 @@
                                                 </div>
                                             </div>
                                             <div class='d-flex mt-3 align-items-center'>
-                                                <input type='checkbox' id="whatsapp" onchange="whatsAppAuto()" value="whatsapp automation" name="automation" class='w-auto mt-1' />
+                                                <input type='checkbox' id="whatsapp" onchange="whatsAppAuto()" value="whatsapp automation" name="automation[3]" class='w-auto mt-1' />
                                                 <label class='w-auto'>Whatsapp Automation</label>
                                             </div>
                                             <div class="whatsapp_automation mt-2" style="display: none">
