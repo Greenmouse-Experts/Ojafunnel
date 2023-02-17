@@ -6,8 +6,10 @@ use App\Models\Funnel;
 use App\Models\FunnelPage;
 use App\Models\Integration;
 use App\Models\Mailinglist;
+use App\Models\OjaPlan;
 use App\Models\Page;
 use App\Models\Plan;
+use App\Models\Shop;
 use App\Models\SmsAutomation;
 use App\Models\SmsCampaign;
 use App\Models\Subscriber;
@@ -251,8 +253,8 @@ class DashboardController extends Controller
     {
         $user = User::findorfail(Auth::user()->id);
 
-        $plan = Plan::where('id', $user->plan)->first();
-        $plans = Plan::latest()->get();
+        $plan = OjaPlan::where('id', $user->plan)->first();
+        $plans = OjaPlan::latest()->get();
 
         return view('dashboard.upgrade', [
             'username' => $username,
@@ -608,7 +610,14 @@ class DashboardController extends Controller
 
     public function shop($username)
     {
-        return view('dashboard.ShopCourse', [
+        return view('dashboard.lms.ShopCourse', [
+            'username' => $username
+        ]);
+    }
+
+    public function view_cart($username)
+    {
+        return view('dashboard.lms.AddCart', [
             'username' => $username
         ]);
     }
@@ -625,6 +634,27 @@ class DashboardController extends Controller
         return view('dashboard.lms.coursecontent', [
             'username' => $username
         ]);
+    }
+
+    public function create_shop($username)
+    {
+        return view('dashboard.lms.createshop', [
+            'username' => $username
+        ]);
+    }
+
+    public function view_shops($username)
+    {
+        $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
+
+        return view('dashboard.lms.checkShops', compact('username', 'shop'));
+    }
+
+    public function my_shops($username)
+    {
+        $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
+
+        return view('dashboard.lms.myShops', compact('username', 'shop'));
     }
 
     public function get_quiz($username)

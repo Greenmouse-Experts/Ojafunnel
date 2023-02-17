@@ -70,4 +70,8 @@ Route::prefix('user')->group(function () {
     Route::post('/crm/save/coupon/{id}', [App\Http\Controllers\CMSController::class, 'save_coupon'])->name('user.save.coupon');
     Route::post('/crm/update/coupon/{id}', [App\Http\Controllers\CMSController::class, 'update_coupon'])->name('user.update.coupon');
     Route::post('/crm/delete/coupon/{id}', [App\Http\Controllers\CMSController::class, 'delete_coupon'])->name('user.delete.coupon');
+
+    Route::post('/crm/create/shop', [App\Http\Controllers\CMSController::class, 'create_shop'])->name('user.shop.create');
+    Route::post('/crm/update/shop/{id}', [App\Http\Controllers\CMSController::class, 'update_shop'])->name('user.shop.update');
+    Route::post('/crm/delete/shop/{id}', [App\Http\Controllers\CMSController::class, 'delete_shop'])->name('user.shop.delete');
 });
