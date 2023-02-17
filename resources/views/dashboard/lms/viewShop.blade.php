@@ -2,21 +2,17 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> Oja Funnel | Dashboard</title>
+    <title>{{$shop->name}} | Oja Funnel | StoreFront</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta content="Oja Funnel |  Dashboard" name="Oja Funnel |  Dashboard" />
-    <meta content="Oja Funnel |  Dashboard" name="Oja Funnel |  Dashboard" />
+    <meta content="title" name="{{$shop->name}} | Oja Funnel | StoreFront" />
+    <meta content="description" name="{{$shop->description}} | Oja Funnel | StoreFront" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
+    <link rel="shortcut icon" href="{{$shop->logo}}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.webui-popover.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/slick.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/slick-theme.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
-    <!-- Bootstrap Css -->
     <!-- Font Css-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,7 +31,7 @@
                             <img src="{{$shop->logo ?? URL::asset('dash/assets/image/shop-logo.png')}}" alt="" width="40" />
                             {{$shop->name}}
                         </a>
-                        <form class="inline-form mt-3" style="width: 80%;">
+                        <form class="inline-form mt-3" style="width: 60%;">
                             <div class="input-group search-box mobile-search">
                                 <input type="text" name='search_string' class="form-control" placeholder="Search for courses">
                                 <div class="input-group-append">
@@ -43,45 +39,55 @@
                                 </div>
                             </div>
                         </form>
+                        
                         {{-- <a href="{{route('user.cart', Auth::user()->username)}}">
                         <button type="button" class="btn btn-primary">
                             <i class="bi bi-cart-check"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}
                         </button>
                         </a> --}}
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-info dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
-                            </button>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="p-4">
+                                @auth
+                                    <a href="{{route('user.create.shop.course', Auth::user()->username)}}">Set up your own shop</a>
+                                @else
+                                    <a href="{{route('/')}}">Set up your own shop</a>
+                                @endauth
+                            </div>
+                            <div class="dropdown">
+                                <button type="button" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" class="btn btn-info dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                </button>
 
-                            <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
-                                <div class="row total-header-section">
-                                    <div class="col-lg-6 col-sm-6 col-6">
-                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
+                                    <div class="row total-header-section">
+                                        <div class="col-lg-6 col-sm-6 col-6">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                        </div>
+                                        @php $total = 0 @endphp
+                                        @foreach((array) session('cart') as $id => $details)
+                                        @php $total += $details['price'] * $details['quantity'] @endphp
+                                        @endforeach
+                                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                                            <p>Total: <span class="text-info">$ {{ $total }}</span></p>
+                                        </div>
                                     </div>
-                                    @php $total = 0 @endphp
-                                    @foreach((array) session('cart') as $id => $details)
-                                    @php $total += $details['price'] * $details['quantity'] @endphp
+                                    @if(session('cart'))
+                                    @foreach(session('cart') as $id => $details)
+                                    <div class="row cart-detail">
+                                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                                            <img style="width: 70px" src="{{ Storage::url($details['image']) }}" />
+                                        </div>
+                                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                            <p>{{ $details['title'] }}</p>
+                                            <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
+                                        </div>
+                                    </div>
                                     @endforeach
-                                    <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                                        <p>Total: <span class="text-info">$ {{ $total }}</span></p>
-                                    </div>
-                                </div>
-                                @if(session('cart'))
-                                @foreach(session('cart') as $id => $details)
-                                <div class="row cart-detail">
-                                    <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                        <img style="width: 70px" src="{{ Storage::url($details['image']) }}" />
-                                    </div>
-                                    <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                        <p>{{ $details['name'] }}</p>
-                                        <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
-                                    </div>
-                                </div>
-                                @endforeach
-                                @endif
-                                <div class="row">
-                                    <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
-                                        <a href="{{ route('cart', $shop->name) }}" class="btn btn-primary btn-block">View all</a>
+                                    @endif
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+                                            <a href="{{ route('cart', $shop->name) }}" class="btn btn-primary btn-block">View all</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -100,29 +106,35 @@
     <section class="TopMontain mt-5">
         <div class="container">
             <div class="row">
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="col-lg-12">
-                    <h2 class="course-carousel-title mb-4">Courses</h2>
+                    <h2 class="course-carousel-title mb-4">All Courses Found {{\App\Models\Course::where('user_id', Auth::user()->id)->get()->count()}}</h2>
                 </div>
+                @forelse(\App\Models\Course::where('user_id', Auth::user()->id)->get() as $course)
                 <div class="col-lg-4">
                     <div class="course-box-wrap">
                         <a href="#" class="has-popover">
                             <div class="course-box">
                                 <div class="course-badge position best-seller">Best seller</div>
                                 <div class="course-image">
-                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1676548204/OjaFunnel-Images/html_yhwt1x.jpg" alt="" class="img-fluid">
+                                    <img src="{{$course->image}}" alt="" class="img-fluid">
                                 </div>
                                 <div class="course-details">
-                                    <h5 class="title">Html Full Course</h5>
-                                    <p class="instructors">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum itaque ducimus, praesentium quasi non facilis culpa quas voluptatem repellat consectetur.</p>
-                                    <div class="rating">
+                                    <h5 class="title">{{$course->title}}</h5>
+                                    <p class="instructors">{{$course->description}}</p>
+                                    <!-- <div class="rating">
                                         <i class="fas fa-star filled"></i>
                                         <i class="fas fa-star filled"></i>
                                         <i class="fas fa-star filled"></i>
                                         <i class="fas fa-star"></i>
                                         <span class="d-inline-block average-rating">5</span>
-                                    </div>
+                                    </div> -->
                                     <p class="price text-right">
-                                        $300
+                                        {{$course->currency}}{{number_format($course->price, 2)}}
                                     </p>
                                 </div>
                             </div>
@@ -130,43 +142,42 @@
                         <div class="webui-popover-content">
                             <div class="course-popover-content">
                                 <div class="course-title">
-                                    <a href="#">Html Full Course</a>
+                                    <a href="#">{{$course->title}}</a>
                                 </div>
-                                <div class="course-category">
+                                <!-- <div class="course-category">
                                     <span class="course-badge best-seller">Best seller</span>
                                     in
                                     <a href="">HTML</a>
-                                </div>
+                                </div> -->
                                 <div class="course-meta">
                                     <span class=""><i class="fas fa-play-circle"></i>
                                         Lessons
                                     </span>
-                                    <span class=""><i class="far fa-clock"></i>
+                                    <!-- <span class=""><i class="far fa-clock"></i>
                                         2 Hours
-                                    </span>
+                                    </span> -->
                                     <span class="">
-                                        <i class="fas fa-closed-captioning"></i>English
+                                        <i class="fas fa-closed-captioning"></i>{{$course->language}}
                                     </span>
                                 </div>
-                                <div class="course-subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa tenetur ullam commodi totam autem pariatur, magni maxime voluptas quae dolorem.</div>
+                                <div class="course-subtitle">{{$course->subtitle ?? $course->description}}</div>
                                 <div class="what-will-learn">
                                     <ul>
-                                        Html courses
+                                        {{$course->subtitle}}
                                     </ul>
                                 </div>
                                 <div class="popover-btns">
-                                    <a href="#">
-                                        <button type="button" class="btn add-to-cart-btn addedToCart big-cart-button-1" id="1">
-                                            Add To Cart
-                                        </button>
+                                    <a href="{{ route('add.course.to.cart', $course->id) }}" type="button" class="btn add-to-cart-btn addedToCart big-cart-button-1" id="1">
+                                        Add To Cart
                                     </a>
-                                    <button type="button" class="wishlist-btn" title="Add to wishlist" id="1"><i class="fas fa-heart"></i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                @empty
+
+                @endforelse
             </div>
         </div>
     </section>
@@ -199,5 +210,71 @@
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </body>
+
+<style>
+.main-section{
+    background-color: #F8F8F8;
+}
+.dropdown button.btn-info{
+    /* float:right;
+    padding-right: 30px; */
+    color: {{$shop->color}};
+    background: {{$shop->theme}};
+}
+.dropdown .dropdown-menu{
+    padding:20px;
+    /*top:30px !important;*/
+    width:350px !important;
+    /*left:-110px !important;*/
+    box-shadow:0px 4px 7px #a8a7a7;
+}
+.total-header-section{
+    border-bottom:1px solid #d2d2d2;
+}
+.total-section p{
+    margin-bottom:20px;
+}
+.cart-detail{
+    padding:15px 0px;
+}
+.cart-detail-img img{
+    width:100%;
+    height:100%;
+    padding-left:15px;
+}
+.cart-detail-product p{
+    margin:0px;
+    color:#000;
+    font-weight:500;
+}
+
+span.text-info{
+    color: {{$shop->theme}} !important;
+}
+.cart-detail .price{
+    font-size:12px;
+    margin-right:10px;
+    font-weight:500;
+}
+.cart-detail .count{
+    color:#C2C2DC;
+}
+.checkout{
+    border-top:1px solid #d2d2d2;
+    padding-top: 15px;
+}
+.checkout .btn-primary{
+    color: {{$shop->color}};
+    background: {{$shop->theme}};
+}
+.dropdown-menu:before{
+    content: " ";
+    position:absolute;
+    top:-20px;
+    right:50px;
+    border:10px solid transparent;
+    border-bottom-color:#fff;
+}
+</style>
 
 </html>

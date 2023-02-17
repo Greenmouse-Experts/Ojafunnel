@@ -38,7 +38,7 @@
                   <div class="all-create">
                     <a href="{{route('user.create.shop.course', Auth::user()->username)}}">
                       <button>
-                      + Create New shop
+                      + Create New Shop
                       </button>
                     </a>
                   </div>
@@ -53,15 +53,15 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title mb-4">All shops</h4>
+              <h4 class="card-title mb-4">Shop</h4>
               <div class="table-responsive">
                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                   <thead class="tread">
                     <tr>
                       <th>S/N</th>
                       <th>shop Name</th>
-                      <!-- <th>Available Product</th>
-                      <th>Sales</th> -->
+                      <th>Available Course</th>
+                      <!-- <th>Sales</th> -->
                       <th>Shop Link</th>
                       <th>Actions</th>
                     </tr>
@@ -73,6 +73,9 @@
                             <th scope="row">{{$loop->iteration}}</th>
                             <td>{{$item->name}}</td>
                             <td>
+                              {{\App\Models\Course::where('user_id', Auth::user()->id)->get()->count()}}
+                            </td>
+                            <td>
                               <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
                             </td>
                             <td>
@@ -82,7 +85,7 @@
                                     </span>
                                 </button>
                                 <div class="modal fade" id="deleteshop-{{$item->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" style="max-width: 35%">
+                                    <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content pb-3">
 
                                             <div class="modal-header border-bottom-0">
@@ -94,7 +97,7 @@
                                                         @csrf
                                                         <div class="form">
                                                             <div class="row">
-                                                                <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to delete this shop <br> ({{$item->name}})</h3>
+                                                                <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to delete <br>this Shop: ({{$item->name}})</h3>
                                                                 <div class="row justify-content-between">
                                                                     <div class="col-6">
                                                                         <a href="#" class="text-decoration-none">
@@ -130,7 +133,7 @@
                                         <div class="modal-content pb-3">
 
                                             <div class="modal-header border-bottom-0">
-                                                <h4 class="card-title mb-4">Add Product</h4>
+                                                <h4 class="card-title mb-4">Edit Shop</h4>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
@@ -143,16 +146,16 @@
                                                                 <div class="form">
                                                                     <div class="row">
                                                                         <div class="col-lg-12 mb-4">
-                                                                            <label for="Name">shop Name</label>
+                                                                            <label for="Name">Shop Name</label>
                                                                             <input type="text" name="name" value="{{$item->name}}" id="shopName" placeholder="Enter your shop name" required />
                                                                         </div>
                                                                         <div class="col-lg-12 mb-4">
-                                                                            <label for="Name">shop Description</label>
-                                                                            <textarea name="description" id="" cols="30" rows="10" placeholder="Enter your shop description">{{$item->description}}</textarea>
+                                                                            <label for="Name">Shop Description</label>
+                                                                            <textarea name="description" id="" cols="30" rows="10" value="{{$item->description}}" placeholder="Enter your shop description">{{$item->description}}</textarea>
                                                                         </div>
                                                                         <div class="col-md-8">
-                                                                            <label for="Name">shop Name</label>
-                                                                            <input type="text" value=" http://shop.ojafunnel.test/" name="link" id="myInput" class="input mov" readonly>
+                                                                            <label for="Name">Shop Name</label>
+                                                                            <input type="text" value="{{$item->link}}" name="link" id="myInput" class="input mov" readonly>
                                                                         </div>
                                                                         <div class="col-md-1 mt-3 mb-3">
                                                                             <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
@@ -163,7 +166,7 @@
                                                         </div>
                                                         <!-- shop theme -->
                                                         <div class="hihj mb-4">
-                                                            <label for="theme" class="fs-5"> shop Theme </label>
+                                                            <label for="theme" class="fs-5"> Shop Theme </label>
                                                             <div class="row mt-2 justify-content-between">
                                                                 <div class="col-lg-6 theme-select">
                                                                     <label class="container2">
@@ -196,9 +199,9 @@
                                                             </div>
                                                             <!-- shop logo -->
                                                             <div class="mt-5 hihj">
-                                                                <label for="logo" class="fs-5 mb-3"> shop Logo </label>
+                                                                <label for="logo" class="fs-5 mb-3"> Shop Logo </label>
                                                                 <div class="logo-input border-in w-full px-5 py-1 pb-5">
-                                                                    <p>Update your shop logo</p>
+                                                                    <p>Update your Shop logo</p>
                                                                     <div class="logo-input2 border-in py-1 px-3">
                                                                         <div class="avatar-logo"></div>
                                                                         <div class="logo-file">
@@ -229,8 +232,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </td>
                           </tr>
                         @endforeach
@@ -242,82 +243,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="container">
-        <div class="shop-table">
-          <div class="table-head row pt-4">
-            <div class="col-lg-6">
-              <h3>All shops</h3>
-            </div>
-          </div>
-          <div class="table-body mt-5 table-responsive">
-            <table class="table text-center">
-              <thead class="fw-bold bg-light rounded-pill">
-                <tr>
-                  <th scope="col">S/N</th>
-                  <th scope="col">shop Name</th>
-                  <th scope="col">Available Product</th>
-                  <th scope="col">shop Link</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Chukka Shoes</td>
-                  <td>120</td>
-                  <td>
-                    <a href="shop.html" class="text-decoration-underline">Preview</a>
-                  </td>
-                  <td>
-                    <div class="d-flex justify-content-center">
-                      <ul class="list-unstyled d-flex">
-                        <li class="px-1">
-                          <a href="#" class="text-decoration-none">View Shop</a>
-                        </li>
-                        <li class="px-1">
-                          <a href="#" class="text-decoration-none">Edit Shop</a>
-                        </li>
-                        <li class="px-1">
-                          <a href="#" class="text-decoration-none">Manage Shop</a>
-                        </li>
-                        <li class="px-1">
-                          <a href="#" class="text-decoration-none text-danger">Delete Shop</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Chukka Digital Books</td>
-                  <td>12</td>
-                  <td>
-                    <a href="shop.html" class="text-decoration-underline">Preview</a>
-                  </td>
-                  <td>
-                    <div class="d-flex justify-content-center">
-                      <ul class="list-unstyled d-flex">
-                        <li class="px-1">
-                          <a href="#" class="text-decoration-none">View Shop</a>
-                        </li>
-                        <li class="px-1">
-                          <a href="#" class="text-decoration-none">Edit Shop</a>
-                        </li>
-                        <li class="px-1">
-                          <a href="#" class="text-decoration-none">Manage Shop</a>
-                        </li>
-                        <li class="px-1">
-                          <a href="#" class="text-decoration-none text-danger">Delete Shop</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div> -->
       <!-- end page title -->
     </div>
   </div>

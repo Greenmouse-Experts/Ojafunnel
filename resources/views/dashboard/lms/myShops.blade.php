@@ -58,14 +58,11 @@
                                                 <div class="col-12">
                                                     <div>
                                                         <p class="text-muted mb-2 text-truncate">Courses Available</p>
-                                                        
+                                                        {{\App\Models\Course::where('user_id', Auth::user()->id)->get()->count()}}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mt-4">
-                                                <!-- <form id="submit-button" method="get" action="{{route('user.shops.link', $item->name)}}">
-                                                    <input name="name" value="{{$item->name}}" hidden>
-                                                </form> -->
                                                 <a href="{{route('user.shops.link', $item->name)}}" class="text-decoration-underline text-reset">Visit Shop <i class="mdi mdi-arrow-right"></i></a>
                                             </div>
                                         </div>
@@ -83,5 +80,4 @@
     </div>
     <!-- End Page-content -->
 </div>
->
 @endsection

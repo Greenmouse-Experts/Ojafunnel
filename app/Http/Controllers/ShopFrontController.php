@@ -15,6 +15,32 @@ class ShopFrontController extends Controller
         $courses = Course::latest()->where('user_id', Auth::user()->id)->get();
         return view('dashboard.lms.viewShop', compact('shop', 'courses'));
     }
+    
+
+    public function addCourseToCart($id)
+    {
+        $course = Course::findOrFail($id);
+
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        } else {
+            $cart[$id] = [
+                "id" => $course->id,
+                "title" => $course->title,
+                "quantity" => 1,
+                'rmQuan' => $course->quantity,
+                "price" => $course->price,
+                "description" => $course->description,
+                "image" => $course->image
+            ];
+        }
+
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Course added to cart successfully!');
+    }
+    
     public function cart(Request $request)
     {
         $store = Store::latest()->where('name', $request->shopname)->first();
@@ -27,30 +53,6 @@ class ShopFrontController extends Controller
         $store = Store::latest()->where('name', $request->shopname)->first();
         $products = StoreProduct::latest()->where('store_id', $store->id)->get();
         return view('dashboard.store.checkout', compact('store', 'products'));
-    }
-
-    public function addToCart($id)
-    {
-        $product = StoreProduct::findOrFail($id);
-
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                "id" => $product->id,
-                "name" => $product->name,
-                "quantity" => 1,
-                'rmQuan' => $product->quantity,
-                "price" => $product->price,
-                "description" => $product->description,
-                "image" => $product->image
-            ];
-        }
-
-        session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
     public function update(Request $request)

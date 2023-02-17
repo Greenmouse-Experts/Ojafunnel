@@ -18,7 +18,7 @@ Route::get('generatePdf', [App\Http\Controllers\StoreFrontController::class, 'Pd
 
 // Shop
 Route::get('/course/shop/{shopname}', [App\Http\Controllers\ShopFrontController::class, 'shopFront'])->name('user.shops.link');
-
+Route::get('/add/course/cart/{id}', [App\Http\Controllers\ShopFrontController::class, 'addCourseToCart'])->name('add.course.to.cart');
 // assets path for email
 Route::get('assets/{dirname}/{basename}', [
     function ($dirname, $basename) {
@@ -303,8 +303,8 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/create-course/start', [App\Http\Controllers\DashboardController::class, 'create_course_start'])->name('user.create.course.start');
                         Route::get('/create-course/course-content/{id}', [App\Http\Controllers\DashboardController::class, 'course_content'])->name('user.course.content');
                         Route::get('/create-shop', [App\Http\Controllers\DashboardController::class, 'create_shop'])->name('user.create.shop.course');
-                        Route::get('/view-shops', [App\Http\Controllers\DashboardController::class, 'view_shops'])->name('user.view.course.shops');
-                        Route::get('/my-shops', [App\Http\Controllers\DashboardController::class, 'my_shops'])->name('user.my.shops.course');
+                        Route::get('/view-shop', [App\Http\Controllers\DashboardController::class, 'view_shops'])->name('user.view.course.shops');
+                        Route::get('/my-shop', [App\Http\Controllers\DashboardController::class, 'my_shops'])->name('user.my.shops.course');
                         // Route::get('/create-course/get-quiz', [App\Http\Controllers\DashboardController::class, 'get_quiz'])->name('user.get.quiz');
                         // Route::get('/create-course/course-summary', [App\Http\Controllers\DashboardController::class, 'course_summary'])->name('user.course.summary');
                         // Route::get('/create-course/enroll-now', [App\Http\Controllers\DashboardController::class, 'enroll_now'])->name('user.enroll.now');
