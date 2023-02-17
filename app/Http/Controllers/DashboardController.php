@@ -782,6 +782,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function main_notify($username)
+    {
+        return view('dashboard.notification', [
+            'username' => $username
+        ]);
+    }
+
     public function getdownlines($array, $parent = 0, $level = 1)
     {
         $referedMembers = '';

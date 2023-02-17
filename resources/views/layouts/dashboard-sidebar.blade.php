@@ -176,6 +176,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('user.main.notification', Auth::user()->username)}}">
+                        <i class="bi bi-bell"></i>
+                        <span key="t-chat">Notifications</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{route('user.upgrade', Auth::user()->username)}}">
                         <i class="bi bi-send-check"></i>
                         <span key="t-chat">Upgrade</span>
