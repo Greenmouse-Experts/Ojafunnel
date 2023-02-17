@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">Greenmouse Contacts</h4>
+                        <h4 class="mb-sm-0 font-size-18">{{$bd->name}} Contacts</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
@@ -30,7 +30,7 @@
             <div class=''>
                 <div class='row align-items-center birthday-contact'>
                     <div class='col-lg-9 main-text'>
-                        <p class='topic'>Greenmouse Contact Listing</p>
+                        <p class='topic'>{{$bd->name}} Listing</p>
                         <p class='mt-2 p-0'> create and manage individual contact list to send messages to customers</p>
                     </div>
                     <div class='col-lg-3 text-end'>
@@ -62,19 +62,134 @@
                                         </tr>
                                     </thead>
                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>blue mouse</td>
-                                            <td>10-02-1996</td>
-                                            <td>+23480123456789</td>
-                                            <td>greenmouseapp@gmail.com</td>
-                                            <td>
-                                                <div class="row fs-5">
-                                                    <div class='col'><i class="bi bi-pencil-square cursor-pointer" data-bs-toggle="modal" data-bs-target="#editContactList"></i></div>
-                                                    <div class='col'><i class="bi bi-trash3-fill text-danger cursor-pointer" data-bs-toggle="modal" data-bs-target="#deleteContactList"></i></div>
+                                        @foreach ($bdc as $i)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$i->name}}</td>
+                                                <td>{{$i->date_of_birth}}</td>
+                                                <td>{{$i->phone_number}}</td>
+                                                <td>{{$i->email}}</td>
+                                                <td>
+                                                    <div class="row fs-5">
+                                                        <div class='col'><i class="bi bi-pencil-square cursor-pointer" data-bs-toggle="modal" data-bs-target="#editContactList-{{$i->id}}"></i></div>
+                                                        <div class='col'><i class="bi bi-trash3-fill text-danger cursor-pointer" data-bs-toggle="modal" data-bs-target="#deleteContactList-{{$i->id}}"></i></div>
+                                                    </div>
+                                                </td>
+                                                <div class="modal fade" id="editContactList-{{$i->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">
+                                                                    Edit this Contact
+                                                                </h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="Edit-level">
+                                                                        <form action="{{route('user.main.birthday.update.list', ['username' => Auth::user()->username, 'birthday_id' => $bd->id, 'id' => $i->id])}}" method="post">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <div class="col-lg-12">
+                                                                                    <label>Name</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input type="text" placeholder="Full Name..." value="{{$i->name}}" name="name" class="input"
+                                                                                                required>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <label>Phone Number</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input type="text" placeholder="Enter Phone Number..." value="{{$i->phone_number}}" name="phone" class="input"
+                                                                                                required>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <label>Email</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input type="text" placeholder="Email..." name="email" value="{{$i->email}}" class="input"
+                                                                                                required>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12 row">
+                                                                                   <div class='col-lg-6'>
+                                                                                        <label>Date of Birth</label>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 mb-4">
+                                                                                                <input type="date" name="dob" value="{{$i->date_of_birth}}" class="input"
+                                                                                                    required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                   </div>
+                                                                                   <div class='col-lg-6'>
+                                                                                        <label>Anniversary (optional)</label>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 mb-4">
+                                                                                                <input type="date" name="aniDate" value="{{$i->anniv_date}}" class="input"
+                                                                                                    required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                   </div>
+                                                                                </div>
+                                                                                <div class="row justify-content-between">
+                                                                                    <div class="col-6">
+                                                                                        <a href="#" class="text-decoration-none">
+                                                                                            <button type='reset' class="btn px-3" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
+                                                                                                Cancel
+                                                                                            </button></a>
+                                                                                    </div>
+                                                                                    <div class="col-6 text-end">
+                                                                                        <a href="#" class="text-decoration-none">
+                                                                                            <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
+                                                                                                >
+                                                                                                Update
+                                                                                            </button>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </td>
-                                        </tr>
+                                                <!-- delete contacts modal -->
+                                                <div class="modal fade" id="deleteContactList-{{$i->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header border-bottom-0 bg-light">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">
+                                                                    Are you sure you want to delete this contact ?
+                                                                </h5>
+                                                                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                                                            </div>
+                                                            <form action="{{route('user.main.birthday.delete.list', ['username' => Auth::user()->username, 'birthday_id' => $bd->id, 'id' => $i->id])}}" method="post">
+                                                                @csrf
+                                                                <div class='row justify-content-between p-3'>
+                                                                    <div class='col'>
+                                                                        <button type="button" class="mybtnprimary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                                                    </div>
+                                                                    <div class='col text-end'>
+                                                                        <button type="submit" class="mybtncancel" data-bs-dismiss="modal" aria-label="Close">Delete</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </tr>
+                                        @endforeach
+
                                    </tbody>
                                 </table>
                             </div>
@@ -98,7 +213,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="Edit-level">
-                            <form  method="post">
+                            <form action="{{route('user.main.birthday.create.list', ['username' => Auth::user()->username, 'birthday_id' => $bd->id])}}" method="post">
+                                @csrf
                                 <div class="form">
                                     <div class="col-lg-12">
                                         <label>Name</label>
@@ -113,7 +229,7 @@
                                         <label>Phone Number</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter Phone Number..." name="name" class="input"
+                                                <input type="text" placeholder="Enter Phone Number..." name="phone" class="input"
                                                     required>
                                             </div>
                                         </div>
@@ -122,7 +238,7 @@
                                         <label>Email</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Email..." name="name" class="input"
+                                                <input type="text" placeholder="Email..." name="email" class="input"
                                                     required>
                                             </div>
                                         </div>
@@ -131,7 +247,7 @@
                                         <label>Date of Birth</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="date" name="date" class="input"
+                                                <input type="date" name="dob" class="input"
                                                     required>
                                             </div>
                                         </div>
@@ -140,14 +256,14 @@
                                         <label>Anniversary (optional)</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="date" name="date" class="input">
+                                                <input type="date" name="aniDate" class="input">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row justify-content-between">
                                         <div class="col-6">
                                             <a href="#" class="text-decoration-none">
-                                                <button type='button' class="btn px-3" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
+                                                <button type='reset' class="btn px-3" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
                                                     Cancel
                                                 </button></a>
                                         </div>
@@ -170,176 +286,8 @@
         </div>
     </div>
     <!-- edit contacts modal -->
-    <div class="modal fade" id="editContactList" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Edit this Contact
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
-                            <form  method="post">
-                                <div class="form">
-                                    <div class="col-lg-12">
-                                        <label>Name</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Full Name..." name="name" class="input"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label>Phone Number</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter Phone Number..." name="name" class="input"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label>Email</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Email..." name="name" class="input"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 row">
-                                       <div class='col-lg-6'>
-                                            <label>Date of Birth</label>
-                                            <div class="row">
-                                                <div class="col-md-12 mb-4">
-                                                    <input type="date" name="date" class="input"
-                                                        required>
-                                                </div>
-                                            </div>
-                                       </div>
-                                       <div class='col-lg-6'>
-                                            <label>Anniversary (optional)</label>
-                                            <div class="row">
-                                                <div class="col-md-12 mb-4">
-                                                    <input type="date" name="date" class="input"
-                                                        required>
-                                                </div>
-                                            </div>
-                                       </div>
-                                    </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-6">
-                                            <a href="#" class="text-decoration-none">
-                                                <button type='button' class="btn px-3" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
-                                                    Cancel
-                                                </button></a>
-                                        </div>
-                                        <div class="col-6 text-end">
-                                            <a href="#" class="text-decoration-none">
-                                                <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                    >
-                                                    Save
-                                                </button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- delete contacts modal -->
-    <div class="modal fade" id="deleteContactList" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0 bg-light">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Are you sure you want to delete this contact ?
-                    </h5>
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-                </div>
-                <div class='row justify-content-between p-3'>
-                    <div class='col'>
-                        <button type="button" class="mybtnprimary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                    </div>
-                    <div class='col text-end'>
-                        <button type="button" class="mybtncancel" data-bs-dismiss="modal" aria-label="Close">Delete</button>
-                    </div>
-                </div>
-                <!-- <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
-                            <form  method="post">
-                                <div class="form">
-                                    <div class="col-lg-12">
-                                        <label>Name</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Full Name..." name="name" class="input"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label>Phone Number</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter Phone Number..." name="name" class="input"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label>Email</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Email..." name="name" class="input"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label>Date of Birth</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="date" name="date" class="input"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-6">
-                                            <a href="#" class="text-decoration-none">
-                                                <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                    Cancel
-                                                </button></a>
-                                        </div>
-                                        <div class="col-6 text-end">
-                                            <a href="#" class="text-decoration-none">
-                                                <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                    >
-                                                    Save
-                                                </button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
 
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-        </div>
-    </div>
 </div>
 <!-- END layout-wrapper -->
 @endsection
