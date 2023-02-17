@@ -82,7 +82,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="course-header-wrap">
+                    <div class="course-header-wrap mb-4git">
                         <h1 class="title">Html and CSS and Javascript</h1>
                         <p class="subtitle">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae omnis eaque necessitatibus nulla, quaerat ea ut eius alias esse deleniti!</p>
                         <div class="rating-row">
