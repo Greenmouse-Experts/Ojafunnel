@@ -31,7 +31,7 @@
                             <img src="{{$shop->logo ?? URL::asset('dash/assets/image/shop-logo.png')}}" alt="" width="40" />
                             {{$shop->name}}
                         </a>
-                        <form class="inline-form mt-3" style="width: 60%;">
+                        <form class="inline-form mt-3" style="width: 55%;">
                             <div class="input-group search-box mobile-search">
                                 <input type="text" name='search_string' class="form-control" placeholder="Search for courses">
                                 <div class="input-group-append">
@@ -54,11 +54,11 @@
                                 @endauth
                             </div>
                             <div class="dropdown">
-                                <button type="button" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" class="btn btn-info dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
-                                </button>
+                                <a class="btn btn-secondary dropdown-toggle" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                </a>
 
-                                <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
+                                <ul class="dropdown-menu">
                                     <div class="row total-header-section">
                                         <div class="col-lg-6 col-sm-6 col-6">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
@@ -68,28 +68,28 @@
                                         @php $total += $details['price'] * $details['quantity'] @endphp
                                         @endforeach
                                         <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                                            <p>Total: <span class="text-info">$ {{ $total }}</span></p>
+                                            <p>Total: <span class="text-info">{{ $total }}</span></p>
                                         </div>
                                     </div>
                                     @if(session('cart'))
                                     @foreach(session('cart') as $id => $details)
                                     <div class="row cart-detail">
                                         <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                            <img style="width: 70px" src="{{ Storage::url($details['image']) }}" />
+                                            <img style="width: 70px" src="{{ $details['image'] ?? URL::asset('dash/assets/image/store-logo.png') }}" />
                                         </div>
                                         <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                             <p>{{ $details['title'] }}</p>
-                                            <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
+                                            <span class="price text-info"> {{ $details['currency'] }}{{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
                                         </div>
                                     </div>
                                     @endforeach
                                     @endif
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
-                                            <a href="{{ route('cart', $shop->name) }}" class="btn btn-primary btn-block">View all</a>
+                                            <a href="{{ route('course.cart', $shop->name) }}" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" class="btn btn-primary btn-block">View all</a>
                                         </div>
                                     </div>
-                                </div>
+                                </ul>
                             </div>
                         </div>
                     </nav>
@@ -119,9 +119,9 @@
                     <div class="course-box-wrap">
                         <a href="#" class="has-popover">
                             <div class="course-box">
-                                <div class="course-badge position best-seller">Best seller</div>
+                                <!-- <div class="course-badge position best-seller">Best seller</div> -->
                                 <div class="course-image">
-                                    <img src="{{$course->image}}" alt="" class="img-fluid">
+                                    <img src="{{$course->image ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" class="img-fluid">
                                 </div>
                                 <div class="course-details">
                                     <h5 class="title">{{$course->title}}</h5>
@@ -209,23 +209,18 @@
     <script src="https://content.jwplatform.com/libraries/O7BMTay5.js"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 </body>
 
 <style>
-.main-section{
-    background-color: #F8F8F8;
-}
 .dropdown button.btn-info{
-    /* float:right;
-    padding-right: 30px; */
     color: {{$shop->color}};
     background: {{$shop->theme}};
 }
 .dropdown .dropdown-menu{
     padding:20px;
-    /*top:30px !important;*/
-    width:350px !important;
-    /*left:-110px !important;*/
+    width:310px !important;
     box-shadow:0px 4px 7px #a8a7a7;
 }
 .total-header-section{

@@ -16,7 +16,6 @@ class ShopFrontController extends Controller
         return view('dashboard.lms.viewShop', compact('shop', 'courses'));
     }
     
-
     public function addCourseToCart($id)
     {
         $course = Course::findOrFail($id);
@@ -31,6 +30,7 @@ class ShopFrontController extends Controller
                 "title" => $course->title,
                 "quantity" => 1,
                 'rmQuan' => $course->quantity,
+                'currency' => $course->currency,
                 "price" => $course->price,
                 "description" => $course->description,
                 "image" => $course->image
@@ -41,24 +41,22 @@ class ShopFrontController extends Controller
         return redirect()->back()->with('success', 'Course added to cart successfully!');
     }
     
-    public function cart(Request $request)
+    public function course_cart(Request $request)
     {
-        $store = Store::latest()->where('name', $request->shopname)->first();
-        $products = StoreProduct::latest()->where('store_id', $store->id)->get();
-        return view('dashboard.store.cart', compact('store', 'products'));
+        $shop = Shop::latest()->where('name', $request->shopname)->first();
+        $courses = Course::latest()->where('user_id', Auth::user()->id)->get();
+        return view('dashboard.lms.cart', compact('shop', 'courses'));
     }
 
-    public function checkout(Request $request)
+    public function course_checkout(Request $request)
     {
-        $store = Store::latest()->where('name', $request->shopname)->first();
-        $products = StoreProduct::latest()->where('store_id', $store->id)->get();
-        return view('dashboard.store.checkout', compact('store', 'products'));
+        $shop = Shop::latest()->where('name', $request->shopname)->first();
+        $courses = Course::latest()->where('user_id', Auth::user()->id)->get();
+        return view('dashboard.lms.checkout', compact('shop', 'courses'));
     }
 
-    public function update(Request $request)
+    public function course_update(Request $request)
     {
-        $product = StoreProduct::findOrFail($request->id);
-
         if ($request->id && $request->quantity) {
             $cart = session()->get('cart');
             $cart[$request->id]["quantity"] = $request->quantity;
@@ -84,9 +82,9 @@ class ShopFrontController extends Controller
         }
     }
 
-    public function checkoutPayment(Request $request)
+    public function courseCheckoutPayment(Request $request)
     {
-        $store = Store::where('name', $request->shopname)->first();
+        $shop = Shop::where('name', $request->shopname)->first();
         $cart = session()->get('cart');
         //dd($cart);
         $totalAmount = 0;
