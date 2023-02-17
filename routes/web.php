@@ -324,6 +324,11 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/edit-birthday', [App\Http\Controllers\DashboardController::class, 'edit_birthday'])->name('user.edit.birthday');
                     }
             );
+            Route::prefix('/notification')->group(
+                function () {
+                        Route::get('/notification', [App\Http\Controllers\DashboardController::class, 'main_notify'])->name('user.main.notification');
+                    }
+            );
         }
     );
 });

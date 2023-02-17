@@ -5034,3 +5034,34 @@ textarea{
     color: #713f93;
   }
 }
+.notify-text{
+  font-size: 20px;
+  font-weight: 600;
+}
+.notify-box{
+  padding: 20px 6px 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 0px 10px 10px 0px;
+  border-left: 4px solid #713f93;
+  display: flex;
+}
+.notify-img-box{
+  width: 70px;
+  height: 70px;
+  margin: 10px 20px;
+  border-radius: 10px;
+  display:grid;
+  place-content: center;
+}
+.notify-img-box img{
+  width: 50px;
+}
+.notify-head-tag{
+  background-color:  #713f93;
+  width: 120px;
+  color:white;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: 500;
+  padding: 2px 0px;
+}
