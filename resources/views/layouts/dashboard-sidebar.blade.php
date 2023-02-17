@@ -157,7 +157,7 @@
                                 <li><a href="{{route('user.order.details', Auth::user()->username)}}" key="t-overview">Order Details</a></li> --}}
                             </ul>
                         </li>
-                        <li><a href="{{route('user.view.product', Auth::user()->username)}}" key="t-tui-calendar">Product</a></li>
+                        {{-- <li><a href="{{route('user.view.product', Auth::user()->username)}}" key="t-tui-calendar">Product</a></li> --}}
                     </ul>
                 </li>
                 <li>

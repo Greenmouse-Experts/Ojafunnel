@@ -724,47 +724,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function main_module($username)
-    {
-        return view('dashboard.birthday.birthdayMain', [
-            'username' => $username
-        ]);
-    }
-
-    public function manage_list($username)
-    {
-        return view('dashboard.birthday.createList', [
-            'username' => $username
-        ]);
-    }
-
-    public function individual_list($username)
-    {
-        return view('dashboard.birthday.individualList', [
-            'username' => $username
-        ]);
-    }
-
-    public function manage_birthday($username)
-    {
-        return view('dashboard.birthday.birthdayManage', [
-            'username' => $username
-        ]);
-    }
-
-    public function create_birthday($username)
-    {
-        return view('dashboard.birthday.birthdayCreate', [
-            'username' => $username
-        ]);
-    }
-
-    public function edit_birthday($username)
-    {
-        return view('dashboard.birthday.birthdayEdit', [
-            'username' => $username
-        ]);
-    }
 
     public function getdownlines($array, $parent = 0, $level = 1)
     {
@@ -784,7 +743,7 @@ class DashboardController extends Controller
               <td> $entry->first_name $entry->last_name</td>
               <td> $levelQuote </td>" .
                     '<td><a href="javascript: void(0);" class="badge badge-soft-primary font-size-11 m-1">' . "Tier " . $level . "</a></td>" .
-                    '<td>' . "10%" .'</td>' .
+                    '<td>' . "10%" . '</td>' .
                     '<td>' . $this->getUserParent($entry->id) . '</td>' .
                     '<td>' . $this->getUserStatus($entry->id) . '</td>
               <td>' . $this->getUserRegDate($entry->id) . '</td>

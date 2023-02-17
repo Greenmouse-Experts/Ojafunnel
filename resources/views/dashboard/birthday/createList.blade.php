@@ -61,20 +61,108 @@
                                         </tr>
                                     </thead>
                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Greenmouse</td>
-                                            <td>24</td>
-                                            <td>Active</td>
-                                            <td>10-02-2023</td>
-                                            <td>
-                                                <div class="row fs-5">
-                                                    <div class='col'><a href="{{route('user.individual.list', Auth::user()->username)}}"><i class="bi bi-eye-fill"></i></a></div>
-                                                    <div class='col'><i class="bi bi-pencil-square cursor-pointer" data-bs-toggle="modal" data-bs-target="#editBirthdayList"></i></div>
-                                                    <div class='col'><i class="bi bi-trash3-fill text-danger cursor-pointer" data-bs-toggle="modal" data-bs-target="#deleteBirthdayList"></i></div>
+                                        @foreach ($bl as $item)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$item->name}}</td>
+                                                <td>{{$item->contact_num->count()}}</td>
+                                                <td>{{$item->status}}</td>
+                                                <td>{{$item->created_at->format('d-m-Y')}}</td>
+                                                <td>
+                                                    <div class="row fs-5">
+                                                        <div class='col'><a href="{{route('user.individual.list', ['username' => Auth::user()->username, 'id' => $item->id])}}"><i class="bi bi-eye-fill"></i></a></div>
+                                                        <div class='col'><i class="bi bi-pencil-square cursor-pointer" data-bs-toggle="modal" data-bs-target="#editBirthdayList-{{$item->id}}"></i></div>
+
+                                                        <div class='col'><i class="bi bi-trash3-fill text-danger cursor-pointer" data-bs-toggle="modal" data-bs-target="#deleteBirthdayList-{{$item->id}}"></i></div>
+                                                    </div>
+                                                </td>
+                                                <div class="modal fade" id="editBirthdayList-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">
+                                                                    Edit {{$item->name}} Birthday List
+                                                                </h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="Edit-level">
+                                                                        <form action="{{route('user.main.update.list', ['username' => Auth::user()->username, 'id' => $item->id])}}" method="post">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <div class="col-lg-12">
+                                                                                    <label>Name</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input type="text" value="{{$item->name}}" placeholder="Contact List Name..." name="name" class="input"
+                                                                                                required>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <label>Status</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <select name="status" id="">
+                                                                                                <option value="Active" selected>Active</option>
+                                                                                                <option value="Suspend">Suspend</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row justify-content-between">
+                                                                                    <div class="col-6">
+                                                                                        <a href="#" class="text-decoration-none">
+                                                                                            <button type="reset" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                                Cancel
+                                                                                            </button></a>
+                                                                                    </div>
+                                                                                    <div class="col-6 text-end">
+                                                                                        <a href="#" class="text-decoration-none">
+                                                                                            <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
+                                                                                                >
+                                                                                                Update
+                                                                                            </button>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </td>
-                                        </tr>
+
+                                                {{-- delete --}}
+                                                <div class="modal fade" id="deleteBirthdayList-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header border-bottom-0 bg-light">
+                                                                <h5 class="modal-title py-2" id="staticBackdropLabel">
+                                                                    Are you sure you want to delete this listing ?
+                                                                </h5>
+                                                            </div>
+                                                            <form action="{{route('user.main.delete.list', ['username' => Auth::user()->username, 'id' => $item->id])}}" method="post">
+                                                                @csrf
+                                                                <div class='row justify-content-between p-3'>
+                                                                    <div class='col'>
+                                                                        <button type="button" class="mybtnprimary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                                                    </div>
+                                                                    <div class='col text-end'>
+                                                                        <button type="submit" class="mybtncancel" data-bs-dismiss="modal" aria-label="Close">Delete</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </tr>
+                                        @endforeach
                                    </tbody>
                                 </table>
                             </div>
@@ -90,14 +178,15 @@
             <div class="modal-content">
                 <div class="modal-header border-bottom-0">
                     <h5 class="modal-title" id="staticBackdropLabel">
-                        Add Contact List
+                        Add Birthday List
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="Edit-level">
-                            <form  method="post">
+                            <form action="{{route('user.main.create.list', Auth::user()->username)}}"  method="post">
+                                @csrf
                                 <div class="form">
                                     <div class="col-lg-12">
                                         <label>Name</label>
@@ -112,9 +201,9 @@
                                         <label>Status</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <select name="status" id="">
+                                                <select required name="status" id="">
                                                     <option value="Active" selected>Active</option>
-                                                    <option value="Suspend">Suspend</option>
+                                                    <option value="Inactive">Suspend</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -122,7 +211,7 @@
                                     <div class="row justify-content-between">
                                         <div class="col-6">
                                             <a href="#" class="text-decoration-none">
-                                                <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                <button type="reset" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                                     Cancel
                                                 </button></a>
                                         </div>

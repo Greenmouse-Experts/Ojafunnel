@@ -46,7 +46,16 @@
                                     <label>Message Title</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Enter the message title" name="name" class="input"
+                                            <input type="text" placeholder="Enter the message title" name="title" class="input"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Sender Name</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Enter the message title" name="sender_name" class="input"
                                                 required>
                                         </div>
                                     </div>
@@ -55,10 +64,28 @@
                                     <label>Select Recipient List</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <select name="status" id="" class='py-3 fs-6'>
+                                            <select name="birthday_list_id" id="" class='py-3 fs-6'>
                                                 <option selected disabled class='p-5'>Choose from birthday listing</option>
-                                                <option value="Active"  class='p-5'>Greenmouse List</option>
-                                                <option value="Suspend">Greenmouse Test</option>
+                                                @if($birthlist->isEmpty())
+                                                    <option disabled value="">No Birthday List</option>
+                                                @else
+                                                    @foreach ($birthlist as $item)
+                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Select Automation Type</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <select name="sms_type" id="" class='py-3 fs-6'>
+                                                <option selected disabled class='p-5'>Select Automation Type</option>
+                                                <option value="birthday">Birthday</option>
+                                                <option value="anniversary">Aniversary</option>
+                                                <option value="other">Other</option>
                                             </select>
                                         </div>
                                     </div>
@@ -67,7 +94,7 @@
                                     <label>Message Body</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <textarea placeholder="Enter the message here" name="name"></textarea>
+                                            <textarea placeholder="Enter the message here" name="message"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -76,16 +103,65 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-5">
                                             <div class='d-flex mt-2 align-items-center'>
-                                                <input type='checkbox' class='w-auto mt-1 checkboxs' />
+                                                <input type='checkbox' id="email_select" onchange="emailAuto()" value="email automation" name="automation" class='w-auto mt-1 checkboxs' />
                                                 <label class='w-auto '>Email Automation</label>
                                             </div>
-                                            <div class='d-flex mt-3 align-items-center'>
-                                                <input type='checkbox' class='w-auto mt-1' />
-                                                <label class='w-auto'>SMS Automation</label>
+                                            <div class="email_automation mt-2" style="display: none">
+                                                <div class="col-lg-8">
+                                                    <label>Select Email Sending Server</label>
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-4">
+                                                            <select name="sending_server" id="" required class='py-3 fs-6'>
+                                                                <option selected disabled class='p-5'>Choose from mail sending server</option>
+                                                                @if($sendingServer->isEmpty())
+                                                                    <option disabled value="">No Mail Sending Server</option>
+                                                                @else
+                                                                    @foreach ($sendingServer as $item)
+                                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class='d-flex mt-3 align-items-center'>
-                                                <input type='checkbox' class='w-auto mt-1' />
+                                                <input type='checkbox' id="sms_select" onchange="smsAuto()" value="sms automation" name="automation" class='w-auto mt-1' />
+                                                <label class='w-auto'>SMS Automation</label>
+                                            </div>
+                                            <div class="sms_automation mt-2" style="display: none">
+                                                <div class="col-lg-8">
+                                                    <label>Select SMS Server</label>
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-4">
+                                                            <select name="integration" id="" required class='py-3 fs-6'>
+                                                                <option selected disabled class='p-5'>Choose from sms sending server</option>
+                                                                @if($sendingServer->isEmpty())
+                                                                    <option disabled value="">No Sms Sending Server</option>
+                                                                @else
+                                                                    @foreach ($smsServer as $item)
+                                                                        <option value="{{$item->id}}">{{$item->type}}</option>
+                                                                    @endforeach
+                                                                @endif
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='d-flex mt-3 align-items-center'>
+                                                <input type='checkbox' id="whatsapp" onchange="whatsAppAuto()" value="whatsapp automation" name="automation" class='w-auto mt-1' />
                                                 <label class='w-auto'>Whatsapp Automation</label>
+                                            </div>
+                                            <div class="whatsapp_automation mt-2" style="display: none">
+                                                <div class="col-lg-8">
+                                                    <label>Sending Account</label>
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-4">
+                                                            <input type="phone" placeholder="Enter the Whatsapp Number e.g +2234666455454" name="sender_id" class="input"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +172,7 @@
                                             <label>Start Date</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <input type="date"  name="name" class="input"
+                                                    <input type="date"  name="start_date" class="input"
                                                         required>
                                                 </div>
                                             </div>
@@ -105,7 +181,7 @@
                                             <label>End Date</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-5">
-                                                    <input type="date"  name="name" class="input"
+                                                    <input type="date"  name="end_date" class="input"
                                                         required>
                                                 </div>
                                             </div>

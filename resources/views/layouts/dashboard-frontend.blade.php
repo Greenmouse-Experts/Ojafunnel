@@ -98,6 +98,33 @@
             }
         }
 
+        function emailAuto(){
+            var smsVal = document.querySelector('#email_select');
+            if (smsVal.checked == true) {
+                document.querySelector('.email_automation').style.display = 'block'
+            } else {
+                document.querySelector('.email_automation').style.display = 'none'
+            }
+        }
+
+        function smsAuto(){
+            var smsVal = document.querySelector('#sms_select');
+            if (smsVal.checked == true) {
+                document.querySelector('.sms_automation').style.display = 'block'
+            } else {
+                document.querySelector('.sms_automation').style.display = 'none'
+            }
+        }
+
+        function whatsAppAuto(){
+            var smsVal = document.querySelector('#whatsapp');
+            if (smsVal.checked == true) {
+                document.querySelector('.whatsapp_automation').style.display = 'block'
+            } else {
+                document.querySelector('.whatsapp_automation').style.display = 'none'
+            }
+        }
+
 
         function frequencyChange(){
             var frq = document.getElementById("selectFrenquncy");
