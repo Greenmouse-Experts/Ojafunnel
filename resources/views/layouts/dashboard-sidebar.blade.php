@@ -58,7 +58,7 @@
                   </li>
                 </ul>
                 </li> -->
-                <li>
+                <!-- <li>
                     <a href="#" class="has-arrow">
                         <i class="bi bi-envelope"></i>
                         <span key="t-dashboards">Messages</span>
@@ -67,7 +67,7 @@
                         <li><a href="{{route('user.create.message', Auth::user()->username)}}" key="t-tui-calendar">Create Message</a></li>
                         <li><a href="{{route('user.view.message', Auth::user()->username)}}" key="t-full-calendar">View Message</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li>
                     <a href="{{route('user.choose.temp', Auth::user()->username)}}">
                         <i class="bi bi-building"></i>

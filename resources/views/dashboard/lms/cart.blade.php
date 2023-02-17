@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                         </form>
-                        
+
                         {{-- <a href="{{route('user.cart', Auth::user()->username)}}">
                         <button type="button" class="btn btn-primary">
                             <i class="bi bi-cart-check"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}
