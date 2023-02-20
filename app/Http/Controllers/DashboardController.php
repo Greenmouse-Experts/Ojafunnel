@@ -643,6 +643,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function my_cart($username)
+    {
+        return view('dashboard.lms.MyCart', [
+            'username' => $username
+        ]);
+    }
+
     public function course_details($username)
     {
         return view('dashboard.lms.CourseDetails', [
