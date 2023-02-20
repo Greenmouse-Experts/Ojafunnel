@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
     <!-- Bootstrap Css -->
-    <!-- Font Css-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 </head>
@@ -51,12 +50,14 @@
                             </a>
                             <div class="dropdown user-dropdown corner-triangle top-right">
                                 <ul class="user-dropdown-menu">
-                                    <li class="user-dropdown-menu-item">
-                                        <a href="#">
-                                           My learning
-                                        </a>
+                                    <li class="mb-2 mt-1" style="padding-left: 20px;"><img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1676548205/OjaFunnel-Images/laravel_iupjh0.png" draggable="false" width="40%"> <span><B>HTML TUTORIAL</B>
+                                <span>Price:200</span></span>
+                                <p class="mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, ex laborum! Nesciunt officia, fugit enim unde iure corporis numquam dolore ipsa consequatur, temporibus repellat ex totam eos! Exercitationem, nobis minima?</p>
+                            </li>
+                                <hr>
+                                    <li >
                                         <a href="{{route('user.my.cart', Auth::user()->username)}}">
-                                          My Cart
+                                         <button class="gotten">Go to Cart</button>
                                         </a>
                                     </li>
                                 </ul>
@@ -637,7 +638,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </body>
 <style>
-
+.gotten{
+    border: 1px solid #713f93;
+    padding: 10px 15px;
+    display: block;
+    margin: auto;
+    text-align: center;
+    color: #fff;
+    background: #713f93;
+    border-radius: 5px;
+}
 html {
     color: #222;
     font-size: 1em;

@@ -57,7 +57,6 @@
                                 <a class="btn btn-secondary dropdown-toggle" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                                 </a>
-
                                 <ul class="dropdown-menu">
                                     <div class="row total-header-section">
                                         <div class="col-lg-6 col-sm-6 col-6">

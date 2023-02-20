@@ -353,6 +353,11 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/notification', [App\Http\Controllers\DashboardController::class, 'main_notify'])->name('user.main.notification');
                     }
             );
+            Route::prefix('/promotion')->group(
+                function () {
+                        Route::get('/promotion', [App\Http\Controllers\DashboardController::class, 'main_promo'])->name('user.main.promotion');
+                    }
+            );
         }
     );
 });

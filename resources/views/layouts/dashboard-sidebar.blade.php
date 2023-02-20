@@ -11,9 +11,7 @@
                         <span key="t-dashboards">Dashboard</span>
                     </a>
                 </li>
-                <!-- email marketing -->
                 <li>
-                    <!-- class="has-arrow waves-effect" -->
                     <a href="#" id="emailmarketDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="has-arrow">
                         <i class="bi bi-envelope-paper"></i>
                         <span key="t-layouts">Email Marketing </span>
@@ -38,36 +36,6 @@
                             <a href="{{route('user.automation.campaign', Auth::user()->username)}}" key="t-vertical" class="py-2">Automation Campaign</a>
                         </li>
                     </ul>
-                    <!-- <li>
-                <a
-                  href="#"
-                  id="emailmarketDrop"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  class="has-arrow"
-                >
-                <i class="bi bi-share"></i>
-                  <span key="t-layouts">Subscribers</span>
-                </a>
-                <ul class="sub-menu p mt-1" aria-labelledby="emailmarketDrop">
-                  <li>
-                    <a href="{{route('user.mailing.list', Auth::user()->username)}}" key="t-vertical" class=""
-                      >Mailing List </a
-                    >
-                  </li>
-                </ul>
-                </li> -->
-                <!-- <li>
-                    <a href="#" class="has-arrow">
-                        <i class="bi bi-envelope"></i>
-                        <span key="t-dashboards">Messages</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('user.create.message', Auth::user()->username)}}" key="t-tui-calendar">Create Message</a></li>
-                        <li><a href="{{route('user.view.message', Auth::user()->username)}}" key="t-full-calendar">View Message</a></li>
-                    </ul>
-                </li> -->
                 <li>
                     <a href="{{route('user.choose.temp', Auth::user()->username)}}">
                         <i class="bi bi-building"></i>
@@ -119,9 +87,13 @@
                                 <li><a href="{{route('user.order.details', Auth::user()->username)}}" key="t-overview">Order Details</a></li> --}}
                             </ul>
                         </li>
-                        <!-- <li><a href="{{route('user.cart', Auth::user()->username)}}" key="t-tui-calendar">Cart</a></li>
-                        <li><a href="{{route('user.checkout', Auth::user()->username)}}" key="t-tui-calendar">Checkout</a></li> -->
                     </ul>
+                </li>
+                <li>
+                    <a href="{{route('user.main.promotion', Auth::user()->username)}}">
+                        <i class="bi bi-people"></i>
+                        <span key="t-chat">Promotion</span>
+                    </a>
                 </li>
                 <li>
                     <a href="{{route('user.affiliate.marketing', Auth::user()->username)}}">
@@ -206,7 +178,6 @@
                 </li>
             </ul>
         </div>
-        <!-- Sidebar -->
     </div>
 </div>
 <!-- Left Sidebar End -->

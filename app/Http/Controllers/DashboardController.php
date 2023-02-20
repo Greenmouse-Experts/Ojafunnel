@@ -657,6 +657,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function main_promo($username)
+    {
+        return view('dashboard.promotion.Product', [
+            'username' => $username
+        ]);
+    }
+
     public function view_shops($username)
     {
         $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
