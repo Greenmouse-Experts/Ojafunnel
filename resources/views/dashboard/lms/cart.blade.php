@@ -1,13 +1,13 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <title>{{$shop->name}} | Oja Funnel | Shop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta content="title" name="{{$shop->name}} | Oja Funnel | shopFront" />
-  <meta content="description" name="{{$shop->description}} | Oja Funnel | Shop" />
-  <!-- App favicon -->
-  <link rel="shortcut icon" href="{{$shop->logo}}" />
+    <meta charset="utf-8" />
+    <title>{{$shop->name}} | Oja Funnel | Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="title" name="{{$shop->name}} | Oja Funnel | shopFront" />
+    <meta content="description" name="{{$shop->description}} | Oja Funnel | Shop" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{$shop->logo}}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.webui-popover.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">

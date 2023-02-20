@@ -50,12 +50,12 @@
                     </p>
                     <div class="js-price-big-wrapper-month">
                         <h1 class="">
-                            {{$plan->currency}}{{$plan->monthly_amount}}/<span>monthly</span> 
+                            {{$plan->currency}}{{$plan->monthly_amount}}/<span>monthly</span>
                         </h1>
                     </div>
                     <div class="js-price-big-wrapper">
                         <h1 class="-yearly -hide">
-                            {{$plan->currency}}{{$plan->yearly_amount}}/<span>yearly</span> 
+                            {{$plan->currency}}{{$plan->yearly_amount}}/<span>yearly</span>
                         </h1>
                     </div>
                     <a href="{{route('signup')}}">START FOR FREE</a>
@@ -179,4 +179,32 @@
     </div>
 </section>
 <!-- Pricing Ends -->
+<!-- Digital -->
+<section class="digital">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mount">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <h1>
+                                Are you ready to take your digital marketing to the next level!
+                            </h1>
+                            <div class="level"></div>
+                            <button>
+                                Sign up
+                            </button>
+                            <button style="background-color: #527EEB; color: #fff;">
+                                See Demo
+                            </button>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Digital Ends -->
 @endsection

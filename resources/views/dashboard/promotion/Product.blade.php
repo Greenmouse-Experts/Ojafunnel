@@ -108,7 +108,7 @@
                 <div class="last">
                     <div class="col-lg-12">
                         <div class="images">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" draggable="false" alt="">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" draggable="false" width="100%" alt="">
                         </div>
                     </div>
                     <div class="row">
