@@ -58,7 +58,7 @@
                                             <td>
                                                 greenmousetest@gmail.com
                                             </td>
-                                            
+
                                             <td>
                                                 <span class="badge badge-pill badge-soft-success font-size-11">active</span>
                                             </td>
@@ -67,17 +67,11 @@
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View mailing list">
-                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                        <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
+                                                        <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
                                                         <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                        <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
@@ -92,7 +86,7 @@
                                             <td>
                                                 greenmousetest@gmail.com
                                             </td>
-                                            
+
                                             <td>
                                                 <span class="badge badge-pill badge-soft-success font-size-11">active</span>
                                             </td>
@@ -101,17 +95,11 @@
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View mailing list">
-                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                        <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
+                                                        <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
                                                         <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                        <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
@@ -126,7 +114,7 @@
                                             <td>
                                                 greenmousetest@gmail.com
                                             </td>
-                                            
+
                                             <td>
                                                 <span class="badge badge-pill badge-soft-success font-size-11">active</span>
                                             </td>
@@ -135,17 +123,11 @@
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View mailing list">
-                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                        <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
+                                                        <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
                                                         <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                        <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
@@ -160,7 +142,7 @@
                                             <td>
                                                 greenmousetest@gmail.com
                                             </td>
-                                            
+
                                             <td>
                                                 <span class="badge badge-pill badge-soft-success font-size-11">active</span>
                                             </td>
@@ -169,17 +151,11 @@
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View mailing list">
-                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                        <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
+                                                        <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
                                                         <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                        <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
@@ -194,7 +170,7 @@
                                             <td>
                                                 greenmousetest@gmail.com
                                             </td>
-                                            
+
                                             <td>
                                                 <span class="badge badge-pill badge-soft-success font-size-11">active</span>
                                             </td>
@@ -203,17 +179,11 @@
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View mailing list">
-                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                        <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
+                                                        <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
                                                         <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                        <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>

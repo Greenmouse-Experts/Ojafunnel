@@ -373,6 +373,7 @@ Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlo
 // Admin Login
 Route::get('/admin/welcome', [App\Http\Controllers\AdminController::class, 'adminwelcome'])->name('adminwelcome');
 Route::get('/admin/view_users', [App\Http\Controllers\AdminController::class, 'view_users'])->name('view_users');
+Route::get('/admin/users-details', [App\Http\Controllers\AdminController::class, 'users_details'])->name('users.details');
 Route::get('/admin/add_plans', [App\Http\Controllers\AdminController::class, 'add_plans'])->name('add_plans');
 Route::get('/admin/manage_plans', [App\Http\Controllers\AdminController::class, 'manage_plans'])->name('manage_plans');
 Route::get('/admin/viewmessage', [App\Http\Controllers\AdminController::class, 'viewmessage'])->name('viewmessage');
