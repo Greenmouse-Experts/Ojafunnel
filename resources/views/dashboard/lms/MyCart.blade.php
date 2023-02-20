@@ -39,7 +39,7 @@
                         <a class="navbar-brand" href="{{route('user.dashboard', Auth::user()->username)}}">
                             Ojafunnel Shop
                         </a>
-                        <form class="inline-form mt-3" style="width: 80%;">
+                        <form class="inline-form" style="width: 80%;">
                             <div class="input-group search-box mobile-search">
                                 <input type="text" name='search_string' class="form-control" placeholder="Search for courses">
                                 <div class="input-group-append">
