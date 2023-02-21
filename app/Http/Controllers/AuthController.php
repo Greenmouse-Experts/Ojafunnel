@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendCodeResetPassword;
+use App\Models\OjaPlan;
 use App\Models\Plan;
 use App\Models\ResetCodePassword;
 use App\Models\Transaction;
@@ -44,7 +45,7 @@ class AuthController extends Controller
 
             $referrer_id = User::where('affiliate_link', $request->referral_link)->first();
 
-            $plan = Plan::where('name', 'Free')->first();
+            $plan = OjaPlan::where('name', 'Free')->first();
 
             if($plan)
             {
@@ -75,7 +76,7 @@ class AuthController extends Controller
             }
             
         } else {
-            $plan = Plan::where('name', 'Free')->first();
+            $plan = OjaPlan::where('name', 'Free')->first();
 
             if($plan)
             {

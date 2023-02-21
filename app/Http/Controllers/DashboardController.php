@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Course;
 use App\Models\Funnel;
 use App\Models\FunnelPage;
 use App\Models\Integration;
@@ -602,7 +604,7 @@ class DashboardController extends Controller
     }
 
     public function create_course($username)
-    {
+    {   
         return view('dashboard.lms.createCourse', [
             'username' => $username
         ]);
@@ -624,15 +626,22 @@ class DashboardController extends Controller
 
     public function create_course_start($username)
     {
+        $categories = Category::latest()->get();
         return view('dashboard.lms.coursestart', [
-            'username' => $username
+            'username' => $username,
+            'categories' => $categories
         ]);
     }
 
-    public function course_content($username)
+    public function course_content($username, $id)
     {
+        $idFinder = Crypt::decrypt($id);
+
+        $course = Course::find($idFinder);
+
         return view('dashboard.lms.coursecontent', [
-            'username' => $username
+            'username' => $username,
+            'course' => $course
         ]);
     }
 
