@@ -1020,7 +1020,7 @@ input:focus {
     background-repeat: no-repeat;
     padding: 130px 0 120px;
     color: #fff;
-    /* background-image:linear-gradient(50deg,  #0000007e, #0000007e), url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg); */
+    background-image:linear-gradient(50deg,  #0000007e, #0000007e), url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1676889039/OjaFunnel-Images/5e66494d-7bdd-4c76-8eba-8d6efbb924b3_nppuwu.jpg);
 }
 
 .home-banner-wrap {
@@ -1066,8 +1066,7 @@ input:focus {
 }
 
 .home-fact-area {
-    background-color: #ec5252;
-    background: -webkit-linear-gradient(-45deg, #ec5252, #6e1a52);
+    background: linear-gradient(50deg,  #0000007e, #0000007e);
     background: -moz-linear-gradient(-45deg, #ec5252 0, #6e1a52 100%);
     background: -ms-linear-gradient(-45deg, #ec5252 0, #6e1a52 100%);
     background: -o-linear-gradient(-45deg, #ec5252 0, #6e1a52 100%);

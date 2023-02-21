@@ -19,7 +19,12 @@ class AdminController extends Controller
 
         public function view_users()
         {
-            return view('admin.view-users');
+            return view('admin.user.view-users');
+        }
+
+        public function users_details()
+        {
+            return view('admin.user.users-details');
         }
 
         public function add_plans()
@@ -31,7 +36,7 @@ class AdminController extends Controller
         {
             return view('admin.manage-plans');
         }
-       
+
         public function viewmessage()
         {
             return view('admin.viewmessages');
@@ -91,6 +96,6 @@ class AdminController extends Controller
         {
             return view('admin.viewCart');
         }
-        
-        
+
+
 }

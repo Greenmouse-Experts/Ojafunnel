@@ -143,7 +143,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <div class="card mini-stats-wid">
                                 <div class="card-body">
                                     <div class="d-flex">
@@ -202,7 +202,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12">
                             <div class="card-body card">
                             <div class="row">
@@ -252,8 +252,8 @@
                                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                                                     <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
                                                                 </li>
-                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
+                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="bi bi-eye-slash"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>
@@ -280,8 +280,8 @@
                                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                                                     <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
                                                                 </li>
-                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
+                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="bi bi-eye-slash"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>
@@ -308,8 +308,8 @@
                                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                                                     <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
                                                                 </li>
-                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
+                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="bi bi-eye-slash"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>
@@ -336,8 +336,8 @@
                                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                                                     <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
                                                                 </li>
-                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
+                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="bi bi-eye-slash"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>
@@ -364,8 +364,8 @@
                                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                                                     <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
                                                                 </li>
-                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
+                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="bi bi-eye-slash"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>

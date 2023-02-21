@@ -305,6 +305,7 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/create-course', [App\Http\Controllers\DashboardController::class, 'create_course'])->name('user.create.course');
                         Route::get('/shop-course', [App\Http\Controllers\DashboardController::class, 'shop'])->name('user.shop.course');
                         Route::get('/create-course/start', [App\Http\Controllers\DashboardController::class, 'create_course_start'])->name('user.create.course.start');
+                        Route::get('/my-cart',[App\Http\Controllers\DashboardController::class, 'my_cart'])->name('user.my.cart');
                         Route::get('/create-course/course-content/{id}', [App\Http\Controllers\DashboardController::class, 'course_content'])->name('user.course.content');
                         Route::get('/create-shop', [App\Http\Controllers\DashboardController::class, 'create_shop'])->name('user.create.shop.course');
                         Route::get('/view-shop', [App\Http\Controllers\DashboardController::class, 'view_shops'])->name('user.view.course.shops');
@@ -331,17 +332,30 @@ Route::prefix('{username}')->group(function () {
             );
             Route::prefix('/birthday')->group(
                 function () {
-                        Route::get('/module', [App\Http\Controllers\DashboardController::class, 'main_module'])->name('user.main.list');
-                        Route::get('/manage-list', [App\Http\Controllers\DashboardController::class, 'manage_list'])->name('user.manage.list');
-                        Route::get('/individual-list', [App\Http\Controllers\DashboardController::class, 'individual_list'])->name('user.individual.list');
-                        Route::get('/manage-birthday', [App\Http\Controllers\DashboardController::class, 'manage_birthday'])->name('user.manage.birthday');
-                        Route::get('/create-birthday', [App\Http\Controllers\DashboardController::class, 'create_birthday'])->name('user.create.birthday');
-                        Route::get('/edit-birthday', [App\Http\Controllers\DashboardController::class, 'edit_birthday'])->name('user.edit.birthday');
+                        Route::get('/module', [App\Http\Controllers\BirthdayController::class, 'main_module'])->name('user.main.list');
+                        Route::post('/create-list', [App\Http\Controllers\BirthdayController::class, 'create_list'])->name('user.main.create.list');
+                        Route::post('/create-birthday-contact-list/{birthday_id}', [App\Http\Controllers\BirthdayController::class, 'birthday_create_contact_list'])->name('user.main.birthday.create.list');
+                        Route::post('/update-birthday-contact-list/{birthday_id}/{id}', [App\Http\Controllers\BirthdayController::class, 'birthday_update_contact_list'])->name('user.main.birthday.update.list');
+                        Route::post('/delete-birthday-contact-list/{birthday_id}/{id}', [App\Http\Controllers\BirthdayController::class, 'birthday_delete_contact_list'])->name('user.main.birthday.delete.list');
+                        Route::post('/update-list/{id}', [App\Http\Controllers\BirthdayController::class, 'update_list'])->name('user.main.update.list');
+                        Route::post('/delete-list/{id}', [App\Http\Controllers\BirthdayController::class, 'delete_list'])->name('user.main.delete.list');
+                        Route::get('/manage-list', [App\Http\Controllers\BirthdayController::class, 'manage_list'])->name('user.manage.list');
+                        Route::get('/individual-list/{id}', [App\Http\Controllers\BirthdayController::class, 'individual_list'])->name('user.individual.list');
+                        Route::get('/manage-birthday', [App\Http\Controllers\BirthdayController::class, 'manage_birthday'])->name('user.manage.birthday');
+                        Route::get('/create-birthday', [App\Http\Controllers\BirthdayController::class, 'create_birthday'])->name('user.create.birthday');
+                        Route::get('/edit-birthday/{id}', [App\Http\Controllers\BirthdayController::class, 'edit_birthday'])->name('user.edit.birthday');
+                        Route::get('/delete-birthday/{id}', [App\Http\Controllers\BirthdayController::class, 'delete_birthday'])->name('user.delete.birthday');
+                        Route::post('/create-birthday-automation', [App\Http\Controllers\BirthdayController::class, 'create_birthday_automation'])->name('user.create.birthday.automation');
                     }
             );
             Route::prefix('/notification')->group(
                 function () {
                         Route::get('/notification', [App\Http\Controllers\DashboardController::class, 'main_notify'])->name('user.main.notification');
+                    }
+            );
+            Route::prefix('/promotion')->group(
+                function () {
+                        Route::get('/promotion', [App\Http\Controllers\DashboardController::class, 'main_promo'])->name('user.main.promotion');
                     }
             );
         }
@@ -359,6 +373,7 @@ Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlo
 // Admin Login
 Route::get('/admin/welcome', [App\Http\Controllers\AdminController::class, 'adminwelcome'])->name('adminwelcome');
 Route::get('/admin/view_users', [App\Http\Controllers\AdminController::class, 'view_users'])->name('view_users');
+Route::get('/admin/users-details', [App\Http\Controllers\AdminController::class, 'users_details'])->name('users.details');
 Route::get('/admin/add_plans', [App\Http\Controllers\AdminController::class, 'add_plans'])->name('add_plans');
 Route::get('/admin/manage_plans', [App\Http\Controllers\AdminController::class, 'manage_plans'])->name('manage_plans');
 Route::get('/admin/viewmessage', [App\Http\Controllers\AdminController::class, 'viewmessage'])->name('viewmessage');
