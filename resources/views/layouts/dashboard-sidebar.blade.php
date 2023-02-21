@@ -161,7 +161,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('user.main.support', Auth::user()->username)}}">
                         <i class="bi bi-chat"></i>
                         <span key="t-chat">Support</span>
                     </a>

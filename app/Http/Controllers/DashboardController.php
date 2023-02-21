@@ -778,6 +778,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function main_support($username)
+    {
+        return view('dashboard.support.supportMain', [
+            'username' => $username
+        ]);
+    }
+
     public function getdownlines($array, $parent = 0, $level = 1)
     {
         $referedMembers = '';

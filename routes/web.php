@@ -358,6 +358,11 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/promotion', [App\Http\Controllers\DashboardController::class, 'main_promo'])->name('user.main.promotion');
                     }
             );
+            Route::prefix('/support')->group(
+                function () {
+                        Route::get('/index', [App\Http\Controllers\DashboardController::class, 'main_support'])->name('user.main.support');
+                    }
+            );
         }
     );
 });
