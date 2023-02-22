@@ -360,8 +360,9 @@ Route::prefix('{username}')->group(function () {
             );
             Route::prefix('/support')->group(
                 function () {
-                        Route::get('/index', [App\Http\Controllers\DashboardController::class, 'main_support'])->name('user.main.support');
-                    }
+                    Route::get('/index', [App\Http\Controllers\DashboardController::class, 'main_support'])->name('user.main.support');
+                    Route::get('/chat', [App\Http\Controllers\DashboardController::class, 'support_chat'])->name('user.main.support.chat');
+                }
             );
         }
     );

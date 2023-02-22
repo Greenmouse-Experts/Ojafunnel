@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -55,7 +56,7 @@ Route::prefix('user')->group(function () {
     // Funding Account
     Route::get('/transaction/confirm/{response}/{amount}', [App\Http\Controllers\TransactionController::class, 'transaction_confirm'])->name('user.transaction.confirm');
 
-    // CRM
+    // LMS
     Route::post('/crm/start/course/creation', [App\Http\Controllers\CMSController::class, 'start_course_creation'])->name('user.start.course.creation');
 
     Route::post('/crm/save/course/{id}', [App\Http\Controllers\CMSController::class, 'save_course'])->name('user.save.course');
@@ -74,4 +75,15 @@ Route::prefix('user')->group(function () {
     Route::post('/crm/create/shop', [App\Http\Controllers\CMSController::class, 'create_shop'])->name('user.shop.create');
     Route::post('/crm/update/shop/{id}', [App\Http\Controllers\CMSController::class, 'update_shop'])->name('user.shop.update');
     Route::post('/crm/delete/shop/{id}', [App\Http\Controllers\CMSController::class, 'delete_shop'])->name('user.shop.delete');
+
+    // Support
+    Route::post('/support/start/chat/{id}', [ChatController::class, 'startChat']);
+    Route::get('/support/chats', [ChatController::class, 'fetchAllRecentChats']);
+    Route::post('/support/send', [ChatController::class, 'sendMessage']);
+    Route::post('/support/clear', [ChatController::class, 'clearChat']);
+    Route::post('/support/clear/single/chat/{id}', [ChatController::class, 'deleteSingleChat']);
+    Route::post('/support/clearall', [ChatController::class, 'deleteAllChats']);
+    Route::delete('/support/deletechatroom', [ChatController::class, 'deleteChatroom']);
+    Route::put('/support/read', [ChatController::class, 'markAsRead']);
+    Route::post('/support/download/attachment/{id}', [ChatController::class, 'downloadAttachment']);
 });
