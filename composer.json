@@ -25,6 +25,7 @@
         "php-http/guzzle7-adapter": "^1.0",
         "php-http/httplug": "^2.3",
         "php-http/message": "^1.13",
+        "pusher/pusher-php-server": "^7.2",
         "realrashid/sweet-alert": "^5.1",
         "twig/twig": "^3.5",
         "twilio/sdk": "^6.43",

@@ -161,6 +161,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('user.main.support', Auth::user()->username)}}">
+                        <i class="bi bi-chat"></i>
+                        <span key="t-chat">Support</span>
+                    </a>
+                </li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-sliders2"></i>
                         <span key="t-chat">Settings</span>
