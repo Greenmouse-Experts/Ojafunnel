@@ -785,6 +785,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function support_chat($username)
+    {
+        return view('dashboard.support.chat', [
+            'username' => $username
+        ]);
+    }
+
     public function getdownlines($array, $parent = 0, $level = 1)
     {
         $referedMembers = '';
