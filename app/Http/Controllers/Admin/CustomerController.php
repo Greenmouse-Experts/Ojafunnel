@@ -76,7 +76,7 @@ class CustomerController extends Controller
             $customer->user->fill($request->old());
         }
 
-        return view('admin.user.users-details', [
+        return view('Admin.user.users-details', [
             'customer' => $customer,
         ]);
     }
