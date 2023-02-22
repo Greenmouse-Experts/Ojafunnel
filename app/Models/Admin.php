@@ -254,12 +254,19 @@ class Admin extends Authenticatable
     public function getAllCustomers()
     {
         $query = \App\Models\Customer::getAll();
-        $query = $query->latest()->get();
+        //$query = $query->latest()->get();
         // if (!$this->user->can('readAll', new \App\Models\Customer())) {
         //     $query = $query->where('customers.admin_id', '=', $this->id);
         // }
 
         return $query;
+    }
+
+    public function getAllCustomerLists()
+    {
+
+        return $this->getAllCustomers()->latest()->get();
+
     }
 
     public function getAllStores()

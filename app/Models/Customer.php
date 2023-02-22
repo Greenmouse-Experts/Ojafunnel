@@ -722,7 +722,7 @@ class Customer extends Model
             $plan = OjaPlan::where('name', 'Free')->first();
 
             if (!$request->referral_link == null) {
-                $this->validate($request, [
+                $request->validate([
                     'referral_link' => 'exists:users,affiliate_link'
                 ]);
 

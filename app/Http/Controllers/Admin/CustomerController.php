@@ -24,8 +24,8 @@ class CustomerController extends Controller
         }
 
         return back()->with([
-            'type' => 'danger',
-            'message' => trans('messages.customers.enabled')
+            'type' => 'success',
+            'message' => "Customer was successfully activated"
         ]);
         // Redirect to my lists page
         //echo trans('messages.customers.enabled');

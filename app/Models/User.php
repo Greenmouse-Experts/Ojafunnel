@@ -84,8 +84,8 @@ class User extends Authenticatable
             'last_name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'min:5', 'max:100', 'regex:/^\S*$/u', 'unique:users'],
             'phone_number' => ['required', 'numeric'],
-            // 'timezone' => 'required',
-            // 'language_id' => 'required',
+            'timezone' => 'required',
+            'language_id' => 'required',
         );
 
         if (isset($this->id)) {
