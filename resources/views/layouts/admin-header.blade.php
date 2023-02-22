@@ -120,12 +120,12 @@
                 <button type="button" style="display: flex; align-items: center;" class="btn header-item" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="d-none d-xl-inline-block ms-1" key="t-henry">
                         <div class="hamzat">
-                            <b>Adeleke Money </b>
+                            <b>{{Auth::guard('admin')->user()->name}} </b>
                         </div>
                     </span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                     <!-- <img class="rounded-circle header-profile-user" src="{{URL::asset('dash/assets/images/users/avatar-1.jpg')}}" alt="Header Avatar" /> -->
-                   
+
                     <img class="rounded-circle header-profile-user" src="{{URL::asset('dash/assets/images/users/avatar-1.jpg')}}" alt="" width="100%">
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">

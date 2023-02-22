@@ -292,6 +292,7 @@ class Customer extends Model
         return self::select('customers.*');
     }
 
+
     /**
      * Items per page.
      *
@@ -316,6 +317,9 @@ class Customer extends Model
             $query = $query->where('customers.admin_id', '=', $request->admin_id);
         }
     }
+
+
+
 
     /**
      * Search items.
@@ -711,18 +715,49 @@ class Customer extends Model
     {
         $user = new User();
 
-        DB::transaction(function () use ($request, &$user) {
-            // Customer
-            $this->fill($request->all());
-            $this->status = self::STATUS_ACTIVE;
-            $this->save();
 
-            // User
-            $user = new User();
-            $user->fill($request->all());
-            $user->password = bcrypt($request->password);
-            $user->customer()->associate($this);
-            $user->save();
+
+        DB::transaction(function () use ($request, &$user) {
+
+            $plan = OjaPlan::where('name', 'Free')->first();
+
+            if (!$request->referral_link == null) {
+                $this->validate($request, [
+                    'referral_link' => 'exists:users,affiliate_link'
+                ]);
+
+                $referrer_id = User::where('affiliate_link', $request->referral_link)->first();
+                // Customer
+                $this->fill($request->all());
+                $this->status = self::STATUS_ACTIVE;
+                $this->save();
+
+                // User
+                $user = new User();
+                $user->fill($request->all());
+                $user->password = bcrypt($request->password);
+                $user->user_type = 'User';
+                $user->affiliate_link = $this->referrer_id_generate(9);
+                $user->plan = $plan->id;
+                $user->referral_link = $referrer_id->id;
+                $user->customer()->associate($this);
+                $user->save();
+            } else {
+                // Customer
+                $this->fill($request->all());
+                $this->status = self::STATUS_ACTIVE;
+                $this->save();
+
+                // User
+                $user = new User();
+                $user->fill($request->all());
+                $user->password = bcrypt($request->password);
+                $user->user_type = 'User';
+                $user->affiliate_link = $this->referrer_id_generate(9);
+                $user->plan = $plan->id;
+                $user->customer()->associate($this);
+                $user->save();
+            }
         });
 
         // Important: return the newly created USER
@@ -732,6 +767,19 @@ class Customer extends Model
     public function sendingServers()
     {
         return $this->hasMany('App\Models\SendingServer');
+    }
+
+    function referrer_id_generate($input, $strength = 9)
+    {
+        $input = '01234567899876543210';
+        $input_length = strlen($input);
+        $random_string = '';
+        for ($i = 0; $i < $strength; $i++) {
+            $random_character = $input[mt_rand(0, $input_length - 1)];
+            $random_string .= $random_character;
+        }
+
+        return $random_string;
     }
 
     public function subAccounts()
