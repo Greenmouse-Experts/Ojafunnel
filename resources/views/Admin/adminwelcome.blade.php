@@ -91,7 +91,6 @@
                                             <p class="text-muted fw-medium">Vendor List</p>
                                             <h4 class="mb-0">50</h4>
                                         </div>
-
                                         <div class="flex-shrink-0 align-self-center">
                                             <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                                 <span class="avatar-title rounded-circle bg-warning">
@@ -203,21 +202,13 @@
                                 </div>
                             </div>
                         </div> -->
-                        <div class="col-md-12">
-                            <div class="card-body card">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <h4 class="card-title mb-3">View Users</h4>
-                                </div>
-                                <div class="col-lg-6"></div>
-                                <div class="col-lg-3 mb-3">
-                                    <input type="search" class="form-control" id="searchInput" placeholder="Search for ...">
-                                </div>
-                            </div>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="transactions-all-tab" role="tabpanel">
-                                        <div class="table-responsive" data-simplebar style="max-height: 330px;">
-                                            <table class="table align-middle table-nowrap">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">View Users</h4>
+                                        <div class="table-responsive">
+                                            <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                                 <thead class="tread">
                                                     <tr>
                                                         <th>S/N</th>
@@ -248,12 +239,14 @@
                                                         </td>
                                                         <td>
                                                             <ul class="list-unstyled hstack gap-1 mb-0">
-
-                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                                    <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
+                                                                    <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
+                                                                    <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
                                                                 </li>
                                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="bi bi-eye-slash"></i></a>
+                                                                    <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>
@@ -276,12 +269,14 @@
                                                         </td>
                                                         <td>
                                                             <ul class="list-unstyled hstack gap-1 mb-0">
-
-                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                                    <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
+                                                                    <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
+                                                                    <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
                                                                 </li>
                                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="bi bi-eye-slash"></i></a>
+                                                                    <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>
@@ -304,12 +299,14 @@
                                                         </td>
                                                         <td>
                                                             <ul class="list-unstyled hstack gap-1 mb-0">
-
-                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                                    <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
+                                                                    <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
+                                                                    <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
                                                                 </li>
                                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="bi bi-eye-slash"></i></a>
+                                                                    <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>
@@ -332,18 +329,19 @@
                                                         </td>
                                                         <td>
                                                             <ul class="list-unstyled hstack gap-1 mb-0">
-
-                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                                    <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
+                                                                    <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
+                                                                    <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
                                                                 </li>
                                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="bi bi-eye-slash"></i></a>
+                                                                    <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>
                                                     </tr>
                                                     <tr>
-
                                                         <td><a href="javascript: void(0);" class="text-body fw-bold">#15</a> </td>
                                                         <td>Daneil</td>
                                                         <td>
@@ -360,12 +358,14 @@
                                                         </td>
                                                         <td>
                                                             <ul class="list-unstyled hstack gap-1 mb-0">
-
-                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                                    <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
+                                                                    <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
+                                                                    <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
                                                                 </li>
                                                                 <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                                    <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="bi bi-eye-slash"></i></a>
+                                                                    <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>
@@ -384,17 +384,9 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <h4 class="card-title mb-3">Recent Transaction</h4>
-                                </div>
-                                <div class="col-lg-6"></div>
-                                <div class="col-lg-3 mb-3">
-                                    <input type="search" class="form-control" id="searchInput" placeholder="Search for ...">
-                                </div>
-                            </div>
+                            <h4 class="card-title mb-4">Recent Transaction</h4>
                             <div class="table-responsive">
-                                <table class="table align-middle table-nowrap mb-0">
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr>
                                             <th class="align-middle">Order ID</th>
@@ -424,9 +416,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
 
@@ -448,9 +442,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
 
@@ -472,9 +468,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -495,9 +493,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -518,9 +518,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -541,15 +543,16 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- end table-responsive -->
                         </div>
                     </div>
                 </div>

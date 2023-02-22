@@ -11,11 +11,11 @@ Skip to content
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">Vendor Details</h4>
+                        <h4 class="mb-sm-0 font-size-18">Transaction Details</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
-                                <li class="breadcrumb-item active">Vendor</li>
+                                <li class="breadcrumb-item active">Transaction</li>
                             </ol>
                         </div>
                     </div>
@@ -25,7 +25,7 @@ Skip to content
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Vendor Details</h4>
+                            <h4 class="font-600">Transaction Details</h4>
                         </div>
                     </div>
                 </div>

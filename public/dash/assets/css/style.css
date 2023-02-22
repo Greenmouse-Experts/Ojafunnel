@@ -5065,3 +5065,67 @@ textarea{
   font-weight: 500;
   padding: 2px 0px;
 }
+.support-module-banner{
+  margin: 10px 0px 0px;
+  height: 250px;
+  width: 100%;
+  border-radius: 20px;
+  background-image: linear-gradient(to bottom, rgba(4,0,36,.4), rgba(8, 8, 8, 0.9)),url('https://res.cloudinary.com/greenmouse-tech/image/upload/v1676986872/OjaFunnel-Images/supportbg_ahtoqz.png');
+  background-size: cover;
+  background-position: center;
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  color: white;
+  overflow: hidden;
+}
+.banner-contain{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  font-size: 26px;
+}
+.mobile-support{
+  position: absolute;
+  width: 400px;
+  height: inherit;
+  right: -5%;
+}
+.mobile-bg{
+  position: relative;
+}
+.support-option{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border:12px solid  rgba(127, 17, 224, .5);
+  display: grid;
+  place-content: center;
+  background-color:  #713f93;
+}
+.support-option:hover{
+  scale: 1.1;
+  transition: 0.5s;
+}
+.support-option a{
+  font-size: 20px;
+  font-weight: 600;
+  color: white
+}
+.support-option img{
+  width: 40%;
+  margin: auto;
+}
+@media (max-width:1000px) {
+  .banner-contain p{
+    position: relative;
+    z-index: 20;
+    font-size: 18px;
+  }
+  .mobile-support{
+    opacity: .3;
+    right: -12%;
+  }
+}

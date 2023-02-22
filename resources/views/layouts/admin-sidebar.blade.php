@@ -19,19 +19,20 @@
                 </li>
                 <li>
                     <a href="#" class="has-arrow">
-                        <i class="bi bi-plus-circle"></i>
-                        <span key="t-dashboards">Plans</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('add_plans')}}" key="t-full-calendar">Add Plan</a></li>
-                        <li><a href="{{route('manage_plans')}}" key="t-full-calendar">Manage Plan</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="{{route('subscriptions')}}">
                         <i class="bi bi-person-check"></i>
                         <span key="t-dashboards">Subscriptions</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('admin.subcribers')}}" key="t-full-calendar">Subscribers</a></li>
+                        <li><a href="{{route('admin.unscribers')}}" key="t-full-calendar">Unsubscribers</a></li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Plans</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="{{route('add_plans')}}" key="t-full-calendar">Add Plan</a></li>
+                                <li><a href="{{route('manage_plans')}}" key="t-full-calendar">Manage Plan</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#" class="has-arrow">
@@ -44,12 +45,12 @@
                         <li><a href="#" key="t-full-calendar">View Automation Campaign</a></li>
                     </ul>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="{{route('vendorlist')}}">
                         <i class="bi bi-card-checklist"></i>
                         <span key="t-dashboards">Vendor list</span>
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="{{route('affiliateList')}}">
                         <i class="bi bi-view-list"></i>
@@ -68,11 +69,9 @@
                         <span key="t-chat">Ecommerce</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('addProduct')}}">Add Product</a></li>
-                        <li><a href="{{route('product')}}">View Store</a></li>
-                        <li><a href="{{route('viewCart')}}">View Cart</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">Product Details</a></li>
+                        <li><a href="{{route('storeList')}}">Store List</a></li>
+                        <li><a href="{{route('productList')}}">Product List</a></li>
+                        <li><a href="{{route('salesList')}}">Sales List</a></li>
                     </ul>
                 </li>
                 <li>
@@ -113,7 +112,7 @@
                         <span key="t-chat">Learning Management</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#" key="t-tui-calendar">View Course</a></li>
+                        <li><a href="{{route('viewCourse')}}" key="t-tui-calendar">View Courses</a></li>
                     </ul>
                 </li>
                 <li>
@@ -130,7 +129,7 @@
                 </li>
                 <li>
                     <a href="#" class="has-arrow">
-                    <i class="bi bi-sliders2"></i>
+                        <i class="bi bi-sliders2"></i>
                         <span key="t-dashboards">Settings</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
