@@ -74,7 +74,6 @@
                                 <h5 class="mb-0">₦{{number_format(Auth::user()->wallet, 2)}}</h5> <button data-bs-toggle="modal" data-bs-target="#emailConfirm">Deposit Now</button>
                             </div>
                         </div>
-
                         <div class="dropdown-divider"></div>
                     </div>
                 </div>
@@ -228,7 +227,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
