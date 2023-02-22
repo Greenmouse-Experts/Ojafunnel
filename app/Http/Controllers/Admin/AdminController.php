@@ -14,111 +14,111 @@ class AdminController extends Controller
 
     public function view_users()
     {
-        return view('admin.user.view-users');
+        return view('Admin.user.view-users');
     }
 
     public function users_details()
     {
-        return view('admin.user.users-details');
+        return view('Admin.user.users-details');
     }
 
     public function add_plans()
     {
-        return view('admin.add-plans');
+        return view('Admin.add-plans');
     }
 
     public function manage_plans()
     {
-        return view('admin.manage-plans');
+        return view('Admin.manage-plans');
     }
 
     public function viewmessage()
     {
-        return view('admin.viewmessages');
+        return view('Admin.viewmessages');
     }
 
     public function transactions()
     {
-        return view('admin.transaction');
+        return view('Admin.transaction');
     }
 
     public function subscriptions()
     {
-        return view('admin.subscription.subscriptions');
+        return view('Admin.subscription.subscriptions');
     }
 
     public function unscribers()
     {
-        return view('admin.subscription.unscribers');
+        return view('Admin.subscription.unscribers');
     }
 
     public function security()
     {
-        return view('admin.securitySettings');
+        return view('Admin.securitySettings');
     }
 
     public function general()
     {
-        return view('admin.generalSettings');
+        return view('Admin.generalSettings');
     }
 
     public function subscribtions()
     {
-        return view('admin.subscribtions');
+        return view('Admin.subscribtions');
     }
 
     public function vendorlist()
     {
-        return view('admin.vendorList');
+        return view('Admin.vendorList');
     }
 
     public function trans_details()
     {
-        return view('admin.TransDetails');
+        return view('Admin.TransDetails');
     }
 
     public function affiliateList()
     {
-        return view('admin.affiliateList');
+        return view('Admin.affiliateList');
     }
 
     public function product()
     {
-        return view('admin.product');
+        return view('Admin.product');
     }
 
     public function addProduct()
     {
-        return view('admin.addProduct');
+        return view('Admin.addProduct');
     }
 
     public function viewCart()
     {
-        return view('admin.viewCart');
+        return view('Admin.viewCart');
     }
 
     public function view_course()
     {
-        return view('admin.lms.courses');
+        return view('Admin.lms.courses');
     }
 
     public function course_detail()
     {
-        return view('admin.lms.viewCourse');
+        return view('Admin.lms.viewCourse');
     }
 
     public function store_list()
     {
-        return view('admin.ecommerce.storeList');
+        return view('Admin.ecommerce.storeList');
     }
 
     public function product_list()
     {
-        return view('admin.ecommerce.productList');
+        return view('Admin.ecommerce.productList');
     }
 
     public function sales_list()
     {
-        return view('admin.ecommerce.salesList');
+        return view('Admin.ecommerce.salesList');
     }
 }
