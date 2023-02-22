@@ -107,5 +107,20 @@ class AdminController extends Controller
             return view('admin.lms.viewCourse');
         }
 
+        public function store_list()
+        {
+            return view('admin.ecommerce.storeList');
+        }
+
+        public function product_list()
+        {
+            return view('admin.ecommerce.productList');
+        }
+
+        public function sales_list()
+        {
+            return view('admin.ecommerce.salesList');
+        }
+
 
 }
