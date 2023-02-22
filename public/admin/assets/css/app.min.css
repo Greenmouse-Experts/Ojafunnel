@@ -762,7 +762,6 @@ body[data-sidebar=dark].vertical-collpsed .vertical-menu #sidebar-menu ul li.mm-
 }
 body[data-sidebar=dark] .mm-active {
     color: #714091!important;
-    background-color: F5E6FE;
 }
 body[data-sidebar=dark] .mm-active>a {
     color: #714091!important;
@@ -1151,10 +1150,10 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
 }
 }/*!
  * Waves v0.7.6
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014-2018 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014-2018 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE */.waves-effect {
     position: relative;
     cursor: pointer;

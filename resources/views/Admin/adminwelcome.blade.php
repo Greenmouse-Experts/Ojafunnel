@@ -91,7 +91,6 @@
                                             <p class="text-muted fw-medium">Vendor List</p>
                                             <h4 class="mb-0">50</h4>
                                         </div>
-
                                         <div class="flex-shrink-0 align-self-center">
                                             <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                                 <span class="avatar-title rounded-circle bg-warning">
@@ -417,9 +416,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
 
@@ -441,9 +442,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
 
@@ -465,9 +468,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -488,9 +493,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -511,9 +518,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -534,9 +543,11 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
+                                                <a href="{{route('trans.details')}}">
+                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light" >
                                                     View Details
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
                                     </tbody>

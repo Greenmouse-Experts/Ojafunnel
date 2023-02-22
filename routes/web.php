@@ -386,9 +386,10 @@ Route::get('/admin/transactions', [App\Http\Controllers\AdminController::class, 
 Route::get('/admin/subscriptions', [App\Http\Controllers\AdminController::class, 'subscriptions'])->name('subscriptions');
 Route::get('/admin/security', [App\Http\Controllers\AdminController::class, 'security'])->name('security');
 Route::get('/admin/general', [App\Http\Controllers\AdminController::class, 'general'])->name('general');
-Route::get('/admin/subscribtions', [App\Http\Controllers\AdminController::class, 'subscribtions'])->name('subscribtions');
+Route::get('/admin/subscribtions', [App\Http\Controllers\AdminController::class, 'subscribtions'])->name('admin.subcribers');
+Route::get('/admin/unscribers', [App\Http\Controllers\AdminController::class, 'unscribers'])->name('admin.unscribers');
 Route::get('/admin/vendorlist', [App\Http\Controllers\AdminController::class, 'vendorlist'])->name('vendorlist');
-Route::get('/admin/vendordetails', [App\Http\Controllers\AdminController::class, 'vendordetails'])->name('vendordetails');
+Route::get('/admin/trans_details', [App\Http\Controllers\AdminController::class, 'trans_details'])->name('trans.details');
 Route::get('/admin/affiliateList', [App\Http\Controllers\AdminController::class, 'affiliateList'])->name('affiliateList');
 Route::get('/admin/product', [App\Http\Controllers\AdminController::class, 'product'])->name('product');
 Route::get('/admin/addProduct', [App\Http\Controllers\AdminController::class, 'addProduct'])->name('addProduct');
