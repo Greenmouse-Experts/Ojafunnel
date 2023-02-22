@@ -6,29 +6,30 @@
  * Model class for admin
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Model\Subscription;
-use Acelle\Library\Traits\TrackJobs;
-use Acelle\Jobs\ImportBlacklistJob;
-use Acelle\Library\Traits\HasUid;
+use App\Models\Subscription;
+use App\Library\Traits\TrackJobs;
+use App\Jobs\ImportBlacklistJob;
+use App\Library\Traits\HasUid;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
     use TrackJobs;
     use HasUid;
@@ -41,7 +42,12 @@ class Admin extends Model
      * @var array
      */
     protected $fillable = [
-        'timezone', 'language_id', 'color_scheme', 'text_direction', 'menu_layout', 'theme_mode'
+        'timezone',
+        'language_id',
+        'color_scheme',
+        'text_direction',
+        'menu_layout',
+        'theme_mode'
     ];
 
     /**
@@ -51,37 +57,37 @@ class Admin extends Model
      */
     public function contact()
     {
-        return $this->belongsTo('Acelle\Model\Contact');
+        return $this->belongsTo('App\Models\Contact');
     }
 
     public function user()
     {
-        return $this->belongsTo('Acelle\Model\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function adminGroup()
     {
-        return $this->belongsTo('Acelle\Model\AdminGroup');
+        return $this->belongsTo('App\Models\AdminGroup');
     }
 
     public function customers()
     {
-        return $this->hasMany('Acelle\Model\Customer');
+        return $this->hasMany('App\Models\Customer');
     }
 
     public function templates()
     {
-        return $this->hasMany('Acelle\Model\Template');
+        return $this->hasMany('App\Models\Template');
     }
 
     public function language()
     {
-        return $this->belongsTo('Acelle\Model\Language');
+        return $this->belongsTo('App\Models\Language');
     }
 
     public function creator()
     {
-        return $this->belongsTo('Acelle\Model\User', 'creator_id');
+        return $this->belongsTo('App\Models\User', 'creator_id');
     }
 
     /**
@@ -119,16 +125,16 @@ class Admin extends Model
     public static function filter($request)
     {
         $query = self::select('admins.*')
-                        ->join('users', 'users.id', '=', 'admins.user_id')
-                        ->leftJoin('admin_groups', 'admin_groups.id', '=', 'admins.admin_group_id');
+            ->join('users', 'users.id', '=', 'admins.user_id')
+            ->leftJoin('admin_groups', 'admin_groups.id', '=', 'admins.admin_group_id');
 
         // Keyword
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('users.first_name', 'like', '%'.$keyword.'%')
-                        ->orWhere('admin_groups.name', 'like', '%'.$keyword.'%')
-                        ->orWhere('users.last_name', 'like', '%'.$keyword.'%');
+                    $q->orwhere('users.first_name', 'like', '%' . $keyword . '%')
+                        ->orWhere('admin_groups.name', 'like', '%' . $keyword . '%')
+                        ->orWhere('users.last_name', 'like', '%' . $keyword . '%');
                 });
             }
         }
@@ -194,7 +200,7 @@ class Admin extends Model
         if (!empty($this->color_scheme)) {
             return $this->color_scheme;
         } else {
-            return \Acelle\Model\Setting::get('backend_scheme');
+            return \App\Models\Setting::get('backend_scheme');
         }
     }
 
@@ -247,12 +253,41 @@ class Admin extends Model
      */
     public function getAllCustomers()
     {
-        $query = \Acelle\Model\Customer::getAll();
+        $query = \App\Models\Customer::getAll();
+        //$query = $query->latest()->get();
+        // if (!$this->user->can('readAll', new \App\Models\Customer())) {
+        //     $query = $query->where('customers.admin_id', '=', $this->id);
+        // }
 
-        if (!$this->user->can('readAll', new \Acelle\Model\Customer())) {
-            $query = $query->where('customers.admin_id', '=', $this->id);
-        }
+        return $query;
+    }
 
+    public function getAllCustomerLists()
+    {
+
+        return $this->getAllCustomers()->latest()->get();
+
+    }
+
+    public function getAllStores()
+    {
+        $query = \App\Models\Store::getAll();
+        $query = $query->latest()->get();
+        // if (!$this->user->can('readAll', new \App\Models\Customer())) {
+        //     $query = $query->where('customers.admin_id', '=', $this->id);
+        // }
+
+        return $query;
+    }
+
+    public function getAllActiveCustomers()
+    {
+        $query = \App\Models\Customer::getAll();
+
+        // if (!$this->user->can('readAll', new \App\Models\Customer())) {
+        //     $query = $query->where('customers.admin_id', '=', $this->id);
+        // }
+        $query = $query->where('status', 'active');
         return $query;
     }
 
@@ -273,7 +308,7 @@ class Admin extends Model
      */
     public function getAllSubscriptions()
     {
-        if ($this->user->can('readAll', new \Acelle\Model\Customer())) {
+        if ($this->user->can('readAll', new \App\Models\Customer())) {
             $query = Subscription::select('subscriptions.*')->leftJoin('customers', 'customers.id', '=', 'subscriptions.customer_id');
         } else {
             $query = Subscription::select('subscriptions.*')
@@ -281,8 +316,8 @@ class Admin extends Model
                 ->where('customers.admin_id', '=', $this->id);
             /* ERROR
             $query = $query->where(function ($q) {
-                $q->orwhere('customers.admin_id', '=', $this->id)
-                    ->orWhere('subscriptions.admin_id', '=', $this->id);
+            $q->orwhere('customers.admin_id', '=', $this->id)
+            ->orWhere('subscriptions.admin_id', '=', $this->id);
             });
             */
         }
@@ -336,7 +371,7 @@ class Admin extends Model
     public function getLanguageCodeFull()
     {
         $region_code = $this->language->region_code ? strtoupper($this->language->region_code) : strtoupper($this->language->code);
-        return is_object($this->language) ? ($this->language->code.'-'.$region_code) : null;
+        return is_object($this->language) ? ($this->language->code . '-' . $region_code) : null;
     }
 
     /**
@@ -346,10 +381,10 @@ class Admin extends Model
      */
     public function getLogs()
     {
-        $query = \Acelle\Model\Log::select('logs.*')->join('customers', 'customers.id', '=', 'logs.customer_id')
+        $query = \App\Models\Log::select('logs.*')->join('customers', 'customers.id', '=', 'logs.customer_id')
             ->leftJoin('admins', 'admins.id', '=', 'customers.admin_id');
 
-        if (!$this->user->can('readAll', new \Acelle\Model\Customer())) {
+        if (!$this->user->can('readAll', new \App\Models\Customer())) {
             $query = $query->where('admins.id', '=', $this->id);
         }
 
@@ -361,7 +396,7 @@ class Admin extends Model
      */
     public function createCustomerAccount()
     {
-        $customer = \Acelle\Model\Customer::newCustomer();
+        $customer = \App\Models\Customer::newCustomer();
         $customer->admin_id = $this->id;
         $customer->language_id = $this->language_id;
         // [moved] $customer->first_name = $this->first_name;
@@ -388,7 +423,7 @@ class Admin extends Model
      *
      * @return bool
      */
-    public function can($action, $item=null)
+    public function can($action, $item = null)
     {
         if ($item) {
             return $this->user->can($action, [$item, 'admin']);
@@ -434,7 +469,7 @@ class Admin extends Model
      */
     public function getAllPlans()
     {
-        return \Acelle\Model\Plan::active();
+        return \App\Models\Plan::active();
     }
 
     /**
@@ -444,10 +479,10 @@ class Admin extends Model
      */
     public function getAllAdmins()
     {
-        $query = \Acelle\Model\Admin::getAll()
-            ->where('admins.status', '=', \Acelle\Model\Admin::STATUS_ACTIVE);
+        $query = \App\Models\Admin::getAll()
+            ->where('admins.status', '=', \App\Models\Admin::STATUS_ACTIVE);
 
-        if (!$this->can('readAll', new \Acelle\Model\Admin())) {
+        if (!$this->can('readAll', new \App\Models\Admin())) {
             $query = $query->where('admins.creator_id', '=', $this->user_id);
         }
 
@@ -461,9 +496,9 @@ class Admin extends Model
      */
     public function getAllAdminGroups()
     {
-        $query = \Acelle\Model\AdminGroup::getAll();
+        $query = \App\Models\AdminGroup::getAll();
 
-        if (!$this->can('readAll', new \Acelle\Model\AdminGroup())) {
+        if (!$this->can('readAll', new \App\Models\AdminGroup())) {
             $query = $query->where('admin_groups.creator_id', '=', $this->user_id);
         }
 
@@ -477,9 +512,9 @@ class Admin extends Model
      */
     public function getAllSendingServers()
     {
-        $query = \Acelle\Model\SendingServer::getAll();
+        $query = \App\Models\SendingServer::getAll();
 
-        if (!$this->can('readAll', new \Acelle\Model\SendingServer())) {
+        if (!$this->can('readAll', new \App\Models\SendingServer())) {
             $query = $query->where('sending_servers.admin_id', '=', $this->id);
         }
 
@@ -496,9 +531,9 @@ class Admin extends Model
      */
     public function getAllCampaigns()
     {
-        $query = \Acelle\Model\Campaign::getAll();
+        $query = \App\Models\Campaign::getAll();
 
-        if (!$this->can('readAll', new \Acelle\Model\Customer())) {
+        if (!$this->can('readAll', new \App\Models\Customer())) {
             $query = $query->leftJoin('customers', 'customers.id', '=', 'campaigns.customer_id')
                 ->where('customers.admin_id', '=', $this->id);
         }
@@ -513,9 +548,9 @@ class Admin extends Model
      */
     public function getAllLists()
     {
-        $query = \Acelle\Model\MailList::getAll();
+        $query = \App\Models\MailList::getAll();
 
-        if (!$this->can('readAll', new \Acelle\Model\Customer())) {
+        if (!$this->can('readAll', new \App\Models\Customer())) {
             $query = $query->leftJoin('customers', 'customers.id', '=', 'mail_lists.customer_id')
                 ->where('customers.admin_id', '=', $this->id);
         }
@@ -532,7 +567,7 @@ class Admin extends Model
     {
         $query = $this->getAllSendingServers();
 
-        $query = $query->whereIn('type', \Acelle\Model\SendingServer::getSubAccountTypes());
+        $query = $query->whereIn('type', \App\Models\SendingServer::getSubAccountTypes());
 
         return $query;
     }
@@ -576,7 +611,7 @@ class Admin extends Model
     public static function newAdmin()
     {
         $admin = new self();
-        $admin->menu_layout = \Acelle\Model\Setting::get('layout.menu_bar');
+        $admin->menu_layout = \App\Models\Setting::get('layout.menu_bar');
 
         return $admin;
     }

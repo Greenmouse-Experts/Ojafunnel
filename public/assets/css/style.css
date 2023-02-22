@@ -524,6 +524,19 @@ header nav .offcanvas-header button i {
     transition: 0.6s;
 }
 
+.register .sign .sign-div select {
+    display: block;
+    width: 100%;
+    margin-top: -10px;
+    padding: 10px 5px 10px 40px;
+    border-radius: 3px;
+    border: 1px solid #70418F;
+    letter-spacing: 0.8px;
+    background-color: #fff;
+    font-size: 16px;
+    transition: 0.6s;
+}
+
 .register .sign .sign-div .toggle-password {
     float: right;
     position: relative;

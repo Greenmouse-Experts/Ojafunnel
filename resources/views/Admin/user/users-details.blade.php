@@ -1,6 +1,10 @@
 @extends('layouts.admin-frontend')
 
 @section('page-content')
+
+@php
+    $user = $customer->user;
+@endphp
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -10,11 +14,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">All Details</h4>
+                        <h4 class="mb-sm-0 font-size-18">{{$user->username}} Details</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
-                                <li class="breadcrumb-item active">All Details</li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
+                                <li class="breadcrumb-item active">{{$user->username}} Details</li>
                             </ol>
                         </div>
                     </div>
@@ -24,7 +28,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">User Details</h4>
+                            <h4 class="font-600">{{$user->username}} Details</h4>
                             <p>
                                 Connect the tools that power your business
                             </p>
@@ -78,8 +82,8 @@
                                                 </div>
                                                 <div class="text-center mb-3">
                                                     <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-sm rounded-circle" />
-                                                    <h6 class="font-size-15 mt-3 mb-1">Hamzat Abdulazeez</h6>
-                                                    <p class="mb-0 text-muted">greenmousetest@gmail.com</p>
+                                                    <h6 class="font-size-15 mt-3 mb-1">{{$user->first_name}} {{$user->last_name}}</h6>
+                                                    <p class="mb-0 text-muted">{{$user->email}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,31 +97,31 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th scope="row">First Name :</th>
-                                                                <td>Hamzat</td>
+                                                                <td>{{$user->first_name}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Last Name :</th>
-                                                                <td>Abdulazeez Adeleke</td>
+                                                                <td>{{$user->last_name}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Username:</th>
-                                                                <td>Hamzat</td>
+                                                                <td>{{$user->username}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">E-mail :</th>
-                                                                <td>greenmousetest@gmail.com</td>
+                                                                <td>{{$user->email}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Mobile :</th>
-                                                                <td>(123) 123 1234</td>
+                                                                <td>{{$user->phone_number}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Referral Code :</th>
-                                                                <td>None</td>
+                                                                <td>{{$user->affiliate_link}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Subscribers:</th>
-                                                                <td>Free</td>
+                                                                <td>{{$user->planName($user->plan)}}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -171,7 +175,16 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-
+                                                            @foreach ($user->store as $item)
+                                                                <tr>
+                                                                    <td>{{$loop->iteration}}</td>
+                                                                    <td>{{$item->name}}</td>
+                                                                    <td>{{$item->product->count()}}</td>
+                                                                    <td>{{$item->order->count()}}</td>
+                                                                    <td>{{$item->link}}</td>
+                                                                    <td>{{$item->created_at->format('D d M, Y')}}</td>
+                                                                </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>

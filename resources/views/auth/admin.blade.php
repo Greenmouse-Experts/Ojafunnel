@@ -16,7 +16,7 @@
         <script type="text/javascript">
             window.setTimeout(function() {
                 $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function(){
-                    $(this).remove(); 
+                    $(this).remove();
                 });
             }, 8000);
         </script>
@@ -46,16 +46,38 @@
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" draggable="false" alt="">
                                             </a>
                                             <h4 class="text-center"> Admin Login</h4>
-                                            <form class="sign-div" action="{{ route('user.login')}}" method="post">
-                                               
+                                            @if(\Session::get('success'))
+                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                    <div class="alert-body">
+                                                        {{ \Session::get('success') }}
+                                                    </div>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            @endif
+                                                {{ \Session::forget('success') }}
+                                            @if(\Session::get('error'))
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    <div class="alert-body">
+                                                        {{ \Session::get('error') }}
+                                                    </div>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            @endif
+                                            <form class="sign-div" action="{{route('adminLoginPost')}}" method="post">
+                                                @csrf
                                                 <div class="row">
                                                     <!--Email-->
                                                     <div class="col-lg-12">
                                                         <label>Email</label>
                                                         <div class="row">
                                                             <div class="col-md-12 mb-4">
-                        ></i>
+                                                                <i class="bi bi-envelope"></i>
                                                                 <input type="email" placeholder="Enter your email" name="email" class="input" required>
+                                                                @if ($errors->has('email'))
+                                                                    <span class="help-block font-red-mint">
+                                                                        <strong>{{ $errors->first('email') }}</strong>
+                                                                    </span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -66,15 +88,20 @@
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-file-lock"></i>
                                                                 <input type="password" placeholder="Enter your password" name="password" class="input">
+                                                                @if ($errors->has('password'))
+                                                                    <span class="help-block font-red-mint">
+                                                                        <strong>{{ $errors->first('password') }}</strong>
+                                                                    </span>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12 mb-2">
-                                                        <button>
+                                                        <button type="submit">
                                                             Log In
                                                         </button>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </form>
                                         </div>
@@ -83,7 +110,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4">
-                           
+
                         </div>
                     </div>
                 </div>
@@ -97,4 +124,6 @@
             });
         });
     </script>
+
+    <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
 </html>
