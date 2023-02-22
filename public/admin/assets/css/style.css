@@ -1970,3 +1970,7 @@ textarea{
   color: #fff !important;
   border: none !important;
 }
+.course-details{
+  background-color: white;
+  padding: 20px 20px;
+}

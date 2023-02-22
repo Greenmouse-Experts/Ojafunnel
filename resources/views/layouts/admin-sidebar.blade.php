@@ -69,11 +69,9 @@
                         <span key="t-chat">Ecommerce</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('addProduct')}}">Add Product</a></li>
-                        <li><a href="{{route('product')}}">View Store</a></li>
-                        <li><a href="{{route('viewCart')}}">View Cart</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">Product Details</a></li>
+                        <li><a href="{{route('storeList')}}">Store List</a></li>
+                        <li><a href="{{route('productList')}}">Product List</a></li>
+                        <li><a href="{{route('salesList')}}">Sales List</a></li>
                     </ul>
                 </li>
                 <li>
@@ -114,7 +112,7 @@
                         <span key="t-chat">Learning Management</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#" key="t-tui-calendar">View Course</a></li>
+                        <li><a href="{{route('viewCourse')}}" key="t-tui-calendar">View Courses</a></li>
                     </ul>
                 </li>
                 <li>

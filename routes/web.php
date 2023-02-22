@@ -378,7 +378,7 @@ Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlo
 // Admin Login
 Route::get('/admin/welcome', [App\Http\Controllers\AdminController::class, 'adminwelcome'])->name('adminwelcome');
 Route::get('/admin/view_users', [App\Http\Controllers\AdminController::class, 'view_users'])->name('view_users');
-Route::get('/admin/users-details', [App\Http\Controllers\AdminController::class, 'users_details'])->name('users.details');
+Route::get('/admin/view_users/users-details', [App\Http\Controllers\AdminController::class, 'users_details'])->name('users.details');
 Route::get('/admin/add_plans', [App\Http\Controllers\AdminController::class, 'add_plans'])->name('add_plans');
 Route::get('/admin/manage_plans', [App\Http\Controllers\AdminController::class, 'manage_plans'])->name('manage_plans');
 Route::get('/admin/viewmessage', [App\Http\Controllers\AdminController::class, 'viewmessage'])->name('viewmessage');
@@ -394,3 +394,9 @@ Route::get('/admin/product', [App\Http\Controllers\AdminController::class, 'prod
 Route::get('/admin/addProduct', [App\Http\Controllers\AdminController::class, 'addProduct'])->name('addProduct');
 Route::get('/admin/productDetails', [App\Http\Controllers\AdminController::class, 'productDetails'])->name('productDetails');
 Route::get('/admin/viewCart', [App\Http\Controllers\AdminController::class, 'viewCart'])->name('viewCart');
+Route::get('/admin/view-course', [App\Http\Controllers\AdminController::class, 'view_course'])->name('viewCourse');
+Route::get('/admin/view-course/course-detail', [App\Http\Controllers\AdminController::class, 'course_detail'])->name('courseDetail');
+Route::get('/admin/ecommerce/store-list', [App\Http\Controllers\AdminController::class, 'store_list'])->name('storeList');
+Route::get('/admin/ecommerce/product-list', [App\Http\Controllers\AdminController::class, 'product_list'])->name('productList');
+Route::get('/admin/ecommerce/sales-list', [App\Http\Controllers\AdminController::class, 'sales_list'])->name('salesList');
+
