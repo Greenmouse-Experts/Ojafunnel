@@ -27,8 +27,12 @@
             <!-- main content -->
 
 
-            <div class="d-lg-flex" id="app">
-                <chatroom-component :userprop="{{ Auth::user() }}"></chatroom-component>
+            <!-- <div class="d-lg-flex" id="app">
+                <example-component :userprop="{{ Auth::user() }}"></example-component>
+            </div> -->
+
+            <div id="app">
+                <example-component></example-component>
             </div>
             
             <!-- <div >
