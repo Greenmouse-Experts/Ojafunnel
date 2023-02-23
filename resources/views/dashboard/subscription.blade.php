@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <h4 class="card-title mb-3">Subscriptions</h4>
                             <div class="table-responsive mt-2">
-                                <table class="table table-hover datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <table id="datatable-buttons" class="table table-hover datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
                                             <th scope="col">Date</th>

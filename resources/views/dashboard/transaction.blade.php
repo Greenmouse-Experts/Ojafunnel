@@ -32,9 +32,10 @@
                                 <div class="tab-pane active" id="all-order" role="tabpanel">
 
                                     <div class="table-responsive mt-2">
-                                        <table class="table table-hover datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <table id="datatable-buttons" class="table table-hover datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                             <thead>
                                                 <tr>
+                                                    <th scope="col">S/N</th>
                                                     <th scope="col">Transaction Date</th>
                                                     <th scope="col">Amount</th>
                                                     <th scope="col">Transaction Reference No</th>
@@ -46,15 +47,12 @@
                                             @foreach($transactions as $transaction)
                                             <tbody>
                                                 <tr>
+                                                    <td>{{$loop->iteration}}</td>
                                                     <td>{{$transaction->created_at->toDayDateTimeString()}}</td>
                                                     <td>₦{{number_format($transaction->amount, 2)}}</td>
                                                     <td>{{$transaction->reference}}</td>
                                                     <td>
-                                                        @if($transaction->status == "Top Up" OR $transaction->status == "Referral Bonus")
                                                         <span class="badge bg-success font-size-10">{{$transaction->status}} <i class="mdi mdi-arrow-up me-1"></i></span>
-                                                        @else
-                                                        <span class="badge bg-danger font-size-10">{{$transaction->status}} <i class="mdi mdi-arrow-down me-1"></i></span>
-                                                        @endif
                                                     </td>
                                                 </tr>
                                             </tbody>

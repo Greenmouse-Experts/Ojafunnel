@@ -49,7 +49,12 @@ class AdminController extends Controller
 
         public function subscriptions()
         {
-            return view('admin.subscriptions');
+            return view('admin.subscription.subscriptions');
+        }
+
+        public function unscribers()
+        {
+            return view('admin.subscription.unscribers');
         }
 
         public function security()
@@ -64,7 +69,7 @@ class AdminController extends Controller
 
         public function subscribtions()
         {
-            return view('admin.subscribtions');
+            return view('admin.subscription.subscriptions');
         }
 
         public function vendorlist()
@@ -72,9 +77,9 @@ class AdminController extends Controller
             return view('admin.vendorList');
         }
 
-        public function vendordetails()
+        public function trans_details()
         {
-            return view('admin.vendorDetails');
+            return view('admin.TransDetails');
         }
 
         public function affiliateList()
@@ -127,10 +132,13 @@ class AdminController extends Controller
             return view('admin.ecommerce.salesList');
         }
 
-        public function sales_detail()
+        //  Email Campaing
+
+        public function manage_campaign()
         {
-            return view('admin.ecommerce.salesDetail');
+            return view('admin.emailmarketing.manage-campaign');
         }
+
 
 
 }

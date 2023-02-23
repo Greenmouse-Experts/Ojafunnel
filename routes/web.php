@@ -38,6 +38,37 @@ Route::get('assets/{dirname}/{basename}', [
     }
 ])->name('public_assets');
 
+// Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+//     Route::get('/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'getLogin'])->name('adminLogin');
+//     Route::post('/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'postLogin'])->name('adminLoginPost');
+
+//     Route::group(
+//         ['middleware' => 'adminauth'],
+//         function () {
+//             Route::get(
+//                 '/dashboard',
+//                 function () {
+//                         return view('Admin.adminwelcome');
+//                     }
+//             )->name('adminDashboard');
+//         }
+//     );
+// });
+
+// Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+//     Route::get('/login', [Admin\AdminAuthController::class, 'getLogin'])->name('adminLogin');
+//     Route::post('/login', [Admin\AdminAuthController::class, 'postLogin'])->name('adminLoginPost');
+//     Route::get('/logout', [Admin\AdminAuthController::class, 'logout'])->name('adminLogout');
+
+//     Route::group(
+//         ['prefix' => 'admin', 'middleware' => 'adminauth'],
+//         function () {
+//             // Admin Dashboard
+//             Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
+//         }
+//     );
+// });
+
 // Route::domain(config('app.domain_url'))->group(function() {
 Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
 // Faqs
@@ -305,7 +336,7 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/create-course', [App\Http\Controllers\DashboardController::class, 'create_course'])->name('user.create.course');
                         Route::get('/shop-course', [App\Http\Controllers\DashboardController::class, 'shop'])->name('user.shop.course');
                         Route::get('/create-course/start', [App\Http\Controllers\DashboardController::class, 'create_course_start'])->name('user.create.course.start');
-                        Route::get('/my-cart',[App\Http\Controllers\DashboardController::class, 'my_cart'])->name('user.my.cart');
+                        Route::get('/my-cart', [App\Http\Controllers\DashboardController::class, 'my_cart'])->name('user.my.cart');
                         Route::get('/create-course/course-content/{id}', [App\Http\Controllers\DashboardController::class, 'course_content'])->name('user.course.content');
                         Route::get('/create-shop', [App\Http\Controllers\DashboardController::class, 'create_shop'])->name('user.create.shop.course');
                         Route::get('/view-shop', [App\Http\Controllers\DashboardController::class, 'view_shops'])->name('user.view.course.shops');
@@ -361,6 +392,7 @@ Route::prefix('{username}')->group(function () {
             Route::prefix('/support')->group(
                 function () {
                         Route::get('/index', [App\Http\Controllers\DashboardController::class, 'main_support'])->name('user.main.support');
+                        Route::get('/chat', [App\Http\Controllers\DashboardController::class, 'support_chat'])->name('user.main.support.chat');
                     }
             );
         }
@@ -373,7 +405,7 @@ Route::post('/general/builder/upload/file', [App\Http\Controllers\PageController
 
 
 // Admin Login
-Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlogin'])->name('adminlogin');
+//Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlogin'])->name('adminlogin');
 
 // Admin Login
 Route::get('/admin/welcome', [App\Http\Controllers\AdminController::class, 'adminwelcome'])->name('adminwelcome');
@@ -386,9 +418,10 @@ Route::get('/admin/transactions', [App\Http\Controllers\AdminController::class, 
 Route::get('/admin/subscriptions', [App\Http\Controllers\AdminController::class, 'subscriptions'])->name('subscriptions');
 Route::get('/admin/security', [App\Http\Controllers\AdminController::class, 'security'])->name('security');
 Route::get('/admin/general', [App\Http\Controllers\AdminController::class, 'general'])->name('general');
-Route::get('/admin/subscribtions', [App\Http\Controllers\AdminController::class, 'subscribtions'])->name('subscribtions');
+Route::get('/admin/subscribtions', [App\Http\Controllers\AdminController::class, 'subscribtions'])->name('admin.subcribers');
+Route::get('/admin/unscribers', [App\Http\Controllers\AdminController::class, 'unscribers'])->name('admin.unscribers');
 Route::get('/admin/vendorlist', [App\Http\Controllers\AdminController::class, 'vendorlist'])->name('vendorlist');
-Route::get('/admin/vendordetails', [App\Http\Controllers\AdminController::class, 'vendordetails'])->name('vendordetails');
+Route::get('/admin/trans_details', [App\Http\Controllers\AdminController::class, 'trans_details'])->name('trans.details');
 Route::get('/admin/affiliateList', [App\Http\Controllers\AdminController::class, 'affiliateList'])->name('affiliateList');
 Route::get('/admin/product', [App\Http\Controllers\AdminController::class, 'product'])->name('product');
 Route::get('/admin/addProduct', [App\Http\Controllers\AdminController::class, 'addProduct'])->name('addProduct');
@@ -400,5 +433,5 @@ Route::get('/admin/ecommerce/store-list', [App\Http\Controllers\AdminController:
 Route::get('/admin/ecommerce/product-list', [App\Http\Controllers\AdminController::class, 'product_list'])->name('productList');
 Route::get('/admin/ecommerce/product-detail', [App\Http\Controllers\AdminController::class, 'product_detail'])->name('productDetail');
 Route::get('/admin/ecommerce/sales-list', [App\Http\Controllers\AdminController::class, 'sales_list'])->name('salesList');
-Route::get('/admin/ecommerce/sales-detail', [App\Http\Controllers\AdminController::class, 'sales_detail'])->name('salesDetail');
-
+// Email Canpaign
+Route::get('/admin/email-marketing/manage', [App\Http\Controllers\AdminController::class, 'manage_campaign'])->name('admin.manage_campaign');

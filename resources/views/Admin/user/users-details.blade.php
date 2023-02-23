@@ -1,6 +1,10 @@
 @extends('layouts.admin-frontend')
 
 @section('page-content')
+
+@php
+    $user = $customer->user;
+@endphp
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -10,11 +14,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">All Details</h4>
+                        <h4 class="mb-sm-0 font-size-18">{{$user->username}} Details</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
-                                <li class="breadcrumb-item active">All Details</li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
+                                <li class="breadcrumb-item active">{{$user->username}} Details</li>
                             </ol>
                         </div>
                     </div>
@@ -24,7 +28,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">User Details</h4>
+                            <h4 class="font-600">{{$user->username}} Details</h4>
                             <p>
                                 Connect the tools that power your business
                             </p>
@@ -78,8 +82,8 @@
                                                 </div>
                                                 <div class="text-center mb-3">
                                                     <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-sm rounded-circle" />
-                                                    <h6 class="font-size-15 mt-3 mb-1">Hamzat Abdulazeez</h6>
-                                                    <p class="mb-0 text-muted">greenmousetest@gmail.com</p>
+                                                    <h6 class="font-size-15 mt-3 mb-1">{{$user->first_name}} {{$user->last_name}}</h6>
+                                                    <p class="mb-0 text-muted">{{$user->email}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,31 +97,31 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th scope="row">First Name :</th>
-                                                                <td>Hamzat</td>
+                                                                <td>{{$user->first_name}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Last Name :</th>
-                                                                <td>Abdulazeez Adeleke</td>
+                                                                <td>{{$user->last_name}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Username:</th>
-                                                                <td>Hamzat</td>
+                                                                <td>{{$user->username}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">E-mail :</th>
-                                                                <td>greenmousetest@gmail.com</td>
+                                                                <td>{{$user->email}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Mobile :</th>
-                                                                <td>(123) 123 1234</td>
+                                                                <td>{{$user->phone_number}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Referral Code :</th>
-                                                                <td>None</td>
+                                                                <td>{{$user->affiliate_link}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Subscribers:</th>
-                                                                <td>Free</td>
+                                                                <td>{{$user->planName($user->plan)}}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -128,37 +132,93 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="profile1" role="tabpanel">
-                                <p class="mb-0">
-                                    Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-                                    single-origin coffee squid. Exercitation +1 labore velit, blog
-                                    sartorial PBR leggings next level wes anderson artisan four loko
-                                    farm-to-table craft beer twee. Qui photo booth letterpress,
-                                    commodo enim craft beer mlkshk aliquip jean shorts ullamco ad
-                                    vinyl cillum PBR. Homo nostrud organic, assumenda labore
-                                    aesthetic magna delectus.
-                                </p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                                        <thead class="tread">
+                                                            <tr>
+                                                                <th>S/N</th>
+                                                                <th>Course Name</th>
+                                                                <th>Course Category</th>
+                                                                <th>Status</th>
+                                                                <th>Date Created</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane" id="messages1" role="tabpanel">
-                                <p class="mb-0">
-                                    Etsy mixtape wayfarers, ethical wes anderson tofu before they
-                                    sold out mcsweeney's organic lomo retro fanny pack lo-fi
-                                    farm-to-table readymade. Messenger bag gentrify pitchfork
-                                    tattooed craft beer, iphone skateboard locavore carles etsy
-                                    salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
-                                    Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh
-                                    mi whatever gluten-free carles.
-                                </p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                                        <thead class="tread">
+                                                            <tr>
+                                                                <th>S/N</th>
+                                                                <th>Store Name</th>
+                                                                <th>Number of Product</th>
+                                                                <th>Sales</th>
+                                                                <th>Store Link</th>
+                                                                <th>Date Created</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($user->store as $item)
+                                                                <tr>
+                                                                    <td>{{$loop->iteration}}</td>
+                                                                    <td>{{$item->name}}</td>
+                                                                    <td>{{$item->product->count()}}</td>
+                                                                    <td>{{$item->order->count()}}</td>
+                                                                    <td>{{$item->link}}</td>
+                                                                    <td>{{$item->created_at->format('D d M, Y')}}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane" id="settings1" role="tabpanel">
-                                <p class="mb-0">
-                                    Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
-                                    art party before they sold out master cleanse gluten-free squid
-                                    scenester freegan cosby sweater. Fanny pack portland seitan DIY,
-                                    art party locavore wolf cliche high life echo park Austin. Cred
-                                    vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                                    farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral,
-                                    mustache readymade keffiyeh craft.
-                                </p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                                        <thead class="tread">
+                                                            <tr>
+                                                                <th>S/N</th>
+                                                                <th>Affiliate Type</th>
+                                                                <th>Names of Referral</th>
+                                                                <th>Level</th>
+                                                                <th>Commission</th>
+                                                                <th>Joined Created</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

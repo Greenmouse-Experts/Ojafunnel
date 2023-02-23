@@ -30,7 +30,7 @@
                 <div class="col-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Manage Your Integrations </h4>
+                            <h4 class="font-500">Manage Your Integrations </h4>
                             <p>
                                 Connect the tools that power your business
                             </p>
@@ -55,13 +55,6 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    @if($integrations->isEmpty())
-                                    <tbody>
-                                        <tr>
-                                            <td class="align-enter text-dark font-15" colspan="4">No Integration Added.</td>
-                                        </tr>
-                                    </tbody>
-                                    @else
                                     @foreach($integrations as $key => $integration)
                                     <tbody>
                                         <tr>
@@ -456,7 +449,6 @@
                                         </tr>
                                     </tbody>
                                     @endforeach
-                                    @endif
                                 </table>
                             </div>
                         </div>

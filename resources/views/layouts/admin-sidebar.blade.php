@@ -6,7 +6,7 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
-                    <a href="{{route('adminwelcome')}}">
+                    <a href="{{route('adminDashboard')}}">
                         <i class="bi bi-grid"></i>
                         <span key="t-dashboards">Dashboard</span>
                     </a>
@@ -23,8 +23,8 @@
                         <span key="t-dashboards">Subscriptions</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('subscriptions')}}" key="t-full-calendar">Subscribers</a></li>
-                        <li><a href="#" key="t-full-calendar">Unsubscribers</a></li>
+                        <li><a href="{{route('admin.subcribers')}}" key="t-full-calendar">Subscribers</a></li>
+                        <li><a href="{{route('admin.unscribers')}}" key="t-full-calendar">Unsubscribers</a></li>
                         <li>
                             <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Plans</a>
                             <ul class="sub-menu" aria-expanded="true">
@@ -40,17 +40,9 @@
                         <span key="t-chat">Email Marketing</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#" key="t-tui-calendar">View Email Checker</a></li>
-                        <li><a href="#" key="t-full-calendar">View Email Campaign</a></li>
-                        <li><a href="#" key="t-full-calendar">View Automation Campaign</a></li>
+                        <li><a href="{{route('admin.manage_campaign')}}" key="t-full-calendar">Manage Campaign</a></li>
                     </ul>
                 </li>
-                <!-- <li>
-                    <a href="{{route('vendorlist')}}">
-                        <i class="bi bi-card-checklist"></i>
-                        <span key="t-dashboards">Vendor list</span>
-                    </a>
-                </li> -->
                 <li>
                     <a href="{{route('affiliateList')}}">
                         <i class="bi bi-view-list"></i>
@@ -75,12 +67,6 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="bi bi-receipt"></i>
-                        <span key="t-chat">Sales Analytics</span>
-                    </a>
-                </li>
-                <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-chat-dots"></i>
                         <span key="t-chat">Automation</span>
@@ -89,12 +75,6 @@
                         <li><a href="#" key="t-tui-calendar">SMS Automation</a></li>
                         <li><a href="#" key="t-tui-calendar">Whatsapp Automation</a></li>
                     </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="bi bi-bookmark"></i>
-                        <span key="t-chat">Affiliate Marketing </span>
-                    </a>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
