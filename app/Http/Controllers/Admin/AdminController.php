@@ -64,7 +64,7 @@ class AdminController extends Controller
 
     public function subscribtions()
     {
-        return view('Admin.subscribtions');
+        return view('Admin.subscription.subscriptions');
     }
 
     public function vendorlist()
@@ -122,7 +122,6 @@ class AdminController extends Controller
         return view('Admin.ecommerce.salesList');
     }
 
-<<<<<<< HEAD
     public function email_support()
     {
         return view('Admin.support.emailSupport');
@@ -141,7 +140,7 @@ class AdminController extends Controller
     public function whatsapp_automation()
     {
         return view('Admin.automation.whatsappAutomation');
-=======
+    }
     // EMAIL-MARKETING
 
     public function index()
@@ -177,6 +176,5 @@ class AdminController extends Controller
     public function create_new()
     {
         return view('Admin.emailmarketing.CreateNew');
->>>>>>> 6dcb438 (Lastest)
     }
 }
