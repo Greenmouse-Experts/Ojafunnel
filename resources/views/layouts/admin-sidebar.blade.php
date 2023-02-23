@@ -6,7 +6,7 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li>
-                    <a href="{{route('adminwelcome')}}">
+                    <a href="{{route('adminDashboard')}}">
                         <i class="bi bi-grid"></i>
                         <span key="t-dashboards">Dashboard</span>
                     </a>

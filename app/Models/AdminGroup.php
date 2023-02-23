@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,9 @@ class AdminGroup extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'options', 'permissions',
+        'name',
+        'options',
+        'permissions',
     ];
 
     /**
@@ -43,7 +45,7 @@ class AdminGroup extends Model
 
     public function creator()
     {
-        return $this->belongsTo('Acelle\Model\User', 'creator_id');
+        return $this->belongsTo('App\Models\User', 'creator_id');
     }
 
     /**
@@ -59,12 +61,12 @@ class AdminGroup extends Model
 
         $options = self::defaultOptions();
         foreach ($options as $type => $option) {
-            $rules['options.'.$type] = 'required';
+            $rules['options.' . $type] = 'required';
         }
 
         $permissions = self::defaultPermissions();
         foreach ($permissions as $type => $value) {
-            $rules['permissions.'.$type] = 'required';
+            $rules['permissions.' . $type] = 'required';
         }
 
         return $rules;
@@ -77,7 +79,7 @@ class AdminGroup extends Model
      */
     public function admins()
     {
-        return $this->hasMany('Acelle\Model\Admin');
+        return $this->hasMany('App\Models\Admin');
     }
 
     /**
@@ -92,7 +94,7 @@ class AdminGroup extends Model
 
         // Keyword
         if (!empty(trim($request->keyword))) {
-            $query = $query->where('name', 'like', '%'.$request->keyword.'%');
+            $query = $query->where('name', 'like', '%' . $request->keyword . '%');
         }
 
         if (!empty($request->creator_id)) {

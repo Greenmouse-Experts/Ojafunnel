@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendCodeResetPassword;
+use App\Models\Customer;
 use App\Models\OjaPlan;
 use App\Models\Plan;
 use App\Models\ResetCodePassword;
@@ -20,111 +21,175 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function register(Request $request) 
+    public function register(Request $request)
     {
-        $messages = [
-            'username.regex' => 'Username must not have space in between',
-            // 'password.regex' => 'Password must be more than 8 characters long, should contain at least 1 Uppercase, 1 Lowercase and  1 number',
-        ];
+        $customer = Customer::newCustomer();
 
-        $this->validate($request, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'min:5', 'max:100', 'regex:/^\S*$/u', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
-            'phone_number' => ['required', 'numeric'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            // 'g-recaptcha-response' => 'required|captcha',
-        ], $messages);
+        $user = new User();
+        if (!empty($request->old())) {
+            $customer->fill($request->old());
+            $user->fill($request->old());
+        }
 
-        if(!$request->referral_link == null)
-        {
-            $this->validate($request, [
-                'referral_link' => 'exists:users,affiliate_link'
-            ]);
+        // save posted data
+        if ($request->isMethod('post')) {
+            $user->fill($request->all());
+            $rules = $user->registerRules();
 
-            $referrer_id = User::where('affiliate_link', $request->referral_link)->first();
+            // Captcha check
+            // if (\Acelle\Model\Setting::get('registration_recaptcha') == 'yes') {
+            //     $success = \Acelle\Library\Tool::checkReCaptcha($request);
+            //     if (!$success) {
+            //         $rules['recaptcha_invalid'] = 'required';
+            //     }
+            // }
+
+            $this->validate($request, $rules);
 
             $plan = OjaPlan::where('name', 'Free')->first();
-
-            if($plan)
-            {
-                $user = User::create([
-                    'user_type' => 'User',
-                    'affiliate_link' => $this->referrer_id_generate(9),
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                    'username' => strtolower($request->username),
-                    'email' => $request->email,
-                    'phone_number' => $request->phone_number,
-                    'password' => Hash ::make($request->password),
-                    'referral_link' => $referrer_id->id,
-                    'plan' => $plan->id
-                ]);
-
-                $subscribe_amount = 10000;
-                $array = User::all();
-                $parent = $user->id;
-                
-                $this->getAncestors($array, $subscribe_amount, $parent);
-
+            // Okay, create it
+            if ($plan) {
+                $user = $customer->createAccountAndUser($request);
             } else {
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Admin yet to add plans! Try again later.'
                 ]);
             }
-            
-        } else {
-            $plan = OjaPlan::where('name', 'Free')->first();
 
-            if($plan)
-            {
-                $user = User::create([
-                    'user_type' => 'User',
-                    'affiliate_link' => $this->referrer_id_generate(7),
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                    'username' => strtolower($request->username),
-                    'email' => $request->email,
-                    'phone_number' => $request->phone_number,
-                    'password' => Hash ::make($request->password),
-                    'referral_link' => $request->referral_link,
-                    'plan' => $plan->id
-                ]);
+            // user email verification
+            if (true) {
+                // Send registration confirmation email
+                try {
+                    $code = mt_rand(100000, 999999);
+
+                    $user->update([
+                        'code' => $code
+                    ]);
+
+                    // Send email to user
+                    $user->notify(new SendVerificationCode($user));
+
+                    return redirect()->route('verify.account', Crypt::encrypt($user->email))->with([
+                        'type' => 'success',
+                        'message' => 'Registration Successful, Please verify your account!'
+                    ]);
+
+                } catch (\Exception $e) {
+                    return view('somethingWentWrong', ['message' => trans('messages.something_went_wrong_with_email_service') . ": " . $e->getMessage()]);
+                }
+
+                //return view('users.register_confirmation_notice');
+
+                // no email verification
             } else {
-                return back()->with([
-                    'type' => 'danger',
-                    'message' => 'Admin yet to add plans! Try again later.'
-                ]);
+                $user->setActivated();
+                return redirect()->route('login');
             }
         }
-        
-        $code = mt_rand(100000, 999999);
+        // $messages = [
+        //     'username.regex' => 'Username must not have space in between',
+        //     // 'password.regex' => 'Password must be more than 8 characters long, should contain at least 1 Uppercase, 1 Lowercase and  1 number',
+        // ];
 
-        $user->update([
-            'code' => $code
-        ]);
+        // $this->validate($request, [
+        //     'first_name' => ['required', 'string', 'max:255'],
+        //     'last_name' => ['required', 'string', 'max:255'],
+        //     'username' => ['required', 'min:5', 'max:100', 'regex:/^\S*$/u', 'unique:users'],
+        //     'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+        //     'phone_number' => ['required', 'numeric'],
+        //     'password' => ['required', 'string', 'min:8', 'confirmed'],
+        //     // 'g-recaptcha-response' => 'required|captcha',
+        // ], $messages);
 
-        // Send email to user
-        $user->notify(new SendVerificationCode($user));
+        // if(!$request->referral_link == null)
+        // {
+        //     $this->validate($request, [
+        //         'referral_link' => 'exists:users,affiliate_link'
+        //     ]);
 
-        return redirect()->route('verify.account', Crypt::encrypt($user->email))->with([
-            'type' => 'success',
-            'message' => 'Registration Successful, Please verify your account!'
-        ]); 
+        //     $referrer_id = User::where('affiliate_link', $request->referral_link)->first();
+
+        //     $plan = OjaPlan::where('name', 'Free')->first();
+
+        //     if($plan)
+        //     {
+        //         $user = User::create([
+        //             'user_type' => 'User',
+        //             'affiliate_link' => $this->referrer_id_generate(9),
+        //             'first_name' => $request->first_name,
+        //             'last_name' => $request->last_name,
+        //             'username' => strtolower($request->username),
+        //             'email' => $request->email,
+        //             'phone_number' => $request->phone_number,
+        //             'password' => Hash ::make($request->password),
+        //             'referral_link' => $referrer_id->id,
+        //             'plan' => $plan->id
+        //         ]);
+
+        //         $subscribe_amount = 10000;
+        //         $array = User::all();
+        //         $parent = $user->id;
+
+        //         $this->getAncestors($array, $subscribe_amount, $parent);
+
+        //     } else {
+        //         return back()->with([
+        //             'type' => 'danger',
+        //             'message' => 'Admin yet to add plans! Try again later.'
+        //         ]);
+        //     }
+
+        // } else {
+        //     $plan = OjaPlan::where('name', 'Free')->first();
+
+        //     if($plan)
+        //     {
+        //         $user = User::create([
+        //             'user_type' => 'User',
+        //             'affiliate_link' => $this->referrer_id_generate(7),
+        //             'first_name' => $request->first_name,
+        //             'last_name' => $request->last_name,
+        //             'username' => strtolower($request->username),
+        //             'email' => $request->email,
+        //             'phone_number' => $request->phone_number,
+        //             'password' => Hash ::make($request->password),
+        //             'referral_link' => $request->referral_link,
+        //             'plan' => $plan->id
+        //         ]);
+        //     } else {
+        //         return back()->with([
+        //             'type' => 'danger',
+        //             'message' => 'Admin yet to add plans! Try again later.'
+        //         ]);
+        //     }
+        // }
+
+        // $code = mt_rand(100000, 999999);
+
+        // $user->update([
+        //     'code' => $code
+        // ]);
+
+        // // Send email to user
+        // $user->notify(new SendVerificationCode($user));
+
+        // return redirect()->route('verify.account', Crypt::encrypt($user->email))->with([
+        //     'type' => 'success',
+        //     'message' => 'Registration Successful, Please verify your account!'
+        // ]);
     }
 
-    function referrer_id_generate($input, $strength = 9) 
+    function referrer_id_generate($input, $strength = 9)
     {
         $input = '01234567899876543210';
         $input_length = strlen($input);
         $random_string = '';
-        for($i = 0; $i < $strength; $i++) {
+        for ($i = 0; $i < $strength; $i++) {
             $random_character = $input[mt_rand(0, $input_length - 1)];
             $random_string .= $random_character;
         }
-    
+
         return $random_string;
     }
 
@@ -192,13 +257,13 @@ class AuthController extends Controller
                             'wallet' => $user_wallet->wallet + $earnings,
                             'ref_bonus' => $user_wallet->ref_bonus + $earnings,
                         ]);
-                        //create history
-                        Transaction::create([
-                            'user_id' => $entry->id,
-                            'amount' => $earnings,
-                            'reference' => 'referralbonus',
-                            'status' => 'Referral Bonus',
-                        ]);
+                    //create history
+                    Transaction::create([
+                        'user_id' => $entry->id,
+                        'amount' => $earnings,
+                        'reference' => 'referralbonus',
+                        'status' => 'Referral Bonus',
+                    ]);
                 }
 
                 if ($level == 5) {
@@ -256,8 +321,7 @@ class AuthController extends Controller
             'code' => ['required', 'numeric']
         ]);
 
-        if($user->code == $request->code)
-        {
+        if ($user->code == $request->code) {
             $user->email_verified_at = now();
             $user->code = null;
             $user->save();
@@ -276,11 +340,10 @@ class AuthController extends Controller
 
     public function user_login(Request $request)
     {
-        if($request->input('submit') == 'magic-link')
-        {
+        if ($request->input('submit') == 'magic-link') {
             $user = $this->loginViaMagicLink($request);
 
-            if(!$user){
+            if (!$user) {
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'User with this username/email does not exist.'
@@ -298,20 +361,20 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:8'],
             // 'g-recaptcha-response' => 'required|captcha',
         ]);
-      
+
         $input = $request->only(['email', 'password']);
 
         $user = User::query()->where('email', $request->email)
-                                ->orWhere('username', $request->email)->first();
-        
-        if ($user && !Hash::check($request->password, $user->password)){
+            ->orWhere('username', $request->email)->first();
+
+        if ($user && !Hash::check($request->password, $user->password)) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Incorrect Password!'
             ]);
         }
-        
-        if(!$user || !Hash::check($request->password, $user->password)) {
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return back()->with([
                 'type' => 'danger',
                 'message' => "Email/Username doesn't exist"
@@ -322,22 +385,22 @@ class AuthController extends Controller
         // if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
 
         // authentication attempt
-        if(auth()->attempt(array($fieldType => $input['email'], 'password' => $input['password']))) {
+        if (auth()->attempt(array($fieldType => $input['email'], 'password' => $input['password']))) {
 
-            if(!$user->email_verified_at){
+            if (!$user->email_verified_at) {
                 // Send email to user
                 $user->notify(new SendVerificationCode($user));
 
                 return redirect()->route('verify.account', Crypt::encrypt($user->email))->with([
                     'type' => 'success',
                     'message' => 'Registration Successful, Please verify your account!'
-                ]); 
+                ]);
             }
 
-            if($user->user_type == 'User'){
+            if ($user->user_type == 'User') {
                 return redirect()->route('user.dashboard', $user->username);
             }
-            
+
             Auth::logout();
 
             return back()->with([
@@ -359,7 +422,7 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('email', $request->email)
-                            ->orWhere('username', $request->email)->first();
+            ->orWhere('username', $request->email)->first();
 
         if ($user) {
             $user->notify(new SendMagicLinkNotification($user));
@@ -402,7 +465,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function password_reset_email($email) 
+    public function password_reset_email($email)
     {
         $email = Crypt::decrypt($email);
 
@@ -432,7 +495,7 @@ class AuthController extends Controller
                 ]);
             }
 
-            // find user's email 
+            // find user's email
             $user = User::firstWhere('email', $passwordReset->email);
 
             // update user password
@@ -440,7 +503,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            // delete current code 
+            // delete current code
             $passwordReset->delete();
 
             return redirect()->route('login')->with([
@@ -471,27 +534,27 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
         ]);
-        
+
         $input = $request->only(['email', 'password']);
-        
+
         $user = User::query()->where('email', $request->email)->first();
 
-        if ($user && !Hash::check($request->password, $user->password)){
+        if ($user && !Hash::check($request->password, $user->password)) {
             return back()->with('failure_report', 'Incorrect Password!');
         }
 
-        if(!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return back()->with('failure_report', 'Email does\'nt exist');
         }
 
         // authentication attempt
         if (auth()->attempt($input)) {
-            if($user->user_type == 'Administrator'){
+            if ($user->user_type == 'Administrator') {
                 return redirect()->route('admin.dashboard');
             }
-           
+
             return back()->with('failure_report', 'You are not an Administrator');
-                    
+
         } else {
             return back()->with('failure_report', 'User authentication failed.');
         }
