@@ -113,7 +113,7 @@
 
                             </p>
                             <div class="table-responsive">
-                                <table class="table mb-0">
+                                <table id="datatable-buttons" class="table mb-0">
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>

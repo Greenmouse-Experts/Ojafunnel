@@ -57,6 +57,9 @@
 </head>
 
 <body data-sidebar="dark" data-layout-mode="light">
+    @php
+        $admin = auth()->guard('admin')->user();
+    @endphp
     <!-- Alerts  Start-->
     <div style="position: fixed; top: 20px; right: 20px; z-index: 100000; width: auto;">
         @include('layouts.alerts')
@@ -67,7 +70,7 @@
         <!-- Header -->
         @includeIf('layouts.admin-header')
         <!-- Header Ends -->
-        
+
         <!-- Sidebar -->
         @includeIf('layouts.admin-sidebar')
         <!-- Sidebar Ends -->

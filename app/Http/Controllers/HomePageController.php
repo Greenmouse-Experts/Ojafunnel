@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\OjaPlan;
 use App\Models\Plan;
 use App\Models\User;
@@ -49,6 +50,8 @@ class HomePageController extends Controller
     // Sign Up
     public function signup()
     {
+        $customer = Customer::newCustomer();
+        $user = new User();
         if (request()->has('ref')) {
             session(['referrer' => request()->query('ref')]);
         }
@@ -57,7 +60,7 @@ class HomePageController extends Controller
 
         $referrer_id = $referrer ? $referrer->affiliate_link : null;
 
-        return view('auth.signup', compact('referrer_id'));
+        return view('auth.signup', compact('referrer_id', 'customer', 'user'));
     }
     // Email Verification
     public function emailverification()
@@ -131,22 +134,25 @@ class HomePageController extends Controller
     {
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://9r3xk3.api.infobip.com/sms/2/text/advanced',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => '{"messages":[{"destinations":[{"to":"08161215848"}],"from":"Ojafunnel","text":"This is a sample message"}]}',
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: {3e299022a25c9eb6c26d79bc0850dca3-39356585-14ef-4e9b-8e89-23ea015a616c}',
-                'Content-Type: application/json',
-                'Accept: application/json'
-            ),
-        ));
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => 'https://9r3xk3.api.infobip.com/sms/2/text/advanced',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => '{"messages":[{"destinations":[{"to":"08161215848"}],"from":"Ojafunnel","text":"This is a sample message"}]}',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: {3e299022a25c9eb6c26d79bc0850dca3-39356585-14ef-4e9b-8e89-23ea015a616c}',
+                    'Content-Type: application/json',
+                    'Accept: application/json'
+                ),
+            )
+        );
 
         $response = curl_exec($curl);
 

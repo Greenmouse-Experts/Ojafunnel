@@ -114,13 +114,6 @@
                                         {{-- <th scope="col">Unsubscribed</th> --}}
                                     </tr>
                                 </thead>
-                                @if($whatsappAutomations->isEmpty())
-                                    <tbody>
-                                        <tr>
-                                            <td class="align-enter text-dark font-15" colspan="8">No sms campaign added.</td>
-                                        </tr>
-                                    </tbody>
-                                @else
                                 @foreach($whatsappAutomations as $key => $campaign)
                                 <tbody>
                                     <tr>
@@ -181,7 +174,6 @@
                                     </tr>
                                 </tbody>
                                 @endforeach
-                                @endif
                             </table>
                         </div>
                     </div>

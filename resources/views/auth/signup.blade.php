@@ -17,7 +17,7 @@
         <script type="text/javascript">
             window.setTimeout(function() {
                 $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function(){
-                    $(this).remove(); 
+                    $(this).remove();
                 });
             }, 8000);
         </script>
@@ -113,6 +113,38 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                @include('helpers.form_control', [
+                                                    'type' => 'select',
+                                                    'class' => 'input',
+                                                    'name' => 'timezone',
+                                                    'value' => $customer->timezone,
+                                                    'options' => \App\Library\Tool::getTimezoneSelectOptions(),
+                                                    'include_blank' => trans('messages.choose'),
+                                                    'rules' => $user->registerRules()
+                                                ])
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                @include('helpers.form_control', [
+                                                    'type' => 'select',
+                                                    'name' => 'language_id',
+                                                    'label' => trans('messages.language'),
+                                                    'value' => $customer->language_id,
+                                                    'options' => App\Models\Language::getSelectOptions(),
+                                                    'include_blank' => trans('messages.choose'),
+                                                    'rules' => $user->registerRules()
+                                                ])
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!--Password-->
                                     <div class="col-lg-12">
                                         <label>Password</label>
@@ -164,7 +196,7 @@
             });
         </script>
          <script>
-            // Script for Show/Hide Password 
+            // Script for Show/Hide Password
             $(".toggle-password").click(function() {
             $(this).toggleClass("fa-eye fa-eye-slash");
             input = $(this).parent().find("input");
