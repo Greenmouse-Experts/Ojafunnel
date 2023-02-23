@@ -139,7 +139,7 @@
                                     @foreach(App\Models\Transaction::latest()->where('user_id', Auth::user()->id)->get()->take(5) as $transaction)
                                     <tbody>
                                         <tr>
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">{{$transaction->amount}}</a> </td>
+                                            <td><a href="javascript: void(0);" class="text-body fw-bold">{{$transaction->reference}}</a> </td>
                                             <td>
                                             {{$transaction->created_at->toDayDateTimeString()}}
                                             </td>
