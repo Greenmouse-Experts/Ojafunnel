@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\OjafunnelNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,17 +18,18 @@ class OjafunnelNotificationController extends Controller
             'message' => ['required', 'string'],
         ]);
 
+        $admin = Admin::latest()->where('name', 'Administrator')->first();
+
         OjafunnelNotification::create([
-            'to' => $user->id,
-            'title' => config('app.name'),
-            'body' => 'Your '.config('app.name').' account has been verified.',
-            'image' => config('app.url').'assets/images/icon.png',
+            'to' => $admin->id,
+            'title' => $request->title,
+            'body' => $request->message,
+            'image' => 'https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png',
         ]);
 
         return back()->with([
             'type' => 'success',
-            'icon' => 'mdi-check-all',
-            'message' => 'Message sent successfully to '.$user->first_name.' '.$user->last_name,
+            'message' => 'Message sent successfully to Admin',
         ]); 
     }
 

@@ -68,13 +68,13 @@
                     <div class="row">
                         <div class="Edit-level">
                             <form method="post" action="{{route('user.send.message')}}">
-                                @crsf
+                                @csrf
                                 <div class="form">
                                     <div class="col-lg-12">
-                                        <label>Email</label>
+                                        <label>Subject</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter your email..." name="name" class="input"
+                                                <input type="text" placeholder="Enter your email..." name="subject" class="input"
                                                     required>
                                             </div>
                                         </div>
@@ -83,24 +83,25 @@
                                         <label>Your Message</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <textarea></textarea>
+                                                <textarea name="message"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row justify-content-between">
                                         <div class="col-6">
-                                            <a href="#" class="text-decoration-none">
-                                                <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            <!-- <a href="#" class="text-decoration-none"> -->
+                                                <button type="button" class="btn px-3" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
                                                     Cancel
-                                                </button></a>
+                                                </button>
+                                            <!-- </a> -->
                                         </div>
                                         <div class="col-6 text-end">
-                                            <a href="#" class="text-decoration-none">
+                                            <!-- <a href="#" class="text-decoration-none"> -->
                                                 <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
                                                     >
                                                     Send
                                                 </button>
-                                            </a>
+                                            <!-- </a> -->
                                         </div>
                                     </div>
                                 </div>
