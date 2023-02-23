@@ -29,7 +29,7 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="py-2">
-                                    <h4 class="font-600">Contact List</h4>
+                                    <h4 class="font-500">Contact List</h4>
                                     <p>
                                         Sms and Whatsapp Contact List
                                     </p>
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         {{-- <div class="py-2">
-                            <h4 class="font-600">WhatsApp Automation</h4>
+                            <h4 class="font-500">WhatsApp Automation</h4>
                             <p>
                                 Send instant, scheduled or automated messages to your contact
                             </p>
@@ -116,7 +116,7 @@
                                         </tr>
                                     </tbody>
                                 @else
-                                
+
                                 <tbody>
                                     @foreach($contact_lists as $key => $item)
                                     <tr>

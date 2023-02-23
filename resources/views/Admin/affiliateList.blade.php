@@ -23,7 +23,8 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Affiliate List</h4>
+                            <h4 class="font-500">Affiliate Program</h4>
+                            <p>View and edit your mailing list</p>
                         </div>
                     </div>
                 </div>
@@ -33,18 +34,10 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <h4 class="card-title mb-3">Affiliate List</h4>
-                                </div>
-                                <div class="col-lg-6"></div>
-                                <div class="col-lg-3">
-                                    <input type="search" class="form-control" id="searchInput" placeholder="Search for ...">
-                                </div>
-                            </div>
-                            <div class="table-responsive mt-2">
-                                <table class="table table-hover datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                    <thead>
+                            <h4 class="card-title mb-4">Affiliate List</h4>
+                            <div class="table-responsive">
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                    <thead class="tread">
                                         <tr>
                                             <th scope="col">No</th>
                                             <th scope="col">Names</th>
@@ -55,7 +48,6 @@
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                         <tr>
                                             <td>1</td>
@@ -68,14 +60,11 @@
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                        <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
-                                                    </li>
+                                                    <!-- <li data-bs-toggle="tooltip" data-bs-placement="top" title="View List">
+                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                    </li> -->
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
                                                         <a href="#activate" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                        <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
@@ -94,14 +83,11 @@
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                        <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
-                                                    </li>
+                                                    <!-- <li data-bs-toggle="tooltip" data-bs-placement="top" title="View List">
+                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                    </li> -->
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
-                                                        <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                        <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                        <a href="#activate" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
@@ -120,14 +106,11 @@
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                        <a href="#" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
-                                                    </li>
+                                                    <!-- <li data-bs-toggle="tooltip" data-bs-placement="top" title="View List">
+                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                    </li> -->
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
-                                                        <a href="#" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                        <a href="#jobDelete" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                        <a href="#activate" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
@@ -149,47 +132,3 @@
 <!-- ============================================================== -->
 <!-- Start right Content Ends -->
 <!-- ============================================================== -->
-
-<!-- Modal -->
-<div class="modal fade" id="jobDelete" tabindex="-1" aria-labelledby="jobDeleteLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content">
-            <div class="modal-body px-4 py-5 text-center">
-                <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="avatar-sm mb-4 mx-auto">
-                    <div class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3">
-                        <i class="mdi mdi-trash-can-outline"></i>
-                    </div>
-                </div>
-                <p class="text-muted font-size-16 mb-4">Are you sure you want to permanently delete this User.</p>
-
-                <div class="hstack gap-2 justify-content-center mb-0">
-                    <button type="button" class="btn btn-danger">Delete Now</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Activate Users -->
-<div class="modal fade" id="activate" tabindex="-1" aria-labelledby="activate" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content">
-            <div class="modal-body px-4 py-5 text-center">
-                <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="avatar-sm mb-4 mx-auto">
-                    <div class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3">
-                        <i class="bi bi-check2-all"></i>
-                    </div>
-                </div>
-                <p class="text-muted font-size-16 mb-4">Are you sure you want to Activate this User.</p>
-
-                <div class="hstack gap-2 justify-content-center mb-0">
-                    <button type="button" class="btn btn-danger">Activate Now</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="activate">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

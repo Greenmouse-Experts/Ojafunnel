@@ -26,7 +26,7 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="py-2">
-                                    <h4 class="font-600">Available Product</h4>
+                                    <h4 class="font-500">Available Product</h4>
                                     <p>
                                         All your Available Product in one Place
                                     </p>

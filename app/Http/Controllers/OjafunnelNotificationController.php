@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class OjafunnelNotificationController extends Controller
 {
     //
-    public function user_send_message($user_id, Request $request) 
+    public function user_send_message(Request $request) 
     {
         //Validate Request
         $this->validate($request, [
@@ -17,38 +17,12 @@ class OjafunnelNotificationController extends Controller
             'message' => ['required', 'string'],
         ]);
 
-        $id = Crypt::decrypt($user_id);
-
-        $user = User::findorfail($id);
-
-        Notification::create([
+        OjafunnelNotification::create([
             'to' => $user->id,
             'title' => config('app.name'),
             'body' => 'Your '.config('app.name').' account has been verified.',
             'image' => config('app.url').'assets/images/icon.png',
         ]);
-
-        FCMService::send(
-            $user->fcm_token,
-            [
-                'title' => config('app.name'),
-                'body' => $request->message,
-                'image' => $request->subject,
-                'sound' => 'default', 
-                'badge' => '1',
-            ]
-        );
-
-        /** Store information to include in mail in $data as an array */
-        $data = array(
-            'name' => $user->first_name.' '.$user->last_name,
-            'email' => $user->email
-        );
-        
-        /** Send message to the user */
-        Mail::send('emails.notification', $data, function ($m) use ($data) {
-            $m->to($data['email'])->subject(config('app.name'));
-        });
 
         return back()->with([
             'type' => 'success',
@@ -56,7 +30,7 @@ class OjafunnelNotificationController extends Controller
             'message' => 'Message sent successfully to '.$user->first_name.' '.$user->last_name,
         ]); 
     }
-    
+
     public function get_all_notifications()
     {
         // $userNotifications = Notification::join('users', 'notifications.from', '=', 'users.id')

@@ -69,7 +69,7 @@ class AdminController extends Controller
 
         public function subscribtions()
         {
-            return view('admin.subscribtions');
+            return view('admin.subscription.subscriptions');
         }
 
         public function vendorlist()
@@ -126,6 +126,14 @@ class AdminController extends Controller
         {
             return view('admin.ecommerce.salesList');
         }
+
+        //  Email Campaing
+
+        public function manage_campaign()
+        {
+            return view('admin.emailmarketing.manage-campaign');
+        }
+
 
 
 }

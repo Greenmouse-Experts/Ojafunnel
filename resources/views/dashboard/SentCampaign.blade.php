@@ -13,7 +13,7 @@
                 <div class="col-lg-12">
                     <div class="card begin account-head mb-4">
                         <div class="">
-                            <h4 class="font-600">WhatsApp Automation</h4>
+                            <h4 class="font-500">WhatsApp Automation</h4>
                             <p>
                                 Send instant, scheduled or automated messages to your contact
                             </p>

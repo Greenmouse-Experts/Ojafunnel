@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Sales Information</h4>
+                            <h4 class="font-500">Sales Information</h4>
                             <p>
                                 View list of product sales from ecommerce store.
                             </p>

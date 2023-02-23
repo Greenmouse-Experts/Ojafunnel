@@ -26,7 +26,7 @@
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="py-2">
-                                    <h4 class="font-600">Sales</h4>
+                                    <h4 class="font-500">Sales</h4>
                                     <p>
                                         All your Product is in one Place
                                     </p>
