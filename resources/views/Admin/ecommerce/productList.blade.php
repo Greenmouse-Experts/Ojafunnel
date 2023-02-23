@@ -73,7 +73,7 @@
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Detail">
-                                                        <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                        <a href="{{route('productDetail')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Flag">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
@@ -83,7 +83,7 @@
                                         </tr>
                                         <tr>
 
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#12</a> </td>
+                                            <td><a href="#" class="text-body fw-bold">#12</a> </td>
                                             <td>Affiliate Insight</td>
                                             <td>
                                                 BlueMouse
@@ -100,7 +100,7 @@
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Detail">
-                                                        <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                        <a href="{{route('productDetail')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Flag">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>

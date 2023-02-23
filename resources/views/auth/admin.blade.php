@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
         <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -33,7 +34,7 @@
             </div>
         </div>
         <!-- login -->
-            <section class="login">
+            <section class="admin">
                 <div class="container-fuild">
                     <div class="row">
                         <div class="col-lg-4"></div>
@@ -41,11 +42,11 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="btn-div">
-                                        <div class="sidelist">
+                                        <div class="sidelist rat">
                                             <a href="{{route('index')}}">
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" draggable="false" alt="">
                                             </a>
-                                            <h4 class="text-center"> Admin Login</h4>
+                                            <h4> Admin Login</h4>
                                             @if(\Session::get('success'))
                                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                                     <div class="alert-body">
@@ -68,7 +69,7 @@
                                                 <div class="row">
                                                     <!--Email-->
                                                     <div class="col-lg-12">
-                                                        <label>Email</label>
+                                                        <label>Enter Your Email</label>
                                                         <div class="row">
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-envelope"></i>
@@ -88,6 +89,7 @@
                                                             <div class="col-md-12 mb-4">
                                                                 <i class="bi bi-file-lock"></i>
                                                                 <input type="password" placeholder="Enter your password" name="password" class="input">
+                                                                <i class="toggle-password fa fa-fw fa-eye-slash" title="Toggle to show/hide password"></i>
                                                                 @if ($errors->has('password'))
                                                                     <span class="help-block font-red-mint">
                                                                         <strong>{{ $errors->first('password') }}</strong>
@@ -101,7 +103,6 @@
                                                             Log In
                                                         </button>
                                                     </div>
-
                                                 </div>
                                             </form>
                                         </div>
@@ -124,6 +125,17 @@
             });
         });
     </script>
-
+    <script>
+            // Script for Show/Hide Password
+            $(".toggle-password").click(function() {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            input = $(this).parent().find("input");
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
+    </script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
 </html>

@@ -122,6 +122,11 @@ class AdminController extends Controller
             return view('admin.ecommerce.productList');
         }
 
+        public function product_detail()
+        {
+            return view('admin.ecommerce.productDetail');
+        }
+
         public function sales_list()
         {
             return view('admin.ecommerce.salesList');

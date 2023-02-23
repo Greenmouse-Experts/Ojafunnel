@@ -4320,3 +4320,189 @@ header nav .offcanvas-header button i {
         font-weight: 500;
     }
 }
+.admin .btn-div .sidelist {
+    margin-top: 130px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+}
+.admin {
+    background-color: #70418F;
+    height: 100vh;
+}
+
+.admin .btn-div .sidelist img {
+    width: 120px;
+    margin: auto;
+    display: block;
+}
+
+.admin .btn-div .sidelist h4 {
+    padding: 20px 0 30px 0;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0px;
+
+}
+
+.admin .btn-div .sidelist .sign-div {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 100%;
+    padding: 0px 0px 0px 0px;
+}
+
+.admin .btn-div .sidelist .sign-div p {
+    text-align: right;
+    font-size: 12px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0 10px 0 0px;
+}
+
+.admin .btn-div .sidelist .sign-div .have {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 30px 10px 0 0px;
+}
+
+.admin .btn-div .sidelist .sign-div p a {
+    text-decoration: none;
+    color: #000;
+}
+
+.admin .btn-div .sidelist .sign-div p a:hover {
+    text-decoration: underline;
+    color: #70418F;
+}
+
+.admin .btn-div .sidelist p {
+    padding: 5px 0 0 0;
+    font-size: 11px;
+}
+
+.admin .btn-div .sidelist p a {
+    text-decoration: none;
+    color: #000;
+}
+
+.admin .btn-div .sidelist p a:hover {
+    text-decoration: underline;
+    color: #70418F;
+}
+
+.admin .btn-div .sidelist .sign-div ::placeholder {
+    font-size: 12px;
+    color: #000;
+}
+
+.admin .btn-div .sidelist .sign-div label {
+    font-size: 13px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    margin-bottom: -0px;
+    z-index: 999 !important;
+    position: relative;
+    background-color: #fff;
+    margin-left: 30px;
+    padding: 0px 5px 0px 5px;
+}
+
+.admin .btn-div .sidelist .sign-div input {
+    display: block;
+    width: 100%;
+    margin-top: -10px;
+    padding: 10px 5px 10px 40px;
+    border-radius: 3px;
+    border: 1px solid #eee;
+    letter-spacing: 0.8px;
+    font-size: 13px;
+    transition: 0.6s;
+}
+
+.admin .btn-div .sidelist .sign-div .toggle-password {
+    float: right;
+    position: relative;
+    top: -28px;
+    right: 15px;
+    cursor: pointer;
+    color: #000;
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: -40px;
+}
+
+.admin .btn-div .sidelist .sign-div ::placeholder {
+    font-size: 12px;
+    color: #999797;
+}
+
+.admin .btn-div .sidelist .sign-div .bi {
+    position: absolute;
+    margin-top: 0px;
+    margin-left: 15px;
+    font-size: 14px;
+    padding-right: 15px;
+    padding-top: 0px;
+    color: #000;
+}
+
+.admin .btn-div .sidelist .sign-div button {
+    width: 100%;
+    padding: 10px 10px 10px 10px !important;
+    text-align: center;
+    border: none;
+    margin-top: 20px;
+    background-color: #70418F;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+@media (max-width:1000px) {
+    .admin .btn-div .sidelist img {
+        width: 100px;
+        margin: auto;
+        display: block;
+    }
+    .admin .btn-div .sidelist {
+        margin-top: 50px;
+        padding: 10px;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+        background-color: #fff;
+    }
+    .admin .btn-div .sidelist h4 {
+        text-align: center;
+    }
+
+    .admin .btn-div .sidelist p {
+        padding: 5px 0 0 0;
+        text-align: center;
+    }
+
+    .admin .btn-div .sidelist {
+        padding: 90px 20px 0px 20px;
+    }
+
+    .admin .btn-div .sidelist .sign-div input {
+        display: block;
+        width: 100%;
+    }
+
+    .admin .btn-div .sidelist .sign-div button {
+        width: 100%;
+    }
+
+    .admin .btn-div {
+        padding: 0px 0px 20px 0px;
+    }
+}
