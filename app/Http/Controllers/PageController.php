@@ -58,6 +58,18 @@ class PageController extends Controller
         $disk = Storage::build([
             'driver' => 'local',
             'root'   => public_path('pageBuilder') . '/'.$request->file_folder,
+            'permissions' => [
+                'file' => [
+                    'public' => 0777,
+                    'private' => 0777,
+                    'custom' => 0777
+                ],
+                'dir' => [
+                    'public' => 0777,
+                    'private' => 0777,
+                    'custom' => 0777
+                ],
+            ],
         ]);
         
         if(!$disk->put($file, $html)){
@@ -234,6 +246,18 @@ class PageController extends Controller
         $disk = Storage::build([
             'driver' => 'local',
             'root'   => public_path('funnelBuilder') . '/'.$request->file_folder,
+            'permissions' => [
+                'file' => [
+                    'public' => 0777,
+                    'private' => 0777,
+                    'custom' => 0777
+                ],
+                'dir' => [
+                    'public' => 0777,
+                    'private' => 0777,
+                    'custom' => 0777
+                ],
+            ],
         ]);
 
         if($disk)
