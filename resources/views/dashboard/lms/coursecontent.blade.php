@@ -52,7 +52,7 @@
                                             <h4 class="card-title mb-4"><strong>Curriculum</strong></h4>
                                             <div id="appera">
                                                 <div class="card-body" style="box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);  line-height: 1.8;">
-                                                    <p class="card-title-desc text-dark font-600">
+                                                    <p class="card-title-desc text-dark font-500">
                                                         <i class="bi bi-info-circle" style="padding-right: 15px;"></i>Start putting together your course by creating sections, lectures and practice activities (quizzes, and assignments). Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
                                                         <a style="float: right;" onclick="myFunct()" class="btn btn-danger mt-3">Dismiss</a>
                                                     </p>
@@ -88,7 +88,7 @@
                                         <div class="common mt-5">
                                             <div class="assets">
                                                 <h1 style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#section-{{$section->id}}"><b>Section {{$loop->iteration}}:</b> {{$section->title}}</h1>
-                                               
+
                                                 <div class="modal fade" id="section-{{$section->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
@@ -649,7 +649,7 @@
 
     $(document).on('click','.open_modal',function(){
         var section_id= $(this).val();
-        
+
         $('#title').text(section_id);
         $('#section_id').val(section_id);
         $('#createLesson').modal('show');
@@ -668,7 +668,7 @@
     //     }
     // });
 
-    function changeFunc() 
+    function changeFunc()
     {
         document.getElementById('textboxcont').innerHTML = '';
         var selectBox = document.getElementById("selectBox").value;

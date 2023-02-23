@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Ecommerce Products</h4>
+                            <h4 class="font-500">Ecommerce Products</h4>
                             <p>
                                 Browse through and view various products in stores.
                             </p>

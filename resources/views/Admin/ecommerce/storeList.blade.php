@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Ecommerce Store</h4>
+                            <h4 class="font-500">Ecommerce Store</h4>
                             <p>
                                 view stores created by ojafunnel users.
                             </p>

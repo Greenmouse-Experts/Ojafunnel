@@ -22,6 +22,16 @@ Skip to content
             </div>
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="card account-head">
+                        <div class="py-2">
+                            <h4 class="font-500"> Unsubscribers List</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">Unsubscribers List</h4>

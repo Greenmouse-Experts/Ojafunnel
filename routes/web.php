@@ -400,4 +400,5 @@ Route::get('/admin/view-course/course-detail', [App\Http\Controllers\AdminContro
 Route::get('/admin/ecommerce/store-list', [App\Http\Controllers\AdminController::class, 'store_list'])->name('storeList');
 Route::get('/admin/ecommerce/product-list', [App\Http\Controllers\AdminController::class, 'product_list'])->name('productList');
 Route::get('/admin/ecommerce/sales-list', [App\Http\Controllers\AdminController::class, 'sales_list'])->name('salesList');
-
+// Email Canpaign
+Route::get('/admin/email-marketing/manage', [App\Http\Controllers\AdminController::class, 'manage_campaign'])->name('admin.manage_campaign');

@@ -24,7 +24,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Manage Plans</h4>
+                            <h4 class="font-500">Manage Plans</h4>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                                             <td>
                                                 Hamzat
                                             </td>
-                                            
+
                                             <td>
                                                 $100
                                             </td>
@@ -71,7 +71,7 @@
                                             <td>
                                                 Adeleke
                                             </td>
-                                            
+
                                             <td>
                                                 $100
                                             </td>

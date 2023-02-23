@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                             <div class="py-2">
-                                <h4 class="font-600">Course Summary</h4>
+                                <h4 class="font-500">Course Summary</h4>
                                 <p>
                                     Edit and preview how your course looks
                                 </p>
