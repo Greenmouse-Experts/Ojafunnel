@@ -121,4 +121,24 @@ class AdminController extends Controller
     {
         return view('Admin.ecommerce.salesList');
     }
+
+    public function email_support()
+    {
+        return view('Admin.support.emailSupport');
+    }
+
+    public function chat_support()
+    {
+        return view('Admin.support.chatSupport');
+    }
+
+    public function sms_automation()
+    {
+        return view('Admin.automation.smsAutomation');
+    }
+
+    public function whatsapp_automation()
+    {
+        return view('Admin.automation.whatsappAutomation');
+    }
 }

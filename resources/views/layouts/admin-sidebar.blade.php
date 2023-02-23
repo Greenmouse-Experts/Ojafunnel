@@ -72,8 +72,8 @@
                         <span key="t-chat">Automation</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#" key="t-tui-calendar">SMS Automation</a></li>
-                        <li><a href="#" key="t-tui-calendar">Whatsapp Automation</a></li>
+                        <li><a href="{{route('smsAutomation')}}"  key="t-tui-calendar">SMS Automation</a></li>
+                        <li><a href="{{route('whatsappAutomation')}}"  key="t-tui-calendar">Whatsapp Automation</a></li>
                     </ul>
                 </li>
                 <li>
@@ -106,6 +106,16 @@
                         <i class="bi bi-receipt"></i>
                         <span key="t-chat">Sales Analytics</span>
                     </a>
+                </li>
+                <li>
+                    <a href="#" class="has-arrow">
+                        <i class="bi bi-headset"></i>
+                        <span key="t-dashboards">Support</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('chatSupport')}}" key="t-full-calendar">Chat Support</a></li>
+                        <li><a href="{{route('emailSupport')}}" key="t-full-calendar">Email Support</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#" class="has-arrow">
