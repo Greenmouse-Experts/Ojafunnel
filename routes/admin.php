@@ -36,9 +36,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/viewCart', [App\Http\Controllers\Admin\AdminController::class, 'viewCart'])->name('viewCart');
             Route::get('/view-course', [App\Http\Controllers\Admin\AdminController::class, 'view_course'])->name('viewCourse');
             Route::get('/view-course/course-detail', [App\Http\Controllers\Admin\AdminController::class, 'course_detail'])->name('courseDetail');
-            Route::get('/ecommerce/store-list', [App\Http\Controllers\Admin\AdminController::class, 'store_list'])->name('storeList');
-            Route::get('/ecommerce/product-list', [App\Http\Controllers\Admin\AdminController::class, 'product_list'])->name('productList');
-            Route::get('/ecommerce/sales-list', [App\Http\Controllers\Admin\AdminController::class, 'sales_list'])->name('salesList');
+            Route::get('/admin/view-course/course-detail', [App\Http\Controllers\AdminController::class, 'course_detail'])->name('courseDetail');
+            Route::get('/admin/ecommerce/store-list', [App\Http\Controllers\AdminController::class, 'store_list'])->name('storeList');
+            Route::get('/admin/ecommerce/product-list', [App\Http\Controllers\AdminController::class, 'product_list'])->name('productList');
+            Route::get('/admin/ecommerce/product-detail', [App\Http\Controllers\AdminController::class, 'product_detail'])->name('productDetail');
+            Route::get('/admin/ecommerce/sales-list', [App\Http\Controllers\AdminController::class, 'sales_list'])->name('salesList');
             Route::get('/user/disable/{uids}', [App\Http\Controllers\Admin\CustomerController::class, 'disable'])->name('disable.user');
             Route::get('/user/enable/{uids}', [App\Http\Controllers\Admin\CustomerController::class, 'enable'])->name('enabled.user');
         }
