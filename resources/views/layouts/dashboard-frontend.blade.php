@@ -13,9 +13,6 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}"></script>
-
     <!-- Bootstrap Css -->
     <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -353,6 +350,9 @@
             }
         }
     </script>
+
+    <!-- Scripts -->
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 
 </html>
