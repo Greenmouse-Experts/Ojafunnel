@@ -13,7 +13,7 @@
                         <h4 class="mb-sm-0 font-size-18">Transactions Histroy</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
                                 <li class="breadcrumb-item active">Histroy</li>
                             </ol>
                         </div>

@@ -97,7 +97,7 @@
                                             <a href="#" class="text-decoration-none">
                                                 <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
                                                     >
-                                                    Save
+                                                    Send
                                                 </button>
                                             </a>
                                         </div>
