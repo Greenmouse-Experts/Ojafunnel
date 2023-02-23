@@ -41,7 +41,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="transactions-all-tab" role="tabpanel">
                             <div class="table-responsive" data-simplebar style="max-height: 330px;">
-                                <table class="table align-middle table-nowrap">
+                                <table class="table align-middle table-nowrap" id="datatable-buttons">
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
