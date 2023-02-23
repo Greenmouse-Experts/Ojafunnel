@@ -77,14 +77,10 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow">
+                    <a href="javascript: void(0);">
                         <i class="bi bi-tags"></i>
                         <span key="t-chat">Integration</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#" key="t-tui-calendar">Create Integrations</a></li>
-                        <li><a href="#" key="t-tui-calendar">Manage Integrations</a></li>
-                    </ul>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
