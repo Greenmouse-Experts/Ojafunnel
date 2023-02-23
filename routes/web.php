@@ -393,6 +393,7 @@ Route::prefix('{username}')->group(function () {
                 function () {
                         Route::get('/index', [App\Http\Controllers\DashboardController::class, 'main_support'])->name('user.main.support');
                         Route::get('/chat', [App\Http\Controllers\DashboardController::class, 'support_chat'])->name('user.main.support.chat');
+                        Route::get('/email', [App\Http\Controllers\DashboardController::class, 'support_email'])->name('user.main.email');
                     }
             );
         }
