@@ -792,6 +792,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function support_email($username)
+    {
+        return view('dashboard.support.emailMain', [
+            'username' => $username
+        ]);
+    }
+
     public function getdownlines($array, $parent = 0, $level = 1)
     {
         $referedMembers = '';
