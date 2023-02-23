@@ -13,7 +13,7 @@
                 <div class="col-lg-10 card">
                     <div class=" account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Compose New Message</h4>
+                            <h4 class="font-500">Compose New Message</h4>
                             <p>
                                 Compose sms, emails and whatsapp messages here
                             </p>

@@ -13,7 +13,7 @@
                         <h4 class="mb-sm-0 font-size-18">View Messagest</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
                                 <li class="breadcrumb-item active">View Mailing list</li>
                             </ol>
                         </div>
@@ -24,7 +24,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">View Messages</h4>
+                            <h4 class="font-500">View Messages</h4>
                             <p>
                                 Connect the tools that power your business
                             </p>

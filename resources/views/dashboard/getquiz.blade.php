@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                             <div class="py-2">
-                            <h4 class="font-600">Set Quiz</h4>
+                            <h4 class="font-500">Set Quiz</h4>
                             <p>
                                 Set your quiz questions and answers here
                             </p>

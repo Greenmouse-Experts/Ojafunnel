@@ -13,12 +13,22 @@ Skip to content
                         <h4 class="mb-sm-0 font-size-18">Unsubscribers</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
                                 <li class="breadcrumb-item active">Unsubscribers</li>
                             </ol>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card account-head">
+                        <div class="py-2">
+                            <h4 class="font-500"> Unsubscribers List</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-1"></div>
             </div>
             <div class="row">
                 <div class="col-lg-12">

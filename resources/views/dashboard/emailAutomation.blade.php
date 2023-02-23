@@ -16,7 +16,7 @@
                             <div class="align-items-center">
                                 <h4>Edit Automation Template</h4>
                                 <p>
-                                    Edit the automated email campaignto suit you     
+                                    Edit the automated email campaignto suit you
                                 </p>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                         <div class="arising">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965301/OjaFunnel-Images/Vectorr_asucru.png" draggable="false">
                             <p>
-                                Send Message 
+                                Send Message
                             </p>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                         <div class="arising">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965300/OjaFunnel-Images/Group_46747_du2s51.png" draggable="false">
                             <p>
-                                Wait 
+                                Wait
                             </p>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <div class="arising">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965300/OjaFunnel-Images/Group_46748_utkqqz.png" draggable="false">
                             <p>
-                                Apply Tags 
+                                Apply Tags
                             </p>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                         <div class="arising">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664965301/OjaFunnel-Images/Vectorrr_u3hhoe.png" draggable="false">
                             <p>
-                                Conditions 
+                                Conditions
                             </p>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                                 </li>
                                 <li>
                                     <h5>
-                                        Purchase Product 
+                                        Purchase Product
                                     </h5>
                                 </li>
                             </ul>
@@ -96,7 +96,7 @@
                                 </li>
                                 <li>
                                     <h5>
-                                        Purchase Product 
+                                        Purchase Product
                                     </h5>
                                 </li>
                             </ul>
@@ -113,7 +113,7 @@
                                 </li>
                                 <li>
                                     <h5>
-                                        Purchase Product 
+                                        Purchase Product
                                     </h5>
                                 </li>
                             </ul>
@@ -130,7 +130,7 @@
                                 </li>
                                 <li>
                                     <h5>
-                                        Purchase Product 
+                                        Purchase Product
                                     </h5>
                                 </li>
                             </ul>
@@ -142,7 +142,7 @@
                                 <div class="product">
                                     <div class="end">
                                         <Button>
-                                            <a href="{{route('user.automation.campaign')}}">
+                                            <a href="{{route('user.automation.campaign', Auth::user()->username)}}">
                                                 Create Automation
                                             </a>
                                         </Button>

@@ -30,7 +30,7 @@
                 <div class="col-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Manage Your Integrations </h4>
+                            <h4 class="font-500">Manage Your Integrations </h4>
                             <p>
                                 Connect the tools that power your business
                             </p>

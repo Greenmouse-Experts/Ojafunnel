@@ -67,7 +67,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="Edit-level">
-                            <form  method="post">
+                            <form method="post" action="{{route('user.send.message')}}">
+                                @crsf
                                 <div class="form">
                                     <div class="col-lg-12">
                                         <label>Email</label>
@@ -97,7 +98,7 @@
                                             <a href="#" class="text-decoration-none">
                                                 <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
                                                     >
-                                                    Save
+                                                    Send
                                                 </button>
                                             </a>
                                         </div>

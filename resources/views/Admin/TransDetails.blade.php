@@ -14,7 +14,7 @@ Skip to content
                         <h4 class="mb-sm-0 font-size-18">Transaction Details</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
                                 <li class="breadcrumb-item active">Transaction</li>
                             </ol>
                         </div>
@@ -25,7 +25,7 @@ Skip to content
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Transaction Details</h4>
+                            <h4 class="font-500">Transaction Details</h4>
                         </div>
                     </div>
                 </div>

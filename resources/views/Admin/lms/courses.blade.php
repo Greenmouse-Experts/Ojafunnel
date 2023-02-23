@@ -13,7 +13,7 @@
                         <h4 class="mb-sm-0 font-size-18">User Courses</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
                                 <li class="breadcrumb-item active">User Courses</li>
                             </ol>
                         </div>
@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">L.M.S Courses</h4>
+                            <h4 class="font-500">L.M.S Courses</h4>
                             <p>
                                 Browse through and review courses created by ojafunnel users.
                             </p>
@@ -87,7 +87,7 @@
 
                                             <td><a href="javascript: void(0);" class="text-body fw-bold">#12</a> </td>
                                             <td>
-                                                Metalbox 
+                                                Metalbox
                                             </td>
                                             <td>
                                                 VueJs Library

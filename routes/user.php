@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\OjafunnelNotificationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -86,4 +87,12 @@ Route::prefix('user')->group(function () {
     Route::delete('/support/deletechatroom', [ChatController::class, 'deleteChatroom']);
     Route::put('/support/read', [ChatController::class, 'markAsRead']);
     Route::post('/support/download/attachment/{id}', [ChatController::class, 'downloadAttachment']);
+
+    // Message
+    Route::post('/user/send/message/admin', [OjafunnelNotificationController::class, 'user_send_message'])->name('user.send.message');
+    Route::get('/user/get/all/notifications', [OjafunnelNotificationController::class, 'get_all_notifications']);
+    Route::get('/user/get/all/unread/notifications', [OjafunnelNotificationController::class, 'get_all_unread_notifications']);
+    Route::get('/user/count/unread/notifications', [OjafunnelNotificationController::class, 'count_unread_notifications']);
+    Route::post('/user/read/notification/{id}', [OjafunnelNotificationController::class, 'read_notification']);
+
 });

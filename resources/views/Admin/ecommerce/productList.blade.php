@@ -13,7 +13,7 @@
                         <h4 class="mb-sm-0 font-size-18">Product List</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
                                 <li class="breadcrumb-item active">Product List</li>
                             </ol>
                         </div>
@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Ecommerce Products</h4>
+                            <h4 class="font-500">Ecommerce Products</h4>
                             <p>
                                 Browse through and view various products in stores.
                             </p>
@@ -73,7 +73,7 @@
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Detail">
-                                                        <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                        <a href="{{route('productDetail')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Flag">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
@@ -83,7 +83,7 @@
                                         </tr>
                                         <tr>
 
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#12</a> </td>
+                                            <td><a href="#" class="text-body fw-bold">#12</a> </td>
                                             <td>Affiliate Insight</td>
                                             <td>
                                                 BlueMouse
@@ -100,7 +100,7 @@
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Detail">
-                                                        <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                        <a href="{{route('productDetail')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Flag">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>

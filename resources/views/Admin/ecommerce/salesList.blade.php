@@ -13,7 +13,7 @@
                         <h4 class="mb-sm-0 font-size-18">Product Sales</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
                                 <li class="breadcrumb-item active">Product Sales</li>
                             </ol>
                         </div>
@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Sales Information</h4>
+                            <h4 class="font-500">Sales Information</h4>
                             <p>
                                 View list of product sales from ecommerce store.
                             </p>
@@ -73,7 +73,7 @@
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Detail">
-                                                        <a href="{{route('users.details')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                        <a href="{{route('salesDetail')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -88,4 +88,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsectiona

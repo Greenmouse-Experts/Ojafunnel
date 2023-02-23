@@ -27,26 +27,38 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row text-center mt-5 mb-4">
-                        <div class="col-md-2 text-purp">
-                            <a href="Eautomation.html">
-                                Most Popular
-                            </a>
-                        </div>
-                        <div class="col-md-2 text-purpp">
-                            <a href="">
-                                Improve Engagement
-                            </a>
-                        </div>
-                        <div class="col-md-2 text-purpp">
-                            <a href="#">
-                                Increased Traffic
-                            </a>
-                        </div>
-                        <div class="col-md-2 text-purpp">
-                            <a href="">
-                                Increased Revenue
-                            </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#home1" role="tab">
+                                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                        <span class="d-none d-sm-block"> Most Popular</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#profile1" role="tab">
+                                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                        <span class="d-none d-sm-block">Improve Engagement</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#messages1" role="tab">
+                                        <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                        <span class="d-none d-sm-block">Increased Traffic</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#settings1" role="tab">
+                                        <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
+                                        <span class="d-none d-sm-block">Increased Revenue</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -55,39 +67,29 @@
             <div class="row card begin">
                 <div class="template-con">
                     <div class="row justify-content-between">
-                        <div class="col-lg-5">
+                        <div class="col-lg-6 mt-5">
                             <div class="p-3 shadows rounded bg-white">
                                 <p class="fs-me">
-                                     Abandoned Cart
+                                    Abandoned Cart
                                 </p>
                                 <p>Send an email after a contact abandons a cart</p>
                             </div>
-                            <div class="p-3 shadows mt-4 rounded bg-white">
+                            <div class="p-3 shadows mt-5 rounded bg-white">
                                 <p class="fs-me">
                                     Product Purchase
                                 </p>
                                 <p>Send an email after a contact abandons a cart</p>
                             </div>
-                            <div class="p-3 shadows mt-4 rounded bg-white">
+                            <div class="p-3 shadows mt-5 rounded bg-white">
                                 <p class="fs-me">Anniversary</p>
                                 <p>Send an email after a contact abandons a cart</p>
                             </div>
-                            <div class="p-3 shadows mt-4 rounded bg-white last">
+                            <div class="p-3 shadows mt-5 rounded bg-white last">
                                 <p class="fs-me">Welcome Message</p>
                                 <p>Send an email after a contact abandons a cart</p>
                             </div>
                         </div>
-                        <div class="col-lg-6 p-3 bg-white rounded">
-                            <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <p class="fs-me">Abandoned Cart</p>
-                                </div>
-                                <div class="col-md-6 text-end">
-                                    <button class="border-0 rounded bg-purp text-white py-1 px-3">
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="col-lg-6 bg-white rounded">
                             <div class="abandon-cart">
                                 <p class="opacity-75">Automation Starts</p>
                                 <p>Trigger - Customer adds product to cart</p>

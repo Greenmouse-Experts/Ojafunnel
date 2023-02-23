@@ -13,7 +13,7 @@
                         <h4 class="mb-sm-0 font-size-18">Transactions Histroy</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
                                 <li class="breadcrumb-item active">Histroy</li>
                             </ol>
                         </div>
@@ -24,7 +24,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-600">Transactions Histroy</h4>
+                            <h4 class="font-500">Transactions Histroy</h4>
                         </div>
                     </div>
                 </div>
@@ -86,9 +86,12 @@
                                                     </td>
                                                     <td>
                                                         <!-- Button trigger modal -->
-                                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
-                                                            View Details
-                                                        </button>
+                                                        <!-- Button trigger modal -->
+                                                        <a href="{{route('trans.details')}}">
+                                                            <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light">
+                                                                View Details
+                                                            </button>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -130,33 +133,39 @@
                                                         </td>
                                                         <td>
                                                             <!-- Button trigger modal -->
-                                                            <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
-                                                                View Details
-                                                            </button>
+                                                            <!-- Button trigger modal -->
+                                                            <a href="{{route('trans.details')}}">
+                                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light">
+                                                                    View Details
+                                                                </button>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2540</a> </td>
-                                            <td>Neal Matthews</td>
-                                            <td>
-                                                07 Oct, 2019
-                                            </td>
-                                            <td>
-                                                $400
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-pill badge-soft-success font-size-11">Paid</span>
-                                            </td>
-                                            <td>
-                                                <i class="fab fa-cc-mastercard me-1"></i> Visa
-                                            </td>
-                                            <td>
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
-                                                    View Details
-                                                </button>
-                                            </td>
-                                        </tr>
+                                                        <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2540</a> </td>
+                                                        <td>Neal Matthews</td>
+                                                        <td>
+                                                            07 Oct, 2019
+                                                        </td>
+                                                        <td>
+                                                            $400
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-pill badge-soft-success font-size-11">Paid</span>
+                                                        </td>
+                                                        <td>
+                                                            <i class="fab fa-cc-mastercard me-1"></i> Visa
+                                                        </td>
+                                                        <td>
+                                                            <!-- Button trigger modal -->
+                                                            <!-- Button trigger modal -->
+                                                            <a href="{{route('trans.details')}}">
+                                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light">
+                                                                    View Details
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
