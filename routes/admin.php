@@ -43,10 +43,22 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/admin/ecommerce/sales-list', [App\Http\Controllers\AdminController::class, 'sales_list'])->name('salesList');
             Route::get('/user/disable/{uids}', [App\Http\Controllers\Admin\CustomerController::class, 'disable'])->name('disable.user');
             Route::get('/user/enable/{uids}', [App\Http\Controllers\Admin\CustomerController::class, 'enable'])->name('enabled.user');
+<<<<<<< HEAD
             Route::get('/email-support', [App\Http\Controllers\Admin\AdminController::class, 'email_support'])->name('emailSupport');
             Route::get('/chat-support', [App\Http\Controllers\Admin\AdminController::class, 'chat_support'])->name('chatSupport');
             Route::get('/sms-automation', [App\Http\Controllers\Admin\AdminController::class, 'sms_automation'])->name('smsAutomation');
             Route::get('/whatsapp-automation', [App\Http\Controllers\Admin\AdminController::class, 'whatsapp_automation'])->name('whatsappAutomation');
+=======
+
+            // Email Marketing
+            Route::get('sending/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('sending.server');
+            Route::get('sending/index/new-server', [App\Http\Controllers\Admin\AdminController::class, 'new_server'])->name('new.server');
+            Route::get('sending/index/new-server/choose', [App\Http\Controllers\Admin\AdminController::class, 'choose_server'])->name('choose.server');
+            Route::get('main-bounce', [App\Http\Controllers\Admin\AdminController::class, 'main_bounce'])->name('main.bounce');
+            Route::get('main-bounce/new-bounce',[App\Http\Controllers\Admin\AdminController::class, 'new_bounce'])->name('new.bounce');
+            Route::get('main-email-verification', [App\Http\Controllers\Admin\AdminController::class, 'main_email'])->name('main.email');
+            Route::get('main-email/create-new', [App\Http\Controllers\Admin\AdminController::class, 'create_new'])->name('create.new');
+>>>>>>> 6dcb438 (Lastest)
         }
     );
 });

@@ -960,12 +960,12 @@ body {
   display: block;
   width: 100%;
   margin-top: -10px;
-  padding: 10px 5px 10px 40px;
+  padding: 10px 5px 10px 20px;
   border-radius: 3px;
   border: 1px solid #70418F;
   letter-spacing: 0.8px;
   background-color: #fff;
-  font-size: 16px;
+  font-size: 13px;
   transition: 0.6s;
 }
 .form textarea{
@@ -977,7 +977,7 @@ body {
   border: 1px solid #70418F;
   letter-spacing: 0.8px;
   background-color: #F8F8FB;
-  font-size: 12px;
+  font-size: 13px;
   transition: 0.6s;
 }
 .form select{
@@ -989,7 +989,7 @@ body {
   border: 1px solid #70418F;
   letter-spacing: 0.8px;
   background-color: #F8F8FB;
-  font-size: 10px;
+  font-size: 13px;
   transition: 0.6s;
 }
 .Dept{
@@ -1992,6 +1992,7 @@ textarea{
   right: -20px;
 
 }
+<<<<<<< HEAD
 .email-box{
   cursor: pointer;
   padding: 15px 6px 3px;
@@ -2010,3 +2011,5 @@ textarea{
 .email-img-box img{
   width: 30px;
 }
+=======
+>>>>>>> 6dcb438 (Lastest)
