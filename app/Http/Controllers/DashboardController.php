@@ -778,6 +778,13 @@ class DashboardController extends Controller
         ]);
     }
 
+     public function main_sales($username)
+    {
+        return view('dashboard.salesAnalytics', [
+            'username' => $username
+        ]);
+    }
+
     public function main_support($username)
     {
         return view('dashboard.support.supportMain', [

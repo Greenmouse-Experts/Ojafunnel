@@ -5146,3 +5146,196 @@ textarea{
 .email-img-box img{
   width: 30px;
 }
+.analytics-header-boxes{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 23% 23% 23% 23%;
+  justify-content: space-between;
+}
+.analytics-header-box{
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.analytics-header-boxes .box1 {
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(113,63,147,1) 100%);
+}
+.analytics-header-boxes .box2 {
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(27,54,255,1) 100%);
+}
+.analytics-header-boxes .box3 {
+  background: rgb(193,174,238);
+background: radial-gradient(circle, rgba(193,174,238,1) 0%, rgba(255,27,104,1) 100%);
+}
+.analytics-header-boxes .box4 {
+  background: rgb(255,116,51);
+  background: radial-gradient(circle, rgba(255,116,51,1) 0%, rgba(113,63,147,1) 100%);
+}
+.analytics-header-boxes .label1 {
+  font-size: 17px;
+  font-weight: 600;
+  color: white;
+}
+.analytics-header-boxes .label2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: white;
+}
+.product-numbers {
+  display: grid;
+  grid-template-columns: 65% 32%;
+  margin: 30px 0px;
+  justify-content: space-between;
+}
+.product-numbers-graph{
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  background-color: white;
+}
+.product-numbers-products{
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  background-color: white;
+}
+.product-details-box{
+  display: grid;
+  grid-template-columns: 30% 65%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 2px dashed rgba(119, 119, 119, 0.5);
+  border-radius: 10px;
+}
+.product-details-box .products-text p{
+  font-weight: 600;
+  margin: 0;
+}
+.repAnal-div{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 23% 23% 23% 23%;
+  justify-content: space-between;
+}
+.repAnal-div .repAnal-box{
+  padding: 20px;
+  border-right: 10px solid #713f93;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  position: relative;
+}
+.repAnal-box .repAnal-badge{
+  width: 40%;
+  background-color:  #713f93;
+  color: white;
+  font-size: 10px;
+  font-weight: 500;
+  text-align: center;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+}
+.transact-analysis{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px;
+  background-color: white;
+  position: relative;
+}
+.transact-badge{
+  width: 160px;
+  background-color:  #713f93;
+  color: white;
+  font-size: 10px;
+  font-weight: 500;
+  text-align: center;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+}
+.subscribe-analysis{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px;
+  background-color: white;
+  position: relative;
+}
+.affiliate-analysis{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px;
+  background-color: white;
+  position: relative;
+  margin-top: 30px;
+}
+.default-badge{
+  width: 160px;
+  background-color:  #713f93;
+  color: white;
+  font-size: 10px;
+  font-weight: 500;
+  text-align: center;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+}
+.detail-fonting{
+  font-size: 24px;
+  color:red;
+}
+.product-details{
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 48% 48%;
+  justify-content: space-between;
+}
+.lms-details{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px;
+  background-color: white;
+  position: relative;
+}
+.ecommerce-details{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px;
+  background-color: white;
+  position: relative;
+}
+@media (max-width:950px) {
+  .product-details-box, .product-numbers{
+    display: block;
+  }
+  .analytics-header-boxes{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 48% 48%;
+    justify-content: space-between;
+  }
+  .repAnal-div{
+    width: 100%;
+    display: block;
+  }
+  .repAnal-div .repAnal-box{
+    margin-top: 20px;
+  }
+  .subscribe-analysis{
+    margin-top: 30px;
+  }
+  .ecommerce-details{
+    margin-top: 30px;
+  }
+  .course-img{
+    width: 200px !important;
+  }
+  .course-imgs{
+    width: 150px !important;
+    margin-top: 20px;
+  }
+  .detail-fonting{
+    font-size: 18px;
+    color:red;
+  }
+  .product-details{
+    display: block;
+  }
+}

@@ -137,7 +137,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('user.main.sales', Auth::user()->username)}}">
                         <i class="bi bi-receipt"></i>
                         <span key="t-chat">Sales Analytics</span>
                     </a>
