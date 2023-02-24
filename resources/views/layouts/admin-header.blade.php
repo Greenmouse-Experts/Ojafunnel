@@ -83,6 +83,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div data-simplebar style="max-height: 230px">
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="d-flex">

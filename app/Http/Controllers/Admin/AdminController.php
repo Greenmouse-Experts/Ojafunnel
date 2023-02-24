@@ -174,12 +174,6 @@ class AdminController extends Controller
         return view('Admin.ecommerce.salesList');
     }
 
-    public function sales_details($id)
-    {
-        $order = StoreOrder::findOrFail($id);
-        return view('Admin.ecommerce.salesDetail', compact('order'));
-    }
-
     public function email_support()
     {
         return view('Admin.support.emailSupport');
@@ -198,9 +192,7 @@ class AdminController extends Controller
 
     public function whatsapp_automation()
     {
-        $whatsappAutomations = SmsCampaign::latest()->where('sms_type', 'whatsapp')->get();
-        //dd($whatsappAutomations);
-        return view('Admin.automation.whatsappAutomation', compact('whatsappAutomations'));
+        return view('Admin.automation.whatsappAutomation');
     }
     // EMAIL-MARKETING
 
