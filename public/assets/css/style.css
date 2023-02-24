@@ -4471,26 +4471,17 @@ header nav .offcanvas-header button i {
         display: block;
     }
     .admin .btn-div .sidelist {
-        margin-top: 50px;
-        padding: 10px;
+        margin-top: 100px;
+        padding: 30px 20px 30px 20px;
         margin-bottom: 30px;
         border-radius: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: 20px;
+        margin-right: 20px;
         box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
         background-color: #fff;
     }
     .admin .btn-div .sidelist h4 {
         text-align: center;
-    }
-
-    .admin .btn-div .sidelist p {
-        padding: 5px 0 0 0;
-        text-align: center;
-    }
-
-    .admin .btn-div .sidelist {
-        padding: 90px 20px 0px 20px;
     }
 
     .admin .btn-div .sidelist .sign-div input {

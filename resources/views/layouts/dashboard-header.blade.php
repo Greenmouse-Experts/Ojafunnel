@@ -110,7 +110,7 @@
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="bell">
                         <i class="bx bx-bell bx-tada"></i>
-                        <span class="badge bg-danger rounded-pill">6</span>
+                        <span class="badge bg-danger rounded-pill">{{App\Models\OjafunnelNotification::latest()->where('to', Auth::user()->id)->where('status', 'Unread')->get()->count()}}</span>
                     </div>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
@@ -124,6 +124,7 @@
                             </div>
                         </div>
                     </div>
+                    @foreach(App\Models\OjafunnelNotification::latest()->where('to', Auth::user()->id)->where('status', 'Unread')->get() as $OjaNotification)
                     <div data-simplebar style="max-height: 230px">
                         <a href="{{route('user.main.notification', Auth::user()->username)}}" class="text-reset notification-item">
                             <div class="d-flex">
@@ -134,21 +135,22 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1" key="t-shipped">
-                                        Your course has been added
+                                        {{$OjaNotification->title}}
                                     </h6>
                                     <div class="font-size-12 text-muted">
                                         <p class="mb-1" key="t-grammer">
-                                            Your course has been successfully uploaded on the store for
+                                            {{$OjaNotification->body}}
                                         </p>
                                         <p class="mb-0">
                                             <i class="mdi mdi-clock-outline"></i>
-                                            <span key="t-min-ago">3 min ago</span>
+                                            <span key="t-min-ago">{{$OjaNotification->created_at->diffForHumans()}}</span>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </a>
                     </div>
+                    @endforeach
                     <div class="p-2 border-top d-grid">
                         <a class="btn btn-sm btn-link font-size-14 text-center" href="{{route('user.main.notification', Auth::user()->username)}}">
                             <i class="mdi mdi-arrow-right-circle me-1"></i>

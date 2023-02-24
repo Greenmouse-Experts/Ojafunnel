@@ -88,11 +88,13 @@ Route::prefix('user')->group(function () {
     Route::put('/support/read', [ChatController::class, 'markAsRead']);
     Route::post('/support/download/attachment/{id}', [ChatController::class, 'downloadAttachment']);
 
-    // Message
+    // Email
     Route::post('/user/send/message/admin', [OjafunnelNotificationController::class, 'user_send_message'])->name('user.send.message');
     Route::get('/user/get/all/notifications', [OjafunnelNotificationController::class, 'get_all_notifications']);
     Route::get('/user/get/all/unread/notifications', [OjafunnelNotificationController::class, 'get_all_unread_notifications']);
     Route::get('/user/count/unread/notifications', [OjafunnelNotificationController::class, 'count_unread_notifications']);
-    Route::post('/user/read/notification/{id}', [OjafunnelNotificationController::class, 'read_notification']);
 
-});
+
+    // Notification
+    Route::get('/user/read/notification/{id}', [OjafunnelNotificationController::class, 'read_notification'])->name('user.read.notification');
+}); 

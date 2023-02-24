@@ -45,9 +45,9 @@
                         <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1676990796/OjaFunnel-Images/chat-clip-removebg-preview_weurrv.png' alt='live-chat' />
                         <a href="{{route('user.main.support.chat', Auth::user()->username)}}" class="text-center">Live Chat</a>
                     </div>
-                    <div class='col-md-4 support-option' data-bs-toggle="modal" data-bs-target="#sendMail">
+                    <div class='col-md-4 support-option'>
                         <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1676991710/OjaFunnel-Images/email-chat-removebg-preview_o6kgo7.png' alt='live-chat' />
-                        <a href="javascript: void(0);" class="text-center">Send Mail</a>
+                        <a href="{{route('user.main.email', Auth::user()->username)}}" class="text-center">Send Mail</a>
                     </div>
                 </div>
             </div>

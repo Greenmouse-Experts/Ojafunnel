@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('room_id');
             $table->text('message')->nullable();
             $table->string('attachment')->nullable();
-
+            
             $table->foreign('room_id')->references('room_id')->on('personal_chatrooms')->onDelete('cascade');
             $table->timestamps();
         });
