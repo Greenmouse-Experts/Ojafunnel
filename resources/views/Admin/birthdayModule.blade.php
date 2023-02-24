@@ -56,38 +56,64 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($bm as $b)
                                             <tr>
-                                                <th scope="row">#01</th>
+                                                <td>{{$loop->iteration}}</td>
                                                 <th scope="row">
-                                                    Greenmouse
+                                                    <p>{{$b->user->username}}</p>
+                                                    <p>{{$b->user->email}}</p>
+
                                                 </th>
+                                                <td>{{\App\Models\BirthdayContactList::where('id', $b->birthday_contact_list_id)->first()->name}}</td>
                                                 <td>
-                                                    Funnel Pro
+                                                    {{$b->title}}
                                                 </td>
                                                 <td>
-                                                    Birthday Wishes
+                                                    @php
+                                                    $bb = json_decode($b->automation, true);
+
+                                                @endphp
+                                                    @foreach ($bb as $key => $value)
+                                                        <p style="text-transform:capitalize">{{$value}}</p>
+                                                    @endforeach
                                                 </td>
                                                 <td>
-                                                    <p>Whatsapp Automation</p>
-                                                    <p>SMS Automation</p>
+                                                    <span class="badge badge-pill badge-soft-success font-size-11">{{$b->status}}</span>
                                                 </td>
-                                                <td>
-                                                    <span class="badge badge-pill badge-soft-success font-size-11">active</span>
-                                                </td>
-                                                <td>
-                                                    <p>30-Dec-2022</p>
-                                                </td>
-                                                <td>
-                                                    <p>27-Dec-2023</p> 
-                                                </td>
+                                                <td>{{$b->start_date}}</td>
+                                                <td>{{$b->end_date}}</td>
                                                 <td>
                                                     <ul class="list-unstyled hstack gap-1 mb-0">
                                                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Message">
-                                                            <a href="" data-bs-toggle="modal" data-bs-target="#viewMessage" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                            <a href="" data-bs-toggle="modal" data-bs-target="#viewMessage-{{$b->id}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                         </li>
                                                     </ul>
                                                 </td>
+                                                <div class="modal fade" id="viewMessage-{{$b->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">
+                                                                    {{$b->title}} ({{$b->user->username}})
+                                                                </h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="Edit-level">
+                                                                        <div>
+                                                                            <p>
+                                                                                {{$b->message}}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -98,28 +124,5 @@
         </div>
     </div>
 </div>
-    <div class="modal fade" id="viewMessage" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Happy Birthday (Username)
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
-                            <div>
-                                <p>
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil perferendis voluptatem, reiciendis velit cumque, earum numquam ullam voluptate eligendi officia voluptatum exercitationem error? Necessitatibus eveniet commodi similique beatae illum sint.
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga, ullam illo ipsam, quo iste veritatis iusto et provident ab sed dolore, officiis eos ipsa consequuntur laborum nam reiciendis molestias ducimus?
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 @endsection
