@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\OjafunnelMailSupport;
 use App\Models\OjafunnelNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,11 +22,12 @@ class OjafunnelNotificationController extends Controller
 
         $admin = Admin::latest()->where('name', 'Administrator')->first();
 
-        OjafunnelNotification::create([
-            'to' => $admin->id,
-            'title' => $request->title,
+        OjafunnelMailSupport::create([
+            'user_id' => Auth::user()->id,
+            'admin_id' => $admin->id,
+            'title' => $request->subject,
             'body' => $request->message,
-            'image' => 'https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png',
+            'by_who' => 'User'
         ]);
 
         return back()->with([

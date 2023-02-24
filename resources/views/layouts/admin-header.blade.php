@@ -69,7 +69,7 @@
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="bell">
                         <i class="bx bx-bell bx-tada"></i>
-                        <span class="badge bg-danger rounded-pill">6</span>
+                        <span class="badge bg-danger rounded-pill">{{App\Models\OjafunnelNotification::latest()->where('admin_id', Auth::guard('admin')->user()->id)->where('status', 'Unread')->get()->count()}}</span>
                     </div>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    
+                    @foreach(App\Models\OjafunnelNotification::latest()->where('admin_id', Auth::guard('admin')->user()->id)->where('status', 'Unread')->get() as $OjaNotification)
                     <div data-simplebar style="max-height: 230px">
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="d-flex">
@@ -109,6 +109,7 @@
                             </div>
                         </a>
                     </div>
+                    @endforeach
                     <div class="p-2 border-top d-grid">
                         <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
                             <i class="mdi mdi-arrow-right-circle me-1"></i>
