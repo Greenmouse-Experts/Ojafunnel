@@ -40,7 +40,14 @@
                         <span key="t-chat">Email Marketing</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('admin.manage_campaign')}}" key="t-full-calendar">Manage Campaign</a></li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Sending</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="{{route('sending.server')}}" key="t-full-calendar">Sending Server</a></li>
+                                <li><a href="{{route('main.bounce')}}" key="t-full-calendar">Bounce Handlers</a></li>
+                                <li><a href="{{route('main.email')}}" key="t-full-calendar">Email verification servers</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -72,19 +79,15 @@
                         <span key="t-chat">Automation</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#" key="t-tui-calendar">SMS Automation</a></li>
-                        <li><a href="#" key="t-tui-calendar">Whatsapp Automation</a></li>
+                        <li><a href="{{route('smsAutomation')}}"  key="t-tui-calendar">SMS Automation</a></li>
+                        <li><a href="{{route('whatsappAutomation')}}"  key="t-tui-calendar">Whatsapp Automation</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow">
+                    <a href="javascript: void(0);">
                         <i class="bi bi-tags"></i>
                         <span key="t-chat">Integration</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#" key="t-tui-calendar">Create Integrations</a></li>
-                        <li><a href="#" key="t-tui-calendar">Manage Integrations</a></li>
-                    </ul>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
@@ -106,6 +109,16 @@
                         <i class="bi bi-receipt"></i>
                         <span key="t-chat">Sales Analytics</span>
                     </a>
+                </li>
+                <li>
+                    <a href="#" class="has-arrow">
+                        <i class="bi bi-headset"></i>
+                        <span key="t-dashboards">Support</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('chatSupport')}}" key="t-full-calendar">Chat Support</a></li>
+                        <li><a href="{{route('emailSupport')}}" key="t-full-calendar">Email Support</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#" class="has-arrow">
