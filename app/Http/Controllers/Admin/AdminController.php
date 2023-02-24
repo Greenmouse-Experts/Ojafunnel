@@ -248,6 +248,17 @@ class AdminController extends Controller
     {
         return view('Admin.automation.whatsappAutomation');
     }
+
+    public function integration()
+    {
+        return view('Admin.integration');
+    }
+
+    public function birthday_module()
+    {
+        return view('Admin.birthdayModule');
+    }
+
     // EMAIL-MARKETING
 
     public function index()

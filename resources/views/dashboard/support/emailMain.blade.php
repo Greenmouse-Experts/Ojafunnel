@@ -76,6 +76,31 @@
                     </div>
                 </div>
 
+                @foreach(App\Models\ReplyMailSupport::latest()->where('mail_id', $ojafunnelmail->id)->get() as $reply)
+                <div class="email-msg-box">
+                    <div class='bg-white email-box'>
+                        <div class="d-flex">
+                            <div class=''>
+                                <div class='bg-light email-img-box'>
+                                    <img src='https://static-00.iconduck.com/assets.00/mail-reply-sender-icon-245x256-vcu9gxgm.png' alt='profile' />
+                                </div>
+                            </div>
+                            <div class=''>
+                                <div class=''>
+                                    <p class='p-0 m-0 fw-bold'>Administrator Reply</p>
+                                </div>
+                                <div>
+                                    <p class='mb-1 mt-1'>{{$reply->body}}</p>
+                                </div>
+                                <div>
+                                    <p class='fst-italic '>{{$reply->created_at->diffForHumans()}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
                 <div class="modal fade" id="viewMail-{{$ojafunnelmail->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">

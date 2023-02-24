@@ -60,7 +60,11 @@
                             </div>
                             <div class=''>
                                 <div class=''>
+                                    @if($ojafunnelmail->by_who == 'User')
                                     <p class='p-0 m-0 fw-bold'>Sent from {{App\Models\User::find($ojafunnelmail->user_id)->first_name}} {{App\Models\User::find($ojafunnelmail->user_id)->last_name}}</p>
+                                    @else
+                                    <p class='p-0 m-0 fw-bold'>From Admininstrator - {{App\Models\User::find($ojafunnelmail->user_id)->first_name}} {{App\Models\User::find($ojafunnelmail->user_id)->last_name}}</p>
+                                    @endif
                                 </div>
                                 <div>
                                     <p class='mb-1 mt-1'>{{$ojafunnelmail->title}}</p>
@@ -107,7 +111,11 @@
                         <div class="modal-content">
                             <div class="modal-header border-bottom-0">
                                 <h5 class="modal-title" id="staticBackdropLabel">
+                                    @if($ojafunnelmail->by_who == 'User')
                                     Mail from {{App\Models\User::find($ojafunnelmail->user_id)->first_name}} {{App\Models\User::find($ojafunnelmail->user_id)->last_name}} (User)
+                                    @else
+                                    Mail to {{App\Models\User::find($ojafunnelmail->user_id)->first_name}} {{App\Models\User::find($ojafunnelmail->user_id)->last_name}} (User)
+                                    @endif
                                 </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
