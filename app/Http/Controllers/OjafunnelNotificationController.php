@@ -20,7 +20,7 @@ class OjafunnelNotificationController extends Controller
             'message' => ['required', 'string'],
         ]);
 
-        $admin = Admin::latest()->where('name', 'Administrator')->first();
+        $admin = Admin::latest()->where('name', 'Admin')->first();
 
         OjafunnelMailSupport::create([
             'user_id' => Auth::user()->id,
