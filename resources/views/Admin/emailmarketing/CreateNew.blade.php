@@ -30,7 +30,7 @@ $admin = auth()->guard('admin')->user();
                         <div class="py-2">
                             <h4 class="font-400">Create New</h4>
                             <p>
-                                Fill in the form to create New Bounce Handler
+                                Fill in the form to create Email Verification Server
                             </p>
                         </div>
                     </div>

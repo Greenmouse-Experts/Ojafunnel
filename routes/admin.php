@@ -61,6 +61,18 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('main-bounce/new-bounce', [App\Http\Controllers\Admin\AdminController::class, 'new_bounce'])->name('new.bounce');
             Route::get('main-email-verification', [App\Http\Controllers\Admin\AdminController::class, 'main_email'])->name('main.email');
             Route::get('main-email/create-new', [App\Http\Controllers\Admin\AdminController::class, 'create_new'])->name('create.new');
+            Route::get('main-backlist', [App\Http\Controllers\Admin\AdminController::class, 'backlist'])->name('backlist.log');
+            Route::get('main-backlist/new-import', [App\Http\Controllers\Admin\AdminController::class, 'import_backlist'])->name('import.backlist');
+            Route::get('main-delivery-log', [App\Http\Controllers\Admin\AdminController::class, 'delivery_log'])->name('delivery.log');
+            Route::get('main-bounce-log', [App\Http\Controllers\Admin\AdminController::class, 'bounce_log'])->name('bounce.log');
+            Route::get('main-open-log', [App\Http\Controllers\Admin\AdminController::class, 'open_log'])->name('open.log');
+            Route::get('main-click-log', [App\Http\Controllers\Admin\AdminController::class, 'click_log'])->name('click.log');
+            Route::get('main-unsubcribe-log', [App\Http\Controllers\Admin\AdminController::class, 'unsubscribe_log'])->name('unsubscribe.log');
+            Route::get('setting/general', [App\Http\Controllers\Admin\AdminController::class, 'generall'])->name('setting.general');
+            Route::get('main-payment-gateway', [App\Http\Controllers\Admin\AdminController::class, 'payment_gateway'])->name('payment.gateway');
+            Route::get('main-plugin', [App\Http\Controllers\Admin\AdminController::class, 'plugin'])->name('plugin');
+            Route::get('main-plugin/install-plugin', [App\Http\Controllers\Admin\AdminController::class, 'install_plugin'])->name('install.plugin');
+
             Route::get('ecommerce/sales-details/{id}', [App\Http\Controllers\Admin\AdminController::class, 'sales_details'])->name('salesDetail');
             // Email Canpaign
             Route::get('email-marketing/manage', [App\Http\Controllers\Admin\AdminController::class, 'manage_campaign'])->name('admin.manage_campaign');

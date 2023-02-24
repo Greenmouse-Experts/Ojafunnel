@@ -51,20 +51,20 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Report</a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="#" key="t-full-calendar">Backlist</a></li>
-                                <li><a href="#" key="t-full-calendar">Deliver Log</a></li>
-                                <li><a href="#" key="t-full-calendar">Bounce Log</a></li>
-                                <li><a href="#" key="t-full-calendar">Open Log</a></li>
-                                <li><a href="#" key="t-full-calendar">Click Log</a></li>
-                                <li><a href="#" key="t-full-calendar">Unsubcribe Log</a></li>
+                                <li><a href="{{route('backlist.log')}}" key="t-full-calendar">Backlist</a></li>
+                                <li><a href="{{route('delivery.log')}}" key="t-full-calendar">Delivery log</a></li>
+                                <li><a href="{{route('bounce.log')}}" key="t-full-calendar">Bounce Log</a></li>
+                                <li><a href="{{route('open.log')}}" key="t-full-calendar">Open Log</a></li>
+                                <li><a href="{{route('click.log')}}" key="t-full-calendar">Click Log</a></li>
+                                <li><a href="{{route('unsubscribe.log')}}" key="t-full-calendar">Unsubcribe Log</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Setting</a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="#" key="t-full-calendar">All Setting</a></li>
-                                <li><a href="#" key="t-full-calendar">Payment Gateway</a></li>
-                                <li><a href="#" key="t-full-calendar">Plugins</a></li>
+                                <li><a href="{{route('setting.general')}}" key="t-full-calendar">All Setting</a></li>
+                                <li><a href="{{route('payment.gateway')}}" key="t-full-calendar">Payment Gateway</a></li>
+                                <li><a href="{{route('plugin')}}" key="t-full-calendar">Plugins</a></li>
                             </ul>
                         </li>
                     </ul>
