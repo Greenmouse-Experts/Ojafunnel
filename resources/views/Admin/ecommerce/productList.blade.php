@@ -1,6 +1,9 @@
 @extends('layouts.admin-frontend')
 
 @section('page-content')
+@php
+    $admin = auth()->guard('admin')->user();
+@endphp
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -46,7 +49,7 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Product Name </th>
-                                            <th>Product Owner</th>
+                                            <th>Store</th>
                                             <th>Amount</th>
                                             <th>Status</th>
                                             <th>Date Added</th>
@@ -54,60 +57,39 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($admin->getAllProducts() as $item)
                                         <tr>
+                                            <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
+                                            <td>{{$item->name}}</td>
+                                            <td>
+                                                {{$item->store->name}}
+                                            </td>
+                                            <td>
+                                                ₦{{number_format($item->price)}}
+                                            </td>
+                                            <td>
+                                                @if ($item->quantity > 0)
+                                                    <span class="badge badge-pill badge-soft-success font-size-11">In Stock</span>
+                                                @else
+                                                    <span class="badge badge-pill badge-soft-secoondary font-size-11">Out of Stock</span>
+                                                @endif
 
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#11</a> </td>
-                                            <td>Great Minds</td>
-                                            <td>
-                                                Greenmouse
                                             </td>
                                             <td>
-                                                ₦40,000.00
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-pill badge-soft-success font-size-11">In store</span>
-                                            </td>
-                                            <td>
-                                                Dec 10 2022
+                                                {{$item->created_at->format('D d M, Y')}}
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Detail">
-                                                        <a href="{{route('productDetail')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Product Detail">
+                                                        <a href="{{route('productDetail', $item->id)}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Flag">
+                                                    {{-- <li data-bs-toggle="tooltip" data-bs-placement="top" title="Flag">
                                                         <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
-                                                    </li>
+                                                    </li> --}}
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr>
-
-                                            <td><a href="#" class="text-body fw-bold">#12</a> </td>
-                                            <td>Affiliate Insight</td>
-                                            <td>
-                                                BlueMouse
-                                            </td>
-                                            <td>
-                                                ₦200,000.00
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-pill badge-soft-success font-size-11">In store</span>
-                                            </td>
-                                            <td>
-                                                Dec 03 2022
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Detail">
-                                                        <a href="{{route('productDetail')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Flag">
-                                                        <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

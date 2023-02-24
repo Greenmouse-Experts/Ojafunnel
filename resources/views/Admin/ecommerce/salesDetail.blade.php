@@ -10,88 +10,142 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">Sales Detail</h4>
+                        <h4 class="mb-sm-0 font-size-18">Sales</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('adminwelcome')}}">Home</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('salesList')}}">Product Sales</a></li>
-                                <li class="breadcrumb-item active">Sales Detail</li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
+                                <li class="breadcrumb-item active">Sales</li>
                             </ol>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- banner -->
-            <div class="mt-4">
-                <div class="row justify-content-around">
-                    <div class="col-lg-4">
-                        <div class="sales-detail-box">
-                            <p class="badge">₦40,000.00</p>
-                            <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1676889791/OjaFunnel-Images/1565838_e54e_16_lmsw3n.jpg' alt='' width="100%"/>
-                            <p class="fw-bold fs-5 text-center mt-3 mb-1">Great Minds</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 sales-detail-box">
-                        <div class="row">
-                            <div class="col-3">
-                                <p>Product Name:</p>
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="invoice-title">
+                                <div class="mb-4">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" alt="logo" height="50" />
+                                </div>
                             </div>
-                            <div class="col-9">
-                                <p>Great Minds</p>
+                            <div>
+                                <strong>Order Id -</strong> {{$order->order_no}}
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <p>Product Description:</p>
+                            <div class="mb-4">
+                                <strong>Order Date - </strong>{{$order->created_at->format('d-m-Y')}}
                             </div>
-                            <div class="col-9">
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium consectetur quam atque quibusdam amet provident debitis neque nostrum, error illum assumenda libero ipsum ab ad dignissimos vel ut possimus necessitatibus?</p>
+                            <div class="table-responsive mb-3">
+                                <table class="table table-bordered dt-responsive nowrap w-100">
+                                    <thead class="tread">
+                                        <tr class="text-center">
+                                            <th scope="col"><b>Store</b></th>
+                                            <th scope="col"><b>Shipping To</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        <tr>
+                                            <td>
+                                               <img style="width: 40px;" src="{{Storage::url($order->store->logo)}}" alt=""> {{$order->store->name}}
+                                            </td>
+                                            <td class="border-0" style="text-align: right">
+                                                <p><strong>Name: </strong>{{$order->user[0]->name}}</p>
+                                                <p><strong>Email: </strong>{{$order->user[0]->email}}</p>
+                                                <p><strong>Phone No: </strong>{{$order->user[0]->phone_no}}</p>
+                                                <p><strong>Address: </strong>{{$order->user[0]->address}}, <br>
+                                                    {{$order->user[0]->state}}, {{$order->user[0]->country}}
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <p>Product Category:</p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered dt-responsive nowrap w-100">
+                                    <thead class="tread">
+                                        <tr class="text-center">
+                                            <th scope="col"> <b>Payment Method</b></th>
+                                            <th scope="col"><b>Shipping Method</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        <tr>
+                                            <td>
+                                            {{$order->payment_method}}
+                                            </td>
+                                            <td>
+                                            Free Shipping - Free Shipping
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="col-9">
-                                <p>Digital Product</p>
+                            <div class="py-2 mt-3">
+                                <h3 class="font-size-15 fw-bold">Order summary</h3>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <p>Date Created:</p>
+                            @php
+                                $orderItem = \App\Models\OrderItem::where('store_order_id', $order->id)->get();
+                            @endphp
+                            <div class="table-responsive">
+                                <table class="table table-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 70px;">No.</th>
+                                            <th>Product Name</th>
+                                            <th>Image</th>
+                                            <th>Price</th>
+                                            <th>Qty</th>
+                                            <th>Subtotal</th>
+                                            <th>Tax Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($orderItem as $item)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$item->product->name}}</td>
+                                            <td><img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset=""></td>
+                                            <td class="text-wrap" style="width: 330px;">{{$item->product->description}}</td>
+                                            <td>{{$item->quantity}}</td>
+                                            <td>₦{{$item->amount}}</td>
+                                            <td>₦{{number_format($item->quantity*$item->amount, 2)}}</td>
+                                        </tr>
+                                        @endforeach
+                                        {{-- <tr>
+                                            <td colspan="6" class="border-0 text-end">
+                                                <strong>Sub Total:</strong>
+                                            </td>
+                                            <td class="border-0">$13.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="border-0 text-end">
+                                                <strong>Tax (18%):</strong>
+                                            </td>
+                                            <td class="border-0">$13.00</td>
+                                        </tr> --}}
+                                        <tr>
+                                            <td colspan="6" class="border-0 text-end">
+                                                <strong>Total:</strong>
+                                            </td>
+                                            <td class="border-0">
+                                               <b>₦{{number_format($order->amount, )}}</b>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="col-9">
-                                <p>20 December 2022</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <p>Product Price:</p>
-                            </div>
-                            <div class="col-9">
-                                <p>₦40,000.00</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <p>Unit Sold:</p>
-                            </div>
-                            <div class="col-9">
-                                <p>3</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">
-                                <p>Accumlated Price:</p>
-                            </div>
-                            <div class="col-9">
-                                <p>₦120,000.00</p>
+                            <div class="d-print-none">
+                                <div class="float-end">
+                                    <a href="javascript:window.print()" class="btn btn-success waves-effect waves-light me-1"><i class="fa fa-print"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-2"></div>
             </div>
         </div>
     </div>
 </div>
-@endsectiona
+@endsection

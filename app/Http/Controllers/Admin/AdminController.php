@@ -3,10 +3,56 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use App\Models\SmsCampaign;
+use App\Models\StoreOrder;
+use App\Models\StoreProduct;
 use Illuminate\Http\Request;
+use Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    public function profile_update(Request $request)
+    {
+        $ad = Admin::findOrFail(Auth::guard('admin')->user()->id);
+        $ad->name = $request->name;
+        $ad->update();
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Admin Profile Updated.'
+        ]);
+    }
+
+    public function changePassword(Request $request)
+    {
+        //$ad = Admin::findOrFail(Auth::guard('admin')->user()->id);
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+
+        #Match The Old Password
+        if (!Hash::check($request->old_password, Auth::guard('admin')->user()->password)) {
+            return back()->with([
+                'type' => 'success',
+                "message",
+                "Old Password Doesn't match!"
+            ]);
+        }
+
+
+        #Update the new Password
+        Admin::whereId(Auth::guard('admin')->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Admin password changed successfully!.'
+        ]);
+    }
     public function dashboard()
     {
         return view('Admin.adminwelcome');
@@ -64,7 +110,7 @@ class AdminController extends Controller
 
     public function subscribtions()
     {
-        return view('Admin.subscribtions');
+        return view('Admin.subscription.subscriptions');
     }
 
     public function vendorlist()
@@ -90,6 +136,12 @@ class AdminController extends Controller
     public function addProduct()
     {
         return view('Admin.addProduct');
+    }
+
+    public function product_detail($id)
+    {
+        $product = StoreProduct::findOrFail($id);
+        return view('Admin.ecommerce.productDetail', compact('product'));
     }
 
     public function viewCart()
@@ -134,11 +186,48 @@ class AdminController extends Controller
 
     public function sms_automation()
     {
-        return view('Admin.automation.smsAutomation');
+        $smsAutomations = SmsCampaign::latest()->where('sms_type', 'plain')->get();
+        return view('Admin.automation.smsAutomation', compact('smsAutomations'));
     }
 
     public function whatsapp_automation()
     {
         return view('Admin.automation.whatsappAutomation');
+    }
+    // EMAIL-MARKETING
+
+    public function index()
+    {
+        return view('Admin.emailmarketing.SendingServer');
+    }
+
+    public function new_server()
+    {
+        return view('Admin.emailmarketing.NewServer');
+    }
+
+    public function choose_server()
+    {
+        return view('Admin.emailmarketing.ChooseServer');
+    }
+
+    public function main_bounce()
+    {
+        return view('Admin.emailmarketing.BounceHandler');
+    }
+
+    public function new_bounce()
+    {
+        return view('Admin.emailmarketing.NewBounce');
+    }
+
+    public function main_email()
+    {
+        return view('Admin.emailmarketing.EmailVerification');
+    }
+
+    public function create_new()
+    {
+        return view('Admin.emailmarketing.CreateNew');
     }
 }

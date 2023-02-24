@@ -42,7 +42,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="transactions-all-tab" role="tabpanel">
                             <div class="table-responsive" data-simplebar style="max-height: 330px;">
-                                <table class="table align-middle table-nowrap">
+                                <table id="datatable-buttons" class="table align-middle table-nowrap">
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
@@ -57,7 +57,6 @@
                                     <tbody>
                                         @foreach ($admin->getAllCustomerLists() as $item)
                                             <tr>
-
                                                 <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
                                                 <td>{{$item->user->first_name}} {{$item->user->last_name}}</td>
                                                 <td>
@@ -95,7 +94,6 @@
                                                         @endif
                                                     </ul>
                                                 </td>
-
                                             </tr>
                                         @endforeach
                                     </tbody>

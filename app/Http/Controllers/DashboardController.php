@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Category;
+use App\Models\Chat;
 use App\Models\Course;
 use App\Models\Funnel;
 use App\Models\FunnelPage;
@@ -10,6 +12,7 @@ use App\Models\Integration;
 use App\Models\Mailinglist;
 use App\Models\OjaPlan;
 use App\Models\Page;
+use App\Models\PersonalChatroom;
 use App\Models\Plan;
 use App\Models\Shop;
 use App\Models\SmsAutomation;
@@ -794,9 +797,83 @@ class DashboardController extends Controller
 
     public function support_chat($username)
     {
-        return view('dashboard.support.chat', [
-            'username' => $username
-        ]);
+        $admin = Admin::latest()->where('name', 'Administrator')->first();
+
+        if (Auth::user()->id == $admin->id) 
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Cannot talk to yourself.'
+            ]);
+        }
+
+        // check whether if this user and the targeted user already has a chatroom
+        $isExist = PersonalChatroom::whereIn('user_id', [Auth::user()->id, $admin->id])
+                                    ->whereIn('admin_id', [Auth::user()->id, $admin->id])
+                                    ->count();
+
+        if ($isExist > 0) 
+        {
+            // get the room id
+            $room_id = PersonalChatroom::whereIn('user_id', [Auth::user()->id, $admin->id])
+                                        ->whereIn('admin_id', [Auth::user()->id, $admin->id])
+                                        ->first('room_id');
+                                  
+            // update the state of interlocutor's chat from unread to read
+            Chat::where('user_id', $admin->id)
+                ->where('room_id', $room_id['room_id'])
+                ->where('read_at', null)
+                ->update(['read_at' => now()]);
+                                        
+            // fetch all of the chats from this chatroom
+            $chats = Chat::where('room_id', $room_id['room_id'])->orderBy('created_at', 'asc')->get();
+
+            // create an array to be sent as a HTTP response
+            $data = [];
+            $data['room_id'] = $room_id['room_id'];
+            $data['admin'] = Admin::find($admin->id);
+            
+            if (count($chats) > 0) {
+                foreach ($chats as $chat) {
+                    $data['messages'][] = [
+                        'sender' => User::find($chat->user_id),
+                        'message' => $chat->message,
+                        'attachment' => $chat->attachment,
+                        'read_at' => $chat->read_at,
+                        'time' => $chat->created_at
+                    ];
+                }    
+            } else {
+                $data['messages'] = [];
+            }
+
+            $data['exist'] = 1;
+            
+            return view('dashboard.support.chat', [
+                'username' => $username,
+                'data' => $data
+            ]);
+        } else 
+        {
+            // if they don't have a chatroom, then create one.
+            $room_id = Auth::user()->id . 'CHAT' . $admin->id;
+            PersonalChatroom::create([
+                'room_id' => $room_id,
+                'user_id' => Auth::user()->id,
+                'admin_id' => $admin->id
+            ]);
+
+            $data = [];
+            $data['room_id'] = $room_id;
+            $data['admin'] = Admin::find($admin->id);
+            $data['messages'] = [];
+            $data['exist'] = 0;
+
+            return view('dashboard.support.chat', [
+                'username' => $username,
+                'data' => $data
+            ]);
+        }
     }
 
     public function support_email($username)

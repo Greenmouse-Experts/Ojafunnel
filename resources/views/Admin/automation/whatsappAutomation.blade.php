@@ -45,51 +45,44 @@
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
-                                            <th>Owner's Name</th>
-                                            <th>Campaign Name</th>
-                                            <th>Contact</th>
-                                            <th>Sent</th>
-                                            <th>Failed</th>
-                                            <th>Campaign Type</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Owner's</th>
+                                            <th scope="col">Campaign Name</th>
+                                            <th scope="col">Contact</th>
+                                            <th scope="col">Sent</th>
+                                            <th scope="col">Failed</th>
+                                            <th scope="col">Campaign Type</th>
+                                            <th scope="col">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#11</a> </td>
-                                            <td>
-                                                Greenmouse Tech
-                                            </td>
-                                            <td>
-                                                February Bonuses
-                                            </td>
-                                            <td>
-                                                2
-                                            </td>
-                                            <td>
-                                                2
-                                            </td>
-                                            <td>
-                                               0
-                                            </td>
-                                            <td>
-                                            <span class="badge badge-pill badge-soft-primary font-size-11">scheduled</span>
-                                            <p>Mon, Jan 30, 2023, 11:23AM</p>
-                                            </td>
-                                            <td>
-                                            <span class="badge badge-pill badge-soft-success font-size-11">Delivered</span>
-                                            <p>Delivered At: Mon, Jan 30, 2023, 11:23AM</p>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Message">
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#viewSms"  class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
+                                        @foreach($whatsappAutomations as $key => $campaign)
+                                            <tr>
+                                                <th scope="row">{{$loop->iteration}}</th>
+                                                <th scope="row">
+                                                    <p>{{$campaign->user->username}}</p>
+                                                    <p>{{$campaign->user->email}}</p>
+                                                </th>
+                                                <td>
+                                                    <p class='text-bold-600'> {{$campaign->title}} </p>
+                                                    <p class='text-muted'>Created at: {{$campaign->created_at->toDayDateTimeString()}}</p>
+                                                </td>
+                                                <td>
+                                                    {{ $campaign->readCache('ContactCount') }}
+                                                </td>
+                                                <td>
+                                                    {{ $campaign->readCache('DeliveredCount') }}
+                                                </td>
+                                                <td>
+                                                    {{ $campaign->readCache('FailedDeliveredCount') }}
+                                                </td>
+                                                <td>
+                                                    {!!$campaign->getCampaignType()!!}
+                                                </td>
+                                                <td>
+                                                    {!!$campaign->getStatus()!!}
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

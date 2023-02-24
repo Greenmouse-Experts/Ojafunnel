@@ -132,13 +132,4 @@ class AdminController extends Controller
             return view('admin.ecommerce.salesList');
         }
 
-        //  Email Campaing
-
-        public function manage_campaign()
-        {
-            return view('admin.emailmarketing.manage-campaign');
-        }
-
-
-
 }

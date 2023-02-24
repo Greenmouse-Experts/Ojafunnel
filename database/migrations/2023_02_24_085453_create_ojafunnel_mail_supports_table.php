@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,14 +13,13 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('ojafunnel_notifications', function (Blueprint $table) {
+        Schema::create('ojafunnel_mail_supports', function (Blueprint $table) {
             $table->id();
-            $table->string('to')->nullable();
+            $table->string('user_id')->nullable();
             $table->string('admin_id')->nullable();
             $table->string('title')->nullable();
             $table->text('body')->nullable();
-            $table->string('image')->nullable();
-            $table->enum('status', ['Read', 'Unread'])->default('Unread');
+            $table->enum('status', ['Read', 'Unread', 'Replied'])->default('Unread');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('ojafunnel_notifications');
+        Schema::dropIfExists('ojafunnel_mail_supports');
     }
 };
