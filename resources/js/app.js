@@ -4,15 +4,26 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import './bootstrap';
 
-window.Vue = require('vue');
-
-import { IconsPlugin } from 'bootstrap-vue';
+import { createApp } from 'vue';
 
 import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
 
-Vue.use(IconsPlugin);
+
+/**
+ * Next, we will create a fresh Vue application instance. You may then begin
+ * registering components with the application instance so they are ready
+ * to use in your application's views. An example is included for you.
+ */
+
+const app = createApp({});
+
+import ExampleComponent from './components/ExampleComponent.vue';
+app.component('example-component', ExampleComponent);
+
+import Chatroom from './components/chatroom/Chatroom.vue';
+app.component('chatroom-component', Chatroom);
 
 /**
  * The following block of code may be used to automatically register your
@@ -22,18 +33,14 @@ Vue.use(IconsPlugin);
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('chatroom-component', require('./components/chatroom/Chatroom.vue').default);
+// Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
+//     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
+// });
 
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
+ * Finally, we will attach the application instance to a HTML element with
+ * an "id" attribute of "app". This element is included with the "auth"
+ * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-const app = new Vue({
-    el: '#app',
-});
+app.mount('#app');

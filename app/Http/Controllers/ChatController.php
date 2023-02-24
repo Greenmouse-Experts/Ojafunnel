@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Acelle\Model\User;
+use App\Events\ReceiveMessage;
+use App\Events\SendChat;
 use App\Models\Chat;
 use App\Models\PersonalChatroom;
 use Illuminate\Http\Request;
@@ -178,7 +180,7 @@ class ChatController extends Controller
                 'success' => true,
             ]);
         } else {
-            $validator = Validator::make(request()->all(), [
+            $validator = Validate::make(request()->all(), [
                 'attachment' => 'required|mimes:jpeg,png,bmp,jpg,mp4,mov,ogg,qt,wmv,avi,m3u8,doc,docx,pdf,csv,xlsx,xlsb,xls,xlsm |max:50000',
             ]);
     

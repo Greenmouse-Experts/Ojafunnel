@@ -13,6 +13,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @vite(['resources/js/app.js', 'resource/css/app.css', 'public/dash/assets/css/boostrap.min.css', 'public/dash/assets/css/app.min.css'])
+
     <!-- Bootstrap Css -->
     <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -350,9 +352,6 @@
             }
         }
     </script>
-
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 
 </html>
