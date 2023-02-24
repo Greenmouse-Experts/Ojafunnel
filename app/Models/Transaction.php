@@ -20,4 +20,14 @@ class Transaction extends Model
         'reference',
         'status'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public static function getAll()
+    {
+        return self::select('transactions.*');
+    }
 }

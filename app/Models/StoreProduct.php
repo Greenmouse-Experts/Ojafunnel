@@ -13,4 +13,14 @@ class StoreProduct extends Model
     {
         return $this->belongsTo(Store::class, 'store_id');
     }
+
+    public function orderItem()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public static function getAll()
+    {
+        return self::select('store_products.*');
+    }
 }
