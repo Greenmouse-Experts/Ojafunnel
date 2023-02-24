@@ -103,7 +103,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);">
+                    <a href="{{route('integration')}}">
                         <i class="bi bi-tags"></i>
                         <span key="t-chat">Integration</span>
                     </a>
@@ -118,7 +118,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('birthdayModule')}}">
                         <i class="bi bi-balloon"></i>
                         <span key="t-chat">Birthday Modules</span>
                     </a>
