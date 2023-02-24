@@ -57,11 +57,11 @@
                                     <tbody>
                                         @foreach($smsAutomations as $key => $campaign)
                                             <tr>
-                                                <td scope="row">{{$loop->iteration}}</th>
-                                                <td scope="row">
+                                                <th scope="row">{{$loop->iteration}}</th>
+                                                <th scope="row">
                                                     <p>{{$campaign->user->username}}</p>
                                                     <p>{{$campaign->user->email}}</p>
-                                                </td>
+                                                </th>
                                                 <td>
                                                     <p class='text-bold-600'> {{$campaign->title}} </p>
                                                     <p class='text-muted'>Created at: {{$campaign->created_at->toDayDateTimeString()}}</p>
