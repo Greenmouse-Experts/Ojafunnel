@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\BirthdayAutomation;
 use App\Models\SmsCampaign;
 use App\Models\StoreOrder;
 use App\Models\StoreProduct;
@@ -174,6 +175,12 @@ class AdminController extends Controller
         return view('Admin.ecommerce.salesList');
     }
 
+    public function sales_details($id)
+    {
+        $order = StoreOrder::findOrFail($id);
+        return view('Admin.ecommerce.salesDetail', compact('order'));
+    }
+
     public function email_support()
     {
         return view('Admin.support.emailSupport');
@@ -192,7 +199,8 @@ class AdminController extends Controller
 
     public function whatsapp_automation()
     {
-        return view('Admin.automation.whatsappAutomation');
+        $whatsappAutomations = SmsCampaign::latest()->where('sms_type', 'whatsapp')->get();
+        return view('Admin.automation.whatsappAutomation', compact('whatsappAutomations'));
     }
 
     public function integration()
@@ -202,7 +210,8 @@ class AdminController extends Controller
 
     public function birthday_module()
     {
-        return view('Admin.birthdayModule');
+        $bm = BirthdayAutomation::latest()->get();
+        return view('Admin.birthdayModule', compact('bm'));
     }
 
     // EMAIL-MARKETING

@@ -52,17 +52,16 @@
                                             <th scope="col">Failed</th>
                                             <th scope="col">Campaign Type</th>
                                             <th scope="col">Status</th>
-                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($smsAutomations as $key => $campaign)
                                             <tr>
-                                                <td scope="row">{{$loop->iteration}}</th>
-                                                <td scope="row">
+                                                <th scope="row">{{$loop->iteration}}</th>
+                                                <th scope="row">
                                                     <p>{{$campaign->user->username}}</p>
                                                     <p>{{$campaign->user->email}}</p>
-                                                </td>
+                                                </th>
                                                 <td>
                                                     <p class='text-bold-600'> {{$campaign->title}} </p>
                                                     <p class='text-muted'>Created at: {{$campaign->created_at->toDayDateTimeString()}}</p>
@@ -81,9 +80,6 @@
                                                 </td>
                                                 <td>
                                                     {!!$campaign->getStatus()!!}
-                                                </td>
-                                                <td>
-
                                                 </td>
                                             </tr>
                                         @endforeach
