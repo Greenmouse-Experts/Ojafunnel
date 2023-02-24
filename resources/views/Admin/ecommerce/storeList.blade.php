@@ -59,7 +59,7 @@
                                     <tbody>
                                         @foreach ($admin->getAllStores() as $item)
                                             <tr>
-                                                <td><a href="javascript: void(0);" class="text-body fw-bold">#11</a> </td>
+                                                <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
                                                 <td>{{$item->name}}</td>
                                                 <td>
                                                     {{$item->user->first_name}} {{$item->user->last_name}}
