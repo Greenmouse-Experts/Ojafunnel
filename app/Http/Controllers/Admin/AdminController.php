@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\OjafunnelMailSupport;
+use App\Models\ReplyMailSupport;
 use App\Models\SmsCampaign;
 use App\Models\StoreOrder;
 use App\Models\StoreProduct;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -177,6 +182,55 @@ class AdminController extends Controller
     public function email_support()
     {
         return view('Admin.support.emailSupport');
+    }
+
+    public function reply_email_support($id, Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'message' => ['required', 'string'],
+        ]);
+
+        $finder = Crypt::decrypt($id);
+        $MailSupport = OjafunnelMailSupport::findorfail($finder);
+
+        ReplyMailSupport::create([
+            'mail_id' => $MailSupport->id,
+            'user_id' => $MailSupport->user_id,
+            'admin_id' => Auth::guard('admin')->user()->id,
+            'title' => 'Reply',
+            'body' => $request->message,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Message replied successfully.',
+        ]); 
+    }
+
+    public function send_email_to_user(Request $request) 
+    {
+        //Validate Request
+        $this->validate($request, [
+            'name' => ['required','string', 'max:255'],
+            'subject' => ['required','string', 'max:255'],
+            'message' => ['required', 'string'],
+        ]);
+
+        $user = User::find($request->name);
+
+        OjafunnelMailSupport::create([
+            'user_id' => $user->id,
+            'admin_id' => Auth::guard('admin')->user()->id,
+            'title' => $request->subject,
+            'body' => $request->message,
+            'by_who' => 'Administrator'
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Message sent successfully.',
+        ]); 
     }
 
     public function chat_support()

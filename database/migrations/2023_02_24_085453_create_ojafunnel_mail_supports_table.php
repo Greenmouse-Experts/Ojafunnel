@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->text('body')->nullable();
             $table->enum('status', ['Read', 'Unread', 'Replied'])->default('Unread');
+            $table->enum('by_who', ['Administrator', 'User']);
             $table->timestamps();
         });
     }
