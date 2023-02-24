@@ -3,10 +3,56 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use App\Models\SmsCampaign;
+use App\Models\StoreOrder;
+use App\Models\StoreProduct;
 use Illuminate\Http\Request;
+use Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    public function profile_update(Request $request)
+    {
+        $ad = Admin::findOrFail(Auth::guard('admin')->user()->id);
+        $ad->name = $request->name;
+        $ad->update();
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Admin Profile Updated.'
+        ]);
+    }
+
+    public function changePassword(Request $request)
+    {
+        //$ad = Admin::findOrFail(Auth::guard('admin')->user()->id);
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+
+        #Match The Old Password
+        if (!Hash::check($request->old_password, Auth::guard('admin')->user()->password)) {
+            return back()->with([
+                'type' => 'success',
+                "message",
+                "Old Password Doesn't match!"
+            ]);
+        }
+
+
+        #Update the new Password
+        Admin::whereId(Auth::guard('admin')->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Admin password changed successfully!.'
+        ]);
+    }
     public function dashboard()
     {
         return view('Admin.adminwelcome');
@@ -92,6 +138,12 @@ class AdminController extends Controller
         return view('Admin.addProduct');
     }
 
+    public function product_detail($id)
+    {
+        $product = StoreProduct::findOrFail($id);
+        return view('Admin.ecommerce.productDetail', compact('product'));
+    }
+
     public function viewCart()
     {
         return view('Admin.viewCart');
@@ -122,6 +174,12 @@ class AdminController extends Controller
         return view('Admin.ecommerce.salesList');
     }
 
+    public function sales_details($id)
+    {
+        $order = StoreOrder::findOrFail($id);
+        return view('Admin.ecommerce.salesDetail', compact('order'));
+    }
+
     public function email_support()
     {
         return view('Admin.support.emailSupport');
@@ -134,12 +192,15 @@ class AdminController extends Controller
 
     public function sms_automation()
     {
-        return view('Admin.automation.smsAutomation');
+        $smsAutomations = SmsCampaign::latest()->where('sms_type', 'plain')->get();
+        return view('Admin.automation.smsAutomation', compact('smsAutomations'));
     }
 
     public function whatsapp_automation()
     {
-        return view('Admin.automation.whatsappAutomation');
+        $whatsappAutomations = SmsCampaign::latest()->where('sms_type', 'whatsapp')->get();
+        //dd($whatsappAutomations);
+        return view('Admin.automation.whatsappAutomation', compact('whatsappAutomations'));
     }
     // EMAIL-MARKETING
 

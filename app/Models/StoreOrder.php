@@ -23,4 +23,9 @@ class StoreOrder extends Model
     {
         return $this->belongsTo(Store::class, 'store_id');
     }
+
+    public static function getAll()
+    {
+        return self::select('store_orders.*');
+    }
 }

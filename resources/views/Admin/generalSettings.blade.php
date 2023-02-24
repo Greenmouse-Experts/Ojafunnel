@@ -1,6 +1,9 @@
 @extends('layouts.admin-frontend')
 
 @section('page-content')
+@php
+    $admin = auth()->guard('admin')->user();
+@endphp
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -39,93 +42,95 @@
             <!-- account container form -->
             <div class="container">
                 <div class="account-con">
-                    <form>
-                        <div>
+                    <form action="{{route('admin.profile.update')}}" method="post">
+                        @csrf
+                        {{-- <div>
                             <h4>Profile Photo</h4>
                             <p>You can upload and change your profile picyure</p>
-                        </div>
-                        <div class="d-flex mt-5 align-items-center">
+                        </div> --}}
+                        {{-- <div class="d-flex mt-5 align-items-center">
                             <div class="account-img overflow-hidden">
-                                
+
                                 <img id="file-ip-1-preview" src="{{URL::asset('dash/assets/image/no-img.jpg')}}" alt="" width="100%" />
-                               
-                               
+
+
                             </div>
                             <div class="upload-img ps-5">
                                 <input type="file" class="btn btn-outline-dark" id="file-ip-1" accept="image/*" name="photo" onchange="showPreview(event);">
                             </div>
                         </div>
-                        <div class="account-border"></div>
+                        <div class="account-border"></div> --}}
                         <div class="Edit">
                             <div class="form">
-                                <div class="row">
-                                    <div>
-                                        <h4>Basic Information</h4>
-                                        <p>Personal info about your account</p>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label>First Name</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter your first name" " class="input" required>
+
+                                    <div class="row">
+                                        <div>
+                                            <h4>Basic Information</h4>
+                                            <p>Personal info about your account</p>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Name</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="text" name="name" placeholder="Enter your first name" value="{{$admin->name}}" class="input" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-lg-6">
+                                            <label>Last Name</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="text" placeholder="Enter your last name"" class="input" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Phone Number</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="tel" placeholder="Enter your phone number" name="phone_number" class="input" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Username</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="text"  class="input">
+                                                </div>
+                                            </div>
+                                        </div> --}}
+                                        <div class="account-border"></div>
+                                        <div>
+                                            <h4>Admin Details</h4>
+                                            <p>Your email and password for your account</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <label>Email</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="email" readonly placeholder="Enter your email address" value="{{$admin->email}}" class="input">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Password</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="password" value="{{$admin->password}}" class="input" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <a class="btn" style="margin-top: 0.6rem; height: 45px; width: 100%; color: #714091; border: 1px solid #714091" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                                                        Change Password
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <label>Last Name</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter your last name"" class="input" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label>Phone Number</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="tel" placeholder="Enter your phone number" name="phone_number" class="input" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label>Username</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text"  class="input">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="account-border"></div>
-                                    <div>
-                                        <h4>Admin Details</h4>
-                                        <p>Your email and password for your account</p>
-                                    </div>
-                                    <div class="col-12">
-                                        <label>Email</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="email" placeholder="Enter your email address" name="email" class="input" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label>Password</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="password" class="input" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <a class="btn" style="margin-top: 0.6rem; height: 45px; width: 100%; color: #714091; border: 1px solid #714091" data-bs-toggle="modal" data-bs-target="#passwordModal">
-                                                    Change Password
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="account-border"></div>
@@ -153,15 +158,15 @@
             <div class="modal-body">
                 <div class="Edit">
                     <h3>Update Password</h3>
-                    <form>
-                        
+                    <form action="{{ route('admin.change-password') }}" method="POST">
+                        @csrf
                         <div class="form">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label>Old Password</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="password" placeholder="Enter your current password"  class="input" required>
+                                            <input type="password" name="old_password" placeholder="Enter your current password"  class="input" required>
                                         </div>
                                     </div>
                                 </div>

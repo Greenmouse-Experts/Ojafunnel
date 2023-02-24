@@ -1,6 +1,9 @@
 @extends('layouts.admin-frontend')
 
 @section('page-content')
+@php
+    $admin = auth()->guard('admin')->user();
+@endphp
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -45,39 +48,34 @@
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
-                                            <th>Product Name </th>
-                                            <th>Product Owner</th>
-                                            <th>Unit Sold</th>
-                                            <th>Amount Per Unit</th>
-                                            <th>Total Amount</th>
+                                            <th scope="col">Order Id</th>
+                                            <th scope="col">Store</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#11</a> </td>
-                                            <td>Great Minds</td>
-                                            <td>
-                                                Greenmouse
-                                            </td>
-                                            <td>
-                                                3
-                                            </td>
-                                            <td>
-                                                ₦40,000.00
-                                            </td>
-                                            <td>
-                                                ₦120,000.00
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Detail">
-                                                        <a href="{{route('salesDetail')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
+                                        @foreach ($admin->getAllOrders() as $item)
+                                            <tr>
+                                                <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
+                                                <td>#{{$item->order_no}}</td>
+                                                <td>{{$item->store->name}}</td>
+                                                <td>{{$item->quantity}}</td>
+                                                <td>₦{{number_format($item->amount, 2)}}</td>
+                                                <td>{{$item->status}}</td>
+                                                <td>{{$item->created_at->format('d M, Y')}}</td>
+                                                <td>
+                                                    <ul class="list-unstyled hstack gap-1 mb-0">
+                                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Detail">
+                                                            <a href="{{route('salesDetail', $item->id)}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
