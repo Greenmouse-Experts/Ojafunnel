@@ -45,39 +45,46 @@
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
-                                            <th>Owner's</th>
                                             <th scope="col">User ID</th>
                                             <th scope="col">Email</th>
-                                            <th scope="col">Automation</th>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">SID</th>
+                                            <th scope="col">Token</th>
+                                            <th scope="col">From</th>
+                                            <th scope="col">Api Key</th>
+                                            <th scope="col">Type</th>
                                             <th scope="col">Status</th>
-                                            <th scope="col">Start Date</th>
-                                            <th scope="col">End Date</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                             <tr>
                                                 <th scope="row">#01</th>
-                                                <th scope="row">
+                                                <td>
+                                                    DB-42137197249402
+                                                </td>
+                                                <td>
+                                                    greenmouse@gmail.com
+                                                </td>
+                                                <td>
                                                     Greenmouse
-                                                </th>
-                                                <td>
-                                                    Funnel Pro
                                                 </td>
                                                 <td>
-                                                    Birthday Wishes
+                                                    PORT-03933
                                                 </td>
                                                 <td>
-                                                    <p>Whatsapp Automation</p>
-                                                    <p>SMS Automation</p>
+                                                    PK-TEST29393390308138
+                                                </td>
+                                                <td>
+                                                    GR-TOKEN
+                                                </td>
+                                                <td>
+                                                    HRT-TEST29393390308138
+                                                </td>
+                                                <td>
+                                                    Automated
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-pill badge-soft-success font-size-11">active</span>
-                                                </td>
-                                                <td>
-                                                    <p>30-Dec-2022</p>
-                                                </td>
-                                                <td>
-                                                    <p>27-Dec-2023</p> 
                                                 </td>
                                             </tr>
                                     </tbody>
