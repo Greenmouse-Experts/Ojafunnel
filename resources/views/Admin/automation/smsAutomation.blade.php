@@ -52,6 +52,7 @@
                                             <th scope="col">Failed</th>
                                             <th scope="col">Campaign Type</th>
                                             <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -80,6 +81,9 @@
                                                 </td>
                                                 <td>
                                                     {!!$campaign->getStatus()!!}
+                                                </td>
+                                                <td>
+
                                                 </td>
                                             </tr>
                                         @endforeach

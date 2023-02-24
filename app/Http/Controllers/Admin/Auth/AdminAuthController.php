@@ -28,17 +28,17 @@ class AdminAuthController extends Controller
      *
      * @var string
      */
-    //protected $redirectTo = '/admin/dashboard';
+    protected $redirectTo = '/admin/dashboard';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest', ['except' => 'logout']);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('adminauth', ['except' => 'logout']);
+    // }
 
     public function getLogin()
     {
