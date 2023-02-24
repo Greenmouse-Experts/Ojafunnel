@@ -61,6 +61,12 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Store');
     }
 
+    public function transaction()
+    {
+        return $this->hasMany('App\Models\Transaction');
+    }
+
+
     /**
      * The attributes that should be cast.
      *

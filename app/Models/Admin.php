@@ -280,6 +280,45 @@ class Admin extends Authenticatable
         return $query;
     }
 
+    public function getAllProducts()
+    {
+        $query = \App\Models\StoreProduct::getAll();
+        $query = $query->latest()->get();
+        // if (!$this->user->can('readAll', new \App\Models\Customer())) {
+        //     $query = $query->where('customers.admin_id', '=', $this->id);
+        // }
+
+        return $query;
+    }
+
+    public function getAllOrders()
+    {
+        $query = \App\Models\StoreOrder::getAll();
+        $query = $query->latest()->get();
+        // if (!$this->user->can('readAll', new \App\Models\Customer())) {
+        //     $query = $query->where('customers.admin_id', '=', $this->id);
+        // }
+
+        return $query;
+    }
+
+    public function getAllTransactions()
+    {
+        $query = \App\Models\Transaction::getAll();
+        // if (!$this->user->can('readAll', new \App\Models\Customer())) {
+        //     $query = $query->where('customers.admin_id', '=', $this->id);
+        // }
+
+        return $query;
+    }
+
+    public function getAllTransactionLists()
+    {
+
+        return $this->getAllTransactions()->latest()->get();
+
+    }
+
     public function getAllActiveCustomers()
     {
         $query = \App\Models\Customer::getAll();
@@ -289,6 +328,11 @@ class Admin extends Authenticatable
         // }
         $query = $query->where('status', 'active');
         return $query;
+    }
+
+    public function recentTransactions()
+    {
+        return $this->getAllTransactions()->orderBy('created_at', 'DESC')->limit(5)->get();
     }
 
     /**

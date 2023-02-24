@@ -1,6 +1,9 @@
 @extends('layouts.admin-frontend')
 
 @section('page-content')
+@php
+    $admin = auth()->guard('admin')->user();
+@endphp
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -59,41 +62,45 @@
                                             <thead>
                                                 <tr>
                                                     <th class="align-middle">Order ID</th>
+                                                    <th class="align-middle">Reference No.</th>
                                                     <th class="align-middle">Billing Name</th>
                                                     <th class="align-middle">Date</th>
                                                     <th class="align-middle">Total</th>
                                                     <th class="align-middle">Payment Status</th>
-                                                    <th class="align-middle">Payment Method</th>
-                                                    <th class="align-middle">View Details</th>
+                                                    {{-- <th class="align-middle">Payment Method</th>
+                                                    <th class="align-middle">View Details</th> --}}
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                <tr>
-                                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2540</a> </td>
-                                                    <td>Neal Matthews</td>
-                                                    <td>
-                                                        07 Oct, 2019
-                                                    </td>
-                                                    <td>
-                                                        $400
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-pill badge-soft-success font-size-11">Paid</span>
-                                                    </td>
-                                                    <td>
-                                                        <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                                    </td>
-                                                    <td>
-                                                        <!-- Button trigger modal -->
-                                                        <!-- Button trigger modal -->
-                                                        <a href="{{route('trans.details')}}">
-                                                            <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light">
-                                                                View Details
-                                                            </button>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                @foreach ($admin->getAllTransactionLists() as $item)
+                                                    <tr>
+                                                        <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
+                                                        <td>{{$item->reference}}</td>
+                                                        <td>{{$item->user->first_name}} {{$item->user->last_name}}</td>
+                                                        <td>
+                                                            {{$item->created_at->format('d M, Y')}}
+                                                        </td>
+                                                        <td>
+                                                            ₦{{number_format($item->amount, 2)}}
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge badge-pill badge-soft-success font-size-11">{{$item->status}}</span>
+                                                        </td>
+                                                        {{-- <td>
+                                                            <i class="fab fa-cc-mastercard me-1"></i> Mastercard
+                                                        </td> --}}
+                                                        {{-- <td>
+                                                            <!-- Button trigger modal -->
+                                                            <!-- Button trigger modal -->
+                                                            <a href="{{route('trans.details')}}">
+                                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light">
+                                                                    View Details
+                                                                </button>
+                                                            </a>
+                                                        </td> --}}
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -105,67 +112,44 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="align-middle">Order ID</th>
+                                                        <th class="align-middle">Reference No.</th>
                                                         <th class="align-middle">Billing Name</th>
                                                         <th class="align-middle">Date</th>
                                                         <th class="align-middle">Total</th>
                                                         <th class="align-middle">Payment Status</th>
-                                                        <th class="align-middle">Payment Method</th>
-                                                        <th class="align-middle">View Details</th>
                                                     </tr>
 
                                                 </thead>
 
                                                 <tbody>
-                                                    <tr>
-                                                        <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2540</a> </td>
-                                                        <td>Neal Matthews</td>
-                                                        <td>
-                                                            07 Oct, 2019
-                                                        </td>
-                                                        <td>
-                                                            $400
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge badge-pill badge-soft-success font-size-11">Paid</span>
-                                                        </td>
-                                                        <td>
-                                                            <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                                        </td>
-                                                        <td>
-                                                            <!-- Button trigger modal -->
-                                                            <!-- Button trigger modal -->
-                                                            <a href="{{route('trans.details')}}">
-                                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light">
-                                                                    View Details
-                                                                </button>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><a href="javascript: void(0);" class="text-body fw-bold">#SK2540</a> </td>
-                                                        <td>Neal Matthews</td>
-                                                        <td>
-                                                            07 Oct, 2019
-                                                        </td>
-                                                        <td>
-                                                            $400
-                                                        </td>
-                                                        <td>
-                                                            <span class="badge badge-pill badge-soft-success font-size-11">Paid</span>
-                                                        </td>
-                                                        <td>
-                                                            <i class="fab fa-cc-mastercard me-1"></i> Visa
-                                                        </td>
-                                                        <td>
-                                                            <!-- Button trigger modal -->
-                                                            <!-- Button trigger modal -->
-                                                            <a href="{{route('trans.details')}}">
-                                                                <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light">
-                                                                    View Details
-                                                                </button>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($admin->recentTransactions() as $item)
+                                                        <tr>
+                                                            <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
+                                                            <td>{{$item->reference}}</td>
+                                                            <td>{{$item->user->first_name}} {{$item->user->last_name}}</td>
+                                                            <td>
+                                                                {{$item->created_at->format('d M, Y')}}
+                                                            </td>
+                                                            <td>
+                                                                ₦{{number_format($item->amount, 2)}}
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-pill badge-soft-success font-size-11">{{$item->status}}</span>
+                                                            </td>
+                                                            {{-- <td>
+                                                                <i class="fab fa-cc-mastercard me-1"></i> Mastercard
+                                                            </td> --}}
+                                                            {{-- <td>
+                                                                <!-- Button trigger modal -->
+                                                                <!-- Button trigger modal -->
+                                                                <a href="{{route('trans.details')}}">
+                                                                    <button type="button" class="btn btn-primary btn-sm btn-rounded waves-light">
+                                                                        View Details
+                                                                    </button>
+                                                                </a>
+                                                            </td> --}}
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
