@@ -304,4 +304,59 @@ class AdminController extends Controller
     {
         return view('Admin.emailmarketing.CreateNew');
     }
+
+    public function backlist()
+    {
+        return view('Admin.emailmarketing.Backlist');
+    }
+
+    public function import_backlist()
+    {
+        return view('Admin.emailmarketing.ImportBacklist');
+    }
+
+    public function delivery_log()
+    {
+        return view('Admin.emailmarketing.DeliveryLog');
+    }
+
+    public function bounce_log()
+    {
+        return view('Admin.emailmarketing.BounceLog');
+    }
+
+    public function open_log()
+    {
+        return view('Admin.emailmarketing.OpenLog');
+    }
+
+    public function click_log()
+    {
+        return view('Admin.emailmarketing.ClickLog');
+    }
+
+    public function unsubscribe_log()
+    {
+        return view('Admin.emailmarketing.Unsubscribe');
+    }
+
+    public function generall()
+    {
+        return view('Admin.emailmarketing.General');
+    }
+
+    public function payment_gateway()
+    {
+        return view('Admin.emailmarketing.Payment');
+    }
+
+    public function plugin()
+    {
+        return view('Admin.emailmarketing.Plugin');
+    }
+
+    public function install_plugin()
+    {
+        return view('Admin.emailmarketing.AddPlugin');
+    }
 }
