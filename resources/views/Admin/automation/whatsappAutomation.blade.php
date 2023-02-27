@@ -93,28 +93,5 @@
         </div>
     </div>
 </div>
-    <div class="modal fade" id="viewSms" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        February Bonuses
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
-                            <div>
-                                <p>
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil perferendis voluptatem, reiciendis velit cumque, earum numquam ullam voluptate eligendi officia voluptatum exercitationem error? Necessitatibus eveniet commodi similique beatae illum sint.
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga, ullam illo ipsam, quo iste veritatis iusto et provident ab sed dolore, officiis eos ipsa consequuntur laborum nam reiciendis molestias ducimus?
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 @endsection

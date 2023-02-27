@@ -4,11 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\BirthdayAutomation;
+use App\Models\OjafunnelMailSupport;
+use App\Models\ReplyMailSupport;
 use App\Models\SmsCampaign;
 use App\Models\StoreOrder;
 use App\Models\StoreProduct;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -174,9 +180,64 @@ class AdminController extends Controller
         return view('Admin.ecommerce.salesList');
     }
 
+    public function sales_details($id)
+    {
+        $order = StoreOrder::findOrFail($id);
+        return view('Admin.ecommerce.salesDetail', compact('order'));
+    }
+
     public function email_support()
     {
         return view('Admin.support.emailSupport');
+    }
+
+    public function reply_email_support($id, Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'message' => ['required', 'string'],
+        ]);
+
+        $finder = Crypt::decrypt($id);
+        $MailSupport = OjafunnelMailSupport::findorfail($finder);
+
+        ReplyMailSupport::create([
+            'mail_id' => $MailSupport->id,
+            'user_id' => $MailSupport->user_id,
+            'admin_id' => Auth::guard('admin')->user()->id,
+            'title' => 'Reply',
+            'body' => $request->message,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Message replied successfully.',
+        ]); 
+    }
+
+    public function send_email_to_user(Request $request) 
+    {
+        //Validate Request
+        $this->validate($request, [
+            'name' => ['required','string', 'max:255'],
+            'subject' => ['required','string', 'max:255'],
+            'message' => ['required', 'string'],
+        ]);
+
+        $user = User::find($request->name);
+
+        OjafunnelMailSupport::create([
+            'user_id' => $user->id,
+            'admin_id' => Auth::guard('admin')->user()->id,
+            'title' => $request->subject,
+            'body' => $request->message,
+            'by_who' => 'Administrator'
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Message sent successfully.',
+        ]); 
     }
 
     public function chat_support()
@@ -192,7 +253,8 @@ class AdminController extends Controller
 
     public function whatsapp_automation()
     {
-        return view('Admin.automation.whatsappAutomation');
+        $whatsappAutomations = SmsCampaign::latest()->where('sms_type', 'whatsapp')->get();
+        return view('Admin.automation.whatsappAutomation', compact('whatsappAutomations'));
     }
 
     public function integration()
@@ -202,7 +264,8 @@ class AdminController extends Controller
 
     public function birthday_module()
     {
-        return view('Admin.birthdayModule');
+        $bm = BirthdayAutomation::latest()->get();
+        return view('Admin.birthdayModule', compact('bm'));
     }
 
     // EMAIL-MARKETING
@@ -240,5 +303,60 @@ class AdminController extends Controller
     public function create_new()
     {
         return view('Admin.emailmarketing.CreateNew');
+    }
+
+    public function backlist()
+    {
+        return view('Admin.emailmarketing.Backlist');
+    }
+
+    public function import_backlist()
+    {
+        return view('Admin.emailmarketing.ImportBacklist');
+    }
+
+    public function delivery_log()
+    {
+        return view('Admin.emailmarketing.DeliveryLog');
+    }
+
+    public function bounce_log()
+    {
+        return view('Admin.emailmarketing.BounceLog');
+    }
+
+    public function open_log()
+    {
+        return view('Admin.emailmarketing.OpenLog');
+    }
+
+    public function click_log()
+    {
+        return view('Admin.emailmarketing.ClickLog');
+    }
+
+    public function unsubscribe_log()
+    {
+        return view('Admin.emailmarketing.Unsubscribe');
+    }
+
+    public function generall()
+    {
+        return view('Admin.emailmarketing.General');
+    }
+
+    public function payment_gateway()
+    {
+        return view('Admin.emailmarketing.Payment');
+    }
+
+    public function plugin()
+    {
+        return view('Admin.emailmarketing.Plugin');
+    }
+
+    public function install_plugin()
+    {
+        return view('Admin.emailmarketing.AddPlugin');
     }
 }

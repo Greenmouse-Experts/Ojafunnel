@@ -2093,3 +2093,11 @@ textarea{
 .email-img-box img{
   width: 30px;
 }
+.padi{
+    padding: 50px;
+    border-radius: 10px;
+    color:#70418F;
+}
+.padi .bi{
+    font-size: 30px;
+}

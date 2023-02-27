@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ReplyMailSupport extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
 }

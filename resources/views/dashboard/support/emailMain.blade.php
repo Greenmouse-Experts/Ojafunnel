@@ -50,8 +50,9 @@
             </div>
             <!-- messages -->
             <div class="mt-2 p-5 bg-white">
+                @foreach(App\Models\OjafunnelMailSupport::latest()->where('user_id', Auth::user()->id)->get() as $ojafunnelmail)
                 <div class="email-msg-box">
-                    <div class='bg-white email-box' data-bs-toggle="modal" data-bs-target="#viewMail">
+                    <div class='bg-white email-box' data-bs-toggle="modal" data-bs-target="#viewMail-{{$ojafunnelmail->id}}">
                         <div class=''>
                             <div class='bg-light email-img-box'>
                                 <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217513/OjaFunnel-Images/Logo-fav_d0wyqv.png' alt='profile' />
@@ -59,17 +60,76 @@
                         </div>
                         <div class=''>
                             <div class=''>
-                                <p class='p-0 m-0 fw-bold'>Sent to Support</p>
+                                @if($ojafunnelmail->by_who == 'User')
+                                <p class='p-0 m-0 fw-bold'>Sent to Administrator</p>
+                                @else
+                                <p class='p-0 m-0 fw-bold'>Message From Admininstrator</p>
+                                @endif
                             </div>
                             <div>
-                                <p class='mb-1 mt-1'>My LMS Courses are not uploading, it returns "Not allowed for the subscription".</p>
+                                <p class='mb-1 mt-1'>{{$ojafunnelmail->title}}</p>
                             </div>
                             <div>
-                                <p class='fst-italic '>10 mins ago</p>
+                                <p class='fst-italic '>{{$ojafunnelmail->created_at->diffForHumans()}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                @foreach(App\Models\ReplyMailSupport::latest()->where('mail_id', $ojafunnelmail->id)->get() as $reply)
+                <div class="email-msg-box">
+                    <div class='bg-white email-box'>
+                        <div class="d-flex">
+                            <div class=''>
+                                <div class='bg-light email-img-box'>
+                                    <img src='https://static-00.iconduck.com/assets.00/mail-reply-sender-icon-245x256-vcu9gxgm.png' alt='profile' />
+                                </div>
+                            </div>
+                            <div class=''>
+                                <div class=''>
+                                    <p class='p-0 m-0 fw-bold'>Administrator Reply</p>
+                                </div>
+                                <div>
+                                    <p class='mb-1 mt-1'>{{$reply->body}}</p>
+                                </div>
+                                <div>
+                                    <p class='fst-italic '>{{$reply->created_at->diffForHumans()}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                <div class="modal fade" id="viewMail-{{$ojafunnelmail->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                @if($ojafunnelmail->by_who == 'User')
+                                <h5 class="modal-title" id="staticBackdropLabel">
+                                    Sent Mail to Administrator
+                                </h5>
+                                @else
+                                <h5 class="modal-title" id="staticBackdropLabel">
+                                    Message From Admininstrator
+                                </h5>
+                                @endif
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="Edit-level">
+                                        <p>{{$ojafunnelmail->created_at->toDayDateTimeString()}}</p>
+                                        <div>
+                                            <p>{{$ojafunnelmail->body}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -88,13 +148,13 @@
                     <div class="row">
                         <div class="Edit-level">
                             <form method="post" action="{{route('user.send.message')}}">
-                                @crsf
+                                @csrf
                                 <div class="form">
                                     <div class="col-lg-12">
-                                        <label>Email</label>
+                                        <label>Subject</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter your email..." name="name" class="input"
+                                                <input type="text" placeholder="Enter your email..." name="subject" class="input"
                                                     required>
                                             </div>
                                         </div>
@@ -103,54 +163,26 @@
                                         <label>Your Message</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <textarea></textarea>
+                                                <textarea name="message"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row justify-content-between">
                                         <div class="col-6">
-                                            <a href="#" class="text-decoration-none">
-                                                <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                    Cancel
-                                                </button></a>
+                                            <button class="px-3 btn" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
+                                                Cancel
+                                            </button>
                                         </div>
                                         <div class="col-6 text-end">
-                                            <a href="#" class="text-decoration-none">
-                                                <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                    >
-                                                    Send
-                                                </button>
-                                            </a>
+                                            <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
+                                                >
+                                                Send
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="viewMail" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Sent Mail to Support Team
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
-                            <p>23 January 2023, 11:39am</p>
-                            <div>
-                                <p>
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil perferendis voluptatem, reiciendis velit cumque, earum numquam ullam voluptate eligendi officia voluptatum exercitationem error? Necessitatibus eveniet commodi similique beatae illum sint.
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga, ullam illo ipsam, quo iste veritatis iusto et provident ab sed dolore, officiis eos ipsa consequuntur laborum nam reiciendis molestias ducimus?
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>
