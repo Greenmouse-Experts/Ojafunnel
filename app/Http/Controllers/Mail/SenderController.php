@@ -1,11 +1,11 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
 use Illuminate\Http\Request;
-use Acelle\Http\Controllers\Controller;
-use Acelle\Model\Sender;
-use Acelle\Model\SendingDomain;
+use App\Http\Controllers\Controller;
+use App\Models\Sender;
+use App\Models\SendingDomain;
 
 class SenderController extends Controller
 {
@@ -27,9 +27,9 @@ class SenderController extends Controller
      */
     public function index(Request $request)
     {
-        if (\Gate::denies('listing', new Sender())) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('listing', new Sender())) {
+        //     return $this->notAuthorized();
+        // }
 
         $subscription = $request->user()->customer->subscription;
         $plan = $subscription->plan;
@@ -49,13 +49,17 @@ class SenderController extends Controller
             ]);
         }
 
-        if ($domain && !$email) {
-            return redirect(url('sending_domains'));
-        } else {
-            return view('senders.index', [
-                'senders' => $this->search($request),
-            ]);
-        }
+        //Later Continuatiion
+
+
+        // if ($domain && !$email) {
+        //     return redirect(url('sending_domains'));
+        // } else {
+        //     return view('senders.index', [
+        //         'senders' => $this->search($request),
+        //     ]);
+        // }
+        return true;
     }
 
     /**
@@ -107,9 +111,9 @@ class SenderController extends Controller
         $sender = new Sender();
 
         // authorize
-        if (\Gate::denies('create', $sender)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('create', $sender)) {
+        //     return $this->notAuthorized();
+        // }
 
         $plan = $request->user()->customer->activeSubscription()->plan;
 
@@ -150,9 +154,9 @@ class SenderController extends Controller
         $sender->updateVerificationStatus();
 
         // authorize
-        if (\Gate::denies('read', $sender)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('read', $sender)) {
+        //     return $this->notAuthorized();
+        // }
 
         return view('senders.show', [
             'sender' => $sender,
@@ -171,9 +175,9 @@ class SenderController extends Controller
         $sender = Sender::findByUid($id);
 
         // authorize
-        if (\Gate::denies('update', $sender)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $sender)) {
+        //     return $this->notAuthorized();
+        // }
 
         $sender->fill($request->old());
 
@@ -195,9 +199,9 @@ class SenderController extends Controller
         $sender = Sender::findByUid($id);
 
         // authorize
-        if (\Gate::denies('update', $sender)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $sender)) {
+        //     return $this->notAuthorized();
+        // }
 
         // save posted data
         if ($request->isMethod('patch')) {
@@ -300,13 +304,13 @@ class SenderController extends Controller
 
         if ($request->isMethod('post')) {
             // authorize
-            if (\Gate::denies('import', new Sender())) {
-                return $this->notAuthorized();
-            }
+            // if (\Gate::denies('import', new Sender())) {
+            //     return $this->notAuthorized();
+            // }
 
             if ($request->hasFile('file')) {
                 // Start system job
-                $job = new \Acelle\Jobs\ImportSenderJob($request->file('file')->path(), $request->user()->customer);
+                $job = new \App\Jobs\ImportSenderJob($request->file('file')->path(), $request->user()->customer);
                 $this->dispatch($job);
             } else {
                 // @note: use try/catch instead

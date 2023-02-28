@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-        <script>
+        {{-- <script>
             var CampaignsIndex = {
                 getList: function() {
                     return makeList({
@@ -74,7 +74,7 @@
                 console.log(CampaignsIndex.getList())
                 CampaignsIndex.getList().load();
             });
-        </script>
+        </script> --}}
     </div>
 </div>
 @endsection

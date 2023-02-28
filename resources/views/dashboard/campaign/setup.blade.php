@@ -223,7 +223,7 @@
 
                                 // @Legacy
                                 // auto fill
-                                var box = $('#sender_from_input').autofill({
+                                var box = $('#sender_from_input').autofills({
                                     messages: {
                                         header_found: '{{ trans('messages.sending_identity') }}',
                                         header_not_found: '{{ trans('messages.sending_identity.not_found.header') }}'
@@ -238,7 +238,7 @@
                                 })
 
                                 // auto fill 2
-                                var box2 = $('#sender_reply_to_input').autofill({
+                                var box2 = $('#sender_reply_to_input').autofills({
                                     messages: {
                                         header_found: '{{ trans('messages.sending_identity') }}',
                                         header_not_found: '{{ trans('messages.sending_identity.reply.not_found.header') }}'
@@ -301,7 +301,7 @@
                 </div>
             </div>
         </div>
-        <script>
+        {{-- <script>
             var CampaignsIndex = {
                 getList: function() {
                     return makeList({
@@ -316,7 +316,7 @@
                 console.log(CampaignsIndex.getList())
                 CampaignsIndex.getList().load();
             });
-        </script>
+        </script> --}}
     </div>
 </div>
 @endsection
