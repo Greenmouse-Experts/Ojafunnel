@@ -51,7 +51,10 @@
                 <div class="top-div">
                     <div class="Ensure row align-items-center">
                         <div class="col-8 font-500">
-                            <h3>212</h3>
+                            @php
+                                $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
+                            @endphp
+                            <h3>{{\App\Models\StoreProduct::where('store_id', $store->id)->count()}}</h3>
                             <p class="mb-0">New Products</p>
                         </div>
                         <div class="col-4 lead-img-div">
@@ -64,8 +67,8 @@
                 <div class="top-div">
                     <div class="Ensure row align-items-center">
                         <div class="col-8 font-500">
-                            <h3>200,500</h3>
-                            <p class="mb-0">Total Sales</p>
+                            <h3>{{$store->count()}}</h3>
+                            <p class="mb-0">Total Store</p>
                         </div>
                         <div class="col-4 lead-img-div">
                             <div class="lead-img p-2 rounded d-flex justify-content-center" style="background: #f0fcef">
@@ -77,7 +80,7 @@
                 <div class="top-div">
                     <div class="Ensure row align-items-center">
                         <div class="col-8 font-500">
-                            <h3>25</h3>
+                            <h3>{{\App\Models\StoreOrder::where('store_id', $store->id)->count()}}</h3>
                             <p class="mb-0">Total Orders</p>
                         </div>
                         <div class="col-4 lead-img-div">
