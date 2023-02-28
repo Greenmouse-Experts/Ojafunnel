@@ -1,4 +1,4 @@
-@extends('layouts.dashboard-frontend')
+@extends('layouts.dashboard-email-frontend')
 
 @section('page-content')
 @include('sweetalert::alert')

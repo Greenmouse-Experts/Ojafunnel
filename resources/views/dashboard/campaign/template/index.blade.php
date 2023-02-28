@@ -1,4 +1,4 @@
-@extends('layouts.dashboard-frontend')
+@extends('layouts.dashboard-email-frontend')
     <script type="text/javascript" src="{{ URL::asset('core/tinymce/tinymce.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('core/js/editor.js') }}"></script>
 
