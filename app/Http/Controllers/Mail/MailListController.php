@@ -129,7 +129,7 @@ class MailListController extends Controller
         // Generate info
         $customer = $request->user()->customer;
         $list = new \App\Models\MailList();
-
+        dd('hi');
         // authorize
         // if (\Gate::denies('create', $list)) {
         //     return $this->noMoreItem();
