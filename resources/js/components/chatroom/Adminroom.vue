@@ -70,6 +70,21 @@
                             <h5 class="font-size-15 mb-1">{{ chatroom_data.user.first_name }} {{ chatroom_data.user.last_name }}</h5>
                             <p class="text-muted mb-0"><i class="mdi mdi-circle text-success align-middle me-1"></i> Active now</p>
                         </div>
+                        <div class="col-md-8 col-3">
+                          <ul class="list-inline user-chat-nav text-end mb-0">
+                              <li class="list-inline-item  d-none d-sm-inline-block">
+                                  <div class="dropdown">
+                                      <button class="btn nav-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          <i class="bx bx-cog"></i>
+                                      </button>
+                                      <div class="dropdown-menu dropdown-menu-end">
+                                          <a @click="clearChat(chatroom_data.room_id)" class="dropdown-item" href="#">Clear chat</a>
+                                          <a @click="deleteChatroom(chatroom_data.room_id)" class="dropdown-item" href="#">Delete Chatroom</a>
+                                      </div>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
                     </div>
                 </div>
 
@@ -105,13 +120,13 @@
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                             </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Copy</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
+                                            <a class="dropdown-item" @click="copyText()" href="#">Copy</a>
+                                            <a class="dropdown-item" @click="deleteSingleChat(chat.id)" href="#">Delete</a>
                                         </div>
                                     </div>
                                     <div class="ctext-wrap">
                                         <div class="conversation-name">You</div>
-                                        <p>
+                                        <p ref="mymessage">
                                             {{ chat.message }}
                                         </p>
 
@@ -123,21 +138,19 @@
                     </div>
                     <div class="p-3 chat-input-section">
                         <div class="row">
-                            <!-- <form method="POST" action="" @submit.prevent="sendMessage()"> -->
-                                <div class="col">
-                                    <div class="position-relative">
-                                        <input v-model="message" @keyup="sendMessage()" type="text" class="form-control chat-input" placeholder="Enter Message...">
-                                        <div class="chat-input-links" id="tooltip-container">
-                                            <ul class="list-inline mb-0">
-                                                <li class="list-inline-item"><a href="javascript: void(0);" title="Add Files"><i class="mdi mdi-file-document-outline"></i></a></li>
-                                            </ul>
-                                        </div>
+                            <div class="col">
+                                <div class="position-relative">
+                                    <input v-model="message" @keyup="sendMessage()" type="text" class="form-control chat-input" placeholder="Enter Message...">
+                                    <div class="chat-input-links" id="tooltip-container">
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item"><a href="javascript: void(0);" title="Add Files"><i class="mdi mdi-file-document-outline"></i></a></li>
+                                        </ul>
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <button @click="sendMessage()" type="submit" class="btn btn-primary btn-rounded chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Send</span> <i class="mdi mdi-send"></i></button>
-                                </div>
-                            <!-- </form> -->
+                            </div>
+                            <div class="col-auto">
+                                <button @click="sendMessageToUser()" type="submit" class="btn btn-primary btn-rounded chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Send</span> <i class="mdi mdi-send"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -168,6 +181,9 @@ export default {
     adminprop: Object
   },
   methods: {
+    copyText() {
+      navigator.clipboard.writeText(this.$refs.mymessage);
+    },
     fetchAllUsers () {
       axios.get('/admin/page/support/get/users')
       .then((res) => {
@@ -191,7 +207,7 @@ export default {
     },
     startChat (id) {
       if (this.chatroom_data) {
-        Echo.leave(`chat.${this.chatroom_data.room_id}`);
+        // Echo.leave(`chat.${this.chatroom_data.room_id}`);
         this.chatroom_data = null;
       }
 
@@ -264,7 +280,7 @@ export default {
         }
   
         this.chatroom_data.messages.push({
-          sender: this.user,
+          sender: this.admin,
           message: this.message,
           time: new Date().toISOString()
         });
@@ -285,6 +301,74 @@ export default {
   
         this.message = '';
       }
+    },
+    sendMessageToUser () {
+      if (this.message == '' || this.message == null) {
+        alert('Please enter message!!');
+        return false;
+      }
+
+      this.chatroom_data.messages.push({
+        sender: this.admin,
+        message: this.message,
+        time: new Date().toISOString()
+      });
+
+      // this.addToFirstIndexInRecentChats(this.chatroom_data.user, this.message);
+
+      console.log(this.recent_chats);
+
+      axios.post('/admin/page/support/send', {
+        message: this.message,
+        room_id: this.chatroom_data.room_id
+      })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        console.log(err);        
+      });
+
+      this.message = '';
+    },
+    clearChat (room_id) {
+      this.chatroom_data.messages = null;
+
+      axios.post(`/admin/page/support/clear`, {
+        room_id: room_id
+      })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
+    deleteSingleChat (id) {
+      axios.post(`/admin/page/support/clear/single/chat`, {
+        id: id
+      })
+      .then((res) => {
+        console.log(res);
+        this.chatroom_data.messages;
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
+    deleteChatroom (room_id) {
+      // this.recent_chats = this.recent_chats.filter(recent => recent.chat.room_id != room_id);
+      // Echo.leave(`chat.${room_id}`);
+      this.chatroom_data = null;
+
+      axios.delete('/admin/page/support/deletechatroom', {
+        data: {
+          room_id: room_id
+        }
+      })
+      .then((res) => {
+        this.setAlert(res.data.status);
+        console.log(res);
+      }).catch((err) => {
+        console.log(err);
+      });
     },
     formattedTime (currentISOtime) {
       const timestamp = new Date(currentISOtime);

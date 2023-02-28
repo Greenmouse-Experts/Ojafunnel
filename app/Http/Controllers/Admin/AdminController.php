@@ -290,6 +290,7 @@ class AdminController extends Controller
             if (count($chats) > 0) {
                 foreach ($chats as $chat) {
                     $data['messages'][] = [
+                        'id' => $chat->id,
                         'sender' => User::find($chat->user_id) ?? Admin::find($chat->admin_id),
                         'message' => $chat->message,
                         'attachment' => $chat->attachment,
@@ -365,6 +366,70 @@ class AdminController extends Controller
     
             return ['status' => 'success'];
         }
+    }
+
+    public function clearChat (Request $request) 
+    {
+        // if (Auth::check() && $request->csrf_token == csrf_token()) {
+            $chats = Chat::where('room_id', $request->room_id)->get();
+
+            foreach($chats as $chat)
+            {
+                // $token = explode('/', $chat->attachment);
+                // $token2 = explode('.', $token[sizeof($token)-1]);
+
+                // if($chat->attachment)
+                // {
+                //     cloudinary()->destroy('Trivhunt/'.$token2[0]);
+                // }
+
+                $chat->delete();
+                
+            }
+            return ['message' => 'Chats have been deleted successfully.'];
+        // }
+    }
+
+    public function deleteSingleChat (Request $request) 
+    {
+        $chat = Chat::find($request->id);
+
+        // $token = explode('/', $chat->attachment);
+        // $token2 = explode('.', $token[sizeof($token)-1]);
+
+        // if($chat->attachment)
+        // {
+        //     cloudinary()->destroy('Trivhunt/'.$token2[0]);
+        // }
+
+        $chat->delete();
+
+        return ['message' => 'Chat has been deleted successfully.'];
+    }
+
+    public function deleteChatroom (Request $request) 
+    {
+        // delete all chats in the particular chatroom
+        $chats = Chat::where('room_id', $request->room_id)->get();
+
+        foreach($chats as $chat)
+        {
+            // $token = explode('/', $chat->attachment);
+            // $token2 = explode('.', $token[sizeof($token)-1]);
+
+            // if($chat->attachment)
+            // {
+            //     cloudinary()->destroy('Trivhunt/'.$token2[0]);
+            // }
+
+            $chat->delete();
+        }
+
+        // delete the chatroom
+        PersonalChatroom::where('room_id', $request->room_id)->delete();
+
+        // return
+        return ['status' => 'Chatroom has been deleted successfully.'];
     }
 
     public function sms_automation()

@@ -397,12 +397,24 @@ class AuthController extends Controller
                 ]);
             }
 
+            if ($user->status == 'inactive') {
+
+                Auth::logout();
+
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Account inactive, please contact administrator.'
+                ]);
+            }
+
+
             if ($user->user_type == 'User') {
                 return redirect()->route('user.dashboard', $user->username);
             }
 
             Auth::logout();
 
+    
             return back()->with([
                 'type' => 'danger',
                 'message' => 'You are not a User.'
