@@ -36,7 +36,7 @@
                         <nav aria-label="Page navigation example normal float-right">
                             <ul class="pagination">
                                 <li class="page-item">
-                                    <a class="page-link" href="{{route('user.list.performance', Auth::user()->username)}}" aria-label="Previous">
+                                    <a class="page-link" href="#" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
