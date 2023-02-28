@@ -135,7 +135,7 @@
                                                     <label>Select SMS Server</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
-                                                            <select name="integration" id="" required class='py-3 fs-6'>
+                                                            <select name="integration" id="" class='py-3 fs-6'>
                                                                 <option selected disabled class='p-5'>Choose from sms sending server</option>
                                                                 @if($smsServer->count() > 0)
                                                                     @foreach ($smsServer as $item)
@@ -159,7 +159,7 @@
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
                                                             <input type="phone" placeholder="Enter the Whatsapp Number e.g +2234666455454" name="sender_id" class="input"
-                                                                required>
+                                                                >
                                                         </div>
                                                     </div>
                                                 </div>
