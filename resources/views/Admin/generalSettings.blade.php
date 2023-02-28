@@ -32,9 +32,9 @@
                     </div>
                     <div class="d-flex account-nav">
                         <p class="ps-0 active">General</p>
-                        <p>
+                        {{--<p>
                             <a href="{{route('security')}}" class="text-decoration-none text-dark">Security</a>
-                        </p>
+                        </p>--}}
                     </div>
                     <div class="acc-border"></div>
                 </div>
