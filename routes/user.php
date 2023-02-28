@@ -78,7 +78,6 @@ Route::prefix('user')->group(function () {
     Route::post('/crm/delete/shop/{id}', [App\Http\Controllers\CMSController::class, 'delete_shop'])->name('user.shop.delete');
 
     // Support
-    Route::post('/support/start/chat/{id}', [ChatController::class, 'startChat']);
     Route::get('/support/chats', [ChatController::class, 'fetchAllRecentChats']);
     Route::post('/support/send', [ChatController::class, 'sendMessage']);
     Route::post('/support/clear', [ChatController::class, 'clearChat']);

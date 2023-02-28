@@ -659,4 +659,9 @@ class Admin extends Authenticatable
 
         return $admin;
     }
+
+    public function chats ()
+    {
+        return $this->hasMany(Chat::class);
+    }
 }

@@ -8,6 +8,7 @@
                         Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                     </p>
                 </div>
+
             </div>
             <div class="col-lg-2">
                 <div class="quick">
@@ -40,7 +41,7 @@
                     </h1>
                     <ul>
                         <li>
-                            8, Address street
+                            8, Address street ikeja area lagos state
                         </li>
                         <li>
                             0815530260
