@@ -1,4 +1,4 @@
-@extends('layouts.dashboard-frontend')
+@extends('layouts.dashboard-email-frontend')
 
 @section('page-content')
 <!-- ============================================================== -->
@@ -64,7 +64,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    
+
                                     <tbody>
                                         @foreach($mailinglists as $key => $mailinglist)
                                         <tr>

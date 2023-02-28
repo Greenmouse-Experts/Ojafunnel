@@ -51,7 +51,7 @@ class CampaignController extends Controller
     {
         //dd('hi');
         $customer = $request->user()->customer;
-
+        //dd($customer);
         $campaigns = $customer->campaigns()
             ->search($request->keyword)
             ->filter($request)
