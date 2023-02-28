@@ -95,7 +95,7 @@ class BirthdayController extends Controller
     {
         $birthlist = BirthdayContactList::where('user_id', Auth::user()->id)->get();
         $sendingServer = SendingServer::where('customer_id', Auth::user()->id)->get();
-        $smsServer = Integration::where('user_id', Auth::user()->id)->where('status', 'Active')->get();
+        $smsServer = Integration::where('user_id', Auth::user()->id)->where('status', 'Active')->orWhere('status', 'active')->get();
         return view('dashboard.birthday.birthdayCreate', [
             'username' => $username,
             'birthlist' => $birthlist,

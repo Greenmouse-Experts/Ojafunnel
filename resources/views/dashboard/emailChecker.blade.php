@@ -38,8 +38,8 @@
             </div>
             <!-- account container form -->
             <div class="container">
-                <form method="POST" action="{{ route('user.email.campaign.checker')}}">
-                    @csrf
+                <form">
+
                     <div class="account-con">
                         <div class="account-input-div mb-5">
                             <input type="email" name="email" placeholder="enter your email address" class="rounded" />
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </form>
-               
+
             </div>
             <!-- end page title -->
         </div>

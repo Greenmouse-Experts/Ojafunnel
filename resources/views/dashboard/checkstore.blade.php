@@ -75,7 +75,7 @@
                             <td> <a href="{{route('user.available.product', ['username' => Auth::user()->username, 'store_id' => $item->id])}}" class="text-decoration-underline">{{$item->product->count()}} Product</a></td>
                             <td> <a href="{{route('user.sales', ['username' => Auth::user()->username, 'store_id' => $item->id])}}" class="text-decoration-underline">{{$item->order->count()}} Sales</a></td>
                             <td>
-                              <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
+                              <a href="{{route('user.stores.link', $item->name)}}" target="_blank" class="text-decoration-underline">Preview</a>
                             </td>
                             <td>
                                 <button class="btn-list" data-bs-toggle="modal" data-bs-target="#editStore-{{$item->id}}">
