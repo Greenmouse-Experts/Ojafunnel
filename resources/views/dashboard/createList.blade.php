@@ -86,7 +86,7 @@
                                         <label>Default Email subject <span>*</span> </label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="email" placeholder="Default Email subject" name="default_subject" class="input" required>
+                                                <input type="text" placeholder="Default Email subject" name="default_subject" class="input" required>
                                             </div>
                                         </div>
                                     </div>
