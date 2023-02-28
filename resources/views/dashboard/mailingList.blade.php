@@ -100,7 +100,7 @@
                                             </td> --}}
                                             <td>{{$mailinglist->created_at->toDayDateTimeString()}}</td>
                                             <td>
-                                                <a href="#" data-popup="tooltip" title="{{ trans('messages.create_subscriber') }}" role="button" class="btn btn-secondary btn-icon " style="padding: 0.321em 0.75em">
+                                                <a href="{{route('user.new.subscribers', ["username" => Auth::user()->username, "uid" => $mailinglist->uid])}}" data-popup="tooltip" title="{{ trans('messages.create_subscriber') }}" role="button" class="btn btn-secondary btn-icon " style="padding: 0.321em 0.75em">
                                                     <span class="material-icons-outlined">
                                                         person_add
                                                     </span>

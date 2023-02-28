@@ -33,7 +33,7 @@
                 <div class="col-lg-4">
                     <div class="card account-head">
                         <div class="all-create py-2">
-                            <a href=" {{route('user.new.subscribers', ["username" => Auth::user()->username, "uid" => $list->uid])}}">
+                            <a href="{{route('user.new.subscribers', ["username" => Auth::user()->username, "uid" => $list->uid])}}">
                                 <button class="btn btn-success"> + New Subscribers</button>
                             </a>
                         </div>
