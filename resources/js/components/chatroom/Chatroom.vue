@@ -106,7 +106,7 @@
                                             </a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="#">Copy</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
+                                            <a class="dropdown-item" @click="deleteSingleChat(chat.id)" href="#">Delete</a>
                                         </div>
                                     </div>
                                     <div class="ctext-wrap">
@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
                                 <div class="col-auto">
-                                    <button @click="sendMessage()" type="submit" class="btn btn-primary btn-rounded chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Send</span> <i class="mdi mdi-send"></i></button>
+                                    <button @click="sendMessageToAdmin()" type="submit" class="btn btn-primary btn-rounded chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Send</span> <i class="mdi mdi-send"></i></button>
                                 </div>
                             <!-- </form> -->
                         </div>
@@ -256,9 +256,8 @@ export default {
     },
     sendMessage () {
       if (!event.shiftKey && event.key == 'Enter') {
-        // UNTUK SEMENTARA
         if (this.message == '' || this.message == null) {
-          alert('Pesan tidak boleh kosong!!');
+          alert('Please enter message!!');
           return false;
         }
   
@@ -284,6 +283,45 @@ export default {
   
         this.message = '';
       }
+    },
+    sendMessageToAdmin () {
+      if (this.message == '' || this.message == null) {
+        alert('Please enter message!!');
+        return false;
+      }
+
+      this.chatroom_data.messages.push({
+        sender: this.user,
+        message: this.message,
+        time: new Date().toISOString()
+      });
+
+      // this.addToFirstIndexInRecentChats(this.chatroom_data.user, this.message);
+
+      console.log(this.recent_chats);
+
+      axios.post('/support/send', {
+        message: this.message,
+        room_id: this.chatroom_data.room_id
+      })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        console.log(err);        
+      });
+
+      this.message = '';
+    },
+    deleteSingleChat (id) {
+      axios.post(`/support/clear/single/chat`, {
+        id: id
+      })
+      .then((res) => {
+        console.log(res);
+        this.chatroom_data.messages;
+      }).catch((err) => {
+        console.log(err);
+      });
     },
     formattedTime (currentISOtime) {
       const timestamp = new Date(currentISOtime);

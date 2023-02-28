@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -22,6 +23,14 @@ class CustomerController extends Controller
             // }
             $item->enable();
         }
+
+        $customer = Customer::where('uid', $request->uids)->first();
+
+        $user = User::where('customer_id', $customer->id)->first();
+        
+        $user->update([
+            'status' => 'active'
+        ]);
 
         return back()->with([
             'type' => 'success',
@@ -50,6 +59,14 @@ class CustomerController extends Controller
 
             $item->disable();
         }
+
+        $customer = Customer::where('uid', $request->uids)->first();
+
+        $user = User::where('customer_id', $customer->id)->first();
+
+        $user->update([
+            'status' => 'inactive'
+        ]);
 
         // Redirect to my lists page
         return back()->with([
