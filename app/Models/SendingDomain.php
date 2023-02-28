@@ -20,16 +20,16 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\MtaSync;
-use Acelle\Library\Traits\HasUid;
+use App\Library\MtaSync;
+use App\Library\Traits\HasUid;
 use Validator;
 use DB;
 use Exception;
 use Mika56\SPFCheck\SPFCheck;
-use function Acelle\Helpers\spfcheck;
+use function App\Helpers\spfcheck;
 
 class SendingDomain extends Model
 {
@@ -50,17 +50,17 @@ class SendingDomain extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     public function admin()
     {
-        return $this->belongsTo('Acelle\Model\Admin');
+        return $this->belongsTo('App\Models\Admin');
     }
 
     public function sendingServer()
     {
-        return $this->belongsTo('Acelle\Model\SendingServer');
+        return $this->belongsTo('App\Models\SendingServer');
     }
 
     public function scopeActive($query)
@@ -86,7 +86,7 @@ class SendingDomain extends Model
     public function scopeSearch($query, $keyword)
     {
         if (!empty($keyword)) {
-            $query->where('sending_domains.name', 'like', '%'.$keyword.'%');
+            $query->where('sending_domains.name', 'like', '%' . $keyword . '%');
         }
 
         return $query;
@@ -105,7 +105,8 @@ class SendingDomain extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'signing_enabled',
+        'name',
+        'signing_enabled',
     ];
 
     /**
@@ -213,7 +214,7 @@ class SendingDomain extends Model
      */
     public function generateIdentityToken()
     {
-        return base64_encode(md5(trim('SALT!'.$this->name)));
+        return base64_encode(md5(trim('SALT!' . $this->name)));
     }
 
     /**
@@ -358,7 +359,7 @@ class SendingDomain extends Model
 
         $results = collect(dns_get_record($identityHostname, DNS_TXT));
         $results = $results->where('type', 'TXT')
-                           ->whereIn('txt', [$identityToken, doublequote($identityToken)]);
+            ->whereIn('txt', [$identityToken, doublequote($identityToken)]);
 
         return $results->isEmpty() ? false : true;
     }
@@ -403,9 +404,9 @@ class SendingDomain extends Model
     public function getDkimSelector()
     {
         if (!empty($this->dkim_selector)) {
-            return $this->dkim_selector.'._domainkey';
+            return $this->dkim_selector . '._domainkey';
         } else {
-            return Setting::get('dkim_selector').'._domainkey';
+            return Setting::get('dkim_selector') . '._domainkey';
         }
     }
 
@@ -476,7 +477,7 @@ class SendingDomain extends Model
 
         // IMPORTANT: do not call fails() again in the controller, use is_null() with the second parameter
         if ($validator->fails()) {
-            return [ $validator, null ];
+            return [$validator, null];
         }
 
         DB::transaction(function () use ($server) {
@@ -495,7 +496,7 @@ class SendingDomain extends Model
             $this->startVerifying();
         });
 
-        return [ $validator, $this ];
+        return [$validator, $this];
     }
 
     public function isAllowedBy($server)
