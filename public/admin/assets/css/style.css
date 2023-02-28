@@ -2101,3 +2101,88 @@ textarea{
 .padi .bi{
     font-size: 30px;
 }
+.monthly-sales{
+  background-color: white;
+  width: 100%;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.analysis-second-row{
+  display: grid;
+  grid-template-columns: 59% 39%;
+  justify-content: space-between;
+  margin: 30px 0px;
+}
+.sales-money{
+  padding: 20px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.subscription-money{
+  padding: 20px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(149,102,122,1) 0%, rgba(113,63,147,1) 73%);
+  color: white;
+}
+.subscription-money{
+  font-size: 35px;
+  font-weight: 800;
+  color: white;
+}
+.subscription-money .word{
+  font-size: 25px;
+  font-weight: 800;
+}
+.orange-color{
+  color:rgba(248, 132, 21, 0.8);
+}
+.notify-text{
+  font-size: 20px;
+  font-weight: 600;
+}
+.notify-box{
+  padding: 20px 6px 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 0px 10px 10px 0px;
+  border-left: 4px solid #713f93;
+  display: flex;
+  margin: 10px 0px;
+}
+.notify-img-box{
+  width: 70px;
+  height: 70px;
+  margin: 10px 20px;
+  border-radius: 10px;
+  display:grid;
+  place-content: center;
+}
+.notify-img-box img{
+  width: 50px;
+}
+.notify-head-tag{
+  background-color:  #713f93;
+  width: 120px;
+  color:white;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: 500;
+  padding: 2px 0px;
+}
+@media (max-width:960px) {
+  .analysis-second-row{
+    display: block;
+  }
+  .subscription-money{
+    margin-top: 30px;
+    font-size: 25px;
+  }
+  .subscription-money .word{
+    font-size: 20px;
+    font-weight: 800;
+  }
+}

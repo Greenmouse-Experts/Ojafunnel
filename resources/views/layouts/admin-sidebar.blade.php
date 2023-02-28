@@ -124,9 +124,15 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('salesAnalytics')}}">
                         <i class="bi bi-receipt"></i>
                         <span key="t-chat">Sales Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('notification')}}">
+                        <i class="bi bi-bell"></i>
+                        <span key="t-chat">Notification</span>
                     </a>
                 </li>
                 <li>

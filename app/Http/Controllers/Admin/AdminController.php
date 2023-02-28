@@ -268,6 +268,18 @@ class AdminController extends Controller
         return view('Admin.birthdayModule', compact('bm'));
     }
 
+    public function notification()
+    {
+        return view('Admin.notification');
+    }
+
+    // sales analytics
+
+    public function sales_analytics()
+    {
+        return view('Admin.salesAnalytics');
+    }
+
     // EMAIL-MARKETING
 
     public function index()

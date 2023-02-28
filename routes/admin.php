@@ -77,6 +77,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             // Email Canpaign
             Route::get('email-marketing/manage', [App\Http\Controllers\Admin\AdminController::class, 'manage_campaign'])->name('admin.manage_campaign');
 
+            // sales analytics
+            Route::get('sales-analytics', [App\Http\Controllers\Admin\AdminController::class, 'sales_analytics'])->name('salesAnalytics');
+
+            // nofitication admin
+            Route::get('notification', [App\Http\Controllers\Admin\AdminController::class, 'notification'])->name('notification');
         }
     );
 });
