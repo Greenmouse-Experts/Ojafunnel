@@ -20,7 +20,7 @@
                         </div>
                         <div class="d-flex account-nav">
                             <p class="ps-0 active">New Campaign</p>
-                            <p>
+                            {{-- <p>
                                 <a href="#" class="text-decoration-none text-dark">Recieved Messages</a>
                             </p>
                             <p>
@@ -34,7 +34,7 @@
                             </p>
                             <p class="ps-0">
                                 <a href="#" class="text-decoration-none text-dark">Settings</a>
-                            </p>
+                            </p> --}}
                         </div>
                     </div>
                 </div>
@@ -366,13 +366,7 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
 </div>
 <!-- end modal -->
 <!-- end modal -->
 @endsection
-=======
-    <!-- end modal -->
-      <!-- end modal -->
-@endsection
->>>>>>> 7207286e5441ec516159c115bbccc604a6c73443

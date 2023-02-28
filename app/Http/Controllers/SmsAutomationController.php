@@ -267,10 +267,20 @@ class SmsAutomationController extends Controller
             'status' => SmsCampaign::STATUS_NEW,
         ]);
         if ($request->message_timimg == 'Immediately') {
-            dd('hi');
+            $new_campaign = SmsCampaign::create([
+                'title' => $request->campaign_name,
+                'user_id' => Auth::user()->id,
+                'message' => $request->message,
+                'sender_name' => $request->sender_name,
+                'integration' => $request->integration,
+                'receivers' => $contact,
+                'sms_type' => $sms_type,
+                'status' => 'send',
+            ]);
         }
         if ($request->message_timimg == 'Schedule') {
             $schedule_date = $request->schedule_date . ' ' . $request->schedule_time;
+            //dd($schedule_date);
             $schedule_time = $schedule_date;
 
             $new_campaign->status = SmsCampaign::STATUS_SCHEDULED;
