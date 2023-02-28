@@ -129,7 +129,7 @@ class MailListController extends Controller
         // Generate info
         $customer = $request->user()->customer;
         $list = new \App\Models\MailList();
-        dd('hi');
+        //dd('hi');
         // authorize
         // if (\Gate::denies('create', $list)) {
         //     return $this->noMoreItem();
@@ -168,9 +168,13 @@ class MailListController extends Controller
             $list->log('created', $request->user()->customer);
 
             // Redirect to my lists page
-            $request->session()->flash('alert-success', trans('messages.list.created'));
+            // $request->session()->flash('alert-success', trans('messages.list.created'));
 
-            return redirect()->back();
+            // return redirect()->back();
+            return back()->with([
+                'type' => 'success',
+                'message' => trans('messages.list.created'),
+            ]);
         }
     }
 
@@ -283,9 +287,13 @@ class MailListController extends Controller
 
             // Redirect to my lists page
             //$request->session()->flash('alert-success', trans('messages.list.updated'));
-            Alert::success('Success', 'Mail List Updated Successfully');
+            // Alert::success('Success', 'Mail List Updated Successfully');
 
-            return back();
+            // return back();
+            return back()->with([
+                'type' => 'success',
+                'message' => trans('messages.list.updated'),
+            ]);
         }
     }
 
@@ -464,9 +472,9 @@ class MailListController extends Controller
         }
 
         // authorize
-        if (\Gate::denies('read', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('read', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         $result = [
             'data' => [],
@@ -555,9 +563,9 @@ class MailListController extends Controller
         }
 
         // authorize
-        if (\Gate::denies('read', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('read', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         return view('lists._quick_view', [
             'list' => $list,
@@ -576,9 +584,9 @@ class MailListController extends Controller
         $list = \App\Models\MailList::findByUid($request->copy_list_uid);
 
         // authorize
-        if (\Gate::denies('update', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         if ($request->isMethod('post')) {
             // make validator
@@ -615,9 +623,9 @@ class MailListController extends Controller
         $list = \App\Models\MailList::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('read', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('read', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         if ($request->isMethod('post')) {
             $list->setEmbeddedFormOptions($request->options);
@@ -640,9 +648,9 @@ class MailListController extends Controller
         $list = \App\Models\MailList::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('read', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('read', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         return view('lists.embedded_form_frame', [
             'list' => $list,
