@@ -1,4 +1,4 @@
-@extends('layouts.dashboard-frontend')
+@extends('layouts.dashboard-email-frontend')
 
 @section('page-content')
 <script type="text/javascript" src="{{ URL::asset('core/datetime/anytime.min.js') }}"></script>

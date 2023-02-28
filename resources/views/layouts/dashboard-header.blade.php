@@ -1,29 +1,4 @@
 <!-- place below the html form -->
-<script>
-    var paymentForm = document.getElementById('paymentForm');
-    paymentForm.addEventListener("submit", payWithPaystack, false);
-
-    function payWithPaystack(){
-        var handler = PaystackPop.setup({
-        key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
-        email: '{{Auth::user()->email}}',
-        amount: document.getElementById("amount").value * 100,
-        ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-        callback: function(response){
-            // alert(JSON.stringify(response))
-            let url = '{{ route("user.transaction.confirm", [":response", ":amount"]) }}';
-            url = url.replace(':response', response.reference);
-            url = url.replace(':amount', document.getElementById("amount").value);
-            document.location.href=url;
-        },
-        onClose: function(){
-            alert('window closed');
-        }
-        });
-    handler.openIframe();
-  }
-</script>
-
 <header id="page-topbar">
     @include('sweetalert::alert')
     <div class="navbar-header">
@@ -202,7 +177,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="Edit-level">
-                        <form id="paymentForm">
+                        <form class="paymentForm">
                             @csrf
                             <div class="form">
                                 <div class="col-lg-12">
@@ -234,3 +209,28 @@
     </div>
 </div>
 <!-- end modal -->
+
+<script>
+    var paymentForm = document.querySelector('.paymentForm');
+    paymentForm.addEventListener("submit", payWithPaystack, false);
+
+    function payWithPaystack(){
+        var handler = PaystackPop.setup({
+        key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
+        email: '{{Auth::user()->email}}',
+        amount: document.getElementById("amount").value * 100,
+        ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+        callback: function(response){
+            // alert(JSON.stringify(response))
+            let url = '{{ route("user.transaction.confirm", [":response", ":amount"]) }}';
+            url = url.replace(':response', response.reference);
+            url = url.replace(':amount', document.getElementById("amount").value);
+            document.location.href=url;
+        },
+        onClose: function(){
+            alert('window closed');
+        }
+        });
+    handler.openIframe();
+  }
+</script>
