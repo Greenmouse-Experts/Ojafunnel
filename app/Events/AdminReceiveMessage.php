@@ -10,11 +10,10 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SendChat implements ShouldBroadcast
+class AdminReceiveMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    // event payload
     public $payload;
 
     /**
@@ -34,6 +33,16 @@ class SendChat implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('chat.' . $this->payload['room_id']);
+        $room = PersonalChatroom::where('room_id', $this->payload)->first();
+        $receiver_id = 0;
+        if ($room) {
+            if ($room['user_id'] == Auth::guard('admin')->user()->id) {
+                $receiver_id = $room['admin_id'];
+            } else {
+                $receiver_id = $room['user_id'];
+            }
+        }
+
+        return new PrivateChannel('user.' . $receiver_id);
     }
 }

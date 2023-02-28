@@ -1,6 +1,18 @@
 <?php
 
+use App\Events\SendMessage;
+use App\Http\Controllers\ChatController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/broadcast', function (Request $request) {
+    // Fire the SendMessage event
+    $message = "Welcome to Ojafunnel";
+    
+    event(new SendMessage($message));
+
+    return 'Successfully';
+})->name('broadcast');
 
 // FrontEnd
 Route::get('/page-builder/create', [App\Http\Controllers\PageController::class, 'page_builder_create'])->name('user.page.builder.create');
@@ -380,8 +392,7 @@ Route::prefix('{username}')->group(function () {
 Route::get('/general/builder/scan/file', [App\Http\Controllers\PageController::class, 'general_builder_scan'])->name('user.general.builder.scan');
 Route::post('/general/builder/upload/file', [App\Http\Controllers\PageController::class, 'general_builder_upload'])->name('user.general.builder.upload');
 
-
-// Admin Login
-//Route::get('/admin/login', [App\Http\Controllers\AuthController::class, 'adminlogin'])->name('adminlogin');
-
-// Admin Login
+// User Support
+Route::post('/support/start/chat/{id}', [ChatController::class, 'startChat']);
+Route::get('/support/get/admins', [ChatController::class, 'fetchAllAdmins']);
+Route::post('/support/send', [ChatController::class, 'sendMessage']);

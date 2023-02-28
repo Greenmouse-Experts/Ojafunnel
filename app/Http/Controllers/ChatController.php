@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Acelle\Model\User;
+use App\Models\User;
 use App\Events\ReceiveMessage;
 use App\Events\SendChat;
+use App\Models\Admin;
 use App\Models\Chat;
 use App\Models\PersonalChatroom;
 use Illuminate\Http\Request;
@@ -15,28 +16,22 @@ class ChatController extends Controller
     //
     public function startChat ($id, Request $request) 
     {
-        if (Auth::user()->id == $request->id) 
-        {
-            return response()->json([
-                'success' => false,
-                'message' => 'Cannot talk to yourself.'
-            ]);
-        }
+        $admin = Admin::find($id);
 
         // check whether if this user and the targeted user already has a chatroom
-        $isExist = PersonalChatroom::whereIn('user_id', [Auth::user()->id, $id])
-                                    ->whereIn('friend_id', [Auth::user()->id, $id])
+        $isExist = PersonalChatroom::whereIn('user_id', [Auth::user()->id, $admin->id])
+                                    ->whereIn('admin_id', [Auth::user()->id, $admin->id])
                                     ->count();
 
         if ($isExist > 0) 
         {
             // get the room id
-            $room_id = PersonalChatroom::whereIn('user_id', [Auth::user()->id, $id])
-                                        ->whereIn('friend_id', [Auth::user()->id, $id])
+            $room_id = PersonalChatroom::whereIn('user_id', [Auth::user()->id, $admin->id])
+                                        ->whereIn('admin_id', [Auth::user()->id, $admin->id])
                                         ->first('room_id');
                                   
             // update the state of interlocutor's chat from unread to read
-            Chat::where('user_id', $id)
+            Chat::where('user_id', $admin->id)
                 ->where('room_id', $room_id['room_id'])
                 ->where('read_at', null)
                 ->update(['read_at' => now()]);
@@ -47,12 +42,12 @@ class ChatController extends Controller
             // create an array to be sent as a HTTP response
             $data = [];
             $data['room_id'] = $room_id['room_id'];
-            $data['user'] = User::find($id);
+            $data['admin'] = Admin::find($admin->id);
             
             if (count($chats) > 0) {
                 foreach ($chats as $chat) {
                     $data['messages'][] = [
-                        'sender' => User::find($chat->user_id),
+                        'sender' => User::find($chat->user_id) ?? Admin::find($chat->admin_id),
                         'message' => $chat->message,
                         'attachment' => $chat->attachment,
                         'read_at' => $chat->read_at,
@@ -65,31 +60,32 @@ class ChatController extends Controller
 
             $data['exist'] = 1;
             
-            return response()->json([
-                'success' => true,
-                'data' => $data
-            ]);
+            return $data;
         } else 
         {
             // if they don't have a chatroom, then create one.
-            $room_id = Auth::user()->id . 'CHAT' . $id;
+            $room_id = Auth::user()->id . 'CHAT' . $admin->id;
             PersonalChatroom::create([
                 'room_id' => $room_id,
                 'user_id' => Auth::user()->id,
-                'friend_id' => $id
+                'admin_id' => $admin->id
             ]);
 
             $data = [];
             $data['room_id'] = $room_id;
-            $data['user'] = User::find($id);
+            $data['admin'] = Admin::find($admin->id);
             $data['messages'] = [];
             $data['exist'] = 0;
 
-            return response()->json([
-                'success' => true,
-                'data' => $data
-            ]);
+            return $data;
         }
+    }
+
+    public function fetchAllAdmins()
+    {
+        $admins = Admin::orderBy('name', 'asc')->get(['id', 'name', 'email']);
+
+        return $admins;
     }
 
     public function fetchAllRecentChats () 
@@ -176,21 +172,11 @@ class ChatController extends Controller
             broadcast(new SendChat($payload->load('user')))->toOthers();
             broadcast(new ReceiveMessage($payload->load('user')))->toOthers();
     
-            return response()->json([
-                'success' => true,
-            ]);
+            return ['status' => 'success'];
         } else {
-            $validator = Validate::make(request()->all(), [
+            $this->validate($request, [
                 'attachment' => 'required|mimes:jpeg,png,bmp,jpg,mp4,mov,ogg,qt,wmv,avi,m3u8,doc,docx,pdf,csv,xlsx,xlsb,xls,xlsm |max:50000',
             ]);
-    
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Please see errors parameter for all errors.',
-                    'errors' => $validator->errors()
-                ]);
-            }
 
             $file = request()->attachment->getClientOriginalName();
 
@@ -212,9 +198,7 @@ class ChatController extends Controller
             broadcast(new SendChat($payload->load('user')))->toOthers();
             broadcast(new ReceiveMessage($payload->load('user')))->toOthers();
     
-            return response()->json([
-                'success' => true,
-            ]);
+            return ['status' => 'success'];
         }
     }
 

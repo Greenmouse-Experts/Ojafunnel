@@ -10,21 +10,24 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SendChat implements ShouldBroadcast
+class SendMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    // event payload
-    public $payload;
+    /**
+     * Message
+     * @var string
+     */
+    public $message;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($payload)
+    public function __construct(string $message)
     {
-        $this->payload = $payload;
+        $this->message = $message;
     }
 
     /**
@@ -34,6 +37,16 @@ class SendChat implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('chat.' . $this->payload['room_id']);
+        return new PrivateChannel('messages');
+    }
+
+    /**
+     * The event's broadcast name.
+     *
+     * @return string
+     */
+    public function broadcastAs()
+    {
+        return 'message.sent';
     }
 }

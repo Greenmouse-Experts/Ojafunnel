@@ -52,6 +52,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/integration', [App\Http\Controllers\Admin\AdminController::class, 'integration'])->name('integration');
             Route::get('/birthday-module', [App\Http\Controllers\Admin\AdminController::class, 'birthday_module'])->name('birthdayModule');
 
+            // Support
+            Route::post('/support/start/chat/{id}', [App\Http\Controllers\Admin\AdminController::class, 'startChat']);
+            Route::get('/support/get/users', [App\Http\Controllers\Admin\AdminController::class, 'fetchAllusers']);
+            Route::post('/support/send', [App\Http\Controllers\Admin\AdminController::class, 'sendMessage']);
 
             // Email Marketing
             Route::get('sending/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('sending.server');

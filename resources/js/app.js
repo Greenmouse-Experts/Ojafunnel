@@ -8,8 +8,7 @@ import './bootstrap';
 
 import { createApp } from 'vue';
 
-import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
-
+import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -24,6 +23,9 @@ app.component('example-component', ExampleComponent);
 
 import Chatroom from './components/chatroom/Chatroom.vue';
 app.component('chatroom-component', Chatroom);
+
+import Adminroom from './components/chatroom/Adminroom.vue';
+app.component('adminroom-component', Adminroom);
 
 /**
  * The following block of code may be used to automatically register your
