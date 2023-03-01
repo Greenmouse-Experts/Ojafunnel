@@ -21,30 +21,86 @@
             <div class="chat-leftsidebar-nav">
                 <ul class="nav nav-pills nav-justified" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a href="#chat" data-bs-toggle="tab" aria-expanded="true" class="nav-link active"
+                        <a href="#admins" data-bs-toggle="tab" aria-expanded="true" class="nav-link active"
                             aria-selected="true" role="tab">
                             <i class="bx bx-chat font-size-20 d-sm-none"></i>
-                            <span class="d-none d-sm-block">Chat</span>
+                            <span class="d-none d-sm-block">Admins</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#chats" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                            <i class="bx bx-group font-size-20 d-sm-none"></i>
+                            <span class="d-none d-sm-block">Recent Chat</span>
                         </a>
                     </li>
                 </ul>
                 <div class="tab-content py-4">
-                    <div class="tab-pane show active" id="chat" role="tabpanel">
+                    <div class="tab-pane show active" id="admins" role="tabpanel">
                         <ul class="list-unstyled chat-list" data-simplebar="init" style="max-height: 410px">
-                            <li v-for="(admin, index) in admins" :key="index" class="active">
-                                <a @click="startChat(admin.id)" href="javascript: void(0);">
+                            <li v-for="(admin, index) in admins" :key="index" @click="startChat(admin.id)" class="active">
+                                <a  href="javascript: void(0);">
                                     <div class="d-flex">
                                         <div class="flex-shrink-0 align-self-center me-3">
-                                            <i class="mdi mdi-circle font-size-10"></i>
+                                            <i class="mdi mdi-circle font-size-10" style="color: #723f93;"></i>
                                         </div>
                                         <div class="flex-shrink-0 align-self-center me-3">
-                                            <span class="rounded-circle avatar-xs" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">AD</span>
+                                            <span class="rounded-circle avatar-xs" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">{{admin.name.charAt(0).toUpperCase()}} {{admin.name.charAt(1).toUpperCase()}}</span>
                                         </div>
 
                                         <div class="flex-grow-1 overflow-hidden">
                                             <h5 class="text-truncate font-size-14 mb-1">
                                                 {{ admin.name }}
                                             </h5>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" id="chats" role="tabpanel">
+                        <ul v-if="recent_chats && this.query_recent_chats.length > 0" class="list-unstyled chat-list" data-simplebar="init" style="max-height: 410px">
+                            <li v-for="(admin, index) in query_recent_chats" :key="index" @click="startChat(admin.admin.id)" class="active">
+                                <a href="javascript: void(0);">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0 align-self-center me-3">
+                                            <i class="mdi mdi-circle font-size-10" style="color: #723f93;"></i>
+                                        </div>
+                                        <div class="flex-shrink-0 align-self-center me-3">
+                                            <span class="rounded-circle avatar-xs" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">{{admin.admin.name.charAt(0).toUpperCase()}} {{admin.admin.name.charAt(1).toUpperCase()}}</span>
+                                        </div>
+
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <h5 class="text-truncate font-size-14 mb-1">
+                                              {{ admin.admin.name }}
+                                            </h5>
+                                            <p class="text-truncate">{{admin.chat.message}}</p>
+                                        </div>
+                                        <div class="flex-shrink-0 align-self-center me-3" v-show="admin.unread > 0" style="margin-top: -1.5rem;">
+                                          <span class="badge bg-success rounded-pill">{{ admin.unread }}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul v-if="recent_chats && this.query_recent_chats.length == 0" class="list-unstyled chat-list" data-simplebar="init" style="max-height: 410px">
+                            <li v-for="(admin, index) in recent_chats" :key="index" @click="startChat(admin.admin.id)" class="active">
+                                <a href="javascript: void(0);">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0 align-self-center me-3">
+                                            <i class="mdi mdi-circle font-size-10" style="color: #723f93;"></i>
+                                        </div>
+                                        <div class="flex-shrink-0 align-self-center me-3">
+                                            <span class="rounded-circle avatar-xs" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">{{admin.admin.name.charAt(0).toUpperCase()}} {{admin.admin.name.charAt(1).toUpperCase()}}</span>
+                                        </div>
+
+                                        <div class="flex-grow-1 overflow-hidden">
+                                            <h5 class="text-truncate font-size-14 mb-1">
+                                              {{ admin.admin.name }}
+                                            </h5>
+                                            <p class="text-truncate">{{admin.chat.message}}</p>
+                                        </div>
+                                        <div class="flex-shrink-0 align-self-center me-3" v-show="admin.unread > 0" style="margin-top: -1.5rem;">
+                                          <span class="badge bg-success rounded-pill">{{ admin.unread }}</span>
                                         </div>
                                     </div>
                                 </a>
@@ -105,13 +161,13 @@
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                             </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Copy</a>
+                                            <a class="dropdown-item" @click="copyUrl" href="#">Copy</a>
                                             <a class="dropdown-item" @click="deleteSingleChat(chat.id)" href="#">Delete</a>
                                         </div>
                                     </div>
                                     <div class="ctext-wrap">
                                         <div class="conversation-name">You</div>
-                                        <p>
+                                        <p ref="showmessage">
                                             {{ chat.message }}
                                         </p>
 
@@ -123,21 +179,19 @@
                     </div>
                     <div class="p-3 chat-input-section">
                         <div class="row">
-                            <!-- <form method="POST" action="" @submit.prevent="sendMessage()"> -->
-                                <div class="col">
-                                    <div class="position-relative">
-                                        <input v-model="message" @keyup="sendMessage()" type="text" class="form-control chat-input" placeholder="Enter Message...">
-                                        <div class="chat-input-links" id="tooltip-container">
-                                            <ul class="list-inline mb-0">
-                                                <li class="list-inline-item"><a href="javascript: void(0);" title="Add Files"><i class="mdi mdi-file-document-outline"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button @click="sendMessageToAdmin()" type="submit" class="btn btn-primary btn-rounded chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Send</span> <i class="mdi mdi-send"></i></button>
-                                </div>
-                            <!-- </form> -->
+                              <div class="col">
+                                  <div class="position-relative">
+                                      <input v-model="message" @keyup="sendMessage()" type="text" class="form-control chat-input" placeholder="Enter Message...">
+                                      <!-- <div class="chat-input-links" id="tooltip-container">
+                                          <ul class="list-inline mb-0">
+                                              <li class="list-inline-item"><a href="javascript: void(0);" title="Add Files"><i class="mdi mdi-file-document-outline"></i></a></li>
+                                          </ul>
+                                      </div> -->
+                                  </div>
+                              </div>
+                              <div class="col-auto">
+                                  <button @click="sendMessageToAdmin()" type="submit" class="btn btn-primary btn-rounded chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Send</span> <i class="mdi mdi-send"></i></button>
+                              </div>
                         </div>
                     </div>
                 </div>
@@ -155,7 +209,7 @@ export default {
       query: null,
       search_result: null,
       placeholder: 'Search in recent chats...',
-      admins: [],
+      admins: null,
       recent_chats: [],
       query_recent_chats: [],
       query_friend_list: [],
@@ -167,6 +221,36 @@ export default {
     userprop: Object
   },
   methods: {
+    copyURL() {
+      var Url = this.$refs.showmessage;
+      Url.innerHTML = window.location.href;
+      console.log(Url.innerHTML)
+      Url.select();
+      document.execCommand("copy");
+    },
+    runThisUserEchoListener () {
+      Echo.private(`user.${this.user.id}`)
+      .listen('ReceiveMessage', (e) => {
+
+        //  recent chats
+        const isExist = this.recent_chats.filter(recent => recent.admin.id == e.payload.user.id);
+
+        if (!isExist.length) {
+          this.recent_chats.unshift({
+            chat: { message: e.payload.message },
+            admin: e.payload.user,
+            unread: 1
+          });
+        } else {
+          // put this user into the top in recent chat list
+          this.addToFirstIndexInRecentChats(e.payload.user, e.payload.message);
+  
+          // increment the unread property value for the badge
+          this.incrementUnreadMessages(e.payload.user.id);
+        }
+        console.log(e);
+      })
+    },
     fetchAllAdmins () {
       axios.get('/support/get/admins')
       .then((res) => {
@@ -177,10 +261,10 @@ export default {
       });
     },
     fetchAllRecentChats () {
-      axios.get('/chats')
+      axios.get('/support/chats')
       .then((res) => {
-        res.data.forEach(friend => {
-          this.recent_chats.push(friend);
+        res.data.forEach(admins => {
+          this.recent_chats.push(admins);
         });
 
         console.log(res);
@@ -190,11 +274,11 @@ export default {
     },
     startChat (id) {
       if (this.chatroom_data) {
-        Echo.leave(`chat.${this.chatroom_data.room_id}`);
+        // Echo.leave(`chat.${this.chatroom_data.room_id}`);
         this.chatroom_data = null;
       }
 
-    //   this.resetUnreadMessages(id);
+      this.resetUnreadMessages(id);
 
       axios.post(`/support/start/chat/${id}`, {
         currentISOtime: new Date().toISOString()
@@ -212,7 +296,7 @@ export default {
               room_id: res.data.room_id,
               message: ''
             },
-            friend: res.data.user,
+            admin: res.data.admin,
             unread: 0
           });
         } 
@@ -237,9 +321,9 @@ export default {
 
           this.addToFirstIndexInRecentChats(e.payload.user, e.payload.message);
 
-        //   setTimeout(() => {
-        //     this.resetUnreadMessages(e.payload.user.id);
-        //   }, 500);
+          setTimeout(() => {
+            this.resetUnreadMessages(e.payload.user.id);
+          }, 500);
 
           this.markAsRead(e.payload.id, 'chat');
 
@@ -252,6 +336,34 @@ export default {
       })
       .catch((err) => {
         console.log(err);
+      });
+    },
+    addToFirstIndexInRecentChats (sender, message) {
+      
+      this.recent_chats.map(recent => {
+        if (recent.admin.id == sender.id) {
+          recent.chat.message = message;
+          recent.chat.created_at = new Date().toISOString();
+          recent.chat.updated_at = new Date().toISOString();
+        }
+      });
+
+      // the user who sent the message
+      const recentlyOpenedUser = this.recent_chats.filter(recentChat => {
+        return recentChat.admin.id == sender.id;
+      });
+
+      // remove the sender from the recent_chats list
+      this.recent_chats = this.recent_chats.filter(recentChat => {
+        return recentChat.admin.id != sender.id;
+      });
+
+      // add new chat to recent_chats at first index
+      this.recent_chats.unshift(recentlyOpenedUser[0]);
+    },
+    resetUnreadMessages (user_id) {
+      this.recent_chats.forEach(recent => {
+        if (recent.admin.id == user_id) recent.unread = 0;
       });
     },
     sendMessage () {
@@ -267,7 +379,7 @@ export default {
           time: new Date().toISOString()
         });
   
-        // this.addToFirstIndexInRecentChats(this.chatroom_data.user, this.message);
+        this.addToFirstIndexInRecentChats(this.chatroom_data.admin, this.message);
   
         console.log(this.recent_chats);
   
@@ -296,7 +408,7 @@ export default {
         time: new Date().toISOString()
       });
 
-      // this.addToFirstIndexInRecentChats(this.chatroom_data.user, this.message);
+      this.addToFirstIndexInRecentChats(this.chatroom_data.admin, this.message);
 
       console.log(this.recent_chats);
 
@@ -344,13 +456,9 @@ export default {
   },
   mounted () {
     this.fetchAllAdmins();
-    // this.fetchAllRecentChats();
+    this.fetchAllRecentChats();
+    // this.runThisUserEchoListener();
   },
-  updated () {
-    if (this.chatroom_data != null) {
-      this.scrollChat();
-    }
-  }
 }
 </script>
 
@@ -362,9 +470,11 @@ export default {
     }
     .chat-area {
         /* border: 5px solid lightseagreen; */
-        overflow-y: auto;
         padding-top: 10px;
         padding-bottom: 10px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 600px;
     }
 
     .chat-area::-webkit-scrollbar {
