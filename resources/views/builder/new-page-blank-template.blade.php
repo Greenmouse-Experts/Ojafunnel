@@ -20,59 +20,18 @@
             position: absolute;
             bottom: 0;
             width: 100%;
-            background: #713F93;
-            min-height: 100px;
-            padding: 20px 50px;
+            background: #000;
+            min-height: 20px;
+            padding: 10px 50px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
 
-        .social-icon,
-        .menu {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px 0;
-            flex-wrap: wrap;
-        }
-
-        .social-icon__item,
-        .menu__item {
-            list-style: none;
-        }
-
-        .social-icon__link {
-            font-size: 2rem;
-            color: #fff;
-            margin: 0 10px;
-            display: inline-block;
-            transition: 0.5s;
-        }
-        .social-icon__link:hover {
-            transform: translateY(-10px);
-        }
-
-        .menu__link {
-            font-size: 1.2rem;
-            color: #fff;
-            margin: 0 10px;
-            display: inline-block;
-            transition: 0.5s;
-            text-decoration: none;
-            opacity: 0.75;
-            font-weight: 300;
-        }
-
-        .menu__link:hover {
-            opacity: 1;
-        }
-
         .footer p {
             color: #fff;
-            margin: 15px 0 10px 0;
+            margin: 5px 0 5px 0;
             font-size: 1rem;
             font-weight: 300;
         }
@@ -92,35 +51,8 @@
         </div>
 
 
-        <footer class="footer">
-            <div class="waves">
-              <div class="wave" id="wave1"></div>
-              <div class="wave" id="wave2"></div>
-              <div class="wave" id="wave3"></div>
-              <div class="wave" id="wave4"></div>
-            </div>
-            <ul class="social-icon">
-                <li class="social-icon__item"><a class="social-icon__link" href="#">
-                    <ion-icon name="logo-facebook"></ion-icon>
-                    </a></li>
-                <li class="social-icon__item"><a class="social-icon__link" href="#">
-                    <ion-icon name="logo-twitter"></ion-icon>
-                    </a></li>
-                <li class="social-icon__item"><a class="social-icon__link" href="#">
-                    <ion-icon name="logo-linkedin"></ion-icon>
-                    </a></li>
-                <li class="social-icon__item"><a class="social-icon__link" href="#">
-                    <ion-icon name="logo-instagram"></ion-icon>
-                    </a></li>
-            </ul>
-            <ul class="menu">
-                <li class="menu__item"><a class="menu__link" href="#">Home</a></li>
-                <li class="menu__item"><a class="menu__link" href="#">About</a></li>
-                <li class="menu__item"><a class="menu__link" href="#">Services</a></li>
-                <li class="menu__item"><a class="menu__link" href="#">Team</a></li>
-                <li class="menu__item"><a class="menu__link" href="#">Contact</a></li>
-            </ul>
-            <p>&copy; <script>document.write(new Date().getFullYear())</script> Ojafunnel | All Rights Reserved</p>
+        <footer class="footer" contenteditable="false">
+            <p>Built with <a href="#" class="text-white">Ojafunnel</a></p>
         </footer>
     
         <grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
