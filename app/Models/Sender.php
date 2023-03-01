@@ -6,27 +6,27 @@
  * Model class for countries
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log as LaravelLog;
-use Acelle\Library\ExtendedSwiftMessage;
-use Acelle\Model\Setting;
-use Acelle\Library\Traits\HasUid;
+use App\Library\ExtendedSwiftMessage;
+use App\Models\Setting;
+use App\Library\Traits\HasUid;
 use App;
 
 class Sender extends Model
@@ -59,8 +59,8 @@ class Sender extends Model
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('senders.email', 'like', '%'.$keyword.'%')
-                        ->orwhere('senders.name', 'like', '%'.$keyword.'%');
+                    $q->orwhere('senders.email', 'like', '%' . $keyword . '%')
+                        ->orwhere('senders.name', 'like', '%' . $keyword . '%');
                 });
             }
         }
@@ -75,12 +75,12 @@ class Sender extends Model
 
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     public function sendingServer()
     {
-        return $this->belongsTo('Acelle\Model\SendingServer');
+        return $this->belongsTo('App\Models\SendingServer');
     }
 
     public static function pending()
@@ -115,7 +115,8 @@ class Sender extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'email'
+        'name',
+        'email'
     ];
 
     /**
@@ -126,7 +127,7 @@ class Sender extends Model
     public function rules()
     {
         $rules = array(
-            'email' => 'required|email|unique:senders,email,'.$this->id.',id',
+            'email' => 'required|email|unique:senders,email,' . $this->id . ',id',
             'name' => 'required',
         );
 
@@ -203,7 +204,7 @@ class Sender extends Model
             $this->save();
             LaravelLog::info(sprintf('Verify sender %s done, status: %s', $this->email, $this->status));
         } else {
-            // verify by clicking on an Acelle link
+            // verify by clicking on an App link
             // so nothing to do here
         }
     }
@@ -283,12 +284,12 @@ class Sender extends Model
 
     public function generateVerificationUrl()
     {
-        return action('SenderController@verify', [ 'token' => $this->generateVerificationToken() ]);
+        return action('SenderController@verify', ['token' => $this->generateVerificationToken()]);
     }
 
     public function generateVerificationResultUrl()
     {
-        return action('SenderController@verifyResult', [ 'uid' => $this->uid ]);
+        return action('SenderController@verifyResult', ['uid' => $this->uid]);
     }
 
     public static function verifyToken($token)

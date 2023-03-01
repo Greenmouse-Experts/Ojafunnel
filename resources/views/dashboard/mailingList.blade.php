@@ -1,4 +1,4 @@
-@extends('layouts.dashboard-frontend')
+@extends('layouts.dashboard-email-frontend')
 
 @section('page-content')
 <!-- ============================================================== -->
@@ -64,7 +64,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    
+
                                     <tbody>
                                         @foreach($mailinglists as $key => $mailinglist)
                                         <tr>
@@ -72,24 +72,24 @@
                                             <td>{{$mailinglist->name}}</td>
                                             <td><span class="no-margin text-primary stat-num">{{$mailinglist->subscribers->count() }}</span></td>
                                             <td>
-                                                <!-- <div class="single-stat-box pull-left ml-20">
+                                                <div class="single-stat-box pull-left ml-20">
                                                     <span class="no-margin text-primary stat-num">{{ $mailinglist->openUniqRate() }}%</span>
                                                     <div class="progress progress-xxs">
                                                         <div class="progress-bar progress-bar-info" style="width: {{ $mailinglist->readCache('UniqOpenRate', 0) }}%">
                                                         </div>
                                                     </div>
                                                     <span class="text-muted small">Open rate</span>
-                                                </div> -->
+                                                </div>
                                             </td>
                                             <td>
-                                                <!-- <div class="single-stat-box pull-left ml-20">
+                                                <div class="single-stat-box pull-left ml-20">
                                                     <span class="no-margin text-primary stat-num">{{ $mailinglist->readCache('ClickedRate', 0) }}%</span>
                                                     <div class="progress progress-xxs">
                                                         <div class="progress-bar progress-bar-info" style="width: {{ $mailinglist->readCache('ClickedRate', 0) }}%">
                                                         </div>
                                                     </div>
                                                     <span class="text-muted small">Click rate</span>
-                                                </div> -->
+                                                </div>
                                             </td>
                                             {{-- <td>
                                                 @if($mailinglist->status == 'Active')
@@ -100,7 +100,7 @@
                                             </td> --}}
                                             <td>{{$mailinglist->created_at->toDayDateTimeString()}}</td>
                                             <td>
-                                                <a href="#" data-popup="tooltip" title="{{ trans('messages.create_subscriber') }}" role="button" class="btn btn-secondary btn-icon " style="padding: 0.321em 0.75em">
+                                                <a href="{{route('user.new.subscribers', ["username" => Auth::user()->username, "uid" => $mailinglist->uid])}}" data-popup="tooltip" title="{{ trans('messages.create_subscriber') }}" role="button" class="btn btn-secondary btn-icon " style="padding: 0.321em 0.75em">
                                                     <span class="material-icons-outlined">
                                                         person_add
                                                     </span>

@@ -12,7 +12,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 
-class ReceiveMessage
+class ReceiveMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -38,10 +38,10 @@ class ReceiveMessage
         $room = PersonalChatroom::where('room_id', $this->payload['room_id'])->first();
         $receiver_id = 0;
         if ($room) {
-            if ($room['first_user'] == Auth::user()->id) {
-                $receiver_id = $room['second_user'];
+            if ($room['user_id'] == Auth::user()->id) {
+                $receiver_id = $room['admin_id'];
             } else {
-                $receiver_id = $room['first_user'];
+                $receiver_id = $room['user_id'];
             }
         }
 

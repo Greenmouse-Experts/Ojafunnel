@@ -32,6 +32,7 @@ class User extends Authenticatable
         'wallet',
         'ref_bonus',
         'password',
+        'status'
     ];
 
     /**
@@ -103,5 +104,9 @@ class User extends Authenticatable
         return $rules;
     }
 
+    public function chats ()
+    {
+        return $this->hasMany(Chat::class);
+    }
 
 }

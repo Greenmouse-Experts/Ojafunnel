@@ -11,6 +11,10 @@ use App\Models\SmsCampaign;
 use App\Models\StoreOrder;
 use App\Models\StoreProduct;
 use App\Models\User;
+use App\Models\Chat;
+use App\Models\PersonalChatroom;
+use App\Events\AdminReceiveMessage;
+use App\Events\AdminSendChat;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -59,6 +63,7 @@ class AdminController extends Controller
             'message' => 'Admin password changed successfully!.'
         ]);
     }
+
     public function dashboard()
     {
         return view('Admin.adminwelcome');
@@ -243,6 +248,188 @@ class AdminController extends Controller
     public function chat_support()
     {
         return view('Admin.support.chatSupport');
+    }
+
+    public function fetchAllusers()
+    {
+        $users = User::latest()->get(['id', 'first_name', 'last_name', 'email', 'photo']);
+
+        return $users;
+    }
+
+    public function startChat ($id, Request $request) 
+    {
+        $user = User::find($id);
+
+        // check whether if this user and the targeted user already has a chatroom
+        $isExist = PersonalChatroom::whereIn('user_id', [Auth::guard('admin')->user()->id, $user->id])
+                                    ->whereIn('admin_id', [Auth::guard('admin')->user()->id, $user->id])
+                                    ->count();
+
+        if ($isExist > 0) 
+        {
+            // get the room id
+            $room_id = PersonalChatroom::whereIn('user_id', [Auth::guard('admin')->user()->id, $user->id])
+                                        ->whereIn('admin_id', [Auth::guard('admin')->user()->id, $user->id])
+                                        ->first('room_id');
+                                  
+            // update the state of interlocutor's chat from unread to read
+            Chat::where('user_id', $user->id)
+                ->where('room_id', $room_id['room_id'])
+                ->where('read_at', null)
+                ->update(['read_at' => now()]);
+                                        
+            // fetch all of the chats from this chatroom
+            $chats = Chat::where('room_id', $room_id['room_id'])->orderBy('created_at', 'asc')->get();
+
+            // create an array to be sent as a HTTP response
+            $data = [];
+            $data['room_id'] = $room_id['room_id'];
+            $data['user'] = User::find($user->id);
+            
+            if (count($chats) > 0) {
+                foreach ($chats as $chat) {
+                    $data['messages'][] = [
+                        'id' => $chat->id,
+                        'sender' => User::find($chat->user_id) ?? Admin::find($chat->admin_id),
+                        'message' => $chat->message,
+                        'attachment' => $chat->attachment,
+                        'read_at' => $chat->read_at,
+                        'time' => $chat->created_at
+                    ];
+                }    
+            } else {
+                $data['messages'] = [];
+            }
+
+            $data['exist'] = 1;
+            
+            return $data;
+        } else 
+        {
+            // if they don't have a chatroom, then create one.
+            $room_id = Auth::guard('admin')->user()->id . 'CHAT' . $user->id;
+            PersonalChatroom::create([
+                'room_id' => $room_id,
+                'user_id' => $user->id,
+                'admin_id' => Auth::guard('admin')->user()->id
+            ]);
+
+            $data = [];
+            $data['room_id'] = $room_id;
+            $data['user'] = User::find($user->id);
+            $data['messages'] = [];
+            $data['exist'] = 0;
+
+            return $data;
+        }
+    }
+
+    public function sendMessage (Request $request) 
+    {
+        if($request->attachment == null)
+        {
+            $payload = Chat::create([
+                'admin_id' => Auth::guard('admin')->user()->id,
+                'room_id' => $request->room_id,
+                'message' => $request->message
+            ]);
+    
+            // broadcast(new AdminSendChat($payload->room_id))->toOthers();
+            // broadcast(new AdminReceiveMessage($payload->room_id))->toOthers();
+    
+            return ['status' => 'success'];
+        } else {
+            $this->validate($request, [
+                'attachment' => 'required|mimes:jpeg,png,bmp,jpg,mp4,mov,ogg,qt,wmv,avi,m3u8,doc,docx,pdf,csv,xlsx,xlsb,xls,xlsm |max:50000',
+            ]);
+
+            $file = request()->attachment->getClientOriginalName();
+
+            $filename = pathinfo($file, PATHINFO_FILENAME);
+    
+            $response = cloudinary()->uploadFile($request->file('attachment')->getRealPath(),
+                            [
+                                'folder' => config('app.name'),
+                                "public_id" => $filename,
+                                "use_filename" => TRUE,
+                            ])->getSecurePath();
+            
+            $payload = $request->admin()->chats()->create([
+                'room_id' => $request->room_id,
+                'message' => $request->message,
+                'attachment' => $response
+            ]);
+    
+            broadcast(new SendChat($payload->load('admin')))->toOthers();
+            broadcast(new ReceiveMessage($payload->load('admin')))->toOthers();
+    
+            return ['status' => 'success'];
+        }
+    }
+
+    public function clearChat (Request $request) 
+    {
+        // if (Auth::check() && $request->csrf_token == csrf_token()) {
+            $chats = Chat::where('room_id', $request->room_id)->get();
+
+            foreach($chats as $chat)
+            {
+                // $token = explode('/', $chat->attachment);
+                // $token2 = explode('.', $token[sizeof($token)-1]);
+
+                // if($chat->attachment)
+                // {
+                //     cloudinary()->destroy('Trivhunt/'.$token2[0]);
+                // }
+
+                $chat->delete();
+                
+            }
+            return ['message' => 'Chats have been deleted successfully.'];
+        // }
+    }
+
+    public function deleteSingleChat (Request $request) 
+    {
+        $chat = Chat::find($request->id);
+
+        // $token = explode('/', $chat->attachment);
+        // $token2 = explode('.', $token[sizeof($token)-1]);
+
+        // if($chat->attachment)
+        // {
+        //     cloudinary()->destroy('Trivhunt/'.$token2[0]);
+        // }
+
+        $chat->delete();
+
+        return ['message' => 'Chat has been deleted successfully.'];
+    }
+
+    public function deleteChatroom (Request $request) 
+    {
+        // delete all chats in the particular chatroom
+        $chats = Chat::where('room_id', $request->room_id)->get();
+
+        foreach($chats as $chat)
+        {
+            // $token = explode('/', $chat->attachment);
+            // $token2 = explode('.', $token[sizeof($token)-1]);
+
+            // if($chat->attachment)
+            // {
+            //     cloudinary()->destroy('Trivhunt/'.$token2[0]);
+            // }
+
+            $chat->delete();
+        }
+
+        // delete the chatroom
+        PersonalChatroom::where('room_id', $request->room_id)->delete();
+
+        // return
+        return ['status' => 'Chatroom has been deleted successfully.'];
     }
 
     public function sms_automation()

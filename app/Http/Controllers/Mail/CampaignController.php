@@ -51,7 +51,7 @@ class CampaignController extends Controller
     {
         //dd('hi');
         $customer = $request->user()->customer;
-
+        //dd($customer);
         $campaigns = $customer->campaigns()
             ->search($request->keyword)
             ->filter($request)
@@ -1586,9 +1586,9 @@ class CampaignController extends Controller
         $campaign = Campaign::findByUid($request->copy_campaign_uid);
 
         // authorize
-        if (\Gate::denies('copy', $campaign)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('copy', $campaign)) {
+        //     return $this->notAuthorized();
+        // }
 
         if ($request->isMethod('post')) {
             // make validator

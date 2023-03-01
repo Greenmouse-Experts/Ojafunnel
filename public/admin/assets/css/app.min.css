@@ -4040,7 +4040,7 @@ div.dataTables_wrapper div.dataTables_filter {
     border-radius: 30px;
     background-color: var(--bs-light)!important;
     border-color: var(--bs-light)!important;
-    padding-right: 120px;
+    padding-right: 50px;
 }
 .chat-input-links {
     position: absolute;

@@ -107,7 +107,7 @@
                                                 <input type='checkbox' id="email_select" onchange="emailAuto()" value="email automation" name="automation[1]" class='w-auto mt-1 checkboxs' />
                                                 <label class='w-auto '>Email Automation</label>
                                             </div>
-                                            <div class="email_automation mt-2" style="display: none">
+                                            {{-- <div class="email_automation mt-2" style="display: none">
                                                 <div class="col-lg-8">
                                                     <label>Select Email Sending Server</label>
                                                     <div class="row">
@@ -125,7 +125,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class='d-flex mt-3 align-items-center'>
                                                 <input type='checkbox' id="sms_select" onchange="smsAuto()" value="sms automation" name="automation[2]" class='w-auto mt-1' />
                                                 <label class='w-auto'>SMS Automation</label>
@@ -135,14 +135,14 @@
                                                     <label>Select SMS Server</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
-                                                            <select name="integration" id="" required class='py-3 fs-6'>
+                                                            <select name="integration" id="" class='py-3 fs-6'>
                                                                 <option selected disabled class='p-5'>Choose from sms sending server</option>
-                                                                @if($sendingServer->isEmpty())
-                                                                    <option disabled value="">No Sms Sending Server</option>
-                                                                @else
+                                                                @if($smsServer->count() > 0)
                                                                     @foreach ($smsServer as $item)
                                                                         <option value="{{$item->id}}">{{$item->type}}</option>
                                                                     @endforeach
+                                                                @else
+                                                                    <option disabled value="">No Sms Sending Server</option>
                                                                 @endif
                                                             </select>
                                                         </div>
@@ -159,7 +159,7 @@
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
                                                             <input type="phone" placeholder="Enter the Whatsapp Number e.g +2234666455454" name="sender_id" class="input"
-                                                                required>
+                                                                >
                                                         </div>
                                                     </div>
                                                 </div>

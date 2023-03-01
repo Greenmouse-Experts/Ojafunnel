@@ -130,7 +130,7 @@ forward_to_inbox
 	restore
 	</span> {{ trans("messages.restart") }}</a></li>
 
-										<li>
+										{{-- <li>
 											<a class="copy-campaign-button dropdown-item"
 												href="{{ route('user.campaign.copy', [
                                                     'username' => Auth::user()->username,
@@ -142,7 +142,7 @@ forward_to_inbox
 													copy_all
 												</span> {{ trans('messages.copy') }}
 											</a>
-										</li>
+										</li> --}}
 
 										<li><a
 											class="dropdown-item list-action-single"
