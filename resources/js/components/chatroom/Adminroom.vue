@@ -73,7 +73,7 @@
                                             <h5 class="text-truncate font-size-14 mb-1">
                                               {{ user.user.first_name }} {{ user.user.last_name }}
                                             </h5>
-                                            <p class="text-truncate">{{user.chat.message}}</p>
+                                            <p class="text-truncate mb-0">{{user.chat.message}}</p>
                                         </div>
                                         <div class="flex-shrink-0 align-self-center me-3" v-show="user.unread > 0" style="margin-top: -1.5rem;">
                                           <span class="badge bg-success rounded-pill">{{ user.unread }}</span>
@@ -97,7 +97,7 @@
                                             <h5 class="text-truncate font-size-14 mb-1">
                                               {{ user.user.first_name }} {{ user.user.last_name }}
                                             </h5>
-                                            <p class="text-truncate">{{user.chat.message}}</p>
+                                            <p class="text-truncate mb-0">{{user.chat.message}}</p>
                                         </div>
                                         <div class="flex-shrink-0 align-self-center me-3" v-show="user.unread > 0" style="margin-top: -1.5rem;">
                                           <span class="badge bg-success rounded-pill">{{ user.unread }}</span>
