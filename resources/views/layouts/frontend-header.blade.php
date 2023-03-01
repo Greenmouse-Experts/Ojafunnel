@@ -87,8 +87,6 @@
                                             </div>
                                             <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
                                         </div>
-<<<<<<< HEAD
-=======
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
@@ -97,9 +95,8 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
+                                            <p>pre-made designs and documents that can be customized is available on</p>
                                         </div>
->>>>>>> e004fe4 (update)
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="upload">
@@ -199,6 +196,13 @@
                                     <a href="{{route('integrations')}}" class="routers">
                                         <a class="dropdown-item">
                                              API Integrations
+                                        </a>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('template')}}" class="routers">
+                                        <a class="dropdown-item">
+                                            Template Designs
                                         </a>
                                     </a>
                                 </li>
