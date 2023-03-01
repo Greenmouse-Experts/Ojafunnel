@@ -91,6 +91,10 @@ Route::get('/features/ecommerce', [App\Http\Controllers\HomePageController::clas
 Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::class, 'funnelbuilder'])->name('funnelbuilder');
 // });
 
+// Template Designs Frontend
+Route::get('/features/template', [App\Http\Controllers\HomePageController::class, 'template'])->name('template');
+// });
+
 // Affiliate Marketing
 Route::get('/features/affiliate', [App\Http\Controllers\HomePageController::class, 'affiliate'])->name('affiliate');
 // });
