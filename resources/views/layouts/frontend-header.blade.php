@@ -87,6 +87,16 @@
                                             </div>
                                             <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="{{route('template')}}">
+                                                       Template Designs
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                        </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="upload">
@@ -186,6 +196,13 @@
                                     <a href="{{route('integrations')}}" class="routers">
                                         <a class="dropdown-item">
                                              API Integrations
+                                        </a>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('template')}}" class="routers">
+                                        <a class="dropdown-item">
+                                            Template Designs
                                         </a>
                                     </a>
                                 </li>
