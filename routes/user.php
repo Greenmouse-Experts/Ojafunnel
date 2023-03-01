@@ -38,6 +38,7 @@ Route::prefix('user')->group(function () {
 
     // Page Builder
     Route::post('/page/builder/create', [App\Http\Controllers\PageController::class, 'page_builder_create'])->name('user.page.builder.create');
+    Route::any('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');
     Route::post('/page/builder/update/{id}', [App\Http\Controllers\PageController::class, 'page_builder_update'])->name('user.page.builder.update');
     Route::post('/page/builder/delete/{id}', [App\Http\Controllers\PageController::class, 'page_builder_delete'])->name('user.page.builder.delete');
 
@@ -48,6 +49,7 @@ Route::prefix('user')->group(function () {
     Route::post('/funnel/builder/create/page', [App\Http\Controllers\PageController::class, 'funnel_builder_create_page'])->name('user.funnel.builder.create.page');
     Route::post('/funnel/builder/update/page/{id}', [App\Http\Controllers\PageController::class, 'funnel_builder_update_page'])->name('user.funnel.builder.update.page');
     Route::post('/funnel/builder/delete/page/{id}', [App\Http\Controllers\PageController::class, 'funnel_builder_delete_page'])->name('user.funnel.builder.delete.page');
+    Route::any('/funnel/builder/save/page', [App\Http\Controllers\PageController::class, 'funnel_builder_save_page'])->name('user.funnel.builder.save.page');
 
     // Account Upgrade
     Route::get('/upgrade/account/confirm/{plan_id}/{response}/{amount}', [App\Http\Controllers\AccountUpgradeController::class, 'upgrade_account_confirm'])->name('user.upgrade.account.confirm');
