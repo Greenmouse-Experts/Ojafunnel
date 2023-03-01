@@ -6,7 +6,7 @@
 
 import './bootstrap';
 
-import { createApp } from 'vue';
+import { createApp, ref } from 'vue';
 
 import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css';
 
