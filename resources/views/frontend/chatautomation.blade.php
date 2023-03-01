@@ -53,31 +53,31 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('emailmarketing')}}">
-                                                        Email Marketing 
+                                                        Email Marketing
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('affiliate')}}">
-                                                        Affiliate Marketing 
+                                                        Affiliate Marketing
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('ecommerce')}}">
-                                                        Ecommerce 
+                                                        Ecommerce
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Create digital products, Courses,Training and members area.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -89,22 +89,35 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('funnelbuilder')}}">
-                                                        Funnel Builder 
+                                                        Funnel Builder
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Create many sales funnels to recapture your leads and optimise their lifetime value.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('pagebuilder')}}">
-                                                        Page Builder 
+                                                        Page Builder
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
                                         </div>
+<<<<<<< HEAD
+=======
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="{{route('template')}}">
+                                                       Template Designs
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
+                                        </div>
+>>>>>>> e004fe4 (update)
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="upload">
@@ -115,21 +128,21 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('marketauto')}}">
-                                                        Automations 
+                                                        Automations
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('chatautomation')}}">
-                                                        Chat Automations 
+                                                        Chat Automations
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Chat Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -141,11 +154,11 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('integrations')}}">
-                                                        API Integrations 
+                                                        API Integrations
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Track various statistics and metrics associated with all your email activities and campaigns.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -207,6 +220,16 @@
                                         </a>
                                     </a>
                                 </li>
+<<<<<<< HEAD
+=======
+                                <li>
+                                    <a href="{{route('template')}}" class="routers">
+                                        <a class="dropdown-item">
+                                            Template Designs
+                                        </a>
+                                    </a>
+                                </li>
+>>>>>>> e004fe4 (update)
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -253,7 +276,7 @@
                         <div class="col-lg-6">
                             <div class="btn-text">
                                 <h1>
-                                    Chat automations for your business 
+                                    Chat automations for your business
                                 </h1>
                                 <p>
                                     Automate and personalize chats follow up to gain more leads and close more deals with highly.
@@ -292,10 +315,10 @@
                         <div class="col-lg-6">
                             <div class="thread-text">
                                 <h4>
-                                    Automated chats 
+                                    Automated chats
                                 </h4>
                                 <h2>
-                                    Automated texts to reduce your everyday workload  
+                                    Automated texts to reduce your everyday workload
                                 </h2>
                                 <p>
                                     Maximize your ability to reach engaged leads through personalized messages. With our chat automation, you can accomplish both when you add automated text messaging to your ongoing marketing strategies and tactics.
@@ -413,10 +436,10 @@
                         <div class="col-lg-8">
                             <div class="btn-text">
                                 <h1>
-                                    Chat Automation features for you 
+                                    Chat Automation features for you
                                 </h1>
                                 <p>
-                                    Amet minim mollit non deserunt ullamco est sit aliqua 
+                                    Amet minim mollit non deserunt ullamco est sit aliqua
                                 </p>
                             </div>
                         </div>
@@ -427,7 +450,7 @@
                                 <img src="" alt="Picture" draggable="false">
                                 <div class="drag">
                                     <h1>
-                                        Page templates 
+                                        Page templates
                                     </h1>
                                     <p>
                                         Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
@@ -441,7 +464,7 @@
                                 <img src="" alt="Picture" draggable="false">
                                 <div class="drag">
                                     <h1>
-                                        Optin Pages 
+                                        Optin Pages
                                     </h1>
                                     <p>
                                         Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
@@ -469,7 +492,7 @@
                                 <img src="" alt="Picture" draggable="false">
                                 <div class="drag">
                                     <h1>
-                                        Quiz Automation 
+                                        Quiz Automation
                                     </h1>
                                     <p>
                                         Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
@@ -483,7 +506,7 @@
                                 <img src="" alt="Picture" draggable="false">
                                 <div class="drag">
                                     <h1>
-                                        Integrations 
+                                        Integrations
                                     </h1>
                                     <p>
                                         Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
@@ -520,7 +543,7 @@
                                     <div class="col-md-3"></div>
                                     <div class="col-md-6">
                                         <h1>
-                                            Are you ready to take your chat automation to the next level! 
+                                            Are you ready to take your chat automation to the next level!
                                         </h1>
                                         <div class="level"></div>
                                         <button>

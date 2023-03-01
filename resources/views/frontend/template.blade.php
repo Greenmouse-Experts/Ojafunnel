@@ -14,12 +14,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
-
 <body>
     <!-- Header -->
-    <header>
-        <nav style="background:linear-gradient(85.46deg, #A219D8 -3.83%, #E656DA 82.54%);" class="navbar navbar-expand-lg fixed-top" id="header-scroll">
+    <!-- linear-gradient(101.28deg, #3C40A5 -7.37%, #208FF7 142.82%) -->
+    <header class="market">
+        <nav class="navbar navbar-expand-lg fixed-top" id="header">
             <div class="container">
                 <a href="{{route('index')}}" class="navbar-brand">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660222222/OjaFunnel-Images/lo_dwxa54.png" draggable="false" alt="OjaFunnel">
@@ -102,6 +103,16 @@
                                                 <h4>
                                                     <a href="{{route('pagebuilder')}}">
                                                         Page Builder
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
+                                        </div>
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="{{route('template')}}">
+                                                       Template Designs
                                                     </a>
                                                 </h4>
                                             </div>
@@ -209,8 +220,6 @@
                                         </a>
                                     </a>
                                 </li>
-<<<<<<< HEAD
-=======
                                 <li>
                                     <a href="{{route('template')}}" class="routers">
                                         <a class="dropdown-item">
@@ -218,7 +227,6 @@
                                         </a>
                                     </a>
                                 </li>
->>>>>>> e004fe4 (update)
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -257,381 +265,126 @@
         </div>
     </header>
     <!-- Header Ends -->
-
-    <!-- Page-Builder -->
-    <section class="page-builder">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="btn-text">
-                        <h1>
-                            Convert prospects with stunning pre built page templates
-                        </h1>
-                        <p>
-                            Building landing pages, pre sales pages, sales page, opt-in page, thank you page, and more with ease.
-                        </p>
-                        <button style="background-color: #fff;color:#000">
-                            Get Started
-                        </button>
-                        <button>
-                            See Demo
-                        </button>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="context">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661267657/OjaFunnel-Images/banner_ajpxfj.png" draggable="false">
+    <!-- hero -->
+    <div class="template-hero-banner">
+        <div class="container h-100">
+            <div class="hero-container">
+                <div class="template-hero-div">
+                    <p class="template-head-text">Free Page Builder Templates</p>
+                    <p class="template-mid-text">Choose a template and get started</p>
+                    <div class="template-search-div">
+                        <input type="search" placeholder="Search template" />
+                        <i class="bi bi-search"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Page Builder  Ends-->
-
-    <!-- Increasing -->
-    <section class="Increasing">
+    </div>
+    <!-- hero ends -->
+    <!-- page contents -->
+    <div class="template-content">
         <div class="container">
             <div class="row">
-                <div class="col-lg-1"></div>
+                <div class="col-lg-2 pe-lg-5 template-side">
+                    <div class="license-div">
+                        <p><i class="bi bi-check2-square pe-2 text-warning fs-4"></i>License</p>
+                        <ul class="license-radio">
+                            <li>
+                                <input type="radio" name="license" />
+                                <span>Any</span>
+                            </li>
+                            <li>
+                                <input type="radio" name="license" />
+                                <span>Free</span>
+                            </li>
+                            <li>
+                                <input type="radio" name="license" />
+                                <span>Premium</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sort-div">
+                        <p><i class="bi bi-sort-down fs-4 pe-2 text-warning"></i>Sort by</p>
+                        <ul class="sort-radio">
+                            <li>
+                                <input type="radio" name="sort" />
+                                <span>Recent</span>
+                            </li>
+                            <li>
+                                <input type="radio" name="sort" />
+                                <span>Popular</span>
+                            </li>
+                            <li>
+                                <input type="radio" name="sort" />
+                                <span>Top Rated</span>
+                            </li>
+                            <li>
+                                <input type="radio" name="sort" />
+                                <span>Editor's Pick</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="col-lg-10">
-                    <div class="thread-text">
-                        <h1>
-                            Simplified Page Builder
-                        </h1>
+                    <!-- category -->
+                    <div class="choose-category">
+                        <p>Choose Category</p>
+                        <div class="category-list">
+                            <ul>
+                                <li class="bg-success text-white">Eccommerce</li>
+                                <li class="bg-warning text-white">Easter</li>
+                                <li class="bg-primary text-white">Business</li>
+                                <li class="bg-danger text-white">Finance</li>
+                                <li class="bg-info text-white">Crypto</li>
+                                <li class="bg-secondary text-white">Logistics</li>
+                                <li class="bg-success text-white">Eccommerce</li>
+                                <li class="bg-warning text-white">Easter</li>
+                                <li class="bg-primary text-white">Business</li>
+                                <li class="bg-danger text-white">Finance</li>
+                                <li class="bg-info text-white">Crypto</li>
+                                <li class="bg-secondary text-white">Logistics</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-1"></div>
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                            Create and build
-                        </h4>
-                        <h2>
-                            Build your landing pages easily with customizable templates
-                        </h2>
-                        <p>
-                            Select a customizable template that best fits your business needs and the look you're going for or use our drag and drop editor to create a unique landing page from scratch.
-                        </p>
-                        <a href="{{route('signup')}}">
-                            <button>
-                                Explore Now
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="imagess">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674489037/OjaFunnel-Images/Group_46928_ohy9gs.png" draggable="false">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Increasing Ends -->
-
-    <!-- Communication -->
-    <section class="communication hide">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675090835/OjaFunnel-Images/Group_46907_qxujq8.png" draggable="false" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                            SEGMENTATION
-                        </h4>
-                        <h2>
-                            Grow your audience and keep it organized
-                        </h2>
-                        <p>
-                            Landing pages make it easy to capture your visitors’ contact information and move them to the next stage of your funnel. Use segmentation to track your leads lifecycle and follow-up with relevant messaging.
-                        </p>
-                        <a href="{{route('signup')}}">
-                            <button>
-                                Explore Now
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Communication Ends -->
-
-    <!-- Communication -->
-    <section class="communication display">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                            SEGMENTATION
-                        </h4>
-                        <h2>
-                            Grow your audience and keep it organized
-                        </h2>
-                        <p>
-                            Landing pages make it easy to capture your visitors’ contact information and move them to the next stage of your funnel. Use segmentation to track your leads lifecycle and follow-up with relevant messaging.
-                        </p>
-                        <a href="{{route('signup')}}">
-                            <button>
-                                Explore Now
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675090835/OjaFunnel-Images/Group_46907_qxujq8.png" draggable="false" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Communication Ends -->
-
-    <!-- Editable  -->
-    <section class="Editable">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                            REPORTS AND ANALYSIS
-                        </h4>
-                        <h2>
-                            Get reports on visitors, clicks, conversions and more
-                        </h2>
-                        <p>
-                            Find what is high converting, ie visitors, clicks, conversions, and revenue, as well as track what content or offerings are most interesting to different audience segments.
-                        </p>
-                        <a href="{{route('signup')}}">
-                            <button>
-                                Explore Now
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="imagess">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675090834/OjaFunnel-Images/Group_46930_bdtlan.png" draggable="false">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Editable Ends -->
-    <!-- Communication -->
-    <section class="communication hide">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675090834/OjaFunnel-Images/Rectangle_18983_pz6pti.png" draggable="false" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                            REPORTS AND ANALYSIS
-                        </h4>
-                        <h2>
-                            Get reports on visitors, clicks, conversions and more
-                        </h2>
-                        <p>
-                            Find what is high converting, ie visitors, clicks, conversions, and revenue, as well as track what content or offerings are most interesting to different audience segments.
-                        </p>
-                        <a href="{{route('signup')}}">
-                            <button>
-                                Explore Now
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Communication Ends -->
-
-    <!-- Communication -->
-    <section class="communication display">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                            REPORTS AND ANALYSIS
-                        </h4>
-                        <h2>
-                            Get reports on visitors, clicks, conversions and more
-                        </h2>
-                        <p>
-                            Find what is high converting, ie visitors, clicks, conversions, and revenue, as well as track what content or offerings are most interesting to different audience segments.
-                        </p>
-                        <a href="{{route('signup')}}">
-                            <button>
-                                Explore Now
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675090834/OjaFunnel-Images/Rectangle_18983_pz6pti.png" draggable="false" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Communication Ends -->
-
-
-    <section class="digital">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="mount">
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-6">
-                                <h1>
-                                    Effortlessly create impressive pages to help grow your audience
-                                </h1>
-                                <div class="level"></div>
-                                <a href="{{route('signup')}}">
-                                    <button>
-                                        Sign up
-                                    </button>
-                                </a>
-                                <button style="background-color: #527EEB; color: #fff;">
-                                    See Demo
-                                </button>
+                    <!-- category content -->
+                    <div class="template-listing">
+                        <div class="template-listing-grid">
+                            <div class="single-template">
+                                <div class="inner first-grid">
+                                    <div  class="text-center">
+                                        <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
+                                        <button class="btn btn-primary d-block mt-2">New Template</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3"></div>
+                            <div class="single-template">
+                                <div class="inner second-grid">
+                                    <img src="https://templatemo.com/screenshots-720/template-562-space-dynamic.jpg" alt="templates" width="100%" height="100%"/>
+                                    <div  class="start-template">
+                                        <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
+                                        <button class="btn btn-primary d-block mt-2">Use Template</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    <!-- page contents ends -->
+    <script>
+        window.addEventListener('scroll', function() {
+            var scroll = $(window).scrollTop();
+            let header = document.getElementById("header")
 
+            if (scroll.scrollTop() > 50) {
+            $('#header').style.backgroundColor = "#3383e6 !important";
+            } else {
+                $('#header').style.backgroundColor = "inherit !important";
+            }
 
-    <!-- Footter -->
-    <section class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="kit-font">
-                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png">
-                    <p>
-                        Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="quick">
-                    <h1>
-                        Quick Link
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="{{route('index')}}">Home</a>
-                        </li>
-                        <li>
-                            <a href="{{route('emailmarketing')}}">Features</a>
-                        </li>
-                        <li>
-                            <a href="{{route('pricing')}}"> Pricing</a>
-                        </li>
-                        <li>
-                            <a href="{{route('faqs')}}">FAQs</a>
-                        </li>
-                        <li>
-                            <a href="{{route('contact')}}">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="quick">
-                    <h1>
-                        Contact
-                    </h1>
-                    <ul>
-                        <li>
-                            8, Address street
-                        </li>
-                        <li>
-                            0815530260
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="quick">
-                    <h1>
-                        Newsletter
-                    </h1>
-                    <ul>
-                        <li>
-                            Get News & Updates
-                        </li>
-                    </ul>
-                    <form class="search-bar">
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="Your email Address" required>
-                            <span class="input-group-text" id="basic-addon2" type="submit" required>Subscribe</span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="last-fot">
-                    <h1>
-                        Helping thousands of businesses succeed,<a href="{{route('login')}}">
-                                join us
-                            </a>
-                    </h1>
-                </div>
-            </div>
-            <div class="col-lg-3"></div>
-            <div class="col-lg-6">
-                <div class="top">
-                    <div class="logo-details">
-                        <div class="media-icons">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="last-fott text-center">
-                        <a href="{{route('privacy')}}">
-                                Privacy Policy
-                            </a>
-                            |
-                            <a href="{{route('terms')}}">
-                                Terms & Condition
-                            </a>
-                    <h1>
-                        Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Footter Ends -->
-    <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
-    <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
-    <script src="{{URL::asset('assets/js/main.js')}}"></script>
-    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        })
+    </script>
 </body>
-
 </html>
