@@ -30,7 +30,9 @@
                                     <button style="background-color: #fff; "><a href="{{route('signup')}}" style="color: #000;">
                                     Sign Up
                                     </a></button>
-                                    <button>See Demo</button>
+                                    <a href="{{route('demo')}}">
+                                        <button>See Demo</button>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-md-3"></div>
@@ -660,12 +662,16 @@
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
                             <div class="level"></div>
-                            <button>
-                                Sign up
-                            </button>
-                            <button style="background-color: #527EEB; color: #fff;">
-                                See Demo
-                            </button>
+                            <a href="signup">
+                                <button>
+                                    Sign up
+                                </button>
+                            </a>
+                            <a href="{{route('demo')}}">
+                                <button style="background-color: #527EEB; color: #fff;">
+                                    See Demo
+                                </button>
+                            </a>
                         </div>
                         <div class="col-md-3"></div>
                     </div>

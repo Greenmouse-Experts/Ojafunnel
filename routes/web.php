@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/broadcast', function (Request $request) {
     // Fire the SendMessage event
     $message = "Welcome to Ojafunnel";
-    
+
     event(new SendMessage($message));
 
     return 'Successfully';
@@ -83,6 +83,11 @@ Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, '
 Route::get('/datatable_locale', [App\Http\Controllers\Controller::class, 'datatable_locale'])->name('datatable_locale');
 Route::get('/jquery_validate_locale', [App\Http\Controllers\Controller::class, 'jquery_validate_locale'])->name('jquery_validate_locale');
 // });
+
+// See Demo
+Route::get('/see-demo', [App\Http\Controllers\HomePageController::class, 'demo'])->name('demo');
+// });
+
 // Ecommerce Frontend
 Route::get('/features/ecommerce', [App\Http\Controllers\HomePageController::class, 'ecommerce'])->name('ecommerce');
 // });
@@ -400,4 +405,7 @@ Route::post('/general/builder/upload/file', [App\Http\Controllers\PageController
 Route::post('/support/start/chat/{id}', [ChatController::class, 'startChat']);
 Route::get('/support/get/admins', [ChatController::class, 'fetchAllAdmins']);
 Route::post('/support/send', [ChatController::class, 'sendMessage']);
+<<<<<<< HEAD
 Route::post('/support/clear/single/chat', [ChatController::class, 'deleteSingleChat']);
+=======
+>>>>>>> 2872fb6 (update)

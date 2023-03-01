@@ -130,12 +130,6 @@ class HomePageController extends Controller
         return view('frontend.Integration');
     }
 
-     // Template Design
-     public function template()
-     {
-         return view('frontend.template');
-     }
-
     public function test()
     {
         $curl = curl_init();

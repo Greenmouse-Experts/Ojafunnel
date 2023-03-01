@@ -55,7 +55,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('emailmarketing')}}">
-                                                        Email Marketing 
+                                                        Email Marketing
                                                     </a>
                                                 </h4>
                                             </div>
@@ -65,7 +65,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('affiliate')}}">
-                                                        Affiliate Marketing 
+                                                        Affiliate Marketing
                                                     </a>
                                                 </h4>
                                             </div>
@@ -75,7 +75,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('ecommerce')}}">
-                                                        Ecommerce 
+                                                        Ecommerce
                                                     </a>
                                                 </h4>
                                             </div>
@@ -91,7 +91,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('funnelbuilder')}}">
-                                                        Funnel Builder 
+                                                        Funnel Builder
                                                     </a>
                                                 </h4>
                                             </div>
@@ -101,7 +101,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('pagebuilder')}}">
-                                                        Page Builder 
+                                                        Page Builder
                                                     </a>
                                                 </h4>
                                             </div>
@@ -127,7 +127,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('marketauto')}}">
-                                                        Automations 
+                                                        Automations
                                                     </a>
                                                 </h4>
                                             </div>
@@ -137,7 +137,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('chatautomation')}}">
-                                                        Chat Automations 
+                                                        Chat Automations
                                                     </a>
                                                 </h4>
                                             </div>
@@ -153,7 +153,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('integrations')}}">
-                                                        API Integrations 
+                                                        API Integrations
                                                     </a>
                                                 </h4>
                                             </div>
@@ -397,7 +397,7 @@
                         REPORTS AND ANALYSIS
                         </h4>
                         <h2>
-                        Reach customers and enhance sales 
+                        Reach customers and enhance sales
                         </h2>
                         <p>
                         Integrate tools that help you market smarter, and also give you the ability to scale faster and stay ahead of the competition.
@@ -424,7 +424,7 @@
                         REPORTS AND ANALYSIS
                         </h4>
                         <h2>
-                        Reach customers and enhance sales 
+                        Reach customers and enhance sales
                         </h2>
                         <p>
                         Integrate tools that help you market smarter, and also give you the ability to scale faster and stay ahead of the competition.
@@ -455,7 +455,7 @@
                 <div class="col-lg-8">
                     <div class="btn-text mb-4">
                         <h1>
-                        Do more with our Integrations 
+                        Do more with our Integrations
                         </h1>
                     </div>
                 </div>
@@ -464,14 +464,14 @@
                     <div class="alert"></div>
                     <div class="Amet">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177279/OjaFunnel-Images/Rectangle_19433_bn7ycr.png" alt="Picture" draggable="false">
-                        
+
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <div class="alert"></div>
                     <div class="Amet">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177280/OjaFunnel-Images/Rectangle_19439_ekkfnx.png" alt="Picture" draggable="false">
-                        
+
                     </div>
                 </div>
                 <div class="col-lg-2">
@@ -513,7 +513,7 @@
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
                                     <h1>
-                                    Engage customers and grow your business with emails marteting features! 
+                                    Engage customers and grow your business with emails marteting features!
                                     </h1>
                                     <div class="level"></div>
                                     <a href="{{route('signup')}}">
@@ -534,15 +534,54 @@
         </section>
     <!-- Digital Ends -->
     <!-- Footter -->
-    <section class="footer">
+   <section class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
-                <div class="kit-font">
-                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png">
-                    <p>
+            <div class="col-lg-3">
+                <div class="quick">
+                    <h1>
+                        Company
+                    </h1>
+                    <ul>
+                        <li style="text-align:justify">
                         Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
-                    </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <div class="quick">
+                    <h1>
+                        Features
+                    </h1>
+                    <ul>
+                        <li>
+                            <a href="{{route('pagebuilder')}}">Page Builder</a>
+                        </li>
+                        <li>
+                            <a href="{{route('funnelbuilder')}}">Funnel Builder</a>
+                        </li>
+                        <li>
+                            <a href="{{route('marketauto')}}">Automation</a>
+                        </li>
+                        <li>
+                            <a href="{{route('ecommerce')}}">Ecommerce</a>
+                        </li>
+                        <li>
+                            <a href="{{route('emailmarketing')}}">Email Marketing</a>
+                        </li>
+                        <li>
+                            <a href="{{route('affiliate')}}">Affiliate Marketing</a>
+                        </li>
+                        <li>
+                            <a href="{{route('chatautomation')}}">Chat Automation</a>
+                        </li>
+                        <li>
+                            <a href="{{route('integrations')}}">API Integration</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="col-lg-2">
@@ -553,9 +592,6 @@
                     <ul>
                         <li>
                             <a href="{{route('index')}}">Home</a>
-                        </li>
-                        <li>
-                            <a href="{{route('emailmarketing')}}">Features</a>
                         </li>
                         <li>
                             <a href="{{route('pricing')}}"> Pricing</a>
@@ -572,68 +608,58 @@
             <div class="col-lg-2">
                 <div class="quick">
                     <h1>
-                        Contact
+                        Account
                     </h1>
                     <ul>
                         <li>
-                            8, Address street
+                            <a href="{{route('login')}}">Register</a>
                         </li>
                         <li>
-                            0815530260
+                            <a href="{{route('signup')}}">Login</a>
+                        </li>
+                    </ul>
+                    <h1>
+                        Resources
+                    </h1>
+                    <ul>
+                        <li>
+                            <a href="{{route('privacy')}}">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="{{route('terms')}}">Terms & Condition</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="quick">
                     <h1>
-                        Newsletter
+                        Follow Us
                     </h1>
                     <ul>
                         <li>
-                            Get News & Updates
+                            <a href="#">
+                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678779/OjaFunnel-Images/facebook_n5uvff.png" draggable="false" title="Follow" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678781/OjaFunnel-Images/twitter_kd7mew.png" draggable="false" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678783/OjaFunnel-Images/instagram_zf1kco.png" draggable="false" alt="">
+                            </a>
                         </li>
                     </ul>
-                    <form class="search-bar">
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="Your email Address" required>
-                            <span class="input-group-text" id="basic-addon2" type="submit" required>Subscribe</span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="last-fot">
-                    <h1>
-                        Helping thousands of businesses succeed,<a href="{{route('login')}}">
-                                join us
-                            </a>
-                    </h1>
-                </div>
-            </div>
-            <div class="col-lg-3"></div>
-            <div class="col-lg-6">
-                <div class="top">
-                    <div class="logo-details">
-                        <div class="media-icons">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="col-lg-12">
                 <div class="last-fott text-center">
-                        <a href="{{route('privacy')}}">
-                                Privacy Policy
-                            </a>
-                            |
-                            <a href="{{route('terms')}}">
-                                Terms & Condition
-                            </a>
+                    <!-- <a href="{{route('privacy')}}">
+                        Privacy Policy
+                    </a>
+                    |
+                    <a href="{{route('terms')}}">
+                        Terms & Condition
+                    </a> -->
                     <h1>
                         Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
                     </h1>
