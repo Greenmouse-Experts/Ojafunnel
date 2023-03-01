@@ -16,6 +16,7 @@ use App\Models\PersonalChatroom;
 use App\Events\AdminReceiveMessage;
 use App\Events\AdminSendChat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Auth;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Crypt;
@@ -255,6 +256,67 @@ class AdminController extends Controller
         $users = User::latest()->get(['id', 'first_name', 'last_name', 'email', 'photo']);
 
         return $users;
+    }
+
+    public function fetchAllRecentChats () 
+    {
+        // prepare an array to contain all of the responses
+        $result = [];
+
+        // get the chatroom record from this user
+        $query = PersonalChatroom::where('user_id', Auth::user()->id)
+                ->orWhere('admin_id', Auth::user()->id)
+                ->get();
+
+        if ($query) {
+            foreach ($query as $chatroom) {
+
+                // get the interlocutor's data
+                if ($chatroom->admin_id == Auth::guard('admin')->user()->id) {
+                    $friend = User::where('id', $chatroom->user_id)->first();
+                } else {
+                    $friend = Admin::where('id', $chatroom->admin_id)->first();
+                }
+
+                // get the most recent chat from the chatroom
+                $latestChat = Chat::where('room_id', $chatroom['room_id'])
+                                    ->latest()
+                                    ->first();
+                            
+                // check how many unread chats
+                $unreadChats = Chat::where('user_id', $friend['id'])
+                                    ->where('room_id', $chatroom['room_id'])
+                                    ->where('read_at', null)
+                                    ->count();
+
+                // if they already have chatted before
+                if ($latestChat) {
+                    $result[] = [
+                        'user' => $friend,
+                        'chat' => $latestChat,
+                        'unread' => $unreadChats
+                    ];
+                    $result = array_reverse(array_values(Arr::sort($result, function ($key) {
+                        return $key['chat']['created_at'];
+                    })));
+                } else {
+                    // if this is the first time they create the chatroom
+                    $result[] = [
+                        'user' => $friend,
+                        'chat' => [
+                            'message' => null,
+                            'created_at' => null,
+                            'updated_at' => null,
+                        ],
+                        'unread' => 0
+                    ];
+                }
+            }
+    
+            return $result;
+        } else {
+            return ['error' => 'You dont have any chat yet.'];
+        }
     }
 
     public function startChat ($id, Request $request) 
