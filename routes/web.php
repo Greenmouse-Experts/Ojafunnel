@@ -407,3 +407,8 @@ Route::get('/support/get/admins', [ChatController::class, 'fetchAllAdmins']);
 Route::get('/support/chats', [ChatController::class, 'fetchAllRecentChats']);
 Route::post('/support/send', [ChatController::class, 'sendMessage']);
 Route::post('/support/clear/single/chat', [ChatController::class, 'deleteSingleChat']);
+
+
+// Builder
+Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');
+Route::post('/funnel/builder/save/page', [App\Http\Controllers\PageController::class, 'funnel_builder_save_page'])->name('user.funnel.builder.save.page');
