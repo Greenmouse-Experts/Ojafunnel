@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/broadcast', function (Request $request) {
     // Fire the SendMessage event
     $message = "Welcome to Ojafunnel";
-    
+
     event(new SendMessage($message));
 
     return 'Successfully';
@@ -83,12 +83,21 @@ Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, '
 Route::get('/datatable_locale', [App\Http\Controllers\Controller::class, 'datatable_locale'])->name('datatable_locale');
 Route::get('/jquery_validate_locale', [App\Http\Controllers\Controller::class, 'jquery_validate_locale'])->name('jquery_validate_locale');
 // });
+
+// See Demo
+Route::get('/see-demo', [App\Http\Controllers\HomePageController::class, 'demo'])->name('demo');
+// });
+
 // Ecommerce Frontend
 Route::get('/features/ecommerce', [App\Http\Controllers\HomePageController::class, 'ecommerce'])->name('ecommerce');
 // });
 
 // Funnel Bulder Frontend
 Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::class, 'funnelbuilder'])->name('funnelbuilder');
+// });
+
+// Template Designs Frontend
+Route::get('/features/template', [App\Http\Controllers\HomePageController::class, 'template'])->name('template');
 // });
 
 // Affiliate Marketing
