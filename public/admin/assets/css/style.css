@@ -2173,6 +2173,98 @@ textarea{
   font-weight: 500;
   padding: 2px 0px;
 }
+.page-contents{
+  background-color: white;
+  padding: 40px 20px;
+  margin: 10px 0px 30px;
+}
+.template-content{
+    margin-top: 0px;
+}
+.template-side{
+    padding-top: 20px;
+}
+.license-div p , .sort-div p{
+    border-bottom: 2px solid gray;
+    font-size: 18px;
+    font-weight: 600;
+}
+.license-radio, .sort-radio{
+    list-style: none;
+    position: relative;
+    left: -20px;
+}
+.license-radio li, .sort-radio li{
+    padding: 10px 0px;
+}
+.choose-category{
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #ebebeb;
+}
+.choose-category p{
+    font-size: 17px;
+    font-weight: 600;
+    color: rgb(112, 65, 144);
+}
+.category-list{
+    width: 100%;
+    overflow-x: scroll;
+}
+.category-list ul{
+    list-style: none;
+    display: flex;
+    width: 150%;
+}
+.category-list::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.category-list::-webkit-scrollbar-thumb {
+    background-color: #70418F;
+    border-radius: 12px;
+}
+.category-list ul li{
+    padding: 5px 20px;
+    border-radius: 20px;
+    margin-right: 20px;
+    font-weight: 500;
+}
+.template-listing{
+    margin: 30px 0px;
+}
+.template-listing-grid{
+    display: grid;
+    grid-template-columns: 32% 32% 32%;
+    justify-content: space-between;
+}
+.single-template .inner{
+    border-radius: 20px;
+    border: 2px solid rgb(175, 175, 175);
+    min-height: 300px;
+    max-height: 500px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+.start-template{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    place-content: center;    
+    transition: 2s ease-in-out;
+}
+.single-template .first-grid{
+    display: grid;
+    place-content: center;
+}
+.second-grid:hover > .start-template{
+    display: grid;
+}
 @media (max-width:960px) {
   .analysis-second-row{
     display: block;
@@ -2184,5 +2276,20 @@ textarea{
   .subscription-money .word{
     font-size: 20px;
     font-weight: 800;
+  }
+  .page-contents{
+    background-color: white;
+    padding: 20px 10px;
+    margin: 10px 0px 30px;
+  }
+  .template-listing-grid{
+    display: grid;
+    grid-template-columns: 49% 49%;
+    justify-content: space-between;
+  }
+  .license-radio, .sort-radio{
+    list-style: none;
+    position: relative;
+    left: 0px;
   }
 }

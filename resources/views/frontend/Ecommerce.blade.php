@@ -110,7 +110,7 @@
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
-                                                    <a href="#">
+                                                    <a href="{{route('template')}}">
                                                        Template Designs
                                                     </a>
                                                 </h4>

@@ -36,13 +36,13 @@
                     <div class='col-4 col-lg-3'>
                         <div class='birthday-calendar'>
                             <div class='month'>
-                                <p class='p-0 m-0'>February</p>
+                                <p class='p-0 m-0' id='month'>February</p>
                             </div>
                             <div class='day'>
-                                <p class='p-0 m-0'>25</p>
+                                <p class='p-0 m-0' id='day'>25</p>
                             </div>
                             <div class='word'>
-                                <p class='p-0 m-0'>Friday</p>
+                                <p class='p-0 m-0' id='days'>Friday</p>
                             </div>
                         </div>
                     </div>
@@ -77,5 +77,19 @@
     </div>
     <!-- End Page-content -->
 </div>
+<script>
+    let monthNames = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];
+
+    let dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+    let d = new Date();
+    let month = document.getElementById('month')
+    let day = document.getElementById('day')
+    let days = document.getElementById('days')
+    month.innerHTML = monthNames[d.getMonth()]
+    day.innerHTML = d.getUTCDate()
+    days.innerHTML = dayNames[d.getDay()]
+    console.log("The current month is " + monthNames[d.getMonth()]);
+</script>
 <!-- END layout-wrapper -->
 @endsection

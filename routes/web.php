@@ -100,6 +100,10 @@ Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::
 Route::get('/features/template', [App\Http\Controllers\HomePageController::class, 'template'])->name('template');
 // });
 
+// Template Designs setails
+Route::get('/features/template/id', [App\Http\Controllers\HomePageController::class, 'templateDetail'])->name('templateDetail');
+// });
+
 // Affiliate Marketing
 Route::get('/features/affiliate', [App\Http\Controllers\HomePageController::class, 'affiliate'])->name('affiliate');
 // });
