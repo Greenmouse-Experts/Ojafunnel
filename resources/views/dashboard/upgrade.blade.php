@@ -41,8 +41,8 @@
                 </div>
                 <div class="col-lg-4"></div>
                 @foreach($plans as $singleplan)
-                <div class="col-lg-2">
-                    <div class="message">
+                <div class="col-lg-4">
+                    <div class="message upgrade-single">
                         <p>
                             {{strtoupper($singleplan->name)}}
                         </p>
@@ -51,9 +51,9 @@
                                 {{$singleplan->currency}}{{$singleplan->monthly_amount}}/<span>monthly</span>
                             </h1>
                             @if($singleplan->name == $plan->name)
-                            <a href="#" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
+                            <a href="#" class="upgrade-btn" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
                             @else
-                            <a href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt($singleplan->monthly_amount)])}}">CHANGE</a>
+                            <a class='upgrade-btn' href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt($singleplan->monthly_amount)])}}">CHANGE</a>
                             @endif
                         </div>
                         <div class="js-price-big-wrapper">
@@ -61,9 +61,9 @@
                                 {{$singleplan->currency}}{{$singleplan->yearly_amount}}/<span>yearly</span>
                             </h1>
                             @if($singleplan->name == $plan->name)
-                            <a class="-yearly -hide" href="#" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
+                            <a class="-yearly -hide upgrade-btn" href="#" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
                             @else
-                            <a class="-yearly -hide" href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt($singleplan->yearly_amount)])}}">CHANGE</a>
+                            <a class="-yearly -hide upgrade-btn" href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt($singleplan->yearly_amount)])}}">CHANGE</a>
                             @endif
                         </div>
                     </div>
@@ -77,3 +77,24 @@
 </div>
 <!-- END layout-wrapper -->
 @endsection
+<style>
+    .upgrade-single{
+        background: rgb(149,102,122);
+        background: radial-gradient(circle, rgba(149,102,122,1) 0%, rgba(113,63,147,1) 73%);
+        padding: 20px 20px 40px;
+        margin: 20px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        color: white;
+        }
+        .upgrade-single:hover{
+            box-shadow: rgba(0, 0, 0, 0.6) 0px 10px 36px 0px, rgba(0, 0, 0, 0.6) 0px 0px 0px 1px;
+        }
+        .upgrade-btn{
+            padding: 10px 40px !important;
+            font-weight: 600;
+            border: none !important;
+        }
+        .upgrade-btn:hover{
+            transform:scale(1.2) !important;
+        }
+</style>
