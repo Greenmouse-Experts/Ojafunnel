@@ -27,8 +27,8 @@
                     </div>
                 </div>
                 <!-- store data information-->
-                   <div class="page-contents">
-                        <div class="template-content">
+                   <div class="page-contentts">
+                        <div class="templatee-content">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-lg-2 pe-lg-5 template-side">
@@ -108,7 +108,7 @@
                                                             <img src="https://templatemo.com/screenshots-720/template-562-space-dynamic.jpg" alt="templates" width="100%" height="100%"/>
                                                             <div  class="start-template">
                                                                 <i class="bi bi-bookmark-plus-fill fs-1 text-primary"></i>
-                                                                <a href="{{route('templateDetail')}}">
+                                                                <a href="#">
                                                                     <button class="btn btn-primary d-block mt-2">Use Template</button>
                                                                 </a>
                                                             </div>
@@ -264,7 +264,7 @@
                         </div>
                         @endforeach
                     </div>
-                
+
                 <!-- end page title -->
             </div>
         </div>
@@ -333,12 +333,10 @@
 </div>
 <!-- end modal -->
 <style>
-    .page-contents{
+    .page-contentts{
         background-color: white;
         padding: 40px 20px;
         margin: 10px 0px 30px;
-    }
-    .template-content{
     }
     .template-side{
     padding-top: 20px;
@@ -414,7 +412,7 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     display: none;
-    place-content: center;    
+    place-content: center;
     transition: 2s ease-in-out;
     }
     .single-template .first-grid{
