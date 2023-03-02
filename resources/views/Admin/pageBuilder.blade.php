@@ -118,10 +118,10 @@
                                                     <img src="https://templatemo.com/screenshots-720/template-562-space-dynamic.jpg" alt="templates" width="100%" height="100%"/>
                                                     <div  class="start-template">
                                                         <i class="bi bi-bookmark-plus-fill fs-1 text-primary"></i>
-                                                        <a href="{{route('templateDetail')}}">
+                                                        <a href="#">
                                                             <button class="btn btn-primary d-block mt-2">Use Template</button>
                                                         </a>
-                                                        <a href="{{route('templateDetail')}}">
+                                                        <a href="#">
                                                             <button class="btn btn-warning mt-2">Publish</button>
                                                         </a>
                                                     </div>
