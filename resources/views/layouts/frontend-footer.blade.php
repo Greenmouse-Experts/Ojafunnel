@@ -78,10 +78,10 @@
                     </h1>
                     <ul>
                         <li>
-                            <a href="{{route('login')}}">Register</a>
+                            <a href="{{route('signup')}}">Register</a>
                         </li>
                         <li>
-                            <a href="{{route('signup')}}">Login</a>
+                            <a href="{{route('login')}}">Login</a>
                         </li>
                     </ul>
                     <h1>

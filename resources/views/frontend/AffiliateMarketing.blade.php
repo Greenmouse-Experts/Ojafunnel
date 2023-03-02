@@ -503,20 +503,22 @@
     <section class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="quick">
-                    <h1>
-                        Company
-                    </h1>
                     <ul>
-                        <li style="text-align:justify">
+                        <li>
+                            <div class="force">
+                                <a href="#">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" alt="">
+                                </a>
+                            </div>
+                        </li>
+                        <li>
                         Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                         </li>
                     </ul>
                 </div>
             </div>
-
-            <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <div class="quick">
                     <h1>
@@ -578,10 +580,10 @@
                     </h1>
                     <ul>
                         <li>
-                            <a href="{{route('login')}}">Register</a>
+                            <a href="{{route('signup')}}">Register</a>
                         </li>
                         <li>
-                            <a href="{{route('signup')}}">Login</a>
+                            <a href="{{route('login')}}">Login</a>
                         </li>
                     </ul>
                     <h1>
@@ -634,7 +636,6 @@
         </div>
     </div>
 </section>
-
 
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
