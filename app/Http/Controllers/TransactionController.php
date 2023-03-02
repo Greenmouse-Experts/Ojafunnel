@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OjafunnelNotification;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,6 +34,12 @@ class TransactionController extends Controller
             'amount' => $amount,
             'reference' => $response,
             'status' => 'Top Up'
+        ]);
+
+        OjafunnelNotification::create([
+            'to' => Auth::user()->id,
+            'title' => config('app.name'),
+            'body' => 'Your '.config('app.name').' account has been funded ₦'.$amount.'.'
         ]);
 
         return redirect()->route('user.transaction', $user->username)->with([
