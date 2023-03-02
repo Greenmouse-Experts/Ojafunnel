@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
     <title> Page Builder | {{config('app.name')}} </title>
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
@@ -59,7 +59,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -69,7 +69,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -79,7 +79,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Create digital products, Courses,Training and members area.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -95,7 +95,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Create many sales funnels to recapture your leads and optimise their lifetime value.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -105,7 +105,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -115,7 +115,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -131,7 +131,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -141,7 +141,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Chat Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -157,73 +157,55 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Track various statistics and metrics associated with all your email activities and campaigns.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <ul class="dropdown-menu mobile-dropdown" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Email Marketing
-                                        </a>
+                                    <a href="{{route('marketauto')}}" class="dropdown-item">
+                                        Email Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('affiliate')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Affiliate Marketing
-                                        </a>
+                                    <a href="{{route('affiliate')}}" class="dropdown-item">
+                                        Affiliate Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('ecommerce')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Ecommerce
-                                        </a>
+                                    <a href="{{route('ecommerce')}}" class="dropdown-item">
+                                        Ecommerce
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('funnelbuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Funnel Builder
-                                        </a>
+                                    <a href="{{route('funnelbuilder')}}" class="dropdown-item">
+                                        Funnel Builder
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('pagebuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Page Builder
-                                        </a>
+                                    <a href="{{route('pagebuilder')}}" class="dropdown-item">
+                                        Page Builder
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Marketing Automations
-                                        </a>
+                                    <a href="{{route('marketauto')}}" class="dropdown-item">
+                                        Marketing Automations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('chatautomation')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Chat Automations
-                                        </a>
+                                    <a href="{{route('chatautomation')}}" class="dropdown-item">
+                                        Chat Automations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('integrations')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             API Integrations
-                                        </a>
+                                    <a href="{{route('integrations')}}" class="dropdown-item">
+                                    API Integrations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="routers">
-                                        <a class="dropdown-item">
-                                            Template Designs
-                                        </a>
+                                    <a href="{{route('template')}}" class="dropdown-item">
+                                    Template Designs
                                     </a>
                                 </li>
                             </ul>
@@ -349,247 +331,257 @@
 
 
     <!-- Increasing -->
-        <section class="Increasing" style="background: #FCFCFE !important;">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-6">
-                        <div class="thread-text">
-                            <h4>
-                                UPSELLS
-                            </h4>
-                            <h2>
-                                Double your sales by maximizing every order
-                            </h2>
-                            <p>
-                                Significantly increase revenue by utilizing one-click upsells, added purchase options at checkout, abandoned cart recovery, and other advanced features.
-                            </p>
-                            <button>
-                                Explore
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="imagess">
-                            <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    <!-- Increasing Ends -->
-
-    <!-- Communication -->
-        <section class="communication hide" style="background: #fff !important;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="el-icon-message">
-                            <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false" alt="">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="thread-text">
-                            <h4>
-                                Payout Checkout
-                            </h4>
-                            <h2>
-                                Integrated lightning-fast checkout
-                            </h2>
-                            <p>
-                                Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
-                            </p>
-                            <button>
-                                Explore Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    <!-- Communication Ends -->
-
-    <!-- Communication -->
-        <section class="communication display">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="thread-text">
-                            <h4>
-                                Payout Checkout
-                            </h4>
-                            <h2>
-                                Integrated lightning-fast checkout
-                            </h2>
-                            <p>
-                                Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
-                            </p>
-                            <button>
-                                Explore Now
-                            </button>
-                        </div>
-                    </div>
-                    <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false" alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
-    <!-- Communication Ends -->
-
-    <!-- Increasing -->
-        <section class="Increasing" style="background: #FCFCFE !important;">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-6">
-                        <div class="thread-text">
-                            <h4>
-                                PAGES AND PRODUCTS
-                            </h4>
-                            <h2>
-                                Boost conversions with a unique page for every product
-                            </h2>
-                            <p>
-                                Set up your store easily by picking a template. Customize it with ease. Then publish. You’ll be ready to start accepting orders in minutes.
-                            </p>
-                            <button>
-                                Explore
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="imagess">
-                            <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    <!-- Increasing Ends -->
-
-    <!-- Features -->
-    <section class="Features">
+    <section class="Increasing" style="background: #FCFCFE !important;">
         <div class="container">
             <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
-                    <div class="btn-text">
-                        <h1>
-                        Built-in features for your business
-                        </h1>
+
+                <div class="col-lg-6">
+                    <div class="thread-text">
+                        <h4>
+                            UPSELLS
+                        </h4>
+                        <h2>
+                            Double your sales by maximizing every order
+                        </h2>
                         <p>
-                        Get more sales and customers for your business with our awesome features
+                            Significantly increase revenue by utilizing one-click upsells, added purchase options at checkout, abandoned cart recovery, and other advanced features.
                         </p>
+                        <button>
+                            Explore
+                        </button>
                     </div>
                 </div>
-                <div class="col-lg-2"></div>
-                <div class="col-lg-4">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                            Integrated checkout
-                            </h1>
-                            <p>
-                            Accept payments for your products from anywhere in the world
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                            Quizzes
-                            </h1>
-                            <p>
-                            Create quizzes to test your students understanding of the material
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                            1-click upsells
-                            </h1>
-                            <p>
-                            Gives your students and customers an opportunity to buy more from you
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                            LMS Feature
-                            </h1>
-                            <p>
-                            Use the platform for handle course management, quizzes and assessments.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                            Custom domain
-                            </h1>
-                            <p>
-                            Get custom domain, or easily link your existing website to Ojafunnel
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                            Abandoned cart recovery
-                            </h1>
-                            <p>
-                            Triggered mails to give your lead another chance to buy from you.
-                            </p>
-                        </div>
+                <div class="col-lg-6">
+                    <div class="imagess">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- Increasing Ends -->
+
+    <!-- Communication -->
+    <section class="communication hide" style="background: #fff !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="el-icon-message">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false" alt="">
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- Communication Ends -->
+
+    <!-- Increasing -->
+    <section class="Increasing" style="background: #FCFCFE !important;">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="thread-text">
+                        <h4>
+                            PAGES AND PRODUCTS
+                        </h4>
+                        <h2>
+                            Boost conversions with a unique page for every product
+                        </h2>
+                        <p>
+                            Set up your store easily by picking a template. Customize it with ease. Then publish. You’ll be ready to start accepting orders in minutes.
+                        </p>
+                        <button>
+                            Explore
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="imagess">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- Communication Ends -->
+
+    <!-- Communication -->
+    <section class="communication display">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="thread-text">
+                        <h4>
+                            Payout Checkout
+                        </h4>
+                        <h2>
+                            Integrated lightning-fast checkout
+                        </h2>
+                        <p>
+                            Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
+                        </p>
+                        <button>
+                            Explore Now
+                        </button>
+                    </div>
+                </div>
+                <div class="el-icon-message">
+                    <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Communication Ends -->
+
+    <!-- Increasing -->
+    <section class="Increasing" style="background: #FCFCFE !important;">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="thread-text">
+                        <h4>
+                            PAGES AND PRODUCTS
+                        </h4>
+                        <h2>
+                            Boost conversions with a unique page for every product
+                        </h2>
+                        <p>
+                            Set up your store easily by picking a template. Customize it with ease. Then publish. You’ll be ready to start accepting orders in minutes.
+                        </p>
+                        <button>
+                            Explore
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="imagess">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Increasing Ends -->
+
+    <!-- Features -->
+    <section class="offer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="what">
+                    <h1>
+                        Enjoy All-In-One features
+                    </h1>
+                </div>
+            </div>
+            <div class="what"></div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669720/OjaFunnel-Images/page_kunfbn.png" draggable="false" alt="">
+                        <h1>
+                            Page Builder
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669823/OjaFunnel-Images/landing-page_moq46w.png" draggable="false" alt="">
+                        <h1>
+                            Funnel Builder
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669907/OjaFunnel-Images/email-marketing_o5cvun.png" draggable="false" alt="">
+                        <h1>
+                            Email Marketing
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
+                        <h1>
+                            SMS Automation
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
+                        <h1>
+                            Analysis and Reporting
+                        </h1>
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670372/OjaFunnel-Images/shopping_seidhl.png" draggable="false" alt="">
+                        <h1>
+                            Ecommerce
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670416/OjaFunnel-Images/affiliate-marketing_cycnqk.png" draggable="false" alt="">
+                        <h1>
+                            Affiliate Module
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670479/OjaFunnel-Images/gateway_durgdd.png" draggable="false" alt="">
+                        <h1>
+                            Payment Integration
+                        </h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
     <!-- Features Ends -->
 
    <section class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="quick">
-                    <h1>
-                        Company
-                    </h1>
                     <ul>
-                        <li style="text-align:justify">
+                        <li>
+                            <div class="force">
+                                <a href="#">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" alt="">
+                                </a>
+                            </div>
+                        </li>
+                        <li>
                         Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                         </li>
                     </ul>
                 </div>
             </div>
-
-            <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <div class="quick">
                     <h1>
@@ -651,10 +643,10 @@
                     </h1>
                     <ul>
                         <li>
-                            <a href="{{route('login')}}">Register</a>
+                            <a href="{{route('signup')}}">Register</a>
                         </li>
                         <li>
-                            <a href="{{route('signup')}}">Login</a>
+                            <a href="{{route('login')}}">Login</a>
                         </li>
                     </ul>
                     <h1>

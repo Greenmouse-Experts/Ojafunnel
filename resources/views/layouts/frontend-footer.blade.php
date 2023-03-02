@@ -3,18 +3,20 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="quick">
-                    <h1>
-                        Company
-                    </h1>
                     <ul>
-                        <li style="text-align:justify">
-                        Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
+                        <li>
+                            <div class="force">
+                                <a href="#">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" alt="">
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                         </li>
                     </ul>
                 </div>
             </div>
-
-            <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <div class="quick">
                     <h1>
@@ -76,10 +78,10 @@
                     </h1>
                     <ul>
                         <li>
-                            <a href="{{route('login')}}">Register</a>
+                            <a href="{{route('signup')}}">Register</a>
                         </li>
                         <li>
-                            <a href="{{route('signup')}}">Login</a>
+                            <a href="{{route('login')}}">Login</a>
                         </li>
                     </ul>
                     <h1>
@@ -95,8 +97,17 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <div class="quick">
+                    <h1>
+                        Newsletter
+                    </h1>
+                    <form class="search-bar mb-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Your email Address">
+                            <span class="input-group-text" id="basic-addon2">Subscribe</span>
+                        </div>
+                    </form>
                     <h1>
                         Follow Us
                     </h1>

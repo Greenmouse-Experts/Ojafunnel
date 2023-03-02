@@ -88,12 +88,16 @@
                                  Are you ready to take your digital marketing to the next level!
                              </h1>
                              <div class="level"></div>
-                             <button>
-                                 Sign up
-                             </button>
-                             <button style="background-color: #527EEB; color: #fff;">
-                                 See Demo
-                             </button>
+                             <a href="signup">
+                                <button>
+                                    Sign up
+                                </button>
+                            </a>
+                            <a href="{{route('demo')}}">
+                                <button style="background-color: #527EEB; color: #fff;">
+                                    See Demo
+                                </button>
+                            </a>
                          </div>
                          <div class="col-md-3"></div>
                      </div>
