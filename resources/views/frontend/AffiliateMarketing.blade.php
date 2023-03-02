@@ -164,66 +164,48 @@
                             </div>
                             <ul class="dropdown-menu mobile-dropdown" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Email Marketing
-                                        </a>
+                                    <a href="{{route('marketauto')}}" class="dropdown-item">
+                                        Email Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('affiliate')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Affiliate Marketing
-                                        </a>
+                                    <a href="{{route('affiliate')}}" class="dropdown-item">
+                                        Affiliate Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('ecommerce')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Ecommerce
-                                        </a>
+                                    <a href="{{route('ecommerce')}}" class="dropdown-item">
+                                        Ecommerce
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('funnelbuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Funnel Builder
-                                        </a>
+                                    <a href="{{route('funnelbuilder')}}" class="dropdown-item">
+                                        Funnel Builder
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('pagebuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Page Builder
-                                        </a>
+                                    <a href="{{route('pagebuilder')}}" class="dropdown-item">
+                                        Page Builder
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Marketing Automations
-                                        </a>
+                                    <a href="{{route('marketauto')}}" class="dropdown-item">
+                                        Marketing Automations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('chatautomation')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Chat Automations
-                                        </a>
+                                    <a href="{{route('chatautomation')}}" class="dropdown-item">
+                                        Chat Automations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('integrations')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             API Integrations
-                                        </a>
+                                    <a href="{{route('integrations')}}" class="dropdown-item">
+                                    API Integrations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('template')}}" class="routers">
-                                        <a class="dropdown-item">
-                                            Template Designs
-                                        </a>
+                                    <a href="{{route('template')}}" class="dropdown-item">
+                                    Template Designs
                                     </a>
                                 </li>
                             </ul>
@@ -468,37 +450,135 @@
         </div>
     </main>
     <!-- End Page-Content -->
+    <section class="offer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="what">
+                    <h1>
+                        Enjoy All-In-One features
+                    </h1>
+                </div>
+            </div>
+            <div class="what"></div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669720/OjaFunnel-Images/page_kunfbn.png" draggable="false" alt="">
+                        <h1>
+                            Page Builder
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669823/OjaFunnel-Images/landing-page_moq46w.png" draggable="false" alt="">
+                        <h1>
+                            Funnel Builder
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669907/OjaFunnel-Images/email-marketing_o5cvun.png" draggable="false" alt="">
+                        <h1>
+                            Email Marketing
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
+                        <h1>
+                            SMS Automation
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
+                        <h1>
+                            Analysis and Reporting
+                        </h1>
 
-    <!-- Digital -->
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670372/OjaFunnel-Images/shopping_seidhl.png" draggable="false" alt="">
+                        <h1>
+                            Ecommerce
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670416/OjaFunnel-Images/affiliate-marketing_cycnqk.png" draggable="false" alt="">
+                        <h1>
+                            Affiliate Module
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670479/OjaFunnel-Images/gateway_durgdd.png" draggable="false" alt="">
+                        <h1>
+                            Payment Integration
+                        </h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
     <section class="digital">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="mount">
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-6">
-                                <h1>
-                                    Engage customers and grow your business with emails marteting features!
-                                </h1>
-                                <div class="level"></div>
-                                <a href="{{route('signup')}}">
-                                    <button>
-                                        Sign up
-                                    </button>
-                                </a>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mount">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <h1>
+                            Engage customers and grow your business with emails marteting features!
+                            </h1>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="level"></div>
+                            <a href="signup">
+                                <button>
+                                    Sign up
+                                </button>
+                            </a>
+                            <a href="{{route('demo')}}">
                                 <button style="background-color: #527EEB; color: #fff;">
                                     See Demo
                                 </button>
-                            </div>
-                            <div class="col-md-3"></div>
+                            </a>
                         </div>
+                        <div class="col-md-4"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Digital Ends -->
+    </div>
+</section>
 
     <section class="footer">
     <div class="container">

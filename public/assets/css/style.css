@@ -233,8 +233,6 @@ header nav .dropdown-menu li {
 header nav .dropdown-menu li a {
     padding-top: 10px;
     padding-bottom: 10px;
-    font-weight: 500;
-    font-size: 20px;
     color: #000000;
 }
 
@@ -2088,16 +2086,8 @@ header nav .offcanvas-header button i {
         width: 100%;
     }
 
-    .Features .alert {
-        padding: 20px 0 0 0;
-    }
-
-    .Features .Amet:hover {
-        padding: 1px;
-    }
-
-    .Features .aler {
-        padding: 20px 0 0 0;
+    .Features .Amet  {
+        margin-bottom: 15px;
     }
 
     .Features .btn-text h1 {
@@ -2120,14 +2110,18 @@ header nav .offcanvas-header button i {
     .Features .Amet img {
         width: 100%;
     }
-
-    .Features .alert {
-        padding: 0px 0 0 0;
+    .Features .Amet {
+        padding: 10px;
+        background: #FFFFFF;
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
+        border-radius: 5px;
+        text-align: left;
+        height: auto !important;
+    }
+    .Features .Amet  {
+        margin-bottom: 15px;
     }
 
-    .Features .aler {
-        padding: 0px 0 0 0;
-    }
 
     .Features .btn-text h1 {
         text-align: center;
@@ -2137,7 +2131,6 @@ header nav .offcanvas-header button i {
     }
 
     .Features .Amet:hover {
-        padding: 10px;
         background: #FFFFFF;
         box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.05);
         border-radius: 20px;
@@ -2310,10 +2303,8 @@ header nav .offcanvas-header button i {
 
 /**Digital**/
 .digital {
-    padding: 70px 0px 50px 0px;
-    background-image: url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1660574125/OjaFunnel-Images/digita_y86zk5.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+    padding: 70px 0px 80px 0px;
+    background-color: #3883E6;
 }
 
 .mount h1 {

@@ -1,7 +1,7 @@
 <section class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="quick">
                     <ul>
                         <li>
@@ -12,7 +12,7 @@
                             </div>
                         </li>
                         <li>
-                        Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
+                            Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                         </li>
                     </ul>
                 </div>
@@ -97,8 +97,17 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <div class="quick">
+                    <h1>
+                        Newsletter
+                    </h1>
+                    <form class="search-bar mb-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Your email Address">
+                            <span class="input-group-text" id="basic-addon2">Subscribe</span>
+                        </div>
+                    </form>
                     <h1>
                         Follow Us
                     </h1>

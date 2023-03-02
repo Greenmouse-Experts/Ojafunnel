@@ -418,14 +418,13 @@
                         <h1>
                             Enjoy All-In-One features to make your business run smoother
                         </h1>
-                        <p>
+                        <p style="margin-bottom: 40px;">
                         Do it all in one platform. Increase the efficiency of your business and sell morewith our marketing and sales tools
                         </p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3"></div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="alert"></div>
+                <div class="col-lg-3"></div>
+                <div class="col-lg-3 col-sm-6">
                     <div class="Amet">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-a_xw1cgy.png" draggable="false">
                         <div class="drag">
@@ -438,8 +437,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-12">
-                    <div class="alert"></div>
+                <div class="col-lg-3 col-sm-6">
                     <div class="Amet">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-b_lsapko.png" draggable="false">
                         <div class="drag">
@@ -452,8 +450,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="alert"></div>
+                <div class="col-lg-3 col-sm-6">
                     <div class="Amet">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-c_smgnoy.png" draggable="false">
                         <div class="drag">
@@ -466,8 +463,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="alert"></div>
+                <div class="col-lg-3 col-sm-6">
                     <div class="Amet">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399347/OjaFunnel-Images/a-d_x64ndk.png" draggable="false">
                         <div class="drag">
@@ -480,7 +476,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-sm-6">
                     <div class="aler"></div>
                     <div class="Amet">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-e_vdadip.png" draggable="false">
@@ -494,7 +490,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-sm-6">
                     <div class="aler"></div>
                     <div class="Amet">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399345/OjaFunnel-Images/a-f_tci9io.png" draggable="false">
@@ -508,7 +504,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-sm-6">
                     <div class="aler"></div>
                     <div class="Amet">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/d-g_hrzx6u.png" draggable="false">
@@ -525,7 +521,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-sm-6">
                     <div class="aler"></div>
                     <div class="Amet">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660399346/OjaFunnel-Images/a-i_buv2lk.png" draggable="false">
@@ -659,8 +655,8 @@
                             </h1>
                         </div>
                         <div class="col-md-2"></div>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
                             <div class="level"></div>
                             <a href="signup">
                                 <button>
@@ -673,7 +669,7 @@
                                 </button>
                             </a>
                         </div>
-                        <div class="col-md-3"></div>
+                        <div class="col-md-4"></div>
                     </div>
                 </div>
             </div>

@@ -144,66 +144,48 @@
                             </div>
                             <ul class="dropdown-menu mobile-dropdown" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Email Marketing
-                                        </a>
+                                    <a href="{{route('marketauto')}}" class="dropdown-item">
+                                        Email Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('affiliate')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Affiliate Marketing
-                                        </a>
+                                    <a href="{{route('affiliate')}}" class="dropdown-item">
+                                        Affiliate Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('ecommerce')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Ecommerce
-                                        </a>
+                                    <a href="{{route('ecommerce')}}" class="dropdown-item">
+                                        Ecommerce
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('funnelbuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Funnel Builder
-                                        </a>
+                                    <a href="{{route('funnelbuilder')}}" class="dropdown-item">
+                                        Funnel Builder
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('pagebuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Page Builder
-                                        </a>
+                                    <a href="{{route('pagebuilder')}}" class="dropdown-item">
+                                        Page Builder
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Marketing Automations
-                                        </a>
+                                    <a href="{{route('marketauto')}}" class="dropdown-item">
+                                        Marketing Automations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('chatautomation')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Chat Automations
-                                        </a>
+                                    <a href="{{route('chatautomation')}}" class="dropdown-item">
+                                        Chat Automations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('integrations')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             API Integrations
-                                        </a>
+                                    <a href="{{route('integrations')}}" class="dropdown-item">
+                                    API Integrations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('template')}}" class="routers">
-                                        <a class="dropdown-item">
-                                            Template Designs
-                                        </a>
+                                    <a href="{{route('template')}}" class="dropdown-item">
+                                    Template Designs    
                                     </a>
                                 </li>
                             </ul>

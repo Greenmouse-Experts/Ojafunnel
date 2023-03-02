@@ -162,66 +162,48 @@
                             </div>
                             <ul class="dropdown-menu mobile-dropdown" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Email Marketing
-                                        </a>
+                                    <a href="{{route('marketauto')}}" class="dropdown-item">
+                                        Email Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('affiliate')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Affiliate Marketing
-                                        </a>
+                                    <a href="{{route('affiliate')}}" class="dropdown-item">
+                                        Affiliate Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('ecommerce')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Ecommerce
-                                        </a>
+                                    <a href="{{route('ecommerce')}}" class="dropdown-item">
+                                        Ecommerce
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('funnelbuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Funnel Builder
-                                        </a>
+                                    <a href="{{route('funnelbuilder')}}" class="dropdown-item">
+                                        Funnel Builder
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('pagebuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Page Builder
-                                        </a>
+                                    <a href="{{route('pagebuilder')}}" class="dropdown-item">
+                                        Page Builder
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Marketing Automations
-                                        </a>
+                                    <a href="{{route('marketauto')}}" class="dropdown-item">
+                                        Marketing Automations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('chatautomation')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Chat Automations
-                                        </a>
+                                    <a href="{{route('chatautomation')}}" class="dropdown-item">
+                                        Chat Automations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('integrations')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             API Integrations
-                                        </a>
+                                    <a href="{{route('integrations')}}" class="dropdown-item">
+                                    API Integrations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('template')}}" class="routers">
-                                        <a class="dropdown-item">
-                                            Template Designs
-                                        </a>
+                                    <a href="{{route('template')}}" class="dropdown-item">
+                                    Template Designs
                                     </a>
                                 </li>
                             </ul>
@@ -423,108 +405,101 @@
         <!-- Editable Ends -->
 
         <!-- Features -->
-            <section class="Features">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-8">
-                            <div class="btn-text">
-                                <h1>
-                                    Chat Automation features for you
-                                </h1>
-                                <p>
-                                    Amet minim mollit non deserunt ullamco est sit aliqua
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-4">
-                            <div class="alert"></div>
-                            <div class="Amet">
-                                <img src="" alt="Picture" draggable="false">
-                                <div class="drag">
-                                    <h1>
-                                        Page templates
-                                    </h1>
-                                    <p>
-                                        Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="alert"></div>
-                            <div class="Amet">
-                                <img src="" alt="Picture" draggable="false">
-                                <div class="drag">
-                                    <h1>
-                                        Optin Pages
-                                    </h1>
-                                    <p>
-                                        Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="alert"></div>
-                            <div class="Amet">
-                                <img src="" alt="Picture" draggable="false">
-                                <div class="drag">
-                                    <h1>
-                                        Order forms
-                                    </h1>
-                                    <p>
-                                        Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="aler"></div>
-                            <div class="Amet">
-                                <img src="" alt="Picture" draggable="false">
-                                <div class="drag">
-                                    <h1>
-                                        Quiz Automation
-                                    </h1>
-                                    <p>
-                                        Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="aler"></div>
-                            <div class="Amet">
-                                <img src="" alt="Picture" draggable="false">
-                                <div class="drag">
-                                    <h1>
-                                        Integrations
-                                    </h1>
-                                    <p>
-                                        Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="aler"></div>
-                            <div class="Amet">
-                                <img src="" alt="Picture" draggable="false">
-                                <div class="drag">
-                                    <h1>
-                                        Reports & Analysis
-                                    </h1>
-                                    <p>
-                                        Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <section class="offer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="what">
+                    <h1>
+                        Enjoy All-In-One features
+                    </h1>
                 </div>
-            </section>
+            </div>
+            <div class="what"></div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669720/OjaFunnel-Images/page_kunfbn.png" draggable="false" alt="">
+                        <h1>
+                            Page Builder
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669823/OjaFunnel-Images/landing-page_moq46w.png" draggable="false" alt="">
+                        <h1>
+                            Funnel Builder
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669907/OjaFunnel-Images/email-marketing_o5cvun.png" draggable="false" alt="">
+                        <h1>
+                            Email Marketing
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
+                        <h1>
+                            SMS Automation
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
+                        <h1>
+                            Analysis and Reporting
+                        </h1>
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670372/OjaFunnel-Images/shopping_seidhl.png" draggable="false" alt="">
+                        <h1>
+                            Ecommerce
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670416/OjaFunnel-Images/affiliate-marketing_cycnqk.png" draggable="false" alt="">
+                        <h1>
+                            Affiliate Module
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670479/OjaFunnel-Images/gateway_durgdd.png" draggable="false" alt="">
+                        <h1>
+                            Payment Integration
+                        </h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
         <!-- Features Ends -->
 
         <!-- Digital -->
@@ -534,8 +509,8 @@
                         <div class="col-lg-12">
                             <div class="mount">
                                 <div class="row">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
                                         <h1>
                                             Are you ready to take your chat automation to the next level!
                                         </h1>
@@ -547,7 +522,7 @@
                                             See Demo
                                         </button>
                                     </div>
-                                    <div class="col-md-3"></div>
+                                    <div class="col-md-4"></div>
                                 </div>
                             </div>
                         </div>
