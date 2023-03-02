@@ -14,20 +14,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-<<<<<<< HEAD
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-=======
->>>>>>> 40fc05a (Update)
 </head>
 <body>
     <!-- Header -->
     <!-- linear-gradient(101.28deg, #3C40A5 -7.37%, #208FF7 142.82%) -->
     <header class="market">
-<<<<<<< HEAD
-        <nav class="navbar navbar-expand-lg fixed-top" id="header">
-=======
         <nav style="background: inherit;" class="navbar navbar-expand-lg fixed-top" id="header-scroll">
->>>>>>> 40fc05a (Update)
             <div class="container">
                 <a href="{{route('index')}}" class="navbar-brand">
                     <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660222222/OjaFunnel-Images/lo_dwxa54.png" draggable="false" alt="OjaFunnel">
@@ -600,23 +593,6 @@
         </div>
     </div>
     <!-- page contents ends -->
-<<<<<<< HEAD
-    <script>
-        window.addEventListener('scroll', function() {
-            var scroll = $(window).scrollTop();
-            let header = document.getElementById("header")
-
-            if (scroll.scrollTop() > 50) {
-            $('#header').style.backgroundColor = "#3383e6 !important";
-            } else {
-                $('#header').style.backgroundColor = "inherit !important";
-            }
-
-        })
-    </script>
-</body>
-</html>
-=======
 </body>
 </html>
 >>>>>>> 40fc05a (Update)
