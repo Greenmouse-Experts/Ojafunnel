@@ -55,7 +55,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('emailmarketing')}}">
-                                                        Email Marketing 
+                                                        Email Marketing
                                                     </a>
                                                 </h4>
                                             </div>
@@ -65,7 +65,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('affiliate')}}">
-                                                        Affiliate Marketing 
+                                                        Affiliate Marketing
                                                     </a>
                                                 </h4>
                                             </div>
@@ -75,7 +75,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('ecommerce')}}">
-                                                        Ecommerce 
+                                                        Ecommerce
                                                     </a>
                                                 </h4>
                                             </div>
@@ -91,7 +91,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('funnelbuilder')}}">
-                                                        Funnel Builder 
+                                                        Funnel Builder
                                                     </a>
                                                 </h4>
                                             </div>
@@ -101,7 +101,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('pagebuilder')}}">
-                                                        Page Builder 
+                                                        Page Builder
                                                     </a>
                                                 </h4>
                                             </div>
@@ -127,7 +127,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('marketauto')}}">
-                                                        Automations 
+                                                        Automations
                                                     </a>
                                                 </h4>
                                             </div>
@@ -137,7 +137,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('chatautomation')}}">
-                                                        Chat Automations 
+                                                        Chat Automations
                                                     </a>
                                                 </h4>
                                             </div>
@@ -153,7 +153,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('integrations')}}">
-                                                        API Integrations 
+                                                        API Integrations
                                                     </a>
                                                 </h4>
                                             </div>
@@ -449,7 +449,7 @@
                             Get reports on visitors, clicks, conversions and more
                         </h2>
                         <p>
-                            Find what is high converting, ie visitors, clicks, conversions, and revenue, as well as track what content or offerings are most interesting to different audience segments. 
+                            Find what is high converting, ie visitors, clicks, conversions, and revenue, as well as track what content or offerings are most interesting to different audience segments.
                         </p>
                         <a href="{{route('signup')}}">
                             <button>
@@ -476,7 +476,7 @@
                             Get reports on visitors, clicks, conversions and more
                         </h2>
                         <p>
-                            Find what is high converting, ie visitors, clicks, conversions, and revenue, as well as track what content or offerings are most interesting to different audience segments. 
+                            Find what is high converting, ie visitors, clicks, conversions, and revenue, as well as track what content or offerings are most interesting to different audience segments.
                         </p>
                         <a href="{{route('signup')}}">
                             <button>
@@ -505,7 +505,7 @@
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
                                 <h1>
-                                    Effortlessly create impressive pages to help grow your audience 
+                                    Effortlessly create impressive pages to help grow your audience
                                 </h1>
                                 <div class="level"></div>
                                 <a href="{{route('signup')}}">
@@ -527,15 +527,54 @@
 
 
     <!-- Footter -->
-    <section class="footer">
+   <section class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
-                <div class="kit-font">
-                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png">
-                    <p>
+            <div class="col-lg-3">
+                <div class="quick">
+                    <h1>
+                        Company
+                    </h1>
+                    <ul>
+                        <li style="text-align:justify">
                         Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
-                    </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-1"></div>
+            <div class="col-lg-2">
+                <div class="quick">
+                    <h1>
+                        Features
+                    </h1>
+                    <ul>
+                        <li>
+                            <a href="{{route('pagebuilder')}}">Page Builder</a>
+                        </li>
+                        <li>
+                            <a href="{{route('funnelbuilder')}}">Funnel Builder</a>
+                        </li>
+                        <li>
+                            <a href="{{route('marketauto')}}">Automation</a>
+                        </li>
+                        <li>
+                            <a href="{{route('ecommerce')}}">Ecommerce</a>
+                        </li>
+                        <li>
+                            <a href="{{route('emailmarketing')}}">Email Marketing</a>
+                        </li>
+                        <li>
+                            <a href="{{route('affiliate')}}">Affiliate Marketing</a>
+                        </li>
+                        <li>
+                            <a href="{{route('chatautomation')}}">Chat Automation</a>
+                        </li>
+                        <li>
+                            <a href="{{route('integrations')}}">API Integration</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="col-lg-2">
@@ -546,9 +585,6 @@
                     <ul>
                         <li>
                             <a href="{{route('index')}}">Home</a>
-                        </li>
-                        <li>
-                            <a href="{{route('emailmarketing')}}">Features</a>
                         </li>
                         <li>
                             <a href="{{route('pricing')}}"> Pricing</a>
@@ -565,68 +601,58 @@
             <div class="col-lg-2">
                 <div class="quick">
                     <h1>
-                        Contact
+                        Account
                     </h1>
                     <ul>
                         <li>
-                            8, Address street
+                            <a href="{{route('login')}}">Register</a>
                         </li>
                         <li>
-                            0815530260
+                            <a href="{{route('signup')}}">Login</a>
+                        </li>
+                    </ul>
+                    <h1>
+                        Resources
+                    </h1>
+                    <ul>
+                        <li>
+                            <a href="{{route('privacy')}}">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="{{route('terms')}}">Terms & Condition</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="quick">
                     <h1>
-                        Newsletter
+                        Follow Us
                     </h1>
                     <ul>
                         <li>
-                            Get News & Updates
+                            <a href="#">
+                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678779/OjaFunnel-Images/facebook_n5uvff.png" draggable="false" title="Follow" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678781/OjaFunnel-Images/twitter_kd7mew.png" draggable="false" alt="">
+                            </a>
+                            <a href="#">
+                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678783/OjaFunnel-Images/instagram_zf1kco.png" draggable="false" alt="">
+                            </a>
                         </li>
                     </ul>
-                    <form class="search-bar">
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="Your email Address" required>
-                            <span class="input-group-text" id="basic-addon2" type="submit" required>Subscribe</span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="last-fot">
-                    <h1>
-                        Helping thousands of businesses succeed,<a href="{{route('login')}}">
-                                join us
-                            </a>
-                    </h1>
-                </div>
-            </div>
-            <div class="col-lg-3"></div>
-            <div class="col-lg-6">
-                <div class="top">
-                    <div class="logo-details">
-                        <div class="media-icons">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="col-lg-12">
                 <div class="last-fott text-center">
-                        <a href="{{route('privacy')}}">
-                                Privacy Policy
-                            </a>
-                            |
-                            <a href="{{route('terms')}}">
-                                Terms & Condition
-                            </a>
+                    <!-- <a href="{{route('privacy')}}">
+                        Privacy Policy
+                    </a>
+                    |
+                    <a href="{{route('terms')}}">
+                        Terms & Condition
+                    </a> -->
                     <h1>
                         Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
                     </h1>

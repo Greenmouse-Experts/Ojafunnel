@@ -135,6 +135,11 @@ class HomePageController extends Controller
      {
          return view('frontend.template');
      }
+    // See Demo
+    public function demo()
+    {
+        return view('frontend.SeeDemo');
+    }
 
      // Template inner Design
      public function templateDetail()

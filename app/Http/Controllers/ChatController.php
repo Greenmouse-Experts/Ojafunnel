@@ -9,6 +9,7 @@ use App\Models\Admin;
 use App\Models\Chat;
 use App\Models\PersonalChatroom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
@@ -29,7 +30,7 @@ class ChatController extends Controller
             $room_id = PersonalChatroom::whereIn('user_id', [Auth::user()->id, $admin->id])
                                         ->whereIn('admin_id', [Auth::user()->id, $admin->id])
                                         ->first('room_id');
-                                  
+
             // update the state of interlocutor's chat from unread to read
             Chat::where('user_id', $admin->id)
                 ->where('room_id', $room_id['room_id'])
@@ -76,6 +77,7 @@ class ChatController extends Controller
             $data['admin'] = Admin::find($admin->id);
             $data['messages'] = [];
             $data['exist'] = 0;
+            
 
             return $data;
         }
@@ -84,7 +86,7 @@ class ChatController extends Controller
     public function fetchAllAdmins()
     {
         $admins = Admin::orderBy('name', 'asc')->get(['id', 'name', 'email']);
-
+        
         return $admins;
     }
 
@@ -95,15 +97,15 @@ class ChatController extends Controller
 
         // get the chatroom record from this user
         $query = PersonalChatroom::where('user_id', Auth::user()->id)
-        ->orWhere('friend_id', Auth::user()->id)
-        ->get();
+                ->orWhere('admin_id', Auth::user()->id)
+                ->get();
 
         if ($query) {
             foreach ($query as $chatroom) {
 
                 // get the interlocutor's data
                 if ($chatroom->user_id == Auth::user()->id) {
-                    $friend = User::where('id', $chatroom->friend_id)->first();
+                    $friend = Admin::where('id', $chatroom->admin_id)->first();
                 } else {
                     $friend = User::where('id', $chatroom->user_id)->first();
                 }
@@ -114,7 +116,7 @@ class ChatController extends Controller
                                     ->first();
                             
                 // check how many unread chats
-                $unreadChats = Chat::where('user_id', $friend['id'])
+                $unreadChats = Chat::where('admin_id', $friend['id'])
                                     ->where('room_id', $chatroom['room_id'])
                                     ->where('read_at', null)
                                     ->count();
@@ -122,21 +124,17 @@ class ChatController extends Controller
                 // if they already have chatted before
                 if ($latestChat) {
                     $result[] = [
-                        'connection' => $friend,
+                        'admin' => $friend,
                         'chat' => $latestChat,
                         'unread' => $unreadChats
                     ];
                     $result = array_reverse(array_values(Arr::sort($result, function ($key) {
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Chat retrieved.',
-                            'data' => $key['chat']['created_at']
-                        ]);
+                        return $key['chat']['created_at'];
                     })));
                 } else {
                     // if this is the first time they create the chatroom
                     $result[] = [
-                        'connection' => $friend,
+                        'admin' => $friend,
                         'chat' => [
                             'message' => null,
                             'created_at' => null,
@@ -147,16 +145,9 @@ class ChatController extends Controller
                 }
             }
     
-            return response()->json([
-                'success' => true,
-                'message' => 'Chat retrieved.',
-                'data' => $result
-            ]);
+            return $result;
         } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'You dont have any chat yet.'
-            ]);
+            return ['error' => 'You dont have any chat yet.'];
         }
     }
 

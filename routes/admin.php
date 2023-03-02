@@ -55,6 +55,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             // Support
             Route::post('/support/start/chat/{id}', [App\Http\Controllers\Admin\AdminController::class, 'startChat']);
             Route::get('/support/get/users', [App\Http\Controllers\Admin\AdminController::class, 'fetchAllusers']);
+            Route::get('/support/chats', [App\Http\Controllers\Admin\AdminController::class, 'fetchAllRecentChats']);
             Route::post('/support/send', [App\Http\Controllers\Admin\AdminController::class, 'sendMessage']);
             Route::post('/support/clear', [App\Http\Controllers\Admin\AdminController::class, 'clearChat']);
             Route::post('/support/clear/single/chat', [App\Http\Controllers\Admin\AdminController::class, 'deleteSingleChat']);
