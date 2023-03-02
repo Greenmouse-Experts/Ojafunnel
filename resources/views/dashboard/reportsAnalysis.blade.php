@@ -35,7 +35,7 @@
                                 <p class='text-center'>funnel count</p>
                                 <i class="bi bi-graph-up-arrow ps-1"></i>
                             </div>
-                            <p class='fs-3 fw-bolder text-center text-primary'>02</p>
+                            <p class='fs-3 fw-bolder text-center text-primary'>{{\App\Models\Funnel::where('user_id', Auth::user()->id)->count()}}</p>
                         </div>
                     </div>
                     <div class='repAnal-box'>
@@ -46,7 +46,7 @@
                                 <p class='text-center'>page count</p>
                                 <i class="bi bi-graph-up-arrow ps-1"></i>
                             </div>
-                            <p class='fs-3 fw-bolder text-center text-warning'>08</p>
+                            <p class='fs-3 fw-bolder text-center text-warning'>{{\App\Models\FunnelPage::where('user_id', Auth::user()->id)->count() + App\Models\Page::where('user_id', Auth::user()->id)->count()}}</p>
                         </div>
                     </div>
                     <div class='repAnal-box'>
