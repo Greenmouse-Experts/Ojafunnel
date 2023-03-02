@@ -195,14 +195,7 @@
                                 </li>
                                 <li>
                                     <a href="{{route('template')}}" class="dropdown-item">
-                                    Template Designs    
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('template')}}" class="routers">
-                                        <a class="dropdown-item">
-                                            Template Designs
-                                        </a>
+                                    Template Designs
                                     </a>
                                 </li>
                             </ul>
