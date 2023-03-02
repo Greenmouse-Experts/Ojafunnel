@@ -130,6 +130,7 @@ class HomePageController extends Controller
         return view('frontend.Integration');
     }
 
+<<<<<<< HEAD
      // Template Design
      public function template()
      {
@@ -144,6 +145,8 @@ class HomePageController extends Controller
 =======
 >>>>>>> 40fc05a (Update)
 
+=======
+>>>>>>> b81269b (update)
     public function test()
     {
         $curl = curl_init();

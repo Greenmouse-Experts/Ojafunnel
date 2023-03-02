@@ -3,6 +3,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="quick">
+<<<<<<< HEAD
                     <ul>
                         <li>
                             <div class="force">
@@ -12,6 +13,13 @@
                             </div>
                         </li>
                         <li>
+=======
+                    <h1>
+                        Company
+                    </h1>
+                    <ul>
+                        <li style="text-align:justify">
+>>>>>>> b81269b (update)
                         Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                         </li>
                     </ul>
@@ -121,7 +129,10 @@
             </div>
             <div class="col-lg-12">
                 <div class="last-fott text-center">
+<<<<<<< HEAD
                     <hr>
+=======
+>>>>>>> b81269b (update)
                     <!-- <a href="{{route('privacy')}}">
                         Privacy Policy
                     </a>

@@ -405,4 +405,11 @@ Route::post('/general/builder/upload/file', [App\Http\Controllers\PageController
 Route::post('/support/start/chat/{id}', [ChatController::class, 'startChat']);
 Route::get('/support/get/admins', [ChatController::class, 'fetchAllAdmins']);
 Route::post('/support/send', [ChatController::class, 'sendMessage']);
+<<<<<<< HEAD
 Route::post('/support/clear/single/chat', [ChatController::class, 'deleteSingleChat']);
+=======
+<<<<<<< HEAD
+Route::post('/support/clear/single/chat', [ChatController::class, 'deleteSingleChat']);
+=======
+>>>>>>> 2872fb6 (update)
+>>>>>>> b81269b (update)
