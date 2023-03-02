@@ -31,7 +31,7 @@
                         <i class="bi bi-x-square"></i>
                     </button>
                 </div>
-                <div class="offcanvas-body">
+               <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1">
                         <li class="nav-item">
                             <a href="{{route('index')}}" class="nav-link {{ (request()->is('/')) ? 'active' : '' }}" class="routers">
@@ -57,7 +57,6 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
                                             <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
                                         </div>
                                         <div>
@@ -109,12 +108,12 @@
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
-                                                    <a href="#">
+                                                    <a href="{{route('template')}}">
                                                        Template Designs
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -219,7 +218,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="routers">
+                                    <a href="{{route('template')}}" class="routers">
                                         <a class="dropdown-item">
                                             Template Designs
                                         </a>

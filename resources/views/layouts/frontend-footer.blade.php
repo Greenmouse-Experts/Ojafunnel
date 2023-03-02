@@ -1,7 +1,7 @@
 <section class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="quick">
                     <ul>
                         <li>
@@ -17,8 +17,6 @@
                     </ul>
                 </div>
             </div>
-
-            <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <div class="quick">
                     <h1>
@@ -121,7 +119,6 @@
             </div>
             <div class="col-lg-12">
                 <div class="last-fott text-center">
-                    <hr>
                     <!-- <a href="{{route('privacy')}}">
                         Privacy Policy
                     </a>

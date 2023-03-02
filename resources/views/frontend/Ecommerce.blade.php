@@ -105,6 +105,16 @@
                                                     </a>
                                                 </h4>
                                             </div>
+                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
+                                        </div>
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="{{route('template')}}">
+                                                       Template Designs
+                                                    </a>
+                                                </h4>
+                                            </div>
                                             <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
                                     </div>
@@ -206,6 +216,13 @@
                                     <a href="{{route('integrations')}}" class="routers">
                                         <a class="dropdown-item">
                                              API Integrations
+                                        </a>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('template')}}" class="routers">
+                                        <a class="dropdown-item">
+                                            Template Designs
                                         </a>
                                     </a>
                                 </li>
@@ -372,37 +389,37 @@
                     </div>
                 </div>
             </div>
-        </section>
+    </section>
     <!-- Communication Ends -->
 
     <!-- Increasing -->
-        <section class="Increasing" style="background: #FCFCFE !important;">
-            <div class="container">
-                <div class="row">
+    <section class="Increasing" style="background: #FCFCFE !important;">
+        <div class="container">
+            <div class="row">
 
-                    <div class="col-lg-6">
-                        <div class="thread-text">
-                            <h4>
-                                PAGES AND PRODUCTS
-                            </h4>
-                            <h2>
-                                Boost conversions with a unique page for every product
-                            </h2>
-                            <p>
-                                Set up your store easily by picking a template. Customize it with ease. Then publish. You’ll be ready to start accepting orders in minutes.
-                            </p>
-                            <button>
-                                Explore
-                            </button>
-                        </div>
+                <div class="col-lg-6">
+                    <div class="thread-text">
+                        <h4>
+                            PAGES AND PRODUCTS
+                        </h4>
+                        <h2>
+                            Boost conversions with a unique page for every product
+                        </h2>
+                        <p>
+                            Set up your store easily by picking a template. Customize it with ease. Then publish. You’ll be ready to start accepting orders in minutes.
+                        </p>
+                        <button>
+                            Explore
+                        </button>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="imagess">
-                            <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
-                        </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="imagess">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
     <!-- Communication Ends -->
@@ -477,7 +494,7 @@
                             Built-in features for your business
                         </h1>
                         <p>
-                        Get more sales and customers for your business with our awesome features
+                            Get more sales and customers for your business with our awesome features
                         </p>
                     </div>
                 </div>
@@ -488,10 +505,10 @@
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
-                            Integrated checkout
+                                Integrated checkout
                             </h1>
                             <p>
-                            Accept payments for your products from anywhere in the world
+                                Accept payments for your products from anywhere in the world
                             </p>
                         </div>
                     </div>
@@ -547,7 +564,7 @@
                                 Custom domain
                             </h1>
                             <p>
-                            Get custom domain, or easily link your existing website to Ojafunnel
+                                Get custom domain, or easily link your existing website to Ojafunnel
                             </p>
                         </div>
                     </div>
