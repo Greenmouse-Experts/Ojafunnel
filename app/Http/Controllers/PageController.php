@@ -119,17 +119,15 @@ class PageController extends Controller
 
     public function page_builder_save_page()
     {
-        // echo request()->html;
-
-        $page = Page::find(request()->id);
+        $page = Page::find($_POST['id']);
 
         define('MAX_FILE_LIMIT', 1024 * 1024 * 2);//2 Megabytes max html file size
 
         $html = "";
 
-        if (isset(request()->html))
+        if (isset($_POST['html']))
         {
-            $html = substr(request()->html, 0, MAX_FILE_LIMIT);
+            $html = substr($_POST['html'], 0, MAX_FILE_LIMIT);
         }
 
         $disk = public_path('pageBuilder/'.$page->folder.'/'.$page->name);
