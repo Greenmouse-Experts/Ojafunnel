@@ -46,7 +46,7 @@
                                     Email Support
                                 </h6>
                                 <div class="line">
-                                    ojafunnel@gmail.com 
+                                    ojafunnel@gmail.com
                                     <br>
                                     info@ojafunnel.com
                                 </div>
@@ -79,7 +79,7 @@
                     <div class="col-lg-6">
                         <div class="btn-loval">
                             <h5>
-                                Office Location 
+                                Office Location
                             </h5>
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1014756.6903908219!2d2.976542089307389!3d6.535154865265881!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf2bae227550d%3A0xe771ad7f1bbe89d6!2sLagos!5e0!3m2!1sen!2sng!4v1639066038889!5m2!1sen!2sng" style="border:1px solid #fff; border-radius: 10px;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
@@ -155,15 +155,19 @@
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
                                     <h1>
-                                        Are you ready to take your digital marketing to the next level! 
+                                        Are you ready to take your digital marketing to the next level!
                                     </h1>
                                     <div class="level"></div>
-                                    <button>
-                                        Sign up
-                                    </button>
-                                    <button style="background-color: #527EEB; color: #fff;">
-                                        See Demo
-                                    </button>
+                                    <a href="signup">
+                                <button>
+                                    Sign up
+                                </button>
+                            </a>
+                            <a href="{{route('demo')}}">
+                                <button style="background-color: #527EEB; color: #fff;">
+                                    See Demo
+                                </button>
+                            </a>
                                 </div>
                                 <div class="col-md-3"></div>
                             </div>

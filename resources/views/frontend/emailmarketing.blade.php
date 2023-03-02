@@ -8,7 +8,7 @@
                 <div class="col-lg-6">
                     <div class="btn-text">
                         <h1>
-                            Keep your customers engaged and grow your business with emails 
+                            Keep your customers engaged and grow your business with emails
                         </h1>
                         <p>
                             Our email tools will help your business get the most out of your email marketing.
@@ -40,7 +40,7 @@
                 <div class="col-lg-10">
                     <div class="thread-text">
                         <h1>
-                            Successful Email Marketing 
+                            Successful Email Marketing
                         </h1>
                     </div>
                 </div>
@@ -88,10 +88,10 @@
                             personalized emails
                         </h4>
                         <h2>
-                            Personalized and timely communication 
+                            Personalized and timely communication
                         </h2>
                         <p>
-                            Send the right message at the right time and develop a personalized journey for each person. Combine email automation with other marketing features on Ojafunnel to send customized messages at exactly the right time. 
+                            Send the right message at the right time and develop a personalized journey for each person. Combine email automation with other marketing features on Ojafunnel to send customized messages at exactly the right time.
                         </p>
                         <a href="{{route('signup')}}">
                             <button>
@@ -115,10 +115,10 @@
                             personalized emails
                         </h4>
                         <h2>
-                            Personalized and timely communication 
+                            Personalized and timely communication
                         </h2>
                         <p>
-                            Send the right message at the right time and develop a personalized journey for each person. Combine email automation with other marketing features on Ojafunnel to send customized messages at exactly the right time. 
+                            Send the right message at the right time and develop a personalized journey for each person. Combine email automation with other marketing features on Ojafunnel to send customized messages at exactly the right time.
                         </p>
                         <a href="{{route('signup')}}">
                             <button>
@@ -144,7 +144,7 @@
                 <div class="col-lg-6">
                     <div class="thread-text">
                         <h4>
-                            BETTER ORGANIZATION 
+                            BETTER ORGANIZATION
                         </h4>
                         <h2>
                             Tags for working with your audience
@@ -184,7 +184,7 @@
                             REPORTS AND ANALYSIS
                         </h4>
                         <h2>
-                            Get insight on your automated emails  
+                            Get insight on your automated emails
                         </h2>
                         <p>
                             Our service provides statistics about opens and clicks so you can monitor the results and improve your email campaigns
@@ -211,7 +211,7 @@
                             REPORTS AND ANALYSIS
                         </h4>
                         <h2>
-                            Get insight on your automated emails  
+                            Get insight on your automated emails
                         </h2>
                         <p>
                             Our service provides statistics about opens and clicks so you can monitor the results and improve your email campaigns
@@ -233,138 +233,133 @@
     </section>
 <!-- Communication Ends -->
 
-<!-- Features -->
-    <section class="Features">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
-                    <div class="btn-text">
-                        <h1>
-                            Awesome email features for you
-                        </h1>
-                        <p>
-                            Amet minim mollit non deserunt ullamco est sit aliqua 
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-2"></div>
-                <div class="col-lg-4">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                       <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Pre-built Templates 
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                       <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Automation
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                       <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Triggered Emails
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                       <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Reports & Analysis
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                       <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                A / B Testing
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="aler"></div>
-                    <div class="Amet">
-                       <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
-                        <div class="drag">
-                            <h1>
-                                Leads Capturing
-                            </h1>
-                            <p>
-                                Amet minim mollit non desunt ullamco est sit aliqua dolor do amet sint.
-                            </p>
-                        </div>
-                    </div>
+<section class="offer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="what">
+                    <h1>
+                        Enjoy All-In-One features
+                    </h1>
                 </div>
             </div>
+            <div class="what"></div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669720/OjaFunnel-Images/page_kunfbn.png" draggable="false" alt="">
+                        <h1>
+                            Page Builder
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669823/OjaFunnel-Images/landing-page_moq46w.png" draggable="false" alt="">
+                        <h1>
+                            Funnel Builder
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669907/OjaFunnel-Images/email-marketing_o5cvun.png" draggable="false" alt="">
+                        <h1>
+                            Email Marketing
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
+                        <h1>
+                            SMS Automation
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
+                        <h1>
+                            Analysis and Reporting
+                        </h1>
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670372/OjaFunnel-Images/shopping_seidhl.png" draggable="false" alt="">
+                        <h1>
+                            Ecommerce
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670416/OjaFunnel-Images/affiliate-marketing_cycnqk.png" draggable="false" alt="">
+                        <h1>
+                            Affiliate Module
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670479/OjaFunnel-Images/gateway_durgdd.png" draggable="false" alt="">
+                        <h1>
+                            Payment Integration
+                        </h1>
+                    </div>
+                </a>
+            </div>
         </div>
-    </section>
-<!-- Features Ends -->
-<!-- Digital -->
-    <section class="digital">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="mount">
-                        <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8">
-                                <h1>
-                                    Enhance your marketing by sending the right message at the right time 
-                                </h1>
-                                <div class="level"></div>
-                               <a href="{{route('signup')}}">
-                                    <button>
-                                        Sign up
-                                    </button>
-                                </a>
+    </div>
+</section>
+<section class="digital">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mount">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <h1>
+                                Enhance your marketing by sending the right message at the right time
+                            </h1>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="level"></div>
+                            <a href="signup">
+                                <button>
+                                    Sign up
+                                </button>
+                            </a>
+                            <a href="{{route('demo')}}">
                                 <button style="background-color: #527EEB; color: #fff;">
                                     See Demo
                                 </button>
-                            </div>
-                            <div class="col-md-2"></div>
+                            </a>
                         </div>
+                        <div class="col-md-4"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-<!-- Digital Ends -->
+    </div>
+</section>
 @endsection

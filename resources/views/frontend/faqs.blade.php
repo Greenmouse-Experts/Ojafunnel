@@ -10,7 +10,7 @@
                                 Frequently Asked Questions
                             </h1>
                             <p>
-                                Do you have questions and need answers, lets help. 
+                                Do you have questions and need answers, lets help.
                             </p>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                                             </button>
                                             </h2>
                                             <div id="flush-collapseNine" class="accordion-collapse collapse" aria-labelledby="flush-headingNine" data-bs-parent="#accordionFlushExample">
-                                            
+
                                             </div>
                                         </div>
                                     </div>
@@ -102,7 +102,7 @@
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-headingTen">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="" aria-expanded="false" aria-controls="">
-                                                SMS 
+                                                SMS
                                             </button>
                                             </h2>
                                             <div id="flush-headingTen" class="accordion-collapse collapse" aria-labelledby="flush-headingTen" data-bs-parent="#accordionFlushExample">
@@ -115,7 +115,7 @@
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-headingTen">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="" aria-expanded="false" aria-controls="">
-                                                Security & Privacy 
+                                                Security & Privacy
                                             </button>
                                             </h2>
                                             <div id="flush-headingTen" class="accordion-collapse collapse" aria-labelledby="flush-headingTen" data-bs-parent="#accordionFlushExample">
@@ -143,7 +143,7 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="flush-headingNine">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNine" aria-expanded="false" aria-controls="flush-collapseNine">
-                                        Q : What is Emaiil Marketing ? 
+                                        Q : What is Emaiil Marketing ?
                                     </button>
                                     </h2>
                                     <div id="flush-collapseNine" class="accordion-collapse collapse" aria-labelledby="flush-headingNine" data-bs-parent="#accordionFlushExample">
@@ -182,7 +182,7 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="flush-headingTwo">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                        Q : What is a transational email ? 
+                                        Q : What is a transational email ?
                                     </button>
                                     </h2>
                                     <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
@@ -259,15 +259,19 @@
                                 <div class="col-md-3"></div>
                                 <div class="col-md-6">
                                     <h1>
-                                        Are you ready to take your digital marketing to the next level! 
+                                        Are you ready to take your digital marketing to the next level!
                                     </h1>
                                     <div class="level"></div>
-                                    <button>
-                                        Sign up
-                                    </button>
-                                    <button style="background-color: #527EEB; color: #fff;">
-                                        See Demo
-                                    </button>
+                                    <a href="signup">
+                                <button>
+                                    Sign up
+                                </button>
+                            </a>
+                            <a href="{{route('demo')}}">
+                                <button style="background-color: #527EEB; color: #fff;">
+                                    See Demo
+                                </button>
+                            </a>
                                 </div>
                                 <div class="col-md-3"></div>
                             </div>

@@ -52,14 +52,14 @@
                     <div class="Ensure row align-items-center">
                         <div class="col-8 font-500">
                             @php
-                                $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
+                            $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
                             @endphp
                             @if($store != null)
-                                <h3>{{\App\Models\StoreProduct::where('store_id', $store->id)->count()}}</h3>
-                            @else 
-                                <h3>0</h3>
+                            <h3>{{\App\Models\StoreProduct::where('store_id', $store->id)->count()}}</h3>
+                            @else
+                            <h3>0</h3>
                             @endif
-                            
+
                             <p class="mb-0">New Products</p>
                         </div>
                         <div class="col-4 lead-img-div">
@@ -73,11 +73,11 @@
                     <div class="Ensure row align-items-center">
                         <div class="col-8 font-500">
                             @if($store != null)
-                                <h3>{{$store->count()}}</h3>
-                            @else 
-                                <h3>0</h3>
+                            <h3>{{$store->count()}}</h3>
+                            @else
+                            <h3>0</h3>
                             @endif
-                            
+
                             <p class="mb-0">Total Store</p>
                         </div>
                         <div class="col-4 lead-img-div">
@@ -91,9 +91,9 @@
                     <div class="Ensure row align-items-center">
                         <div class="col-8 font-500">
                             @if($store != null)
-                                <h3>{{\App\Models\StoreOrder::where('store_id', $store->id)->count()}}</h3>
-                            @else 
-                                <h3>0</h3>
+                            <h3>{{\App\Models\StoreOrder::where('store_id', $store->id)->count()}}</h3>
+                            @else
+                            <h3>0</h3>
                             @endif
                             <p class="mb-0">Total Orders</p>
                         </div>
@@ -106,7 +106,7 @@
                 </div>
             </div>
             <!-- product & stores row-->
-            <div class="products-stores-row">
+            <div class="products-stores-row mt-4">
                 <div class="sales-analysis">
                     <div class="row mb-4">
                         <div class="col-6 font-500">
@@ -121,7 +121,7 @@
                     </div>
                     <div id="sales"></div>
                 </div>
-                <div class="campaign-div">
+                <div class="campaign-div mt-1">
                     <div class="row mb-4">
                         <div class="col-6 font-500">
                             <h4>Email Campaign</h4>
@@ -137,15 +137,15 @@
                 </div>
             </div>
             <!-- /product & stores -->
-
-            <div class="row">
+            <!-- end page title -->
+            <div class="row mt-4">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">Latest Transaction</h4>
                             <div class="table-responsive">
-                                <table class="table align-middle table-nowrap mb-0">
-                                    <thead class="table-light">
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                    <thead class="tread">
                                         <tr>
                                             <th class="align-middle">Transaction No</th>
                                             <th class="align-middle">Date</th>
@@ -158,7 +158,7 @@
                                         <tr>
                                             <td><a href="javascript: void(0);" class="text-body fw-bold">{{$transaction->reference}}</a> </td>
                                             <td>
-                                            {{$transaction->created_at->toDayDateTimeString()}}
+                                                {{$transaction->created_at->toDayDateTimeString()}}
                                             </td>
                                             <td>
                                                 ₦{{number_format($transaction->amount, 2)}}
@@ -171,12 +171,10 @@
                                     @endforeach
                                 </table>
                             </div>
-                            <!-- end table-responsive -->
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- end page title -->
         </div>
     </div>
     <!-- End Page-content -->

@@ -197,8 +197,43 @@
         </div>
     </div>
 </section>
-<section class="sam">
-
+<!-- Digital -->
+<section class="digital">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mount">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <h1>
+                             Look at Ojafunnel Free Page Builder Templates and Choose the available templates                       </h1>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="level"></div>
+                            <a href="signup">
+                                <button>
+                                    Sign up
+                                </button>
+                            </a>
+                            <a href="{{route('template')}}">
+                                <button style="background-color: #527EEB; color: #fff;">
+                                    See Template
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+<!-- Digital Ends -->
+<!-- <section class="sam">
+
+</section> -->
 <!-- Increasing Ends -->
 @endsection

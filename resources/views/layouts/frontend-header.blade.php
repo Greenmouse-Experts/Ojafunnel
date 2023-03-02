@@ -35,31 +35,31 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('emailmarketing')}}">
-                                                        Email Marketing 
+                                                        Email Marketing
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('affiliate')}}">
-                                                        Affiliate Marketing 
+                                                        Affiliate Marketing
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('ecommerce')}}">
-                                                        Ecommerce 
+                                                        Ecommerce
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Create digital products, Courses,Training and members area.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -71,21 +71,31 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('funnelbuilder')}}">
-                                                        Funnel Builder 
+                                                        Funnel Builder
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Create many sales funnels to recapture your leads and optimise their lifetime value.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('pagebuilder')}}">
-                                                        Page Builder 
+                                                        Page Builder
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
+                                        </div>
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="{{route('template')}}">
+                                                       Template Designs
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -107,21 +117,21 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('marketauto')}}">
-                                                        Automations 
+                                                        Automations
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('chatautomation')}}">
-                                                        Chat Automations 
+                                                        Chat Automations
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Chat Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -133,70 +143,59 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('integrations')}}">
-                                                        API Integrations 
+                                                        API Integrations
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Track various statistics and metrics associated with all your email activities and campaigns.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <ul class="dropdown-menu mobile-dropdown" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Email Marketing
-                                        </a>
+                                    <a href="{{route('marketauto')}}" class="dropdown-item">
+                                        Email Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('affiliate')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Affiliate Marketing
-                                        </a>
+                                    <a href="{{route('affiliate')}}" class="dropdown-item">
+                                        Affiliate Marketing
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('ecommerce')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Ecommerce
-                                        </a>
+                                    <a href="{{route('ecommerce')}}" class="dropdown-item">
+                                        Ecommerce
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('funnelbuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Funnel Builder
-                                        </a>
+                                    <a href="{{route('funnelbuilder')}}" class="dropdown-item">
+                                        Funnel Builder
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('pagebuilder')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Page Builder
-                                        </a>
+                                    <a href="{{route('pagebuilder')}}" class="dropdown-item">
+                                        Page Builder
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('marketauto')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Marketing Automations
-                                        </a>
+                                    <a href="{{route('marketauto')}}" class="dropdown-item">
+                                        Marketing Automations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('chatautomation')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             Chat Automations
-                                        </a>
+                                    <a href="{{route('chatautomation')}}" class="dropdown-item">
+                                        Chat Automations
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('integrations')}}" class="routers">
-                                        <a class="dropdown-item">
-                                             API Integrations
-                                        </a>
+                                    <a href="{{route('integrations')}}" class="dropdown-item">
+                                    API Integrations
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('template')}}" class="dropdown-item">
+                                    Template Designs    
                                     </a>
                                 </li>
                                 <li>

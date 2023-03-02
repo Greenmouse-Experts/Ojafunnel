@@ -59,7 +59,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -69,7 +69,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -79,7 +79,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Create digital products, Courses,Training and members area.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -95,7 +95,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Create many sales funnels to recapture your leads and optimise their lifetime value.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -105,17 +105,17 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
-                                                    <a href="#">
+                                                    <a href="{{route('template')}}">
                                                        Template Designs
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -131,7 +131,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -141,7 +141,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Chat Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -157,7 +157,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
+                                            <p>Track various statistics and metrics associated with all your email activities and campaigns.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -220,7 +220,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" class="routers">
+                                    <a href="{{route('template')}}" class="routers">
                                         <a class="dropdown-item">
                                             Template Designs
                                         </a>
@@ -537,20 +537,22 @@
    <section class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="quick">
-                    <h1>
-                        Company
-                    </h1>
                     <ul>
-                        <li style="text-align:justify">
+                        <li>
+                            <div class="force">
+                                <a href="#">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" alt="">
+                                </a>
+                            </div>
+                        </li>
+                        <li>
                         Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                         </li>
                     </ul>
                 </div>
             </div>
-
-            <div class="col-lg-1"></div>
             <div class="col-lg-2">
                 <div class="quick">
                     <h1>
@@ -612,10 +614,10 @@
                     </h1>
                     <ul>
                         <li>
-                            <a href="{{route('login')}}">Register</a>
+                            <a href="{{route('signup')}}">Register</a>
                         </li>
                         <li>
-                            <a href="{{route('signup')}}">Login</a>
+                            <a href="{{route('login')}}">Login</a>
                         </li>
                     </ul>
                     <h1>
@@ -667,8 +669,7 @@
             </div>
         </div>
     </div>
-</section>
-    <!-- Footter Ends -->
+</section>    <!-- Footter Ends -->
 
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>

@@ -37,34 +37,129 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" data-bs-toggle="tab" href="#home1" role="tab">
                                         <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                        <span class="d-none d-sm-block"> Most Popular</span>
+                                        <span class="d-none d-sm-block">Abandoned Cart</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#profile1" role="tab">
                                         <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                        <span class="d-none d-sm-block">Improve Engagement</span>
+                                        <span class="d-none d-sm-block">Product Purchase</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#messages1" role="tab">
                                         <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                                        <span class="d-none d-sm-block">Increased Traffic</span>
+                                        <span class="d-none d-sm-block">Anniversary</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#settings1" role="tab">
                                         <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
-                                        <span class="d-none d-sm-block">Increased Revenue</span>
+                                        <span class="d-none d-sm-block">Welcome Message</span>
                                     </a>
                                 </li>
                             </ul>
+                            <div class="tab-content p-3 text-muted">
+                                <div class="tab-pane active" id="home1" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4 class="card-title mt-4 mb-4">Abandoned Cart</h4>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered dt-responsive nowrap w-100">
+                                                    <thead class="tread">
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>Course Name</th>
+                                                            <th>Course Category</th>
+                                                            <th>Status</th>
+                                                            <th>Date Created</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="profile1" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4 class="card-title mt-4 mb-4">Product Purchase</h4>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered dt-responsive nowrap w-100">
+                                                    <thead class="tread">
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>Course Name</th>
+                                                            <th>Course Category</th>
+                                                            <th>Status</th>
+                                                            <th>Date Created</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="messages1" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4 class="card-title mt-4 mb-4">Abandoned Cart</h4>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered dt-responsive nowrap w-100">
+                                                    <thead class="tread">
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>Course Name</th>
+                                                            <th>Course Category</th>
+                                                            <th>Status</th>
+                                                            <th>Date Created</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="settings1" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4 class="card-title mt-4 mb-4">Abandoned Cart</h4>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered dt-responsive nowrap w-100">
+                                                    <thead class="tread">
+                                                        <tr>
+                                                            <th>S/N</th>
+                                                            <th>Course Name</th>
+                                                            <th>Course Category</th>
+                                                            <th>Status</th>
+                                                            <th>Date Created</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- account container form -->
-            <div class="row card begin">
+            <!-- <div class="row card begin">
                 <div class="template-con">
                     <div class="row justify-content-between">
                         <div class="col-lg-6 mt-5">
@@ -108,7 +203,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- end page title -->
         </div>
     </div>
