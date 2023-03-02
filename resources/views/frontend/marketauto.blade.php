@@ -106,18 +106,30 @@
                                             <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
                                         </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('template')}}">
+=======
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="#">
+>>>>>>> 40fc05a (Update)
                                                        Template Designs
                                                     </a>
                                                 </h4>
                                             </div>
+<<<<<<< HEAD
                                             <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
 >>>>>>> e004fe4 (update)
+=======
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                        </div>
+>>>>>>> 40fc05a (Update)
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="upload">
@@ -221,15 +233,23 @@
                                     </a>
                                 </li>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                                 <li>
                                     <a href="{{route('template')}}" class="routers">
+=======
+                                <li>
+                                    <a href="#" class="routers">
+>>>>>>> 40fc05a (Update)
                                         <a class="dropdown-item">
                                             Template Designs
                                         </a>
                                     </a>
                                 </li>
+<<<<<<< HEAD
 >>>>>>> e004fe4 (update)
+=======
+>>>>>>> 40fc05a (Update)
                             </ul>
                         </li>
                         <li class="nav-item">

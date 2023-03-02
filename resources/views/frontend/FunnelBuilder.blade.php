@@ -77,6 +77,7 @@
                                                 </div>
                                                 <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                             </div>
+<<<<<<< HEAD
 =======
                                         <div>
                                             <div class="btn-area">
@@ -88,6 +89,18 @@
                                             </div>
                                             <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
 >>>>>>> e004fe4 (update)
+=======
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="#">
+                                                            Template Designs
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            </div>
+>>>>>>> 40fc05a (Update)
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -246,6 +259,13 @@
                                              API Integrations
                                         </a>
 <<<<<<< HEAD
+                                    </li>
+                                    <li>
+                                        <a href="#" class="routers">
+                                            <a class="dropdown-item">
+                                                Template Designs
+                                            </a>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>

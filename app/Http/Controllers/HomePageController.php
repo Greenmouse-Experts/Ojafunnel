@@ -135,11 +135,14 @@ class HomePageController extends Controller
      {
          return view('frontend.template');
      }
+<<<<<<< HEAD
     // See Demo
     public function demo()
     {
         return view('frontend.SeeDemo');
     }
+=======
+>>>>>>> 40fc05a (Update)
 
     public function test()
     {

@@ -121,6 +121,16 @@
                                             </div>
                                             <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="#">
+                                                       Template Designs
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                        </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="upload">
@@ -224,15 +234,23 @@
                                     </a>
                                 </li>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                                 <li>
                                     <a href="{{route('template')}}" class="routers">
+=======
+                                <li>
+                                    <a href="#" class="routers">
+>>>>>>> 40fc05a (Update)
                                         <a class="dropdown-item">
                                             Template Designs
                                         </a>
                                     </a>
                                 </li>
+<<<<<<< HEAD
 >>>>>>> e004fe4 (update)
+=======
+>>>>>>> 40fc05a (Update)
                             </ul>
                         </li>
                         <li class="nav-item">
