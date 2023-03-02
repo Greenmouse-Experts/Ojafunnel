@@ -16,7 +16,6 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
-
 <body>
     <!-- Header -->
     <!-- linear-gradient(101.28deg, #3C40A5 -7.37%, #208FF7 142.82%) -->
@@ -61,7 +60,7 @@
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                             </div>
                                             <div>
                                                 <div class="btn-area">
@@ -71,7 +70,7 @@
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <p>Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently.</p>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                             </div>
                                             <div>
                                                 <div class="btn-area">
@@ -81,7 +80,7 @@
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <p>Create digital products, Courses,Training and members area.</p>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -97,7 +96,7 @@
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <p>Create many sales funnels to recapture your leads and optimise their lifetime value.</p>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                             </div>
                                             <div>
                                                 <div class="btn-area">
@@ -107,7 +106,7 @@
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                             </div>
                                             <div>
                                                 <div class="btn-area">
@@ -117,7 +116,7 @@
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -133,7 +132,7 @@
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <p>Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                             </div>
                                             <div>
                                                 <div class="btn-area">
@@ -143,7 +142,7 @@
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <p>Chat Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -159,55 +158,73 @@
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <p>Track various statistics and metrics associated with all your email activities and campaigns.</p>
+                                                <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <ul class="dropdown-menu mobile-dropdown" aria-labelledby="navbarDropdown">
                                     <li>
-                                        <a href="{{route('marketauto')}}" class="dropdown-item">
-                                            Email Marketing
+                                        <a href="{{route('marketauto')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Email Marketing
+                                            </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('affiliate')}}" class="dropdown-item">
-                                            Affiliate Marketing
+                                        <a href="{{route('affiliate')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Affiliate Marketing
+                                            </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('ecommerce')}}" class="dropdown-item">
-                                            Ecommerce
+                                        <a href="{{route('ecommerce')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Ecommerce
+                                            </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('funnelbuilder')}}" class="dropdown-item">
-                                            Funnel Builder
+                                        <a href="{{route('funnelbuilder')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Funnel Builder
+                                            </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('pagebuilder')}}" class="dropdown-item">
-                                            Page Builder
+                                        <a href="{{route('pagebuilder')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Page Builder
+                                            </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('marketauto')}}" class="dropdown-item">
-                                            Marketing Automations
+                                        <a href="{{route('marketauto')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Marketing Automations
+                                            </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('chatautomation')}}" class="dropdown-item">
-                                            Chat Automations
+                                        <a href="{{route('chatautomation')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                Chat Automations
+                                            </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('integrations')}}" class="dropdown-item">
-                                            API Integrations
+                                        <a href="{{route('integrations')}}" class="routers">
+                                            <a class="dropdown-item">
+                                                API Integrations
+                                            </a>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('template')}}" class="dropdown-item">
-                                            Template Designs
+                                        <a href="#" class="routers">
+                                            <a class="dropdown-item">
+                                                Template Designs
+                                            </a>
                                         </a>
                                     </li>
                                 </ul>
@@ -247,128 +264,180 @@
             </div>
         </div>
     </header>
-    <!-- Header Ends -->
-    <!-- hero -->
-    <div class="template-hero-banner">
-        <div class="container h-100">
-            <div class="hero-container">
-                <div class="template-hero-div">
-                    <p class="template-head-text">Free Page Builder Templates</p>
-                    <p class="template-mid-text">Choose a template and get started</p>
-                    <div class="template-search-div">
-                        <input type="search" placeholder="Search template" />
-                        <i class="bi bi-search"></i>
+    <!-- page contents -->
+    <div class="template-content-details">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 template-img-col">
+                    <div class="w-100">
+                        <img src="https://templatemo.com/screenshots-720/template-562-space-dynamic.jpg" alt="template" width="100%">
+                    </div>
+                </div>
+                <div class="col-lg-5 ps-lg-5 template-text-col">
+                    <div class="details-text">
+                        <p class="text-header">Do you like this template</p>
+                        <p>Try Ojafunnel premium 14 days for free. <span class="fw-normal">No credit card required!</span></p>
+                        <button class="btn btn-primary mt-4">Start Free Trial</button>
+                    </div>
+                    <div class="template-ratings">
+                        <div class="row">
+                            <div class="col-3">
+                                <p class="fw-bold">Ratings</p>
+                            </div>
+                            <div class="col-9 d-flex">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-3">
+                                <p class="fw-bold">Category</p>
+                            </div>
+                            <div class="col-9 d-flex">
+                                <ul class="d-flex">
+                                    <li class="bg-success text-white px-1 me-1">Ecommerce</li>
+                                    <li class="bg-warning text-white px-1 me-1">Easter</li>
+                                    <li class="bg-primary text-white px-1 me-1">Business</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-3">
+                                <p class="fw-bold">Description</p>
+                            </div>
+                            <div class="col-9 d-flex">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus obcaecati est doloremque vero itaque atque eaque eum tempora dolorem quia illo harum libero laborum vel repudiandae fuga ad, aut magnam?</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- hero ends -->
-    <!-- page contents -->
-    <div class="template-content">
+    <section class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-lg-2 pe-lg-5 template-side">
-                    <div class="license-div">
-                        <p><i class="bi bi-check2-square pe-2 text-warning fs-4"></i>License</p>
-                        <ul class="license-radio">
-                            <li>
-                                <input type="radio" name="license" />
-                                <span>Any</span>
-                            </li>
-                            <li>
-                                <input type="radio" name="license" />
-                                <span>Free</span>
-                            </li>
-                            <li>
-                                <input type="radio" name="license" />
-                                <span>Premium</span>
-                            </li>
-                        </ul>
+                <div class="col-lg-4">
+                    <div class="kit-font">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png">
+                        <p>
+                            Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
+                        </p>
                     </div>
-                    <div class="sort-div">
-                        <p><i class="bi bi-sort-down fs-4 pe-2 text-warning"></i>Sort by</p>
-                        <ul class="sort-radio">
+                </div>
+                <div class="col-lg-2">
+                    <div class="quick">
+                        <h1>
+                            Quick Link
+                        </h1>
+                        <ul>
                             <li>
-                                <input type="radio" name="sort" />
-                                <span>Recent</span>
+                                <a href="{{route('index')}}">Home</a>
                             </li>
                             <li>
-                                <input type="radio" name="sort" />
-                                <span>Popular</span>
+                                <a href="{{route('emailmarketing')}}">Features</a>
                             </li>
                             <li>
-                                <input type="radio" name="sort" />
-                                <span>Top Rated</span>
+                                <a href="{{route('pricing')}}"> Pricing</a>
                             </li>
                             <li>
-                                <input type="radio" name="sort" />
-                                <span>Editor's Pick</span>
+                                <a href="{{route('faqs')}}">FAQs</a>
+                            </li>
+                            <li>
+                                <a href="{{route('contact')}}">Contact</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-10">
-                    <!-- category -->
-                    <div class="choose-category">
-                        <p>Choose Category</p>
-                        <div class="category-list">
-                            <ul>
-                                <li class="bg-success text-white">Eccommerce</li>
-                                <li class="bg-warning text-white">Easter</li>
-                                <li class="bg-primary text-white">Business</li>
-                                <li class="bg-danger text-white">Finance</li>
-                                <li class="bg-info text-white">Crypto</li>
-                                <li class="bg-secondary text-white">Logistics</li>
-                                <li class="bg-success text-white">Eccommerce</li>
-                                <li class="bg-warning text-white">Easter</li>
-                                <li class="bg-primary text-white">Business</li>
-                                <li class="bg-danger text-white">Finance</li>
-                                <li class="bg-info text-white">Crypto</li>
-                                <li class="bg-secondary text-white">Logistics</li>
-                            </ul>
+                <div class="col-lg-2">
+                    <div class="quick">
+                        <h1>
+                            Contact
+                        </h1>
+                        <ul>
+                            <li>
+                                8, Address street
+                            </li>
+                            <li>
+                                0815530260
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="quick">
+                        <h1>
+                            Newsletter
+                        </h1>
+                        <ul>
+                            <li>
+                                Get News & Updates
+                            </li>
+                        </ul>
+                        <form class="search-bar">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Your email Address" required>
+                                <span class="input-group-text" id="basic-addon2" type="submit" required>Subscribe</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="last-fot">
+                        <h1>
+                            Helping thousands of businesses succeed,<a href="{{route('login')}}">
+                                    join us
+                                </a>
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="top">
+                        <div class="logo-details">
+                            <div class="media-icons">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                            </div>
                         </div>
                     </div>
-                    <!-- category content -->
-                    <div class="template-listing">
-                        <div class="template-listing-grid">
-                            <div class="single-template">
-                                <div class="inner first-grid">
-                                    <div class="text-center">
-                                        <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
-                                        <button class="btn btn-primary d-block mt-2">New Template</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="single-template">
-                                <div class="inner second-grid">
-                                    <img src="https://templatemo.com/screenshots-720/template-562-space-dynamic.jpg" alt="templates" width="100%" height="100%" />
-                                    <div class="start-template">
-                                        <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
-                                        <button class="btn btn-primary d-block mt-2">Use Template</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="last-fott text-center">
+                            <a href="{{route('privacy')}}">
+                                    Privacy Policy
+                                </a>
+                                |
+                                <a href="{{route('terms')}}">
+                                    Terms & Condition
+                                </a>
+                        <h1>
+                            Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
+                        </h1>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
     <!-- page contents ends -->
-</body>
-<script>
-    window.addEventListener('scroll', function() {
-        var scroll = $(window).scrollTop();
-        let header = document.getElementById("header")
+    <script>
+        window.addEventListener('scroll', function() { 
+            var scroll = $(window).scrollTop();
+            let header = document.getElementById("header")
 
-        if (scroll.scrollTop() > 50) {
+            if (scroll.scrollTop() > 50) {
             $('#header').style.backgroundColor = "#3383e6 !important";
-        } else {
-            $('#header').style.backgroundColor = "inherit !important";
-        }
-
-    })
-</script>
-
+            } else {
+                $('#header').style.backgroundColor = "inherit !important";
+            }
+        
+        })
+    </script>
+</body>
 </html>

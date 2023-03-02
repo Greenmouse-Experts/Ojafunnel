@@ -90,6 +90,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             // nofitication admin
             Route::get('notification', [App\Http\Controllers\Admin\AdminController::class, 'notification'])->name('notification');
+
+            // Admin page builder
+            Route::get('page-builder', [App\Http\Controllers\Admin\AdminController::class, 'page_builder'])->name('pageBuilder');
         }
     );
 });

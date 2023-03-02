@@ -192,6 +192,11 @@ class AdminController extends Controller
         return view('Admin.ecommerce.salesDetail', compact('order'));
     }
 
+    public function page_builder()
+    {
+        return view('Admin.pageBuilder');
+    }
+
     public function email_support()
     {
         return view('Admin.support.emailSupport');
