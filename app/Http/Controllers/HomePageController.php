@@ -136,6 +136,12 @@ class HomePageController extends Controller
          return view('frontend.template');
      }
 
+     // Template inner Design
+     public function templateDetail()
+     {
+         return view('frontend.templateDetail');
+     }
+
     public function test()
     {
         $curl = curl_init();
