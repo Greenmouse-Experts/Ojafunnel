@@ -100,11 +100,6 @@
 =======
 >>>>>>> f6df9b3 (Update)
                                         </div>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 4259826 (update)
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
@@ -113,14 +108,8 @@
                                                     </a>
                                                 </h4>
                                             </div>
-<<<<<<< HEAD
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
-                                        </div>
-=======
                                             <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="upload">
