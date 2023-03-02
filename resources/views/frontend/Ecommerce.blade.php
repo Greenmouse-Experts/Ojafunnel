@@ -101,54 +101,7 @@
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('pagebuilder')}}">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                                        Page Builder 
-=======
-=======
->>>>>>> b81269b (update)
-=======
->>>>>>> f6df9b3 (Update)
                                                         Page Builder
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('template')}}">
-                                                       Template Designs
->>>>>>> e004fe4 (update)
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="#">
-                                                       Template Designs
-=======
-<<<<<<< HEAD
-                                                        Page Builder 
-=======
-                                                        Page Builder
->>>>>>> 4259826 (update)
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('template')}}">
-                                                       Template Designs
->>>>>>> e004fe4 (update)
                                                     </a>
                                                 </h4>
                                             </div>
@@ -256,41 +209,6 @@
                                         </a>
                                     </a>
                                 </li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                                <li>
-                                    <a href="{{route('template')}}" class="routers">
-=======
-                                <li>
-                                    <a href="#" class="routers">
->>>>>>> 40fc05a (Update)
-=======
-                                <li>
-                                    <a href="#" class="routers">
-=======
-<<<<<<< HEAD
-=======
-                                <li>
-                                    <a href="{{route('template')}}" class="routers">
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
-                                        <a class="dropdown-item">
-                                            Template Designs
-                                        </a>
-                                    </a>
-                                </li>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> e004fe4 (update)
-=======
->>>>>>> 40fc05a (Update)
-=======
-=======
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -453,7 +371,6 @@
                         <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false" alt="">
                     </div>
                 </div>
-<<<<<<< HEAD
             </div>
         </section>
     <!-- Communication Ends -->
@@ -483,22 +400,6 @@
                         <div class="imagess">
                             <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
                         </div>
-=======
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                            Payout Checkout
-                        </h4>
-                        <h2>
-                            Integrated lightning-fast checkout
-                        </h2>
-                        <p>
-                            Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
-                        </p>
-                        <button>
-                            Explore Now
-                        </button>
->>>>>>> e004fe4 (update)
                     </div>
                 </div>
             </div>
@@ -576,26 +477,7 @@
                             Built-in features for your business
                         </h1>
                         <p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        Get more sales and customers for your business with our awesome features 
-=======
-                            Get more sales and customers for your business with our awesome features
->>>>>>> e004fe4 (update)
-=======
                         Get more sales and customers for your business with our awesome features
->>>>>>> b81269b (update)
-=======
-                        Get more sales and customers for your business with our awesome features
-=======
-<<<<<<< HEAD
-                        Get more sales and customers for your business with our awesome features 
-=======
-                            Get more sales and customers for your business with our awesome features
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                         </p>
                     </div>
                 </div>
@@ -606,43 +488,10 @@
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            Integrated checkout 
-                            </h1>
-                            <p>
-                            Accept payments for your products from anywhere in the world   
-=======
-                                Integrated checkout
-                            </h1>
-                            <p>
-                                Accept payments for your products from anywhere in the world
->>>>>>> e004fe4 (update)
-=======
-=======
->>>>>>> f6df9b3 (Update)
                             Integrated checkout
                             </h1>
                             <p>
                             Accept payments for your products from anywhere in the world
-<<<<<<< HEAD
->>>>>>> b81269b (update)
-=======
-=======
-<<<<<<< HEAD
-                            Integrated checkout 
-                            </h1>
-                            <p>
-                            Accept payments for your products from anywhere in the world   
-=======
-                                Integrated checkout
-                            </h1>
-                            <p>
-                                Accept payments for your products from anywhere in the world
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                             </p>
                         </div>
                     </div>
@@ -698,26 +547,7 @@
                                 Custom domain
                             </h1>
                             <p>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            Get custom domain, or easily link your existing website to Ojafunnel 
-=======
-                                Get custom domain, or easily link your existing website to Ojafunnel
->>>>>>> e004fe4 (update)
-=======
                             Get custom domain, or easily link your existing website to Ojafunnel
->>>>>>> b81269b (update)
-=======
-                            Get custom domain, or easily link your existing website to Ojafunnel
-=======
-<<<<<<< HEAD
-                            Get custom domain, or easily link your existing website to Ojafunnel 
-=======
-                                Get custom domain, or easily link your existing website to Ojafunnel
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                             </p>
                         </div>
                     </div>
@@ -741,157 +571,7 @@
     </section>
     <!-- Features Ends -->
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     <section class="footer">
-<<<<<<< HEAD
-=======
-   <section class="footer">
->>>>>>> b81269b (update)
-=======
-   <section class="footer">
-=======
-    <section class="footer">
-<<<<<<< HEAD
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="quick">
-                    <h1>
-                        Company
-                    </h1>
-                    <ul>
-                        <li style="text-align:justify">
-                        Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-lg-1"></div>
-            <div class="col-lg-2">
-                <div class="quick">
-                    <h1>
-                        Features
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="{{route('pagebuilder')}}">Page Builder</a>
-                        </li>
-                        <li>
-                            <a href="{{route('funnelbuilder')}}">Funnel Builder</a>
-                        </li>
-                        <li>
-                            <a href="{{route('marketauto')}}">Automation</a>
-                        </li>
-                        <li>
-                            <a href="{{route('ecommerce')}}">Ecommerce</a>
-                        </li>
-                        <li>
-                            <a href="{{route('emailmarketing')}}">Email Marketing</a>
-                        </li>
-                        <li>
-                            <a href="{{route('affiliate')}}">Affiliate Marketing</a>
-                        </li>
-                        <li>
-                            <a href="{{route('chatautomation')}}">Chat Automation</a>
-                        </li>
-                        <li>
-                            <a href="{{route('integrations')}}">API Integration</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="quick">
-                    <h1>
-                        Quick Link
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="{{route('index')}}">Home</a>
-                        </li>
-                        <li>
-                            <a href="{{route('pricing')}}"> Pricing</a>
-                        </li>
-                        <li>
-                            <a href="{{route('faqs')}}">FAQs</a>
-                        </li>
-                        <li>
-                            <a href="{{route('contact')}}">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="quick">
-                    <h1>
-                        Account
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="{{route('login')}}">Register</a>
-                        </li>
-                        <li>
-                            <a href="{{route('signup')}}">Login</a>
-                        </li>
-                    </ul>
-                    <h1>
-                        Resources
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="{{route('privacy')}}">Privacy Policy</a>
-                        </li>
-                        <li>
-                            <a href="{{route('terms')}}">Terms & Condition</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="quick">
-                    <h1>
-                        Follow Us
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678779/OjaFunnel-Images/facebook_n5uvff.png" draggable="false" title="Follow" alt="">
-                            </a>
-                            <a href="#">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678781/OjaFunnel-Images/twitter_kd7mew.png" draggable="false" alt="">
-                            </a>
-                            <a href="#">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678783/OjaFunnel-Images/instagram_zf1kco.png" draggable="false" alt="">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="last-fott text-center">
-                    <!-- <a href="{{route('privacy')}}">
-                        Privacy Policy
-                    </a>
-                    |
-                    <a href="{{route('terms')}}">
-                        Terms & Condition
-                    </a> -->
-                    <h1>
-                        Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
-=======
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
@@ -907,27 +587,6 @@
                     </div>
                 </div>
 
-=======
-
-=======
-    
-=======
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="quick">
-                        <h1>
-                            Company
-                        </h1>
-                        <ul>
-                            <li style="text-align:justify">
-                                Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
->>>>>>> f6df9b3 (Update)
                 <div class="col-lg-1"></div>
                 <div class="col-lg-2">
                     <div class="quick">
@@ -1047,14 +706,6 @@
         </div>
     </section>
 
->>>>>>> e004fe4 (update)
-<<<<<<< HEAD
-=======
-
->>>>>>> b81269b (update)
-=======
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/main.js')}}"></script>

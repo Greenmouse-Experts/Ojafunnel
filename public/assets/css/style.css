@@ -1069,19 +1069,15 @@ header nav .offcanvas-header button i {
 }
 .welcome {
     padding: 220px 0px 50px 0px;
+
+}
+
+.welcome {
     background: linear-gradient(180.03deg, #149BE4 0.03%, rgba(74, 20, 228, 0.72) 103.37%);
     background-position-y: -250px;
     background-repeat: no-repeat;
 }
 
-@media (max-width:1600px) {
-    .welcome {
-        padding: 220px 0px 50px 0px;
-        background: linear-gradient(180.03deg, #149BE4 0.03%, rgba(74, 20, 228, 0.72) 103.37%);
-        background-position-y: -250px;
-        background-repeat: no-repeat;
-    }
-}
 
 .welcome .accelerate h1 {
     text-align: center;
@@ -1899,6 +1895,7 @@ header nav .offcanvas-header button i {
     display: block;
     margin: auto;
     width: 70%;
+
 }
 
 .Seemless .el-icon-message .pulse {
@@ -2189,7 +2186,7 @@ header nav .offcanvas-header button i {
 }
 
 .choose .menu-image-holder img {
-    width: 65%;
+    width: 80%;
     display: block;
     margin: auto;
 }
@@ -2200,11 +2197,11 @@ header nav .offcanvas-header button i {
 }
 
 .choose .text-btn p {
+
     font-size: 14px;
     color: #000;
     font-weight: 400;
     line-height: 2;
-    padding: 0 0 0px 0;
 }
 
 .mobile {
@@ -2369,12 +2366,8 @@ header nav .offcanvas-header button i {
 
 /**Footer**/
 .footer {
-<<<<<<< HEAD
-    padding: 100px 0px 0px 0px;
-=======
     padding: 50px 0px 0px 0px;
     background-color: #F2F3F4;
->>>>>>> e004fe4 (update)
 }
 
 .footer .kit-font img {
@@ -2404,20 +2397,31 @@ header nav .offcanvas-header button i {
     margin-top: 0;
     padding: 0 0 15px 0;
     margin-bottom: 0;
-    font-weight: 600;
+    font-weight: 700;
 }
-<<<<<<< HEAD
-
-=======
+.footer .quick ul li  img{
+    width: 25px;
+    margin: 0px 7px;
+}
 .force img{
     width: 160px !important;
 }
->>>>>>> e004fe4 (update)
 .footer .quick ul li {
     list-style: none;
     color: #000;
     line-height: 2;
     font-size: 13px;
+    font-size: 20px;
+    margin-top: 0;
+    padding: 0 0 20px 0;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.footer .quick ul li {
+    list-style: none;
+    color: #000;
+    font-size: 14px;
     margin-left: -30px;
     padding: 0 0 8px;
 }
@@ -2700,7 +2704,7 @@ header nav .offcanvas-header button i {
 .footer .copy {
     text-align: center;
     padding: 30px 0 0 0;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 /**Footer Ends**/
@@ -4583,11 +4587,6 @@ header nav .offcanvas-header button i {
     background-color: rgba(216, 214, 227, 0.15);
 }
 
-.price-table tr td:nth-child(3) .fa-check,
-.price-table tr:nth-child(2n) td:nth-child(3) .fa-check {
-    /* color: #ffffff; */
-}
-
 .price-table td.price {
     color: #000;
     padding: 30px 14px;
@@ -4884,90 +4883,3 @@ header nav .offcanvas-header button i {
         color:black;
     }
 }
-
-.offer .what {
-    text-align: center;
-}
-.card iframe{
-    width: 100%;
-    height: 500px;
-    border-radius: 10px;
-}
-.offer .what h1 {
-    font-size: 30px;
-    color: #000;
-    font-weight: 700;
-}
-
-.offer .what p {
-    padding: 15px 0 0 0;
-    font-weight: 400;
-}
-.offer  a{
-    text-decoration: none;
-    color: #000;
-}
-.offer  a:hover{
-    text-decoration: none;
-    color: #000;
-}
-.offer .card {
-    margin-top: 30px;
-    padding: 30px 20px;
-    border-radius: 5px;
-    border: none;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.offer .card img {
-    width: 60px;
-    display: block;
-    margin: auto;
-}
-
-.offer .card h1 {
-    color: #000;
-    padding: 20px 0px 0px 0;
-    font-size: 15px;
-    text-align: center;
-    font-weight: 600;
-}
-
-
-
-@media (max-width:584px) {
-    .offer {
-        padding: 80px 10px 80px 10px;
-    }
-
-    .offer .what h1 {
-        font-size: 28px;
-        color: #000;
-        font-weight: 700;
-    }
-    .Value {
-        padding: 80px 10px 50px 10px !important;
-        background-color: #026632;
-        color: #fff;
-    }
-    .Core {
-        padding: 80px 10px 50px 10px !important;
-    }
-    .Features{
-        padding: 50px 10px !important;
-        background-color: #EBEBEB;
-    }
-}
-
-/*********Offer  Ends*******/
-
-.sam
-{
-    /* background-color: rgba(255,255,255,0.6); */
-    background-image: linear-gradient(50deg,  #0000005b, #0000005b), url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1677674383/OjaFunnel-Images/Disha-Hero__dynsk5.jpg);
-    background-position: center right;
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 300px 0;
-}
->>>>>>> 2872fb6 (update)

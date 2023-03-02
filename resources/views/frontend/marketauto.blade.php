@@ -57,7 +57,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -67,7 +67,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -77,7 +77,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Create digital products, Courses,Training and members area.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -93,7 +93,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Create many sales funnels to recapture your leads and optimise their lifetime value.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -103,57 +103,18 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('template')}}">
-=======
-=======
->>>>>>> f6df9b3 (Update)
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="#">
-<<<<<<< HEAD
->>>>>>> 40fc05a (Update)
-=======
-=======
-<<<<<<< HEAD
-=======
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('template')}}">
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                                                        Template Designs
                                                     </a>
                                                 </h4>
                                             </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
-                                        </div>
->>>>>>> e004fe4 (update)
-=======
                                             <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
->>>>>>> 40fc05a (Update)
-=======
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
-                                        </div>
-=======
-                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
-                                        </div>
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="upload">
@@ -168,7 +129,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -178,7 +139,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Chat Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -194,7 +155,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Track various statistics and metrics associated with all your email activities and campaigns.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
                                     </div>
                                 </div>
@@ -256,41 +217,13 @@
                                         </a>
                                     </a>
                                 </li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                                <li>
-                                    <a href="{{route('template')}}" class="routers">
-=======
                                 <li>
                                     <a href="#" class="routers">
->>>>>>> 40fc05a (Update)
-=======
-                                <li>
-                                    <a href="#" class="routers">
-=======
-<<<<<<< HEAD
-=======
-                                <li>
-                                    <a href="{{route('template')}}" class="routers">
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                                         <a class="dropdown-item">
                                             Template Designs
                                         </a>
                                     </a>
                                 </li>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> e004fe4 (update)
-=======
->>>>>>> 40fc05a (Update)
-=======
-=======
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                             </ul>
                         </li>
                         <li class="nav-item">

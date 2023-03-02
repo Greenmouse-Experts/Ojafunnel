@@ -33,7 +33,7 @@
                             <i class="bi bi-x-square"></i>
                         </button>
                     </div>
-                    <div class="offcanvas-body">
+                     <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1">
                         <li class="nav-item">
                             <a href="{{route('index')}}" class="nav-link {{ (request()->is('/')) ? 'active' : '' }}" class="routers">
@@ -59,7 +59,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -69,7 +69,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -79,7 +79,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Create digital products, Courses,Training and members area.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -95,64 +95,27 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Create many sales funnels to recapture your leads and optimise their lifetime value.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('pagebuilder')}}">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                                        Page Builder 
-=======
-=======
->>>>>>> b81269b (update)
-=======
->>>>>>> f6df9b3 (Update)
                                                         Page Builder
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('template')}}">
-                                                       Template Designs
->>>>>>> e004fe4 (update)
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="#">
                                                        Template Designs
-=======
-<<<<<<< HEAD
-                                                        Page Builder 
-=======
-                                                        Page Builder
->>>>>>> 4259826 (update)
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('template')}}">
-                                                       Template Designs
->>>>>>> e004fe4 (update)
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -168,7 +131,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
                                         <div>
                                             <div class="btn-area">
@@ -178,7 +141,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Chat Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -194,7 +157,7 @@
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Track various statistics and metrics associated with all your email activities and campaigns.</p>
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua .</p>
                                         </div>
                                     </div>
                                 </div>
@@ -256,41 +219,13 @@
                                         </a>
                                     </a>
                                 </li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                                <li>
-                                    <a href="{{route('template')}}" class="routers">
-=======
                                 <li>
                                     <a href="#" class="routers">
->>>>>>> 40fc05a (Update)
-=======
-                                <li>
-                                    <a href="#" class="routers">
-=======
-<<<<<<< HEAD
-=======
-                                <li>
-                                    <a href="{{route('template')}}" class="routers">
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                                         <a class="dropdown-item">
                                             Template Designs
                                         </a>
                                     </a>
                                 </li>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> e004fe4 (update)
-=======
->>>>>>> 40fc05a (Update)
-=======
-=======
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -427,7 +362,7 @@
                         <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19429_dkzil0.png" draggable="false" alt="">
                     </div>
                 </div>
-                <div class="col-lg-3" style="margin-top: 30px;">
+                <div class="col-lg-3"  style="margin-top: 30px;">
                     <div>
                         <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19430_xwwm2k.png" draggable="false" alt="">
                     </div>
@@ -437,7 +372,7 @@
                         <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19431_abdoih.png" draggable="false" alt="">
                     </div>
                 </div>
-                <div class="col-lg-3" style="margin-top: 30px;">
+                <div class="col-lg-3"  style="margin-top: 30px;">
                     <div>
                         <img width="100%" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176680/OjaFunnel-Images/Group_46931_kbs6gz.png" draggable="false" alt="">
                     </div>
@@ -459,32 +394,13 @@
                 <div class="col-lg-6">
                     <div class="thread-text">
                         <h4>
-                            REPORTS AND ANALYSIS
+                        REPORTS AND ANALYSIS
                         </h4>
                         <h2>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        Reach customers and enhance sales 
-=======
-                            Reach customers and enhance sales
->>>>>>> e004fe4 (update)
-=======
                         Reach customers and enhance sales
->>>>>>> b81269b (update)
-=======
-                        Reach customers and enhance sales
-=======
-<<<<<<< HEAD
-                        Reach customers and enhance sales 
-=======
-                            Reach customers and enhance sales
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                         </h2>
                         <p>
-                            Integrate tools that help you market smarter, and also give you the ability to scale faster and stay ahead of the competition.
+                        Integrate tools that help you market smarter, and also give you the ability to scale faster and stay ahead of the competition.
                         </p>
                         <a href="{{route('signup')}}">
                             <button>
@@ -504,33 +420,14 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="thread-text">
-                        <h4>
-                            REPORTS AND ANALYSIS
+                    <h4>
+                        REPORTS AND ANALYSIS
                         </h4>
                         <h2>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        Reach customers and enhance sales 
-=======
-                            Reach customers and enhance sales
->>>>>>> e004fe4 (update)
-=======
                         Reach customers and enhance sales
->>>>>>> b81269b (update)
-=======
-                        Reach customers and enhance sales
-=======
-<<<<<<< HEAD
-                        Reach customers and enhance sales 
-=======
-                            Reach customers and enhance sales
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                         </h2>
                         <p>
-                            Integrate tools that help you market smarter, and also give you the ability to scale faster and stay ahead of the competition.
+                        Integrate tools that help you market smarter, and also give you the ability to scale faster and stay ahead of the competition.
                         </p>
                         <a href="{{route('signup')}}">
                             <button>
@@ -558,26 +455,7 @@
                 <div class="col-lg-8">
                     <div class="btn-text mb-4">
                         <h1>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        Do more with our Integrations 
-=======
-                            Do more with our Integrations
->>>>>>> e004fe4 (update)
-=======
                         Do more with our Integrations
->>>>>>> b81269b (update)
-=======
-                        Do more with our Integrations
-=======
-<<<<<<< HEAD
-                        Do more with our Integrations 
-=======
-                            Do more with our Integrations
->>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
                         </h1>
                     </div>
                 </div>
@@ -626,7 +504,6 @@
     <!-- Features Ends -->
 
     <!-- Digital -->
-<<<<<<< HEAD
         <section class="digital">
             <div class="container">
                 <div class="row">
@@ -646,52 +523,18 @@
                                     </a>
                                     <button style="background-color: #527EEB; color: #fff;">
                                         See Demo
-=======
-    <section class="digital">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="mount">
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-6">
-                                <h1>
-                                    Engage customers and grow your business with emails marteting features!
-                                </h1>
-                                <div class="level"></div>
-                                <a href="{{route('signup')}}">
-                                    <button>
-                                        Sign up
->>>>>>> e004fe4 (update)
                                     </button>
-                                </a>
-                                <button style="background-color: #527EEB; color: #fff;">
-                                    See Demo
-                                </button>
+                                </div>
+                                <div class="col-md-3"></div>
                             </div>
-                            <div class="col-md-3"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     <!-- Digital Ends -->
     <!-- Footter -->
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <section class="footer">
-<<<<<<< HEAD
-=======
    <section class="footer">
->>>>>>> b81269b (update)
-=======
-   <section class="footer">
-=======
-    <section class="footer">
-<<<<<<< HEAD
->>>>>>> 4259826 (update)
->>>>>>> f6df9b3 (Update)
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
@@ -820,141 +663,11 @@
                     <h1>
                         Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
                     </h1>
-=======
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="quick">
-                        <h1>
-                            Company
-                        </h1>
-                        <ul>
-                            <li style="text-align:justify">
-                                Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-1"></div>
-                <div class="col-lg-2">
-                    <div class="quick">
-                        <h1>
-                            Features
-                        </h1>
-                        <ul>
-                            <li>
-                                <a href="{{route('pagebuilder')}}">Page Builder</a>
-                            </li>
-                            <li>
-                                <a href="{{route('funnelbuilder')}}">Funnel Builder</a>
-                            </li>
-                            <li>
-                                <a href="{{route('marketauto')}}">Automation</a>
-                            </li>
-                            <li>
-                                <a href="{{route('ecommerce')}}">Ecommerce</a>
-                            </li>
-                            <li>
-                                <a href="{{route('emailmarketing')}}">Email Marketing</a>
-                            </li>
-                            <li>
-                                <a href="{{route('affiliate')}}">Affiliate Marketing</a>
-                            </li>
-                            <li>
-                                <a href="{{route('chatautomation')}}">Chat Automation</a>
-                            </li>
-                            <li>
-                                <a href="{{route('integrations')}}">API Integration</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="quick">
-                        <h1>
-                            Quick Link
-                        </h1>
-                        <ul>
-                            <li>
-                                <a href="{{route('index')}}">Home</a>
-                            </li>
-                            <li>
-                                <a href="{{route('pricing')}}"> Pricing</a>
-                            </li>
-                            <li>
-                                <a href="{{route('faqs')}}">FAQs</a>
-                            </li>
-                            <li>
-                                <a href="{{route('contact')}}">Contact</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="quick">
-                        <h1>
-                            Account
-                        </h1>
-                        <ul>
-                            <li>
-                                <a href="{{route('login')}}">Register</a>
-                            </li>
-                            <li>
-                                <a href="{{route('signup')}}">Login</a>
-                            </li>
-                        </ul>
-                        <h1>
-                            Resources
-                        </h1>
-                        <ul>
-                            <li>
-                                <a href="{{route('privacy')}}">Privacy Policy</a>
-                            </li>
-                            <li>
-                                <a href="{{route('terms')}}">Terms & Condition</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="quick">
-                        <h1>
-                            Follow Us
-                        </h1>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678779/OjaFunnel-Images/facebook_n5uvff.png" draggable="false" title="Follow" alt="">
-                                </a>
-                                <a href="#">
-                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678781/OjaFunnel-Images/twitter_kd7mew.png" draggable="false" alt="">
-                                </a>
-                                <a href="#">
-                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678783/OjaFunnel-Images/instagram_zf1kco.png" draggable="false" alt="">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="last-fott text-center">
-                        <!-- <a href="{{route('privacy')}}">
-                        Privacy Policy
-                    </a>
-                    |
-                    <a href="{{route('terms')}}">
-                        Terms & Condition
-                    </a> -->
-                        <h1>
-                            Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
-                        </h1>
-                    </div>
->>>>>>> e004fe4 (update)
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
     <!-- Footter Ends -->
 
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>

@@ -86,19 +86,6 @@
                                                 </h4>
                                             </div>
                                             <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
-<<<<<<< HEAD
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('template')}}">
-                                                       Template Designs
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <p>pre-made designs and documents that can be customized is available on</p>
-=======
->>>>>>> f6df9b3 (Update)
                                         </div>
                                         <div>
                                             <div class="btn-area">
