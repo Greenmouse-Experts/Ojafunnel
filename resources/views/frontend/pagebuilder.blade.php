@@ -102,6 +102,7 @@
                                                 <h4>
                                                     <a href="{{route('pagebuilder')}}">
                                                         Page Builder
+<<<<<<< HEAD
                                                     </a>
                                                 </h4>
                                             </div>
@@ -112,10 +113,12 @@
                                                 <h4>
                                                     <a href="#">
                                                        Template Designs
+=======
+>>>>>>> 4259826 (update)
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -221,6 +224,7 @@
                                 </li>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                                 <li>
                                     <a href="{{route('template')}}" class="routers">
@@ -228,15 +232,31 @@
                                 <li>
                                     <a href="#" class="routers">
 >>>>>>> 40fc05a (Update)
+=======
+                                <li>
+                                    <a href="#" class="routers">
+=======
+<<<<<<< HEAD
+=======
+                                <li>
+                                    <a href="{{route('template')}}" class="routers">
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                                         <a class="dropdown-item">
                                             Template Designs
                                         </a>
                                     </a>
                                 </li>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> e004fe4 (update)
 =======
 >>>>>>> 40fc05a (Update)
+=======
+=======
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                             </ul>
                         </li>
                         <li class="nav-item">

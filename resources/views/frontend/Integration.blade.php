@@ -103,10 +103,13 @@
                                                     <a href="{{route('pagebuilder')}}">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                         Page Builder 
 =======
 =======
 >>>>>>> b81269b (update)
+=======
+>>>>>>> f6df9b3 (Update)
                                                         Page Builder
                                                     </a>
                                                 </h4>
@@ -129,10 +132,27 @@
                                                 <h4>
                                                     <a href="#">
                                                        Template Designs
+=======
+<<<<<<< HEAD
+                                                        Page Builder 
+=======
+                                                        Page Builder
+>>>>>>> 4259826 (update)
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
+                                        </div>
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="{{route('template')}}">
+                                                       Template Designs
+>>>>>>> e004fe4 (update)
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -238,6 +258,7 @@
                                 </li>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                                 <li>
                                     <a href="{{route('template')}}" class="routers">
@@ -245,15 +266,31 @@
                                 <li>
                                     <a href="#" class="routers">
 >>>>>>> 40fc05a (Update)
+=======
+                                <li>
+                                    <a href="#" class="routers">
+=======
+<<<<<<< HEAD
+=======
+                                <li>
+                                    <a href="{{route('template')}}" class="routers">
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                                         <a class="dropdown-item">
                                             Template Designs
                                         </a>
                                     </a>
                                 </li>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> e004fe4 (update)
 =======
 >>>>>>> 40fc05a (Update)
+=======
+=======
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -427,6 +464,7 @@
                         <h2>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                         Reach customers and enhance sales 
 =======
                             Reach customers and enhance sales
@@ -434,6 +472,16 @@
 =======
                         Reach customers and enhance sales
 >>>>>>> b81269b (update)
+=======
+                        Reach customers and enhance sales
+=======
+<<<<<<< HEAD
+                        Reach customers and enhance sales 
+=======
+                            Reach customers and enhance sales
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                         </h2>
                         <p>
                             Integrate tools that help you market smarter, and also give you the ability to scale faster and stay ahead of the competition.
@@ -462,6 +510,7 @@
                         <h2>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                         Reach customers and enhance sales 
 =======
                             Reach customers and enhance sales
@@ -469,6 +518,16 @@
 =======
                         Reach customers and enhance sales
 >>>>>>> b81269b (update)
+=======
+                        Reach customers and enhance sales
+=======
+<<<<<<< HEAD
+                        Reach customers and enhance sales 
+=======
+                            Reach customers and enhance sales
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                         </h2>
                         <p>
                             Integrate tools that help you market smarter, and also give you the ability to scale faster and stay ahead of the competition.
@@ -501,6 +560,7 @@
                         <h1>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                         Do more with our Integrations 
 =======
                             Do more with our Integrations
@@ -508,6 +568,16 @@
 =======
                         Do more with our Integrations
 >>>>>>> b81269b (update)
+=======
+                        Do more with our Integrations
+=======
+<<<<<<< HEAD
+                        Do more with our Integrations 
+=======
+                            Do more with our Integrations
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                         </h1>
                     </div>
                 </div>
@@ -609,11 +679,19 @@
     <!-- Digital Ends -->
     <!-- Footter -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <section class="footer">
 <<<<<<< HEAD
 =======
    <section class="footer">
 >>>>>>> b81269b (update)
+=======
+   <section class="footer">
+=======
+    <section class="footer">
+<<<<<<< HEAD
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
     <div class="container">
         <div class="row">
             <div class="col-lg-3">

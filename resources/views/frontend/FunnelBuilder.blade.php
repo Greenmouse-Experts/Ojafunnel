@@ -78,6 +78,7 @@
                                                 <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                                         <div>
                                             <div class="btn-area">
@@ -90,6 +91,8 @@
                                             <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
 >>>>>>> e004fe4 (update)
 =======
+=======
+>>>>>>> f6df9b3 (Update)
                                             <div>
                                                 <div class="btn-area">
                                                     <h4>
@@ -100,7 +103,23 @@
                                                 </div>
                                                 <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                             </div>
+<<<<<<< HEAD
 >>>>>>> 40fc05a (Update)
+=======
+=======
+=======
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="{{route('emailmarketing')}}">
+                                                        Email Marketing
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                                         </div>
                                         <div>
                                             <div class="btn-area">

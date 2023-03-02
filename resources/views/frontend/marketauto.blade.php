@@ -107,21 +107,36 @@
                                         </div>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="{{route('template')}}">
 =======
+=======
+>>>>>>> f6df9b3 (Update)
                                         <div>
                                             <div class="btn-area">
                                                 <h4>
                                                     <a href="#">
+<<<<<<< HEAD
 >>>>>>> 40fc05a (Update)
+=======
+=======
+<<<<<<< HEAD
+=======
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="{{route('template')}}">
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                                                        Template Designs
                                                     </a>
                                                 </h4>
                                             </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
                                             <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
@@ -130,6 +145,15 @@
                                             <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
                                         </div>
 >>>>>>> 40fc05a (Update)
+=======
+                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                        </div>
+=======
+                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
+                                        </div>
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="upload">
@@ -234,6 +258,7 @@
                                 </li>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                                 <li>
                                     <a href="{{route('template')}}" class="routers">
@@ -241,15 +266,31 @@
                                 <li>
                                     <a href="#" class="routers">
 >>>>>>> 40fc05a (Update)
+=======
+                                <li>
+                                    <a href="#" class="routers">
+=======
+<<<<<<< HEAD
+=======
+                                <li>
+                                    <a href="{{route('template')}}" class="routers">
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                                         <a class="dropdown-item">
                                             Template Designs
                                         </a>
                                     </a>
                                 </li>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> e004fe4 (update)
 =======
 >>>>>>> 40fc05a (Update)
+=======
+=======
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                             </ul>
                         </li>
                         <li class="nav-item">

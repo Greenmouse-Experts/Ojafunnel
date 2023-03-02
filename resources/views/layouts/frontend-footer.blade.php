@@ -4,6 +4,7 @@
             <div class="col-lg-3">
                 <div class="quick">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <ul>
                         <li>
                             <div class="force">
@@ -14,12 +15,28 @@
                         </li>
                         <li>
 =======
+=======
+>>>>>>> f6df9b3 (Update)
                     <h1>
                         Company
                     </h1>
                     <ul>
                         <li style="text-align:justify">
+<<<<<<< HEAD
 >>>>>>> b81269b (update)
+=======
+=======
+                    <ul>
+                        <li>
+                            <div class="force">
+                                <a href="#">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" alt="">
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                         Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                         </li>
                     </ul>
@@ -130,9 +147,15 @@
             <div class="col-lg-12">
                 <div class="last-fott text-center">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <hr>
 =======
 >>>>>>> b81269b (update)
+=======
+=======
+                    <hr>
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                     <!-- <a href="{{route('privacy')}}">
                         Privacy Policy
                     </a>

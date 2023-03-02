@@ -103,10 +103,13 @@
                                                     <a href="{{route('pagebuilder')}}">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                         Page Builder 
 =======
 =======
 >>>>>>> b81269b (update)
+=======
+>>>>>>> f6df9b3 (Update)
                                                         Page Builder
                                                     </a>
                                                 </h4>
@@ -129,10 +132,27 @@
                                                 <h4>
                                                     <a href="#">
                                                        Template Designs
+=======
+<<<<<<< HEAD
+                                                        Page Builder 
+=======
+                                                        Page Builder
+>>>>>>> 4259826 (update)
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
+                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
+                                        </div>
+                                        <div>
+                                            <div class="btn-area">
+                                                <h4>
+                                                    <a href="{{route('template')}}">
+                                                       Template Designs
+>>>>>>> e004fe4 (update)
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -238,6 +258,7 @@
                                 </li>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                                 <li>
                                     <a href="{{route('template')}}" class="routers">
@@ -245,15 +266,31 @@
                                 <li>
                                     <a href="#" class="routers">
 >>>>>>> 40fc05a (Update)
+=======
+                                <li>
+                                    <a href="#" class="routers">
+=======
+<<<<<<< HEAD
+=======
+                                <li>
+                                    <a href="{{route('template')}}" class="routers">
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                                         <a class="dropdown-item">
                                             Template Designs
                                         </a>
                                     </a>
                                 </li>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> e004fe4 (update)
 =======
 >>>>>>> 40fc05a (Update)
+=======
+=======
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -541,6 +578,7 @@
                         <p>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                         Get more sales and customers for your business with our awesome features 
 =======
                             Get more sales and customers for your business with our awesome features
@@ -548,6 +586,16 @@
 =======
                         Get more sales and customers for your business with our awesome features
 >>>>>>> b81269b (update)
+=======
+                        Get more sales and customers for your business with our awesome features
+=======
+<<<<<<< HEAD
+                        Get more sales and customers for your business with our awesome features 
+=======
+                            Get more sales and customers for your business with our awesome features
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                         </p>
                     </div>
                 </div>
@@ -558,6 +606,7 @@
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674143190/OjaFunnel-Images/Ellipse_910_ndx5ym.png" class="optic" alt="Picture" draggable="false">
                         <div class="drag">
                             <h1>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
                             Integrated checkout 
@@ -571,11 +620,29 @@
                                 Accept payments for your products from anywhere in the world
 >>>>>>> e004fe4 (update)
 =======
+=======
+>>>>>>> f6df9b3 (Update)
                             Integrated checkout
                             </h1>
                             <p>
                             Accept payments for your products from anywhere in the world
+<<<<<<< HEAD
 >>>>>>> b81269b (update)
+=======
+=======
+<<<<<<< HEAD
+                            Integrated checkout 
+                            </h1>
+                            <p>
+                            Accept payments for your products from anywhere in the world   
+=======
+                                Integrated checkout
+                            </h1>
+                            <p>
+                                Accept payments for your products from anywhere in the world
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                             </p>
                         </div>
                     </div>
@@ -633,6 +700,7 @@
                             <p>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                             Get custom domain, or easily link your existing website to Ojafunnel 
 =======
                                 Get custom domain, or easily link your existing website to Ojafunnel
@@ -640,6 +708,16 @@
 =======
                             Get custom domain, or easily link your existing website to Ojafunnel
 >>>>>>> b81269b (update)
+=======
+                            Get custom domain, or easily link your existing website to Ojafunnel
+=======
+<<<<<<< HEAD
+                            Get custom domain, or easily link your existing website to Ojafunnel 
+=======
+                                Get custom domain, or easily link your existing website to Ojafunnel
+>>>>>>> e004fe4 (update)
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
                             </p>
                         </div>
                     </div>
@@ -664,11 +742,19 @@
     <!-- Features Ends -->
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <section class="footer">
 <<<<<<< HEAD
 =======
    <section class="footer">
 >>>>>>> b81269b (update)
+=======
+   <section class="footer">
+=======
+    <section class="footer">
+<<<<<<< HEAD
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
@@ -803,6 +889,7 @@
     </div>
 </section>
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 =======
         <div class="container">
@@ -820,6 +907,27 @@
                     </div>
                 </div>
 
+=======
+
+=======
+    
+=======
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="quick">
+                        <h1>
+                            Company
+                        </h1>
+                        <ul>
+                            <li style="text-align:justify">
+                                Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+>>>>>>> f6df9b3 (Update)
                 <div class="col-lg-1"></div>
                 <div class="col-lg-2">
                     <div class="quick">
@@ -940,9 +1048,13 @@
     </section>
 
 >>>>>>> e004fe4 (update)
+<<<<<<< HEAD
 =======
 
 >>>>>>> b81269b (update)
+=======
+>>>>>>> 4259826 (update)
+>>>>>>> f6df9b3 (Update)
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/main.js')}}"></script>
