@@ -97,16 +97,6 @@
                                             </div>
                                             <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                         </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('template')}}">
-                                                       Template Designs
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <p>Amet minim mollit non desunt ullamco est sit aliqua dolor.</p>
-                                        </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="upload">
