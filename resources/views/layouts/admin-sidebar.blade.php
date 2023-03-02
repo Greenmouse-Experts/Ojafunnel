@@ -109,6 +109,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('pageBuilder')}}">
+                        <i class="bi bi-window-fullscreen"></i>
+                        <span key="t-chat">Page Builder</span>
+                    </a>
+                </li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-book"></i>
                         <span key="t-chat">Learning Management</span>
