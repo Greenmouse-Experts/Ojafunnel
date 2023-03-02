@@ -2370,16 +2370,11 @@ header nav .offcanvas-header button i {
 /**Footer**/
 .footer {
 <<<<<<< HEAD
-    padding: 50px 0px 0px 0px;
-    background-color: #fff;
-=======
-<<<<<<< HEAD
     padding: 100px 0px 0px 0px;
 =======
     padding: 50px 0px 0px 0px;
     background-color: #F2F3F4;
 >>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
 }
 
 .footer .kit-font img {
@@ -2409,14 +2404,8 @@ header nav .offcanvas-header button i {
     margin-top: 0;
     padding: 0 0 15px 0;
     margin-bottom: 0;
-    font-weight: 700;
+    font-weight: 600;
 }
-.footer .quick ul li  img{
-    width: 25px;
-    margin: 0px 7px;
-}
-<<<<<<< HEAD
-=======
 <<<<<<< HEAD
 
 =======
@@ -2424,7 +2413,6 @@ header nav .offcanvas-header button i {
     width: 160px !important;
 }
 >>>>>>> e004fe4 (update)
->>>>>>> 4259826 (update)
 .footer .quick ul li {
     list-style: none;
     color: #000;
