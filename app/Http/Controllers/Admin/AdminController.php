@@ -166,6 +166,18 @@ class AdminController extends Controller
         return view('Admin.lms.courses');
     }
 
+    
+    public function view_shop()
+    {
+        return view('Admin.lms.viewShop');
+    }
+
+    
+    public function view_category()
+    {
+        return view('Admin.lms.category');
+    }
+
     public function course_detail()
     {
         return view('Admin.lms.viewCourse');
