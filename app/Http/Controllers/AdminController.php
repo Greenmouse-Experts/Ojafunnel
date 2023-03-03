@@ -107,6 +107,23 @@ class AdminController extends Controller
             return view('admin.lms.courses');
         }
 
+        public function add_category(Request $request)
+        {
+
+            
+            return view('admin.lms.courses');
+        }
+
+        public function update_category()
+        {
+            return view('admin.lms.courses');
+        }
+
+        public function delete_category()
+        {
+            return view('admin.lms.courses');
+        }
+
         public function course_detail()
         {
             return view('admin.lms.viewCourse');

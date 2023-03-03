@@ -8,7 +8,6 @@
     <meta content="Oja Funnel |  Dashboard" name="Oja Funnel |  Dashboard" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{$shop->logo}}" />
-    <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.webui-popover.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/slick.css') }}">
@@ -31,7 +30,7 @@
                         <ul class="mobile-header-buttons">
                             <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
                         </ul>
-                        <a class="navbar-brand" href="{{route('user.dashboard', Auth::user()->username)}}">
+                        <a class="navbar-brand" href="{{$shop->link}}">
                             {{$shop->name}}
                         </a>
                         <form class="inline-form mt-3" style="width: 80%;">
@@ -166,9 +165,9 @@
                     </div>
                 @endif
                 <div class="col-lg-12">
-                    <h2 class="course-carousel-title mb-4">All Courses Found {{\App\Models\Course::where('user_id', Auth::user()->id)->get()->count()}}</h2>
+                    <h2 class="course-carousel-title mb-4">All Courses Found {{\App\Models\Course::where('user_id', Auth::user()->id)->where('approved', true)->get()->count()}}</h2>
                 </div>
-                @forelse(\App\Models\Course::where('user_id', Auth::user()->id)->get() as $course)
+                @forelse(\App\Models\Course::where('user_id', Auth::user()->id)->where('approved', true)->get() as $course)
                 <div class="col-lg-4">
                     <div class="course-box-wrap">
                         <a href="{{route('view.course.details', [$shop->name, Crypt::encrypt($course->id)])}}" class="has-popover">
@@ -205,7 +204,7 @@
                                 </div> -->
                                 <div class="course-meta">
                                     <span class=""><i class="fas fa-play-circle"></i>
-                                        Lessons
+                                        {{App\Models\Lesson::where('course_id', $course->id)->get()->count()}} Lessons
                                     </span>
                                     <!-- <span class=""><i class="far fa-clock"></i>
                                         2 Hours

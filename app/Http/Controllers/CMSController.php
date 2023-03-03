@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Course;
+use App\Models\Learn;
 use App\Models\Lesson;
+use App\Models\Requirement;
 use App\Models\Section;
 use App\Models\Shop;
 use App\Models\Video;
@@ -348,6 +350,75 @@ class CMSController extends Controller
             'message' => 'Lesson deleted successfully.'
         ]);
     }
+
+    public function save_requirement($id, Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'description' => ['required', 'string']
+        ]);
+
+        $finder = Crypt::decrypt($id);
+
+        $course = Course::find($finder);
+
+        Requirement::create([
+            'course_id' => $course->id,
+            'description' => $request->description,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Save successfully.'
+        ]);
+    }
+
+    public function delete_requirement($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        Requirement::find($finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Requirement deleted successfully.'
+        ]);
+    }
+
+    public function save_what_to_learn($id, Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'description' => ['required', 'string']
+        ]);
+
+        $finder = Crypt::decrypt($id);
+
+        $course = Course::find($finder);
+
+        Learn::create([
+            'course_id' => $course->id,
+            'description' => $request->description,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Save successfully.'
+        ]);
+    }
+
+    public function delete_what_to_learn($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        Learn::find($finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Outline deleted successfully.'
+        ]);
+    }
+    
 
     public function save_coupon($id, Request $request)
     {

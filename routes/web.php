@@ -51,7 +51,6 @@ Route::get('assets/{dirname}/{basename}', [
 ])->name('public_assets');
 
 
-
 // Route::domain(config('app.domain_url'))->group(function() {
 Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
 // Faqs
@@ -82,33 +81,24 @@ Route::get('/features/emailmarketing', [App\Http\Controllers\HomePageController:
 Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
 Route::get('/datatable_locale', [App\Http\Controllers\Controller::class, 'datatable_locale'])->name('datatable_locale');
 Route::get('/jquery_validate_locale', [App\Http\Controllers\Controller::class, 'jquery_validate_locale'])->name('jquery_validate_locale');
-// });
 
 // See Demo
 Route::get('/see-demo', [App\Http\Controllers\HomePageController::class, 'demo'])->name('demo');
-// });
 
 // Ecommerce Frontend
 Route::get('/features/ecommerce', [App\Http\Controllers\HomePageController::class, 'ecommerce'])->name('ecommerce');
-// });
 
 // Funnel Bulder Frontend
 Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::class, 'funnelbuilder'])->name('funnelbuilder');
-// });
 
 // Template Designs Frontend
 Route::get('/features/template', [App\Http\Controllers\HomePageController::class, 'template'])->name('template');
-// });
 
 // Affiliate Marketing
 Route::get('/features/affiliate', [App\Http\Controllers\HomePageController::class, 'affiliate'])->name('affiliate');
-// });
-
 
 // Integration Frontend
 Route::get('/features/integrations', [App\Http\Controllers\HomePageController::class, 'integrations'])->name('integrations');
-// });
-
 
 //User Authentications
 Route::prefix('auth')->group(function () {
@@ -409,8 +399,6 @@ Route::get('/support/get/admins', [ChatController::class, 'fetchAllAdmins']);
 Route::post('/support/send', [ChatController::class, 'sendMessage']);
 
 Route::post('/support/clear/single/chat', [ChatController::class, 'deleteSingleChat']);
-
-
 
 // Builder
 Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');

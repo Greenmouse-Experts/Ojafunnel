@@ -37,7 +37,7 @@
                         <ul class="mobile-header-buttons">
                             <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
                         </ul>
-                        <a class="navbar-brand" href="{{route('user.dashboard', Auth::user()->username)}}">
+                        <a class="navbar-brand" href="{{$shop->link}}">
                             {{$shop->name}}
                         </a>
                         <form class="inline-form" style="width: 100%;">

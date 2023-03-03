@@ -7,7 +7,6 @@
     <meta content="description" name="{{$shop->description}} | Oja Funnel | Shop" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{$shop->logo}}" />
-    <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.webui-popover.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/slick.css') }}">
@@ -31,7 +30,7 @@
                         <ul class="mobile-header-buttons">
                             <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
                         </ul>
-                        <a class="navbar-brand" href="{{route('user.dashboard', Auth::user()->username)}}">
+                        <a class="navbar-brand" href="{{$shop->link}}">
                             {{$shop->name}}
                         </a>
                         <form class="inline-form mt-3" style="width: 100%;">
@@ -103,11 +102,12 @@
                         <h1 class="title">{{$course->title}}</h1>
                         <p class="subtitle">{{$course->subtitle}}</p>
                         <div class="rating-row">
-                            <span class="course-badge best-seller">Best seller</span>
+                            <!-- <span class="course-badge best-seller">Best seller</span>
                             <i class="fas fa-star filled" style="color: #f5c85b;"></i>
                             <i class="fas fa-star"></i>
                             <span class="d-inline-block average-rating"></span>
-                            <span>(20 ratings)</span>
+                            <span>(20 ratings)</span> -->
+                            <span class="last-updated-date">Created By {{App\Models\User::find($course->user_id)->first_name}} {{App\Models\User::find($course->user_id)->last_name}}</span>
                             <span class="enrolled-num">
                                 {{\App\Models\ShopOrder::where('course_id', $course->id)->get()->count()}} Students Enrolled
                             </span>
@@ -117,7 +117,6 @@
                             {{--Created by--}}
                             {{--<a href="">first_name last_name</a>--}}
                             {{--</span>--}} -->
-                            <span class="last-updated-date">Created on {{$course->created_at->toFormattedDateString()}}</span>
                             <span class="last-updated-date">Last updated on {{$course->updated_at->toFormattedDateString()}}</span>
                             <span class="comment">
                                 <i class="fas fa-comment"></i>{{$course->language}}
@@ -129,17 +128,7 @@
                     <div class="course-sidebar">
                         <div class="course-sidebar-text-box">
                             <div class="buy-btns">
-                                    <a href="" class="btn btn-buy-now" id="course_2" onclick="handleBuyNow(this)">Buy
-                                        now</a>
-                                    <a>
-                                        <input type="hidden" value="1" name="course_id">
-                                        <input type="hidden" value="Html and Css" name="name">
-                                        <input type="hidden" value="100" name="price">
-                                        <input type="hidden" value="1" name="quantity">
-                                        <button class="btn btn-add-cart" type="submit">Add to
-                                            cart
-                                        </button>
-                                    </a>
+                                    <a href="{{ route('add.course.to.cart', $course->id) }}" class="btn btn-add-cart">Add to cart</a>
                             </div>
 
                             <div class="includes">
@@ -165,8 +154,9 @@
                     <div class="what-you-get-box">
                         <div class="what-you-get-title">What i will learn?</div>
                         <ul class="what-you-get__items">
-                            <li>You will create a portfolio of 15 apps to be able apply for junior developer jobs at a technology company</li>
-                            <li>You will learn Xcode, UIKit and SwiftUI, ARKit, CoreML and CoreData.</li>
+                            @foreach(App\Models\Learn::where('course_id', $course->id)->get() as $learn)
+                            <li>{{$learn->description}}</li>
+                            @endforeach
                         </ul>
 
                     </div>
@@ -175,42 +165,43 @@
                         <div class="course-curriculum-title clearfix">
                             <div class="title float-left">Lessons for this course</div>
                         </div>
+                        @foreach(App\Models\Section::where('course_id', $course->id)->get() as $section)
                         <div class="course-curriculum-accordion">
                             <div class="lecture-group-wrapper">
-                                <div class="lecture-group-title clearfix" data-toggle="collapse" data-target="#collapse" aria-expanded="false">
+                                <div class="lecture-group-title clearfix" data-toggle="collapse" data-target="#collapse-{{$section->id}}" aria-expanded="false">
                                     <div class="title float-left">
-                                        Lessons
+                                        {{$section->title}}
                                     </div>
                                     <div class="float-right">
                                         <span class="total-time">
-                                            2 lessons
+                                            {{App\Models\Lesson::where('section_id', $section->id)->get()->count()}} lessons
                                         </span>
                                         <span class="total-time">
-                                            12: 30 minute
+                                            {{App\Models\Lesson::where('section_id', $section->id)->sum('duration')}} minutes
                                         </span>
                                     </div>
                                 </div>
-                                <div id="collapse" class="lecture-list collapse">
+                                <div id="collapse-{{$section->id}}" class="lecture-list collapse">
                                     <ul>
+                                        @foreach(App\Models\Lesson::where('section_id', $section->id)->get() as $lesson)
                                         <li class="lecture has-preview">
-                                            <span class="lecture-title">Vue Js</span>
-                                            <span class="lecture-time float-right">12: 30 minute</span>
+                                            <span class="lecture-title">{{$lesson->title}}</span>
+                                            <span class="lecture-time float-right">{{$lesson->duration}} minutes</span>
                                         </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
                     </div>
                     <div class="requirements-box">
                         <div class="requirements-title">Requirements</div>
                         <div class="requirements-content">
                             <ul class="requirements__list">
-                                <li>No programming experience needed - I'll teach you everything you need to know</li>
-                                <li>A Mac computer running macOS 10.15 (Catalina) or a PC running macOS.</li>
-                                <li>No paid software required - all apps will be created in Xcode 11 (which is free to download)</li>
-                                <li>
-                                I'll walk you through, step-by-step how to get Xcode installed and set up
-                                </li>
+                                @foreach(App\Models\Requirement::where('course_id', $course->id)->get() as $requirement)
+                                <li>{{$requirement->description}}</li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -221,7 +212,7 @@
                         <div class="description-title">Description</div>
                         <div class="description-content-wrap">
                             <div class="description-content">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, quisquam?
+                                {{$course->description}}
                             </div>
                         </div>
                     </div>
@@ -258,6 +249,68 @@
     <script src="https://content.jwplatform.com/libraries/O7BMTay5.js"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 </body>
+
+<style>
+.dropdown button.btn-info{
+    color: {{$shop->color}};
+    background: {{$shop->theme}};
+}
+.dropdown .dropdown-menu{
+    padding:20px;
+    width:310px !important;
+    box-shadow:0px 4px 7px #a8a7a7;
+}
+.total-header-section{
+    border-bottom:1px solid #d2d2d2;
+}
+.total-section p{
+    margin-bottom:20px;
+}
+.cart-detail{
+    padding:15px 0px;
+}
+.cart-detail-img img{
+    width:100%;
+    height:100%;
+    padding-left:15px;
+}
+.cart-detail-product p{
+    margin:0px;
+    color:#000;
+    font-weight:500;
+}
+
+span.text-info{
+    color: {{$shop->theme}} !important;
+}
+.cart-detail .price{
+    font-size:12px;
+    margin-right:10px;
+    font-weight:500;
+}
+.cart-detail .count{
+    color:#C2C2DC;
+}
+.checkout{
+    border-top:1px solid #d2d2d2;
+    padding-top: 15px;
+}
+.checkout .btn-primary{
+    color: {{$shop->color}};
+    background: {{$shop->theme}};
+}
+.dropdown-menu:before{
+    content: " ";
+    position:absolute;
+    top:-20px;
+    right:50px;
+    border:10px solid transparent;
+    border-bottom-color:#fff;
+}
+</style>
+
 </html>
 

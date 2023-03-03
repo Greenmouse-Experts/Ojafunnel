@@ -157,14 +157,14 @@
                                                                 <td><b>Lesson {{$loop->iteration}}:</b> {{$lesson->title}}</td>
                                                                 <td><b>Content Type:</b> {{$lesson->content_type}}</td>
                                                                 <td>
-                                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                                    <li data-bs-toggle="tooltip" data-bs-placement="top">
-                                                                        <form method="POST" action="{{ route('user.delete.lesson', Crypt::encrypt($lesson->id))}}">
-                                                                            @csrf
-                                                                            <button type="submit" title="Delete" class="btn btn-sm btn-soft-danger"><i class="bi bi-trash"></i></button>
-                                                                        </form>
-                                                                    </li>
-                                                                </ul>
+                                                                    <ul class="list-unstyled hstack gap-1 mb-0">
+                                                                        <li data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                            <form method="POST" action="{{ route('user.delete.lesson', Crypt::encrypt($lesson->id))}}">
+                                                                                @csrf
+                                                                                <button type="submit" title="Delete" class="btn btn-sm btn-soft-danger"><i class="bi bi-trash"></i></button>
+                                                                            </form>
+                                                                        </li>
+                                                                    </ul>
                                                                 </td>
                                                             </tr>
                                                             @endforeach
@@ -270,76 +270,78 @@
                                                 <div class="col-sm-9">
                                                     <div class="Editt">
                                                         <form id="submit-button" name="submitbutton" method="post" action="{{route('user.save.course', Crypt::encrypt($course->id))}}" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <div class="form">
-                                                            <div class="row">
-                                                                <div class="col-lg-12 mb-4">
-                                                                    <label for="Name">Course title</label>
-                                                                    <input type="text" name="title" value="{{$course->title}}" placeholder="Course Title" />
-                                                                </div>
-                                                                <div class="col-lg-12 mb-4">
-                                                                    <label for="Name">Course subtitle</label>
-                                                                    <input type="text" name="subtitle" value="{{$course->subtitle}}" placeholder="Insert your course subtitle." />
-                                                                </div>
-                                                                <div class="col-lg-12 mb-4">
-                                                                    <label for="Name">Course description</label>
-                                                                    <textarea name="course_description" cols="30" rows="10" placeholder="Insert your Course Description">{{$course->description}}</textarea>
-                                                                </div>
-                                                                <div class="col-lg-4 mb-4">
-                                                                    <label for="Name">Basic info</label>
-                                                                    <select name="language">
-                                                                        <option value="{{$course->language}}">{{$course->language}}</option>
-                                                                        <option value="">-- Select Level --</option>
-                                                                        <option value="English">English</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-lg-4 mb-4">
-                                                                    <label for="Name">-- Select Level --</label>
-                                                                    <select name="level">
-                                                                        <option value="{{$course->level}}">{{$course->level}}</option>
-                                                                        <option value="">-- Select Level --</option>
-                                                                        <option value="beginner">Beginner Level</option>
-                                                                        <option value="intermediate">Intermediate Level</option>
-                                                                        <option value="advanced">Advanced Level</option>
-                                                                        <option value="all">All Levels</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-lg-4 mb-4">
-                                                                    <label for="Name">-- Select Category --</label>
-                                                                    <select name="category">
-                                                                        <option value="{{$course->category_id}}">{{\App\Models\Category::find($course->category_id)->name}}</option>
-                                                                        <option value="">-- Select Category --</option>
-                                                                        @foreach(\App\Models\Category::get() as $category)
-                                                                        <option value="{{$category->id}}">{{$category->name}}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-lg-2 mb-4">
-                                                                    <label for="Name">Currency</label>
-                                                                    <select name="currency">
-                                                                        <option value="{{$course->currency}}">{{$course->currency}}</option>
-                                                                        <option value="">-- Select Currency --</option>
-                                                                        <option value="USD">USD</option>
-                                                                        <option value="NGN">NGN</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-lg-10 mb-4">
-                                                                    <label for="Name">Pricing</label>
-                                                                    <input type="number" name="price" value="{{$course->price}}" placeholder="Enter Price" />
-                                                                </div>
-                                                                <div class="col-lg-12 mb-4">
-                                                                    <label for="Name">Course image</label>
-                                                                    <input type="file" name="image" />
-                                                                </div>
-                                                                <div class="col-xl-12 float-end">
-                                                                    <div class="card">
-                                                                        <button type="submit" name="courseUpdate" value="Update" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
-                                                                            Update
-                                                                        </button>
+                                                            @csrf
+                                                            <div class="form">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="Name">Course title</label>
+                                                                        <input type="text" name="title" value="{{$course->title}}" placeholder="Course Title" />
+                                                                    </div>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="Name">Course subtitle</label>
+                                                                        <input type="text" name="subtitle" value="{{$course->subtitle}}" placeholder="Insert your course subtitle." />
+                                                                    </div>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="Name">Course description</label>
+                                                                        <textarea name="course_description" cols="30" rows="10" placeholder="Insert your Course Description">{{$course->description}}</textarea>
+                                                                    </div>
+                                                                    <div class="col-lg-4 mb-4">
+                                                                        <label for="Name">Basic info</label>
+                                                                        <select name="language">
+                                                                            <option value="{{$course->language}}">{{$course->language}}</option>
+                                                                            <option value="">-- Select Level --</option>
+                                                                            @foreach(App\Models\Language::get() as $language)
+                                                                            <option value="{{$language->name}}">{{$language->name}}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-lg-4 mb-4">
+                                                                        <label for="Name">-- Select Level --</label>
+                                                                        <select name="level">
+                                                                            <option value="{{$course->level}}">{{$course->level}}</option>
+                                                                            <option value="">-- Select Level --</option>
+                                                                            <option value="beginner">Beginner Level</option>
+                                                                            <option value="intermediate">Intermediate Level</option>
+                                                                            <option value="advanced">Advanced Level</option>
+                                                                            <option value="all">All Levels</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-lg-4 mb-4">
+                                                                        <label for="Name">-- Select Category --</label>
+                                                                        <select name="category">
+                                                                            <option value="{{$course->category_id}}">{{\App\Models\Category::find($course->category_id)->name}}</option>
+                                                                            <option value="">-- Select Category --</option>
+                                                                            @foreach(\App\Models\Category::get() as $category)
+                                                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-lg-2 mb-4">
+                                                                        <label for="Name">Currency</label>
+                                                                        <select name="currency">
+                                                                            <option value="{{$course->currency}}">{{$course->currency}}</option>
+                                                                            <option value="">-- Select Currency --</option>
+                                                                            <option value="USD">USD</option>
+                                                                            <option value="NGN">NGN</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-lg-10 mb-4">
+                                                                        <label for="Name">Pricing</label>
+                                                                        <input type="number" name="price" value="{{$course->price}}" placeholder="Enter Price" />
+                                                                    </div>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="Name">Course image</label>
+                                                                        <input type="file" name="image" />
+                                                                    </div>
+                                                                    <div class="col-xl-12 float-end">
+                                                                        <div class="card">
+                                                                            <button type="submit" name="courseUpdate" value="Update" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                                                                Update
+                                                                            </button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -363,19 +365,21 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="table-responsive mt-2">
-                                                        <table id="" class="table table-bordered dt-responsive nowrap w-100">
+                                                        <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                                             <thead>
                                                                 <tr>
                                                                     <th scope="col">S/N</th>
                                                                     <th scope="col">Requirements</th>
+                                                                    <th scope="col">Date Added</th>
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                @foreach(App\Models\Requirement::latest()->where('course_id', $course->id)->get() as $requirment)
                                                                 <tr>
-                                                                    <td>#01</td>
-                                                                    <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas vero nemo sapiente officiis error
-                                                                    </td>
+                                                                    <td>{{$loop->iteration}}</td>
+                                                                    <td>{{$requirment->description}}</td>
+                                                                    <td>{{$requirment->created_at->toDayDateTimeString()}}</td>
                                                                     <td>
                                                                         <ul class="list-unstyled hstack gap-1 mb-0">
                                                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
@@ -384,6 +388,7 @@
                                                                         </ul>
                                                                     </td>
                                                                 </tr>
+                                                                @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -396,7 +401,7 @@
                                                     <h4 class="card-title mb-4"><strong>What to Learn</strong></h4>
                                                     <div class="visual">
                                                         <p>
-                                                             State and outline what students will learn enrolling for this course.
+                                                            State and outline what students will learn enrolling for this course.
                                                         <div class="lamet float-end"><a href="" data-bs-toggle="modal" data-bs-target="#createOutline"><strong>Add Outline</strong></a></div>
                                                         </p>
                                                     </div>
@@ -405,19 +410,21 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="table-responsive mt-2">
-                                                        <table id="" class="table table-bordered dt-responsive nowrap w-100">
+                                                        <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                                             <thead>
                                                                 <tr>
                                                                     <th scope="col">S/N</th>
                                                                     <th scope="col">Course Outline</th>
+                                                                    <th scope="col">Date Added</th>
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                @foreach(App\Models\Learn::latest()->where('course_id', $course->id)->get() as $learn)
                                                                 <tr>
-                                                                    <td>#01</td>
-                                                                    <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas vero nemo sapiente officiis error
-                                                                    </td>
+                                                                    <td>{{$loop->iteration}}</td>
+                                                                    <td>{{$learn->description}}</td>
+                                                                    <td>{{$learn->created_at->toDayDateTimeString()}}</td>
                                                                     <td>
                                                                         <ul class="list-unstyled hstack gap-1 mb-0">
                                                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
@@ -426,6 +433,7 @@
                                                                         </ul>
                                                                     </td>
                                                                 </tr>
+                                                                @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -735,98 +743,97 @@
 </div>
 <!-- add requirements -->
 <div class="modal fade" id="createRequirement" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Add New Requirement
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
-                            <form method="post">
-                                <div class="form">
-                                    <div class="col-lg-12">
-                                        <label>Requirement</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter requirements" name="name" class="input" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-6">
-                                            <button class="px-3 btn" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
-                                                Cancel
-                                            </button>
-                                        </div>
-                                        <div class="col-6 text-end">
-                                            <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                >
-                                                Add Requirement
-                                            </button>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Add New Requirement
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="post" action="{{route('user.save.requirement', Crypt::encrypt($course->id))}}">
+                            @csrf
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label>Requirement</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Enter requirements" name="description" class="input" required>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button class="px-3 btn" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
+                                            Add Requirement
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- create outline -->
-    <div class="modal fade" id="createOutline" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Add New Outline
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
-                            <form method="post">
-                                <div class="form">
-                                    <div class="col-lg-12">
-                                        <label> Course Outline</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter course ouline" name="name" class="input" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-6">
-                                            <button class="px-3 btn" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
-                                                Cancel
-                                            </button>
-                                        </div>
-                                        <div class="col-6 text-end">
-                                            <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                >
-                                                Add Outline
-                                            </button>
+</div>
+<!-- create outline -->
+<div class="modal fade" id="createOutline" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Add New Outline
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="post" action="{{route('user.save.what.to.learn', Crypt::encrypt($course->id))}}">
+                            @csrf
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label> Course Outline</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Enter course ouline" name="description" class="input" required>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button class="px-3 btn" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
+                                            Add Outline
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <!-- end modal -->
 
 <script>
-
-    $(document).on('click','.open_modal',function(){
-        var section_id= $(this).val();
+    $(document).on('click', '.open_modal', function() {
+        var section_id = $(this).val();
 
         $('#title').text(section_id);
         $('#section_id').val(section_id);
@@ -846,8 +853,7 @@
     //     }
     // });
 
-    function changeFunc()
-    {
+    function changeFunc() {
         document.getElementById('textboxcont').innerHTML = '';
         var selectBox = document.getElementById("selectBox").value;
         var selectedValues = Array.from(document.getElementById('selectBox').selectedOptions).map(el => el.value);

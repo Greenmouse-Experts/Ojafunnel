@@ -37,7 +37,7 @@
             <!-- table content of courses -->
             <div class="col-md-12">
                 <div class="card-body card">
-                    <h4 class="card-title mb-4">Courses List</h4>
+                    <h4 class="card-title mb-4">Shop List</h4>
                     <div class="tab-content">
                         <div class="tab-pane active" id="transactions-all-tab" role="tabpanel">
                             <div class="table-responsive" data-simplebar style="max-height: 530px;">
@@ -47,39 +47,34 @@
                                             <th>S/N</th>
                                             <th>Owner's Name</th>
                                             <th>Shop Name</th>
-                                            <th>Status</th>
-                                            <th>Date Created</th>
+                                            <th>Courses</th>
+                                            <th>Students</th>
                                             <th>Shop Link</th>
-                                            <th>Action</th>
+                                            <th>Date Created</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach(App\Models\Shop::latest()->get() as $item)
                                         <tr>
-
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#11</a> </td>
+                                            <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
                                             <td>
-                                                Greenmouse Tech
+                                                {{App\Models\User::find($item->user_id)->first_name}} {{App\Models\User::find($item->user_id)->last_name}}
                                             </td>
                                             <td>
-                                                Laravel Framwork
+                                                {{$item->name}}
+                                            </td>
+                                            <td>{{\App\Models\Course::where('user_id', $item->user_id)->get()->count()}}</td>
+                                            <td>
+                                                {{\App\Models\ShopOrder::where('shop_id', $item->id)->get()->count()}}
                                             </td>
                                             <td>
-                                                <span class="badge badge-pill badge-soft-success font-size-11">active</span>
+                                                <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
                                             </td>
                                             <td>
-                                                Dec 10 2022
-                                            </td>
-                                            <td>
-                                                <p class="p-1 bg-light" style="position:relative; top:8px">http://shop.ojafunnel.test/</p>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Shop">
-                                                        <a href="{{route('courseDetail')}}"  class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li>
-                                                </ul>
+                                                {{$item->created_at->toDayDateTimeString()}}
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
