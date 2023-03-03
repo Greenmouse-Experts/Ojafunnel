@@ -73,7 +73,7 @@
                             <th scope="row">{{$loop->iteration}}</th>
                             <td>{{$item->name}}</td>
                             <td>
-                              {{\App\Models\Course::where('user_id', Auth::user()->id)->get()->count()}}
+                              {{\App\Models\Course::where('user_id', Auth::user()->id)->where('approved', true)->get()->count()}}
                               <a href="{{route('user.create.course', Auth::user()->username)}}" class="text-decoration-underline">Courses</a>
                             </td>
                             <td>

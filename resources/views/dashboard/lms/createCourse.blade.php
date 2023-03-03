@@ -66,7 +66,7 @@
                                             <div class="course-meta">
                                                 <span class="">
                                                     <i class="fas fa-play-circle"></i>
-                                                    Lessons
+                                                    {{App\Models\Lesson::where('course_id', $course->id)->get()->count()}} Lessons
                                                 </span>
                                                 <!-- <span class="">
                                                     <i class="far fa-clock"></i>
@@ -80,6 +80,15 @@
                                                     Unpublish
                                                     @else
                                                     Published
+                                                    @endif
+                                                </span>
+                                                <span class="">
+                                                    @if($course->approved == false)
+                                                    <i class="bi bi-eye-slash-fill"></i>
+                                                    <span class="badge badge-pill badge-soft-danger text-danger font-size-11">Inactive</span>
+                                                    @else
+                                                    <i class="bi bi-check2-all"></i>
+                                                    <span class="badge badge-pill badge-soft-success text-danger font-size-11">Active</span>
                                                     @endif
                                                 </span>
                                             </div>

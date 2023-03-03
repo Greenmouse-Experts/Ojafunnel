@@ -431,7 +431,7 @@
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <div class="boding">
                                                                                             <button type="submit" class="form-btn">
-                                                                                                I understand this consquences, Delete Mailing List
+                                                                                                I understand this consquences, Delete List
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>
