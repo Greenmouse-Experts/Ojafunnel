@@ -2749,8 +2749,11 @@ section.category-course-list-area {
 .course-box-2 .course-price-rating {
     width: 24%;
     text-align: right;
-    -ms-flex-item-align: end;
-    align-self: flex-end;
+    min-height: 148px;
+    display: grid;
+    align-content: space-between ;
+    /* -ms-flex-item-align: end; */
+    /* align-self: flex-end; */
     padding: 10px 25px 15px;
 }
 

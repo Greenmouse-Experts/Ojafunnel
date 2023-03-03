@@ -33,6 +33,10 @@
                                 <i class="bx bx-money d-block check-nav-icon mt-4 mb-2"></i>
                                 <p class="fw-bold mb-4">Course Landing Page</p>
                             </a>
+                            <a class="nav-link" id="v-pills-requirements-tab" data-bs-toggle="pill" href="#v-pills-requirements" role="tab" aria-controls="v-pills-payment" aria-selected="false">
+                                <i class="bi bi-journal-check d-block check-nav-icon mt-4 mb-2"></i>
+                                <p class="fw-bold mb-4">Requirements</p>
+                            </a>
                             <a class="nav-link" id="v-pills-promotion-tab" data-bs-toggle="pill" href="#v-pills-promotion" role="tab" aria-controls="v-pills-promotion" aria-selected="false">
                                 <i class="bi bi-person-check d-block check-nav-icon mt-4 mb-2"></i>
                                 <p class="fw-bold mb-4">Promotions</p>
@@ -343,6 +347,92 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="v-pills-requirements" role="tabpanel" aria-labelledby="v-pills-requirements-tab">
+                                        <div class="requirements">
+                                            <div class="card shadow-none border mb-0">
+                                                <div class="card-body">
+                                                    <h4 class="card-title mb-4"><strong>Course Requirement</strong></h4>
+                                                    <div class="visual">
+                                                        <p>
+                                                            State the requirements for enrollment on this course.
+                                                        <div class="lamet float-end"><a href="" data-bs-toggle="modal" data-bs-target="#createRequirement"><strong>Add Requirement</strong></a></div>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="table-responsive mt-2">
+                                                        <table id="" class="table table-bordered dt-responsive nowrap w-100">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">S/N</th>
+                                                                    <th scope="col">Requirements</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>#01</td>
+                                                                    <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas vero nemo sapiente officiis error
+                                                                    </td>
+                                                                    <td>
+                                                                        <ul class="list-unstyled hstack gap-1 mb-0">
+                                                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                                                <a href="#" class="btn btn-sm btn-soft-danger"><i class="bi bi-x-circle"></i></a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="outlines">
+                                            <div class="card shadow-none border mb-0">
+                                                <div class="card-body">
+                                                    <h4 class="card-title mb-4"><strong>What to Learn</strong></h4>
+                                                    <div class="visual">
+                                                        <p>
+                                                             State and outline what students will learn enrolling for this course.
+                                                        <div class="lamet float-end"><a href="" data-bs-toggle="modal" data-bs-target="#createOutline"><strong>Add Outline</strong></a></div>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="table-responsive mt-2">
+                                                        <table id="" class="table table-bordered dt-responsive nowrap w-100">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">S/N</th>
+                                                                    <th scope="col">Course Outline</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>#01</td>
+                                                                    <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas vero nemo sapiente officiis error
+                                                                    </td>
+                                                                    <td>
+                                                                        <ul class="list-unstyled hstack gap-1 mb-0">
+                                                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                                                <a href="#" class="btn btn-sm btn-soft-danger"><i class="bi bi-x-circle"></i></a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="tab-pane fade" id="v-pills-promotion" role="tabpanel" aria-labelledby="v-pills-promotion-tab">
                                         <div class="card shadow-none border mb-0">
                                             <div class="card-body">
@@ -643,6 +733,94 @@
         </div>
     </div>
 </div>
+<!-- add requirements -->
+<div class="modal fade" id="createRequirement" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        Add New Requirement
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="Edit-level">
+                            <form method="post">
+                                <div class="form">
+                                    <div class="col-lg-12">
+                                        <label>Requirement</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Enter requirements" name="name" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <div class="col-6">
+                                            <button class="px-3 btn" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
+                                                >
+                                                Add Requirement
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- create outline -->
+    <div class="modal fade" id="createOutline" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        Add New Outline
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="Edit-level">
+                            <form method="post">
+                                <div class="form">
+                                    <div class="col-lg-12">
+                                        <label> Course Outline</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Enter course ouline" name="name" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <div class="col-6">
+                                            <button class="px-3 btn" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
+                                                >
+                                                Add Outline
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- end modal -->
 
 <script>
