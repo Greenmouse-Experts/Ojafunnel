@@ -15,6 +15,8 @@ use App\Models\Chat;
 use App\Models\PersonalChatroom;
 use App\Events\AdminReceiveMessage;
 use App\Events\AdminSendChat;
+use App\Models\Category;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Auth;
@@ -636,5 +638,82 @@ class AdminController extends Controller
     public function install_plugin()
     {
         return view('Admin.emailmarketing.AddPlugin');
+    }
+
+    public function add_category(Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'name' => ['required', 'string'],
+        ]);
+
+        Category::create([
+            'name' => $request->name
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Category added successfully.',
+        ]); 
+    }
+
+    public function update_category(Request $request, $id)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'name' => ['required', 'string'],
+        ]);
+
+        $Finder = Crypt::decrypt($id);
+        $category = Category::find($Finder);
+
+        $category->update([
+            'name' => $request->name
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Category updated successfully.',
+        ]); 
+
+    }
+
+    public function delete_category($id)
+    {
+        $Finder = Crypt::decrypt($id);
+        Category::find($Finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Category deleted successfully.',
+        ]); 
+    }
+
+    public function course_activate($id)
+    {
+        $course = Course::find($id);
+
+        $course->update([
+            'approved' => true
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Course activated successfully.',
+        ]); 
+    }
+
+    public function course_deactivate($id)
+    {
+        $course = Course::find($id);
+
+        $course->update([
+            'approved' => false
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Course suspended successfully.',
+        ]); 
     }
 }

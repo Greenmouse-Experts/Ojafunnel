@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('currency')->nullable();
             $table->decimal('price', 10,2)->default(0);
             $table->boolean('published')->default(false);
-            $table->boolean('approved')->default(false);
+            $table->boolean('approved')->default(true);
             $table->text('settings')->nullable();
             $table->timestamps();
         });
