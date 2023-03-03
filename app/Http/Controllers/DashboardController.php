@@ -662,9 +662,19 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function view_course_details($username, Request $request)
+    {
+        $course = Course::find($request->id);
+
+        return view('dashboard.lms.viewcoursedetails', [
+            'username' => $username,
+            'course' => $course
+        ]);
+    }
+
     public function course_details($username)
     {
-        return view('dashboard.lms.CourseDetails', [
+        return view('dashboard.lms.coursedetails', [
             'username' => $username
         ]);
     }
@@ -681,6 +691,13 @@ class DashboardController extends Controller
         $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.lms.checkShops', compact('username', 'shop'));
+    }
+
+    public function view_enrollments($username, Request $reequest)
+    {
+        $shop = Shop::latest()->where('user_id', Auth::user()->id)->first();
+
+        return view('dashboard.lms.view_enrollments', compact('username', 'shop'));
     }
 
     public function my_shops($username)

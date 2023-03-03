@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>{{$shop->name}} | Oja Funnel | Shop</title>
     <!-- App favicon -->
-    <link rel="shortcut icon" href="" />
+    <link rel="shortcut icon" href="{{$shop->logo}}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.webui-popover.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
@@ -111,7 +111,7 @@
                                                         {{ $details['currency'] }}{{ $details['price'] }}
                                                     </td>
                                                     <td>
-                                                        {{ $details['currency'] }}{{ $details['price'] }}
+                                                        {{ $details['currency'] }}{{ number_format($details['price'], 2)}}
                                                     </td>
                                                     <td>
                                                         <a href="javascript(0);" class="action-icon text-danger remove-from-cart"> <i class="fas fa-trash-can font-size-18"></i></a>
@@ -122,7 +122,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="7" class="text-right"><h4>Total {{ $details['currency'] }}{{ $total }}</h4></td>
+                                        <td colspan="7" class="text-right"><h4>Total {{ $details['currency'] }}{{ number_format($total, 2) }}</h4></td>
                                     </tr>
                                 </tfoot>
                             </table>

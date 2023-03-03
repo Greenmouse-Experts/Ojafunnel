@@ -125,7 +125,7 @@
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="{{route('user.create.shop.course', Auth::user()->username)}}" key="t-tui-calendar">Create Shop</a></li>
                                 <li><a href="{{route('user.view.course.shops', Auth::user()->username)}}" key="t-tui-calendar">View Shop</a></li>
-                                <li><a href="{{route('user.my.shops.course', Auth::user()->username)}}" key="t-tui-calendar">My Shop</a></li>
+                                <!-- <li><a href="{{route('user.my.shops.course', Auth::user()->username)}}" key="t-tui-calendar">My Shop</a></li> -->
                             </ul>
                         </li>
                     </ul>

@@ -218,7 +218,7 @@
                                                             <td>
                                                                 <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ $details['title'] }} </a></h5>
                                                             </td>
-                                                            <td>{{ $details['currency'] }}{{ $details['price'] }}</td>
+                                                            <td>{{ $details['currency'] }}{{ number_format($details['price'], 2) }}</td>
                                                         </tr>
                                                         @endforeach
                                                         @endif
@@ -227,7 +227,7 @@
                                                                 <h6 class="m-0 text-end">Total:</h6>
                                                             </td>
                                                             <td>
-                                                                {{ $details['currency'] }}{{ $total }}
+                                                                {{ $details['currency'] }}{{ number_format($total, 2) }}
                                                                 <input type="hidden" id="totalAmount" value="{{ $total }}" name="">
                                                             </td>
                                                         </tr>

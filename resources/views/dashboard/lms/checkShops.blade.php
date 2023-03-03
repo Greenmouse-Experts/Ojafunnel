@@ -61,7 +61,7 @@
                       <th>S/N</th>
                       <th>shop Name</th>
                       <th>Available Course</th>
-                      <!-- <th>Sales</th> -->
+                      <th>Enrollment</th>
                       <th>Shop Link</th>
                       <th>Actions</th>
                     </tr>
@@ -74,6 +74,11 @@
                             <td>{{$item->name}}</td>
                             <td>
                               {{\App\Models\Course::where('user_id', Auth::user()->id)->get()->count()}}
+                              <a href="{{route('user.create.course', Auth::user()->username)}}" class="text-decoration-underline">Courses</a>
+                            </td>
+                            <td>
+                              {{\App\Models\ShopOrder::where('shop_id', $item->id)->get()->count()}}
+                              <a href="{{route('user.view.course.enrollments', [Auth::user()->username, $item->id])}}" class="text-decoration-underline">Enrollments</a>
                             </td>
                             <td>
                               <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>

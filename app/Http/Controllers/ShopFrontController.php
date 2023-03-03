@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Crypt;
 
 class ShopFrontController extends Controller
 {
@@ -127,6 +128,7 @@ class ShopFrontController extends Controller
             ];
 
             $shopOrder = ShopOrder::create([
+                'shop_id' => $shop->id,
                 'course_id' => $item['id'],
                 'enrollment_id' => $enroll->id,
                 'order_no' => $enroll->order_no,
@@ -178,5 +180,15 @@ class ShopFrontController extends Controller
         //dd($store);
 
         //return $pdf->download('invoice.pdf');
+    }
+
+    public function view_course_details(Request $request)
+    {
+        $Finder = Crypt::decrypt($request->id);
+
+        $course = Course::find($Finder);
+        $shop = Shop::latest()->where('name', $request->shopname)->first();
+        
+        return view('dashboard.lms.view_course_details', compact('course', 'shop'));
     }
 }
