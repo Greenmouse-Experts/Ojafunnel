@@ -2,18 +2,21 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{{$shop->name}} | Oja Funnel | StoreFront</title>
+    <title>{{$shop->name}} | Oja Funnel | Shop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta content="title" name="{{$shop->name}} | Oja Funnel | StoreFront" />
-    <meta content="description" name="{{$shop->description}} | Oja Funnel | StoreFront" />
+    <meta content="Oja Funnel |  Dashboard" name="Oja Funnel |  Dashboard" />
+    <meta content="Oja Funnel |  Dashboard" name="Oja Funnel |  Dashboard" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{$shop->logo}}" />
+    <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.webui-popover.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/slick.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/slick-theme.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/fontawesome-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
-    <!-- Font Css-->
+    <!-- Bootstrap Css -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 </head>
@@ -27,11 +30,10 @@
                         <ul class="mobile-header-buttons">
                             <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
                         </ul>
-                        <a class="navbar-brand" href="#">
-                            <img src="{{$shop->logo ?? URL::asset('dash/assets/image/shop-logo.png')}}" alt="" width="40" />
+                        <a class="navbar-brand" href="{{route('user.dashboard', Auth::user()->username)}}">
                             {{$shop->name}}
                         </a>
-                        <form class="inline-form mt-3" style="width: 55%;">
+                        <form class="inline-form mt-3" style="width: 80%;">
                             <div class="input-group search-box mobile-search">
                                 <input type="text" name='search_string' class="form-control" placeholder="Search for courses">
                                 <div class="input-group-append">
@@ -39,12 +41,8 @@
                                 </div>
                             </div>
                         </form>
-
-                        {{-- <a href="{{route('user.cart', Auth::user()->username)}}">
-                        <button type="button" class="btn btn-primary">
-                            <i class="bi bi-cart-check"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}
-                        </button>
-                        </a> --}}
+                        <div class="cart-box menu-icon-box" id="cart_items">
+                        </div>
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="p-4">
                                 @auth
@@ -54,8 +52,8 @@
                                 @endauth
                             </div>
                             <div class="dropdown">
-                                <a class="btn btn-secondary dropdown-toggle" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                <a class="btn btn-success dropdown-toggle" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <div class="row total-header-section">
@@ -64,7 +62,7 @@
                                         </div>
                                         @php $total = 0 @endphp
                                         @foreach((array) session('cart') as $id => $details)
-                                        @php $total += $details['price'] * $details['quantity'] @endphp
+                                        @php $total += $details['price'] @endphp
                                         @endforeach
                                         <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
                                             <p>Total: <span class="text-info">{{ $total }}</span></p>
@@ -78,7 +76,7 @@
                                         </div>
                                         <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                             <p>{{ $details['title'] }}</p>
-                                            <span class="price text-info"> {{ $details['currency'] }}{{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
+                                            <span class="price text-info"> {{ $details['currency'] }}{{ $details['price'] }}</span>
                                         </div>
                                     </div>
                                     @endforeach
@@ -90,16 +88,72 @@
                                     </div>
                                 </ul>
                             </div>
+                            <div class="user-box menu-icon-box">
+                                <div class="icon">
+                                    <a href="#">
+                                        <img src="{{$shop->logo ?? URL::asset('dash/assets/image/shop-logo.png')}}" alt="" class="img-fluid"/>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </nav>
                 </div>
             </div>
         </div>
     </section>
-    <section class="container home-banner-area text-center" style="background: {{$shop->theme}}!important; color: {{$shop->color}}">
+    <section class="container home-banner-area">
         <div class="container">
-            <img src="{{$shop->logo ?? URL::asset('dash/assets/image/shop-logo.png')}}" alt="" width="100" />
-            <h3 class="mt-3 px-2" style="font-size: 30px;">{{$shop->name}}</h3>
+            <div class="row">
+                <div class="col-lg-1">
+                </div>
+                <div class="col">
+                <div class="home-banner-wrap">
+                        <h2>Best place for learning</h2>
+                        <p>Learn from any topic, choose from category</p>
+                        <form class="" action="" method="post">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search_string" placeholder="what do you want to learn?">
+                                <div class="input-group-append">
+                                    <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="home-fact-area container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 d-flex">
+                    <div class="home-fact-box mr-md-auto ml-auto mr-auto">
+                        <i class="fas fa-bullseye float-left"></i>
+                        <div class="text-box">
+                            <h4>Online Courses</h4>
+                            <p>Explore A Variety Of Fresh Topics</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="home-fact-box mr-md-auto ml-auto mr-auto">
+                        <i class="fa fa-check float-left"></i>
+                        <div class="text-box">
+                            <h4>Expert Instruction</h4>
+                            <p>Find The Right Course For You</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex">
+                    <div class="home-fact-box mr-md-auto ml-auto mr-auto">
+                        <i class="fa fa-clock float-left"></i>
+                        <div class="text-box">
+                            <h4>Lifetime Access</h4>
+                            <p>Learn On Your Schedule</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <section class="TopMontain mt-5">

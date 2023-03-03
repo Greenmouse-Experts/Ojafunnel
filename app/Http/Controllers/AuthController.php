@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\SendCodeResetPassword;
 use App\Models\Customer;
+use App\Models\OjafunnelNotification;
 use App\Models\OjaPlan;
 use App\Models\Plan;
 use App\Models\ResetCodePassword;
@@ -215,6 +216,11 @@ class AuthController extends Controller
                         'reference' => 'referralbonus',
                         'status' => 'Referral Bonus',
                     ]);
+                    OjafunnelNotification::create([
+                        'to' => $entry->id,
+                        'title' => config('app.name'),
+                        'body' => 'A user just registered using your referral link.'
+                    ]);
                 } elseif ($level == 2) {
                     $earnings = 10 * $deposit_amount / 100;
                     //add earnings to ancestor balance
@@ -230,6 +236,11 @@ class AuthController extends Controller
                         'amount' => $earnings,
                         'reference' => 'referralbonus',
                         'status' => 'Referral Bonus',
+                    ]);
+                    OjafunnelNotification::create([
+                        'to' => $entry->id,
+                        'title' => config('app.name'),
+                        'body' => 'A user just registered using your referral link.'
                     ]);
                 } elseif ($level == 3) {
                     $earnings = 5 * $deposit_amount / 100;
@@ -247,6 +258,11 @@ class AuthController extends Controller
                         'reference' => 'referralbonus',
                         'status' => 'Referral Bonus',
                     ]);
+                    OjafunnelNotification::create([
+                        'to' => $entry->id,
+                        'title' => config('app.name'),
+                        'body' => 'A user just registered using your referral link.'
+                    ]);
                 } elseif ($level == 4) {
                     //dd('here4');
                     $earnings = 5 * $deposit_amount / 100;
@@ -263,6 +279,11 @@ class AuthController extends Controller
                         'amount' => $earnings,
                         'reference' => 'referralbonus',
                         'status' => 'Referral Bonus',
+                    ]);
+                    OjafunnelNotification::create([
+                        'to' => $entry->id,
+                        'title' => config('app.name'),
+                        'body' => 'A user just registered using your referral link.'
                     ]);
                 }
 

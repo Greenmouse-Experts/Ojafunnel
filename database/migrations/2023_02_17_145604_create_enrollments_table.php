@@ -15,6 +15,13 @@ return new class extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
+            $table->string('order_no')->nullable();
+            $table->string('email')->nullable();
+            $table->string('name')->nullable();
+            $table->string('phone_no')->nullable();
+            $table->longText('address')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
             $table->timestamps();
         });
     }
