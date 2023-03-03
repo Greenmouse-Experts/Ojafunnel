@@ -448,59 +448,101 @@
 
 
     <!-- Features -->
-    <section class="Features">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
-                    <div class="btn-text mb-4">
-                        <h1>
-                        Do more with our Integrations
-                        </h1>
-                    </div>
-                </div>
-                <div class="col-lg-2"></div>
-                <div class="col-lg-2">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177279/OjaFunnel-Images/Rectangle_19433_bn7ycr.png" alt="Picture" draggable="false">
-
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177280/OjaFunnel-Images/Rectangle_19439_ekkfnx.png" alt="Picture" draggable="false">
-
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177279/OjaFunnel-Images/Rectangle_19438_dzmrce.png" alt="Picture" draggable="false">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19431_abdoih.png" alt="Picture" draggable="false">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19429_dkzil0.png" alt="Picture" draggable="false">
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="alert"></div>
-                    <div class="Amet">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675176410/OjaFunnel-Images/Rectangle_19430_xwwm2k.png" alt="Picture" draggable="false">
-                    </div>
+    <section class="offer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="what">
+                    <h1>
+                        Enjoy All-In-One features
+                    </h1>
                 </div>
             </div>
+            <div class="what"></div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669720/OjaFunnel-Images/page_kunfbn.png" draggable="false" alt="">
+                        <h1>
+                            Page Builder
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669823/OjaFunnel-Images/landing-page_moq46w.png" draggable="false" alt="">
+                        <h1>
+                            Funnel Builder
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669907/OjaFunnel-Images/email-marketing_o5cvun.png" draggable="false" alt="">
+                        <h1>
+                            Email Marketing
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
+                        <h1>
+                            SMS Automation
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
+                        <h1>
+                            Analysis and Reporting
+                        </h1>
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670372/OjaFunnel-Images/shopping_seidhl.png" draggable="false" alt="">
+                        <h1>
+                            Ecommerce
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670416/OjaFunnel-Images/affiliate-marketing_cycnqk.png" draggable="false" alt="">
+                        <h1>
+                            Affiliate Module
+                        </h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3">
+                <a href="#">
+                    <div class="card" data-aos="zoom-in-left">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670479/OjaFunnel-Images/gateway_durgdd.png" draggable="false" alt="">
+                        <h1>
+                            Payment Integration
+                        </h1>
+                    </div>
+                </a>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
     <!-- Features Ends -->
 
     <!-- Digital -->
@@ -534,10 +576,10 @@
         </section>
     <!-- Digital Ends -->
     <!-- Footter -->
-   <section class="footer">
+  <section class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="quick">
                     <ul>
                         <li>
@@ -548,7 +590,7 @@
                             </div>
                         </li>
                         <li>
-                        Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
+                            Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
                         </li>
                     </ul>
                 </div>
@@ -633,8 +675,17 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <div class="quick">
+                    <h1>
+                        Newsletter
+                    </h1>
+                    <form class="search-bar mb-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Your email Address">
+                            <span class="input-group-text" id="basic-addon2">Subscribe</span>
+                        </div>
+                    </form>
                     <h1>
                         Follow Us
                     </h1>
