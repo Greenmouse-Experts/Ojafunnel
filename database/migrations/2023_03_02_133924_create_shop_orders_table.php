@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('shop_orders', function (Blueprint $table) {
             $table->id();
+            $table->integer('shop_id')->unsigned()->references('id')->on('shops')->onDelete('cascade');
             $table->integer('course_id')->unsigned()->references('id')->on('courses')->onDelete('cascade');
             $table->unsignedBigInteger('enrollment_id')->references('id')->on('enrollments')->onDelete('cascade');
             $table->integer('coupon_id')->unsigned()->nullable();

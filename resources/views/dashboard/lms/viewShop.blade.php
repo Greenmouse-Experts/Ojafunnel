@@ -7,6 +7,7 @@
     <meta content="Oja Funnel |  Dashboard" name="Oja Funnel |  Dashboard" />
     <meta content="Oja Funnel |  Dashboard" name="Oja Funnel |  Dashboard" />
     <!-- App favicon -->
+    <link rel="shortcut icon" href="{{$shop->logo}}" />
     <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.webui-popover.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/select2.min.css') }}">
@@ -65,7 +66,7 @@
                                         @php $total += $details['price'] @endphp
                                         @endforeach
                                         <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                                            <p>Total: <span class="text-info">{{ $total }}</span></p>
+                                            <p>Total: <span class="text-info">{{ number_format($total, 2) }}</span></p>
                                         </div>
                                     </div>
                                     @if(session('cart'))
@@ -76,7 +77,7 @@
                                         </div>
                                         <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                             <p>{{ $details['title'] }}</p>
-                                            <span class="price text-info"> {{ $details['currency'] }}{{ $details['price'] }}</span>
+                                            <span class="price text-info"> {{ $details['currency'] }}{{ number_format($details['price'], 2) }}</span>
                                         </div>
                                     </div>
                                     @endforeach
@@ -170,7 +171,7 @@
                 @forelse(\App\Models\Course::where('user_id', Auth::user()->id)->get() as $course)
                 <div class="col-lg-4">
                     <div class="course-box-wrap">
-                        <a href="#" class="has-popover">
+                        <a href="{{route('view.course.details', [$shop->name, Crypt::encrypt($course->id)])}}" class="has-popover">
                             <div class="course-box">
                                 <!-- <div class="course-badge position best-seller">Best seller</div> -->
                                 <div class="course-image">

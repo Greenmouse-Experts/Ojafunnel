@@ -84,6 +84,9 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        <div class="float-end">
+                                            <a href="{{route('user.view.course.details', [Auth::user()->username, $course->id])}}"><strong><u>View Course Details</u></strong></a>
+                                        </div>
                                         <div class="course-price-rating mb-3">
                                             <div class="course-price">
                                                 <span class="current-price">{{$course->currency}} {{number_format($course->price, 2)}}</span>
