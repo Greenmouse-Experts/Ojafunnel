@@ -47,7 +47,7 @@
                                         <ul class="license-radio">
                                             <li>
                                                 <input type="radio" name="license" />
-                                                <span>Any</span>
+                                                <span>All</span>
                                             </li>
                                             <li>
                                                 <input type="radio" name="license" />
@@ -62,6 +62,14 @@
                                     <div class="sort-div">
                                         <p><i class="bi bi-sort-down fs-4 pe-2 text-warning"></i>Sort by</p>
                                         <ul class="sort-radio">
+                                            <li>
+                                                <input type="radio" name="sort" />
+                                                <span>Published</span>
+                                            </li>
+                                            <li>
+                                                <input type="radio" name="sort" />
+                                                <span>Unpublished</span>
+                                            </li>
                                             <li>
                                                 <input type="radio" name="sort" />
                                                 <span>Recent</span>
