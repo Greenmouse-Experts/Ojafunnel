@@ -406,6 +406,25 @@ class AdminController extends Controller
         }
     }
 
+    public function markAsRead (Request $request) 
+    {
+        if ($request->target_model == 'chat') {
+            // set a value to the 'read_at' column
+            Chat::where('id', $request->target_id)
+                ->update(['read_at' => now()]);
+
+            return ['message' => 'Chat with id ' . $request->target_id . ' has been updated.'];
+        }
+
+        if ($request->target_model == 'read') {
+            // set a value to the 'read_at' column
+            Chat::where('user_id', $request->target_id)
+                ->update(['read_at' => now()]);
+
+            return ['message' => 'Chat with id ' . $request->target_id . ' has been updated.'];
+        }
+    }
+
     public function sendMessage (Request $request) 
     {
         if($request->attachment == null)
@@ -416,8 +435,8 @@ class AdminController extends Controller
                 'message' => $request->message
             ]);
     
-            // broadcast(new AdminSendChat($payload->room_id))->toOthers();
-            // broadcast(new AdminReceiveMessage($payload->room_id))->toOthers();
+            broadcast(new AdminSendChat($payload))->toOthers();
+            // broadcast(new AdminReceiveMessage($payload))->toOthers();
     
             return ['status' => 'success'];
         } else {
@@ -448,6 +467,7 @@ class AdminController extends Controller
             return ['status' => 'success'];
         }
     }
+    
 
     public function clearChat (Request $request) 
     {

@@ -34,6 +34,6 @@ class AdminSendChat implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('chat.' . $this->payload);
+        return new PresenceChannel('adminchat.' . $this->payload['room_id']);
     }
 }
