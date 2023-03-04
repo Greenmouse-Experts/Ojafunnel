@@ -5,15 +5,15 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app.42955c77.js",
+    "file": "assets/app.068c626f.js",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app.35183e92.css"
+      "assets/app.eb27024d.css"
     ]
   },
   "resources/js/app.css": {
-    "file": "assets/app.35183e92.css",
+    "file": "assets/app.eb27024d.css",
     "src": "resources/js/app.css"
   },
   "public/dash/assets/css/app.min.css": {

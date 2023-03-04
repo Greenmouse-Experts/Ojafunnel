@@ -238,15 +238,15 @@ export default {
         if (!isExist.length) {
           this.recent_chats.unshift({
             chat: { message: e.payload.message },
-            admin: e.payload.user,
+            admin: e.payload.admin,
             unread: 1
           });
         } else {
           // put this user into the top in recent chat list
-          this.addToFirstIndexInRecentChats(e.payload.user, e.payload.message);
+          this.addToFirstIndexInRecentChats(e.payload.admin, e.payload.message);
   
           // increment the unread property value for the badge
-          this.incrementUnreadMessages(e.payload.user.id);
+          this.incrementUnreadMessages(e.payload.admin.id);
         }
         console.log(e);
       })
@@ -274,7 +274,7 @@ export default {
     },
     startChat (id) {
       if (this.chatroom_data) {
-        // Echo.leave(`chat.${this.chatroom_data.room_id}`);
+        Echo.leave(`chat.${this.chatroom_data.room_id}`);
         this.chatroom_data = null;
       }
 
@@ -330,6 +330,8 @@ export default {
           console.log(e);
         });
 
+        this.markAsRead(id, 'read');
+
         console.log(this.chatroom_data);
 
         return res;
@@ -338,32 +340,15 @@ export default {
         console.log(err);
       });
     },
-    addToFirstIndexInRecentChats (sender, message) {
-      
-      this.recent_chats.map(recent => {
-        if (recent.admin.id == sender.id) {
-          recent.chat.message = message;
-          recent.chat.created_at = new Date().toISOString();
-          recent.chat.updated_at = new Date().toISOString();
-        }
-      });
-
-      // the user who sent the message
-      const recentlyOpenedUser = this.recent_chats.filter(recentChat => {
-        return recentChat.admin.id == sender.id;
-      });
-
-      // remove the sender from the recent_chats list
-      this.recent_chats = this.recent_chats.filter(recentChat => {
-        return recentChat.admin.id != sender.id;
-      });
-
-      // add new chat to recent_chats at first index
-      this.recent_chats.unshift(recentlyOpenedUser[0]);
-    },
-    resetUnreadMessages (user_id) {
-      this.recent_chats.forEach(recent => {
-        if (recent.admin.id == user_id) recent.unread = 0;
+    markAsRead (id, model) {
+      axios.put('/support/read', {
+        target_id: id,
+        target_model: model
+      })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        console.log(err);
       });
     },
     sendMessage () {
@@ -424,6 +409,44 @@ export default {
 
       this.message = '';
     },
+    addToFirstIndexInRecentChats (sender, message) {
+      
+      this.recent_chats.map(recent => {
+        if (recent.admin.id == sender.id) {
+          recent.chat.message = message;
+          recent.chat.created_at = new Date().toISOString();
+          recent.chat.updated_at = new Date().toISOString();
+        }
+      });
+
+      // the user who sent the message
+      const recentlyOpenedUser = this.recent_chats.filter(recentChat => {
+        return recentChat.admin.id == sender.id;
+      });
+
+      // remove the sender from the recent_chats list
+      this.recent_chats = this.recent_chats.filter(recentChat => {
+        return recentChat.admin.id != sender.id;
+      });
+
+      // add new chat to recent_chats at first index
+      this.recent_chats.unshift(recentlyOpenedUser[0]);
+    },
+    incrementUnreadMessages (user_id) {
+      /**
+       * increment the number of unread messages this user has.
+       * The number will be shown on the badge in the recent chat list.
+       */
+
+      this.recent_chats.map(recent => {
+        if (recent.admin.id == user_id) recent.unread++;
+      });
+    },
+    resetUnreadMessages (user_id) {
+      this.recent_chats.forEach(recent => {
+        if (recent.admin.id == user_id) recent.unread = 0;
+      });
+    },
     deleteSingleChat (id) {
       axios.post(`/support/clear/single/chat`, {
         id: id
@@ -457,7 +480,7 @@ export default {
   mounted () {
     this.fetchAllAdmins();
     this.fetchAllRecentChats();
-    // this.runThisUserEchoListener();
+    this.runThisUserEchoListener();
   },
 }
 </script>
@@ -479,5 +502,9 @@ export default {
 
     .chat-area::-webkit-scrollbar {
         width: 0;
+    }
+
+    .nav-pills .nav-link.active {
+      background-color: #713f93;
     }
 </style>
