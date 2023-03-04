@@ -764,7 +764,16 @@ class DashboardController extends Controller
 
     public function reports_analysis($username)
     {
+        $coursePurchase = Transaction::where('user_id', Auth::user()->id)->where('status', 'Course Purchase')->get()->count();
+        $referralBonus = Transaction::where('user_id', Auth::user()->id)->where('status', 'Referral Bonus')->get()->count();
+        $productPurchase = Transaction::where('user_id', Auth::user()->id)->where('status', 'Product Purchase')->get()->count();
+        $topUp = Transaction::where('user_id', Auth::user()->id)->where('status', 'Top Up')->get()->count();
+
         return view('dashboard.reportsAnalysis', [
+            'coursePurchase' => $coursePurchase,
+            'referralBonus' => $referralBonus,
+            'productPurchase' => $productPurchase,
+            'topUp' => $topUp,
             'username' => $username
         ]);
     }

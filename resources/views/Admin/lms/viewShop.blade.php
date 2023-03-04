@@ -65,7 +65,7 @@
                                             </td>
                                             <td>{{\App\Models\Course::where('user_id', $item->user_id)->get()->count()}}</td>
                                             <td>
-                                                {{\App\Models\ShopOrder::where('shop_id', $item->id)->get()->count()}}
+                                                {{\App\Models\Enrollment::where('shop_id', $item->id)->get()->count()}}
                                             </td>
                                             <td>
                                                 <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>

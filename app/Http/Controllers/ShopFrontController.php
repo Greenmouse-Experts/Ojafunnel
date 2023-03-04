@@ -100,6 +100,7 @@ class ShopFrontController extends Controller
         // dd($request->name, $request->email, $request->phoneNo, $request->address, $request->state, $request->country);
 
         $enroll = Enrollment::create([
+            'shop_id' => $shop->id,
             'order_no' => Str::random(6),
             'email' => $request->email,
             'name' => $request->name,
