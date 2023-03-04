@@ -17,7 +17,6 @@
                             <h3>
                                 Build Sales pages, Sales Funnels & Courses Without Coding.
                                 Schedule And Automate Your Marketing With Whatsapp, Email, SMS Automations By Grabbing Customers Attention And Convert Them Into Leads And Sales.
-
                             </h3>
                         </div>
                         <div class="col-md-1"></div>
