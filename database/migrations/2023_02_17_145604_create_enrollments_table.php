@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
+            $table->string('shop_id')->nullable();
             $table->string('order_no')->nullable();
             $table->string('email')->nullable();
             $table->string('name')->nullable();
