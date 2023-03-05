@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-lg-12">
                     <h1 class="text-center all">
-                        Choose your preferab plan:
+                        Choose your preferable plan:
                     </h1>
             <div class="main">
                 <table class="price-table">
@@ -150,6 +150,15 @@
                             <td>No</td>
                         </tr>
                         <tr>
+                            <td><a href="#wordpress-billing" class="price-table-help"><i class="bi bi-info-circle"></i></a> Footer Branding</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>No</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
                             <td></td>
                             <td></td>
                             <td class="price">
@@ -187,7 +196,7 @@
             </div>
             <div class="what"></div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('pagebuilder')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669720/OjaFunnel-Images/page_kunfbn.png" draggable="false" alt="">
                         <h1>
@@ -197,7 +206,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('funnelbuilder')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669823/OjaFunnel-Images/landing-page_moq46w.png" draggable="false" alt="">
                         <h1>
@@ -207,7 +216,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('marketauto')}}">
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669907/OjaFunnel-Images/email-marketing_o5cvun.png" draggable="false" alt="">
                         <h1>
@@ -217,7 +226,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('chatautomation')}}">
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
                         <h1>
@@ -227,7 +236,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('affiliate')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
                         <h1>
@@ -238,7 +247,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('ecommerce')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670372/OjaFunnel-Images/shopping_seidhl.png" draggable="false" alt="">
                         <h1>
@@ -248,7 +257,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('affiliate')}}">
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670416/OjaFunnel-Images/affiliate-marketing_cycnqk.png" draggable="false" alt="">
                         <h1>
@@ -258,7 +267,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('integrations')}}">
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670479/OjaFunnel-Images/gateway_durgdd.png" draggable="false" alt="">
                         <h1>
