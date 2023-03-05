@@ -34,204 +34,204 @@
                         </button>
                     </div>
                     <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-center flex-grow-1">
-                        <li class="nav-item">
-                            <a href="{{route('index')}}" class="nav-link {{ (request()->is('/')) ? 'active' : '' }}" class="routers">
-                                Home
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle {{ (request()->is('features*')) ? 'active' : '' }}" href="#">
-                                Features
-                            </a>
-                            <div class="dropdown-content container desktop-dropdown">
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <div class="upload">
-                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/growth_pb0d7g.png" draggable="false">
-                                            <span>MARKETING</span>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('emailmarketing')}}">
-                                                        Email Marketing
-                                                    </a>
-                                                </h4>
+                        <ul class="navbar-nav justify-content-center flex-grow-1">
+                            <li class="nav-item">
+                                <a href="{{route('index')}}" class="nav-link {{ (request()->is('/')) ? 'active' : '' }}" class="routers">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle {{ (request()->is('features*')) ? 'active' : '' }}" href="#">
+                                    Features
+                                </a>
+                                <div class="dropdown-content container desktop-dropdown">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="upload">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/growth_pb0d7g.png" draggable="false">
+                                                <span>MARKETING</span>
                                             </div>
-                                            <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('affiliate')}}">
-                                                        Affiliate Marketing
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('emailmarketing')}}">
+                                                            Email Marketing
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Run email marketing campaign without the with 100% Delivery rate, track your customers activities and build unlimited lists.</p>
                                             </div>
-                                            <p>Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently.</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('ecommerce')}}">
-                                                        Ecommerce
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('affiliate')}}">
+                                                            Affiliate Marketing
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Fully-featured affiliate marketing module that allows you to create and manage affiliate campaigns efficiently.</p>
                                             </div>
-                                            <p>Create digital products, Courses,Training and members area.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="upload">
-                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/globe_wpfoop.png" draggable="false">
-                                            <span>CREATE AND DESIGN</span>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('funnelbuilder')}}">
-                                                        Funnel Builder
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('ecommerce')}}">
+                                                            Ecommerce
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Create digital products, Courses,Training and members area.</p>
                                             </div>
-                                            <p>Create many sales funnels to recapture your leads and optimise their lifetime value.</p>
                                         </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('pagebuilder')}}">
-                                                        Page Builder
-                                                    </a>
-                                                </h4>
+                                        <div class="col-lg-3">
+                                            <div class="upload">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/globe_wpfoop.png" draggable="false">
+                                                <span>CREATE AND DESIGN</span>
                                             </div>
-                                            <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('template')}}">
-                                                       Template Designs
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('funnelbuilder')}}">
+                                                            Funnel Builder
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Create many sales funnels to recapture your leads and optimise their lifetime value.</p>
                                             </div>
-                                            <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="upload">
-                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/setting_kzwd29.png" draggable="false">
-                                            <span>AUTOMATIONS</span>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('marketauto')}}">
-                                                        Automations
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('pagebuilder')}}">
+                                                            Page Builder
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Design beautiful pages in minutes with our beautiful templates readily made available for you.</p>
                                             </div>
-                                            <p>Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('chatautomation')}}">
-                                                        Chat Automations
-                                                    </a>
-                                                </h4>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('template')}}">
+                                                            Template Designs
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>pre-made designs and documents that can be customized is available on Ojafunnel</p>
                                             </div>
-                                            <p>Chat Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="upload">
-                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254551/OjaFunnel-Images/plugin_g09fa1.png" draggable="false">
-                                            <span>MORE</span>
-                                        </div>
-                                        <div>
-                                            <div class="btn-area">
-                                                <h4>
-                                                    <a href="{{route('integrations')}}">
-                                                        API Integrations
-                                                    </a>
-                                                </h4>
+                                        <div class="col-lg-3">
+                                            <div class="upload">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254552/OjaFunnel-Images/setting_kzwd29.png" draggable="false">
+                                                <span>AUTOMATIONS</span>
                                             </div>
-                                            <p>Track various statistics and metrics associated with all your email activities and campaigns.</p>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('marketauto')}}">
+                                                            Automations
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
+                                            </div>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('chatautomation')}}">
+                                                            Chat Automations
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Chat Automate or schedule SMS to your buyers' list, prospects list or individuals.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="upload">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661254551/OjaFunnel-Images/plugin_g09fa1.png" draggable="false">
+                                                <span>MORE</span>
+                                            </div>
+                                            <div>
+                                                <div class="btn-area">
+                                                    <h4>
+                                                        <a href="{{route('integrations')}}">
+                                                            API Integrations
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <p>Track various statistics and metrics associated with all your email activities and campaigns.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <ul class="dropdown-menu mobile-dropdown" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a href="{{route('marketauto')}}" class="dropdown-item">
-                                        Email Marketing
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('affiliate')}}" class="dropdown-item">
-                                        Affiliate Marketing
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('ecommerce')}}" class="dropdown-item">
-                                        Ecommerce
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('funnelbuilder')}}" class="dropdown-item">
-                                        Funnel Builder
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('pagebuilder')}}" class="dropdown-item">
-                                        Page Builder
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('marketauto')}}" class="dropdown-item">
-                                        Marketing Automations
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('chatautomation')}}" class="dropdown-item">
-                                        Chat Automations
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('integrations')}}" class="dropdown-item">
-                                    API Integrations
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('template')}}" class="dropdown-item">
-                                    Template Designs
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('pricing')}}" class="nav-link {{ (request()->is('pricing')) ? 'active' : '' }}" class="routers">
-                                Pricing
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('faqs')}}" class="nav-link {{ (request()->is('faqs')) ? 'active' : '' }}" class="routers">
-                                FAQs
-                            </a>
-                        </li>
-                        <!-- -->
-                        <li class="nav-item">
-                            <a href="{{route('contact')}}" class="nav-link {{ (request()->is('contact')) ? 'active' : '' }}" class="routers">
-                                Contact
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="login-div">
-                        <a href="{{route('login')}}" class="btn-login">Login</a>
-                        <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
+                                <ul class="dropdown-menu mobile-dropdown" aria-labelledby="navbarDropdown">
+                                    <li>
+                                        <a href="{{route('marketauto')}}" class="dropdown-item">
+                                            Email Marketing
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('affiliate')}}" class="dropdown-item">
+                                            Affiliate Marketing
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('ecommerce')}}" class="dropdown-item">
+                                            Ecommerce
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('funnelbuilder')}}" class="dropdown-item">
+                                            Funnel Builder
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('pagebuilder')}}" class="dropdown-item">
+                                            Page Builder
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('marketauto')}}" class="dropdown-item">
+                                            Marketing Automations
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('chatautomation')}}" class="dropdown-item">
+                                            Chat Automations
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('integrations')}}" class="dropdown-item">
+                                            API Integrations
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('template')}}" class="dropdown-item">
+                                            Template Designs
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('pricing')}}" class="nav-link {{ (request()->is('pricing')) ? 'active' : '' }}" class="routers">
+                                    Pricing
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('faqs')}}" class="nav-link {{ (request()->is('faqs')) ? 'active' : '' }}" class="routers">
+                                    FAQs
+                                </a>
+                            </li>
+                            <!-- -->
+                            <li class="nav-item">
+                                <a href="{{route('contact')}}" class="nav-link {{ (request()->is('contact')) ? 'active' : '' }}" class="routers">
+                                    Contact
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="login-div">
+                            <a href="{{route('login')}}" class="btn-login">Login</a>
+                            <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         </nav>
@@ -466,7 +466,7 @@
     <!-- Increasing Ends -->
 
     <!-- Features -->
-    <section class="offer">
+ <section class="offer">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -478,7 +478,7 @@
             </div>
             <div class="what"></div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('pagebuilder')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669720/OjaFunnel-Images/page_kunfbn.png" draggable="false" alt="">
                         <h1>
@@ -488,7 +488,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('funnelbuilder')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669823/OjaFunnel-Images/landing-page_moq46w.png" draggable="false" alt="">
                         <h1>
@@ -498,7 +498,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('marketauto')}}">
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669907/OjaFunnel-Images/email-marketing_o5cvun.png" draggable="false" alt="">
                         <h1>
@@ -508,7 +508,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('chatautomation')}}">
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
                         <h1>
@@ -518,7 +518,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('affiliate')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
                         <h1>
@@ -529,7 +529,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('ecommerce')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670372/OjaFunnel-Images/shopping_seidhl.png" draggable="false" alt="">
                         <h1>
@@ -539,7 +539,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('affiliate')}}">
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670416/OjaFunnel-Images/affiliate-marketing_cycnqk.png" draggable="false" alt="">
                         <h1>
@@ -549,7 +549,7 @@
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="#">
+                <a href="{{route('integrations')}}">
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670479/OjaFunnel-Images/gateway_durgdd.png" draggable="false" alt="">
                         <h1>
@@ -563,142 +563,142 @@
 </section>
     <!-- Features Ends -->
 
-   <section class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="quick">
-                    <ul>
-                        <li>
-                            <div class="force">
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="quick">
+                        <ul>
+                            <li>
+                                <div class="force">
+                                    <a href="#">
+                                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" alt="">
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="quick">
+                        <h1>
+                            Features
+                        </h1>
+                        <ul>
+                            <li>
+                                <a href="{{route('pagebuilder')}}">Page Builder</a>
+                            </li>
+                            <li>
+                                <a href="{{route('funnelbuilder')}}">Funnel Builder</a>
+                            </li>
+                            <li>
+                                <a href="{{route('marketauto')}}">Automation</a>
+                            </li>
+                            <li>
+                                <a href="{{route('ecommerce')}}">Ecommerce</a>
+                            </li>
+                            <li>
+                                <a href="{{route('emailmarketing')}}">Email Marketing</a>
+                            </li>
+                            <li>
+                                <a href="{{route('affiliate')}}">Affiliate Marketing</a>
+                            </li>
+                            <li>
+                                <a href="{{route('chatautomation')}}">Chat Automation</a>
+                            </li>
+                            <li>
+                                <a href="{{route('integrations')}}">API Integration</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="quick">
+                        <h1>
+                            Quick Link
+                        </h1>
+                        <ul>
+                            <li>
+                                <a href="{{route('index')}}">Home</a>
+                            </li>
+                            <li>
+                                <a href="{{route('pricing')}}"> Pricing</a>
+                            </li>
+                            <li>
+                                <a href="{{route('faqs')}}">FAQs</a>
+                            </li>
+                            <li>
+                                <a href="{{route('contact')}}">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="quick">
+                        <h1>
+                            Account
+                        </h1>
+                        <ul>
+                            <li>
+                                <a href="{{route('signup')}}">Register</a>
+                            </li>
+                            <li>
+                                <a href="{{route('login')}}">Login</a>
+                            </li>
+                        </ul>
+                        <h1>
+                            Resources
+                        </h1>
+                        <ul>
+                            <li>
+                                <a href="{{route('privacy')}}">Privacy Policy</a>
+                            </li>
+                            <li>
+                                <a href="{{route('terms')}}">Terms & Condition</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="quick">
+                        <h1>
+                            Follow Us
+                        </h1>
+                        <ul>
+                            <li>
                                 <a href="#">
-                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" alt="">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678779/OjaFunnel-Images/facebook_n5uvff.png" draggable="false" title="Follow" alt="">
                                 </a>
-                            </div>
-                        </li>
-                        <li>
-                        Ojafunnel is an all-in-one marketing platform to acquire leads through lead generation forms and optin, engage web visitors through beautiful landing pages, nurture them through engaging emails, and automate your marketing funnel through marketing automation.
-                        </li>
-                    </ul>
+                                <a href="#">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678781/OjaFunnel-Images/twitter_kd7mew.png" draggable="false" alt="">
+                                </a>
+                                <a href="#">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678783/OjaFunnel-Images/instagram_zf1kco.png" draggable="false" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="quick">
-                    <h1>
-                        Features
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="{{route('pagebuilder')}}">Page Builder</a>
-                        </li>
-                        <li>
-                            <a href="{{route('funnelbuilder')}}">Funnel Builder</a>
-                        </li>
-                        <li>
-                            <a href="{{route('marketauto')}}">Automation</a>
-                        </li>
-                        <li>
-                            <a href="{{route('ecommerce')}}">Ecommerce</a>
-                        </li>
-                        <li>
-                            <a href="{{route('emailmarketing')}}">Email Marketing</a>
-                        </li>
-                        <li>
-                            <a href="{{route('affiliate')}}">Affiliate Marketing</a>
-                        </li>
-                        <li>
-                            <a href="{{route('chatautomation')}}">Chat Automation</a>
-                        </li>
-                        <li>
-                            <a href="{{route('integrations')}}">API Integration</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="quick">
-                    <h1>
-                        Quick Link
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="{{route('index')}}">Home</a>
-                        </li>
-                        <li>
-                            <a href="{{route('pricing')}}"> Pricing</a>
-                        </li>
-                        <li>
-                            <a href="{{route('faqs')}}">FAQs</a>
-                        </li>
-                        <li>
-                            <a href="{{route('contact')}}">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="quick">
-                    <h1>
-                        Account
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="{{route('signup')}}">Register</a>
-                        </li>
-                        <li>
-                            <a href="{{route('login')}}">Login</a>
-                        </li>
-                    </ul>
-                    <h1>
-                        Resources
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="{{route('privacy')}}">Privacy Policy</a>
-                        </li>
-                        <li>
-                            <a href="{{route('terms')}}">Terms & Condition</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="quick">
-                    <h1>
-                        Follow Us
-                    </h1>
-                    <ul>
-                        <li>
-                            <a href="#">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678779/OjaFunnel-Images/facebook_n5uvff.png" draggable="false" title="Follow" alt="">
-                            </a>
-                            <a href="#">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678781/OjaFunnel-Images/twitter_kd7mew.png" draggable="false" alt="">
-                            </a>
-                            <a href="#">
-                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677678783/OjaFunnel-Images/instagram_zf1kco.png" draggable="false" alt="">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="last-fott text-center">
-                    <!-- <a href="{{route('privacy')}}">
-                        Privacy Policy
-                    </a>
-                    |
-                    <a href="{{route('terms')}}">
-                        Terms & Condition
-                    </a> -->
-                    <h1>
-                        Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
-                    </h1>
+                <div class="col-lg-12">
+                    <div class="last-fott text-center">
+                        <!-- <a href="{{route('privacy')}}">
+                            Privacy Policy
+                        </a>
+                        |
+                        <a href="{{route('terms')}}">
+                            Terms & Condition
+                        </a> -->
+                        <h1>
+                            Copyright © {{ date('Y') }} {{config('app.name')}}. All rights reserved
+                        </h1>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
