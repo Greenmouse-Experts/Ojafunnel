@@ -137,7 +137,7 @@
     <script>
         // total sales chart
         let options1 = {
-          series: [{{App\Models\StoreOrder::where('store_id', $store->id)->get()->count()}}],
+          series: ['{{$storeOrderCount}}'],
           chart: {
           height: 190,
           width: "100%",
@@ -223,7 +223,7 @@
     <script>
         // total sales chart
         let options2 = {
-          series: [{{App\Models\ShopOrder::where('shop_id', $shop->id)->get()->count()}}],
+          series: ['{{$shopOrderCount}}'],
           chart: {
           height: 190,
           width: "100%",

@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
     server: {
         hmr: {
-            host: 'ojafunnel.greenmouseproperties.com',
+            host: 'localhost',
         },
     },
     plugins: [

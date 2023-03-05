@@ -15,8 +15,10 @@ use App\Models\Page;
 use App\Models\PersonalChatroom;
 use App\Models\Plan;
 use App\Models\Shop;
+use App\Models\ShopOrder;
 use App\Models\SmsAutomation;
 use App\Models\SmsCampaign;
+use App\Models\StoreOrder;
 use App\Models\Subscriber;
 use App\Models\Transaction;
 use App\Models\User;
@@ -807,10 +809,29 @@ class DashboardController extends Controller
         ]);
     }
 
-     public function main_sales($username)
+    public function main_sales($username)
     {
+        $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
+        $shop = \App\Models\Shop::where('user_id', Auth::user()->id)->first();
+
+        if($store != null)
+        {
+            $storeOrderCount = StoreOrder::where('store_id', $store->id)->get()->count();
+        } else {
+            $storeOrderCount = 0;
+        }
+
+        if($shop != null)
+        {
+            $shopOrderCount = ShopOrder::where('shop_id', $shop->id)->get()->count();
+        } else {
+            $shopOrderCount = 0;
+        }
+
         return view('dashboard.salesAnalytics', [
-            'username' => $username
+            'username' => $username,
+            'storeOrderCount' => $storeOrderCount,
+            'shopOrderCount' => $shopOrderCount
         ]);
     }
 
