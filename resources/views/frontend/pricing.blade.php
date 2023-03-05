@@ -21,9 +21,9 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-                    <h1 class="text-center all">
-                        Choose your preferable plan:
-                    </h1>
+            <h1 class="text-center all">
+                Choose your preferable plan:
+            </h1>
             <div class="main">
                 <table class="price-table">
                     <tbody>
