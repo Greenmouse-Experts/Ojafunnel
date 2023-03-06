@@ -17,6 +17,7 @@ use App\Events\AdminReceiveMessage;
 use App\Events\AdminSendChat;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\OjafunnelNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Auth;
@@ -735,5 +736,16 @@ class AdminController extends Controller
             'type' => 'success',
             'message' => 'Course suspended successfully.',
         ]); 
+    }
+
+    public function read_notification($id)
+    {
+        $finder = Crypt::decrypt($id);
+        $notification = OjafunnelNotification::findorfail($finder);
+
+        $notification->status = 'Read';
+        $notification->save();
+
+        return back();
     }
 }

@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\OjafunnelNotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -102,6 +104,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             // Admin page builder
             Route::get('page-builder', [App\Http\Controllers\Admin\AdminController::class, 'page_builder'])->name('pageBuilder');
+
+            // Notification
+            Route::get('/admin/read/notification/{id}', [App\Http\Controllers\Admin\AdminController::class, 'read_notification'])->name('admin.read.notification');
         }
     );
 });

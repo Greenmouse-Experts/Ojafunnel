@@ -81,7 +81,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="text-center mb-3">
-                                                    <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-sm rounded-circle" />
+                                                    @if($user->photo)
+                                                    <img class="avatar-sm rounded-circle" src="{{$user->photo}}" alt="{{$user->first_name}}" width="100%">
+                                                    @else
+                                                    <img  class="avatar-sm rounded-circle" src="{{URL::asset('dash/assets/image/no-img.jpg')}}" alt="" width="100%" />
+                                                    @endif
                                                     <h6 class="font-size-15 mt-3 mb-1">{{$user->first_name}} {{$user->last_name}}</h6>
                                                     <p class="mb-0 text-muted">{{$user->email}}</p>
                                                 </div>

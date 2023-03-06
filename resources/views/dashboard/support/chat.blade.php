@@ -27,9 +27,9 @@
             <!-- main content -->
 
 
-            <div id="app">
-                <chatroom-component :userprop="{{ Auth::user() }}"></chatroom-component>
-            </div>
+            <!-- <div id="app"> -->
+                <example-component></example-component>
+            <!-- </div> -->
             
         </div>
     </div>

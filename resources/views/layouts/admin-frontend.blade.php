@@ -10,8 +10,6 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{URL::asset('admin/assets/images/Logo-fav.png')}}" />
 
-    @vite(['resources/js/app.js', 'resources/css/app.css', 'public/dash/assets/js/app.js', 'public/dash/assets/css/app.min.css'])
-
     <!-- Bootstrap Css -->
     <link href="{{URL::asset('admin/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->

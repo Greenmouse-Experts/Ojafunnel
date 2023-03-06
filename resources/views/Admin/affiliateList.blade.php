@@ -39,85 +39,25 @@
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr>
-                                            <th scope="col">No</th>
+                                            <th scope="col">S/N</th>
                                             <th scope="col">Names</th>
-                                            <th scope="col">Earning</th>
-                                            <th scope="col">Rate</th>
-                                            <th scope="col">Paid Referrals</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Action</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Referred By</th>
+                                            <th scope="col">Date Referred</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach(App\Models\User::latest()->where('referral_link', '!=', null)->get() as $affiliate)
                                         <tr>
-                                            <td>1</td>
-                                            <td>Hamzat Abdul</td>
-                                            <td>1000</td>
-                                            <td>1%</td>
-                                            <td>500</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">active</span>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$affiliate->first_name}} {{$affiliate->last_name}}</td>
+                                            <td>{{$affiliate->email}}</td>
+                                            <td>{{App\Models\User::find($affiliate->referral_link)->first_name}} {{App\Models\User::find($affiliate->referral_link)->last_name}}
+                                                <p>{{App\Models\User::find($affiliate->referral_link)->email}}</p>
                                             </td>
-                                            <td>
-                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <!-- <li data-bs-toggle="tooltip" data-bs-placement="top" title="View List">
-                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li> -->
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
-                                                        <a href="#activate" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                        <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
+                                            <td>{{$affiliate->created_at->toDayDateTimeString()}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Adeleke Money</td>
-                                            <td>2000</td>
-                                            <td>2%</td>
-                                            <td>1000</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">active</span>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <!-- <li data-bs-toggle="tooltip" data-bs-placement="top" title="View List">
-                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li> -->
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
-                                                        <a href="#activate" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                        <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Promise</td>
-                                            <td>4000</td>
-                                            <td>5%</td>
-                                            <td>1000</td>
-                                            <td>
-                                                <span class="badge bg-danger font-size-10">pending</span>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <!-- <li data-bs-toggle="tooltip" data-bs-placement="top" title="View List">
-                                                        <a href="#" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li> -->
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
-                                                        <a href="#activate" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                        <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
