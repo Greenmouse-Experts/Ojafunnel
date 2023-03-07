@@ -191,7 +191,7 @@ class HomePageController extends Controller
         $admin = Admin::latest()->first();
 
         OjafunnelNotification::create([
-            'admin_id' => 3,
+            'admin_id' => $admin->id,
             'title' => config('app.name'),
             'body' => $contact->name.' sent a contact us form.'
         ]);
