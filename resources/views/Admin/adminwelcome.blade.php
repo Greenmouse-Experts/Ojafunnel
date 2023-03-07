@@ -223,51 +223,7 @@
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    @foreach ($admin->recentCustomers() as $item)
-                                                        <tr>
-
-                                                            <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
-                                                            <td>{{$item->user->first_name}} {{$item->user->last_name}}</td>
-                                                            <td>
-                                                                {{$item->user->email}}
-                                                            </td>
-                                                            <td>
-                                                                {{$item->user->phone_number}}
-                                                            </td>
-                                                            <td>
-                                                                @if ($item->status == 'active')
-                                                                    <span class="badge badge-pill badge-soft-success font-size-11">{{ trans('messages.user_status_' . $item->status) }}</span>
-                                                                @endif
-
-                                                                @if ($item->status == 'inactive')
-                                                                    <span class="badge badge-pill badge-soft-danger font-size-11">Banned</span>
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                {{$item->user->created_at->format('d M, Y')}}
-                                                            </td>
-                                                            <td>
-                                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
-                                                                        <a href="{{route('users.details', $item->uid)}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                                    </li>
-                                                                    @if ($item->status == 'inactive')
-                                                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
-                                                                            <a href="{{ route('enabled.user', ["uids" => $item->uid]) }}" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
-                                                                        </li>
-                                                                    @endif
-                                                                    @if ($item->status == 'active')
-                                                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                                            <a href="{{ route('disable.user', ["uids" => $item->uid]) }}" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
-                                                                        </li>
-                                                                    @endif
-                                                                </ul>
-                                                            </td>
-
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
+                                                
                                             </table>
                                         </div>
                                     </div>
