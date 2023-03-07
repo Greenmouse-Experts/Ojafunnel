@@ -59,6 +59,7 @@ Route::get('/faqs', [App\Http\Controllers\HomePageController::class, 'faqs'])->n
 Route::get('/pricing', [App\Http\Controllers\HomePageController::class, 'pricing'])->name('pricing');
 // Contact Us
 Route::get('/contact', [App\Http\Controllers\HomePageController::class, 'contact'])->name('contact');
+Route::post('/contact-us', [App\Http\Controllers\HomePageController::class, 'contactConfirm']);
 // Login
 Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])->name('login');
 // Sign In
@@ -401,6 +402,11 @@ Route::post('/support/send', [ChatController::class, 'sendMessage']);
 Route::put('/support/read', [ChatController::class, 'markAsRead']);
 
 Route::post('/support/clear/single/chat', [ChatController::class, 'deleteSingleChat']);
+
+Route::get('/support/checkConvo/{recieverId}', [ChatController::class, 'check']);
+Route::post('/support/sendMessage', [ChatController::class, 'store'])->name('sendMessage');
+Route::get('/support/loadMessage/{reciever}/{sender}', [ChatController::class, 'load']);
+Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [ChatController::class, 'retrieveNew']);
 
 // Builder
 Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');

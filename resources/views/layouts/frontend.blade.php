@@ -13,8 +13,27 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
         <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        {!! NoCaptcha::renderJs() !!}
+        <script type="text/javascript">
+            window.setTimeout(function() {
+                $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function(){
+                    $(this).remove(); 
+                });
+            }, 8000);
+        </script>
     </head>
-    <body>        
+    <body>    
+        <!-- Alerts  Start-->
+        <div style="position: fixed; top: 10px; right: 20px; z-index: 100000; width: auto;">
+            @include('layouts.alert')
+        </div>
+        <!-- Alerts End -->   
+        <div id='loader'>
+            <div class="loader-inner">
+                <div class="loading-content"></div>
+            </div>
+        </div> 
         <!-- Header -->
             @includeIf('layouts.frontend-header')
         <!-- Header Ends -->
@@ -26,6 +45,13 @@
         <!-- Footer -->
             @includeIf('layouts.frontend-footer')
         <!-- Footer Ends -->         
+        <script>
+            $(function() {
+                $("form").submit(function() {
+                    $('#loader').show();
+                });
+            });
+        </script>
         <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
         <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
         <script src="{{URL::asset('assets/js/main.js')}}"></script>

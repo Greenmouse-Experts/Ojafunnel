@@ -72,6 +72,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::post('/support/clear/single/chat', [App\Http\Controllers\Admin\AdminController::class, 'deleteSingleChat']);
             Route::delete('/support/deletechatroom', [App\Http\Controllers\Admin\AdminController::class, 'deleteChatroom']);
 
+            Route::get('/support/checkConvo/{recieverId}', [App\Http\Controllers\Admin\AdminController::class, 'check']);
+            Route::post('/support/sendMessage', [App\Http\Controllers\Admin\AdminController::class, 'store'])->name('sendMessage');
+            Route::get('/support/loadMessage/{reciever}/{sender}', [App\Http\Controllers\Admin\AdminController::class, 'load']);
+            Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [App\Http\Controllers\Admin\AdminController::class, 'retrieveNew']);
+
             // Email Marketing
             Route::get('sending/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('sending.server');
             Route::get('sending/index/new-server', [App\Http\Controllers\Admin\AdminController::class, 'new_server'])->name('new.server');
@@ -107,6 +112,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             // Notification
             Route::get('/admin/read/notification/{id}', [App\Http\Controllers\Admin\AdminController::class, 'read_notification'])->name('admin.read.notification');
+
+            // Frontend
+            Route::get('/faq', [App\Http\Controllers\Admin\AdminController::class, 'view_faq'])->name('viewFaq');
+            Route::post('/add-faq', [App\Http\Controllers\Admin\AdminController::class, 'add_faq'])->name('addFaq');
+            Route::post('/update-faq/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_faq'])->name('updateFaq');
+            Route::post('/delete-faq/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_faq'])->name('deleteFaq');
+
+            Route::get('/contact-us', [App\Http\Controllers\Admin\AdminController::class, 'view_contact_us'])->name('viewContactUs');
+            Route::post('/delete-contact-us/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_contact_us'])->name('deleteContactUs');
         }
     );
 });

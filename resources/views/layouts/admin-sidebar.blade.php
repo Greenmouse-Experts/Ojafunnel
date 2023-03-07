@@ -154,6 +154,16 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bi bi-book"></i>
+                        <span key="t-chat">Frontend</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('viewFaq')}}" key="t-tui-calendar">FAQ</a></li>
+                        <li><a href="{{route('viewContactUs')}}" key="t-tui-calendar">Contact Us</a></li>
+                    </ul>
+                </li>
+                <li>
                     <a href="#" class="has-arrow">
                         <i class="bi bi-sliders2"></i>
                         <span key="t-dashboards">Settings</span>
