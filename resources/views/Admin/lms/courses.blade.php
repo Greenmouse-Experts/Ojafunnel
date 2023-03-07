@@ -35,83 +35,80 @@
                 <div class="row mt-1"></div>
             </div>
             <!-- table content of courses -->
-            <div class="col-md-12">
-                <div class="card-body card">
-                    <h4 class="card-title mb-4">Courses List</h4>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="transactions-all-tab" role="tabpanel">
-                            <div class="table-responsive" data-simplebar style="max-height: 330px;">
-                                <table class="table align-middle table-nowrap">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">Course List</h4>
+                            <div class="table-responsive">
+                                <table id="datatable-buttons" class="table align-middle table-nowrap">
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
                                             <th>Owner's Name</th>
-                                            <th>Course Name</th>
+                                            <th>Course Title</th>
                                             <th>Course Category</th>
+                                            <th>Enrollment</th>
+                                            <th>Published</th>
                                             <th>Status</th>
                                             <th>Date Created</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach(\App\Models\Course::latest()->get() as $course)
                                         <tr>
 
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#11</a> </td>
+                                            <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
                                             <td>
-                                                Greenmouse Tech
+                                                {{App\Models\User::find($course->user_id)->first_name}} {{App\Models\User::find($course->user_id)->last_name}}
                                             </td>
                                             <td>
-                                                Laravel Framwork
+                                                {{$course->title}}
                                             </td>
                                             <td>
-                                                Technology
+                                                </i>{{App\Models\Category::find($course->category_id)->name}}
                                             </td>
                                             <td>
-                                                <span class="badge badge-pill badge-soft-success font-size-11">active</span>
+                                                <i class="fas fa-user"> {{App\Models\ShopOrder::where('course_id',$course->id)->get()->count()}}
                                             </td>
                                             <td>
-                                                Dec 10 2022
+                                                <i class="fas fa-play-circle"></i>
+                                                @if($course->published == false)
+                                                Unpublish
+                                                @else
+                                                Published
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <i class="fas fa-play-circle"></i>
+                                                @if($course->approved == false)
+                                                Inactive
+                                                @else
+                                                Active
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{$course->created_at->toDayDateTimeString()}}
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Details">
                                                         <a href="{{route('courseDetail')}}"  class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
+                                                    @if($course->approved == true)
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Suspend Course">
-                                                        <a href="#" class="btn btn-sm btn-soft-danger"><i class="bi bi-x-circle"></i></a>
+                                                        <a href="{{route('course.deactivate', $course->id)}}" class="btn btn-sm btn-soft-danger"><i class="bi bi-x-circle"></i></a>
                                                     </li>
+                                                    @else
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate Course">
+                                                        <a href="{{route('course.activate', $course->id)}}" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></a>
+                                                    </li>
+                                                    @endif
                                                 </ul>
                                             </td>
                                         </tr>
-                                        <tr>
-
-                                            <td><a href="javascript: void(0);" class="text-body fw-bold">#12</a> </td>
-                                            <td>
-                                                Metalbox
-                                            </td>
-                                            <td>
-                                                VueJs Library
-                                            </td>
-                                            <td>
-                                                Technology
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-pill badge-soft-success font-size-11">active</span>
-                                            </td>
-                                            <td>
-                                                Dec 03 2022
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Details">
-                                                        <a href="{{route('courseDetail')}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                                                    </li>
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Suspend Course">
-                                                        <a href="#" class="btn btn-sm btn-soft-danger"><i class="bi bi-x-circle"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

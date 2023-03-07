@@ -29,19 +29,51 @@
                 <div class='analytics-header-boxes'>
                     <div class='analytics-header-box box1'>
                         <p class='text-center label1'>Total Sales</p>
-                        <p class='text-center label2'>₦300,000.00</p>
+                        <p class='text-center label2'>
+                          @php
+                            $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
+                            $shop = \App\Models\Shop::where('user_id', Auth::user()->id)->first();
+                          @endphp
+                          @if($store != null AND $shop != null)
+                            ₦{{number_format(App\Models\StoreOrder::where('store_id', $store->id)->sum('amount') + App\Models\ShopOrder::where('shop_id', $shop->id)->sum('amount'), 2)}}
+                          @elseif($shop != null AND $store == null)
+                            ₦{{number_format(App\Models\ShopOrder::where('shop_id', $shop->id)->sum('amount'), 2)}}
+                          @elseif($store != null AND $shop == null)
+                            ₦{{number_format(App\Models\StoreOrder::where('store_id', $store->id)->sum('amount'), 2)}}
+                          @else
+                            ₦0
+                          @endif
+                        </p>
                         <div class='d-flex justify-content-center'>
                             <img src='https://cdn-icons-png.flaticon.com/512/1389/1389181.png' alt='analysis' width='60%' />
                         </div>
                     </div>
                     <div class='analytics-header-box box2'>
                         <p class='text-center label1'>Ecommerce Sales</p>
-                        <p class='text-center label2'>₦152,000.00</p>
+                        <p class='text-center label2'>
+                          @php
+                            $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
+                          @endphp
+                          @if($store != null)
+                            ₦{{number_format(App\Models\StoreOrder::where('store_id', $store->id)->sum('amount'), 2)}}
+                          @else
+                            ₦0
+                          @endif
+                        </p>
                         <div id='chart1'></div>
                     </div>
                     <div class='analytics-header-box box3'>
                         <p class='text-center label1'>L.M.S Sales</p>
-                        <p class='text-center label2'>₦98,000.00</p>
+                        <p class='text-center label2'>
+                          @php
+                            $shop = \App\Models\Shop::where('user_id', Auth::user()->id)->first();
+                          @endphp
+                          @if($shop != null)
+                            ₦{{number_format(App\Models\ShopOrder::where('shop_id', $shop->id)->sum('amount'), 2)}}
+                          @else
+                            ₦0
+                          @endif
+                        </p>
                         <div id='chart2'></div>
                     </div>
                     <div class='analytics-header-box box4'>
@@ -105,7 +137,7 @@
     <script>
         // total sales chart
         let options1 = {
-          series: [53],
+          series: ['{{$storeOrderCount}}'],
           chart: {
           height: 190,
           width: "100%",
@@ -191,7 +223,7 @@
     <script>
         // total sales chart
         let options2 = {
-          series: [38],
+          series: ['{{$shopOrderCount}}'],
           chart: {
           height: 190,
           width: "100%",
@@ -275,119 +307,119 @@
         chart.render();
     </script>
     <script>
-    // total sales chart
-    let options3 = {
-          series: [18],
-          chart: {
-          height: 190,
-          type: 'radialBar',
-          toolbar: {
-            show: true
-          }
-        },
-        plotOptions: {
-          radialBar: {
-            startAngle: -135,
-            endAngle: 225,
-             hollow: {
-              margin: 0,
-              size: '70%',
-              background: '#fff',
-              image: undefined,
-              imageOffsetX: 0,
-              imageOffsetY: 0,
-              position: 'front',
-              dropShadow: {
-                enabled: true,
-                top: 3,
-                left: 0,
-                blur: 4,
-                opacity: 0.24
-              }
-            },
-            track: {
-              background: '#fff',
-              strokeWidth: '67%',
-              margin: 0, // margin is in pixels
-              dropShadow: {
-                enabled: true,
-                top: -3,
-                left: 0,
-                blur: 4,
-                opacity: 0.35
-              }
-            },
-        
-            dataLabels: {
+      // total sales chart
+      let options3 = {
+        series: [18],
+        chart: {
+        height: 190,
+        type: 'radialBar',
+        toolbar: {
+          show: true
+        }
+      },
+      plotOptions: {
+        radialBar: {
+          startAngle: -135,
+          endAngle: 225,
+            hollow: {
+            margin: 0,
+            size: '70%',
+            background: '#fff',
+            image: undefined,
+            imageOffsetX: 0,
+            imageOffsetY: 0,
+            position: 'front',
+            dropShadow: {
+              enabled: true,
+              top: 3,
+              left: 0,
+              blur: 4,
+              opacity: 0.24
+            }
+          },
+          track: {
+            background: '#fff',
+            strokeWidth: '67%',
+            margin: 0, // margin is in pixels
+            dropShadow: {
+              enabled: true,
+              top: -3,
+              left: 0,
+              blur: 4,
+              opacity: 0.35
+            }
+          },
+      
+          dataLabels: {
+            show: true,
+            name: {
+              offsetY: -10,
               show: true,
-              name: {
-                offsetY: -10,
-                show: true,
-                color: '#888',
-                fontSize: '13px'
+              color: '#888',
+              fontSize: '13px'
+            },
+            value: {
+              formatter: function(val) {
+                return parseInt(val);
               },
-              value: {
-                formatter: function(val) {
-                  return parseInt(val);
-                },
-                color: '#111',
-                fontSize: '26px',
-                show: true,
-              }
+              color: '#111',
+              fontSize: '26px',
+              show: true,
             }
           }
-        },
-        fill: {
-          type: 'gradient',
-          gradient: {
-            shade: 'dark',
-            type: 'horizontal',
-            shadeIntensity: 0.5,
-            gradientToColors: ['orange'],
-            inverseColors: true,
-            opacityFrom: 1,
-            opacityTo: 1,
-            stops: [0, 100]
-          }
-        },
-        stroke: {
-          lineCap: 'round'
-        },
-        labels: ['Percent'],
-        };
+        }
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          type: 'horizontal',
+          shadeIntensity: 0.5,
+          gradientToColors: ['orange'],
+          inverseColors: true,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 100]
+        }
+      },
+      stroke: {
+        lineCap: 'round'
+      },
+      labels: ['Percent'],
+      };
 
-        var secondChart = new ApexCharts(document.getElementById("chart3"), options3);
-        secondChart.render();
+      var secondChart = new ApexCharts(document.getElementById("chart3"), options3);
+      secondChart.render();
     </script>
-    <script>
-        var options = {
-          series: [{
-          data: [20, 5 , 10, 15, 18, 21, 28]
-        }],
-          chart: {
-          type: 'bar',
-          height: 350
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 4,
-            horizontal: true,
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        xaxis: {
-          categories: ['Laravel Fra..', 'Automation To..', 'Affiliate Top', 'Tract Tamp','Page Builder', 'Email World', 'Funnel Pro'
-          ],
-        },
-        fill: {
-                    colors: ['#713f93']
-                }
-        };
+    <script> 
+      var options = {
+        series: [{
+        data: [20, 5 , 10, 15, 18, 21, 28]
+      }],
+        chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 4,
+          horizontal: true,
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      xaxis: {
+          categories: ['Course Sales', 'Automation To..', 'Affiliate Top', 'Tract Tamp','Page Builder', 'Email World', 'Funnel Pro'
+        ],
+      },
+      fill: {
+          colors: ['#713f93']
+        }
+      };
 
-        let products = new ApexCharts(document.querySelector("#products"), options);
-        products.render();
+      let products = new ApexCharts(document.querySelector("#products"), options);
+      products.render();
     </script>
 <!-- END layout-wrapper -->
 @endsection

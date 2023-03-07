@@ -301,14 +301,21 @@ class ChatController extends Controller
 
     public function markAsRead (Request $request) 
     {
-        // set a value to the 'read_at' column
-        Chat::where('id', $request->target_id)
-            ->update(['read_at' => now()]);
+        if ($request->target_model == 'chat') {
+            // set a value to the 'read_at' column
+            Chat::where('id', $request->target_id)
+                ->update(['read_at' => now()]);
 
-        return response()->json([
-            'success' => false,
-            'message' => 'Chat with id ' . $request->target_id . ' has been updated.'
-        ]);
+            return ['message' => 'Chat with id ' . $request->target_id . ' has been updated.'];
+        }
+
+        if ($request->target_model == 'read') {
+            // set a value to the 'read_at' column
+            Chat::where('admin_id', $request->target_id)
+                ->update(['read_at' => now()]);
+
+            return ['message' => 'Chat with id ' . $request->target_id . ' has been updated.'];
+        }
     }
 
     public function downloadAttachment ($id, Request $request) 

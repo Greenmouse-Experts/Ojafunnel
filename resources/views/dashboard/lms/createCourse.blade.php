@@ -66,7 +66,7 @@
                                             <div class="course-meta">
                                                 <span class="">
                                                     <i class="fas fa-play-circle"></i>
-                                                    Lessons
+                                                    {{App\Models\Lesson::where('course_id', $course->id)->get()->count()}} Lessons
                                                 </span>
                                                 <!-- <span class="">
                                                     <i class="far fa-clock"></i>
@@ -82,9 +82,24 @@
                                                     Published
                                                     @endif
                                                 </span>
+                                                <span class="">
+                                                    @if($course->approved == false)
+                                                    <i class="bi bi-eye-slash-fill"></i>
+                                                    <span class="badge badge-pill badge-soft-danger text-danger font-size-11">Inactive</span>
+                                                    @else
+                                                    <i class="bi bi-check2-all"></i>
+                                                    <span class="badge badge-pill badge-soft-success text-danger font-size-11">Active</span>
+                                                    @endif
+                                                </span>
                                             </div>
                                         </div>
-                                        <div class="course-price-rating mb-3">
+                                        <div class="float-end" style="float:right">
+                                            
+                                        </div>
+                                        <div class="course-price-rating mb-3" style="display:grid;align-items:space-between;min-height:148px">
+                                            <div>
+                                                <a href="{{route('user.view.course.details', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View Course Details</u></strong></a>    
+                                            </div>
                                             <div class="course-price">
                                                 <span class="current-price">{{$course->currency}} {{number_format($course->price, 2)}}</span>
                                             </div>

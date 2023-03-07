@@ -15,8 +15,10 @@ use App\Models\Page;
 use App\Models\PersonalChatroom;
 use App\Models\Plan;
 use App\Models\Shop;
+use App\Models\ShopOrder;
 use App\Models\SmsAutomation;
 use App\Models\SmsCampaign;
+use App\Models\StoreOrder;
 use App\Models\Subscriber;
 use App\Models\Transaction;
 use App\Models\User;
@@ -662,9 +664,19 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function view_course_details($username, Request $request)
+    {
+        $course = Course::find($request->id);
+
+        return view('dashboard.lms.viewcoursedetails', [
+            'username' => $username,
+            'course' => $course
+        ]);
+    }
+
     public function course_details($username)
     {
-        return view('dashboard.lms.CourseDetails', [
+        return view('dashboard.lms.coursedetails', [
             'username' => $username
         ]);
     }
@@ -681,6 +693,13 @@ class DashboardController extends Controller
         $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.lms.checkShops', compact('username', 'shop'));
+    }
+
+    public function view_enrollments($username, Request $reequest)
+    {
+        $shop = Shop::latest()->where('user_id', Auth::user()->id)->first();
+
+        return view('dashboard.lms.view_enrollments', compact('username', 'shop'));
     }
 
     public function my_shops($username)
@@ -747,7 +766,16 @@ class DashboardController extends Controller
 
     public function reports_analysis($username)
     {
+        $coursePurchase = Transaction::where('user_id', Auth::user()->id)->where('status', 'Course Purchase')->get()->count();
+        $referralBonus = Transaction::where('user_id', Auth::user()->id)->where('status', 'Referral Bonus')->get()->count();
+        $productPurchase = Transaction::where('user_id', Auth::user()->id)->where('status', 'Product Purchase')->get()->count();
+        $topUp = Transaction::where('user_id', Auth::user()->id)->where('status', 'Top Up')->get()->count();
+
         return view('dashboard.reportsAnalysis', [
+            'coursePurchase' => $coursePurchase,
+            'referralBonus' => $referralBonus,
+            'productPurchase' => $productPurchase,
+            'topUp' => $topUp,
             'username' => $username
         ]);
     }
@@ -781,10 +809,29 @@ class DashboardController extends Controller
         ]);
     }
 
-     public function main_sales($username)
+    public function main_sales($username)
     {
+        $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
+        $shop = \App\Models\Shop::where('user_id', Auth::user()->id)->first();
+
+        if($store != null)
+        {
+            $storeOrderCount = StoreOrder::where('store_id', $store->id)->get()->count();
+        } else {
+            $storeOrderCount = 0;
+        }
+
+        if($shop != null)
+        {
+            $shopOrderCount = ShopOrder::where('shop_id', $shop->id)->get()->count();
+        } else {
+            $shopOrderCount = 0;
+        }
+
         return view('dashboard.salesAnalytics', [
-            'username' => $username
+            'username' => $username,
+            'storeOrderCount' => $storeOrderCount,
+            'shopOrderCount' => $shopOrderCount
         ]);
     }
 

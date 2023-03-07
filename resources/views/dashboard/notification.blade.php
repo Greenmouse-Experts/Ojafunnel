@@ -43,13 +43,13 @@
                             <a href="{{route('user.read.notification', Crypt::encrypt($notification->id))}}">
                             <div class=''>
                                 <div class='notify-head-tag'>
-                                    <p class='p-0 m-0'>Ecommerce</p>
+                                    <p class='p-0 m-0'>{{$notification->title}}</p>
                                 </div>
                                 <div>
-                                    <p class='mb-1 mt-2 fs-5'>Your course has been succesfully uploaded on the store for purchase.</p>
+                                    <p class='mb-1 mt-2 fs-5'>{{$notification->body}}</p>
                                 </div>
                                 <div>
-                                    <p class='fst-italic '>10 mins ago</p>
+                                    <p class='fst-italic '>{{$notification->created_at->diffForHumans()}}</p>
                                 </div>
                             </div>
                             </a>
@@ -63,13 +63,13 @@
                             </div>
                             <div class=''>
                                 <div class='notify-head-tag'>
-                                    <p class='p-0 m-0'>Ecommerce</p>
+                                    <p class='p-0 m-0'>{{$notification->title}}</p>
                                 </div>
                                 <div>
-                                    <p class='mb-1 mt-2 fs-5'>Your course has been succesfully uploaded on the store for purchase.</p>
+                                    <p class='mb-1 mt-2 fs-5'>{{$notification->body}}</p>
                                 </div>
                                 <div>
-                                    <p class='fst-italic '>10 mins ago</p>
+                                    <p class='fst-italic '>{{$notification->created_at->diffForHumans()}}</p>
                                 </div>
                             </div>
                         </div>

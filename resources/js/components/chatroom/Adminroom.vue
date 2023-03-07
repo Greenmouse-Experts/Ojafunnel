@@ -240,6 +240,29 @@ export default {
     copyText() {
       navigator.clipboard.writeText(this.$refs.mymessage);
     },
+    runThisUserEchoListener () {
+      Echo.private(`user.${this.user.id}`)
+      .listen('ReceiveMessage', (e) => {
+
+        //  recent chats
+        const isExist = this.recent_chats.filter(recent => recent.admin.id == e.payload.user.id);
+
+        if (!isExist.length) {
+          this.recent_chats.unshift({
+            chat: { message: e.payload.message },
+            admin: e.payload.user,
+            unread: 1
+          });
+        } else {
+          // put this user into the top in recent chat list
+          this.addToFirstIndexInRecentChats(e.payload.user, e.payload.message);
+  
+          // increment the unread property value for the badge
+          this.incrementUnreadMessages(e.payload.user.id);
+        }
+        console.log(e);
+      })
+    },
     fetchAllUsers () {
       axios.get('/admin/page/support/get/users')
       .then((res) => {
@@ -263,7 +286,7 @@ export default {
     },
     startChat (id) {
       if (this.chatroom_data) {
-        // Echo.leave(`chat.${this.chatroom_data.room_id}`);
+        Echo.leave(`chat.${this.chatroom_data.room_id}`);
         this.chatroom_data = null;
       }
 
@@ -319,11 +342,24 @@ export default {
           console.log(e);
         });
 
+        this.markAsRead(id, 'read');
+
         console.log(this.chatroom_data);
 
         return res;
       })
       .catch((err) => {
+        console.log(err);
+      });
+    },
+    markAsRead (id, model) {
+      axios.put('/admin/page/support/read', {
+        target_id: id,
+        target_model: model
+      })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
         console.log(err);
       });
     },
@@ -397,7 +433,7 @@ export default {
         time: new Date().toISOString()
       });
 
-      // this.addToFirstIndexInRecentChats(this.chatroom_data.user, this.message);
+      this.addToFirstIndexInRecentChats(this.chatroom_data.user, this.message);
 
       console.log(this.recent_chats);
 
@@ -501,5 +537,9 @@ export default {
 
     .chat-area::-webkit-scrollbar {
         width: 0;
+    }
+
+    .nav-pills .nav-link.active {
+      background-color: #713f93;
     }
 </style>

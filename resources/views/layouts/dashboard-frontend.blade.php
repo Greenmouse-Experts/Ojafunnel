@@ -13,8 +13,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @vite(['resources/js/app.js', 'resources/css/app.css', 'public/dash/assets/js/app.js', 'public/dash/assets/css/app.min.css', 'public/dash/assets/libs/simplebar/simplebar.min.js'])
-
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <!-- Bootstrap Css -->
     <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />

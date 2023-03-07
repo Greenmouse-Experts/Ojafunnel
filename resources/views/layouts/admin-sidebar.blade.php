@@ -120,7 +120,9 @@
                         <span key="t-chat">Learning Management</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('viewCategory')}}" key="t-tui-calendar">Course Category</a></li>
                         <li><a href="{{route('viewCourse')}}" key="t-tui-calendar">View Courses</a></li>
+                        <li><a href="{{route('viewShop')}}" key="t-tui-calendar">View Shop</a></li>
                     </ul>
                 </li>
                 <li>

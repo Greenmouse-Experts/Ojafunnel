@@ -19,14 +19,13 @@ Route::get('/page-builder/create', [App\Http\Controllers\PageController::class, 
 Route::get('pages/{page}/editor', [App\Http\Controllers\PageController::class, 'viewEditor'])->name('user.page.builder.view.editor');
 Route::get('pages/{page}', [App\Http\Controllers\PageController::class, 'viewPage'])->name('user.page.builder.view.page');
 Route::get('/shop/{storename}', [App\Http\Controllers\StoreFrontController::class, 'storeFront'])->name('user.stores.link');
-Route::get('/course/shop/{shopname}', [App\Http\Controllers\StoreFrontController::class, 'shopFront'])->name('user.shops.link');
 Route::get('cart/{storename}', [App\Http\Controllers\StoreFrontController::class, 'cart'])->name('cart');
 Route::get('checkout/{storename}', [App\Http\Controllers\StoreFrontController::class, 'checkout'])->name('checkout');
 Route::post('checkout/payment/{storename}', [App\Http\Controllers\StoreFrontController::class, 'checkoutPayment'])->name('payment.checkout');
 Route::get('add-to-cart/{id}', [App\Http\Controllers\StoreFrontController::class, 'addToCart'])->name('add.to.cart');
 Route::patch('update-cart', [App\Http\Controllers\StoreFrontController::class, 'update'])->name('update.cart');
 Route::delete('remove-from-cart', [App\Http\Controllers\StoreFrontController::class, 'remove'])->name('remove.from.cart');
-Route::get('generatePdf', [App\Http\Controllers\StoreFrontController::class, 'Pdf'])->name('generate.pdf');
+Route::get('generatePdf', [App\Http\Controllers\ShopFrontController::class, 'Pdf'])->name('generate.pdf');
 
 // Shop
 Route::get('/course/shop/{shopname}', [App\Http\Controllers\ShopFrontController::class, 'shopFront'])->name('user.shops.link');
@@ -34,7 +33,8 @@ Route::get('/add/course/cart/{id}', [App\Http\Controllers\ShopFrontController::c
 Route::get('/course/cart/{shopname}', [App\Http\Controllers\ShopFrontController::class, 'course_cart'])->name('course.cart');
 Route::get('/course/checkout/{shopname}', [App\Http\Controllers\ShopFrontController::class, 'course_checkout'])->name('course.checkout');
 Route::patch('/course/update-cart', [App\Http\Controllers\ShopFrontController::class, 'course_update'])->name('course.update.cart');
-Route::post('/course/checkout/payment/{storename}', [App\Http\Controllers\ShopFrontController::class, 'courseCheckoutPayment'])->name('course.payment.checkout');
+Route::post('/course/checkout/payment/{shopname}', [App\Http\Controllers\ShopFrontController::class, 'courseCheckoutPayment'])->name('course.payment.checkout');
+Route::get('/view-course-details/{shopname}/{id}', [App\Http\Controllers\ShopFrontController::class, 'view_course_details'])->name('view.course.details');
 // assets path for email
 Route::get('assets/{dirname}/{basename}', [
     function ($dirname, $basename) {
@@ -49,7 +49,6 @@ Route::get('assets/{dirname}/{basename}', [
         }
     }
 ])->name('public_assets');
-
 
 
 // Route::domain(config('app.domain_url'))->group(function() {
@@ -82,33 +81,24 @@ Route::get('/features/emailmarketing', [App\Http\Controllers\HomePageController:
 Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
 Route::get('/datatable_locale', [App\Http\Controllers\Controller::class, 'datatable_locale'])->name('datatable_locale');
 Route::get('/jquery_validate_locale', [App\Http\Controllers\Controller::class, 'jquery_validate_locale'])->name('jquery_validate_locale');
-// });
 
 // See Demo
 Route::get('/see-demo', [App\Http\Controllers\HomePageController::class, 'demo'])->name('demo');
-// });
 
 // Ecommerce Frontend
 Route::get('/features/ecommerce', [App\Http\Controllers\HomePageController::class, 'ecommerce'])->name('ecommerce');
-// });
 
 // Funnel Bulder Frontend
 Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::class, 'funnelbuilder'])->name('funnelbuilder');
-// });
 
 // Template Designs Frontend
 Route::get('/features/template', [App\Http\Controllers\HomePageController::class, 'template'])->name('template');
-// });
 
 // Affiliate Marketing
 Route::get('/features/affiliate', [App\Http\Controllers\HomePageController::class, 'affiliate'])->name('affiliate');
-// });
-
 
 // Integration Frontend
 Route::get('/features/integrations', [App\Http\Controllers\HomePageController::class, 'integrations'])->name('integrations');
-// });
-
 
 //User Authentications
 Route::prefix('auth')->group(function () {
@@ -332,9 +322,11 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/create-course/course-content/{id}', [App\Http\Controllers\DashboardController::class, 'course_content'])->name('user.course.content');
                         Route::get('/create-shop', [App\Http\Controllers\DashboardController::class, 'create_shop'])->name('user.create.shop.course');
                         Route::get('/view-shop', [App\Http\Controllers\DashboardController::class, 'view_shops'])->name('user.view.course.shops');
+                        Route::get('/view-enrollments/{id}', [App\Http\Controllers\DashboardController::class, 'view_enrollments'])->name('user.view.course.enrollments');
                         Route::get('/my-shop', [App\Http\Controllers\DashboardController::class, 'my_shops'])->name('user.my.shops.course');
                         Route::get('/course/checkout', [App\Http\Controllers\DashboardController::class, 'course_checkout'])->name('user.course.checkout');
                         Route::get('/course/cart', [App\Http\Controllers\DashboardController::class, 'course_cart'])->name('user.course.cart');
+                        Route::get('/view-course-details/{id}', [App\Http\Controllers\DashboardController::class, 'view_course_details'])->name('user.view.course.details');
                         Route::get('/course-details', [App\Http\Controllers\DashboardController::class, 'course_details'])->name('user.course.details');
                         // Route::get('/create-course/get-quiz', [App\Http\Controllers\DashboardController::class, 'get_quiz'])->name('user.get.quiz');
                         // Route::get('/create-course/course-summary', [App\Http\Controllers\DashboardController::class, 'course_summary'])->name('user.course.summary');
@@ -403,12 +395,12 @@ Route::post('/general/builder/upload/file', [App\Http\Controllers\PageController
 
 // User Support
 Route::post('/support/start/chat/{id}', [ChatController::class, 'startChat']);
+Route::get('/support/chats', [ChatController::class, 'fetchAllRecentChats']);
 Route::get('/support/get/admins', [ChatController::class, 'fetchAllAdmins']);
 Route::post('/support/send', [ChatController::class, 'sendMessage']);
+Route::put('/support/read', [ChatController::class, 'markAsRead']);
 
 Route::post('/support/clear/single/chat', [ChatController::class, 'deleteSingleChat']);
-
-
 
 // Builder
 Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');

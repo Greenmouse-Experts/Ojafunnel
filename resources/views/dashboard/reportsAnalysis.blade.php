@@ -1,5 +1,6 @@
 @extends('layouts.dashboard-frontend')
-
+  <link href="{{asset('assets/css/components.min.css')}}" rel="stylesheet" type="text/css">	
+  <script type="text/javascript" src="{{asset('assets/js/echarts.min.js')}}"></script>
 @section('page-content')
 <!-- ============================================================== -->
 <!-- Start right Content here -->
@@ -35,7 +36,7 @@
                                 <p class='text-center'>funnel count</p>
                                 <i class="bi bi-graph-up-arrow ps-1"></i>
                             </div>
-                            <p class='fs-3 fw-bolder text-center text-primary'>02</p>
+                            <p class='fs-3 fw-bolder text-center text-primary'>{{\App\Models\FunnelPage::where('user_id', Auth::user()->id)->count()}}</p>
                         </div>
                     </div>
                     <div class='repAnal-box'>
@@ -46,7 +47,7 @@
                                 <p class='text-center'>page count</p>
                                 <i class="bi bi-graph-up-arrow ps-1"></i>
                             </div>
-                            <p class='fs-3 fw-bolder text-center text-warning'>08</p>
+                            <p class='fs-3 fw-bolder text-center text-warning'>{{App\Models\Page::where('user_id', Auth::user()->id)->count()}}</p>
                         </div>
                     </div>
                     <div class='repAnal-box'>
@@ -68,7 +69,7 @@
                                 <p class='text-center'>store count</p>
                                 <i class="bi bi-graph-up-arrow ps-1"></i>
                             </div>
-                            <p class='fs-3 fw-bolder text-center text-danger'>02</p>
+                            <p class='fs-3 fw-bolder text-center text-danger'>{{App\Models\Store::where('user_id', Auth::user()->id)->get()->count()}}</p>
                         </div>
                     </div>
                 </div>
@@ -76,13 +77,15 @@
                     <div class='transact-analysis'>
                         <p class='transact-badge'>Transaction Analysis</p>
                         <p class='fs-4 fw-bold'>Transaction Analysis</p>
-                        <div id='transact'></div>
+                        <div class="chart-container">
+                            <div class="chart has-fixed-height" id="bars_basic"></div>
+                        </div>
                     </div>
                     <div>
                       <div class='subscribe-analysis'>
                         <p class="default-badge">Subscription Detail</p>
                         <div>
-                          <p class="text-center fw-bold fs-4 text-warning">STANDARD PLAN</p>
+                          <p class="text-center fw-bold fs-4 text-warning">{{App\Models\OjaPlan::find(Auth::user()->plan)->name}} </p>
                         </div>
                         <div class="d-flex align-items-center">
                           <p>Status:</p>
@@ -96,11 +99,11 @@
                       <div class='affiliate-analysis'>
                         <p class="default-badge">Affiliate Detail</p>
                         <div>
-                          <p class="text-center fw-bold detail-fonting" >0</p>
-                          <p class="text-center">No of Affiliate</p>
+                          <p class="text-center fw-bold detail-fonting">{{App\Models\User::where('referral_link', Auth::user()->id)->get()->count()}}</p>
+                          <p class="text-center">No of Direct Affiliate</p>
                         </div>
                         <div>
-                          <p class="text-center fw-bold detail-fonting" >₦0.00</p>
+                          <p class="text-center fw-bold detail-fonting" >₦{{number_format(Auth::user()->ref_bonus, 2)}}</p>
                           <p class="text-center">Refferal Bonus</p>
                         </div>
                       </div>
@@ -113,20 +116,34 @@
                       <div class=" d-flex justify-content-center">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677247981/OjaFunnel-Images/courses_aqxpw1.png" alt="course" width="100%" class="course-img" />
                       </div>
-                      <p class="text-center fw-bold">12 Courses in Store</p>
+                      <p class="text-center fw-bold">{{App\Models\Course::where('user_id', Auth::user()->id)->where('approved', true)->get()->count()}} Courses in Shop</p>
                     </div>
                     <div class="col-lg-4">
                       <div class="d-flex justify-content-center">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677247981/OjaFunnel-Images/book_rvzxzs.webp" alt="books" width="80%" class="course-img" />
                       </div>
-                      <p class="text-center fw-bold">49 Unit Sold</p>
+                      <p class="text-center fw-bold">
+                        @php
+                          $shop = \App\Models\Shop::where('user_id', Auth::user()->id)->first();
+                        @endphp
+                        @if($shop != null)
+                          {{App\Models\ShopOrder::where('shop_id', $shop->id)->get()->count()}} Courses Sold
+                        @else
+                          0 Course Sold
+                        @endif
+                      </p>
                     </div>
                     <div class="col-lg-4">
                       <div class="d-flex justify-content-center">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677247981/OjaFunnel-Images/bookwin-removebg-preview_cgkz6f.png" alt="books" width="70%" class="course-img">
                       </div>
-                      <p class="text-center fw-bold my-0">Top Grossing Course</p>
-                      <p class="text-sm text-center my-0">(Laravel Framework)</p>
+                      <p class="text-center fw-bold">
+                        @if($shop != null)
+                          {{App\Models\Enrollment::where('shop_id', $shop->id)->get()->count()}} Total Students
+                        @else
+                          0 Total Student
+                        @endif
+                      </p>
                     </div>
                   </div>
                   <div class="ecommerce-details pt-lg-5 row">
@@ -135,20 +152,34 @@
                       <div class=" d-flex justify-content-center">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677247982/OjaFunnel-Images/store_edshht.png" alt="course" width="60%" class="course-imgs" />
                       </div>
-                      <p class="text-center fw-bold mt-2">5 Shops</p>
+                      <p class="text-center fw-bold mt-2">{{App\Models\Store::where('user_id', Auth::user()->id)->get()->count()}} Stores</p>
                     </div>
                     <div class="col-lg-4">
                       <div class="d-flex justify-content-center">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677247981/OjaFunnel-Images/product_uqmijd.png" alt="books" width="60%" class="course-imgs" />
                       </div>
-                      <p class="text-center fw-bold mt-2">45 Products</p>
+                      <p class="text-center fw-bold mt-2">
+                          @php
+                            $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
+                          @endphp
+                          @if($store != null)
+                            {{\App\Models\StoreProduct::where('store_id', $store->id)->count()}} Total Products
+                          @else
+                            0 Total Product
+                          @endif
+                        </p>
                     </div>
                     <div class="col-lg-4">
                       <div class="d-flex justify-content-center">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677247981/OjaFunnel-Images/prize_q1vmvf.jpg"  alt="books" width="60%" class="course-imgs" >
                       </div>
-                      <p class="text-center fw-bold mb-0">Top Grossing Product</p>
-                      <p class="text-sm my-0 text-center">(Funnel Case)</p>
+                      <p class="text-center fw-bold">
+                          @if($store != null)
+                            {{\App\Models\StoreOrder::where('store_id', $store->id)->count()}} Total Orders
+                          @else
+                            0 Total Order
+                          @endif
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -157,79 +188,54 @@
     </div>
     <!-- End Page-content -->
 </div>
-<script>
-     var options = {
-          series: [{
-          name: 'Servings',
-          data: [44, 55, 41, 67, 22, 43, 21, 33, 45, 31, 87, 65, 35]
-        }],
-          annotations: {
-          points: [{
-            x: 'Bananas',
-            seriesIndex: 0,
-            label: {
-              borderColor: '#775DD0',
-              offsetY: 0,
-              style: {
-                color: '#fff',
-                background: '#775DD0',
-              },
-              text: 'Bananas are good',
+<script type="text/javascript">
+var bars_basic_element = document.getElementById('bars_basic');
+if (bars_basic_element) {
+    var bars_basic = echarts.init(bars_basic_element);
+    bars_basic.setOption({
+        color: ['#713f93'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {            
+                type: 'shadow'
             }
-          }]
         },
-        chart: {
-          height: 350,
-          type: 'bar',
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 10,
-            columnWidth: '50%',
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          width: 2
-        },
-        
         grid: {
-          row: {
-            colors: ['#fff', '#f2f2f2']
-          }
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
         },
-        xaxis: {
-          labels: {
-            rotate: -45
-          },
-          categories: ['Course Sales', 'Email Auto..', 'Strawberries', 'Tangerines', 'Papayas'
-          ],
-          tickPlacement: 'on'
-        },
-        yaxis: {
-          title: {
-            text: 'Servings',
-          },
-        },
-        fill: {
-          type: 'gradient',
-          gradient: {
-            shade: 'light',
-            type: "horizontal",
-            shadeIntensity: 0.25,
-            gradientToColors: undefined,
-            inverseColors: true,
-            opacityFrom: 0.85,
-            opacityTo: 0.85,
-            stops: [50, 0, 100]
-          },
-        }
-        };
-
-        var chart = new ApexCharts(document.querySelector("#transact"), options);
-        chart.render();
+        xAxis: [
+            {
+                type: 'category',
+                data: ['Course Purchase', 'Referral Bonus', 'Product Purchase', 'Top Up'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: 'Transaction Analysis',
+                type: 'bar',
+                barWidth: '20%',
+                data: [
+                    {{$coursePurchase}},
+                    {{$referralBonus}}, 
+                    {{$productPurchase}},
+                    {{$topUp}}
+                ]
+            }
+        ]
+    });
+}
 </script>
+
 <!-- END layout-wrapper -->
 @endsection

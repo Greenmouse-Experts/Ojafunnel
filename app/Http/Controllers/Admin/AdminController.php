@@ -15,6 +15,9 @@ use App\Models\Chat;
 use App\Models\PersonalChatroom;
 use App\Events\AdminReceiveMessage;
 use App\Events\AdminSendChat;
+use App\Models\Category;
+use App\Models\Course;
+use App\Models\OjafunnelNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Auth;
@@ -164,6 +167,18 @@ class AdminController extends Controller
     public function view_course()
     {
         return view('Admin.lms.courses');
+    }
+
+    
+    public function view_shop()
+    {
+        return view('Admin.lms.viewShop');
+    }
+
+    
+    public function view_category()
+    {
+        return view('Admin.lms.category');
     }
 
     public function course_detail()
@@ -392,6 +407,25 @@ class AdminController extends Controller
         }
     }
 
+    public function markAsRead (Request $request) 
+    {
+        if ($request->target_model == 'chat') {
+            // set a value to the 'read_at' column
+            Chat::where('id', $request->target_id)
+                ->update(['read_at' => now()]);
+
+            return ['message' => 'Chat with id ' . $request->target_id . ' has been updated.'];
+        }
+
+        if ($request->target_model == 'read') {
+            // set a value to the 'read_at' column
+            Chat::where('user_id', $request->target_id)
+                ->update(['read_at' => now()]);
+
+            return ['message' => 'Chat with id ' . $request->target_id . ' has been updated.'];
+        }
+    }
+
     public function sendMessage (Request $request) 
     {
         if($request->attachment == null)
@@ -402,8 +436,8 @@ class AdminController extends Controller
                 'message' => $request->message
             ]);
     
-            // broadcast(new AdminSendChat($payload->room_id))->toOthers();
-            // broadcast(new AdminReceiveMessage($payload->room_id))->toOthers();
+            broadcast(new AdminSendChat($payload))->toOthers();
+            // broadcast(new AdminReceiveMessage($payload))->toOthers();
     
             return ['status' => 'success'];
         } else {
@@ -434,6 +468,7 @@ class AdminController extends Controller
             return ['status' => 'success'];
         }
     }
+    
 
     public function clearChat (Request $request) 
     {
@@ -624,5 +659,93 @@ class AdminController extends Controller
     public function install_plugin()
     {
         return view('Admin.emailmarketing.AddPlugin');
+    }
+
+    public function add_category(Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'name' => ['required', 'string'],
+        ]);
+
+        Category::create([
+            'name' => $request->name
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Category added successfully.',
+        ]); 
+    }
+
+    public function update_category(Request $request, $id)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'name' => ['required', 'string'],
+        ]);
+
+        $Finder = Crypt::decrypt($id);
+        $category = Category::find($Finder);
+
+        $category->update([
+            'name' => $request->name
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Category updated successfully.',
+        ]); 
+
+    }
+
+    public function delete_category($id)
+    {
+        $Finder = Crypt::decrypt($id);
+        Category::find($Finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Category deleted successfully.',
+        ]); 
+    }
+
+    public function course_activate($id)
+    {
+        $course = Course::find($id);
+
+        $course->update([
+            'approved' => true
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Course activated successfully.',
+        ]); 
+    }
+
+    public function course_deactivate($id)
+    {
+        $course = Course::find($id);
+
+        $course->update([
+            'approved' => false
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Course suspended successfully.',
+        ]); 
+    }
+
+    public function read_notification($id)
+    {
+        $finder = Crypt::decrypt($id);
+        $notification = OjafunnelNotification::findorfail($finder);
+
+        $notification->status = 'Read';
+        $notification->save();
+
+        return back();
     }
 }

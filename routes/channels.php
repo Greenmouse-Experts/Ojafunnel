@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -24,4 +25,8 @@ Broadcast::channel('user.{id}', function (User $user, $id) {
 
 Broadcast::channel('chat.{roomId}', function (User $user) {
     return $user;
+});
+
+Broadcast::channel('adminchat.{roomId}', function () {
+    return;
 });

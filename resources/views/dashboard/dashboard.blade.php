@@ -39,7 +39,7 @@
                     <div class="Ensure row align-items-center">
                         <div class="col-8 font-500">
                             <h3>{{App\Models\User::where('referral_link', Auth::user()->id)->get()->count() ?? '0'}}</h3>
-                            <p class="mb-0">Total Affiliate</p>
+                            <p class="mb-0">Total Direct Affiliate</p>
                         </div>
                         <div class="col-4 lead-img-div">
                             <div class="lead-img p-2 rounded d-flex justify-content-center" style="background: #edfbfc">
@@ -59,7 +59,6 @@
                             @else
                             <h3>0</h3>
                             @endif
-
                             <p class="mb-0">New Products</p>
                         </div>
                         <div class="col-4 lead-img-div">
@@ -72,12 +71,7 @@
                 <div class="top-div">
                     <div class="Ensure row align-items-center">
                         <div class="col-8 font-500">
-                            @if($store != null)
-                            <h3>{{$store->count()}}</h3>
-                            @else
-                            <h3>0</h3>
-                            @endif
-
+                            <h3>{{App\Models\Store::where('user_id', Auth::user()->id)->get()->count()}}</h3>
                             <p class="mb-0">Total Store</p>
                         </div>
                         <div class="col-4 lead-img-div">
