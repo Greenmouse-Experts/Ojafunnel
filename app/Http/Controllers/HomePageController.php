@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
+use App\Models\ContactUs;
 use App\Models\Customer;
+use App\Models\OjafunnelNotification;
 use App\Models\OjaPlan;
 use App\Models\Plan;
 use App\Models\User;
@@ -168,5 +171,35 @@ class HomePageController extends Controller
 
         curl_close($curl);
         dd($response);
+    }
+
+    public function contactConfirm(Request $request) {
+        //Validate Request
+        $this->validate($request, [
+            'phone' => 'required|numeric',
+            // 'g-recaptcha-response' => 'required|captcha'
+        ]);
+
+        $contact = ContactUs::create([
+            'name' => request()->name,
+            'email' => request()->email,
+            'phone_number' => request()->phone,
+            'subject' => request()->subject,
+            'message' => request()->message,
+        ]);
+
+        $admin = Admin::latest()->first();
+
+        OjafunnelNotification::create([
+            'admin_id' => 3,
+            'title' => config('app.name'),
+            'body' => $contact->name.' sent a contact us form.'
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Form submitted successfully, we will get back to you shortly.'
+        ]);
+
     }
 }

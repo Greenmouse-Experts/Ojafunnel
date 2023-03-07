@@ -12,11 +12,15 @@ use App\Models\StoreOrder;
 use App\Models\StoreProduct;
 use App\Models\User;
 use App\Models\Chat;
+use App\Models\Faq;
+use App\Models\ContactUs;
 use App\Models\PersonalChatroom;
 use App\Events\AdminReceiveMessage;
 use App\Events\AdminSendChat;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\Message;
+use App\Models\MessageUser;
 use App\Models\OjafunnelNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -268,6 +272,23 @@ class AdminController extends Controller
 
     public function chat_support()
     {
+        // $data = [];
+
+        // $users = User::get();
+
+        // foreach($users as $user)
+        // {
+
+        //     $id1 = MessageUser::where('sender_id', $user->id)->where('reciever_id', Auth::guard('admin')->user()->id)->pluck('id');
+        //     $id2 = MessageUser::where('reciever_id', Auth::guard('admin')->user()->id)->where('sender_id', $user->id)->pluck('id');
+
+            // $data['unread'] = $id1;
+        // }
+
+        // $allMessages[] = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
+        
+        // return $id2;
+
         return view('Admin.support.chatSupport');
     }
 
@@ -469,7 +490,6 @@ class AdminController extends Controller
         }
     }
     
-
     public function clearChat (Request $request) 
     {
         // if (Auth::check() && $request->csrf_token == csrf_token()) {
@@ -532,6 +552,73 @@ class AdminController extends Controller
 
         // return
         return ['status' => 'Chatroom has been deleted successfully.'];
+    }
+
+    public function check($recieverId){
+        $senderId = Auth::guard('admin')->user()->id;
+
+        $data = [
+            'sender_id' => $senderId,
+            'reciever_id' => $recieverId
+        ];
+        $data2 = [
+            'sender_id' => $recieverId,
+            'reciever_id' => $senderId
+        ];
+
+        $checkExist = MessageUser::where('sender_id', $senderId)->where('reciever_id', $recieverId)->first();
+
+        if(!$checkExist){
+            $createConvo = MessageUser::create($data);
+            $createConvo2 = MessageUser::create($data2);
+            return $createConvo->id;
+        }else{
+            return $checkExist->id;
+        }
+    }
+
+    public function store(Request $request){
+        $data = [
+            'message_users_id' => $request->convo_id,
+            'message' => $request->message
+        ];
+
+        $sendMessage = Message::create($data);
+
+        if($sendMessage){
+            return "Message Sent";
+        }else{
+            return "Error sending message.";
+        }
+    }
+
+    public function load($reciever, $sender){
+        $boxType = "";
+
+        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id',$reciever)->pluck('id');
+        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id',$reciever)->pluck('id');
+
+        $allMessages = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
+        
+        // foreach($allMessages as $row){
+        //     if($id1[0]==$row['message_users_id']){$boxType = "p-2 recieverBox ml-auto";}else{$boxType = "float-left p-2 mb-2 senderBox";}
+        //     echo "<div class='p-2 d-flex'>";
+        //     echo "<div class='".$boxType."'>";
+        //     echo "<p>".$row['message']."</p>";
+        //     echo "</div>";
+        //     echo "</div>";
+        // }
+        $tobePassed = [$allMessages, $id1];
+        return $tobePassed;
+    }
+
+    public function retrieveNew($reciever, $sender, $lastId){
+        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id',$reciever)->pluck('id');
+        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id',$reciever)->pluck('id');
+
+        $allMessages = Message::where('id','>=',$lastId)->where('message_users_id', $id2)->orderBy('id', 'asc')->get();
+
+        return $allMessages;
     }
 
     public function sms_automation()
@@ -747,5 +834,78 @@ class AdminController extends Controller
         $notification->save();
 
         return back();
+    }
+
+    public function view_faq()
+    {
+        return view('Admin.frontend.faq');
+    }
+
+    public function add_faq(Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'question' => ['required', 'string'],
+            'answer' => ['required', 'string'],
+        ]);
+
+        Faq::create([
+            'question' => $request->question,
+            'answer' => $request->answer
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Faq added successfully.',
+        ]); 
+    }
+
+    public function update_faq(Request $request, $id)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'question' => ['required', 'string'],
+            'answer' => ['required', 'string'],
+        ]);
+
+        $Finder = Crypt::decrypt($id);
+        $faq = Faq::find($Finder);
+
+        $faq->update([
+            'question' => $request->question,
+            'answer' => $request->answer
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Faq updated successfully.',
+        ]); 
+    }
+
+    public function delete_faq($id)
+    {
+        $Finder = Crypt::decrypt($id);
+        Faq::find($Finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Faq deleted successfully.',
+        ]); 
+    }
+
+    public function view_contact_us()
+    {
+        return view('Admin.frontend.contact_us');
+    }
+
+    public function delete_contact_us($id)
+    {
+        $Finder = Crypt::decrypt($id);
+        ContactUs::find($Finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Contact Us Form deleted successfully.',
+        ]); 
     }
 }

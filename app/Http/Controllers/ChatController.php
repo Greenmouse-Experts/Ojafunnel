@@ -7,6 +7,8 @@ use App\Events\ReceiveMessage;
 use App\Events\SendChat;
 use App\Models\Admin;
 use App\Models\Chat;
+use App\Models\Message;
+use App\Models\MessageUser;
 use App\Models\PersonalChatroom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -353,4 +355,73 @@ class ChatController extends Controller
     
         return $path; // Use coming path.
     }
+
+    public function check($recieverId){
+        $senderId = Auth::user()->id;
+
+        $data = [
+            'sender_id' => $senderId,
+            'reciever_id' => $recieverId
+        ];
+        $data2 = [
+            'sender_id' => $recieverId,
+            'reciever_id' => $senderId
+        ];
+
+        $checkExist = MessageUser::where('sender_id', $senderId)->where('reciever_id', $recieverId)->first();
+
+        if(!$checkExist){
+            $createConvo = MessageUser::create($data);
+            $createConvo2 = MessageUser::create($data2);
+            return $createConvo->id;
+        }else{
+            return $checkExist->id;
+        }
+    }
+
+    public function store(Request $request){
+        $data = [
+            'message_users_id' => $request->convo_id,
+            'message' => $request->message
+        ];
+
+        $sendMessage = Message::create($data);
+
+        if($sendMessage){
+            return "Message Sent";
+        }else{
+            return "Error sending message.";
+        }
+    }
+
+    public function load($reciever, $sender){
+        $boxType = "";
+
+        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id',$reciever)->pluck('id');
+        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id',$reciever)->pluck('id');
+
+        $allMessages = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
+        
+        // foreach($allMessages as $row){
+        //     if($id1[0]==$row['message_users_id']){$boxType = "p-2 recieverBox ml-auto";}else{$boxType = "float-left p-2 mb-2 senderBox";}
+        //     echo "<div class='p-2 d-flex'>";
+        //     echo "<div class='".$boxType."'>";
+        //     echo "<p>".$row['message']."</p>";
+        //     echo "</div>";
+        //     echo "</div>";
+        // }
+        $tobePassed = [$allMessages, $id1];
+        return $tobePassed;
+    }
+
+    public function retrieveNew($reciever, $sender, $lastId){
+        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id',$reciever)->pluck('id');
+        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id',$reciever)->pluck('id');
+
+        $allMessages = Message::where('id','>=',$lastId)->where('message_users_id', $id2)->orderBy('id', 'asc')->get();
+
+        return $allMessages;
+    }
+
+
 }
