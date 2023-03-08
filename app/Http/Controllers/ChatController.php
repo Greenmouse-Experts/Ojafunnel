@@ -430,7 +430,7 @@ class ChatController extends Controller
 
             $sendMessage = Message::create($data);
 
-            $this->fcm($request->message, $admin);
+            $this->fcm('Message from '.Auth::user()->first_name.' '.Auth::user()->last_name.': '.$request->message, $admin);
 
             if($sendMessage){
                 return "Message Sent";
@@ -447,7 +447,7 @@ class ChatController extends Controller
 
             $sendMessage = Message::create($data);
 
-            $this->fcm($request->message, $admin);
+            $this->fcm('Message from '.Auth::user()->first_name.' '.Auth::user()->last_name.': '.$request->message, $admin);
 
             if($sendMessage){
                 return "Message Sent";

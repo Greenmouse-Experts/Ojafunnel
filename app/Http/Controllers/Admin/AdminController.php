@@ -628,7 +628,7 @@ class AdminController extends Controller
 
             $sendMessage = Message::create($data);
 
-            $this->fcm($request->message, $user);
+            $this->fcm('Message from '.Auth::guard('admin')->user()->name.': '.$request->message, $user);
 
             if($sendMessage){
                 return "Message Sent";
@@ -645,7 +645,7 @@ class AdminController extends Controller
 
             $sendMessage = Message::create($data);
 
-            $this->fcm($request->message, $user);
+            $this->fcm('Message from '.Auth::guard('admin')->user()->name.': '.$request->message, $user);
 
             if($sendMessage){
                 return "Message Sent";
