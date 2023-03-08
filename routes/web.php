@@ -2,6 +2,7 @@
 
 use App\Events\SendMessage;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -389,6 +390,9 @@ Route::prefix('{username}')->group(function () {
         }
     );
 });
+
+// Save FCM Token
+Route::post('/save-token', [DashboardController::class, 'saveToken'])->name('save.token');
 
 // Upload
 Route::get('/general/builder/scan/file', [App\Http\Controllers\PageController::class, 'general_builder_scan'])->name('user.general.builder.scan');

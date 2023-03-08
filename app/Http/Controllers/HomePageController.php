@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tzsk\Sms\Facades\Sms;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\URL;
 
 class HomePageController extends Controller
 {
@@ -196,10 +197,41 @@ class HomePageController extends Controller
             'body' => $contact->name.' sent a contact us form.'
         ]);
 
+        $firebaseToken = Admin::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+
+        $SERVER_API_KEY = config('app.fcm_token');
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => config('app.name'),
+                "body" => 'Contact form submitted by '.$contact->name, 
+                'image' => URL::asset('assets/images/Logo-fav.png'),
+            ],
+            'vibrate' => 1,
+            'sound' => 1
+        ];
+
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);      
+        curl_exec($ch);
+
         return back()->with([
             'type' => 'success',
             'message' => 'Form submitted successfully, we will get back to you shortly.'
         ]);
-
     }
 }

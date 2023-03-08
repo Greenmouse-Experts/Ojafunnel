@@ -13,9 +13,45 @@ use App\Models\PersonalChatroom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 class ChatController extends Controller
 {
+    function fcm($body, $firebaseToken)
+    {
+        $SERVER_API_KEY = config('app.fcm_token');
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => config('app.name'),
+                "body" => $body, 
+                'image' => URL::asset('assets/images/Logo-fav.png'),
+            ],
+            'vibrate' => 1,
+            'sound' => 1
+        ];
+
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString); 
+        $result = curl_exec ( $ch );     
+
+        return $result;
+    }
+
     //
     public function startChat ($id, Request $request) 
     {
@@ -379,18 +415,46 @@ class ChatController extends Controller
         }
     }
 
-    public function store(Request $request){
-        $data = [
-            'message_users_id' => $request->convo_id,
-            'message' => $request->message
-        ];
+    public function store(Request $request)
+    {
+        $messageUser = MessageUser::find($request->convo_id);
 
-        $sendMessage = Message::create($data);
+        if($messageUser->sender_id == Auth::user()->id)
+        {
+            $admin = Admin::where('id', $messageUser->reciever_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-        if($sendMessage){
-            return "Message Sent";
-        }else{
-            return "Error sending message.";
+            $data = [
+                'message_users_id' => $request->convo_id,
+                'message' => $request->message
+            ];
+
+            $sendMessage = Message::create($data);
+
+            $this->fcm('Message from '.Auth::user()->first_name.' '.Auth::user()->last_name.': '.$request->message, $admin);
+
+            if($sendMessage){
+                return "Message Sent";
+            }else{
+                return "Error sending message.";
+            }
+        } else {
+            $admin = Admin::where('id', $messageUser->sender_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+
+            $data = [
+                'message_users_id' => $request->convo_id,
+                'message' => $request->message
+            ];
+
+            $sendMessage = Message::create($data);
+
+            $this->fcm('Message from '.Auth::user()->first_name.' '.Auth::user()->last_name.': '.$request->message, $admin);
+
+            if($sendMessage){
+                return "Message Sent";
+            }else{
+                return "Error sending message.";
+            }
+
         }
     }
 

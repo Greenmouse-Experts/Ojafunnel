@@ -890,6 +890,17 @@ class DashboardController extends Controller
         return $referedMembers;
     }
 
+    public function saveToken(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+
+        $user->update([
+            'fcm_token' => $request->token
+        ]);
+
+        return response()->json(['Token successfully stored.']);
+    }
+
     //Get user Parent
     function getUserParent($id)
     {
@@ -915,6 +926,8 @@ class DashboardController extends Controller
 
         return $user->created_at;
     }
+
+
 
     public function test()
     {
