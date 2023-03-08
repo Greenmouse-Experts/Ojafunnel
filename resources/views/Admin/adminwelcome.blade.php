@@ -8,6 +8,7 @@
 <!-- Start right Content here -->
 <!-- ============================================================== -->
 <div class="main-content">
+    <button hidden id="btn-nft-enable" onclick="startFCM()" class="btn btn-danger btn-xs btn-flat">Allow for Notification</button>
     <div class="page-content">
         <!-- container-fluid -->
         <div class="container-fluid">
@@ -355,4 +356,65 @@
         </div>
     </div>
 </div>
+
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
+<script>
+    window.onload=function(){
+        document.getElementById("btn-nft-enable").click();
+    };
+
+    var firebaseConfig = {
+        apiKey: "AIzaSyBcg119ZTB8mbzBPQdYoq2tojaa2uQCzgU",
+        authDomain: "ojafunnel.firebaseapp.com",
+        projectId: "ojafunnel",
+        storageBucket: "ojafunnel.appspot.com",
+        messagingSenderId: "466300978039",
+        appId: "1:466300978039:web:8af3d79c8b6e6d34ed1772",
+        measurementId: "G-B5FX3YDK5B"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    function startFCM() {
+        messaging
+            .requestPermission()
+            .then(function () {
+                return messaging.getToken()
+            })
+            .then(function (response) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{ route("admin.save.token") }}',
+                    type: 'POST',
+                    data: {
+                        token: response
+                    },
+                    dataType: 'JSON',
+                    success: function (response) {
+                        console.log('Token stored.');
+                    },
+                    error: function (error) {
+                        console.log('User Token Error'+ error);
+                    },
+                });
+            }).catch(function (error) {
+                console.log('User Token Error'+ error);
+            });
+    }
+
+    messaging.onMessage(function(payload) {
+        const noteTitle = payload.notification.title;
+        const noteOptions = {
+            body: payload.notification.body,
+            icon: payload.notification.icon,
+        };
+        new Notification(noteTitle, noteOptions);
+    });
+   
+</script>
 @endsection

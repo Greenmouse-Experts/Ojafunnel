@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\OjafunnelNotificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -121,6 +122,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             Route::get('/contact-us', [App\Http\Controllers\Admin\AdminController::class, 'view_contact_us'])->name('viewContactUs');
             Route::post('/delete-contact-us/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_contact_us'])->name('deleteContactUs');
+
+            // Save FCM Token
+            Route::post('/save-token', [AdminController::class, 'saveToken'])->name('admin.save.token');
         }
     );
 });

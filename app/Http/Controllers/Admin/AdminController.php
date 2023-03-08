@@ -28,9 +28,45 @@ use Auth;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 
 class AdminController extends Controller
 {
+    function fcm($body, $firebaseToken)
+    {
+        $SERVER_API_KEY = config('app.fcm_token');
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => config('app.name'),
+                "body" => $body, 
+                'image' => URL::asset('assets/images/Logo-fav.png'),
+            ],
+            'vibrate' => 1,
+            'sound' => 1
+        ];
+
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString); 
+        $result = curl_exec ( $ch );
+
+        return $result;
+    }
+
     public function profile_update(Request $request)
     {
         $ad = Admin::findOrFail(Auth::guard('admin')->user()->id);
@@ -577,18 +613,46 @@ class AdminController extends Controller
         }
     }
 
-    public function store(Request $request){
-        $data = [
-            'message_users_id' => $request->convo_id,
-            'message' => $request->message
-        ];
+    public function store(Request $request)
+    {
+        $messageUser = MessageUser::find($request->convo_id);
 
-        $sendMessage = Message::create($data);
+        if($messageUser->sender_id == Auth::guard('admin')->user()->id)
+        {
+            $user = User::where('id', $messageUser->reciever_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-        if($sendMessage){
-            return "Message Sent";
-        }else{
-            return "Error sending message.";
+            $data = [
+                'message_users_id' => $request->convo_id,
+                'message' => $request->message
+            ];
+
+            $sendMessage = Message::create($data);
+
+            $this->fcm($request->message, $user);
+
+            if($sendMessage){
+                return "Message Sent";
+            }else{
+                return "Error sending message.";
+            }
+        } else {
+            $user = User::where('id', $messageUser->sender_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+
+            $data = [
+                'message_users_id' => $request->convo_id,
+                'message' => $request->message
+            ];
+
+            $sendMessage = Message::create($data);
+
+            $this->fcm($request->message, $user);
+
+            if($sendMessage){
+                return "Message Sent";
+            }else{
+                return "Error sending message.";
+            }
+
         }
     }
 
@@ -907,5 +971,16 @@ class AdminController extends Controller
             'type' => 'success',
             'message' => 'Contact Us Form deleted successfully.',
         ]); 
+    }
+
+    public function saveToken(Request $request)
+    {
+        $admin = Admin::findOrFail(Auth::guard('admin')->user()->id);
+
+        $admin->update([
+            'fcm_token' => $request->token
+        ]);
+
+        return response()->json(['Token successfully stored.']);
     }
 }
