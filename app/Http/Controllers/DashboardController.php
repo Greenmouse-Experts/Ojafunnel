@@ -609,7 +609,7 @@ class DashboardController extends Controller
     }
 
     public function create_course($username)
-    {   
+    {
         return view('dashboard.lms.createCourse', [
             'username' => $username
         ]);
@@ -625,6 +625,13 @@ class DashboardController extends Controller
     public function view_cart($username)
     {
         return view('dashboard.lms.AddCart', [
+            'username' => $username
+        ]);
+    }
+
+    public function courses_details($username)
+    {
+        return view('dashboard.lms.Details', [
             'username' => $username
         ]);
     }
@@ -843,7 +850,7 @@ class DashboardController extends Controller
     }
 
     public function support_chat($username)
-    { 
+    {
         return view('dashboard.support.chat', [
             'username' => $username,
         ]);

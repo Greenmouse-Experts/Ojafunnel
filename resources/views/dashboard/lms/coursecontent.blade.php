@@ -65,12 +65,12 @@
                                             <div class="font-500 mt-5">
                                                 <p>
                                                     Start putting together your course by creating sections, lectures and practice <a href="#">
-                                                        (quizzes,and assignments)
+                                                        (quizzes, and assignments)
                                                     </a>.
                                                 </p>
                                                 <p>
                                                     Start putting together your course by creating sections, lectures and practice activities <a href="#">
-                                                        (quizzes,and assignments)
+                                                        (quizzes, and assignments)
                                                     </a>. Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
                                                 </p>
                                             </div>
@@ -78,12 +78,12 @@
                                         <div class="font-500 mt-5">
                                             <p>
                                                 Start putting together your course by creating sections, lectures and practice <a href="#">
-                                                    (quizzes,and assignments)
+                                                    (quizzes, and assignments)
                                                 </a>.
                                             </p>
                                             <p>
                                                 Start putting together your course by creating sections, lectures and practice activities <a href="#">
-                                                    (quizzes,and assignments)
+                                                    (quizzes, and assignments)
                                                 </a>. Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
                                             <div class="lamet float-end"><a href="" data-bs-toggle="modal" data-bs-target="#createCurriculum"><strong><u>Create Curriculum</u></strong></a></div>
                                             </p>

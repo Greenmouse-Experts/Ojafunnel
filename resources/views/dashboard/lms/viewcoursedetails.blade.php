@@ -4,7 +4,6 @@
 <div class="main-content">
     <div class="page-content">
         <!-- container-fluid -->
-
         <div class="container-fluid">
             <!-- start page title -->
             <div class="row">
@@ -22,7 +21,7 @@
                 </div>
             </div>
 
-            
+
         </div>
     </div>
 </div>
