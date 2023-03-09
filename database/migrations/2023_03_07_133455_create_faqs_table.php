@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('personal_chatrooms', function (Blueprint $table) {
+        Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->string('room_id')->unique();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('admin_id');
+            $table->string('question');
+            $table->string('answer');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personal_chatrooms');
+        Schema::dropIfExists('faqs');
     }
 };

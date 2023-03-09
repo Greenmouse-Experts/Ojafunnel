@@ -22,9 +22,15 @@
 <body>
 	<div id="vvveb-builder">
 		<div id="top-panel">
+			@auth
 			<a href="{{route('user.page.builder', Auth::user()->username)}}">
 				<img src="{{URL::asset('dash/assets/images/Logo-fav.png')}}" alt="{{config('app.name')}}" height="22" class="float-start" id="logo">
 			</a>
+			@else
+			<a href="{{route('pageBuilder')}}">
+				<img src="{{URL::asset('dash/assets/images/Logo-fav.png')}}" alt="{{config('app.name')}}" height="22" class="float-start" id="logo">
+			</a>
+			@endif
 
 			<div class="btn-group float-start" role="group">
 				<button class="btn btn-light" title="Toggle file manager" id="toggle-file-manager-btn" data-vvveb-action="toggleFileManager" data-bs-toggle="button" aria-pressed="false">
@@ -70,14 +76,21 @@
 
 			</div>
 
-
-			<div class="btn-group me-3 float-end" role="group">
-				<input id="id" name="id" value="{{$page->id}}" hidden>
-				<button class="btn btn-primary btn-icon" title="Export (Ctrl + E)" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="{{ route('user.page.builder.save.page') }}" data-v-vvveb-shortcut="ctrl+e">
-					<i class="la la-save"></i> <span data-v-gettext>Save page</span>
-				</button>
-			</div>
-
+			@auth
+				<div class="btn-group me-3 float-end" role="group">
+					<input id="id" name="id" value="{{$page->id}}" hidden>
+					<button class="btn btn-primary btn-icon" title="Export (Ctrl + E)" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="{{ route('user.page.builder.save.page') }}" data-v-vvveb-shortcut="ctrl+e">
+						<i class="la la-save"></i> <span data-v-gettext>Save page</span>
+					</button>
+				</div>
+			@else
+				<div class="btn-group me-3 float-end" role="group">
+					<input id="id" name="id" value="{{$page->id}}" hidden>
+					<button class="btn btn-primary btn-icon" title="Export (Ctrl + E)" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="{{ route('admin.page.builder.save.page') }}" data-v-vvveb-shortcut="ctrl+e">
+						<i class="la la-save"></i> <span data-v-gettext>Save page</span>
+					</button>
+				</div>
+			@endif
 			<div class="btn-group float-end me-3 responsive-btns" role="group">
 				<a href="{{$page->file_location}}" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
 

@@ -229,10 +229,22 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="login-div">
-                            <a href="{{route('login')}}" class="btn-login">Login</a>
-                            <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
-                        </div>
+                        @auth
+                            <div class="login-div">
+                                <a href="{{route('user.dashboard', Auth::user()->username)}}" class="btn-signup">Dashboard <i class="bi bi-box-arrow-right"></i></a>
+                            </div>
+                        @else
+                            @if(Auth::guard('admin')->user())
+                                <div class="login-div">
+                                    <a href="{{route('adminDashboard')}}" class="btn-signup">Dashboard <i class="bi bi-box-arrow-right"></i></a>
+                                </div>
+                            @else
+                                <div class="login-div">
+                                    <a href="{{route('login')}}" class="btn-login">Login</a>
+                                    <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
+                                </div>
+                            @endif
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -268,7 +280,7 @@
     <div class="template-content">
         <div class="container">
             <div class="row">
-                <div class="col-lg-2 pe-lg-5 template-side">
+                <!-- <div class="col-lg-2 pe-lg-5 template-side">
                     <div class="license-div">
                         <p><i class="bi bi-check2-square pe-2 text-warning fs-4"></i>License</p>
                         <ul class="license-radio">
@@ -307,10 +319,10 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-                <div class="col-lg-10">
+                </div> -->
+                <div class="col-lg-12">
                     <!-- category -->
-                    <div class="choose-category">
+                    <!-- <div class="choose-category">
                         <p>Choose Category</p>
                         <div class="category-list">
                             <ul>
@@ -328,7 +340,7 @@
                                 <li class="bg-secondary text-white">Logistics</li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- category content -->
                     <div class="template-listing">
                         <div class="template-listing-grid">
@@ -336,19 +348,25 @@
                                 <div class="inner first-grid">
                                     <div class="text-center">
                                         <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
-                                        <button class="btn btn-primary d-block mt-2">New Template</button>
+                                        <a href="{{route('signup')}}" class="btn btn-primary d-block mt-2">New Template</a>
                                     </div>
                                 </div>
                             </div>
+                            @foreach(App\Models\Page::latest()->where('published', true)->get() as $page)
                             <div class="single-template">
                                 <div class="inner second-grid">
-                                    <img src="https://templatemo.com/screenshots-720/template-562-space-dynamic.jpg" alt="templates" width="100%" height="100%" />
+                                    @if($page->thumbnail)
+                                    <img src="{{$page->thumbnail}}" alt="templates" width="100%" height="100%" />
+                                    @else
+                                    <img src="http://via.placeholder.com/640x1000" alt="templates" width="100%" height="100%" />
+                                    @endif
                                     <div class="start-template">
                                         <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
-                                        <button class="btn btn-primary d-block mt-2">Use Template</button>
+                                        <a href="{{route('templateDetails', Crypt::encrypt($page->id))}}" class="btn btn-primary d-block mt-2">Use Template</a>
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
