@@ -17,12 +17,11 @@
 		}
 
         .footer {
-            position: absolute;
+            position: fixed;
             bottom: 0;
             width: 100%;
             background: #000;
-            min-height: 20px;
-            padding: 10px 50px;
+            min-height: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,7 +31,7 @@
         .footer p {
             color: #fff;
             margin: 5px 0 5px 0;
-            font-size: 1rem;
+            font-size: 0.6rem;
             font-weight: 300;
         }
     </style>

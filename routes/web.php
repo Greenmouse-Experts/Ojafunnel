@@ -95,6 +95,7 @@ Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::
 
 // Template Designs Frontend
 Route::get('/features/template', [App\Http\Controllers\HomePageController::class, 'template'])->name('template');
+Route::get('/features/template/{id}', [App\Http\Controllers\HomePageController::class, 'template_details'])->name('templateDetails');
 
 // Affiliate Marketing
 Route::get('/features/affiliate', [App\Http\Controllers\HomePageController::class, 'affiliate'])->name('affiliate');
@@ -398,15 +399,7 @@ Route::post('/save-token', [DashboardController::class, 'saveToken'])->name('sav
 Route::get('/general/builder/scan/file', [App\Http\Controllers\PageController::class, 'general_builder_scan'])->name('user.general.builder.scan');
 Route::post('/general/builder/upload/file', [App\Http\Controllers\PageController::class, 'general_builder_upload'])->name('user.general.builder.upload');
 
-// User Support
-Route::post('/support/start/chat/{id}', [ChatController::class, 'startChat']);
-Route::get('/support/chats', [ChatController::class, 'fetchAllRecentChats']);
-Route::get('/support/get/admins', [ChatController::class, 'fetchAllAdmins']);
-Route::post('/support/send', [ChatController::class, 'sendMessage']);
-Route::put('/support/read', [ChatController::class, 'markAsRead']);
-
-Route::post('/support/clear/single/chat', [ChatController::class, 'deleteSingleChat']);
-
+// Support
 Route::get('/support/checkConvo/{recieverId}', [ChatController::class, 'check']);
 Route::post('/support/sendMessage', [ChatController::class, 'store'])->name('sendMessage');
 Route::get('/support/loadMessage/{reciever}/{sender}', [ChatController::class, 'load']);

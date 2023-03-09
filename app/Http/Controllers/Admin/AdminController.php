@@ -11,23 +11,22 @@ use App\Models\SmsCampaign;
 use App\Models\StoreOrder;
 use App\Models\StoreProduct;
 use App\Models\User;
-use App\Models\Chat;
 use App\Models\Faq;
 use App\Models\ContactUs;
-use App\Models\PersonalChatroom;
-use App\Events\AdminReceiveMessage;
-use App\Events\AdminSendChat;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Message;
 use App\Models\MessageUser;
 use App\Models\OjafunnelNotification;
+use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Auth;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
 class AdminController extends Controller
@@ -326,268 +325,6 @@ class AdminController extends Controller
         // return $id2;
 
         return view('Admin.support.chatSupport');
-    }
-
-    public function fetchAllusers()
-    {
-        $users = User::latest()->get(['id', 'first_name', 'last_name', 'email', 'photo']);
-
-        return $users;
-    }
-
-    public function fetchAllRecentChats () 
-    {
-        // prepare an array to contain all of the responses
-        $result = [];
-
-        // get the chatroom record from this user
-        $query = PersonalChatroom::where('user_id', Auth::user()->id)
-                ->orWhere('admin_id', Auth::user()->id)
-                ->get();
-
-        if ($query) {
-            foreach ($query as $chatroom) {
-
-                // get the interlocutor's data
-                if ($chatroom->admin_id == Auth::guard('admin')->user()->id) {
-                    $friend = User::where('id', $chatroom->user_id)->first();
-                } else {
-                    $friend = Admin::where('id', $chatroom->admin_id)->first();
-                }
-
-                // get the most recent chat from the chatroom
-                $latestChat = Chat::where('room_id', $chatroom['room_id'])
-                                    ->latest()
-                                    ->first();
-                            
-                // check how many unread chats
-                $unreadChats = Chat::where('user_id', $friend['id'])
-                                    ->where('room_id', $chatroom['room_id'])
-                                    ->where('read_at', null)
-                                    ->count();
-
-                // if they already have chatted before
-                if ($latestChat) {
-                    $result[] = [
-                        'user' => $friend,
-                        'chat' => $latestChat,
-                        'unread' => $unreadChats
-                    ];
-                    $result = array_reverse(array_values(Arr::sort($result, function ($key) {
-                        return $key['chat']['created_at'];
-                    })));
-                } else {
-                    // if this is the first time they create the chatroom
-                    $result[] = [
-                        'user' => $friend,
-                        'chat' => [
-                            'message' => null,
-                            'created_at' => null,
-                            'updated_at' => null,
-                        ],
-                        'unread' => 0
-                    ];
-                }
-            }
-    
-            return $result;
-        } else {
-            return ['error' => 'You dont have any chat yet.'];
-        }
-    }
-
-    public function startChat ($id, Request $request) 
-    {
-        $user = User::find($id);
-
-        // check whether if this user and the targeted user already has a chatroom
-        $isExist = PersonalChatroom::whereIn('user_id', [Auth::guard('admin')->user()->id, $user->id])
-                                    ->whereIn('admin_id', [Auth::guard('admin')->user()->id, $user->id])
-                                    ->count();
-
-        if ($isExist > 0) 
-        {
-            // get the room id
-            $room_id = PersonalChatroom::whereIn('user_id', [Auth::guard('admin')->user()->id, $user->id])
-                                        ->whereIn('admin_id', [Auth::guard('admin')->user()->id, $user->id])
-                                        ->first('room_id');
-                                  
-            // update the state of interlocutor's chat from unread to read
-            Chat::where('user_id', $user->id)
-                ->where('room_id', $room_id['room_id'])
-                ->where('read_at', null)
-                ->update(['read_at' => now()]);
-                                        
-            // fetch all of the chats from this chatroom
-            $chats = Chat::where('room_id', $room_id['room_id'])->orderBy('created_at', 'asc')->get();
-
-            // create an array to be sent as a HTTP response
-            $data = [];
-            $data['room_id'] = $room_id['room_id'];
-            $data['user'] = User::find($user->id);
-            
-            if (count($chats) > 0) {
-                foreach ($chats as $chat) {
-                    $data['messages'][] = [
-                        'id' => $chat->id,
-                        'sender' => User::find($chat->user_id) ?? Admin::find($chat->admin_id),
-                        'message' => $chat->message,
-                        'attachment' => $chat->attachment,
-                        'read_at' => $chat->read_at,
-                        'time' => $chat->created_at
-                    ];
-                }    
-            } else {
-                $data['messages'] = [];
-            }
-
-            $data['exist'] = 1;
-            
-            return $data;
-        } else 
-        {
-            // if they don't have a chatroom, then create one.
-            $room_id = Auth::guard('admin')->user()->id . 'CHAT' . $user->id;
-            PersonalChatroom::create([
-                'room_id' => $room_id,
-                'user_id' => $user->id,
-                'admin_id' => Auth::guard('admin')->user()->id
-            ]);
-
-            $data = [];
-            $data['room_id'] = $room_id;
-            $data['user'] = User::find($user->id);
-            $data['messages'] = [];
-            $data['exist'] = 0;
-
-            return $data;
-        }
-    }
-
-    public function markAsRead (Request $request) 
-    {
-        if ($request->target_model == 'chat') {
-            // set a value to the 'read_at' column
-            Chat::where('id', $request->target_id)
-                ->update(['read_at' => now()]);
-
-            return ['message' => 'Chat with id ' . $request->target_id . ' has been updated.'];
-        }
-
-        if ($request->target_model == 'read') {
-            // set a value to the 'read_at' column
-            Chat::where('user_id', $request->target_id)
-                ->update(['read_at' => now()]);
-
-            return ['message' => 'Chat with id ' . $request->target_id . ' has been updated.'];
-        }
-    }
-
-    public function sendMessage (Request $request) 
-    {
-        if($request->attachment == null)
-        {
-            $payload = Chat::create([
-                'admin_id' => Auth::guard('admin')->user()->id,
-                'room_id' => $request->room_id,
-                'message' => $request->message
-            ]);
-    
-            broadcast(new AdminSendChat($payload))->toOthers();
-            // broadcast(new AdminReceiveMessage($payload))->toOthers();
-    
-            return ['status' => 'success'];
-        } else {
-            $this->validate($request, [
-                'attachment' => 'required|mimes:jpeg,png,bmp,jpg,mp4,mov,ogg,qt,wmv,avi,m3u8,doc,docx,pdf,csv,xlsx,xlsb,xls,xlsm |max:50000',
-            ]);
-
-            $file = request()->attachment->getClientOriginalName();
-
-            $filename = pathinfo($file, PATHINFO_FILENAME);
-    
-            $response = cloudinary()->uploadFile($request->file('attachment')->getRealPath(),
-                            [
-                                'folder' => config('app.name'),
-                                "public_id" => $filename,
-                                "use_filename" => TRUE,
-                            ])->getSecurePath();
-            
-            $payload = $request->admin()->chats()->create([
-                'room_id' => $request->room_id,
-                'message' => $request->message,
-                'attachment' => $response
-            ]);
-    
-            broadcast(new SendChat($payload->load('admin')))->toOthers();
-            broadcast(new ReceiveMessage($payload->load('admin')))->toOthers();
-    
-            return ['status' => 'success'];
-        }
-    }
-    
-    public function clearChat (Request $request) 
-    {
-        // if (Auth::check() && $request->csrf_token == csrf_token()) {
-            $chats = Chat::where('room_id', $request->room_id)->get();
-
-            foreach($chats as $chat)
-            {
-                // $token = explode('/', $chat->attachment);
-                // $token2 = explode('.', $token[sizeof($token)-1]);
-
-                // if($chat->attachment)
-                // {
-                //     cloudinary()->destroy('Trivhunt/'.$token2[0]);
-                // }
-
-                $chat->delete();
-                
-            }
-            return ['message' => 'Chats have been deleted successfully.'];
-        // }
-    }
-
-    public function deleteSingleChat (Request $request) 
-    {
-        $chat = Chat::find($request->id);
-
-        // $token = explode('/', $chat->attachment);
-        // $token2 = explode('.', $token[sizeof($token)-1]);
-
-        // if($chat->attachment)
-        // {
-        //     cloudinary()->destroy('Trivhunt/'.$token2[0]);
-        // }
-
-        $chat->delete();
-
-        return ['message' => 'Chat has been deleted successfully.'];
-    }
-
-    public function deleteChatroom (Request $request) 
-    {
-        // delete all chats in the particular chatroom
-        $chats = Chat::where('room_id', $request->room_id)->get();
-
-        foreach($chats as $chat)
-        {
-            // $token = explode('/', $chat->attachment);
-            // $token2 = explode('.', $token[sizeof($token)-1]);
-
-            // if($chat->attachment)
-            // {
-            //     cloudinary()->destroy('Trivhunt/'.$token2[0]);
-            // }
-
-            $chat->delete();
-        }
-
-        // delete the chatroom
-        PersonalChatroom::where('room_id', $request->room_id)->delete();
-
-        // return
-        return ['status' => 'Chatroom has been deleted successfully.'];
     }
 
     public function check($recieverId){
@@ -983,4 +720,242 @@ class AdminController extends Controller
 
         return response()->json(['Token successfully stored.']);
     }
+
+    public function page_builder_create(Request $request)
+    {   
+        //Validate Request
+        $this->validate($request, [
+            'title' => ['required', 'string', 'max:255'],
+            'file_folder' => ['required', 'string', 'max:255'],
+            'file_name' => ['required', 'string', 'max:255'],
+        ]);
+
+        if (str_contains($request->file_name, '.')) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'file name invalid.'
+            ]);
+        }
+
+        $file = $request->file_name.'.html';
+        
+        define('MAX_FILE_LIMIT', 1024 * 1024 * 2);//2 Megabytes max html file size
+        
+        $data = file_get_contents(resource_path('views/builder/new-page-blank-template.blade.php'));
+
+        $html = substr($data, 0, MAX_FILE_LIMIT);
+
+        $file = $this->sanitizeFileName($file);
+
+        // $datum = strval($request->file_folder);
+
+        $disk = Storage::build([
+            'driver' => 'local',
+            'root'   => public_path('pageBuilder') . '/'.$request->file_folder,
+            'permissions' => [
+                'file' => [
+                    'public' => 0777,
+                    'private' => 0777,
+                    'custom' => 0777
+                ],
+                'dir' => [
+                    'public' => 0777,
+                    'private' => 0777,
+                    'custom' => 0777
+                ],
+            ],
+        ]);
+        
+        if(!$disk->put($file, $html)){
+            header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Error saving file  '.$file.'\nPossible causes are missing write permission or incorrect file path!'
+            ]);
+        } else {
+            $page = Page::create([
+                'user_id' => Auth::guard('admin')->user()->id,
+                'title' => $request->title,
+                'name' => $file,
+                'folder' => $request->file_folder,
+                'file_location' => config('app.url').'/pageBuilder/'.$request->file_folder.'/'.$file
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => $page->name.' created.'
+            ]);
+        };
+    }
+
+    function sanitizeFileName($file)
+    {
+        //sanitize, remove double dot .. and remove get parameters if any
+        $file = preg_replace('@\?.*$@' , '', preg_replace('@\.{2,}@' , '', preg_replace('@[^\/\\a-zA-Z0-9\-\._]@', '', $file)));
+        return $file;
+    }
+
+    public function viewEditor($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $page = Page::find($finder);
+
+        return view('dashboard.editor', [
+            'page' => $page
+        ]);
+    }
+
+    public function viewPage($username, Request $request, Page $page)
+    {
+        return view('dashboard.page', compact('page'));
+    }
+
+    public function page_builder_save_page()
+    {
+        $page = Page::find($_POST['id']);
+
+        define('MAX_FILE_LIMIT', 1024 * 1024 * 2);//2 Megabytes max html file size
+
+        $html = "";
+
+        if (isset($_POST['html']))
+        {
+            $html = substr($_POST['html'], 0, MAX_FILE_LIMIT);
+        }
+
+        $disk = public_path('pageBuilder/'.$page->folder.'/'.$page->name);
+
+        if (file_put_contents($disk, $html)) {
+        	echo "File saved.";
+        } else {
+        	header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+        	echo "Error saving file. \nPossible causes are missing write permission or incorrect file path!";
+        }	
+    }
+
+    public function page_builder_update($id, Request $request)
+    {   
+        //Validate Request
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255']
+        ]);
+
+        if (str_contains($request->name, '.')) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'file name invalid.'
+            ]);
+        }
+         
+        $idFinder = Crypt::decrypt($id);
+        $page = Page::find($idFinder);
+
+        $file = $request->name.'.html';
+        
+        $disk = public_path('pageBuilder/'.$page->folder.'/'.$page->name);
+
+        rename ($disk, public_path('pageBuilder/'.$page->folder.'/'.$file));
+
+        //Validate User
+        if (request()->hasFile('thumbnail')) {
+            $this->validate($request, [
+                'thumbnail' => 'required|mimes:jpeg,png,jpg',
+            ]);
+            $filename = request()->thumbnail->getClientOriginalName();
+            if($page->thumbnail) {
+                Storage::delete(str_replace("storage", "public", $page->thumbnail));
+            }
+            request()->thumbnail->storeAs('pages', $filename, 'public');
+
+            $page->update([
+                'thumbnail' => '/storage/pages/'.$filename,
+                'name' => $file,
+                'title' => $request->title,
+                'file_location' => config('app.url').'/pageBuilder/'.$page->folder.'/'.$file
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Page updated successfully!'
+            ]);
+        }
+
+        $page->update([
+            'name' => $file,
+            'title' => $request->title,
+            'file_location' => config('app.url').'/pageBuilder/'.$page->folder.'/'.$file
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Page Updated Successfully!'
+        ]);
+    }
+
+    public function page_builder_delete($id, Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'delete_field' => ['required', 'string', 'max:255']
+        ]);
+
+        if($request->delete_field == "DELETE")
+        {
+            $idFinder = Crypt::decrypt($id);
+
+            $page = Page::findorfail($idFinder);
+
+            if($page->thumbnail) {
+                Storage::delete(str_replace("storage", "public", $page->thumbnail));
+            }
+
+            if($page->file_location) {
+                File::deleteDirectory(public_path('pageBuilder/'.$page->folder));
+            }
+
+            $page->delete();
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Page deleted successfully!'
+            ]); 
+        } 
+
+        return back()->with([
+            'type' => 'danger',
+            'message' => "Field doesn't match, Try Again!"
+        ]); 
+        
+    }
+
+    public function page_publish(Request $request)
+    {
+        if($request->action == 'Publish')
+        {
+            $page = Page::findorfail($request->id);
+
+            $page->update([
+                'published' => true
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => "Page Published"
+            ]); 
+        } else {
+            $page = Page::findorfail($request->id);
+
+            $page->update([
+                'published' => false
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => "Page Unpublish"
+            ]); 
+        }
+    }
+
 }

@@ -246,10 +246,22 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="login-div">
-                            <a href="{{route('login')}}" class="btn-login">Login</a>
-                            <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
-                        </div>
+                        @auth
+                            <div class="login-div">
+                                <a href="{{route('user.dashboard', Auth::user()->username)}}" class="btn-signup">Dashboard <i class="bi bi-box-arrow-right"></i></a>
+                            </div>
+                        @else
+                            @if(Auth::guard('admin')->user())
+                                <div class="login-div">
+                                    <a href="{{route('adminDashboard')}}" class="btn-signup">Dashboard <i class="bi bi-box-arrow-right"></i></a>
+                                </div>
+                            @else
+                                <div class="login-div">
+                                    <a href="{{route('login')}}" class="btn-login">Login</a>
+                                    <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
+                                </div>
+                            @endif
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -264,54 +276,34 @@
             </div>
         </div>
     </header>
+    <!-- hero -->
+    <div class="template-hero-banner">
+        <div class="container h-100">
+            <div class="hero-container">
+                <div class="template-hero-div">
+                    <p class="template-head-text">{{$page->folder}} Page</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- hero ends -->
     <!-- page contents -->
-    <div class="template-content-details">
+    <div class="template-content mb-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-5 template-img-col">
                     <div class="w-100">
-                        <img src="https://templatemo.com/screenshots-720/template-562-space-dynamic.jpg" alt="template" width="100%">
+                         @if($page->thumbnail)
+                        <img src="{{$page->thumbnail}}" alt="{{$page->name}}" width="100%" height="100%" />
+                        @else
+                        <img src="http://via.placeholder.com/640x1000" alt="template" width="100%" height="100%" />
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-5 ps-lg-5 template-text-col">
                     <div class="details-text">
                         <p class="text-header">Do you like this template</p>
-                        <p>Try Ojafunnel premium 14 days for free. <span class="fw-normal">No credit card required!</span></p>
-                        <button class="btn btn-primary mt-4">Start Free Trial</button>
-                    </div>
-                    <div class="template-ratings">
-                        <div class="row">
-                            <div class="col-3">
-                                <p class="fw-bold">Ratings</p>
-                            </div>
-                            <div class="col-9 d-flex">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-3">
-                                <p class="fw-bold">Category</p>
-                            </div>
-                            <div class="col-9 d-flex">
-                                <ul class="d-flex">
-                                    <li class="bg-success text-white px-1 me-1">Ecommerce</li>
-                                    <li class="bg-warning text-white px-1 me-1">Easter</li>
-                                    <li class="bg-primary text-white px-1 me-1">Business</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-3">
-                                <p class="fw-bold">Description</p>
-                            </div>
-                            <div class="col-9 d-flex">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus obcaecati est doloremque vero itaque atque eaque eum tempora dolorem quia illo harum libero laborum vel repudiandae fuga ad, aut magnam?</p>
-                            </div>
-                        </div>
+                        <a href="{{route('signup')}}" class="btn btn-primary mt-4">Use Template</a>
                     </div>
                 </div>
             </div>

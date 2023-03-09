@@ -227,10 +227,22 @@
                             </a>
                         </li>
                     </ul>
-                    <div class="login-div">
-                        <a href="{{route('login')}}" class="btn-login">Login</a>
-                        <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
-                    </div>
+                    @auth
+                        <div class="login-div">
+                            <a href="{{route('user.dashboard', Auth::user()->username)}}" class="btn-signup">Dashboard <i class="bi bi-box-arrow-right"></i></a>
+                        </div>
+                    @else
+                        @if(Auth::guard('admin')->user())
+                            <div class="login-div">
+                                <a href="{{route('adminDashboard')}}" class="btn-signup">Dashboard <i class="bi bi-box-arrow-right"></i></a>
+                            </div>
+                        @else
+                            <div class="login-div">
+                                <a href="{{route('login')}}" class="btn-login">Login</a>
+                                <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
+                            </div>
+                        @endif
+                    @endauth
                 </div>
                 </div>
             </div>

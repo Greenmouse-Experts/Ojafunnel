@@ -64,15 +64,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/birthday-module', [App\Http\Controllers\Admin\AdminController::class, 'birthday_module'])->name('birthdayModule');
 
             // Support
-            Route::post('/support/start/chat/{id}', [App\Http\Controllers\Admin\AdminController::class, 'startChat']);
-            Route::put('/support/read', [App\Http\Controllers\Admin\AdminController::class, 'markAsRead']);
-            Route::get('/support/get/users', [App\Http\Controllers\Admin\AdminController::class, 'fetchAllusers']);
-            Route::get('/support/chats', [App\Http\Controllers\Admin\AdminController::class, 'fetchAllRecentChats']);
-            Route::post('/support/send', [App\Http\Controllers\Admin\AdminController::class, 'sendMessage']);
-            Route::post('/support/clear', [App\Http\Controllers\Admin\AdminController::class, 'clearChat']);
-            Route::post('/support/clear/single/chat', [App\Http\Controllers\Admin\AdminController::class, 'deleteSingleChat']);
-            Route::delete('/support/deletechatroom', [App\Http\Controllers\Admin\AdminController::class, 'deleteChatroom']);
-
             Route::get('/support/checkConvo/{recieverId}', [App\Http\Controllers\Admin\AdminController::class, 'check']);
             Route::post('/support/sendMessage', [App\Http\Controllers\Admin\AdminController::class, 'store'])->name('sendMessage');
             Route::get('/support/loadMessage/{reciever}/{sender}', [App\Http\Controllers\Admin\AdminController::class, 'load']);
@@ -110,6 +101,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             // Admin page builder
             Route::get('page-builder', [App\Http\Controllers\Admin\AdminController::class, 'page_builder'])->name('pageBuilder');
+
+             // Admin Page Builder
+            Route::post('/page/builder/create', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_create'])->name('admin.page.builder.create');
+            Route::any('/page/builder/save/page', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_save_page'])->name('admin.page.builder.save.page');
+            Route::post('/page/builder/update/{id}', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_update'])->name('admin.page.builder.update');
+            Route::get('/page/publish/{action}/{id}', [App\Http\Controllers\Admin\AdminController::class, 'page_publish'])->name('admin.page.publish');
+            Route::post('/page/builder/delete/{id}', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_delete'])->name('admin.page.builder.delete');
+            Route::get('/pages/{page}/editor', [App\Http\Controllers\Admin\AdminController::class, 'viewEditor'])->name('admin.page.builder.view.editor');
 
             // Notification
             Route::get('/admin/read/notification/{id}', [App\Http\Controllers\Admin\AdminController::class, 'read_notification'])->name('admin.read.notification');
