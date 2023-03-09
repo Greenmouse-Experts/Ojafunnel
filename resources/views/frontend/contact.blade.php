@@ -90,15 +90,16 @@
                                 Get In Touch
                             </h5>
                             <div class="Visit">
-                                <form class="login">
+                                <form class="login" method="post" action="/contact-us">
+                                    @csrf
                                     <div class="row">
                                         <!--Name-->
                                         <div class="col-lg-12">
-                                            <label>First Name</label>
+                                            <label>Full Name</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <i class="bi bi-person"></i>
-                                                    <input type="text" placeholder="First name" name="firstname" class="input" required>
+                                                    <input type="text" placeholder="Full name" name="name" class="input" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -108,7 +109,7 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <i class="bi bi-phone"></i>
-                                                    <input type="tel" placeholder="Enter your phone number " name="lastname" class="input" required>
+                                                    <input type="tel" placeholder="Enter your phone number" name="phone" class="input" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,7 +118,16 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <i class="bi bi-envelope"></i>
-                                                    <input type="text" placeholder="Email address" name="lastname" class="input" required>
+                                                    <input type="email" placeholder="Email address" name="email" class="input" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <label>Subject</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <i class="bi bi-envelope"></i>
+                                                    <input type="tel" placeholder="Enter your subject" name="subject" class="input" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -126,12 +136,19 @@
                                             <label>Message</label>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <textarea required class="input" cols="20" placeholder="Enter your message." rows="5"></textarea>
+                                                    <textarea required class="input" cols="20" placeholder="Enter your message." name="message" rows="5"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mb-4">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    {!! app('captcha')->display() !!}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 mb-2">
-                                            <button>
+                                            <button type="submit">
                                                 Send Message
                                             </button>
                                         </div>

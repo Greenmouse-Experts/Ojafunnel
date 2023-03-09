@@ -88,7 +88,7 @@
                                                     <span class="badge badge-pill badge-soft-danger text-danger font-size-11">Inactive</span>
                                                     @else
                                                     <i class="bi bi-check2-all"></i>
-                                                    <span class="badge badge-pill badge-soft-success text-danger font-size-11">Active</span>
+                                                    <span class="badge badge-pill badge-soft-success text-success font-size-11">Active</span>
                                                     @endif
                                                 </span>
                                             </div>

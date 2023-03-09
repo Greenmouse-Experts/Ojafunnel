@@ -2,6 +2,7 @@
 
 use App\Events\SendMessage;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +60,7 @@ Route::get('/faqs', [App\Http\Controllers\HomePageController::class, 'faqs'])->n
 Route::get('/pricing', [App\Http\Controllers\HomePageController::class, 'pricing'])->name('pricing');
 // Contact Us
 Route::get('/contact', [App\Http\Controllers\HomePageController::class, 'contact'])->name('contact');
+Route::post('/contact-us', [App\Http\Controllers\HomePageController::class, 'contactConfirm']);
 // Login
 Route::get('/login', [App\Http\Controllers\HomePageController::class, 'login'])->name('login');
 // Sign In
@@ -93,6 +95,7 @@ Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::
 
 // Template Designs Frontend
 Route::get('/features/template', [App\Http\Controllers\HomePageController::class, 'template'])->name('template');
+Route::get('/features/template/{id}', [App\Http\Controllers\HomePageController::class, 'template_details'])->name('templateDetails');
 
 // Affiliate Marketing
 Route::get('/features/affiliate', [App\Http\Controllers\HomePageController::class, 'affiliate'])->name('affiliate');
@@ -390,18 +393,18 @@ Route::prefix('{username}')->group(function () {
     );
 });
 
+// Save FCM Token
+Route::post('/save-token', [DashboardController::class, 'saveToken'])->name('save.token');
+
 // Upload
 Route::get('/general/builder/scan/file', [App\Http\Controllers\PageController::class, 'general_builder_scan'])->name('user.general.builder.scan');
 Route::post('/general/builder/upload/file', [App\Http\Controllers\PageController::class, 'general_builder_upload'])->name('user.general.builder.upload');
 
-// User Support
-Route::post('/support/start/chat/{id}', [ChatController::class, 'startChat']);
-Route::get('/support/chats', [ChatController::class, 'fetchAllRecentChats']);
-Route::get('/support/get/admins', [ChatController::class, 'fetchAllAdmins']);
-Route::post('/support/send', [ChatController::class, 'sendMessage']);
-Route::put('/support/read', [ChatController::class, 'markAsRead']);
-
-Route::post('/support/clear/single/chat', [ChatController::class, 'deleteSingleChat']);
+// Support
+Route::get('/support/checkConvo/{recieverId}', [ChatController::class, 'check']);
+Route::post('/support/sendMessage', [ChatController::class, 'store'])->name('sendMessage');
+Route::get('/support/loadMessage/{reciever}/{sender}', [ChatController::class, 'load']);
+Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [ChatController::class, 'retrieveNew']);
 
 // Builder
 Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');

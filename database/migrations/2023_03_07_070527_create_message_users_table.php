@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('funnels', function (Blueprint $table) {
-            $table->comment('');
-            $table->bigIncrements('id');
-            $table->string('user_id');
-            $table->string('folder')->nullable();
+        Schema::create('message_users', function (Blueprint $table) {
+            $table->id();
+            $table->string('sender_id');
+            $table->string('reciever_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('funnels');
+        Schema::dropIfExists('message_users');
     }
 };

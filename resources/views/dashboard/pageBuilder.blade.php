@@ -46,12 +46,12 @@
                                         @foreach($pages as $page)
                                         
                                         <div class="single-template">
-                                            <h6 class="text-center">{{$page->name}}</h6>
+                                            <h6 class="text-center pageName">{{$page->name}}</h6>
                                             <div class="inner second-grid">
                                                 @if($page->thumbnail)
                                                 <img src="{{$page->thumbnail}}" alt="templates" width="100%" height="100%" />
                                                 @else
-                                                <img src="https://templatemo.com/screenshots-720/template-562-space-dynamic.jpg" alt="templates" width="100%" height="100%" />
+                                                <img src="http://via.placeholder.com/640x1000" alt="templates" width="100%" height="100%" />
                                                 @endif
                                                 <div class="start-template">
                                                     
@@ -184,7 +184,6 @@
 </div>
 <!-- END layout-wrapper -->
 
-
 <!-- Modal START -->
 <div class="modal fade" id="template" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -244,115 +243,13 @@
         </div>
     </div>
 </div>
-<!-- end modal -->
+
 <style>
-    .page-contentts {
-        background-color: white;
-        padding: 40px 20px;
-        margin: 10px 0px 30px;
-    }
-
-    .template-side {
-        padding-top: 20px;
-    }
-
-    .license-div p,
-    .sort-div p {
-        border-bottom: 2px solid gray;
-        font-size: 18px;
-        font-weight: 600;
-    }
-
-    .license-radio,
-    .sort-radio {
-        list-style: none;
-        position: relative;
-        left: -20px;
-    }
-
-    .license-radio li,
-    .sort-radio li {
-        padding: 10px 0px;
-    }
-
-    .choose-category {
-        padding: 20px;
+    .pageName {
+        background: #556ee6;
+        padding: 0.7rem;
         border-radius: 20px;
-        background-color: #ebebeb;
-    }
-
-    .choose-category p {
-        font-size: 17px;
-        font-weight: 600;
-        color: rgb(112, 65, 144);
-    }
-
-    .category-list {
-        width: 100%;
-        overflow-x: scroll;
-    }
-
-    .category-list ul {
-        list-style: none;
-        display: flex;
-        width: 150%;
-    }
-
-    .category-list::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-    }
-
-    .category-list::-webkit-scrollbar-thumb {
-        background-color: #70418F;
-        border-radius: 12px;
-    }
-
-    .category-list ul li {
-        padding: 5px 20px;
-        border-radius: 20px;
-        margin-right: 20px;
-        font-weight: 500;
-    }
-
-    .template-listing {
-        margin: 30px 0px;
-    }
-
-    .template-listing-grid {
-        display: grid;
-        grid-template-columns: 32% 32% 32%;
-        justify-content: space-between;
-    }
-
-    .single-template .inner {
-        border-radius: 20px;
-        border: 2px solid rgb(175, 175, 175);
-        min-height: 300px;
-        max-height: 500px;
-        overflow: hidden;
-        position: relative;
-        text-align: center;
-    }
-
-    .start-template {
-        position: absolute;
-        top: 0px;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.6);
-        display: none;
-        place-content: center;
-        transition: 2s ease-in-out;
-    }
-
-    .single-template .first-grid {
-        display: grid;
-        place-content: center;
-    }
-
-    .second-grid:hover>.start-template {
-        display: grid;
-    }
+        color: #fff;
+    } 
 </style>
 @endsection

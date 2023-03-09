@@ -9,12 +9,5 @@ class FunnelPage extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'folder_id',
-        'name',
-        'title',
-        'thumbnail',
-        'file_location'
-    ];
+    protected $guarded = [];
 }

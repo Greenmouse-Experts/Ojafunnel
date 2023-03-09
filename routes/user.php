@@ -83,16 +83,6 @@ Route::prefix('user')->group(function () {
     Route::post('/crm/update/shop/{id}', [App\Http\Controllers\CMSController::class, 'update_shop'])->name('user.shop.update');
     Route::post('/crm/delete/shop/{id}', [App\Http\Controllers\CMSController::class, 'delete_shop'])->name('user.shop.delete');
 
-    // Support
-    Route::get('/support/chats', [ChatController::class, 'fetchAllRecentChats']);
-    Route::post('/support/send', [ChatController::class, 'sendMessage']);
-    Route::post('/support/clear', [ChatController::class, 'clearChat']);
-    Route::post('/support/clear/single/chat/{id}', [ChatController::class, 'deleteSingleChat']);
-    Route::post('/support/clearall', [ChatController::class, 'deleteAllChats']);
-    Route::delete('/support/deletechatroom', [ChatController::class, 'deleteChatroom']);
-    Route::put('/support/read', [ChatController::class, 'markAsRead']);
-    Route::post('/support/download/attachment/{id}', [ChatController::class, 'downloadAttachment']);
-
     // Email
     Route::post('/user/send/message/admin', [OjafunnelNotificationController::class, 'user_send_message'])->name('user.send.message');
     Route::get('/user/get/all/notifications', [OjafunnelNotificationController::class, 'get_all_notifications']);

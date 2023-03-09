@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('file_location')->nullable();
+            $table->boolean('published')->default(false);
             $table->timestamps();
         });
     }

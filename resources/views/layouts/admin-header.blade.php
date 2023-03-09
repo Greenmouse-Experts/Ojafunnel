@@ -3,7 +3,7 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="#" class="logo logo-dark">
+                <a href="/" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="{{URL::asset('admin/assets/images/Logo-fav.png')}}" alt="" height="22" />
                     </span>
@@ -12,7 +12,7 @@
                     </span>
                 </a>
 
-                <a href="#" class="logo logo-light">
+                <a href="/" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="{{URL::asset('admin/assets/images/Logo-fav.png')}}" alt="" height="22" />
                     </span>
@@ -79,7 +79,7 @@
                                 <h6 class="m-0" key="t-notifications">Notifications</h6>
                             </div>
                             <div class="col-auto">
-                                <a href="#!" class="small" key="t-view-all"> View All</a>
+                                <a href="{{route('notification')}}" class="small" key="t-view-all"> View All</a>
                             </div>
                         </div>
                     </div>
@@ -94,15 +94,15 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <h6 class="mb-1" key="t-shipped">
-                                        Your item is shipped
+                                        {{$OjaNotification->title}}
                                     </h6>
                                     <div class="font-size-12 text-muted">
                                         <p class="mb-1" key="t-grammer">
-                                            If several languages coalesce the grammar
+                                            {{$OjaNotification->body}}
                                         </p>
                                         <p class="mb-0">
                                             <i class="mdi mdi-clock-outline"></i>
-                                            <span key="t-min-ago">3 min ago</span>
+                                            <span key="t-min-ago">{{$OjaNotification->created_at->diffForHumans()}}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                     </div>
                     @endforeach
                     <div class="p-2 border-top d-grid">
-                        <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
+                        <a class="btn btn-sm btn-link font-size-14 text-center" href="{{route('notification')}}">
                             <i class="mdi mdi-arrow-right-circle me-1"></i>
                             <span key="t-view-more">View More..</span>
                         </a>

@@ -32,7 +32,8 @@ class User extends Authenticatable
         'wallet',
         'ref_bonus',
         'password',
-        'status'
+        'status',
+        'fcm_token'
     ];
 
     /**
