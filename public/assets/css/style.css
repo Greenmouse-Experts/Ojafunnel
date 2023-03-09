@@ -2086,7 +2086,7 @@ header nav .offcanvas-header button i {
         width: 100%;
     }
 
-    .Features .Amet  {
+    .Features .Amet {
         margin-bottom: 15px;
     }
 
@@ -2110,6 +2110,7 @@ header nav .offcanvas-header button i {
     .Features .Amet img {
         width: 100%;
     }
+
     .Features .Amet {
         padding: 10px;
         background: #FFFFFF;
@@ -2118,7 +2119,8 @@ header nav .offcanvas-header button i {
         text-align: left;
         height: auto !important;
     }
-    .Features .Amet  {
+
+    .Features .Amet {
         margin-bottom: 15px;
     }
 
@@ -2399,6 +2401,7 @@ header nav .offcanvas-header button i {
 .force img {
     width: 160px !important;
 }
+
 .footer .quick ul li {
     list-style: none;
     color: #000;

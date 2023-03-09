@@ -79,8 +79,9 @@
                                         </a>
                                         <div class="collapse" id="categories-collapse">
                                             <div class="card border-0 shadow-none ps-2 mb-0">
-                                                <ul class="list-unstyled mb-0">
-                                                    <li><a href="javascript: void(0);" class="d-flex align-items-center"><span class="me-auto">Design</span></a></li>
+                                               <ul class="list-unstyled mb-0">
+                                                    <li><a href="javascript: void(0);" class="d-flex align-items-center"><span class="me-auto">Introduction Development</span> <i class="mdi mdi-pin ms-auto"></i></a></li>
+                                                    <li><a href="javascript: void(0);" class="d-flex align-items-center"><span class="me-auto">Development</span> <i class="mdi mdi-pin ms-auto"></i></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -88,13 +89,14 @@
                                 </li>
                                 <li class="border-bottom">
                                     <div class="custom-accordion mt-2">
-                                        <a class="text-body fw-medium py-1 d-flex align-items-center" data-bs-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="categories-collapsee">
+                                        <a class="text-body fw-medium py-1 d-flex align-items-center" data-bs-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="categories-collapse">
                                             Section 2: Basic Concept <i class="mdi mdi-chevron-up accor-down-icon ms-auto"></i>
                                         </a>
-                                        <div class="collapse" id="categories-collapsee">
+                                        <div class="collapse" id="categories-collapse">
                                             <div class="card border-0 shadow-none ps-2 mb-0">
-                                                <ul class="list-unstyled mb-0">
-                                                    <li><a href="javascript: void(0);" class="d-flex align-items-center"><span class="me-auto">Design</span></a></li>
+                                               <ul class="list-unstyled mb-0">
+                                                    <li><a href="javascript: void(0);" class="d-flex align-items-center"><span class="me-auto">Introduction Development</span> <i class="mdi mdi-pin ms-auto"></i></a></li>
+                                                    <li><a href="javascript: void(0);" class="d-flex align-items-center"><span class="me-auto">Development</span> <i class="mdi mdi-pin ms-auto"></i></a></li>
                                                 </ul>
                                             </div>
                                         </div>
