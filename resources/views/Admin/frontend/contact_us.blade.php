@@ -79,6 +79,9 @@
                                             </td>
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
+                                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Reply">
+                                                        <a href="mailto:{{$contact->email}}" target="_blank" class="btn btn-sm btn-soft-success"><i class="bi bi-reply"></i></a>
+                                                    </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#delete-{{$contact->id}}" class="btn btn-sm btn-soft-danger"><i class="bi bi-x-circle"></i></a>
                                                     </li>

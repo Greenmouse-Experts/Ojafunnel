@@ -9,8 +9,5 @@ class Funnel extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'folder',
-    ];
+    protected $guarded = [];
 }

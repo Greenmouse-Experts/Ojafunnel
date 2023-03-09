@@ -13,9 +13,9 @@
                 <div class="col-12 account-head">
                     <div class="row py-3 justify-content-between align-items-center">
                         <div class="col-md-9">
-                            <h4 class="font-60">Choose A Funnel Template</h4>
+                            <h4 class="font-60">Create A Funnel</h4>
                             <p>
-                                 Pick a ready made funnel templates to begin building your funnel
+                                 Create a funnel templates to begin building your funnel
                             </p>
                         </div>
                         <div class="col-md-3">
@@ -45,7 +45,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-3">Folder Storage</h4>
+                            <h4 class="card-title mb-3">Funnels</h4>
                             <div class="table-responsive mt-2">
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>

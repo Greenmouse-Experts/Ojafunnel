@@ -7,6 +7,7 @@ use App\Models\ContactUs;
 use App\Models\Customer;
 use App\Models\OjafunnelNotification;
 use App\Models\OjaPlan;
+use App\Models\Page;
 use App\Models\Plan;
 use App\Models\User;
 use Exception;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tzsk\Sms\Facades\Sms;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\URL;
 
 class HomePageController extends Controller
@@ -134,11 +136,21 @@ class HomePageController extends Controller
         return view('frontend.Integration');
     }
 
-     // Template Design
-     public function template()
-     {
-         return view('frontend.template');
-     }
+    // Template Design
+    public function template()
+    {
+        return view('frontend.template');
+    }
+    public function template_details($id)
+    {
+        $idFinder = Crypt::decrypt($id);
+        
+        $page = Page::find($idFinder);
+
+        return view('frontend.templateDetail', [
+            'page' => $page
+        ]);
+    }
     // See Demo
     public function demo()
     {
@@ -174,7 +186,8 @@ class HomePageController extends Controller
         dd($response);
     }
 
-    public function contactConfirm(Request $request) {
+    public function contactConfirm(Request $request)
+    {
         //Validate Request
         $this->validate($request, [
             'phone' => 'required|numeric',
@@ -194,7 +207,7 @@ class HomePageController extends Controller
         OjafunnelNotification::create([
             'admin_id' => $admin->id,
             'title' => config('app.name'),
-            'body' => $contact->name.' sent a contact us form.'
+            'body' => $contact->name . ' sent a contact us form.'
         ]);
 
         $firebaseToken = Admin::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
@@ -205,7 +218,7 @@ class HomePageController extends Controller
             "registration_ids" => $firebaseToken,
             "notification" => [
                 "title" => config('app.name'),
-                "body" => 'Contact form submitted by '.$contact->name, 
+                "body" => 'Contact form submitted by ' . $contact->name,
                 'image' => URL::asset('assets/images/Logo-fav.png'),
             ],
             'vibrate' => 1,
@@ -226,7 +239,7 @@ class HomePageController extends Controller
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);      
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
         curl_exec($ch);
 
         return back()->with([
