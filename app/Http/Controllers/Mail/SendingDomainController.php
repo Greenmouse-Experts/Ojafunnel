@@ -1,17 +1,22 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
 use Illuminate\Http\Request;
-use Acelle\Http\Controllers\Controller;
-use Acelle\Model\SendingDomain;
-use Acelle\Model\SendingServer;
-use Acelle\Model\Setting;
-use Acelle\Library\Facades\Hook;
+use App\Http\Controllers\Controller;
+use App\Models\SendingDomain;
+use App\Models\SendingServer;
+use App\Models\Setting;
+use App\Library\Facades\Hook;
 use Gate;
+use Illuminate\Support\Facades\Auth;
 
 class SendingDomainController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +24,9 @@ class SendingDomainController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->user()->customer->can('read', new SendingDomain())) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('read', new SendingDomain())) {
+        //     return $this->notAuthorized();
+        // }
 
         $request->merge(array("customer_id" => $request->user()->customer->id));
         $plan = $request->user()->customer->activeSubscription()->plan;
@@ -34,7 +39,7 @@ class SendingDomainController extends Controller
 
         $items = SendingDomain::search($request, $server);
 
-        return view('sending_domains.index', [
+        return view('dashboard.campaign.sending_domains.index', [
             'items' => $items,
         ]);
     }
@@ -48,9 +53,9 @@ class SendingDomainController extends Controller
     {
         $customer = $request->user()->customer;
 
-        if (!$customer->can('read', new SendingDomain())) {
-            return $this->notAuthorized();
-        }
+        // if (!$customer->can('read', new SendingDomain())) {
+        //     return $this->notAuthorized();
+        // }
 
         $domains = $customer->sendingDomains();
 
@@ -65,7 +70,7 @@ class SendingDomainController extends Controller
 
         $items = $domains->search($request->keyword)->orderBy($request->sort_order, $request->sort_direction)->paginate(25);
 
-        return view('sending_domains._list', [
+        return view('dashboard.campaign.sending_domains._list', [
             'items' => $items,
             'server' => isset($server) ? $server : null,
         ]);
@@ -86,11 +91,11 @@ class SendingDomainController extends Controller
         $server->fill($request->old());
 
         // authorize
-        if (!$request->user()->customer->can('create', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('create', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('sending_domains.create', [
+        return view('dashboard.campaign.sending_domains.create', [
             'server' => $server,
             'readonly' => '0',
         ]);
@@ -106,9 +111,9 @@ class SendingDomainController extends Controller
     public function store(Request $request)
     {
         // authorize
-        if (Gate::denies('create', SendingDomain::class)) {
-            return $this->notAuthorized();
-        }
+        // if (Gate::denies('create', SendingDomain::class)) {
+        //     return $this->notAuthorized();
+        // }
 
         // Get customer
         $customer = $request->user()->customer;
@@ -127,18 +132,18 @@ class SendingDomainController extends Controller
         if ($server && $server->allowVerifyingOwnDomainsRemotely()) {
             list($validator, $domain) = $domain->createFromArray($request->all(), $server); // server based domain
         } else {
-            list($validator, $domain) = $domain->createFromArray($request->all(), null);    // app based domain
+            list($validator, $domain) = $domain->createFromArray($request->all(), null); // app based domain
         }
 
         if (is_null($domain)) { // fail to create
-            return redirect()->action('SendingDomainController@create')->withErrors($validator);
+            return redirect()->route('user.sending-domain.create', Auth::user()->username)->withErrors($validator);
         }
 
         // Log
         $domain->log('created', $customer);
 
         $request->session()->flash('alert-success', trans('messages.sending_domain.created'));
-        return redirect()->action('SendingDomainController@show', $domain->uid);
+        return redirect()->route('user.sending-domain.show', ['username' => Auth::user()->username, 'uid' => $domain->uid]);
     }
 
     /**
@@ -148,11 +153,11 @@ class SendingDomainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $domain = SendingDomain::findByUid($id);
+        $domain = SendingDomain::findByUid($request->uid);
 
-        return view('sending_domains.show', [
+        return view('dashboard.campaign.sending_domains.show', [
             'server' => $domain,
             'readonly' => 'readonly',
         ]);
@@ -176,7 +181,7 @@ class SendingDomainController extends Controller
 
         $server->fill($request->old());
 
-        return view('sending_domains.edit', [
+        return view('dashboard.campaign.sending_domains.edit', [
             'server' => $server,
             'readonly' => 'readonly',
         ]);
@@ -197,9 +202,9 @@ class SendingDomainController extends Controller
         $server = SendingDomain::findByUid($id);
 
         // authorize
-        if (!$request->user()->customer->can('update', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         // save posted data
         if ($request->isMethod('patch')) {
@@ -213,7 +218,7 @@ class SendingDomainController extends Controller
                 $server->log('updated', $request->user()->customer);
 
                 $request->session()->flash('alert-success', trans('messages.sending_domain.updated'));
-                return redirect()->action('SendingDomainController@show', $server->uid);
+                return redirect()->route('user.sending-domain.show', ['username' => Auth::user()->username, 'uid' => $domain->uid]);
             }
         }
     }
@@ -265,9 +270,9 @@ class SendingDomainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function verify($id)
+    public function verify(Request $request, $id)
     {
-        $domain = SendingDomain::findByUid($id);
+        $domain = SendingDomain::findByUid($request->uid);
         $domain->verify();
     }
 
@@ -278,9 +283,9 @@ class SendingDomainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function records($id)
+    public function records(Request $request, $id)
     {
-        $domain = SendingDomain::findByUid($id);
+        $domain = SendingDomain::findByUid($request->uid);
 
         $tokens = json_decode($domain->verification_token, true);
         $identity = $tokens['identity'];
@@ -290,9 +295,16 @@ class SendingDomainController extends Controller
 
         Hook::execute(
             'filter_aws_ses_dns_records',
-            [&$identity, &$dkims, &$spf]
+            [
+                &
+                $identity,
+                &
+                $dkims,
+                &
+                $spf
+            ]
         );
-        return view('sending_domains._records_aws', [
+        return view('dashboard.campaign.sending_domains._records_aws', [
             'domain' => $domain,
             'identity' => $identity,
             'dkims' => $dkims,

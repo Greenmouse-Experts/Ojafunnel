@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Library;
+namespace App\Library;
 
 class IdentityStore
 {
@@ -31,7 +31,7 @@ class IdentityStore
     private function normalize($data)
     {
         if (is_string($data)) {
-            $data = [ $data => [] ];
+            $data = [$data => []];
         }
 
         foreach ($data as $key => $attributes) {
@@ -60,7 +60,7 @@ class IdentityStore
         ];
 
         if (!array_key_exists($status, $map)) {
-            throw new \Exception("Status '{$status}' of verification status not recognized by Acelle");
+            throw new \Exception("Status '{$status}' of verification status not recognized by App");
         }
 
         return $map[$status];

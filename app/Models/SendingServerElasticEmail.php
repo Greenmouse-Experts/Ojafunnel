@@ -20,10 +20,10 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
-use Acelle\Library\StringHelper;
+use App\Library\Log as MailLog;
+use App\Library\StringHelper;
 use CurlFile;
 
 class SendingServerElasticEmail extends SendingServer
@@ -84,7 +84,7 @@ class SendingServerElasticEmail extends SendingServer
             $bounceLog->bounce_type = BounceLog::HARD;
             $bounceLog->raw = json_encode($params);
             $bounceLog->save();
-            MailLog::info('Bounce recorded for message '.$bounceLog->runtime_message_id);
+            MailLog::info('Bounce recorded for message ' . $bounceLog->runtime_message_id);
 
             // add subscriber's email to blacklist
             $subscriber = $bounceLog->findSubscriberByRuntimeMessageId();
@@ -92,7 +92,7 @@ class SendingServerElasticEmail extends SendingServer
                 $subscriber->sendToBlacklist($bounceLog->raw);
                 MailLog::info('Email added to blacklist');
             } else {
-                MailLog::warning('Cannot find associated tracking log for ElasticEmail message '.$bounceLog->runtime_message_id);
+                MailLog::warning('Cannot find associated tracking log for ElasticEmail message ' . $bounceLog->runtime_message_id);
             }
         } elseif (strcasecmp($params['status'], 'AbuseReport') == 0) {
             $feedbackLog = new FeedbackLog();
@@ -110,7 +110,7 @@ class SendingServerElasticEmail extends SendingServer
             $feedbackLog->feedback_type = 'spam';
             $feedbackLog->raw_feedback_content = json_encode($params);
             $feedbackLog->save();
-            MailLog::info('Feedback recorded for message '.$feedbackLog->runtime_message_id);
+            MailLog::info('Feedback recorded for message ' . $feedbackLog->runtime_message_id);
 
             // update the mail list, subscriber to be marked as 'spam-reported'
             // @todo: the following lines of code should be wrapped up in one single method: $feedbackLog->markSubscriberAsSpamReported();
@@ -119,7 +119,7 @@ class SendingServerElasticEmail extends SendingServer
                 $subscriber->markAsSpamReported();
                 MailLog::info('Subscriber marked as spam-reported');
             } else {
-                MailLog::warning('Cannot find associated tracking log for ElasticEmail message '.$feedbackLog->runtime_message_id);
+                MailLog::warning('Cannot find associated tracking log for ElasticEmail message ' . $feedbackLog->runtime_message_id);
             }
         }
     }
@@ -136,7 +136,7 @@ class SendingServerElasticEmail extends SendingServer
             return true;
         }
 
-        $uri = self::API_ENDPOINT.'/account/updateadvancedoptions?apikey='.$this->api_key.'&allowCustomHeaders=true';
+        $uri = self::API_ENDPOINT . '/account/updateadvancedoptions?apikey=' . $this->api_key . '&allowCustomHeaders=true';
 
         $response = file_get_contents($uri);
         $responseJson = json_decode($response);
@@ -145,7 +145,7 @@ class SendingServerElasticEmail extends SendingServer
             MailLog::info('Custom headers enabled');
             self::$isCustomHeadersEnabled = true;
         } else {
-            throw new \Exception('Cannot enable customer headers: '.$response);
+            throw new \Exception('Cannot enable customer headers: ' . $response);
         }
     }
 
@@ -165,7 +165,7 @@ class SendingServerElasticEmail extends SendingServer
 
         // add webhook
         $subscribeUrl = urlencode($this->getSubscribeUrl());
-        $endpoint = self::API_ENDPOINT.'/account/addwebhook?apikey='.$this->api_key.'&webNotificationUrl='.$subscribeUrl.'&name='.self::WEBHOOK_NAME.'&notifyOncePerEmail=&notificationForSent=&notificationForOpened=&notificationForClicked=&notificationForUnsubscribed=&notificationForAbuseReport=true&notificationForError=true';
+        $endpoint = self::API_ENDPOINT . '/account/addwebhook?apikey=' . $this->api_key . '&webNotificationUrl=' . $subscribeUrl . '&name=' . self::WEBHOOK_NAME . '&notifyOncePerEmail=&notificationForSent=&notificationForOpened=&notificationForClicked=&notificationForUnsubscribed=&notificationForAbuseReport=true&notificationForError=true';
 
         $response = json_decode(file_get_contents($endpoint), true);
 
@@ -173,9 +173,9 @@ class SendingServerElasticEmail extends SendingServer
             MailLog::info('webhook set!');
             self::$isWebhookSetup = true;
         } else {
-            $msg = 'ElasticEmail Erorr. Cannot setup webhook for "'.$subscribeUrl.'". Make sure your Elastic API key has full access. Also, please note that the webhook feature is reserved for Elastic Unlimited PRO & API PRO plans only. Response from server: '.json_encode($response);
+            $msg = 'ElasticEmail Erorr. Cannot setup webhook for "' . $subscribeUrl . '". Make sure your Elastic API key has full access. Also, please note that the webhook feature is reserved for Elastic Unlimited PRO & API PRO plans only. Response from server: ' . json_encode($response);
             MailLog::error($msg);
-            MailLog::error('Elastic endpoint: '.$endpoint);
+            MailLog::error('Elastic endpoint: ' . $endpoint);
             throw new \Exception($msg);
         }
     }
@@ -183,19 +183,19 @@ class SendingServerElasticEmail extends SendingServer
     public function deleteWebHook()
     {
         MailLog::info('Deleting webhooks if any');
-        $loadUri = self::API_ENDPOINT.'/account/loadwebhook?apikey='.$this->api_key.'&limit=1000';
+        $loadUri = self::API_ENDPOINT . '/account/loadwebhook?apikey=' . $this->api_key . '&limit=1000';
         $webhooks = json_decode(file_get_contents($loadUri), true)['data'];
-        MailLog::info(sizeof($webhooks).' webhooks found');
+        MailLog::info(sizeof($webhooks) . ' webhooks found');
 
         foreach ($webhooks as $webhook) {
-            MailLog::info('Checking '.$webhook['url'].' ('.$webhook['name'].')');
+            MailLog::info('Checking ' . $webhook['url'] . ' (' . $webhook['name'] . ')');
             if ($this->isSubscribeUrl($webhook['url']) || $webhook['name'] == self::WEBHOOK_NAME) {
-                MailLog::info('Deleting '.$webhook['url'].' ('.$webhook['name'].')');
-                $deleteUri = $deleteUri = self::API_ENDPOINT.'/account/deletewebhook?apikey='.$this->api_key.'&webhookID='.$webhook['webhookid'];
+                MailLog::info('Deleting ' . $webhook['url'] . ' (' . $webhook['name'] . ')');
+                $deleteUri = $deleteUri = self::API_ENDPOINT . '/account/deletewebhook?apikey=' . $this->api_key . '&webhookID=' . $webhook['webhookid'];
                 $result = json_decode(file_get_contents($deleteUri), true);
                 if ($result['success'] != true) {
-                    MailLog::error('Cannot delete webhook '.$webhook['url'].' ('.$webhook['name'].')');
-                    throw new \Exception('Cannot delete webhook '.$webhook['url'].' ('.$webhook['name'].')');
+                    MailLog::error('Cannot delete webhook ' . $webhook['url'] . ' (' . $webhook['name'] . ')');
+                    throw new \Exception('Cannot delete webhook ' . $webhook['url'] . ' (' . $webhook['name'] . ')');
                 }
             } else {
                 MailLog::info('Skipped');
@@ -274,7 +274,7 @@ class SendingServerElasticEmail extends SendingServer
 
         $attachmentKey = 1;
         foreach ($message->extAttachments as $file) {
-            $params['file_'.$attachmentKey] = new CurlFile($file['path'], $file['type'], basename($file['path']));
+            $params['file_' . $attachmentKey] = new CurlFile($file['path'], $file['type'], basename($file['path']));
             $attachmentKey += 1;
         }
 
@@ -330,7 +330,7 @@ class SendingServerElasticEmail extends SendingServer
 
         $attachmentKey = 1;
         foreach ($message->extAttachments as $file) {
-            $params['file_'.$attachmentKey] = new CurlFile($file['path'], $file['type'], basename($file['path']));
+            $params['file_' . $attachmentKey] = new CurlFile($file['path'], $file['type'], basename($file['path']));
             $attachmentKey += 1;
         }
 
@@ -343,7 +343,8 @@ class SendingServerElasticEmail extends SendingServer
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_SSL_VERIFYPEER => false
-        ));
+        )
+        );
 
         $result = curl_exec($ch);
         curl_close($ch);
@@ -356,10 +357,10 @@ class SendingServerElasticEmail extends SendingServer
 
         try {
             if ($jsonResponse->success == false) {
-                throw new \Exception("ElasticEmail error: ".$result);
+                throw new \Exception("ElasticEmail error: " . $result);
             }
         } catch (\Throwable $t) {
-            throw new \Exception("Abnormal response from ElasticEmail: ".$result);
+            throw new \Exception("Abnormal response from ElasticEmail: " . $result);
         }
 
         // Use transactionid returned from ElasticEmail as runtime_message_id
@@ -375,7 +376,7 @@ class SendingServerElasticEmail extends SendingServer
     {
         // Sample result:
         // {"success":true,"data":[{"domain":"marcurselli.com (info@marcurselli.com)","defaultdomain":true,"spf":true,"dkim":true,"mx":true,"dmarc":true,"isrewritedomainvalid":true,"verify":false,"type":0,"trackingstatus":0,"certificatestatus":0,"certificatevalidationerror":null,"trackingtypeuserrequest":null,"verp":true,"custombouncesdomain":"bounces.marcurselli.com","iscustombouncesdomaindefault":true,"ownership":0},{"domain":"acellemail.com","defaultdomain":false,"spf":false,"dkim":false,"mx":true,"dmarc":false,"isrewritedomainvalid":false,"verify":true,"type":0,"trackingstatus":2,"certificatestatus":0,"certificatevalidationerror":null,"trackingtypeuserrequest":null,"verp":true,"custombouncesdomain":null,"iscustombouncesdomaindefault":false,"ownership":0}]}
-        $response = file_get_contents(self::API_ENDPOINT.'/domain/list?apikey='.$this->api_key);
+        $response = file_get_contents(self::API_ENDPOINT . '/domain/list?apikey=' . $this->api_key);
         $json = json_decode($response, true);
         if ($json['success'] == false) {
             throw new \Exception($json['error']);
@@ -406,10 +407,10 @@ class SendingServerElasticEmail extends SendingServer
      */
     public function test()
     {
-        $response = file_get_contents(self::API_ENDPOINT.'/domain/list?apikey='.$this->api_key);
+        $response = file_get_contents(self::API_ENDPOINT . '/domain/list?apikey=' . $this->api_key);
         $json = json_decode($response, true);
         if ($json['success'] == false) {
-            throw new \Exception('Failed to connect to ElasticEmail: '.$response);
+            throw new \Exception('Failed to connect to ElasticEmail: ' . $response);
         }
 
         return true;

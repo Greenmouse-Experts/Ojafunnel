@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Library\Automation;
+namespace App\Library\Automation;
 
 use Carbon\Carbon;
 use Exception;

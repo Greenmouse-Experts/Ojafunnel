@@ -12,5 +12,12 @@ class Page extends Model implements Editable
     use HasFactory;
     use EditableTrait;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id',
+        'name',
+        'title',
+        'thumbnail',
+        'folder',
+        'file_location'
+    ];
 }

@@ -1,20 +1,21 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Validator;
-use Acelle\Http\Requests;
-use Acelle\Model\Automation2;
-use Acelle\Model\MailList;
-use Acelle\Model\Email;
-use Acelle\Model\Attachment;
-use Acelle\Model\Template;
-use Acelle\Model\Subscriber;
-use Acelle\Model\Setting;
+use App\Http\Requests;
+use App\Models\Automation2;
+use App\Models\MailList;
+use App\Models\Email;
+use App\Models\Attachment;
+use App\Models\Template;
+use App\Models\Subscriber;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Storage;
-use Acelle\Model\TemplateCategory;
+use App\Models\TemplateCategory;
 use Exception;
 
 class Automation2Controller extends Controller
@@ -26,7 +27,7 @@ class Automation2Controller extends Controller
      */
     public function index(Request $request)
     {
-        return view('automation2.index');
+        return view('dashboard.campaign.automation2.index');
     }
 
     /**
@@ -105,7 +106,7 @@ class Automation2Controller extends Controller
             return null;
         }
 
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
 
         return view('automation2.wizardListFieldSelect', [
             'list' => $list,
@@ -354,7 +355,7 @@ class Automation2Controller extends Controller
 
         $valid = $valid && !$validator->fails();
 
-        return [$validator,  $valid];
+        return [$validator, $valid];
     }
 
     /**
@@ -484,7 +485,7 @@ class Automation2Controller extends Controller
         }
 
         if ($request->key == 'wait') {
-            $delayOptions = \Acelle\Model\Automation2::getDelayOptions();
+            $delayOptions = \App\Models\Automation2::getDelayOptions();
             $parts = explode(' ', $request->time);
             $title = trans('messages.time.wait_for') . ' ' . $parts[0] . ' ' . trans_choice('messages.time.' . $parts[1], $parts[0]);
 
@@ -634,7 +635,7 @@ class Automation2Controller extends Controller
         // saving
         if ($request->isMethod('post')) {
             if ($request->key == 'wait') {
-                $delayOptions = \Acelle\Model\Automation2::getDelayOptions();
+                $delayOptions = \App\Models\Automation2::getDelayOptions();
                 $parts = explode(' ', $request->time);
                 $title = trans('messages.time.wait_for') . ' ' . $parts[0] . ' ' . trans_choice('messages.time.' . $parts[1], $parts[0]);
 
@@ -759,7 +760,7 @@ class Automation2Controller extends Controller
 
             // Tacking domain
             if (isset($params['custom_tracking_domain']) && $params['custom_tracking_domain'] && isset($params['tracking_domain_uid'])) {
-                $tracking_domain = \Acelle\Model\TrackingDomain::findByUid($params['tracking_domain_uid']);
+                $tracking_domain = \App\Models\TrackingDomain::findByUid($params['tracking_domain_uid']);
                 if (is_object($tracking_domain)) {
                     $this->tracking_domain_id = $tracking_domain->id;
                 } else {
@@ -1435,10 +1436,10 @@ class Automation2Controller extends Controller
 
         // list by type
         $subscribers = $automation->getSubscribersWithTriggerInfo()
-                                  ->simpleSearch($request->keyword)
-                                  ->addSelect('subscribers.created_at')
-                                  ->addSelect('auto_triggers.updated_at')
-                                  ->orderBy($sortBy, $sortOrder);
+            ->simpleSearch($request->keyword)
+            ->addSelect('subscribers.created_at')
+            ->addSelect('auto_triggers.updated_at')
+            ->orderBy($sortBy, $sortOrder);
         $contacts = $subscribers->paginate($request->per_page);
 
         return view('automation2.contacts.list', [
@@ -2096,7 +2097,7 @@ class Automation2Controller extends Controller
         $existingTrigger = $automation->getAutoTriggerFor($subscriber);
 
         if (!is_null($existingTrigger)) {
-            echo sprintf("%s already triggered. Click <a href='%s'>here</a> for more details", $subscriber->email, action('AutoTrigger@show', [ 'id' => $existingTrigger->id ]));
+            echo sprintf("%s already triggered. Click <a href='%s'>here</a> for more details", $subscriber->email, action('AutoTrigger@show', ['id' => $existingTrigger->id]));
             return;
         }
 
@@ -2107,7 +2108,7 @@ class Automation2Controller extends Controller
         // Even inactive contacts - in case of Say-Goodbye-Trigger for example
         $trigger = $automation->initTrigger($subscriber, $force = true);
 
-        return redirect()->action('AutoTrigger@show', [ 'id' => $trigger->id ]);
+        return redirect()->action('AutoTrigger@show', ['id' => $trigger->id]);
     }
 
     /**

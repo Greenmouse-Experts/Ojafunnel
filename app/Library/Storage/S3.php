@@ -1,9 +1,9 @@
 <?php
 
-namespace Acelle\Library\Storage;
+namespace App\Library\Storage;
 
-use Acelle\Library\Storage\Contracts\StorageService;
-use Acelle\Library\Storage\Contracts\Storable;
+use App\Library\Storage\Contracts\StorageService;
+use App\Library\Storage\Contracts\Storable;
 use Aws\S3\S3Client;
 use Aws\Credentials\Credentials;
 
@@ -15,6 +15,7 @@ class S3 implements StorageService
     protected $bucket;
 
     public function __construct($apiKey, $apiSecret, $region, $bucket) // What interface?
+
     {
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
@@ -26,15 +27,17 @@ class S3 implements StorageService
     {
         // Upload an object by streaming the contents of a file
         // $pathToFile should be absolute path to a file on disk
-        $result = $this->getClient()->putObject(array(
-            'Bucket'     => $this->bucket,
-            'Key'        => $object->getArchivePath(),
-            'SourceFile' => $object->toZip(),
-            'Metadata'   => array(
-                'Foo' => 'abc',
-                'Baz' => '123'
+        $result = $this->getClient()->putObject(
+            array(
+                'Bucket' => $this->bucket,
+                'Key' => $object->getArchivePath(),
+                'SourceFile' => $object->toZip(),
+                'Metadata' => array(
+                    'Foo' => 'abc',
+                    'Baz' => '123'
+                )
             )
-        ));
+        );
     }
 
     public function getClient()

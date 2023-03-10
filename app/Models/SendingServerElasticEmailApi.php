@@ -20,9 +20,9 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
+use App\Library\Log as MailLog;
 
 class SendingServerElasticEmailApi extends SendingServerElasticEmail
 {

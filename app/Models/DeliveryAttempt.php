@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +24,8 @@ class DeliveryAttempt extends Model
     //             TrackingLog
 
     protected $fillable = [
-        'subscriber_id', 'email_id', 'auto_trigger_id',
+        'subscriber_id',
+        'email_id',
+        'auto_trigger_id',
     ];
 }

@@ -1,13 +1,16 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Acelle\Events\MailListSubscription;
-use Acelle\Model\Setting;
-use Acelle\Model\MailList;
-use Acelle\Model\IpLocation;
+use App\Events\MailListSubscription;
+use App\Models\Setting;
+use App\Models\MailList;
+use App\Models\IpLocation;
+use Illuminate\Support\Facades\Validator;
 
 class PageController extends Controller
 {
@@ -30,15 +33,15 @@ class PageController extends Controller
      */
     public function update(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
 
         // authorize
-        if (\Gate::denies('update', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
-        $layout = \Acelle\Model\Layout::where('alias', $request->alias)->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
+        $layout = \App\Models\Layout::where('alias', $request->alias)->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
 
         // storing
         if ($request->isMethod('post')) {
@@ -47,7 +50,7 @@ class PageController extends Controller
             $validate = 'required';
             foreach ($layout->tags() as $tag) {
                 if ($tag['required']) {
-                    $validate .= '|substring:'.$tag['name'];
+                    $validate .= '|substring:' . $tag['name'];
                 }
             }
 
@@ -61,8 +64,10 @@ class PageController extends Controller
                 $rules['subject'] = 'required';
             }
 
+            //dd($rules, $request);
+
             // Validation
-            $this->validate($request, $rules);
+            //$this->validate($request, $rules);
 
             // save
             $page->save();
@@ -72,13 +77,13 @@ class PageController extends Controller
 
             $request->session()->flash('alert-success', trans('messages.page.updated'));
 
-            return redirect()->action('PageController@update', array('list_uid' => $list->uid, 'alias' => $layout->alias));
+            return redirect()->route('user.pages.update', ['username' => Auth::user()->username, 'list_uid' => $list->uid, 'alias' => $layout->alias]);
         }
 
         // return back
         $page->fill($request->old());
 
-        return view('pages.update', [
+        return view('dashboard.campaign.pages.update', [
             'list' => $list,
             'page' => $page,
             'layout' => $layout,
@@ -94,21 +99,21 @@ class PageController extends Controller
      */
     public function preview(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
 
         // authorize
-        if (\Gate::denies('update', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
-        $layout = \Acelle\Model\Layout::where('alias', $request->alias)->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
+        $layout = \App\Models\Layout::where('alias', $request->alias)->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
         $page->content = $request->content;
 
         // render content
         $page->renderContent();
 
-        return view('pages.preview_'.$page->layout->type, [
+        return view('dashboard.campaign.pages.preview_' . $page->layout->type, [
             'list' => $list,
             'page' => $page,
         ]);
@@ -123,9 +128,9 @@ class PageController extends Controller
      */
     public function signUpForm(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $layout = \Acelle\Model\Layout::where('alias', 'sign_up_form')->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $layout = \App\Models\Layout::where('alias', 'sign_up_form')->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
 
         // Language
         if (is_object($list->customer) && is_object($list->customer->language)) {
@@ -163,12 +168,13 @@ class PageController extends Controller
                 return redirect()->away($request->redirect_url);
             } elseif ($list->subscribe_confirmation && !$subscriber->isSubscribed()) {
                 // tell subscriber to check email for confirmation
-                return redirect()->action('PageController@signUpThankyouPage', ['list_uid' => $list->uid, 'subscriber_uid' => $subscriber->uid]);
+                return redirect()->route('PageController@signUpThankyouPage', ['username' => Auth::user()->username, 'list_uid' => $list->uid, 'subscriber_uid' => $subscriber->uid]);
             } else {
                 // All done, confirmed
-                return redirect()->action(
-                    'PageController@signUpConfirmationThankyou',
+                return redirect()->route(
+                    'user.pages.signUpConfirmationThankyou',
                     [
+                        'username' => Auth::user()->username,
                         'list_uid' => $list->uid,
                         'uid' => $subscriber->uid,
                         'code' => 'empty',
@@ -177,7 +183,7 @@ class PageController extends Controller
             }
         }
 
-        return view('pages.form', [
+        return view('dashboard.campaign.pages.form', [
             'list' => $list,
             'page' => $page,
             'values' => $values,
@@ -193,10 +199,10 @@ class PageController extends Controller
      */
     public function signUpThankyouPage(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $layout = \Acelle\Model\Layout::where('alias', 'sign_up_thankyou_page')->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
-        $subscriber = \Acelle\Model\Subscriber::findByUid($request->subscriber_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $layout = \App\Models\Layout::where('alias', 'sign_up_thankyou_page')->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
+        $subscriber = \App\Models\Subscriber::findByUid($request->subscriber_uid);
 
         // Language
         if (is_object($list->customer) && is_object($list->customer->language)) {
@@ -227,10 +233,10 @@ class PageController extends Controller
     public function signUpConfirmationThankyou(Request $request)
     {
         $user = $request->user();
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $layout = \Acelle\Model\Layout::where('alias', 'sign_up_confirmation_thankyou')->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
-        $subscriber = \Acelle\Model\Subscriber::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $layout = \App\Models\Layout::where('alias', 'sign_up_confirmation_thankyou')->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
+        $subscriber = \App\Models\Subscriber::findByUid($request->uid);
 
         // Language
         if (is_object($list->customer) && is_object($list->customer->language)) {
@@ -271,10 +277,10 @@ class PageController extends Controller
     {
         // IMPORTANT: it does not create TrackingLog!!!
         $user = $request->user();
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $layout = \Acelle\Model\Layout::where('alias', 'unsubscribe_form')->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
-        $subscriber = \Acelle\Model\Subscriber::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $layout = \App\Models\Layout::where('alias', 'unsubscribe_form')->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
+        $subscriber = \App\Models\Subscriber::findByUid($request->uid);
 
         // Language
         if (is_object($list->customer) && is_object($list->customer->language)) {
@@ -321,10 +327,10 @@ class PageController extends Controller
     public function unsubscribeSuccessPage(Request $request)
     {
         $user = $request->user();
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $layout = \Acelle\Model\Layout::where('alias', 'unsubscribe_success_page')->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
-        $subscriber = \Acelle\Model\Subscriber::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $layout = \App\Models\Layout::where('alias', 'unsubscribe_success_page')->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
+        $subscriber = \App\Models\Subscriber::findByUid($request->uid);
 
         // Language
         if (is_object($list->customer) && is_object($list->customer->language)) {
@@ -356,10 +362,10 @@ class PageController extends Controller
     public function profileUpdateForm(Request $request)
     {
         $user = $request->user();
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $layout = \Acelle\Model\Layout::where('alias', 'profile_update_form')->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
-        $subscriber = \Acelle\Model\Subscriber::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $layout = \App\Models\Layout::where('alias', 'profile_update_form')->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
+        $subscriber = \App\Models\Subscriber::findByUid($request->uid);
 
         // Language
         if (is_object($list->customer) && is_object($list->customer->language)) {
@@ -395,7 +401,7 @@ class PageController extends Controller
         if ($request->isMethod('post')) {
             if ($subscriber->getSecurityToken('update-profile') == $request->code) {
                 $rules = $subscriber->getRules();
-                $rules['EMAIL'] .= '|in:'.$subscriber->email;
+                $rules['EMAIL'] .= '|in:' . $subscriber->email;
                 // Validation
                 $this->validate($request, $rules);
 
@@ -423,10 +429,10 @@ class PageController extends Controller
     public function profileUpdateSuccessPage(Request $request)
     {
         $user = $request->user();
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $layout = \Acelle\Model\Layout::where('alias', 'profile_update_success_page')->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
-        $subscriber = \Acelle\Model\Subscriber::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $layout = \App\Models\Layout::where('alias', 'profile_update_success_page')->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
+        $subscriber = \App\Models\Subscriber::findByUid($request->uid);
 
         // Language
         if (is_object($list->customer) && is_object($list->customer->language)) {
@@ -458,10 +464,10 @@ class PageController extends Controller
     public function profileUpdateEmailSent(Request $request)
     {
         $user = $request->user();
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
-        $layout = \Acelle\Model\Layout::where('alias', 'profile_update_email_sent')->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
-        $subscriber = \Acelle\Model\Subscriber::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $layout = \App\Models\Layout::where('alias', 'profile_update_email_sent')->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
+        $subscriber = \App\Models\Subscriber::findByUid($request->uid);
 
         // Language
         if (is_object($list->customer) && is_object($list->customer->language)) {
@@ -492,19 +498,19 @@ class PageController extends Controller
 
     public function restoreDefault(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
 
         // authorize
-        if (\Gate::denies('update', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
-        $layout = \Acelle\Model\Layout::where('alias', $request->alias)->first();
-        $page = \Acelle\Model\Page::findPage($list, $layout);
+        $layout = \App\Models\Layout::where('alias', $request->alias)->first();
+        $page = \App\Models\Mailpage::findPage($list, $layout);
 
         $page->delete();
 
         $request->session()->flash('alert-success', trans('messages.page.reset.success'));
-        return redirect()->action('PageController@update', array('list_uid' => $list->uid, 'alias' => $layout->alias));
+        return redirect()->route('user.pages.update', array('username' => \Auth::user()->username, 'list_uid' => $list->uid, 'alias' => $layout->alias));
     }
 }

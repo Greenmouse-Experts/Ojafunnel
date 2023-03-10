@@ -95,18 +95,18 @@ class SendingServer extends Model implements HasQuotaInterface
 
     // Supported server types
     public static $serverMapping = array(
-            self::TYPE_AMAZON_API => 'SendingServerAmazonApi',
-            self::TYPE_AMAZON_SMTP => 'SendingServerAmazonSmtp',
-            self::TYPE_SMTP => 'SendingServerSmtp',
-            self::TYPE_SENDMAIL => 'SendingServerSendmail',
-            self::TYPE_MAILGUN_API => 'SendingServerMailgunApi',
-            self::TYPE_MAILGUN_SMTP => 'SendingServerMailgunSmtp',
-            self::TYPE_SENDGRID_API => 'SendingServerSendGridApi',
-            self::TYPE_SENDGRID_SMTP => 'SendingServerSendGridSmtp',
-            self::TYPE_ELASTICEMAIL_API => 'SendingServerElasticEmailApi',
-            self::TYPE_ELASTICEMAIL_SMTP => 'SendingServerElasticEmailSmtp',
-            self::TYPE_SPARKPOST_API => 'SendingServerSparkPostApi',
-            self::TYPE_SPARKPOST_SMTP => 'SendingServerSparkPostSmtp',
+        self::TYPE_AMAZON_API => 'SendingServerAmazonApi',
+        self::TYPE_AMAZON_SMTP => 'SendingServerAmazonSmtp',
+        self::TYPE_SMTP => 'SendingServerSmtp',
+        self::TYPE_SENDMAIL => 'SendingServerSendmail',
+        self::TYPE_MAILGUN_API => 'SendingServerMailgunApi',
+        self::TYPE_MAILGUN_SMTP => 'SendingServerMailgunSmtp',
+        self::TYPE_SENDGRID_API => 'SendingServerSendGridApi',
+        self::TYPE_SENDGRID_SMTP => 'SendingServerSendGridSmtp',
+        self::TYPE_ELASTICEMAIL_API => 'SendingServerElasticEmailApi',
+        self::TYPE_ELASTICEMAIL_SMTP => 'SendingServerElasticEmailSmtp',
+        self::TYPE_SPARKPOST_API => 'SendingServerSparkPostApi',
+        self::TYPE_SPARKPOST_SMTP => 'SendingServerSparkPostSmtp',
     );
 
     /**
@@ -173,9 +173,14 @@ class SendingServer extends Model implements HasQuotaInterface
     {
         if (array_key_exists($server->type, self::$serverMapping)) {
             // Old sending server types
+
             $class_name = '\App\Models\\' . self::$serverMapping[$server->type];
+
+
         } else {
+
             $extendedTypes = Hook::execute('register_sending_server');
+            //dd($extendedTypes);
             foreach ($extendedTypes as $meta) {
                 if ($meta['type'] == $server->type) {
                     $class_name = $meta['class'];
@@ -188,12 +193,14 @@ class SendingServer extends Model implements HasQuotaInterface
         }
 
         if ($server->id) {
+            //dd($server->id);
             $instance = $class_name::find($server->id);
+            //dd($instance);
         } else {
             $instance = new $class_name(['type' => $server->type]);
         }
-
-        $instance->fill($server->getAttributes());
+        //dd($server->getAttributes());
+        $instance->fill($server->toArray());
 
         return $instance;
     }
@@ -310,7 +317,7 @@ class SendingServer extends Model implements HasQuotaInterface
     public static function types()
     {
         return [
-                self::TYPE_AMAZON_SMTP => [
+            self::TYPE_AMAZON_SMTP => [
                 'cols' => [
                     'host' => 'required',
                     'aws_access_key_id' => 'required',
@@ -326,7 +333,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_AMAZON_API => [
+            self::TYPE_AMAZON_API => [
                 'cols' => [
                     'aws_access_key_id' => 'required',
                     'aws_secret_access_key' => 'required',
@@ -337,7 +344,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_SENDGRID_SMTP => [
+            self::TYPE_SENDGRID_SMTP => [
                 'cols' => [
                     'api_key' => 'required',
                     'host' => 'required',
@@ -350,7 +357,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_SENDGRID_API => [
+            self::TYPE_SENDGRID_API => [
                 'cols' => [
                     'api_key' => 'required',
                 ],
@@ -359,7 +366,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_MAILGUN_API => [
+            self::TYPE_MAILGUN_API => [
                 'cols' => [
                     'api_key' => 'required',
                     'domain' => 'required',
@@ -370,7 +377,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_MAILGUN_SMTP => [
+            self::TYPE_MAILGUN_SMTP => [
                 'cols' => [
                     'domain' => 'required',
                     'api_key' => 'required',
@@ -386,7 +393,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_ELASTICEMAIL_API => [
+            self::TYPE_ELASTICEMAIL_API => [
                 'cols' => [
                     'api_key' => 'required',
                 ],
@@ -395,7 +402,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_ELASTICEMAIL_SMTP => [
+            self::TYPE_ELASTICEMAIL_SMTP => [
                 'cols' => [
                     'api_key' => 'required',
                     'host' => 'required',
@@ -408,7 +415,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_SPARKPOST_API => [
+            self::TYPE_SPARKPOST_API => [
                 'cols' => [
                     'host' => 'required',
                     'api_key' => 'required',
@@ -418,7 +425,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_SPARKPOST_SMTP => [
+            self::TYPE_SPARKPOST_SMTP => [
                 'cols' => [
                     'api_key' => 'required',
                     'host' => 'required',
@@ -432,7 +439,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_SMTP => [
+            self::TYPE_SMTP => [
                 'cols' => [
                     'host' => 'required',
                     'smtp_username' => 'required',
@@ -447,7 +454,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'feedback_loop_handler_id' => '',
                 ],
             ],
-                self::TYPE_SENDMAIL => [
+            self::TYPE_SENDMAIL => [
                 'cols' => [
                     'sendmail_path' => 'required',
                 ],
@@ -469,7 +476,7 @@ class SendingServer extends Model implements HasQuotaInterface
     public static function frontendTypes()
     {
         return [
-                self::TYPE_AMAZON_SMTP => [
+            self::TYPE_AMAZON_SMTP => [
                 'cols' => [
                     'name' => 'required',
                     'host' => 'required',
@@ -483,7 +490,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_AMAZON_API => [
+            self::TYPE_AMAZON_API => [
                 'cols' => [
                     'name' => 'required',
                     'aws_access_key_id' => 'required',
@@ -492,7 +499,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_SENDGRID_SMTP => [
+            self::TYPE_SENDGRID_SMTP => [
                 'cols' => [
                     'name' => 'required',
                     'api_key' => 'required',
@@ -503,14 +510,14 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_SENDGRID_API => [
+            self::TYPE_SENDGRID_API => [
                 'cols' => [
                     'name' => 'required',
                     'api_key' => 'required',
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_MAILGUN_API => [
+            self::TYPE_MAILGUN_API => [
                 'cols' => [
                     'name' => 'required',
                     'api_key' => 'required',
@@ -518,7 +525,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_MAILGUN_SMTP => [
+            self::TYPE_MAILGUN_SMTP => [
                 'cols' => [
                     'name' => 'required',
                     'domain' => 'required',
@@ -530,14 +537,14 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_ELASTICEMAIL_API => [
+            self::TYPE_ELASTICEMAIL_API => [
                 'cols' => [
                     'name' => 'required',
                     'api_key' => 'required',
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_ELASTICEMAIL_SMTP => [
+            self::TYPE_ELASTICEMAIL_SMTP => [
                 'cols' => [
                     'name' => 'required',
                     'api_key' => 'required',
@@ -548,7 +555,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_SPARKPOST_API => [
+            self::TYPE_SPARKPOST_API => [
                 'cols' => [
                     'name' => 'required',
                     'host' => 'required',
@@ -556,7 +563,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_SPARKPOST_SMTP => [
+            self::TYPE_SPARKPOST_SMTP => [
                 'cols' => [
                     'name' => 'required',
                     'api_key' => 'required',
@@ -568,7 +575,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'default_from_email' => 'email',
                 ],
             ],
-                self::TYPE_SMTP => [
+            self::TYPE_SMTP => [
                 'cols' => [
                     'name' => 'required',
                     'host' => 'required',
@@ -581,7 +588,7 @@ class SendingServer extends Model implements HasQuotaInterface
                     'feedback_loop_handler_id' => '',
                 ],
             ],
-                self::TYPE_SENDMAIL => [
+            self::TYPE_SENDMAIL => [
                 'cols' => [
                     'name' => 'required',
                     'sendmail_path' => 'required',

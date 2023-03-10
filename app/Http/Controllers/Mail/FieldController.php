@@ -1,7 +1,8 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class FieldController extends Controller
@@ -13,20 +14,20 @@ class FieldController extends Controller
      */
     public function index(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
         $fields = $list->getFields;
 
         // authorize
-        if (\Gate::denies('update', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         // Get old post values
         if (isset($request->old()['fields'])) {
             $fields = $list->getFieldsFromParams($request->old());
         }
 
-        return view('fields.index', [
+        return view('dashboard.campaign.fields.index', [
             'list' => $list,
             'fields' => $fields,
         ]);
@@ -50,7 +51,7 @@ class FieldController extends Controller
      */
     public function store(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
 
         // authorize
         if (\Gate::denies('update', $list)) {
@@ -63,8 +64,8 @@ class FieldController extends Controller
 
             if ($validator->fails()) {
                 return redirect()->action('FieldController@index', $list->uid)
-                ->withErrors($validator)
-                ->withInput();
+                    ->withErrors($validator)
+                    ->withInput();
             }
 
             // Redirect to my lists page
@@ -82,7 +83,7 @@ class FieldController extends Controller
      */
     public function sample(Request $request)
     {
-        $list = \Acelle\Model\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->list_uid);
 
         // authorize
         if (\Gate::denies('update', $list)) {
@@ -104,7 +105,7 @@ class FieldController extends Controller
      */
     public function delete(Request $request)
     {
-        $field = \Acelle\Model\Field::findByUid($request->uid);
+        $field = \App\Models\Field::findByUid($request->uid);
 
         // authorize
         if (\Gate::denies('update', $field->mailList)) {

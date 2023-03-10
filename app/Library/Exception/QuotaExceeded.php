@@ -1,10 +1,10 @@
 <?php
 
-namespace Acelle\Library\Exception;
+namespace App\Library\Exception;
 
 use Exception;
 
 class QuotaExceeded extends Exception
 {
-    // nothing here
+// nothing here
 }

@@ -1,23 +1,20 @@
 <?php
 
-namespace Acelle\Library\Automation;
+namespace App\Library\Automation;
 
-use Acelle\Model\Email;
+use App\Models\Email;
 use Exception;
 
 class Send extends Action
 {
     /*****
-
-        Send action may result in the following cases:
-          + Send OK (email queued, do not care about delivery status)
-          + Exception (email UID not found for example, other exception...)
-        In case of Exception, it is better to stop the whole automation process and write error log to the automation
-        so that the responsible person can check it
-
-        Then, "last_executed" is used as a flag indicating that the process is done
-        Execution always returns TRUE
-
+    Send action may result in the following cases:
+    + Send OK (email queued, do not care about delivery status)
+    + Exception (email UID not found for example, other exception...)
+    In case of Exception, it is better to stop the whole automation process and write error log to the automation
+    so that the responsible person can check it
+    Then, "last_executed" is used as a flag indicating that the process is done
+    Execution always returns TRUE
     ****/
 
     protected function doExecute()
@@ -25,9 +22,8 @@ class Send extends Action
         /*** do not care if subscriber is active() or not ***/
         /*
         if (!$subscriber->isActive()) {
-            $this->logger->warning(sprintf('Subscriber "%s" is not active (current status: "%s")', $subscriber->email, $subscriber->status));
-
-            return false;
+        $this->logger->warning(sprintf('Subscriber "%s" is not active (current status: "%s")', $subscriber->email, $subscriber->status));
+        return false;
         }
         */
 

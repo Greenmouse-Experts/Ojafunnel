@@ -6,25 +6,25 @@
  * Abstract class for different types of delivery handlers
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\StringHelper;
-use Acelle\Library\Log as MailLog;
+use App\Library\StringHelper;
+use App\Library\Log as MailLog;
 
 class DeliveryHandler extends Model
 {
@@ -112,7 +112,7 @@ class DeliveryHandler extends Model
             // see http://stackoverflow.com/questions/5422405/cant-silence-imap-open-error-notices-in-php
             imap_errors();
             imap_alerts();
-            MailLog::error('Cannot connect to handler '.$e->getMessage());
+            MailLog::error('Cannot connect to handler ' . $e->getMessage());
         }
     }
 
@@ -123,12 +123,12 @@ class DeliveryHandler extends Model
      */
     public function getMessageId($message)
     {
-        preg_match('/(?<=X-Acelle-Message-Id:)\s{0,1}<{0,1}(?<id>[a-zA-Z0-9\.]+[a-zA-Z0-9]+@[a-zA-Z0-9\.\-]+[a-zA-Z0-9]+)/', $message, $matched);
+        preg_match('/(?<=X-App-Message-Id:)\s{0,1}<{0,1}(?<id>[a-zA-Z0-9\.]+[a-zA-Z0-9]+@[a-zA-Z0-9\.\-]+[a-zA-Z0-9]+)/', $message, $matched);
         if (array_key_exists('id', $matched)) {
             return StringHelper::cleanupMessageId($matched['id']);
         }
 
-        // more tolerant matching (case-insensitive, no need for Acelle prefix, etc.)
+        // more tolerant matching (case-insensitive, no need for App prefix, etc.)
         preg_match('/(?<=Message-Id:)\s{0,1}<{0,1}(?<id>[a-zA-Z0-9\.]+[a-zA-Z0-9]+@[a-zA-Z0-9\.\-]+[a-zA-Z0-9]+)/i', $message, $matched);
         if (array_key_exists('id', $matched)) {
             return StringHelper::cleanupMessageId($matched['id']);

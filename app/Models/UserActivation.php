@@ -6,21 +6,21 @@
  * Model class for user activation
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,6 +43,6 @@ class UserActivation extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Acelle\Model\User');
+        return $this->belongsTo('App\Models\User');
     }
 }

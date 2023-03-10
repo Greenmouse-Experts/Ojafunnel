@@ -36,10 +36,9 @@ class SubscriberController extends Controller
      */
     public function index(Request $request)
     {
+        //dd('dhhd');
         $list = MailList::findByUid($request->uid);
-
-
-        return view('dashboard.listSubscribers', [
+        return view('dashboard.campaign.subscribers.index', [
             'list' => $list
         ]);
     }
@@ -51,13 +50,13 @@ class SubscriberController extends Controller
      */
     public function listing(Request $request)
     {
-        $list = MailList::findByUid($request->list_uid);
+        $list = MailList::findByUid($request->uid);
 
         // authorize
         // if (\Gate::denies('read', $list)) {
         //     return;
         // }
-        dd($request);
+        //dd($request);
         $subscribers = $this->search($list, $request);
         // $total = distinctCount($subscribers);
         $total = $subscribers->count();
@@ -66,7 +65,7 @@ class SubscriberController extends Controller
 
         $fields = $list->getFields->whereIn('uid', $request->columns);
 
-        return view('subscribers._list', [
+        return view('dashboard.campaign.subscribers._list', [
             'subscribers' => $subscribers,
             'total' => $total,
             'list' => $list,
@@ -102,7 +101,7 @@ class SubscriberController extends Controller
             }
         }
 
-        return view('dashboard.newSubscribers', [
+        return view('dashboard.campaign.subscribers.create', [
             'list' => $list,
             'subscriber' => $subscriber,
             'values' => $values,
@@ -308,18 +307,18 @@ class SubscriberController extends Controller
 
         foreach ($subscribers->get() as $subscriber) {
             // authorize
-            if (\Gate::allows('subscribe', $subscriber)) {
-                $subscriber->subscribe([
-                    'message_id' => null,
-                    'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-                ]);
+            // if (\Gate::allows('subscribe', $subscriber)) {
+            $subscriber->subscribe([
+                'message_id' => null,
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            ]);
 
-                // update MailList cache
-                event(new \App\Events\MailListUpdated($subscriber->mailList));
+            // update MailList cache
+            event(new \App\Events\MailListUpdated($subscriber->mailList));
 
-                // Log
-                $subscriber->log('subscribed', $customer);
-            }
+            // Log
+            $subscriber->log('subscribed', $customer);
+            // }
         }
 
         // Redirect to my lists page
@@ -349,18 +348,18 @@ class SubscriberController extends Controller
 
         foreach ($subscribers->get() as $subscriber) {
             // authorize
-            if (\Gate::allows('unsubscribe', $subscriber)) {
-                $subscriber->unsubscribe([
-                    'message_id' => null,
-                    'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-                ]);
+            // if (\Gate::allows('unsubscribe', $subscriber)) {
+            $subscriber->unsubscribe([
+                'message_id' => null,
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+            ]);
 
-                // Log
-                $subscriber->log('unsubscribed', $customer);
+            // Log
+            $subscriber->log('unsubscribed', $customer);
 
-                // update MailList cache
-                event(new \App\Events\MailListUpdated($subscriber->mailList));
-            }
+            // update MailList cache
+            event(new \App\Events\MailListUpdated($subscriber->mailList));
+            // }
         }
 
         // Redirect to my lists page
@@ -376,7 +375,7 @@ class SubscriberController extends Controller
      */
     public function import(Request $request)
     {
-        $customer = $request->user()->customer;
+        $customer = \Auth::user()->customer;
         $list = MailList::findByUid($request->uid);
         $currentJob = $list->importJobs()->first();
 
@@ -389,17 +388,17 @@ class SubscriberController extends Controller
 
         // GET, has a current job
         if ($currentJob) {
-            return view('dashboard.importSubscribers', [
+            return view('dashboard.campaign.subscribers.import', [
                 'list' => $list,
                 'currentJobUid' => $currentJob->uid,
-                'progressCheckUrl' => route('user.importProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid, 'list_uid' => $list->uid]),
-                'cancelUrl' => route('user.cancelImport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
-                'logDownloadUrl' => route('user.downloadImportLog', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+                'progressCheckUrl' => route('user.subscriber.importProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid, 'list_uid' => $list->uid]),
+                'cancelUrl' => route('user.subscriber.cancelImport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+                'logDownloadUrl' => route('user.subscriber.downloadImportLog', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
                 'importNotifications' => $importNotifications,
             ]);
             // GET, do not have any job
         } else {
-            return view('dashboard.importSubscribers', [
+            return view('dashboard.campaign.subscribers.import', [
                 'list' => $list,
                 'importNotifications' => $importNotifications,
             ]);
@@ -424,13 +423,13 @@ class SubscriberController extends Controller
 
         // Dispatch the import job
         $currentJob = Hook::perform('dispatch_list_import_job', [$list, $filepath]);
-
+        //dd($currentJob);
         // Return the job information
         return redirect()->back()->with([
             'currentJobUid' => $currentJob->uid,
-            'progressCheckUrl' => route('user.importProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid, 'list_uid' => $list->uid]),
-            'cancelUrl' => route('user.cancelImport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
-            'logDownloadUrl' => route('user.downloadImportLog', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+            'progressCheckUrl' => route('user.subscriber.importProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid, 'list_uid' => $list->uid]),
+            'cancelUrl' => route('user.subscriber.cancelImport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+            'logDownloadUrl' => route('user.subscriber.downloadImportLog', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
         ]);
     }
 
@@ -444,7 +443,7 @@ class SubscriberController extends Controller
     public function cancelImport(Request $request)
     {
         $job = JobMonitor::findByUid($request->job_uid);
-
+        //dd($job);
         try {
             $job->cancel();
             return response()->json(['status' => 'done']);
@@ -528,16 +527,16 @@ class SubscriberController extends Controller
 
         // GET, has a current job
         if ($currentJob) {
-            return view('dashboard.exportSubscribers', [
+            return view('dashboard.campaign.subscribers.export', [
                 'list' => $list,
                 'currentJobUid' => $currentJob->uid,
-                'progressCheckUrl' => route('user.exportProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
-                'cancelUrl' => route('user.cancelExport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
-                'downloadUrl' => route('user.downloadExportedFile', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+                'progressCheckUrl' => route('user.subscriber.exportProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+                'cancelUrl' => route('user.subscriber.cancelExport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+                'downloadUrl' => route('user.subscriber.downloadExportedFile', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
             ]);
             // GET, do not have any job
         } else {
-            return view('dashboard.exportSubscribers', [
+            return view('dashboard.campaign.subscribers.export', [
                 'list' => $list
             ]);
         }
@@ -554,9 +553,9 @@ class SubscriberController extends Controller
         // Return the job information
         return response()->json([
             'currentJobUid' => $currentJob->uid,
-            'progressCheckUrl' => route('user.exportProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
-            'cancelUrl' => route('user.cancelExport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
-            'downloadUrl' => route('user.downloadExportedFile', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+            'progressCheckUrl' => route('user.subscriber.exportProgress', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+            'cancelUrl' => route('user.subscriber.cancelExport', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
+            'downloadUrl' => route('user.subscriber.downloadExportedFile', ["username" => Auth::user()->username, 'job_uid' => $currentJob->uid]),
         ]);
     }
 
@@ -602,9 +601,9 @@ class SubscriberController extends Controller
 
         foreach ($subscribers->get() as $subscriber) {
             // authorize
-            if (\Gate::allows('update', $to_list)) {
-                $subscriber->copy($to_list);
-            }
+            // if (\Gate::allows('update', $to_list)) {
+            $subscriber->copy($to_list);
+            // }
         }
 
         // Trigger updating related campaigns cache
@@ -646,9 +645,9 @@ class SubscriberController extends Controller
 
         foreach ($subscribers->get() as $subscriber) {
             // authorize
-            if (\Gate::allows('update', $to_list)) {
-                $subscriber->move($to_list);
-            }
+            // if (\Gate::allows('update', $to_list)) {
+            $subscriber->move($to_list);
+            // }
         }
 
         // Trigger updating related campaigns cache
@@ -688,7 +687,7 @@ class SubscriberController extends Controller
             );
         }
 
-        return view('subscribers.copy_move_form', [
+        return view('dashboard.campaign.subscribers.copy_move_form', [
             'subscribers' => $subscribers,
             'from_list' => $from_list
         ]);

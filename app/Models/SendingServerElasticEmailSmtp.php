@@ -20,10 +20,10 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
-use Acelle\Library\ExtendedSmtpTransport;
+use App\Library\Log as MailLog;
+use App\Library\ExtendedSmtpTransport;
 use Exception;
 
 class SendingServerElasticEmailSmtp extends SendingServerElasticEmail

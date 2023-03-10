@@ -1,10 +1,10 @@
 <?php
 
-namespace Acelle\Library\Everification;
+namespace App\Library\Everification;
 
 use Exception;
 use GuzzleHttp\Client;
-use Acelle\Library\Exception\VerificationTakesLongerThanNormal;
+use App\Library\Exception\VerificationTakesLongerThanNormal;
 
 class Emailable
 {
@@ -39,7 +39,7 @@ class Emailable
     public function parseResult($response)
     {
         // Get raw response
-        $raw = (string)$response->getBody();
+        $raw = (string) $response->getBody();
 
         // Verify result
         if (empty($raw)) {
@@ -51,10 +51,10 @@ class Emailable
 
         if (!array_key_exists('state', $json)) {
             if (array_key_exists('message', $json)) {
-                $this->logger->warning('Skipped. Server responds: '.$raw);
+                $this->logger->warning('Skipped. Server responds: ' . $raw);
                 throw new VerificationTakesLongerThanNormal($raw);
             } else {
-                throw new Exception('Unexpected result from emailable.com: '.$raw);
+                throw new Exception('Unexpected result from emailable.com: ' . $raw);
             }
         }
 
@@ -67,7 +67,7 @@ class Emailable
         ];
 
         if (!array_key_exists($json['state'], $map)) {
-            throw new Exception('Unexpected "state" value from emailable.com: '.$raw);
+            throw new Exception('Unexpected "state" value from emailable.com: ' . $raw);
         }
 
         return $map[$json['state']];

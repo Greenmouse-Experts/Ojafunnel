@@ -1,10 +1,11 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log as LaravelLog;
-use Acelle\Library\Facades\Billing;
+use App\Library\Facades\Billing;
 
 class AccountController extends Controller
 {
@@ -83,12 +84,12 @@ class AccountController extends Controller
     public function contact(Request $request)
     {
         // Get current user
-        $customer = $request->user()->customer;
+        $customer = \Auth::user()->customer;
         $contact = $customer->getContact();
 
         // Create new company if null
         if (!is_object($contact)) {
-            $contact = new \Acelle\Model\Contact();
+            $contact = new \App\Models\Contact();
         }
 
         // save posted data
@@ -98,7 +99,7 @@ class AccountController extends Controller
                 return view('somethingWentWrong', ['message' => trans('messages.operation_not_allowed_in_demo')]);
             }
 
-            $this->validate($request, \Acelle\Model\Contact::$rules);
+            $this->validate($request, \App\Models\Contact::$rules);
 
             $contact->fill($request->all());
 
@@ -112,7 +113,7 @@ class AccountController extends Controller
             }
         }
 
-        return view('account.contact', [
+        return view('dashboard.campaign.account.contact', [
             'customer' => $customer,
             'contact' => $contact->fill($request->old()),
         ]);
@@ -135,7 +136,7 @@ class AccountController extends Controller
      */
     public function logsListing(Request $request)
     {
-        $logs = \Acelle\Model\Log::search($request)->paginate($request->per_page);
+        $logs = \App\Models\Log::search($request)->paginate($request->per_page);
 
         return view('account.logs_listing', [
             'logs' => $logs,
