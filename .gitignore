@@ -1,7 +1,7 @@
 /node_modules
 /public/storage
-/public/funnelBuilder
-/public/pageBuilder
+/public/funnelBuilder/*
+/public/pageBuilder/*
 /storage/*.key
 /vendor
 .env
