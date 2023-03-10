@@ -10,27 +10,27 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="start">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="start-main">
-                                    <h1>Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}} 👋</h1>
-                                    <p>
-                                        Start enjoying full control of your business all in
-                                        one place
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-3"></div>
-                            <div class="col-md-3">
-                                <div class="click py-2">
-                                    <button type="button" class="px-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                        + Create
-                                    </button>
-                                </div>
-                            </div>
+            <div class="start">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="start-main">
+                            <h1>Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}} 👋</h1>
+                            <p>
+                                Start enjoying full control of your business all in
+                                one place
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="exaplaner" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1678461136/OjaFunnel-Images/multimedia_yugciw.png" draggable="false" alt="">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="click py-2">
+                            <button type="button" class="px-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                + Create
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -322,6 +322,27 @@
         };
         new Notification(noteTitle, noteOptions);
     });
-   
+
 </script>
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="aller">
+                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
 @endsection
