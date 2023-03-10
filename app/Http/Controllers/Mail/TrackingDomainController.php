@@ -1,15 +1,21 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
 use Illuminate\Http\Request;
-use Acelle\Http\Controllers\Controller;
-use Acelle\Model\TrackingDomain;
-use Acelle\Model\SendingServer;
-use Acelle\Model\Setting;
+use App\Http\Controllers\Controller;
+use App\Models\TrackingDomain;
+use App\Models\SendingServer;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 
 class TrackingDomainController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,15 +23,15 @@ class TrackingDomainController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->user()->customer->can('read', new TrackingDomain())) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('read', new TrackingDomain())) {
+        //     return $this->notAuthorized();
+        // }
 
-        $request->merge(array("customer_id" => $request->user()->customer->id));
+        $request->merge(array("customer_id" => Auth::user()->customer->id));
 
         $trackingDomains = TrackingDomain::search($request);
 
-        return view('tracking_domains.index', [
+        return view('dashboard.campaign.tracking_domains.index', [
             'trackingDomains' => $trackingDomains,
         ]);
     }
@@ -37,15 +43,15 @@ class TrackingDomainController extends Controller
      */
     public function listing(Request $request)
     {
-        if (!$request->user()->customer->can('read', new TrackingDomain())) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('read', new TrackingDomain())) {
+        //     return $this->notAuthorized();
+        // }
 
         $request->merge(array("customer_id" => $request->user()->customer->id));
 
         $trackingDomains = TrackingDomain::search($request)->paginate($request->per_page);
 
-        return view('tracking_domains._list', [
+        return view('dashboard.campaign.tracking_domains._list', [
             'trackingDomains' => $trackingDomains,
         ]);
     }
@@ -65,11 +71,11 @@ class TrackingDomainController extends Controller
         $domain->fill($request->old());
 
         // authorize
-        if (!$request->user()->customer->can('create', $domain)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('create', $domain)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('tracking_domains.create', [
+        return view('dashboard.campaign.tracking_domains.create', [
             'domain' => $domain,
             'readonly' => '0',
         ]);
@@ -85,9 +91,9 @@ class TrackingDomainController extends Controller
     public function store(Request $request)
     {
         // authorize
-        if (!$request->user()->customer->can('create', TrackingDomain::class)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('create', TrackingDomain::class)) {
+        //     return $this->notAuthorized();
+        // }
 
         list($domain, $validator) = TrackingDomain::createFromRequest($request);
 
@@ -96,7 +102,7 @@ class TrackingDomainController extends Controller
         }
 
         $request->session()->flash('alert-success', trans('messages.tracking_domain.created'));
-        return redirect()->action('TrackingDomainController@index');
+        return redirect()->route('user.tracking-domain.index', Auth::user()->username);
     }
 
     /**
@@ -116,10 +122,10 @@ class TrackingDomainController extends Controller
             session()->forget('tracking_domain_debug', $debug);
         }
 
-        $domain = TrackingDomain::findByUid($id);
+        $domain = TrackingDomain::findByUid($request->uid);
         $hostname = parse_url(url('/'), PHP_URL_HOST);
-
-        return view('tracking_domains.show2', [
+        //dd(url('tracking-1.0.0.zip'));
+        return view('dashboard.campaign.tracking_domains.show2', [
             'domain' => $domain,
             'download' => url('tracking-1.0.0.zip'),
             'hostname' => $hostname,
@@ -154,13 +160,13 @@ class TrackingDomainController extends Controller
 
         foreach ($items->get() as $item) {
             // authorize
-            if ($request->user()->customer->can('delete', $item)) {
-                $item->delete();
-            }
+            //if ($request->user()->customer->can('delete', $item)) {
+            $item->delete();
+            //}
         }
 
         // Redirect to my lists page
-        echo trans('messages.tracking_domains.deleted');
+        echo trans('messages.dashboard.campaign.tracking_domains.deleted');
     }
 
     /**
@@ -172,7 +178,8 @@ class TrackingDomainController extends Controller
      */
     public function verify(Request $request, $uid)
     {
-        $domain = TrackingDomain::findByUid($uid);
+        $domain = TrackingDomain::findByUid($request->uid);
+        //dd($domain->verify());
         if ($domain->verify()) {
             return response()->json(['success' => true], 200);
         } else {
@@ -197,14 +204,14 @@ class TrackingDomainController extends Controller
             $dkims = $options['dkim'];
             $spf = array_key_exists('spf', $options) ? $options['spf'] : [];
 
-            return view('tracking_domains._records_aws', [
+            return view('dashboard.campaign.tracking_domains._records_aws', [
                 'domain' => $domain,
                 'identity' => $identity,
                 'dkims' => $dkims,
                 'spf' => $spf,
             ]);
         } else {
-            return view('tracking_domains._records', [
+            return view('dashboard.campaign.tracking_domains._records', [
                 'domain' => $domain,
             ]);
         }

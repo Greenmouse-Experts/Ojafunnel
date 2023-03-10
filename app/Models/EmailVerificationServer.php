@@ -1,20 +1,21 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Config;
 use JsonPath\JsonObject;
-use Acelle\Library\Log as MailLog;
-use Acelle\Library\Traits\HasUid;
-use Acelle\Library\Traits\HasQuota;
-use Acelle\Library\Contracts\HasQuota as HasQuotaInterface;
+use App\Library\Log as MailLog;
+use App\Library\Traits\HasUid;
+use App\Library\Traits\HasQuota;
+use App\Library\Contracts\HasQuota as HasQuotaInterface;
 use Exception;
-use Acelle\Library\QuotaManager;
+use App\Library\QuotaManager;
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Formatter\LineFormatter;
-use Acelle\Library\Everification\Emailable;
+use App\Library\Everification\Emailable;
 
 class EmailVerificationServer extends Model implements HasQuotaInterface
 {
@@ -40,12 +41,12 @@ class EmailVerificationServer extends Model implements HasQuotaInterface
      */
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     public function admin()
     {
-        return $this->belongsTo('Acelle\Model\Admin');
+        return $this->belongsTo('App\Models\Admin');
     }
 
     public function initEverificationService()
@@ -96,7 +97,7 @@ class EmailVerificationServer extends Model implements HasQuotaInterface
             $postdata = str_replace('{EMAIL}', $email, $postdata);
             foreach ($config['fields'] as $field) {
                 if (array_key_exists($field, $options)) {
-                    $postdata = str_replace('{'.strtoupper($field).'}', $options[$field], $postdata);
+                    $postdata = str_replace('{' . strtoupper($field) . '}', $options[$field], $postdata);
                 }
             }
 
@@ -104,7 +105,7 @@ class EmailVerificationServer extends Model implements HasQuotaInterface
             foreach ($headers as $header => $value) {
                 foreach ($config['fields'] as $field) {
                     if (array_key_exists($field, $options)) {
-                        $value = str_replace('{'.strtoupper($field).'}', $options[$field], $value);
+                        $value = str_replace('{' . strtoupper($field) . '}', $options[$field], $value);
                         $headers[$header] = $value;
                     }
                 }
@@ -114,7 +115,7 @@ class EmailVerificationServer extends Model implements HasQuotaInterface
             $response = $client->request(
                 $config['request_type'],
                 $uri,
-                [ 'headers' => $headers, 'body' => $postdata, 'verify' => false]
+                ['headers' => $headers, 'body' => $postdata, 'verify' => false]
             );
         } else { // GET request
             // actually request to the service
@@ -122,16 +123,16 @@ class EmailVerificationServer extends Model implements HasQuotaInterface
         }
 
         // fetch the result
-        $raw = (string)$response->getBody();
+        $raw = (string) $response->getBody();
 
         // workaround for https://emaillistvalidation.com/
         if ($raw == 'error_credit') {
-            throw new Exception('No verification credits available for service '.$this->type);
+            throw new Exception('No verification credits available for service ' . $this->type);
         }
 
         if (array_key_exists('response_type', $config) && $config['response_type'] == 'plain') {
             if (!array_key_exists($raw, $config['result_map'])) {
-                throw new Exception('Error verifying email address with service `'.$this->type."`. Response from service: ".$raw);
+                throw new Exception('Error verifying email address with service `' . $this->type . "`. Response from service: " . $raw);
             }
             $mapped = $config['result_map'][$raw];
 
@@ -157,10 +158,10 @@ class EmailVerificationServer extends Model implements HasQuotaInterface
             throw new Exception($message);
         }
 
-        // map the result value to those of Acelle Mail
+        // map the result value to those of App Mail
         $result = is_bool($result) ? json_encode($result) : $result;
         if (!array_key_exists($result, $config['result_map'])) {
-            throw new \Exception('Unexpected result from verification service: '.$raw);
+            throw new \Exception('Unexpected result from verification service: ' . $raw);
         }
         $mapped = $config['result_map'][$result];
 
@@ -174,14 +175,15 @@ class EmailVerificationServer extends Model implements HasQuotaInterface
      */
     public function getConfig()
     {
-        $configs = \Config::get('verification.services');
+        $configs = Config::get('verification.services');
+        //dd(configs);
         foreach ($configs as $config) {
             if ($config['id'] == $this->type) {
                 return $config;
             }
         }
 
-        throw new \Exception('Cannot find settings for verification service '.$this->type);
+        throw new \Exception('Cannot find settings for verification service ' . $this->type);
     }
 
     /**
@@ -205,8 +207,8 @@ class EmailVerificationServer extends Model implements HasQuotaInterface
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('email_verification_servers.name', 'like', '%'.$keyword.'%')
-                        ->orWhere('email_verification_servers.type', 'like', '%'.$keyword.'%');
+                    $q->orwhere('email_verification_servers.name', 'like', '%' . $keyword . '%')
+                        ->orWhere('email_verification_servers.type', 'like', '%' . $keyword . '%');
                 });
             }
         }
@@ -283,7 +285,7 @@ class EmailVerificationServer extends Model implements HasQuotaInterface
 
         if ($this->type) {
             foreach ($this->getConfig()['fields'] as $field) {
-                $rules['options.'.$field] = 'required';
+                $rules['options.' . $field] = 'required';
             }
         }
 
@@ -312,8 +314,8 @@ class EmailVerificationServer extends Model implements HasQuotaInterface
     public static function statusSelectOptions()
     {
         return [
-            ['value' => self::STATUS_ACTIVE, 'text' => trans('messages.email_verification_server_status_'.self::STATUS_ACTIVE)],
-            ['value' => self::STATUS_INACTIVE, 'text' => trans('messages.email_verification_server_status_'.self::STATUS_INACTIVE)],
+            ['value' => self::STATUS_ACTIVE, 'text' => trans('messages.email_verification_server_status_' . self::STATUS_ACTIVE)],
+            ['value' => self::STATUS_INACTIVE, 'text' => trans('messages.email_verification_server_status_' . self::STATUS_INACTIVE)],
         ];
     }
 

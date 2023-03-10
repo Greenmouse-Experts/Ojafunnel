@@ -1,10 +1,10 @@
 <?php
 
-namespace Acelle\Library\Contracts;
+namespace App\Library\Contracts;
 
-use Acelle\Model\Invoice;
-use Acelle\Model\Transaction;
-use Acelle\Library\TransactionVerificationResult;
+use App\Models\Invoice;
+use App\Models\Transaction;
+use App\Library\TransactionVerificationResult;
 
 interface PaymentGatewayInterface
 {

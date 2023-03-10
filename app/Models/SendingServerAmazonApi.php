@@ -20,9 +20,9 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
+use App\Library\Log as MailLog;
 
 class SendingServerAmazonApi extends SendingServerAmazon
 {
@@ -37,11 +37,13 @@ class SendingServerAmazonApi extends SendingServerAmazon
      */
     public function send($message, $params = array())
     {
-        $sent = $this->sesClient()->sendRawEmail(array(
-            'RawMessage' => array(
-                'Data' => $message->toString(),
-            ),
-        ));
+        $sent = $this->sesClient()->sendRawEmail(
+            array(
+                'RawMessage' => array(
+                    'Data' => $message->toString(),
+                ),
+            )
+        );
 
         MailLog::info('Sent!');
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Library;
+namespace App\Library;
 
 class TransactionVerificationResult
 {

@@ -1,14 +1,19 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
 use Illuminate\Http\Request;
-use Acelle\Http\Controllers\Controller;
-use Acelle\Model\SendingServer;
-use Acelle\Library\Facades\Hook;
+use App\Http\Controllers\Controller;
+use App\Models\SendingServer;
+use App\Library\Facades\Hook;
+use Illuminate\Support\Facades\Auth;
 
 class SendingServerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,14 +21,14 @@ class SendingServerController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->user()->customer->can('read', new SendingServer())) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('read', new SendingServer())) {
+        //     return $this->notAuthorized();
+        // }
 
         $items = $request->user()->customer->sendingServers()->search($request->keyword)
             ->filter($request);
 
-        return view('sending_servers.index', [
+        return view('dashboard.campaign.sending_servers.index', [
             'items' => $items,
         ]);
     }
@@ -35,16 +40,16 @@ class SendingServerController extends Controller
      */
     public function listing(Request $request)
     {
-        if (!$request->user()->customer->can('read', new SendingServer())) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('read', new SendingServer())) {
+        //     return $this->notAuthorized();
+        // }
 
         $items = $request->user()->customer->sendingServers()->search($request->keyword)
             ->filter($request)
             ->orderBy($request->sort_order, $request->sort_direction ? $request->sort_direction : 'asc')
             ->paginate($request->per_page);
 
-        return view('sending_servers._list', [
+        return view('dashboard.campaign.sending_servers._list', [
             'items' => $items,
         ]);
     }
@@ -58,7 +63,7 @@ class SendingServerController extends Controller
     {
         // Sending servers added by Plugins
         $more = Hook::execute('register_sending_server');
-        return view('sending_servers.select', ['more' => $more]);
+        return view('dashboard.campaign.sending_servers.select', ['more' => $more]);
     }
 
     /**
@@ -82,11 +87,11 @@ class SendingServerController extends Controller
         $server->name = trans('messages.' . $request->type);
 
         // authorize
-        if (!$request->user()->customer->can('create', SendingServer::class)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('create', SendingServer::class)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('sending_servers.create', [
+        return view('dashboard.campaign.sending_servers.create', [
             'server' => $server,
         ]);
     }
@@ -101,13 +106,13 @@ class SendingServerController extends Controller
     public function store(Request $request)
     {
         // authorize
-        if (!$request->user()->customer->can('create', SendingServer::class)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('create', SendingServer::class)) {
+        //     return $this->notAuthorized();
+        // }
 
         // New sending server
         list($validator, $server) = SendingServer::createFromArray(array_merge($request->all(), [
-            'customer_id' => $request->user()->customer->id,
+            'customer_id' => Auth::user()->customer->id,
         ]));
 
         // Failed
@@ -116,8 +121,8 @@ class SendingServerController extends Controller
                 // Redirect to plugin's create page
                 return redirect()->back()->withErrors($validator)->withInput();
             } else {
-                return redirect()->action('SendingServerController@create', $server->type)
-                        ->withErrors($validator)->withInput();
+                return redirect()->route('user.sending-server.create', ['username' => Auth::user()->username, 'type' => $server->type])
+                    ->withErrors($validator)->withInput();
             }
         }
 
@@ -128,7 +133,7 @@ class SendingServerController extends Controller
         if ($server->isExtended()) {
             return redirect($server->getEditUrl());
         } else {
-            return redirect()->action('SendingServerController@edit', [$server->uid, $server->type]);
+            return redirect()->route('user.sending-server.edit', ['username' => Auth::user()->username, "id" => $server->uid, 'type' => $server->type]);
         }
     }
 
@@ -152,12 +157,15 @@ class SendingServerController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $server = SendingServer::findByUid($id);
+
+        $server = SendingServer::findByUid($request->id);
+
         $server = SendingServer::mapServerType($server);
+        //dd($server);
         // authorize
-        if (!$request->user()->customer->can('update', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         // bounce / feedback hanlder nullable
         if ($request->old() && empty($request->old()["bounce_handler_id"])) {
@@ -170,7 +178,6 @@ class SendingServerController extends Controller
         $server->fill($request->old());
 
         $notices = [];
-
         try {
             $server->test();
             $server->syncIdentities();
@@ -204,7 +211,9 @@ class SendingServerController extends Controller
 
         $bigNotices = Hook::execute('generate_big_notice_for_sending_server', [$server]);
 
-        return view('sending_servers.edit', [
+        //dd($server);
+
+        return view('dashboard.campaign.sending_servers.edit', [
             'server' => $server,
             'bigNotices' => $bigNotices,
             'notices' => $notices,
@@ -229,9 +238,9 @@ class SendingServerController extends Controller
         $server = SendingServer::mapServerType($server);
 
         // authorize
-        if (!$request->user()->customer->can('update', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         // save posted data
         if ($request->isMethod('patch')) {
@@ -244,11 +253,11 @@ class SendingServerController extends Controller
             if ($validator->fails()) {
                 if ($server->isExtended()) {
                     return redirect($server->getEditUrl())->withErrors($validator)
-                            ->withInput();
+                        ->withInput();
                 } else {
-                    return redirect()->action('SendingServerController@edit', [$server->uid, $server->type])
-                            ->withErrors($validator)
-                            ->withInput();
+                    return redirect()->route('user.sending-server.edit', ['username' => Auth::user()->username, "id" => $server->uid, 'type' => $server->type])
+                        ->withErrors($validator)
+                        ->withInput();
                 }
             }
 
@@ -266,7 +275,7 @@ class SendingServerController extends Controller
                 if ($server->isExtended()) {
                     return redirect($server->getEditUrl());
                 } else {
-                    return redirect()->action('SendingServerController@edit', [$server->uid, $server->type]);
+                    return redirect()->route('user.sending-server.edit', ['username' => Auth::user()->username, "id" => $server->uid, 'type' => $server->type]);
                 }
             }
         }
@@ -300,13 +309,13 @@ class SendingServerController extends Controller
 
         foreach ($items->get() as $item) {
             // authorize
-            if ($request->user()->customer->can('delete', $item)) {
-                $item->doDelete();
-            }
+            //if ($request->user()->customer->can('delete', $item)) {
+            $item->doDelete();
+            //}
         }
 
         // Redirect to my lists page
-        echo trans('messages.sending_servers.deleted');
+        echo trans('messages.dashboard.campaign.sending_servers.deleted');
     }
 
     /**
@@ -325,13 +334,13 @@ class SendingServerController extends Controller
 
         foreach ($items->get() as $item) {
             // authorize
-            if ($request->user()->customer->can('disable', $item)) {
-                $item->disable();
-            }
+            //if ($request->user()->customer->can('disable', $item)) {
+            $item->disable();
+            //}
         }
 
         // Redirect to my lists page
-        echo trans('messages.sending_servers.disabled');
+        echo trans('messages.dashboard.campaign.sending_servers.disabled');
     }
 
     /**
@@ -350,13 +359,13 @@ class SendingServerController extends Controller
 
         foreach ($items->get() as $item) {
             // authorize
-            if ($request->user()->customer->can('enable', $item)) {
-                $item->enable();
-            }
+            //if ($request->user()->customer->can('enable', $item)) {
+            $item->enable();
+            //}
         }
 
         // Redirect to my lists page
-        echo trans('messages.sending_servers.enabled');
+        echo trans('messages.dashboard.campaign.sending_servers.enabled');
     }
 
     /**
@@ -370,11 +379,11 @@ class SendingServerController extends Controller
     public function test(Request $request, $uid)
     {
         // Get current user
-        $current_user = $request->user();
+        $current_user = Auth::user();
 
         // Fill new server info
-        if ($uid) {
-            $server = SendingServer::findByUid($uid);
+        if ($request->uid) {
+            $server = SendingServer::findByUid($request->uid);
         } else {
             $server = new SendingServer();
             $server->uid = 0;
@@ -383,9 +392,9 @@ class SendingServerController extends Controller
         $server->fill($request->all());
 
         // authorize
-        if (!$current_user->customer->can('test', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$current_user->customer->can('test', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         if ($request->isMethod('post')) {
             // @todo testing method and return result here. Ex: echo json_encode($server->test())
@@ -398,20 +407,22 @@ class SendingServerController extends Controller
                 ]);
             } catch (\Exception $ex) {
                 return response()->json([
-                    'status' => 'error', // or success
+                    'status' => 'error',
+                    // or success
                     'message' => $ex->getMessage()
                 ], 401);
                 return;
             }
 
             return response()->json([
-                'status' => 'success', // or success
+                'status' => 'success',
+                // or success
                 'message' => trans('messages.sending_server.test_email_sent')
             ]);
             return;
         }
 
-        return view('sending_servers.test', [
+        return view('dashboard.campaign.sending_servers.test', [
             'server' => $server,
         ]);
     }
@@ -426,13 +437,13 @@ class SendingServerController extends Controller
      */
     public function testConnection(Request $request, $uid)
     {
-        $server = SendingServer::findByUid($uid);
+        $server = SendingServer::findByUid($request->uid);
         $server = SendingServer::mapServerType($server);
 
         // authorize
-        if (!$request->user()->customer->can('update', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         try {
             $server->test();
@@ -474,7 +485,7 @@ class SendingServerController extends Controller
         if ($request->isMethod('post')) {
             $selectOptions = $server->getSendingLimitSelectOptions();
 
-            return view('sending_servers.form._sending_limit', [
+            return view('dashboard.campaign.sending_servers.form._sending_limit', [
                 'quotaValue' => $request->quota_value,
                 'quotaBase' => $request->quota_base,
                 'quotaUnit' => $request->quota_unit,
@@ -482,7 +493,7 @@ class SendingServerController extends Controller
             ]);
         }
 
-        return view('sending_servers.form.sending_limit', [
+        return view('dashboard.campaign.sending_servers.form.sending_limit', [
             'server' => $server,
         ]);
     }
@@ -498,12 +509,12 @@ class SendingServerController extends Controller
     public function config(Request $request, $uid)
     {
         // find server
-        $server = SendingServer::findByUid($uid)->mapType();
-
+        $server = SendingServer::findByUid($request->uid)->mapType();
+        //dd($server);
         // authorize
-        if (!$request->user()->customer->can('update', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         // Save current user info
         $server->fill($request->all());
@@ -534,12 +545,13 @@ class SendingServerController extends Controller
         }
 
         if ($server->save()) {
+            //dd($server);
             $request->session()->flash('alert-success', trans('messages.sending_server.updated'));
 
             if ($server->isExtended()) {
                 return redirect($server->getEditUrl());
             } else {
-                return redirect()->action('SendingServerController@edit', [$server->uid, $server->type]);
+                return redirect()->route('user.sending-server.edit', ['username' => Auth::user()->username, "id" => $server->uid, 'type' => $server->type]);
             }
         }
     }
@@ -564,7 +576,7 @@ class SendingServerController extends Controller
                 $server->host = $option['host'];
             }
         }
-        return view('sending_servers.form._aws_region_host', [
+        return view('dashboard.campaign.sending_servers.form._aws_region_host', [
             'server' => $server,
         ]);
     }
@@ -597,9 +609,9 @@ class SendingServerController extends Controller
                 }
 
                 if (!$valid || $validator->fails()) {
-                    return redirect()->action('SendingServerController@addDomain', $server->uid)
-                                ->withErrors($validator)
-                                ->withInput();
+                    return redirect()->route('user.sending-server.addDomain', ['username' => Auth::user()->username, "id" => $server->uid])
+                        ->withErrors($validator)
+                        ->withInput();
                 }
             } else {
                 // validation
@@ -613,9 +625,9 @@ class SendingServerController extends Controller
                 }
 
                 if (!$valid || $validator->fails()) {
-                    return redirect()->action('SendingServerController@addDomain', $server->uid)
-                                ->withErrors($validator)
-                                ->withInput();
+                    return redirect()->route('user.sending-server.addDomain', ['username' => Auth::user()->username, "id" => $server->uid])
+                        ->withErrors($validator)
+                        ->withInput();
                 }
             }
 
@@ -625,7 +637,7 @@ class SendingServerController extends Controller
             return;
         }
 
-        return view('sending_servers.add_domain', [
+        return view('dashboard.campaign.sending_servers.add_domain', [
             'server' => $server,
         ]);
     }
@@ -647,7 +659,7 @@ class SendingServerController extends Controller
         if ($server->isExtended()) {
             return redirect($server->getEditUrl());
         } else {
-            return redirect()->action('SendingServerController@edit', [$server->uid, $server->type]);
+            return redirect()->route('user.sending-server.edit', ['username' => Auth::user()->username, "id" => $server->uid, 'type' => $server->type]);
         }
     }
 

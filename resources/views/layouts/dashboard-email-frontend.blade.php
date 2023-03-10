@@ -69,6 +69,16 @@
         <script type="text/javascript" src="{{ URL::asset('dash/assets/js/search.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('core/tinymce/tinymce.min.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('core/js/editor.js') }}"></script>
+        <script type="text/javascript" src="{{ URL::asset('core/echarts/echarts.min.js') }}"></script>
+        <script type="text/javascript" src="{{ URL::asset('core/echarts/dark.js') }}"></script>
+        <link rel="stylesheet" type="text/css" href="{{ URL::asset('core/prismjs/prism.css') }}">
+        <script type="text/javascript" src="{{ URL::asset('core/prismjs/prism.js') }}"></script>
+
+
+        <script type="text/javascript" src="{{ URL::asset('core/datetime/anytime.min.js') }}"></script>
+        <script type="text/javascript" src="{{ URL::asset('core/datetime/moment.min.js') }}"></script>
+        <script type="text/javascript" src="{{ URL::asset('core/datetime/pickadate/picker.js') }}"></script>
+        <script type="text/javascript" src="{{ URL::asset('core/datetime/pickadate/picker.date.js') }}"></script>
 
         <!-- Dropzone -->
         <script type="text/javascript" src="{{ URL::asset('core/dropzone/dropzone.js') }}"></script>

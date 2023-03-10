@@ -130,101 +130,101 @@ Route::prefix('{username}')->group(function () {
             Route::get('/subscription', [App\Http\Controllers\DashboardController::class, 'subscription'])->name('user.subscription');
             Route::prefix('/email-marketing')->group(
                 function () {
-                        Route::get('/email-checker', [App\Http\Controllers\DashboardController::class, 'email_checker'])->name('user.email.checker');
-                        Route::get('/email-campaign', [App\Http\Controllers\DashboardController::class, 'email_campaign'])->name('user.email.campaign');
-                        Route::get('/email-campaign/email-campaign', [App\Http\Controllers\DashboardController::class, 'email_Ecampaign'])->name('user.email.Ecampaign');
-                        Route::get('/email-campaign/email-layout', [App\Http\Controllers\DashboardController::class, 'email_layout'])->name('user.email.layout');
-                        Route::get('/email-campaign/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
-                        Route::get('/email-campaign/email-preview', [App\Http\Controllers\DashboardController::class, 'email_preview'])->name('user.email.preview');
-                        Route::get('/email-campaign/email-design', [App\Http\Controllers\DashboardController::class, 'email_design'])->name('user.email.design');
+                        // Route::get('/email-checker', [App\Http\Controllers\DashboardController::class, 'email_checker'])->name('user.email.checker');
+                        // Route::get('/email-campaign', [App\Http\Controllers\DashboardController::class, 'email_campaign'])->name('user.email.campaign');
+                        // Route::get('/email-campaign/email-campaign', [App\Http\Controllers\DashboardController::class, 'email_Ecampaign'])->name('user.email.Ecampaign');
                         // Route::get('/email-campaign/email-layout', [App\Http\Controllers\DashboardController::class, 'email_layout'])->name('user.email.layout');
-                        // Route::get('/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
-                        Route::get('/email-automation', [App\Http\Controllers\DashboardController::class, 'email_automation'])->name('user.email.automation');
-                        Route::get('/automation-campaign', [App\Http\Controllers\DashboardController::class, 'automation_campaign'])->name('user.automation.campaign');
-                        Route::get('/edittemplate', [App\Http\Controllers\DashboardController::class, 'edit_template'])->name('user.edit.template');
+                        // Route::get('/email-campaign/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
+                        // Route::get('/email-campaign/email-preview', [App\Http\Controllers\DashboardController::class, 'email_preview'])->name('user.email.preview');
+                        // Route::get('/email-campaign/email-design', [App\Http\Controllers\DashboardController::class, 'email_design'])->name('user.email.design');
+                        // // Route::get('/email-campaign/email-layout', [App\Http\Controllers\DashboardController::class, 'email_layout'])->name('user.email.layout');
+                        // // Route::get('/email-campaign/email-code', [App\Http\Controllers\DashboardController::class, 'email_code'])->name('user.email.code');
+                        // Route::get('/email-automation', [App\Http\Controllers\DashboardController::class, 'email_automation'])->name('user.email.automation');
+                        // Route::get('/automation-campaign', [App\Http\Controllers\DashboardController::class, 'automation_campaign'])->name('user.automation.campaign');
+                        // Route::get('/edittemplate', [App\Http\Controllers\DashboardController::class, 'edit_template'])->name('user.edit.template');
                     }
             );
-            Route::prefix('/list')->group(
-                function () {
-                        Route::get('/create-view', [App\Http\Controllers\Mail\MailListController::class, 'create'])->name('user.create.list');
-                        Route::post('/create-view/store', [App\Http\Controllers\Mail\MailListController::class, 'store'])->name('user.create_list');
-                        Route::patch('/update-list/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'update'])->name('user.update_list');
-                        Route::get('/view-list', [App\Http\Controllers\Mail\MailListController::class, 'index'])->name('user.view.list');
-                        Route::get('/list-overview/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'overview'])->name('user.view.overview');
-                        Route::get('/list-performance', [App\Http\Controllers\DashboardController::class, 'list_performance'])->name('user.list.performance');
-                        Route::get('/list-setting/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'edit'])->name('user.list.setting');
-                        Route::get('/list-subscribers/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'index'])->name('user.list.subscribers');
-                        Route::get('/new-subscribers/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'create'])->name('user.new.subscribers');
-                        Route::post('/new-subscribers/store/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'store'])->name('user.new.subscribers.post');
-                        Route::get('/delete-subscriber/{list_uid}/{uids}', [App\Http\Controllers\Mail\SubscriberController::class, 'delete'])->name('user.subscriber.delete');
+            // Route::prefix('/list')->group(
+            //     function () {
+            //             Route::get('/create-view', [App\Http\Controllers\Mail\MailListController::class, 'create'])->name('user.create.list');
+            //             Route::post('/create-view/store', [App\Http\Controllers\Mail\MailListController::class, 'store'])->name('user.create_list');
+            //             Route::patch('/update-list/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'update'])->name('user.update_list');
+            //             Route::get('/view-list', [App\Http\Controllers\Mail\MailListController::class, 'index'])->name('user.view.list');
+            //             Route::get('/list-overview/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'overview'])->name('user.view.overview');
+            //             Route::get('/list-performance', [App\Http\Controllers\DashboardController::class, 'list_performance'])->name('user.list.performance');
+            //             Route::get('/list-setting/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'edit'])->name('user.list.setting');
+            //             Route::get('/list-subscribers/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'index'])->name('user.list.subscribers');
+            //             Route::get('/new-subscribers/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'create'])->name('user.new.subscribers');
+            //             Route::post('/new-subscribers/store/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'store'])->name('user.new.subscribers.post');
+            //             Route::get('/delete-subscriber/{list_uid}/{uids}', [App\Http\Controllers\Mail\SubscriberController::class, 'delete'])->name('user.subscriber.delete');
 
-                        Route::get('/import-subscribers/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'import'])->name('user.import.subscribers');
-                        Route::get('/import-progress/{job_uid}/{list_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'importProgress'])->name('user.importProgress');
-                        Route::post('/cancelImport/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'cancelImport'])->name('user.cancelImport');
-                        Route::get('/downloadImportLog/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'downloadImportLog'])->name('user.downloadImportLog');
-                        Route::post('/dispatchImportJob/{list_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'dispatchImportJob'])->name('user.dispatchImportJob');
-                        Route::get('/export-subscribers/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'export'])->name('user.export.subscribers');
-                        Route::get('/exportProgress/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'exportProgress'])->name('user.exportProgress');
-                        Route::post('/cancelExport/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'cancelExport'])->name('user.cancelExport');
-                        Route::get('/downloadExportedFile/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'downloadExportedFile'])->name('user.downloadExportedFile');
-                        Route::post('/dispatchExportJob/{list_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'dispatchExportJob'])->name('user.dispatchExportJob');
-                        Route::get('/segments', [App\Http\Controllers\DashboardController::class, 'segments'])->name('user.new.segments');
-                        Route::get('/create-segments', [App\Http\Controllers\DashboardController::class, 'create_segments'])->name('user.create.segments');
-                    }
-            );
+            //             Route::get('/import-subscribers/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'import'])->name('user.import.subscribers');
+            //             Route::get('/import-progress/{job_uid}/{list_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'importProgress'])->name('user.importProgress');
+            //             Route::post('/cancelImport/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'cancelImport'])->name('user.cancelImport');
+            //             Route::get('/downloadImportLog/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'downloadImportLog'])->name('user.downloadImportLog');
+            //             Route::post('/dispatchImportJob/{list_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'dispatchImportJob'])->name('user.dispatchImportJob');
+            //             Route::get('/export-subscribers/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'export'])->name('user.export.subscribers');
+            //             Route::get('/exportProgress/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'exportProgress'])->name('user.exportProgress');
+            //             Route::post('/cancelExport/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'cancelExport'])->name('user.cancelExport');
+            //             Route::get('/downloadExportedFile/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'downloadExportedFile'])->name('user.downloadExportedFile');
+            //             Route::post('/dispatchExportJob/{list_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'dispatchExportJob'])->name('user.dispatchExportJob');
+            //             Route::get('/segments', [App\Http\Controllers\DashboardController::class, 'segments'])->name('user.new.segments');
+            //             Route::get('/create-segments', [App\Http\Controllers\DashboardController::class, 'create_segments'])->name('user.create.segments');
+            //         }
+            // );
             Route::prefix('/campaign')->group(
                 function () {
-                        Route::get('/overview', [App\Http\Controllers\Mail\CampaignController::class, 'index'])->name('user.campaign.overview');
-                        Route::get('/overviews', [App\Http\Controllers\Mail\CampaignController::class, 'overview'])->name('user.campaign.overviews');
-                        Route::get('/copy/uid/copy_campaign_uid', [App\Http\Controllers\Mail\CampaignController::class, 'copy'])->name('user.campaign.copy');
-                        Route::post('/delete/uids', [App\Http\Controllers\Mail\CampaignController::class, 'delete'])->name('user.campaign.delete');
-                        Route::post('/restart/uids', [App\Http\Controllers\Mail\CampaignController::class, 'restart'])->name('user.campaign.restart');
-                        Route::post('/pause/uids', [App\Http\Controllers\Mail\CampaignController::class, 'pause'])->name('user.campaign.pause');
-                        Route::get('/resend/uid', [App\Http\Controllers\Mail\CampaignController::class, 'resend'])->name('user.campaign.resend');
-                        Route::post('/resend/uid', [App\Http\Controllers\Mail\CampaignController::class, 'resend'])->name('user.campaign.resend');
-                        Route::get('/ediit/uid', [App\Http\Controllers\Mail\CampaignController::class, 'edit'])->name('user.campaign.edit');
-                        Route::get('/show/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'show'])->name('user.campaign.show');
-                        Route::get('/edit/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'edit'])->name('user.campaign.edit');
-                        Route::get('/list', [App\Http\Controllers\Mail\CampaignController::class, 'listing'])->name('user.campaign.list');
-                        Route::get('/select-type', [App\Http\Controllers\Mail\CampaignController::class, 'selectType'])->name('user.campaign.selectType');
-                        Route::get('/create/{type}', [App\Http\Controllers\Mail\CampaignController::class, 'create'])->name('user.campaign.create');
-                        Route::get('/recipents/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'recipients'])->name('user.campaign.recipient');
-                        Route::get('/listSegmentForm/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'listSegmentForm'])->name('user.campaign.listSegmentForm');
-                        Route::post('/recipents/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'recipients'])->name('user.campaign.recipient.post');
-                        Route::get('/setup/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'setup'])->name('user.campaign.setup');
-                        Route::post('/setup/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'setup'])->name('user.campaign.setup.post');
-                        Route::get('/template/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'template'])->name('user.campaign.template');
-                        Route::get('/schedule/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'schedule'])->name('user.campaign.schedule');
-                        Route::post('/schedule/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'schedule'])->name('user.campaign.schedule');
-                        Route::get('/confirm/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'confirm'])->name('user.campaign.confirm');
-                        Route::post('/confirm/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'confirm'])->name('user.campaign.confirm');
-                        Route::get('/templateLayout/{uid}/', [App\Http\Controllers\Mail\CampaignController::class, 'templateLayout'])->name('user.campaign.templateLayout');
-                        Route::post('/templateLayouts/{uid}/{template}', [App\Http\Controllers\Mail\CampaignController::class, 'templateLayout'])->name('user.campaign.templateLayouts');
-                        Route::get('/templateLayout2/{uid}/{category_uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateLayout'])->name('user.campaign.templateLayouts2');
-                        Route::get('/templateLayoutsMine/{uid}/{from}', [App\Http\Controllers\Mail\CampaignController::class, 'templateLayout'])->name('user.campaign.templateLayout.from');
-                        Route::get('/templateLayoutList/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateLayoutList'])->name('user.campaign.templateLayoutList');
-                        Route::get('/templateUpload/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateUpload'])->name('user.campaign.templateUpload');
-                        Route::get('/plain/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'plain'])->name('user.campaign.plain');
-                        Route::get('/templateCreate/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateCreate'])->name('user.campaign.templateCreate');
-                        Route::get('/templateBuilderSelect/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateBuilderSelect'])->name('user.campaign.templateBuilderSelect');
-                        Route::get('/templateEdit/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateEdit'])->name('user.campaign.templateEdit');
-                        Route::post('/templateEdit/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateEdit'])->name('user.campaign.templateEdit');
-                        Route::get('/builderClassic/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'builderClassic'])->name('user.campaign.builderClassic');
-                        Route::post('/builderClassic/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'builderClassic'])->name('user.campaign.builderClassic');
-                        Route::get('/builderPlainEdit/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'builderPlainEdit'])->name('user.campaign.builderPlainEdit');
-                        Route::post('/builderPlainEdit/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'builderPlainEdit'])->name('user.campaign.builderPlainEdit');
-                        Route::get('/templateContent/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateContent'])->name('user.campaign.templateContent');
-                        Route::get('/previewContent/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'previewContent'])->name('user.campaign.previewContent');
-                        Route::get('/preview/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'preview'])->name('user.campaign.preview');
-                        Route::post('/uploadAttachment/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'uploadAttachment'])->name('user.campaign.uploadAttachment');
-                        Route::get('/downloadAttachment/{uid}/{name}', [App\Http\Controllers\Mail\CampaignController::class, 'downloadAttachment'])->name('user.campaign.downloadAttachment');
-                        Route::post('/removeAttachment/{uid}/{name}', [App\Http\Controllers\Mail\CampaignController::class, 'removeAttachment'])->name('user.campaign.removeAttachment');
-                        Route::get('/spamScore/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'spamScore'])->name('user.campaign.spamScore');
-                        Route::get('/sendTestEmail/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'sendTestEmail'])->name('user.campaign.sendTestEmail');
-                        Route::post('/sendTestEmail/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'sendTestEmail'])->name('user.campaign.sendTestEmail');
-                        Route::get('/campaigns/test/{message}', [App\Http\Controllers\Mail\CampaignController::class, 'notification'])->name('campaign_message');
+                    Route::get('/overview', [App\Http\Controllers\Mail\CampaignController::class, 'index'])->name('user.campaign.overview');
+                    Route::get('/overviews', [App\Http\Controllers\Mail\CampaignController::class, 'overview'])->name('user.campaign.overviews');
+                    Route::get('/copy/uid/copy_campaign_uid', [App\Http\Controllers\Mail\CampaignController::class, 'copy'])->name('user.campaign.copy');
+                    Route::post('/delete/uids', [App\Http\Controllers\Mail\CampaignController::class, 'delete'])->name('user.campaign.delete');
+                    Route::post('/restart/uids', [App\Http\Controllers\Mail\CampaignController::class, 'restart'])->name('user.campaign.restart');
+                    Route::post('/pause/uids', [App\Http\Controllers\Mail\CampaignController::class, 'pause'])->name('user.campaign.pause');
+                    Route::get('/resend/uid', [App\Http\Controllers\Mail\CampaignController::class, 'resend'])->name('user.campaign.resend');
+                    Route::post('/resend/uid', [App\Http\Controllers\Mail\CampaignController::class, 'resend'])->name('user.campaign.resend');
+                    Route::get('/ediit/uid', [App\Http\Controllers\Mail\CampaignController::class, 'edit'])->name('user.campaign.edit');
+                    Route::get('/show/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'show'])->name('user.campaign.show');
+                    Route::get('/edit/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'edit'])->name('user.campaign.edit');
+                    Route::get('/list', [App\Http\Controllers\Mail\CampaignController::class, 'listing'])->name('user.campaign.list');
+                    Route::get('/select-type', [App\Http\Controllers\Mail\CampaignController::class, 'selectType'])->name('user.campaign.selectType');
+                    Route::get('/create/{type}', [App\Http\Controllers\Mail\CampaignController::class, 'create'])->name('user.campaign.create');
+                    Route::get('/recipents/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'recipients'])->name('user.campaign.recipient');
+                    Route::get('/listSegmentForm/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'listSegmentForm'])->name('user.campaign.listSegmentForm');
+                    Route::post('/recipents/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'recipients'])->name('user.campaign.recipient.post');
+                    Route::get('/setup/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'setup'])->name('user.campaign.setup');
+                    Route::post('/setup/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'setup'])->name('user.campaign.setup.post');
+                    Route::get('/template/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'template'])->name('user.campaign.template');
+                    Route::get('/schedule/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'schedule'])->name('user.campaign.schedule');
+                    Route::post('/schedule/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'schedule'])->name('user.campaign.schedule');
+                    Route::get('/confirm/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'confirm'])->name('user.campaign.confirm');
+                    Route::post('/confirm/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'confirm'])->name('user.campaign.confirm');
+                    Route::get('/templateLayout/{uid}/', [App\Http\Controllers\Mail\CampaignController::class, 'templateLayout'])->name('user.campaign.templateLayout');
+                    Route::post('/templateLayouts/{uid}/{template}', [App\Http\Controllers\Mail\CampaignController::class, 'templateLayout'])->name('user.campaign.templateLayouts');
+                    Route::get('/templateLayout2/{uid}/{category_uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateLayout'])->name('user.campaign.templateLayouts2');
+                    Route::get('/templateLayoutsMine/{uid}/{from}', [App\Http\Controllers\Mail\CampaignController::class, 'templateLayout'])->name('user.campaign.templateLayout.from');
+                    Route::get('/templateLayoutList/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateLayoutList'])->name('user.campaign.templateLayoutList');
+                    Route::get('/templateUpload/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateUpload'])->name('user.campaign.templateUpload');
+                    Route::get('/plain/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'plain'])->name('user.campaign.plain');
+                    Route::get('/templateCreate/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateCreate'])->name('user.campaign.templateCreate');
+                    Route::get('/templateBuilderSelect/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateBuilderSelect'])->name('user.campaign.templateBuilderSelect');
+                    Route::get('/templateEdit/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateEdit'])->name('user.campaign.templateEdit');
+                    Route::post('/templateEdit/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateEdit'])->name('user.campaign.templateEdit');
+                    Route::get('/builderClassic/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'builderClassic'])->name('user.campaign.builderClassic');
+                    Route::post('/builderClassic/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'builderClassic'])->name('user.campaign.builderClassic');
+                    Route::get('/builderPlainEdit/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'builderPlainEdit'])->name('user.campaign.builderPlainEdit');
+                    Route::post('/builderPlainEdit/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'builderPlainEdit'])->name('user.campaign.builderPlainEdit');
+                    Route::get('/templateContent/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'templateContent'])->name('user.campaign.templateContent');
+                    Route::get('/previewContent/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'previewContent'])->name('user.campaign.previewContent');
+                    Route::get('/preview/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'preview'])->name('user.campaign.preview');
+                    Route::post('/uploadAttachment/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'uploadAttachment'])->name('user.campaign.uploadAttachment');
+                    Route::get('/downloadAttachment/{uid}/{name}', [App\Http\Controllers\Mail\CampaignController::class, 'downloadAttachment'])->name('user.campaign.downloadAttachment');
+                    Route::post('/removeAttachment/{uid}/{name}', [App\Http\Controllers\Mail\CampaignController::class, 'removeAttachment'])->name('user.campaign.removeAttachment');
+                    Route::get('/spamScore/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'spamScore'])->name('user.campaign.spamScore');
+                    Route::get('/sendTestEmail/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'sendTestEmail'])->name('user.campaign.sendTestEmail');
+                    Route::post('/sendTestEmail/{uid}', [App\Http\Controllers\Mail\CampaignController::class, 'sendTestEmail'])->name('user.campaign.sendTestEmail');
+                    Route::get('/campaigns/test/{message}', [App\Http\Controllers\Mail\CampaignController::class, 'notification'])->name('campaign_message');
 
-                    }
+                }
             );
             Route::prefix('/template')->group(
                 function () {
@@ -241,21 +241,194 @@ Route::prefix('{username}')->group(function () {
             Route::prefix('/segment')->group(
                 function () {
                         Route::get('/overview', [App\Http\Controllers\Mail\SegmentController::class, 'selectBox'])->name('user.segment.selectBox');
+                        Route::get('/edit', [App\Http\Controllers\Mail\SegmentController::class, 'edit'])->name('user.segment.edit');
+                        Route::get('/delete', [App\Http\Controllers\Mail\SegmentController::class, 'delete'])->name('user.segment.delete');
+                        Route::get('/export', [App\Http\Controllers\Mail\SegmentController::class, 'export'])->name('user.segment.export');
+                        Route::get('/create/{uid}', [App\Http\Controllers\Mail\SegmentController::class, 'create'])->name('user.segment.create');
+                        Route::get('/index/{uid}', [App\Http\Controllers\Mail\SegmentController::class, 'index'])->name('user.segment.index');
+                        Route::get('/listing/{list_uid}', [App\Http\Controllers\Mail\SegmentController::class, 'listing'])->name('user.segment.listing');
+                        Route::get('/subscribers', [App\Http\Controllers\Mail\SegmentController::class, 'subscribers'])->name('user.segment.subscribers');
+                        Route::get('/listing_subscribers/{list_uid}/{uid}', [App\Http\Controllers\Mail\SegmentController::class, 'listing_subscribers'])->name('user.segment.listing_subscribers');
+                        Route::get('/delete/{list_uid}', [App\Http\Controllers\Mail\SegmentController::class, 'delete'])->name('user.segment.delete');
+                        Route::get('/conditionValueControl', [App\Http\Controllers\Mail\SegmentController::class, 'conditionValueControl'])->name('user.segment.conditionValueControl');
+                        Route::get('/sample_condition/{list_uid}', [App\Http\Controllers\Mail\SegmentController::class, 'sample_condition'])->name('user.segment.sample_condition');
+                        Route::post('/store/{list_uid}', [App\Http\Controllers\Mail\SegmentController::class, 'store'])->name('user.segment.store');
+                        Route::patch('/update/{list_uid}', [App\Http\Controllers\Mail\SegmentController::class, 'update'])->name('user.segment.update');
                     }
             );
             Route::prefix('/sender')->group(
                 function () {
-                        Route::get('/index', [App\Http\Controllers\Mail\SenderController::class, 'index'])->name('user.segment.index');
-                        Route::get('/dropbox', [App\Http\Controllers\Mail\SenderController::class, 'dropbox'])->name('user.segment.dropbox');
+                        Route::get('/index', [App\Http\Controllers\Mail\SenderController::class, 'index'])->name('user.sender.index');
+                        Route::get('/dropbox', [App\Http\Controllers\Mail\SenderController::class, 'dropbox'])->name('user.sender.dropbox');
+                        Route::get('/verify/{token}', [App\Http\Controllers\Mail\SenderController::class, 'verify'])->name('user.sender.verify');
+                        Route::get('/edit/{uid}', [App\Http\Controllers\Mail\SenderController::class, 'edit'])->name('user.sender.edit');
+                        Route::get('/listing', [App\Http\Controllers\Mail\SenderController::class, 'listing'])->name('user.sender.listing');
+                        Route::get('/create', [App\Http\Controllers\Mail\SenderController::class, 'create'])->name('user.sender.create');
+                        Route::get('/show/{uid}', [App\Http\Controllers\Mail\SenderController::class, 'show'])->name('user.sender.show');
+                        Route::post('/store', [App\Http\Controllers\Mail\SenderController::class, 'store'])->name('user.sender.store');
+                        Route::get('/delete', [App\Http\Controllers\Mail\SenderController::class, 'delete'])->name('user.sender.delete');
+                        Route::patch('/update/{uid}', [App\Http\Controllers\Mail\SenderController::class, 'update'])->name('user.sender.update');
+                    }
+            );
+            Route::prefix('/sending-domain')->group(
+                function () {
+                        Route::get('/index', [App\Http\Controllers\Mail\SendingDomainController::class, 'index'])->name('user.sending-domain.index');
+                        Route::get('/show/{uid}', [App\Http\Controllers\Mail\SendingDomainController::class, 'show'])->name('user.sending-domain.show');
+                        Route::get('/sort', [App\Http\Controllers\Mail\SendingDomainController::class, 'sort'])->name('user.sending-domain.sort');
+                        Route::get('/listing', [App\Http\Controllers\Mail\SendingDomainController::class, 'listing'])->name('user.sending-domain.listing');
+                        Route::get('/delete', [App\Http\Controllers\Mail\SendingDomainController::class, 'delete'])->name('user.sending-domain.delete');
+                        Route::get('/create', [App\Http\Controllers\Mail\SendingDomainController::class, 'create'])->name('user.sending-domain.create');
+                        Route::get('/records/{uid}', [App\Http\Controllers\Mail\SendingDomainController::class, 'records'])->name('user.sending-domain.records');
+                        Route::post('/store', [App\Http\Controllers\Mail\SendingDomainController::class, 'store'])->name('user.sending-domain.store');
+                        Route::post('/verify/{uid}', [App\Http\Controllers\Mail\SendingDomainController::class, 'verify'])->name('user.sending-domain.verify');
+                    }
+            );
+            Route::prefix('/tracking-domain')->group(
+                function () {
+                        Route::get('/index', [App\Http\Controllers\Mail\TrackingDomainController::class, 'index'])->name('user.tracking-domain.index');
+                        Route::get('/show/{uid}', [App\Http\Controllers\Mail\TrackingDomainController::class, 'show'])->name('user.tracking-domain.show');
+                        // Route::get('/sort', [App\Http\Controllers\Mail\SendingDomainController::class, 'sort'])->name('user.sending-domain.sort');
+                        Route::get('/listing', [App\Http\Controllers\Mail\TrackingDomainController::class, 'listing'])->name('user.tracking-domain.listing');
+                        Route::get('/delete', [App\Http\Controllers\Mail\TrackingDomainController::class, 'delete'])->name('user.tracking-domain.delete');
+                        Route::get('/create', [App\Http\Controllers\Mail\TrackingDomainController::class, 'create'])->name('user.tracking-domain.create');
+                        // Route::get('/records/{uid}', [App\Http\Controllers\Mail\SendingDomainController::class, 'records'])->name('user.sending-domain.records');
+                        Route::post('/store', [App\Http\Controllers\Mail\TrackingDomainController::class, 'store'])->name('user.tracking-domain.store');
+                        Route::get('/verify/{uid}', [App\Http\Controllers\Mail\TrackingDomainController::class, 'verify'])->name('user.tracking-domain.verify');
+                    }
+            );
+            Route::prefix('/sending-server')->group(
+                function () {
+                        Route::get('/index', [App\Http\Controllers\Mail\SendingServerController::class, 'index'])->name('user.sending-server.index');
+                        // Route::get('/show/{uid}', [App\Http\Controllers\Mail\SendingDomainController::class, 'show'])->name('user.sending-domain.show');
+                        Route::get('/edit/{id}/{type}', [App\Http\Controllers\Mail\SendingServerController::class, 'edit'])->name('user.sending-server.edit');
+                        Route::get('/sort', [App\Http\Controllers\Mail\SendingServerController::class, 'sort'])->name('user.sending-server.sort');
+                        Route::get('/enable', [App\Http\Controllers\Mail\SendingServerController::class, 'enable'])->name('user.sending-server.enable');
+                        Route::get('/disable', [App\Http\Controllers\Mail\SendingServerController::class, 'disable'])->name('user.sending-server.disable');
+                        Route::get('/listing', [App\Http\Controllers\Mail\SendingServerController::class, 'listing'])->name('user.sending-server.listing');
+                        Route::get('/select', [App\Http\Controllers\Mail\SendingServerController::class, 'select'])->name('user.sending-server.select');
+                        Route::get('/delete', [App\Http\Controllers\Mail\SendingServerController::class, 'delete'])->name('user.sending-server.delete');
+                        Route::get('/create/{type}', [App\Http\Controllers\Mail\SendingServerController::class, 'create'])->name('user.sending-server.create');
+                        Route::get('/sendingLimit/{uid}', [App\Http\Controllers\Mail\SendingServerController::class, 'sendingLimit'])->name('user.sending-server.sendingLimit');
+                        Route::post('/config/{uid}', [App\Http\Controllers\Mail\SendingServerController::class, 'config'])->name('user.sending-server.config');
+                        Route::get('/test/{uid}', [App\Http\Controllers\Mail\SendingServerController::class, 'test'])->name('user.sending-server.test');
+                        Route::post('/test/{uid}', [App\Http\Controllers\Mail\SendingServerController::class, 'test'])->name('user.sending-server.test');
+                        Route::get('/fromDropbox/{uid}', [App\Http\Controllers\Mail\SendingServerController::class, 'fromDropbox'])->name('user.sending-server.fromDropbox');
+                        Route::post('/testConnection/{uid}', [App\Http\Controllers\Mail\SendingServerController::class, 'testConnection'])->name('user.sending-server.testConnection');
+                        Route::patch('/update/{id}/{type}', [App\Http\Controllers\Mail\SendingServerController::class, 'update'])->name('user.sending-server.update');
+                        Route::post('/store/{type}', [App\Http\Controllers\Mail\SendingServerController::class, 'store'])->name('user.sending-server.store');
+                        Route::get('/awsRegionHost/{uid}', [App\Http\Controllers\Mail\SendingServerController::class, 'awsRegionHost'])->name('user.sending-server.awsRegionHost');
+                        Route::post('/removeDomain/{uid}/{identity}', [App\Http\Controllers\Mail\SendingServerController::class, 'removeDomain'])->name('user.sending-server.removeDomain');
+                        Route::get('/addDomain/{uid}', [App\Http\Controllers\Mail\SendingServerController::class, 'addDomain'])->name('user.sending-server.addDomain');
+                        Route::post('/addDomain/{uid}', [App\Http\Controllers\Mail\SendingServerController::class, 'addDomain'])->name('user.sending-server.addDomain');
+                        // Route::post('/store', [App\Http\Controllers\Mail\SendingDomainController::class, 'store'])->name('user.sending-domain.store');
+                        // Route::post('/verify/{uid}', [App\Http\Controllers\Mail\SendingDomainController::class, 'verify'])->name('user.sending-domain.verify');
+                    }
+            );
+
+            Route::prefix('/list')->group(
+                function () {
+                        Route::get('/overview/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'overview'])->name('user.list.overview');
+                        Route::get('/embeddedForm/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'embeddedForm'])->name('user.list.embeddedForm');
+                        Route::post('/embeddedForm/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'embeddedForm'])->name('user.list.embeddedForm');
+                        Route::post('/embeddedFormSubscribe/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'embeddedFormSubscribe'])->name('user.list.embeddedFormSubscribe');
+                        Route::get('/embeddedFormFrame/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'embeddedFormFrame'])->name('user.list.embeddedFormFrame');
+                        Route::get('/checkEmail/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'checkEmail'])->name('user.list.checkEmail');
+                        Route::get('/index', [App\Http\Controllers\Mail\MailListController::class, 'index'])->name('user.list.index');
+                        Route::get('/delete', [App\Http\Controllers\Mail\MailListController::class, 'delete'])->name('user.list.delete');
+                        Route::post('/delete', [App\Http\Controllers\Mail\MailListController::class, 'delete'])->name('user.list.delete');
+                        Route::get('/deleteConfirm', [App\Http\Controllers\Mail\MailListController::class, 'deleteConfirm'])->name('user.list.deleteConfirm');
+                        Route::post('/deleteConfirm', [App\Http\Controllers\Mail\MailListController::class, 'deleteConfirm'])->name('user.list.deleteConfirm');
+                        Route::get('/create', [App\Http\Controllers\Mail\MailListController::class, 'create'])->name('user.list.create');
+                        Route::post('/store', [App\Http\Controllers\Mail\MailListController::class, 'store'])->name('user.list.store');
+                        Route::get('/listing', [App\Http\Controllers\Mail\MailListController::class, 'listing'])->name('user.list.listing');
+                        Route::get('/verification/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'verification'])->name('user.list.verification');
+                        Route::get('/edit/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'edit'])->name('user.list.edit');
+                        Route::patch('/update/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'update'])->name('user.list.update');
+                        Route::get('/copy/{copy_list_uid}', [App\Http\Controllers\Mail\MailListController::class, 'copy'])->name('user.list.copy');
+                        Route::post('/copy/{copy_list_uid}', [App\Http\Controllers\Mail\MailListController::class, 'copy'])->name('user.list.copy');
+                        Route::get('/cloneForCustomersChoose/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'cloneForCustomersChoose'])->name('user.list.cloneForCustomersChoose');
+                        Route::get('/listGrowthChart/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'listGrowthChart'])->name('user.list.listGrowthChart');
+                        Route::get('/statisticsChart/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'statisticsChart'])->name('user.list.statisticsChart');
+                        Route::post('/resetVerification/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'resetVerification'])->name('user.list.resetVerification');
+                        Route::post('/startVerification/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'startVerification'])->name('user.list.startVerification');
+                        Route::get('/stopVerification/{uid}/{job_uid}', [App\Http\Controllers\Mail\MailListController::class, 'stopVerification'])->name('user.list.stopVerification');
+                        Route::post('/stopVerification/{uid}/{job_uid}', [App\Http\Controllers\Mail\MailListController::class, 'stopVerification'])->name('user.list.stopVerification');
+                        Route::get('/verificationProgress/{uid}/{job_uid}', [App\Http\Controllers\Mail\MailListController::class, 'verificationProgress'])->name('user.list.verificationProgress');
+                        Route::get('/emailVerificationChart/{uid}', [App\Http\Controllers\Mail\MailListController::class, 'emailVerificationChart'])->name('user.list.emailVerificationChart');
+                    }
+            );
+
+            Route::prefix('/automation')->group(
+                function () {
+                        Route::get('/index', [App\Http\Controllers\Mail\Automation2Controller::class, 'contact'])->name('user.automation.index');
+
+                    }
+            );
+
+            Route::prefix('/pages')->group(
+                function () {
+                        Route::get('/update/{list_uid}/{alias}', [App\Http\Controllers\Mail\PageController::class, 'update'])->name('user.pages.update');
+                        Route::post('/update/{list_uid}/{alias}', [App\Http\Controllers\Mail\PageController::class, 'update'])->name('user.pages.update');
+                        Route::post('/restoreDefault/{list_uid}/{alias}', [App\Http\Controllers\Mail\PageController::class, 'restoreDefault'])->name('user.pages.restoreDefault');
+                        Route::get('/preview/{list_uid}/{alias}', [App\Http\Controllers\Mail\PageController::class, 'preview'])->name('user.pages.preview');
+                        Route::get('/signUpForm/{list_uid}', [App\Http\Controllers\Mail\PageController::class, 'signUpForm'])->name('user.pages.signUpForm');
+                        Route::post('/signUpForm/{list_uid}', [App\Http\Controllers\Mail\PageController::class, 'signUpForm'])->name('user.pages.signUpForm');
+                        Route::get('/signUpThankyouPage/{list_uid}/{subscriber_uid}', [App\Http\Controllers\Mail\PageController::class, 'signUpThankyouPage'])->name('user.pages.signUpThankyouPage');
+                        Route::get('/signUpConfirmationThankyou/{list_uid}/{uid}/{code}', [App\Http\Controllers\Mail\PageController::class, 'signUpConfirmationThankyou'])->name('user.pages.signUpConfirmationThankyou');
+
+                    }
+            );
+            Route::prefix('/accounts')->group(
+                function () {
+                        Route::get('/contact', [App\Http\Controllers\Mail\AccountController::class, 'contact'])->name('user.account.contact');
+
+                    }
+            );
+            Route::prefix('/field')->group(
+                function () {
+                        Route::get('/index/{list_uid}', [App\Http\Controllers\Mail\FieldController::class, 'index'])->name('user.field.index');
+                        Route::post('/store/{list_uid}', [App\Http\Controllers\Mail\FieldController::class, 'store'])->name('user.field.store');
+                        Route::get('/sort/{list_uid}', [App\Http\Controllers\Mail\FieldController::class, 'sort'])->name('user.field.sort');
+                        Route::get('/delete/{list_uid}/{uid}', [App\Http\Controllers\Mail\FieldController::class, 'delete'])->name('user.field.delete');
+                        Route::get('/sample/{list_uid}/{type}', [App\Http\Controllers\Mail\FieldController::class, 'sample'])->name('user.field.sample');
+
                     }
             );
             Route::prefix('/subscribers')->group(
                 function () {
-                        Route::get('/mailing-list', [App\Http\Controllers\DashboardController::class, 'mailing_list'])->name('user.mailing.list');
-                        Route::get('/mailing-list/contacts/{id}', [App\Http\Controllers\DashboardController::class, 'contact'])->name('user.contact');
-                        Route::get('/mailing-list/add-contact/{id}', [App\Http\Controllers\DashboardController::class, 'add_contact'])->name('user.add.contact');
-                        Route::get('/mailing-list/copypaste/{id}', [App\Http\Controllers\DashboardController::class, 'copy_paste'])->name('user.copy.paste');
-                        Route::get('/mailing-list/upload/{id}', [App\Http\Controllers\DashboardController::class, 'upload'])->name('user.up.load');
+                        Route::get('/index/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'index'])->name('user.subscriber.index');
+                        Route::get('/create/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'create'])->name('user.subscriber.create');
+                        Route::get('/import/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'import'])->name('user.subscriber.import');
+                        Route::post('/import/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'import'])->name('user.subscriber.import');
+                        Route::post('/dispatchExportJob/{list_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'dispatchExportJob'])->name('user.subscriber.dispatchExportJob');
+                        Route::post('/dispatchImportJob/{list_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'dispatchImportJob'])->name('user.subscriber.dispatchImportJob');
+                        Route::get('/export/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'export'])->name('user.subscriber.export');
+                        Route::get('/listing/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'listing'])->name('user.subscriber.listing');
+                        Route::get('/delete/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'delete'])->name('user.subscriber.delete');
+                        Route::get('/bulkDelete/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'bulkDelete'])->name('user.subscriber.bulkDelete');
+                        Route::get('/assignValues/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'assignValues'])->name('user.subscriber.assignValues');
+                        Route::get('/copyMoveForm/{from_uid}/{action}', [App\Http\Controllers\Mail\SubscriberController::class, 'copyMoveForm'])->name('user.subscriber.copyMoveForm');
+                        Route::post('/resendConfirmationEmail/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'resendConfirmationEmail'])->name('user.subscriber.resendConfirmationEmail');
+                        Route::post('/unsubscribe/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'unsubscribe'])->name('user.subscriber.unsubscribe');
+                        Route::post('/subscribe/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'subscribe'])->name('user.subscriber.subscribe');
+                        Route::post('/store/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'store'])->name('user.subscriber.store');
+                        Route::get('/edit/{list_uid}/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'edit'])->name('user.subscriber.edit');
+                        Route::get('/avatar/{uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'avatar'])->name('user.subscriber.avatar');
+                        Route::get('/copy', [App\Http\Controllers\Mail\SubscriberController::class, 'copy'])->name('user.subscriber.copy');
+                        Route::get('/exportProgress/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'exportProgress'])->name('user.subscriber.exportProgress');
+                        Route::get('/cancelExport/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'cancelExport'])->name('user.subscriber.cancelExport');
+                        Route::post('/cancelExport/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'cancelExport'])->name('user.subscriber.cancelExport');
+                        Route::get('/downloadExportedFile/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'downloadExportedFile'])->name('user.subscriber.downloadExportedFile');
+
+                        Route::get('/importProgress/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'importProgress'])->name('user.subscriber.importProgress');
+                        Route::get('/cancelImport/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'cancelImport'])->name('user.subscriber.cancelImport');
+                        Route::post('/cancelImport/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'cancelImport'])->name('user.subscriber.cancelImport');
+                        Route::get('/downloadImportLog/{job_uid}', [App\Http\Controllers\Mail\SubscriberController::class, 'downloadImportLog'])->name('user.subscriber.downloadImportLog');
+                        // Route::get('/mailing-list', [App\Http\Controllers\DashboardController::class, 'mailing_list'])->name('user.mailing.list');
+                        // Route::get('/mailing-list/contacts/{id}', [App\Http\Controllers\DashboardController::class, 'contact'])->name('user.contact');
+                        // Route::get('/mailing-list/add-contact/{id}', [App\Http\Controllers\DashboardController::class, 'add_contact'])->name('user.add.contact');
+                        // Route::get('/mailing-list/copypaste/{id}', [App\Http\Controllers\DashboardController::class, 'copy_paste'])->name('user.copy.paste');
+                        // Route::get('/mailing-list/upload/{id}', [App\Http\Controllers\DashboardController::class, 'upload'])->name('user.up.load');
                     }
             );
             Route::prefix('/messages')->group(

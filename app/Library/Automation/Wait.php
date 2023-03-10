@@ -1,23 +1,20 @@
 <?php
 
-namespace Acelle\Library\Automation;
+namespace App\Library\Automation;
 
 use Carbon\Carbon;
 
 class Wait extends Action
 {
     /*****
-
-        Wait action may result in the following cases:
-          + True - pass, go to next step
-          + False - not pass, wait...
-          + Exception - for any reason
-        In case of Exception, it is better to stop the whole automation process and write error log to the automation
-        so that the responsible person can check it
-
-        Then, "last_executed" is used as a flag indicating that the process is done
-        Return FALSE or TRUE (update last_executed before returning true)
-
+    Wait action may result in the following cases:
+    + True - pass, go to next step
+    + False - not pass, wait...
+    + Exception - for any reason
+    In case of Exception, it is better to stop the whole automation process and write error log to the automation
+    so that the responsible person can check it
+    Then, "last_executed" is used as a flag indicating that the process is done
+    Return FALSE or TRUE (update last_executed before returning true)
     ****/
 
     protected function doExecute()
@@ -28,7 +25,7 @@ class Wait extends Action
         }
 
         $now = Carbon::now();
-        $waitDuration = $this->getOption('time');  // 1 hour, 1 day, 2 days
+        $waitDuration = $this->getOption('time'); // 1 hour, 1 day, 2 days
         $parentExecutionTime = Carbon::createFromTimestamp($this->getParent()->getLastExecuted());
         $due = $parentExecutionTime->modify($waitDuration);
 
@@ -57,6 +54,6 @@ class Wait extends Action
             return '* Wait';
         }
 
-        return 'Hold on for '.$this->getOption('time');
+        return 'Hold on for ' . $this->getOption('time');
     }
 }

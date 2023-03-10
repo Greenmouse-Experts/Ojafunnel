@@ -20,10 +20,10 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
-use Acelle\Library\AmazonSmtpTransport;
+use App\Library\Log as MailLog;
+use App\Library\AmazonSmtpTransport;
 use Exception;
 
 class SendingServerAmazonSmtp extends SendingServerAmazon

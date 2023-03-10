@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Events;
+namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-use Acelle\Model\Subscriber;
+use App\Models\Subscriber;
 
 class MailListUnsubscription
 {

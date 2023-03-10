@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mail;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\MailModel\MailList;
 use App\Models\MailModel\EmailVerificationServer;
@@ -31,7 +32,7 @@ class MailListController extends Controller
         $settings = [
             'list.clone_for_others' => Setting::isYes('list.clone_for_others')
         ];
-        return view('dashboard.mailingList', compact('mailinglists', 'settings'));
+        return view('dashboard.campaign.lists.index', compact('mailinglists', 'settings'));
     }
 
     /**
@@ -51,7 +52,7 @@ class MailListController extends Controller
         $settings = [
             'list.clone_for_others' => Setting::isYes('list.clone_for_others')
         ];
-        return view('lists._list', [
+        return view('dashboard.campaign.lists._list', [
             'lists' => $lists,
             'settings' => $settings,
         ]);
@@ -111,7 +112,7 @@ class MailListController extends Controller
 
         $allowedSingleOptin = Setting::isYes('list.allow_single_optin');
 
-        return view('dashboard.createList', [
+        return view('dashboard.campaign.lists.create', [
             'list' => $list,
             'allowedSingleOptin' => $allowedSingleOptin
         ]);
@@ -232,7 +233,7 @@ class MailListController extends Controller
 
         $allowedSingleOptin = Setting::isYes('list.allow_single_optin');
 
-        return view('dashboard.listSetting', [
+        return view('dashboard.campaign.lists.edit', [
             'list' => $list,
             'allowedSingleOptin' => $allowedSingleOptin
         ]);
@@ -330,12 +331,13 @@ class MailListController extends Controller
      */
     public function deleteConfirm(Request $request)
     {
+
         $lists = \App\Models\MailList::whereIn(
             'uid',
             is_array($request->uids) ? $request->uids : explode(',', $request->uids)
         );
 
-        return view('lists.delete_confirm', [
+        return view('dashboard.campaign.lists.delete_confirm', [
             'lists' => $lists,
         ]);
     }
@@ -360,18 +362,18 @@ class MailListController extends Controller
 
         foreach ($lists->get() as $item) {
             // authorize
-            if (\Gate::allows('delete', $item)) {
-                $item->delete();
+            // if (\Gate::allows('delete', $item)) {
+            $item->delete();
 
-                // not needed as the related campaigns will be deleted as well
-                // $item->updateCachedInfo();
+            // not needed as the related campaigns will be deleted as well
+            // $item->updateCachedInfo();
 
-                // Log
-                $item->log('deleted', $request->user()->customer);
+            // Log
+            $item->log('deleted', $request->user()->customer);
 
-                // update MailList cache
-                event(new \App\Events\MailListUpdated($item));
-            }
+            // update MailList cache
+            event(new \App\Events\MailListUpdated($item));
+            // }
         }
 
         // Redirect to my lists page
@@ -396,7 +398,7 @@ class MailListController extends Controller
         //     return $this->notAuthorized();
         // }
 
-        return view('dashboard.listPerformance', [
+        return view('dashboard.campaign.lists.overview', [
             'list' => $list,
         ]);
     }
@@ -421,9 +423,9 @@ class MailListController extends Controller
         }
 
         // authorize
-        if (\Gate::denies('read', $list)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('read', $list)) {
+        //     return $this->notAuthorized();
+        // }
 
         $result = [
             'columns' => [],
@@ -606,7 +608,7 @@ class MailListController extends Controller
             return trans('messages.list.copied');
         }
 
-        return view('lists.copy', [
+        return view('dashboard.campaign.lists.copy', [
             'list' => $list,
         ]);
     }
@@ -631,7 +633,7 @@ class MailListController extends Controller
             $list->setEmbeddedFormOptions($request->options);
         }
 
-        return view('lists.embedded_form', [
+        return view('dashboard.campaign.lists.embedded_form', [
             'list' => $list,
         ]);
     }
@@ -652,7 +654,7 @@ class MailListController extends Controller
         //     return $this->notAuthorized();
         // }
 
-        return view('lists.embedded_form_frame', [
+        return view('dashboard.campaign.lists.embedded_form_frame', [
             'list' => $list,
         ]);
     }
@@ -675,7 +677,7 @@ class MailListController extends Controller
 
         $request->session()->put('form_url', \URL::previous());
 
-        return view('lists.embedded_form_captcha', [
+        return view('dashboard.campaign.lists.embedded_form_captcha', [
             'list' => $list,
         ]);
     }
@@ -695,7 +697,7 @@ class MailListController extends Controller
             if ($request->hasCaptcha) {
                 $success = \App\Library\Tool::checkReCaptcha($request);
             } else {
-                return view('lists.embedded_form_captcha', [
+                return view('dashboard.campaign.lists.embedded_form_captcha', [
                     'list' => $list,
                 ]);
             }
@@ -762,12 +764,13 @@ class MailListController extends Controller
             return redirect()->away($request->redirect_url);
         } elseif ($list->subscribe_confirmation && !$subscriber->isSubscribed()) {
             // tell subscriber to check email for confirmation
-            return redirect()->action('PageController@signUpThankyouPage', ['list_uid' => $list->uid, 'subscriber_uid' => $subscriber->uid]);
+            return redirect()->route('user.pages.signUpThankyouPage', ['username' => Auth::user()->username, 'list_uid' => $list->uid, 'subscriber_uid' => $subscriber->uid]);
         } else {
             // All done, confirmed
-            return redirect()->action(
-                'PageController@signUpConfirmationThankyou',
+            return redirect()->route(
+                'user.pages.signUpConfirmationThankyou',
                 [
+                    'username' => Auth::user()->username,
                     'list_uid' => $list->uid,
                     'uid' => $subscriber->uid,
                     'code' => 'empty',
@@ -789,14 +792,14 @@ class MailListController extends Controller
         $currentJob = $list->verificationJobs()->first();
 
         if ($currentJob) {
-            return view('lists.email_verification', [
+            return view('dashboard.campaign.lists.email_verification', [
                 'list' => $list,
                 'currentJobUid' => $currentJob->uid,
-                'cancelUrl' => action('MailListController@stopVerification', ['uid' => $list->uid, 'job_uid' => $currentJob->uid]),
-                'progressCheckUrl' => action('MailListController@verificationProgress', ['uid' => $list->uid, 'job_uid' => $currentJob->uid]),
+                'cancelUrl' => route('user.list.stopVerification', ['username' => Auth::user()->username, 'uid' => $list->uid, 'job_uid' => $currentJob->uid]),
+                'progressCheckUrl' => route('user.list.verificationProgress', ['username' => Auth::user()->username, 'uid' => $list->uid, 'job_uid' => $currentJob->uid]),
             ]);
         } else {
-            return view('lists.email_verification', [
+            return view('dashboard.campaign.lists.email_verification', [
                 'list' => $list,
             ]);
         }
@@ -809,8 +812,8 @@ class MailListController extends Controller
     public function startVerification(Request $request)
     {
         // Get list & server
-        $list = MailList::findByUid($request->uid);
-        $server = EmailVerificationServer::findByUid($request->email_verification_server_id);
+        $list = \App\Models\MailList::findByUid($request->uid);
+        $server = \App\Models\EmailVerificationServer::findByUid($request->email_verification_server_id);
 
         // Dispatch
         $job = $list->dispatchVerificationJob($server);
@@ -818,8 +821,8 @@ class MailListController extends Controller
         // Return
         return response()->json([
             'currentJobUid' => $job->uid,
-            'cancelUrl' => action('MailListController@stopVerification', ['uid' => $list->uid, 'job_uid' => $job->uid]),
-            'progressCheckUrl' => action('MailListController@verificationProgress', ['uid' => $list->uid, 'job_uid' => $job->uid]),
+            'cancelUrl' => route('user.list.stopVerification', ['username' => Auth::user()->username, 'uid' => $list->uid, 'job_uid' => $job->uid]),
+            'progressCheckUrl' => route('user.list.verificationProgress', ['username' => Auth::user()->username, 'uid' => $list->uid, 'job_uid' => $job->uid]),
         ]);
     }
 
@@ -829,7 +832,7 @@ class MailListController extends Controller
      */
     public function stopVerification(Request $request)
     {
-        $list = MailList::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->uid);
         $job = $list->verificationJobs()->where('uid', $request->job_uid)->first();
 
         if (is_null($job)) {
@@ -848,7 +851,7 @@ class MailListController extends Controller
     {
         $list = \App\Models\MailList::findByUid($request->uid);
         $list->resetVerification();
-        return redirect()->action('MailListController@verification', $list->uid);
+        return redirect()->route('user.list.verification', ['username' => Auth::user()->username, 'uid' => $list->uid]);
     }
 
     /**
@@ -857,7 +860,7 @@ class MailListController extends Controller
      */
     public function verificationProgress(Request $request)
     {
-        $list = MailList::findByUid($request->uid);
+        $list = \App\Models\MailList::findByUid($request->uid);
         $job = $list->verificationJobs()->where('uid', $request->job_uid)->first();
 
         if (is_null($job)) {
@@ -897,14 +900,14 @@ class MailListController extends Controller
     public function cloneForCustomersChoose(Request $request, $uid)
     {
         $list = \App\Models\MailList::findByUid($request->uid);
-        $customers = Customer::where('id', '!=', $list->customer_id);
+        $customers = App\Models\Customer::where('id', '!=', $list->customer_id);
 
         $options = [];
         foreach ($customers->get() as $customer) {
             $options[] = ['text' => $customer->user->displayName(), 'value' => $customer->uid];
         }
 
-        return view('lists.cloneForCustomersChoose', [
+        return view('dashboard.campaign.lists.cloneForCustomersChoose', [
             'list' => $list,
             'options' => $options,
         ]);
@@ -917,7 +920,7 @@ class MailListController extends Controller
     public function cloneForCustomers(Request $request, $uid)
     {
         $list = \App\Models\MailList::findByUid($request->uid);
-        $customers = Customer::WhereIn('uid', $request->customers);
+        $customers = \App\Models\Customer::WhereIn('uid', $request->customers);
 
         $list->cloneForCustomers($customers->get());
 

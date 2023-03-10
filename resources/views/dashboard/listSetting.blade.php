@@ -87,11 +87,11 @@
                                                 'value' => $list->from_email,
                                                 'help_class' => 'list',
                                                 'rules' => App\Models\MailList::$rules,
-                                                // 'url' => action('SenderController@dropbox'),
+                                                'url' => action('SenderController@dropbox'),
                                                 'empty' => trans('messages.sender.dropbox.empty'),
-                                                // 'error' => trans('messages.sender.dropbox.error', [
-                                                //     'sender_link' => action('SenderController@index'),
-                                                // ]),
+                                                'error' => trans('messages.sender.dropbox.error', [
+                                                'sender_link' => route('user.sender.index', Auth::user()->username),
+                                                ]),
                                                 'header' => trans('messages.verified_senders'),
                                             ])
                                         </div>

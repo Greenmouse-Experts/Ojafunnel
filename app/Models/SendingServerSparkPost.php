@@ -6,18 +6,18 @@
  * Abstract class for SparkPost sending server
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  *
  * @description: This is the Skeleton for developing a sending server which is used to send email through a 3rd service
  * the expected usage is:
@@ -26,10 +26,10 @@
  *     $server->sendMessage( $message );
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
-use Acelle\Library\StringHelper;
+use App\Library\Log as MailLog;
+use App\Library\StringHelper;
 use SparkPost\SparkPost;
 use GuzzleHttp\Client;
 use Http\Adapter\Guzzle7\Client as GuzzleAdapter;
@@ -87,7 +87,7 @@ class SendingServerSparkPost extends SendingServer
         try {
             $this->cleanupWebhook($webhookUrl);
             $response = $this->client()->request('POST', 'webhooks', [
-                'name' => 'Acelle Mail Webhook',
+                'name' => 'App Mail Webhook',
                 'target' => $webhookUrl,
                 'auth_type' => 'none',
                 'events' => [
@@ -108,7 +108,7 @@ class SendingServerSparkPost extends SendingServer
         } catch (\Exception $e) {
             // just ignore the error
             self::$isWebhookSetup = true;
-            MailLog::warning('Cannot setup Spark Post webhook. Error: '.$e->getMessage());
+            MailLog::warning('Cannot setup Spark Post webhook. Error: ' . $e->getMessage());
         }
     }
 
@@ -184,7 +184,7 @@ class SendingServerSparkPost extends SendingServer
                     self::handleSpamComplaint($message);
                     break;
                 default:
-                    MailLog::warning('Unknown notification type: '.$type);
+                    MailLog::warning('Unknown notification type: ' . $type);
             }
         }
     }
@@ -213,7 +213,7 @@ class SendingServerSparkPost extends SendingServer
         $bounceLog->bounce_type = BounceLog::HARD;
         $bounceLog->raw = json_encode($message);
         $bounceLog->save();
-        MailLog::info('Bounce recorded for message '.$bounceLog->runtime_message_id);
+        MailLog::info('Bounce recorded for message ' . $bounceLog->runtime_message_id);
 
         // add subscriber's email to blacklist
         $subscriber = $bounceLog->findSubscriberByRuntimeMessageId();
@@ -221,7 +221,7 @@ class SendingServerSparkPost extends SendingServer
             $subscriber->sendToBlacklist($bounceLog->raw);
             MailLog::info('Email added to blacklist');
         } else {
-            MailLog::warning('Cannot find associated tracking log for message '.$bounceLog->runtime_message_id);
+            MailLog::warning('Cannot find associated tracking log for message ' . $bounceLog->runtime_message_id);
         }
     }
 
@@ -241,7 +241,7 @@ class SendingServerSparkPost extends SendingServer
             return response('', 200);
         }
 
-        // retrieve the associated tracking log in Acelle
+        // retrieve the associated tracking log in App
         $trackingLog = TrackingLog::where('runtime_message_id', $feedbackLog->runtime_message_id)->first();
         if ($trackingLog) {
             $feedbackLog->message_id = $trackingLog->message_id;
@@ -251,7 +251,7 @@ class SendingServerSparkPost extends SendingServer
         $feedbackLog->feedback_type = 'spam';
         $feedbackLog->raw_feedback_content = json_encode($message);
         $feedbackLog->save();
-        MailLog::info('Feedback recorded for message '.$feedbackLog->runtime_message_id);
+        MailLog::info('Feedback recorded for message ' . $feedbackLog->runtime_message_id);
 
         // update the mail list, subscriber to be marked as 'spam-reported'
         // @todo: the following lines of code should be wrapped up in one single method: $feedbackLog->markSubscriberAsSpamReported();
@@ -260,7 +260,7 @@ class SendingServerSparkPost extends SendingServer
             $subscriber->markAsSpamReported();
             MailLog::info('Subscriber marked as spam-reported');
         } else {
-            MailLog::warning('Cannot find associated tracking log for message '.$feedbackLog->runtime_message_id);
+            MailLog::warning('Cannot find associated tracking log for message ' . $feedbackLog->runtime_message_id);
         }
     }
 
@@ -302,14 +302,14 @@ class SendingServerSparkPost extends SendingServer
         try {
             $response = $this->client()->request('GET', 'sending-domains', ['ownership_verified' => 'true']);
         } catch (\Exception $ex) {
-            throw new \Exception('Cannot connect to SparkPost: '.$ex->getMessage());
+            throw new \Exception('Cannot connect to SparkPost: ' . $ex->getMessage());
         }
 
         return true;
     }
 
     /**
-     * Allow user to verify his/her own sending domain against Acelle Mail.
+     * Allow user to verify his/her own sending domain against App Mail.
      *
      * @return bool
      */
@@ -319,7 +319,7 @@ class SendingServerSparkPost extends SendingServer
     }
 
     /**
-     * Allow user to verify his/her own sending domain against Acelle Mail.
+     * Allow user to verify his/her own sending domain against App Mail.
      *
      * @return bool
      */

@@ -24,7 +24,7 @@
             </div>
             <div class="Edit">
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-12">
                         <form action="{{ route('user.campaign.setup.post', ['username' => Auth::user()->username ,'uid' =>$campaign->uid]) }}" method="POST" class="form-validate-jqueryz">
                             {{ csrf_field() }}
 
@@ -63,10 +63,10 @@
                                             'value' => $campaign->from_email,
                                             'rules' => $rules,
                                             'help_class' => 'campaign',
-                                            'url' => route('user.segment.dropbox', Auth::user()->username),
+                                            'url' => route('user.sender.dropbox', Auth::user()->username),
                                             'empty' => trans('messages.sender.dropbox.empty'),
                                             'error' => trans('messages.sender.dropbox.error.' . Auth::user()->customer->allowUnverifiedFromEmailAddress(), [
-                                                'sender_link' => route('user.segment.index', Auth::user()->username),
+                                                'sender_link' => route('user.sender.index', Auth::user()->username),
                                             ]),
                                             'header' => trans('messages.verified_senders'),
                                         ])
@@ -87,12 +87,12 @@
                                         'name' => 'reply_to',
                                         'label' => trans('messages.reply_to'),
                                         'value' => $campaign->reply_to,
-                                        'url' => route('user.segment.index', Auth::user()->username),
+                                        'url' => route('user.sender.dropbox', Auth::user()->username),
                                         'rules' => $campaign->rules(),
                                         'help_class' => 'campaign',
                                         'empty' => trans('messages.sender.dropbox.empty'),
                                         'error' => trans('messages.sender.dropbox.reply.error.' . Auth::user()->customer->allowUnverifiedFromEmailAddress(), [
-                                            'sender_link' => route('user.segment.dropbox', Auth::user()->username),
+                                            'sender_link' => route('user.sender.index', Auth::user()->username),
                                         ]),
                                         'header' => trans('messages.verified_senders'),
                                     ])

@@ -6,24 +6,24 @@
  * Abstract class for SendGrid API sending server
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
-use Acelle\Library\StringHelper;
+use App\Library\Log as MailLog;
+use App\Library\StringHelper;
 use SendGrid\Mail;
 
 class SendingServerSendGridApi extends SendingServerSendGrid
@@ -40,7 +40,7 @@ class SendingServerSendGridApi extends SendingServerSendGrid
     // Inherit class to implementation of this method
     public function send($message, $params = array())
     {
-        $msgId = $message->getHeaders()->get('X-Acelle-Message-Id')->getFieldBody();
+        $msgId = $message->getHeaders()->get('X-App-Message-Id')->getFieldBody();
 
         $mail = $this->prepareEmail($message);
         $response = $this->client()->client->mail()->send()->post($mail);
@@ -63,7 +63,7 @@ class SendingServerSendGridApi extends SendingServerSendGrid
 
             return $result;
         } else {
-            throw new \Exception("{$statusCode} ".$response->body());
+            throw new \Exception("{$statusCode} " . $response->body());
         }
     }
 }

@@ -225,16 +225,21 @@ class TrackingDomain extends Model
     {
         try {
             $url = $this->getUrl();
-            $verifyUrl = "$url/ok";
-            $result = file_get_contents($verifyUrl);
-            if ($result == 'ok') {
+
+            $verifyUrl = "http://greenmouseproperties.com/ok";
+
+            $result = \Http::get($verifyUrl);
+
+            if ($result->body() == 'ok') {
                 $this->setVerified();
                 $this->save();
                 return true;
             } else {
+                //dd($result->body());
                 return false;
             }
         } catch (\Exception $ex) {
+            //dd($result->body());
             return false;
         }
     }

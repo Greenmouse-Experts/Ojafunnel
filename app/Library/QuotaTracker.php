@@ -1,11 +1,11 @@
 <?php
 
-namespace Acelle\Library;
+namespace App\Library;
 
 use File;
 use Carbon\Carbon;
 use Exception;
-use Acelle\Library\Exception\QuotaExceeded;
+use App\Library\Exception\QuotaExceeded;
 use Closure;
 
 class QuotaTracker
@@ -256,7 +256,7 @@ class QuotaTracker
             }
 
             fseek($fopen, ++$offset);
-            fwrite($fopen, "\n".$record);
+            fwrite($fopen, "\n" . $record);
         }
     }
 

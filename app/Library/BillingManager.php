@@ -1,10 +1,10 @@
 <?php
 
-namespace Acelle\Library;
+namespace App\Library;
 
 use Exception;
-use Acelle\Library\Contracts\PaymentGatewayInterface;
-use Acelle\Model\Setting;
+use App\Library\Contracts\PaymentGatewayInterface;
+use App\Models\Setting;
 
 class BillingManager
 {

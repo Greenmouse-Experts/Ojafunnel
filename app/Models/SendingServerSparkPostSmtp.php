@@ -6,23 +6,23 @@
  * Model class for SparkPost SMTP sending server
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
+use App\Library\Log as MailLog;
 
 class SendingServerSparkPostSmtp extends SendingServerSparkPost
 {
@@ -42,7 +42,7 @@ class SendingServerSparkPostSmtp extends SendingServerSparkPost
         $transport->setPassword($this->smtp_password);
 
         // tracking bounce/feedback
-        $msgId = $message->getHeaders()->get('X-Acelle-Message-Id')->getFieldBody();
+        $msgId = $message->getHeaders()->get('X-App-Message-Id')->getFieldBody();
         $message->getHeaders()->addTextHeader('X-MSYS-API', json_encode(['metadata' => ['runtime_message_id' => $msgId]]));
 
         // Create the Mailer using your created Transport

@@ -6,21 +6,21 @@
  * Tool for upgrading the entire system source
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
- * @category   Acelle Library
+ * @category   App Library
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Library;
+namespace App\Library;
 
 use ZipArchive;
 use Illuminate\Support\Facades\Log as LaravelLog; // something wrong, cannot use the default name Log
@@ -64,7 +64,7 @@ class UpgradeManager
                 $this->validate();
             } else {
                 umask($old);
-                LaravelLog::error('Cannot open zip file '.$path.' with error code '.$res);
+                LaravelLog::error('Cannot open zip file ' . $path . ' with error code ' . $res);
                 throw new \Exception('Invalid upgrade package');
             }
         } catch (\Exception $e) {
@@ -187,7 +187,7 @@ class UpgradeManager
 
                 if ($test) {
                     if ($this->isLanguageFile($source)) {
-                        $languages = \Acelle\Model\Language::all();
+                        $languages = \App\Model\Language::all();
                         foreach ($languages as $lang) {
                             $target = join_paths($lang->languageDir(), pathinfo($file)['basename']);
                             if (!$this->isWritable($target)) {
@@ -425,7 +425,7 @@ class UpgradeManager
                     $parent = $tmppath;
                 }
             } catch (\Exception $ex) {
-                LaravelLog::warning($path.' not in open_basedir: '.ini_get('open_basedir'));
+                LaravelLog::warning($path . ' not in open_basedir: ' . ini_get('open_basedir'));
                 $parent = $tmppath;
             }
         }
@@ -451,7 +451,7 @@ class UpgradeManager
         $dir = opendir($src);
         while (false !== ($file = readdir($dir))) {
             if (($file != '.') && ($file != '..')) {
-                $full = $src.'/'.$file;
+                $full = $src . '/' . $file;
                 if (is_dir($full)) {
                     $this->rm($full);
                 } else {
@@ -513,14 +513,14 @@ class UpgradeManager
     /**
      * Upgrade all existing language packages using the provided file
      * For example:
-     *    $manager = new \Acelle\Library\UpgradeManager();
+     *    $manager = new \App\Library\UpgradeManager();
      *    $manager->upgradeLanguageFiles(resource_path("lang/en/messages.php"));.
      */
     public function upgradeLanguageFiles($sourcePath)
     {
         $source = include $sourcePath;
 
-        $languages = \Acelle\Model\Language::all();
+        $languages = \App\Model\Language::all();
         foreach ($languages as $lang) {
             // if for any reason the language directory does not exist, just ignore it
             if (!file_exists($lang->languageDir())) {
@@ -543,7 +543,7 @@ class UpgradeManager
     /**
      * Merge the language file to retain user's change
      * Example:
-     *    $manager = new \Acelle\Library\UpgradeManager()
+     *    $manager = new \App\Library\UpgradeManager()
      *    $manager->mergeLanguageFile('/home/user/mailixa/resources/lang/en/messages.php', '/tmp/messages.php').
      */
     public function mergeLanguageFile($sourcePath, $targetPath)
@@ -552,7 +552,7 @@ class UpgradeManager
         if (!file_exists($targetPath)) {
             $this->copy($sourcePath, $targetPath);
         } else {
-            \Acelle\Helpers\updateTranslationFile($targetPath, $sourcePath, $overwrite = false);
+            \App\Helpers\updateTranslationFile($targetPath, $sourcePath, $overwrite = false);
         }
     }
 }

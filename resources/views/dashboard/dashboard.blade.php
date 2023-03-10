@@ -230,7 +230,7 @@
                                 avaliable for you
                             </p>
                             <div class="con">
-                                <a href="{{route('user.create.list', Auth::user()->username)}}" class="text-purp">
+                                <a href="#" class="text-purp">
                                     <b> Continue <i class="bi bi-arrow-right"></i> </b>
                                 </a>
                             </div>

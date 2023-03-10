@@ -6,24 +6,24 @@
  * Model class for email bounces handling
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Log as MailLog;
+use App\Library\Traits\HasUid;
 
 class BounceHandler extends DeliveryHandler
 {
@@ -45,12 +45,12 @@ class BounceHandler extends DeliveryHandler
             $body = imap_body($mbox, $msgNo, FT_PEEK);
 
             /* The following check is now deprecated
-             * and will be removed
-                 $bouncedAddress = $this->getBouncedAddress($header->toaddress);
-                 print_r($bouncedAddress . "\n");
-                 if (empty($bouncedAddress)) {
-                     throw new \Exception("not a bounce message");
-                 }
+            * and will be removed
+            $bouncedAddress = $this->getBouncedAddress($header->toaddress);
+            print_r($bouncedAddress . "\n");
+            if (empty($bouncedAddress)) {
+            throw new \Exception("not a bounce message");
+            }
             */
 
             $msgId = $this->getMessageId($body);
@@ -59,7 +59,7 @@ class BounceHandler extends DeliveryHandler
                 throw new \Exception('cannot find Message-ID, skipped');
             }
 
-            MailLog::info('Processing bounce notification for message '.$msgId);
+            MailLog::info('Processing bounce notification for message ' . $msgId);
 
             $trackingLog = TrackingLog::where('message_id', $msgId)->first();
             if (empty($trackingLog)) {
@@ -71,13 +71,13 @@ class BounceHandler extends DeliveryHandler
             $bounceLog->message_id = $msgId;
             $bounceLog->runtime_message_id = $msgId;
             $bounceLog->bounce_type = 'unknown'; // @TODO fill in the NULL value here
-            $bounceLog->raw = imap_fetchheader($mbox, $msgNo).PHP_EOL.$body;
+            $bounceLog->raw = imap_fetchheader($mbox, $msgNo) . PHP_EOL . $body;
             $bounceLog->save();
 
             // just delete the bounce notification email
             imap_delete($mbox, $msgNo);
 
-            MailLog::info('Bounce recorded for message '.$msgId);
+            MailLog::info('Bounce recorded for message ' . $msgId);
 
             MailLog::info('Adding email to blacklist');
             $trackingLog->subscriber->sendToBlacklist($bounceLog->raw);
@@ -126,9 +126,9 @@ class BounceHandler extends DeliveryHandler
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('bounce_handlers.name', 'like', '%'.$keyword.'%')
-                        ->orWhere('bounce_handlers.type', 'like', '%'.$keyword.'%')
-                        ->orWhere('bounce_handlers.host', 'like', '%'.$keyword.'%');
+                    $q->orwhere('bounce_handlers.name', 'like', '%' . $keyword . '%')
+                        ->orWhere('bounce_handlers.type', 'like', '%' . $keyword . '%')
+                        ->orWhere('bounce_handlers.host', 'like', '%' . $keyword . '%');
                 });
             }
         }
@@ -170,7 +170,14 @@ class BounceHandler extends DeliveryHandler
      * @var array
      */
     protected $fillable = [
-        'name', 'host', 'port', 'username', 'password', 'protocol', 'encryption', 'email',
+        'name',
+        'host',
+        'port',
+        'username',
+        'password',
+        'protocol',
+        'encryption',
+        'email',
     ];
 
     /**

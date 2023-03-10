@@ -6,21 +6,21 @@
  * Model class for bounce logs
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,7 +36,7 @@ class BounceLog extends Model
      */
     public function trackingLog()
     {
-        return $this->belongsTo('Acelle\Model\TrackingLog', 'message_id', 'message_id');
+        return $this->belongsTo('App\Model\TrackingLog', 'message_id', 'message_id');
     }
 
     /**
@@ -85,11 +85,11 @@ class BounceLog extends Model
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('campaigns.name', 'like', '%'.$keyword.'%')
-                        ->orwhere('bounce_logs.bounce_type', 'like', '%'.$keyword.'%')
-                        ->orwhere('bounce_logs.raw', 'like', '%'.$keyword.'%')
-                        ->orwhere('sending_servers.name', 'like', '%'.$keyword.'%')
-                        ->orwhere('subscribers.email', 'like', '%'.$keyword.'%');
+                    $q->orwhere('campaigns.name', 'like', '%' . $keyword . '%')
+                        ->orwhere('bounce_logs.bounce_type', 'like', '%' . $keyword . '%')
+                        ->orwhere('bounce_logs.raw', 'like', '%' . $keyword . '%')
+                        ->orwhere('sending_servers.name', 'like', '%' . $keyword . '%')
+                        ->orwhere('subscribers.email', 'like', '%' . $keyword . '%');
                 });
             }
         }
