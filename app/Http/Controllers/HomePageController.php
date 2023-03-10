@@ -218,7 +218,7 @@ class HomePageController extends Controller
             "registration_ids" => $firebaseToken,
             "notification" => [
                 "title" => config('app.name'),
-                "body" => 'Contact form submitted by ' . $contact->name,
+                "body" => 'Contact form submitted from ' . $contact->name,
                 'image' => URL::asset('assets/images/Logo-fav.png'),
             ],
             'vibrate' => 1,
