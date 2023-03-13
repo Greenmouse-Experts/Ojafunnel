@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->comment('');
             $table->bigIncrements('id');
-            $table->string('user_id');
+            $table->string('user_id')->nullable();
+            $table->string('admin_id')->nullable();
             $table->string('name')->nullable();
             $table->string('title')->nullable();
             $table->string('thumbnail')->nullable();

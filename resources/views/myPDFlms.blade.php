@@ -121,8 +121,8 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{\App\Models\Course::find($item->course_id)->title}}</td>
                                             <td><img style="width: 50px" src="{{\App\Models\Course::find($item->course_id)->image ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" srcset=""></td>
-                                            <td class="text-wrap" style="width: 330px;">{{\App\Models\Course::find($item->course_id)->description}}</td>
-                                            <td>₦{{$item->amount}}</td>
+                                            <td class="text-wrap" style="width: 330px;">₦{{$item->amount}}</td>
+                                            <td>₦{{number_format($item->amount)}}</td>
                                             <td>₦{{number_format($item->amount, 2)}}</td>
                                         </tr>
                                         @endforeach
