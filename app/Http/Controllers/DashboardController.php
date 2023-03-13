@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Category;
 use App\Models\Chat;
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\Funnel;
 use App\Models\FunnelPage;
 use App\Models\Integration;
@@ -831,14 +832,17 @@ class DashboardController extends Controller
         if($shop != null)
         {
             $shopOrderCount = ShopOrder::where('shop_id', $shop->id)->get()->count();
+            $students = Enrollment::where('shop_id', $shop->id)->get()->count();
         } else {
             $shopOrderCount = 0;
+            $students = 0;
         }
 
         return view('dashboard.salesAnalytics', [
             'username' => $username,
             'storeOrderCount' => $storeOrderCount,
-            'shopOrderCount' => $shopOrderCount
+            'shopOrderCount' => $shopOrderCount,
+            'students' => $students
         ]);
     }
 

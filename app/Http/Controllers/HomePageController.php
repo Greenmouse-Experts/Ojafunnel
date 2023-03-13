@@ -191,7 +191,7 @@ class HomePageController extends Controller
         //Validate Request
         $this->validate($request, [
             'phone' => 'required|numeric',
-            'g-recaptcha-response' => 'required|captcha'
+            // 'g-recaptcha-response' => 'required|captcha'
         ]);
 
         $contact = ContactUs::create([

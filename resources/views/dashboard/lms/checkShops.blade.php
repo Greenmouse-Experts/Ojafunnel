@@ -59,7 +59,7 @@
                   <thead class="tread">
                     <tr>
                       <th>S/N</th>
-                      <th>shop Name</th>
+                      <th>Shop Name</th>
                       <th>Available Course</th>
                       <th>Orders</th>
                       <th>Shop Link</th>
@@ -77,7 +77,7 @@
                               <a href="{{route('user.create.course', Auth::user()->username)}}" class="text-decoration-underline">Courses</a>
                             </td>
                             <td>
-                              
+
                               {{\App\Models\ShopOrder::where('shop_id', $item->id)->get()->count()}}
                               <a href="{{route('user.view.course.enrollments', [Auth::user()->username, $item->id])}}" class="text-decoration-underline">Orders</a>
                             </td>

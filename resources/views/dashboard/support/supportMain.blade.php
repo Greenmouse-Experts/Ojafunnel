@@ -46,6 +46,10 @@
                         <a href="{{route('user.main.support.chat', Auth::user()->username)}}" class="text-center">Live Chat</a>
                     </div>
                     <div class='col-md-4 support-option'>
+                        <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1676990796/OjaFunnel-Images/chat-clip-removebg-preview_weurrv.png' alt='live-chat' />
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#whatsappNumber" class="text-center">Whatsapp Number</a>
+                    </div>
+                    <div class='col-md-4 support-option'>
                         <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1676991710/OjaFunnel-Images/email-chat-removebg-preview_o6kgo7.png' alt='live-chat' />
                         <a href="{{route('user.main.email', Auth::user()->username)}}" class="text-center">Send Mail</a>
                     </div>
@@ -55,63 +59,39 @@
     </div>
     <!-- End Page-content -->
 </div>
-<div class="modal fade" id="sendMail" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Send Instant Mail to Ojafunnel
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
-                            <form method="post" action="{{route('user.send.message')}}">
-                                @csrf
-                                <div class="form">
-                                    <div class="col-lg-12">
-                                        <label>Subject</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter your email..." name="subject" class="input"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label>Your Message</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <textarea name="message"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-6">
-                                            <!-- <a href="#" class="text-decoration-none"> -->
-                                                <button type="button" class="btn px-3" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
-                                                    Cancel
-                                                </button>
-                                            <!-- </a> -->
-                                        </div>
-                                        <div class="col-6 text-end">
-                                            <!-- <a href="#" class="text-decoration-none"> -->
-                                                <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                    >
-                                                    Send
-                                                </button>
-                                            <!-- </a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
+<div class="modal fade" id="whatsappNumber" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Whatsapp Number List
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <table class="table align-middle table-nowrap">
+                        <thead class="tread">
+                            <tr>
+                                <th>S/N</th>
+                                <th>Whatsapp Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(App\Models\WhatsappNumber::latest()->get() as $whatsapp)
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td>
+                                    <a href="https://api.whatsapp.com/send?phone={{$whatsapp->phone_number}}" target="_blank" class="text-body fw-bold">{{$whatsapp->phone_number}}</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <!-- END layout-wrapper -->
 @endsection
