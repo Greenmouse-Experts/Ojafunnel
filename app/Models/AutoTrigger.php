@@ -6,29 +6,29 @@
  * Model class for logging triggered events
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\Automation\Action;
-use Acelle\Library\Automation\Trigger;
-use Acelle\Library\Automation\Send;
-use Acelle\Library\Automation\Wait;
+use App\Library\Automation\Action;
+use App\Library\Automation\Trigger;
+use App\Library\Automation\Send;
+use App\Library\Automation\Wait;
 use Exception;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 
 class AutoTrigger extends Model
 {
@@ -61,7 +61,7 @@ class AutoTrigger extends Model
      */
     public function subscriber()
     {
-        return $this->belongsTo('Acelle\Model\Subscriber');
+        return $this->belongsTo('App\Models\Subscriber');
     }
 
     /**
@@ -71,7 +71,7 @@ class AutoTrigger extends Model
      */
     public function automation2()
     {
-        return $this->belongsTo('Acelle\Model\Automation2');
+        return $this->belongsTo('App\Models\Automation2');
     }
 
     /**
@@ -81,7 +81,7 @@ class AutoTrigger extends Model
      */
     public function timelines()
     {
-        return $this->hasMany('Acelle\Model\Timeline')->orderBy('created_at', 'DESC');
+        return $this->hasMany('App\Models\Timeline')->orderBy('created_at', 'DESC');
     }
 
     // Mark the next action as "latest" and return it
@@ -257,7 +257,7 @@ class AutoTrigger extends Model
             throw new Exception("Automation does not have a trigger!!!!");
         }
 
-        return  $trigger;
+        return $trigger;
     }
 
     public function logger()

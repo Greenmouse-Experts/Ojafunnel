@@ -1,6 +1,6 @@
 <div class="mb-20">
     <input type="hidden" name="options[type]" value="woo-abandoned-cart" />
-    
+
     <div class="edit-connect-url">
         @include('helpers.form_control', [
             'type' => 'select',
@@ -8,7 +8,7 @@
             'label' => '',
             'name' => 'options[source_uid]',
             'value' => '',
-            'options' => request()->user()->customer->getSelectOptions('woocommerce'),
+            'options' => Auth::user()->customer->getSelectOptions('woocommerce'),
             'help_class' => 'trigger',
             'rules' => [],
         ])

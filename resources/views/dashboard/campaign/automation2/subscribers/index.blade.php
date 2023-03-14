@@ -1,4 +1,4 @@
-@extends('layouts.core.frontend_dark')
+@extends('dashboard.layouts.core.frontend_dark')
 
 @section('title', trans('messages.automation.create'))
 
@@ -44,7 +44,7 @@
                 <select class="select select2 top-menu-select" name="switch_automation">
                     <option value="--hidden--"></option>
                     @foreach($automation->getSwitchAutomations(Auth::user()->customer)->get() as $auto)
-                        <option value='{{ action('Automation2Controller@edit', $auto->uid) }}'>{{ $auto->name }}</option>
+                        <option value='{{ action('Automation2Controller@edit', ['username' => Auth::user->username, 'uid' => $auto->uid]) }}'>{{ $auto->name }}</option>
                     @endforeach
                 </select>
 
@@ -246,7 +246,7 @@ exit_to_app
             SubscribersIndex.getList().load();
         });
     </script>
-	
+
 	<script>
 		var bulkDeletePopup = new Popup();
 
@@ -254,10 +254,10 @@ exit_to_app
 			e.preventDefault();
 
 			var url = $(this).attr('href');
-			
+
 			bulkDeletePopup.load(url);
 		});
-		
+
 		var assignValues;
 		$(document).on('click', '.assign-values-button', function(e) {
 			e.preventDefault();
@@ -265,7 +265,7 @@ exit_to_app
         	var data = SubscribersIndex.getList().data();
 
 			var url = $(this).attr('href');
-			
+
 			assignValues = new Popup();
 			assignValues.load({
 				url: url,
@@ -339,7 +339,7 @@ exit_to_app
 			});
 
 			copyMovePopup.hide();
-			
+
 		});
 	</script>
 @endsection

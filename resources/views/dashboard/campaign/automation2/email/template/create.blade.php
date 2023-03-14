@@ -1,18 +1,19 @@
 @extends('layouts.popup.large')
 
-@section('content')    
-        
-    @include('automation2.email._tabs', ['tab' => 'template'])
-    
+@section('content')
+
+    @include('dashboard.campaign.automation2.email._tabs', ['tab' => 'template'])
+
     <div class="row">
         <div class="col-md-10">
-            <h5 class="mb-3">{{ trans('messages.automation.template.email_content') }}</h5>                
+            <h5 class="mb-3">{{ trans('messages.automation.template.email_content') }}</h5>
             <p>{{ trans('messages.automation.template.email_content.intro') }}</p>
-            
+
             <div class="row">
                 <div class="col-md-10">
                     <ul class="hover-list">
-                        <li class="template-start" data-url="{{ action('Automation2Controller@templateLayout', [
+                        <li class="template-start" data-url="{{ route('user.automation.templateLayout', [
+                                'username' => Auth::user()->username,
                                 'uid' => $automation->uid,
                                 'email_uid' => $email->uid,
                             ]) }}"
@@ -30,7 +31,8 @@
                                 </button>
                             </div>
                         </li>
-                        <li class="template-start" data-url="{{ action('Automation2Controller@templateUpload', [
+                        <li class="template-start" data-url="{{ route('user.automation.templateUpload', [
+                                'username' => Auth::user()->username,
                                 'uid' => $automation->uid,
                                 'email_uid' => $email->uid,
                             ]) }}"
@@ -53,16 +55,16 @@
             </div>
         </div>
     </div>
-        
+
     <script>
         $(document).ready(function() {
-        
+
             $('.template-start').click(function() {
                 var url = $(this).attr('data-url');
-                
+
                 popup.load(url);
             });
-        
+
         });
     </script>
 @endsection

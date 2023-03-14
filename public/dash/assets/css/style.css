@@ -7863,16 +7863,16 @@ label.checker input:disabled ~ .checker-symbol {
 .form-control {
     font-size: 0.92rem;
 }
-.form-control, .select2 {
+.select2 {
     border-color: #bbb;
     border-radius: 5px;
-    border: solid 2px #ccc;
+    border: solid 2px transparent;
 }
 .form-control {
     padding: 0.29rem 0.75rem;
     height: 35px;
 }
-.form-control, .select2 {
+.form-control{
     border-color: #bbb;
     border-radius: 5px;
     border: solid 2px #ccc;

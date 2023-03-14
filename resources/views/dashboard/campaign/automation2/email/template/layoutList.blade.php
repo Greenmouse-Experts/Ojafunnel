@@ -13,8 +13,8 @@
             </div>
         @endforeach
     </div>
-        
-    
+
+
 @else
     <div class="empty-list">
         <i class="material-icons-outlined">featured_play_list</i>
@@ -29,16 +29,13 @@
 
     $('.template-choose').click(function(e) {
         e.preventDefault();
-        
-        var url = '{{ action('Automation2Controller@templateLayout', [
-            'uid' => $automation->uid,
-            'email_uid' => $email->uid,
-        ]) }}';
+
+        var url = '{{ route('user.automation.templateLayout', ['username' => Auth::user()->username,'uid' => $automation->uid,'email_uid' => $email->uid]) }}';
         var template_uid = $(this).attr('data-template');
-        
+
         // loading popup
         popup.loading();
-        
+
         $.ajax({
             url: url,
             type: 'POST',
@@ -47,16 +44,10 @@
                 template_uid: template_uid
             }
         }).always(function(response) {
-            popup.load('{{ action('Automation2Controller@emailTemplate', [
-                'uid' => $automation->uid,
-                'email_uid' => $email->uid,
-            ]) }}');
+            popup.load('{{ route('user.automation.emailTemplate', ['username' => Auth::user()->username,'uid' => $automation->uid, 'email_uid' => $email->uid]) }}');
 
             builderSelectPopup = new Popup({
-                url: '{{ action('Automation2Controller@templateBuilderSelect', [
-                    'uid' => $automation->uid,
-                    'email_uid' => $email->uid,
-                ]) }}'
+                url: '{{ route('user.automation.templateBuilderSelect', ['username' => Auth::user()->username,'uid' => $automation->uid,'email_uid' => $email->uid]) }}'
             });
             builderSelectPopup.load();
 

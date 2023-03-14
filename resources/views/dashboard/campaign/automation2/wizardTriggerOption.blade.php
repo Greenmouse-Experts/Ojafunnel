@@ -9,24 +9,24 @@
             <p class="mb-10">
                 {!! trans('messages.automation.trigger.' . $trigger_type . '.intro') !!}
             </p>
-                
-            <form id="trigger-select" action="{{ action("Automation2Controller@wizardTriggerOption") }}"
+
+            <form id="trigger-select" action="{{ route("user.automation.wizardTriggerOptionPost", Auth::user()->username) }}"
                 method="POST"
             >
                 {{ csrf_field() }}
-                
+
                 <input type="hidden" name="options[key]" value="{{ $trigger_type }}" />
                 <input type="hidden" name="trigger_type" value="{{ $trigger_type }}" />
                 <input type="hidden" name="" value="{{ $trigger_type }}" />
-                
-                @if(View::exists('automation2.wizard.' . $trigger_type))
-                    @include('automation2.wizard.' . $trigger_type)
+
+                @if(View::exists('dashboard.campaign.automation2.wizard.' . $trigger_type))
+                    @include('dashboard.campaign.automation2.wizard.' . $trigger_type)
                 @endif
 
                 <div class="automation-segment">
 
                 </div>
-                
+
                 <button class="btn btn-secondary select-trigger-confirm mt-2">
                     {{ trans('messages.automation.trigger.select_confirm') }}
                 </button>
@@ -39,7 +39,7 @@
             // automation segment
             var automationSegment = new Box($('#trigger-select .automation-segment'));
             $('#trigger-select [name=mail_list_uid]').change(function(e) {
-                var url = '{{ action('Automation2Controller@segmentSelect') }}?list_uid=' + $(this).val();
+                var url = '{{ route('user.automation.segmentSelectPost', ['username' => Auth::user()->username]) }}?list_uid=' + $(this).val();
 
                 automationSegment.load(url);
             });

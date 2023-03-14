@@ -1,11 +1,12 @@
 <?php
 
-namespace Acelle\Http\Controllers;
+namespace App\Http\Controllers\Mail;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Acelle\Model\AutoTrigger as AutoTriggerModel;
-use Acelle\Model\DeliveryAttempt;
-use Acelle\Model\Email;
+use App\Models\AutoTrigger as AutoTriggerModel;
+use App\Models\DeliveryAttempt;
+use App\Models\Email;
 use Exception;
 
 class AutoTrigger extends Controller

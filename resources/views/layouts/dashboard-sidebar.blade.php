@@ -21,7 +21,10 @@
                             <a href="{{route('user.email.checker', Auth::user()->username)}}" key="t-vertical" class="">Email Checker</a>
                         </li> --}}
                         <li>
-                            <a href="{{route('user.campaign.overview', Auth::user()->username)}}" key="t-vertical" class="py-2">Email Campaign</a>
+                            <a href="{{route('user.automation.index', Auth::user()->username)}}" key="t-vertical" class="leftbar-tooltip nav-link d-flex align-items-center py-3 lvl-1">Automation</a>
+                        </li>
+                        <li class="nav-item" rel0="MailListController">
+                            <a href="{{route('user.campaign.overview', Auth::user()->username)}}" key="t-vertical" class="leftbar-tooltip nav-link d-flex align-items-center py-3 lvl-1">Campaign</a>
                         </li>
                         {{-- <li>
                             <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Lists</a>
@@ -43,8 +46,8 @@
                                 <span>{{ trans('messages.lists') }}</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Sending</a>
+                        <li class="nav-item" rel0="MailListController">
+                            <a href="javascript: void(0);" class="has-arrow leftbar-tooltip nav-link d-flex align-items-center py-3 lvl-1" key="t-candidate">Sending</a>
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="{{route('user.sending-domain.index', Auth::user()->username)}}" key="t-tui-calendar">Sending Domains</a>
                                 </li>
@@ -53,9 +56,7 @@
                                 <li><a href="{{route('user.tracking-domain.index', Auth::user()->username)}}" key="t-tui-calendar">Tracking Domain</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="{{route('user.automation.index', Auth::user()->username)}}" key="t-vertical" class="py-2">Automation Campaign</a>
-                        </li>
+
                     </ul>
                 <li>
                     <a href="{{route('user.choose.temp', Auth::user()->username)}}">

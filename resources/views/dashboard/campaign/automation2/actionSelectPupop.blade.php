@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <h3 class="mb-3">{{ trans('messages.automation.add_an_action') }}</h3>
             <p>{{ trans('messages.automation.action.intro') }}</p>
-                
+
             <div class="line-list">
                 @foreach ($types as $type)
                     @php
@@ -45,7 +45,7 @@
             e.stopPropagation();
             e.stopImmediatePropagation();
 
-            var url = '{!! action('Automation2Controller@operationSelect', $automation->uid) !!}';
+            var url = '{{ route('user.automation.operationSelect', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}';
             popup.load(url);
         });
     </script>

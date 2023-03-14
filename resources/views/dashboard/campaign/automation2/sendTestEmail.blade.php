@@ -17,7 +17,7 @@
                 'class' => 'email',
                 'value' => request()->has('email') ? request()->email : '',
                 'label' => trans('messages.enter_an_email_address_for_testing_campaign'),
-                'options' => Acelle\Library\Tool::timeUnitOptions(),
+                'options' => \App\Library\Tool::timeUnitOptions(),
                 'include_blank' => trans('messages.choose'),
                 'help_class' => 'campaign',
                 'rules' => ['send_test_email' => 'required']
@@ -38,9 +38,7 @@
         });
 
         var Automation2SendTestEmail = {
-            action: '{{ action('Automation2Controller@sendTestEmail', [
-                'email_uid' => $email->uid,
-            ]) }}',
+            action: '{{ route('user.automation.sendTestEmail', ['username' => Auth::user()->username, 'email_uid' => $email->uid]) }}',
 
             submit: function(data) {
                 addMaskLoading();

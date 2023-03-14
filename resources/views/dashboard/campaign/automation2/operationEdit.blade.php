@@ -4,16 +4,17 @@
 
 <div class="row">
     <div class="col-md-12">
-        <form id="operation-edit" action="{{ action('Automation2Controller@operationEdit', [
+        <form id="operation-edit" action="{{ route('user.automation.operationEdit', [
+            'username' => Auth::user()->username,
             'uid' => $automation->uid,
             'operation' => request()->operation
         ]) }}" method="POST" class="form-validate-jquery">
             {{ csrf_field() }}
 
             <input type="hidden" name="operation" value="{{ request()->operation }}" />
-            
-            @include('automation2.operation.' . request()->operation)
-            
+
+            @include('dashboard.campaign.automation2.operation.' . request()->operation)
+
             <button class="btn btn-secondary select-action-confirm">
                     {{ trans('messages.automation.operation.save') }}
             </button>
@@ -31,7 +32,7 @@
         if (!$(this).valid()) {
             return;
         }
-        
+
         $.ajax({
             url: url,
             method: 'POST',
@@ -48,14 +49,14 @@
             success: function (response) {
                 tree.getSelected().setOptions(response.options);
                 tree.getSelected().setTitle(response.title);
-                
+
                 // save tree
                 saveData(function() {
                     popup.hide();
-                    
+
                     // reload sidebar
                     sidebar.load();
-                    
+
                     notify({
     type: 'success',
     title: '{!! trans('messages.notify.success') !!}',

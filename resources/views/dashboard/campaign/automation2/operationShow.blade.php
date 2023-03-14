@@ -1,8 +1,8 @@
-@include('automation2._back')
+@include('dashboard.campaign.automation2._back')
 
 <h4 class="mb-3">{{ trans('messages.automation.operation.' . $element->getOption('operation_type')) }}</h4>
 <p>{!! trans('messages.automation.operation.' .$element->getOption('operation_type'). '.desc', [
-    'list_name' => $element->getOption('target_list_uid') ? \Acelle\Model\MailList::findByUid($element->getOption('target_list_uid'))->name : '',
+    'list_name' => $element->getOption('target_list_uid') ? \App\Models\MailList::findByUid($element->getOption('target_list_uid'))->name : '',
     'tags' => $element->getOption('tags') ? '<span class="label bg-running mr-1">' . implode('</span><span class="label bg-running mr-1">', $element->getOption('tags')) . '</span>' : '',
 ]) !!}</p>
 
@@ -17,7 +17,7 @@
         <tbody>
             @foreach($element->getOption('update') as $update)
                 <tr>
-                    <th scope="row">{{ \Acelle\Model\Field::findByUid($update->field_uid)->label }}</th>
+                    <th scope="row">{{ \App\Models\Field::findByUid($update->field_uid)->label }}</th>
                     <td>{{ $update->value }}</td>
                 </tr>
             @endforeach
@@ -32,13 +32,15 @@
     }
 @endphp
 
-<a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@operationEdit', [
+<a href="javascript:;" onclick="popup.load('{{ route('user.automation.operationEdit', [
+    'username' => Auth::user()->username,
     'uid' => $automation->uid,
     'operation' =>  $operation . '_contact',
     'id' => request()->id,
 ]) }}')" class="btn btn-secondary">{{ trans('messages.automation.edit_operation') }}</a>
 
-<a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@operationSelect', [
+<a href="javascript:;" onclick="popup.load('{{ route('user.automation.operationSelect', [
+    'username' => Auth::user()->username,
     'uid' => $automation->uid,
     'id' => request()->id,
 ]) }}')" class="btn btn-secondary">{{ trans('messages.automation.operation.change') }}</a>
@@ -49,7 +51,7 @@
             {{ trans('messages.automation.dangerous_zone') }}
         </h4>
         <p class="">
-            {{ trans('messages.automation.action.delete.wording') }}                
+            {{ trans('messages.automation.action.delete.wording') }}
         </p>
         <div class="mt-3">
             <a href="javascript:;" data-confirm="{{ trans('messages.automation.action.delete.confirm') }}"
@@ -66,22 +68,22 @@ delete
 
     $('.operation-delete').on('click', function(e) {
         e.preventDefault();
-        
+
         var confirm = $(this).attr('data-confirm');
         var dialog = new Dialog('confirm', {
             message: confirm,
             ok: function(dialog) {
                 // remove current node
                 tree.getSelected().remove();
-                
+
                 // save tree
                 saveData(function() {
                     sidebar.load();
                     // notify
                     notify('success', '{{ trans('messages.notify.success') }}', '{{ trans('messages.automation.action.deteled') }}');
-                    
+
                     // load default sidebar
-                    sidebar.load('{{ action('Automation2Controller@settings', $automation->uid) }}');
+                    sidebar.load('{{ route('user.automation.settings', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}');
                 });
             },
         });

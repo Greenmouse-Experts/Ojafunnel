@@ -7,7 +7,7 @@
 
 <div class="row">
     @php
-        $delayOptions = \Acelle\Model\Automation2::getDelayOptions();
+        $delayOptions = \App\Models\Automation2::getDelayOptions();
         $exist = false;
 
         foreach($delayOptions as $deplayOption) {
@@ -23,7 +23,7 @@
             $moreOptions = [['text' => $text, 'value' => $text]];
         }
     @endphp
-    <div class="col-md-6 wait-time">    
+    <div class="col-md-6 wait-time">
         @include('helpers.form_control', [
             'type' => 'select',
             'class' => '',
@@ -45,7 +45,7 @@
         var val = $(this).val();
 
         if (val == 'custom') {
-            waitTimePopup.load('{{ action('Automation2Controller@waitTime', $automation->uid) }}');
+            waitTimePopup.load('{{ route('user.automation.waitTime', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}');
         }
     });
 </script>

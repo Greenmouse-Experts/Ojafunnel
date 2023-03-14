@@ -3,7 +3,8 @@
 @section('content')
 	<div class="row">
         <div class="col-md-12">
-            <form class="tag-contact" action="{{ action("Automation2Controller@tagContact", [
+            <form class="tag-contact" action="{{ route("user.automation.tagContact", [
+                    'username' => Auth::username,
                     'uid' => $automation->uid,
                     'contact_uid' => $contact->uid,
                 ]) }}"

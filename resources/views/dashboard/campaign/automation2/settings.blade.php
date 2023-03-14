@@ -1,14 +1,14 @@
-@include('automation2._info')
-				
-@include('automation2._tabs', ['tab' => 'settings'])
-    
+@include('dashboard.campaign.automation2._info')
+
+@include('dashboard.campaign.automation2._tabs', ['tab' => 'settings'])
+
 <p class="mt-3">
     {!! trans('messages.automation.settings.intro') !!}
 </p>
-    
-<form id="automationUpdate" action="{{ action("Automation2Controller@update", $automation->uid) }}" method="POST" class="form-validate-jqueryz">
+
+<form id="automationUpdate" action="{{ route("user.automation.update", ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}" method="POST" class="form-validate-jqueryz">
     {{ csrf_field() }}
-    
+
     <div class="row mb-3">
         <div class="col-md-8">
             @include('helpers.form_control', [
@@ -20,7 +20,7 @@
                 'help_class' => 'automation',
                 'rules' => $automation->rules(),
             ])
-            
+
             @include('helpers.form_control', [
                 'name' => 'mail_list_uid',
                 'include_blank' => trans('messages.automation.choose_list'),
@@ -34,20 +34,20 @@
             <div class="automation-segment">
 
             </div>
-            
+
             @include('helpers.form_control', [
                 'type' => 'select',
                 'name' => 'timezone',
                 'value' => \Auth::user()->customer->timezone,
-                'options' => Tool::getTimezoneSelectOptions(),
+                'options' => \App\Library\Tool::getTimezoneSelectOptions(),
                 'include_blank' => trans('messages.choose'),
                 'rules' => $automation->rules(),
                 'disabled' => true,
             ])
         </div>
     </div>
-    
-    <button class="btn btn-secondary mt-20">{{ trans('messages.automation.settings.save') }}</button>            
+
+    <button class="btn btn-secondary mt-20">{{ trans('messages.automation.settings.save') }}</button>
 </form>
 
 <div class="mt-4 d-flex py-3">
@@ -56,10 +56,10 @@
             {{ trans('messages.automation.dangerous_zone') }}
         </h4>
         <p class="">
-            {{ trans('messages.automation.delete.wording') }}        
+            {{ trans('messages.automation.delete.wording') }}
         </p>
         <div class="mt-3">
-            <a href="{{ action('Automation2Controller@delete', ['uids' => $automation->uid]) }}"
+            <a href="{{ route('user.automation.delete', ['username' => Auth::user()->username, 'uids' => $automation->uid]) }}"
                 data-confirm="{{ trans('messages.automation.delete.confirm') }}"
                 class="btn btn-secondary automation-delete"
             >
@@ -70,12 +70,12 @@ delete
         </div>
     </div>
 </div>
-    
+
 <script>
     // automation segment
     var automationSegment = new Box($('.automation-segment'));
     $('[name=mail_list_uid]').change(function(e) {
-        var url = '{{ action('Automation2Controller@segmentSelect') }}?uid={{ $automation->uid }}&list_uid=' + $(this).val();
+        var url = '{{ route('user.automation.segmentSelectPost', Auth::user()->username) }}?uid={{ $automation->uid }}&list_uid=' + $(this).val();
 
         automationSegment.load(url);
     });
@@ -87,13 +87,13 @@ delete
 
     $('#automationUpdate').submit(function(e) {
         e.preventDefault();
-        
+
         var form = $(this);
         var url = form.attr('action');
-        
+
         // loading effect
         sidebar.loading();
-        
+
         $.ajax({
             url: url,
             method: 'POST',
@@ -106,7 +106,7 @@ delete
              },
              success: function (response) {
                 sidebar.load();
-                
+
                 notify(response.status, '{{ trans('messages.notify.success') }}', response.message);
              }
         });
@@ -119,8 +119,8 @@ delete
             var dialog = new Dialog('confirm', {
                 message: confirm,
                 ok: function(dialog) {
-                    // store new value        
-                    $sel.trigger('update');     
+                    // store new value
+                    $sel.trigger('update');
                 },
                 cancel: function(dialog) {
                     // reset
@@ -143,7 +143,7 @@ delete
 
     $('.automation-delete').click(function(e) {
         e.preventDefault();
-        
+
         var confirm = $(this).attr('data-confirm');
         var url = $(this).attr('href');
 
@@ -167,7 +167,7 @@ delete
                         addMaskLoading(
                             '{{ trans('messages.automation.redirect_to_index') }}',
                             function() {
-                                window.location = '{{ action('Automation2Controller@index') }}';
+                                window.location = '{{ route('user.automation.index', Auth::user()->username) }}';
                             },
                             { wait: 2000 }
                         );

@@ -1,4 +1,4 @@
-@include('automation2._back')
+@include('dashboard.campaign.automation2._back')
 
 <h4 class="mb-20 mt-3"h5>
     {{ trans('messages.automation.action.send-an-email') }}
@@ -7,17 +7,18 @@
     {{ trans('messages.automation.action.send-an-email.intro') }}
 </p>
 
-<form action="{{ action('Automation2Controller@emailSetup', $automation->uid) }}" method="POST" class="form-validate-jqueryz">
+<form action="{{ route('user.automation.emailSetup', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}" method="POST" class="form-validate-jqueryz">
     {{ csrf_field() }}
-    
-    @include('automation2.email._summary')
-    
-    <div class="trigger-action mt-4">    
+
+    @include('dashboard.campaign.automation2.email._summary')
+
+    <div class="trigger-action mt-4">
         <span class="btn btn-secondary email-settings-change mr-1"
         >
             {{ trans('messages.automation.email.settings') }}
         </span>
-        <a onclick="popupwindow('{{ action('Automation2Controller@templatePreview', [
+        <a onclick="popupwindow('{{ route('user.automation.templatePreview', [
+                            'username' => Auth::user()->username,
                             'uid' => $automation->uid,
                             'email_uid' => $email->uid,
                         ]) }}', '{{ $automation->name }}', 800, 800)"
@@ -27,7 +28,7 @@
                         {{ trans('messages.automation.template.preview') }}
                     </a>
     </div>
-    
+
 <form>
 
 <div class="mt-4 d-flex py-3">
@@ -36,10 +37,11 @@
             {{ trans('messages.automation.dangerous_zone') }}
         </h4>
         <p class="">
-            {{ trans('messages.automation.action.delete.wording') }}         
+            {{ trans('messages.automation.action.delete.wording') }}
         </p>
         <div class="mt-3">
-            <a href="{{ action('Automation2Controller@emailDelete', [
+            <a href="{{ route('user.automation.mailDelete', [
+                'username' => Auth::user()->username,
                 'uid' => $automation->uid,
                 'email_uid' => $email->uid,
             ]) }}" data-confirm="{{ trans('messages.automation.action.delete.confirm') }}" class="btn btn-secondary email-action-delete">
@@ -55,15 +57,15 @@ delete
     // Click on exist action
     $('.email-settings-change').click(function(e) {
         e.preventDefault();
-        
-        var url = '{{ action('Automation2Controller@emailTemplate', ['uid' => $automation->uid, 'email_uid' => $email->uid]) }}';
-        
+
+        var url = '{{ route('user.automation.emailTemplate', ['username' => Auth::user()->username, 'uid' => $automation->uid, 'email_uid' => $email->uid]) }}';
+
         popup.load(url);
     });
-    
+
     $('.email-action-delete').click(function(e) {
         e.preventDefault();
-        
+
         var confirm = $(this).attr('data-confirm');
         var url = $(this).attr('href');
 
@@ -88,21 +90,21 @@ delete
                     success: function (response) {
                         // remove current node
                         tree.getSelected().remove();
-                        
+
                         // save tree
-                        saveData(function() {                            
+                        saveData(function() {
                             // notify
                             notify({
     type: 'success',
     title: '{!! trans('messages.notify.success') !!}',
     message: response.message
 });
-                            
+
                             // load default sidebar
-                            sidebar.load('{{ action('Automation2Controller@settings', $automation->uid) }}');
+                            sidebar.load('{{ route('user.automation.settings', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}');
                         });
                     }
-                });                        
+                });
             },
         });
     });

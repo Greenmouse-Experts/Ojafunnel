@@ -19,12 +19,12 @@
 				<td>
 					<div class="d-flex">
 						<div class="subscriber-avatar">
-							<a href="{{ action('SubscriberController@edit', ['list_uid' => $list->uid ,'uid' => $subscriber->uid]) }}">
-								<img src="{{ (isSiteDemo() ? 'https://i.pravatar.cc/300?v=' . $key : action('SubscriberController@avatar',  $subscriber->uid)) }}" />
+							<a href="{{ route('user.subscriber.edit', ['username' => Auth::user->username, 'list_uid' => $list->uid ,'uid' => $subscriber->uid]) }}">
+								<img src="{{ (isSiteDemo() ? 'https://i.pravatar.cc/300?v=' . $key : route('user.subscriber.avatar',  $subscriber->uid)) }}" />
 							</a>
 						</div>
 						<div class="no-margin text-bold">
-							<a class="kq_search" href="{{ action('SubscriberController@edit', ['list_uid' => $list->uid ,'uid' => $subscriber->uid]) }}">
+							<a class="kq_search" href="{{ route('user.subscriber.edit', ['username' => Auth::user->username, 'list_uid' => $list->uid ,'uid' => $subscriber->uid]) }}">
 								{{ $subscriber->email }}
 							</a>
 							<br />
@@ -60,31 +60,33 @@
 				@endif
 
 				<td class="text-end text-nowrap">
-					@if (\Gate::allows('update', $subscriber))
-						<a href="{{ action('Automation2Controller@subscribersShow', [
+					{{-- @if (\Gate::allows('update', $subscriber)) --}}
+						<a href="{{ route('Automation2Controller@subscribersShow', [
+                            'username' => Auth::user->username,
 							'uid' => $automation->uid,
 							'subscriber_uid' => $subscriber->uid
 						]) }}" role="button" class="btn btn-secondary btn-icon">
 							{{ trans('messages.automation.subscriber.view') }}
 						</a>
-					@endif
+					{{-- @endif --}}
 					<div class="btn-group">
 						<button role="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"></button>
 						<ul class="dropdown-menu dropdown-menu-end">
-							@if (\Gate::allows('subscribe', $subscriber))
-								<li><a class="dropdown-item list-action-single" link-method="POST" href="{{ action('SubscriberController@subscribe', ['list_uid' => $list->uid, "uids" => $subscriber->uid]) }}"><span class="material-icons-outlined">
+							{{-- @if (\Gate::allows('subscribe', $subscriber)) --}}
+								<li><a class="dropdown-item list-action-single" link-method="POST" href="{{ route('user.subscriber.subscribe', ['username' => Auth::user->username, 'list_uid' => $list->uid, "uids" => $subscriber->uid]) }}"><span class="material-icons-outlined">
 mark_email_read
 </span> {{ trans('messages.subscribe') }}</a></li>
-							@endif
-							@if (\Gate::allows('unsubscribe', $subscriber))
-								<li><a class="dropdown-item list-action-single" link-method="POST" href="{{ action('SubscriberController@unsubscribe', ['list_uid' => $list->uid, "uids" => $subscriber->uid]) }}"><span class="material-icons-round">
+							{{-- @endif --}}
+							{{-- @if (\Gate::allows('unsubscribe', $subscriber)) --}}
+								<li><a class="dropdown-item list-action-single" link-method="POST" href="{{ route('user.subscriber.unsubscribe', ['username' => Auth::user->username, 'list_uid' => $list->uid, "uids" => $subscriber->uid]) }}"><span class="material-icons-round">
 logout
 </span> {{ trans('messages.unsubscribe') }}</a></li>
-							@endif
+							{{-- @endif --}}
 
 							<li>
 								<a href="#copy" class="dropdown-item copy_move_subscriber"
-									data-url="{{ action('SubscriberController@copyMoveForm', [
+									data-url="{{ route('user.subscriber.copyMoveForm', [
+                                        'username' => Auth::user->username,
 										'uids' => $subscriber->uid,
 										'from_uid' => $list->uid,
 										'action' => 'copy',
@@ -96,7 +98,8 @@ copy_all
 							</li>
 							<li>
 								<a href="#move" class="dropdown-item copy_move_subscriber"
-									data-url="{{ action('SubscriberController@copyMoveForm', [
+									data-url="{{ route('user.subscriber.copyMoveForm', [
+                                        'username' => Auth::user->username,
 										'uids' => $subscriber->uid,
 										'from_uid' => $list->uid,
 										'action' => 'move',
@@ -106,20 +109,20 @@ exit_to_app
 </span> {{ trans('messages.move_to') }}
 								</a>
 							</li>
-							@if (\Gate::allows('update', $subscriber))
+							{{-- @if (\Gate::allows('update', $subscriber)) --}}
 								<li>
-									<a class="dropdown-item list-action-single" link-method="POST" link-confirm="{{ trans('messages.subscribers.resend_confirmation_email.confirm') }}" href="{{ action('SubscriberController@resendConfirmationEmail', ['list_uid' => $list->uid, "uids" => $subscriber->uid]) }}">
+									<a class="dropdown-item list-action-single" link-method="POST" link-confirm="{{ trans('messages.subscribers.resend_confirmation_email.confirm') }}" href="{{ route('user.subscriber.resendConfirmationEmail', ['username' => Auth::user->username, 'list_uid' => $list->uid, "uids" => $subscriber->uid]) }}">
 										<span class="material-icons-outlined">
 mark_email_read
 </span> {{ trans('messages.subscribers.resend_confirmation_email') }}
 									</a>
 								</li>
-							@endif
-							@if (\Gate::allows('delete', $subscriber))
-								<li><a class="dropdown-item list-action-single" link-confirm="{{ trans('messages.delete_subscribers_confirm') }}" href="{{ action('SubscriberController@delete', ['list_uid' => $list->uid, "uids" => $subscriber->uid]) }}"><span class="material-icons-outlined">
+							{{-- @endif --}}
+							{{-- @if (\Gate::allows('delete', $subscriber)) --}}
+								<li><a class="dropdown-item list-action-single" link-confirm="{{ trans('messages.delete_subscribers_confirm') }}" href="{{ route('user.subscriber.delete', ['username' => Auth::user->username, 'list_uid' => $list->uid, "uids" => $subscriber->uid]) }}"><span class="material-icons-outlined">
 delete_outline
 </span> {{ trans("messages.delete") }}</a></li>
-							@endif	
+							{{-- @endif	 --}}
 						</ul>
 					</div>
 				</td>
@@ -128,7 +131,7 @@ delete_outline
 		@endforeach
 	</table>
 	@include('elements/_per_page_select', ["items" => $subscribers])
-	
+
 @elseif (!empty(request()->keyword))
 	<div class="empty-list">
 		<span class="material-icons-outlined">

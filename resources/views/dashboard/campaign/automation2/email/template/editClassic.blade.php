@@ -3,7 +3,7 @@
 @section('title', trans('messages.edit_template'))
 
 @section('head')
-	<script type="text/javascript" src="{{ URL::asset('core/tinymce/tinymce.min.js') }}"></script>        
+	<script type="text/javascript" src="{{ URL::asset('core/tinymce/tinymce.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('core/js/editor.js') }}"></script>
 
     <script src="{{ URL::asset('core/js/UrlAutoFill.js') }}"></script>
@@ -27,7 +27,8 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="{{ action('Automation2Controller@templateEditPlain', [
+        <a href="{{ route('user.automation.templateEditPlain', [
+            'username' => Auth::user()->username,
             'uid' => $automation->uid,
             'email_uid' => $email->uid,
         ]) }}"
@@ -47,7 +48,8 @@
 @endsection
 
 @section('content')
-    <form id="classic-builder-form" action="{{ action('Automation2Controller@templateEditClassic', [
+    <form id="classic-builder-form" action="{{ route('user.automation.templateEditClassic', [
+        'username' => Auth::user()->username,
         'uid' => $automation->uid,
         'email_uid' => $email->uid,
     ]) }}" method="POST" class="ajax_upload_form builder-classic-form form-validate-jquery">
@@ -64,12 +66,12 @@
                     'name' => 'content',
                     'value' => $email->getTemplateContent(),
                     'rules' => ['content' => 'required']
-                ])           
+                ])
             </div>
             <div class="col-md-3 pr-0 pb-0 sidebar pr-4 pt-4 pl-4" style="overflow:auto;background:#f5f5f5">
-                @include('elements._tags', ['tags' => Acelle\Model\Template::tags($automation->mailList)])
-            </div>            
-        </div>   
+                @include('elements._tags', ['tags' => \App\Models\Template::tags($automation->mailList)])
+            </div>
+        </div>
     <form>
 
     <script>
@@ -132,8 +134,8 @@
 });
                         }
                     });
-                });         
-            }     
+                });
+            }
         });
 
         $('.sidebar').css('height', parent.$('.full-iframe-popup').height()-53);
@@ -167,7 +169,7 @@
                 filemanager_title:"Responsive Filemanager" ,
                 external_plugins: { "filemanager" : APP_URL.replace('/index.php','')+"/filemanager2/plugin.min.js"},
                 setup: function (editor) {
-                    
+
                     /* Menu button that has a simple "insert date" menu item, and a submenu containing other formats. */
                     /* Clicking the first menu item or one of the submenu items inserts the date in the selected format. */
                     editor.ui.registry.addMenuButton('acelletags', {
@@ -182,7 +184,7 @@
                             onAction: function (_) {
                                 editor.insertContent('<a href="{UNSUBSCRIBE_URL}">{{ trans('messages.editor.unsubscribe_text') }}</a>');
                             }
-                        });                        
+                        });
 
                         // web view url
                         items.push({
@@ -193,7 +195,7 @@
                             }
                         });
 
-                        @foreach(Acelle\Model\Template::tags($automation->mailList) as $tag)
+                        @foreach(\App\Models\Template::tags($automation->mailList) as $tag)
                             items.push({
                                 type: 'menuitem',
                                 text: '{{ $tag["name"] }}',

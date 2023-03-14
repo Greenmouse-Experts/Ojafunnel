@@ -2,7 +2,7 @@
     <p class="insight-intro mb-2 small">
         {{ trans('messages.automation.contact.all_count', ['count' => format_number($contacts->total())]) }}
     </p>
-        
+
     <div class="mc-table small border-top">
         @foreach ($contacts as $key => $contact)
             @php
@@ -10,12 +10,13 @@
             @endphp
             <div class="mc-row d-flex align-items-center">
                 <div class="media trigger">
-                    <a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@profile', [
+                    <a href="javascript:;" onclick="popup.load('{{ route('user.automation.profile', [
+                        'username' => Auth::user()->username,
                         'uid' => $automation->uid,
                         'contact_uid' => $contact->uid,
                     ]) }}')" class="font-weight-semibold d-block">
                         @if ($contact->avatar)
-                            <img src="{{ action('SubscriberController@avatar',  $contact->uid) }}" haha="https://i.pravatar.cc/30{{ $key }}" />
+                            <img src="{{ route('user.subscriber.avatar',  ['username' => Auht::user()->username, 'uid' => $contact->uid]) }}" haha="https://i.pravatar.cc/30{{ $key }}" />
                         @elseif(isSiteDemo())
                             <img src="https://i.pravatar.cc/30{{ $key }}" />
                         @else
@@ -24,7 +25,8 @@
                     </a>
                 </div>
                 <div class="flex-fill" style="width: 20%">
-                    <a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@profile', [
+                    <a href="javascript:;" onclick="popup.load('{{ route('user.automation.profile', [
+                        'username' => Auth::user()->username,
                         'uid' => $automation->uid,
                         'contact_uid' => $contact->uid,
                     ]) }}')" class="font-weight-semibold d-block">
@@ -32,7 +34,7 @@
                     </a>
                     <desc>{{ $contact->email }}</desc>
                 </div>
-                
+
                 <div class="actions-points">
                     @if (!is_null($trigger))
                         @php
@@ -58,7 +60,7 @@
                         </label>
                         <desc>
                             <a target="_blank" style="color:blue;text-decoration: underline;"
-                                href="{{ action('Automation2Controller@triggerNow', [ 'automation' => $automation->uid, 'subscriber' => $contact->uid ]) }}"
+                                href="{{ route('user.automation.triggerNow', ['username' => Auth::user()->username, 'automation' => $automation->uid, 'subscriber' => $contact->uid ]) }}"
                                 class="timeline-trigger-now">
                                 {{ trans('messages.automation.trigger_now') }}
                             </a>
@@ -80,18 +82,18 @@
                         </label>
                         <desc>{{ trans('messages.automation.last_activity') }} •
                             <a target="_blank" target="_blank" style="color:blue;text-decoration: underline;"
-                                href="{{ action('AutoTrigger@check', [ 'id' => $trigger->id ]) }}"
+                                href="{{ route('user.autotrigger.check', ['username' => Auth::user()->username , 'id' => $trigger->id ]) }}"
                                 class="trigger-check"
                             >
                                 {{ trans('messages.trigger.check') }}
                             </a>
                         </desc>
                     @endif
-                    
+
                 </div>
             </div>
         @endforeach
-        
+
     @include('helpers._pagination', ['paginator' => $contacts] )
 @else
     <div class="empty-list">
@@ -118,7 +120,7 @@
                     method: 'GET',
                     success: function (response) {
                         // notify
-                        // notify(response.status, '{{ trans('messages.notify.success') }}', response.message); 
+                        // notify(response.status, '{{ trans('messages.notify.success') }}', response.message);
 
                         listContact.load();
 
@@ -141,7 +143,7 @@
             method: 'GET',
             success: function (response) {
                 // notify
-                // notify(response.status, '{{ trans('messages.notify.success') }}', response.message); 
+                // notify(response.status, '{{ trans('messages.notify.success') }}', response.message);
 
                 listContact.load();
 

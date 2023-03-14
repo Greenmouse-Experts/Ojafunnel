@@ -2,7 +2,7 @@
     <div style="width: 70%" class="mr-auto">
         <h2 class="mb-2 email_title">{{ trans('messages.automation.automation_email') }}</h2>
         <p>{{ trans('messages.automation.automation_email.intro') }}</p>
-    </div>    
+    </div>
     <div class="header-action">
         <button class="btn btn-secondary d-flex align-items-center back_to_workflow" onclick="sidebar.load(); popup.hide()">
             <i class="material-icons-outlined me-2">
@@ -10,12 +10,13 @@
             </i>
             {{ trans('messages.automation.back_to_workflow') }}
         </button>
-    </div>  
+    </div>
 </div>
 
 <ul class="nav nav-tabs mb-4 email_tabs nav-underline">
     <li class="nav-item">
-        <a class="nav-link setup" href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@emailSetup', [
+        <a class="nav-link setup" href="javascript:;" onclick="popup.load('{{ route('user.automation.emailSetup', [
+            'username' => Auth::user()->username,
             'uid' => $automation->uid,
             'email_uid' => $email->uid,
         ]) }}')">
@@ -27,8 +28,9 @@ settings
     </li>
     <li class="nav-item">
         <a class="nav-link template {{ (!isset($email->id)) ? 'disabled' : '' }}" href="javascript:;"
-            @if (isset($email->id))                    
-                onclick="popup.load('{{ action('Automation2Controller@emailTemplate', [
+            @if (isset($email->id))
+                onclick="popup.load('{{ route('user.automation.emailTemplate', [
+                    'username' => Auth::user()->username,
                     'uid' => $automation->uid,
                     'email_uid' => $email->uid,
                 ]) }}')"
@@ -42,8 +44,9 @@ mark_email_unread
     </li>
     <li class="nav-item">
         <a class="nav-link confirm {{ (!isset($email->id)) ? 'disabled' : '' }}" href="javascript:;"
-            @if (isset($email->id))                    
-                onclick="popup.load('{{ action('Automation2Controller@emailConfirm', [
+            @if (isset($email->id))
+                onclick="popup.load('{{ route('user.automation.emailConfirm', [
+                    'username' => Auth::user()->username,
                     'uid' => $automation->uid,
                     'email_uid' => $email->uid,
                 ]) }}')"
@@ -56,7 +59,7 @@ mark_email_unread
         </a>
     </li>
 </ul>
-    
+
 <script>
     @if (isset($tab))
         $('.email_tabs .nav-link.{{ $tab }}').addClass('active');

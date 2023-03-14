@@ -1,38 +1,38 @@
 @extends('layouts.popup.large')
 
 @section('content')
-        
-    @include('automation2.email._tabs', ['tab' => 'setup'])
-        
-    <h5 class="mb-3">Email Setup</h5>    
+
+    @include('dashboard.campaign.automation2.email._tabs', ['tab' => 'setup'])
+
+    <h5 class="mb-3">Email Setup</h5>
     <p>{{ trans('messages.automation.email.setup.intro') }}</p>
-    
-    <form id="emailSetup" action="{{ action('Automation2Controller@emailSetup', $automation->uid) }}" method="POST">
+
+    <form id="emailSetup" action="{{ route('user.automation.emailSetup', ['username' => Auth::user()->username, "uid" => $automation->uid]) }}" method="POST">
         {{ csrf_field() }}
-        
+
         <input type="hidden" name="email_uid" value="{{ $email->uid }}" />
         <input type="hidden" name="action_id" value="{{ $email->action_id }}" />
-    
+
         <div class="row">
-            <div class="col-md-6">                                            
+            <div class="col-md-6">
                 @include('helpers.form_control', ['type' => 'text',
                     'name' => 'subject',
                     'label' => trans('messages.email_subject'),
                     'value' => $email->subject,
                     'rules' => $email->rules(),
                     'help_class' => 'email',
-                    'placeholder' => trans('messages.automation.email.subject.placeholder'), 
+                    'placeholder' => trans('messages.automation.email.subject.placeholder'),
                 ])
-                                                
+
                 @include('helpers.form_control', ['type' => 'text',
                     'name' => 'from_name',
                     'label' => trans('messages.from_name'),
                     'value' => $email->from_name,
                     'rules' => $email->rules(),
                     'help_class' => 'email',
-                    'placeholder' => trans('messages.automation.email.from_name.placeholder'), 
+                    'placeholder' => trans('messages.automation.email.from_name.placeholder'),
                 ])
-                
+
                 @include('helpers.form_control', [
                     'type' => 'autofill',
                     'id' => 'sender_from_input',
@@ -41,32 +41,32 @@
                     'value' => $email->from_email,
                     'rules' => $email->rules(),
                     'help_class' => 'email',
-                    'url' => action('SenderController@dropbox'),
+                    'url' => route('user.sender.dropbox',  Auth::user()->username),
                     'empty' => trans('messages.sender.dropbox.empty'),
                     'error' => trans('messages.sender.dropbox.error.' . Auth::user()->customer->allowUnverifiedFromEmailAddress(), [
-                        'sender_link' => action('SenderController@index'),
+                        'sender_link' => route('user.sender.index', Auth::user()->username),
                     ]),
                     'header' => trans('messages.verified_senders'),
-                    'placeholder' => trans('messages.automation.email.from.placeholder'), 
+                    'placeholder' => trans('messages.automation.email.from.placeholder'),
                 ])
-                                                
+
                 @include('helpers.form_control', [
                     'type' => 'autofill',
                     'id' => 'sender_reply_to_input',
                     'name' => 'reply_to',
                     'label' => trans('messages.reply_to'),
                     'value' => $email->reply_to,
-                    'url' => action('SenderController@dropbox'),
+                    'url' => route('user.sender.dropbox',  Auth::user()->username),
                     'rules' => $email->rules(),
                     'help_class' => 'email',
                     'empty' => trans('messages.sender.dropbox.empty'),
                     'error' => trans('messages.sender.dropbox.reply.error.' . Auth::user()->customer->allowUnverifiedFromEmailAddress(), [
-                        'sender_link' => action('SenderController@index'),
+                        'sender_link' => route('user.sender.index', Auth::user()->username),
                     ]),
                     'header' => trans('messages.verified_senders'),
-                    'placeholder' => trans('messages.automation.email.from.placeholder'), 
+                    'placeholder' => trans('messages.automation.email.from.placeholder'),
                 ])
-                
+
             </div>
             <div class="col-md-6 segments-select-box">
                 <div class="form-group checkbox-right-switch">
@@ -78,7 +78,7 @@
                         'help_class' => 'email',
                         'rules' => $email->rules(),
                     ])
-                
+
                     @include('helpers.form_control', ['type' => 'checkbox3',
                         'name' => 'track_click',
                         'label' => trans('messages.automation.email.track_click'),
@@ -87,7 +87,7 @@
                         'help_class' => 'email',
                         'rules' => $email->rules(),
                     ])
-                    
+
                     @include('helpers.form_control', ['type' => 'checkbox3',
                         'name' => 'sign_dkim',
                         'label' => trans('messages.automation.email.add_sign_dkim'),
@@ -122,7 +122,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="text-end mt-5 {{ Auth::user()->customer->allowUnverifiedFromEmailAddress() ? '' : 'unverified_next_but' }}">
             <button class="btn btn-secondary">
                 <span class="d-flex align-items-center">
@@ -131,7 +131,7 @@
             </button>
         </div>
     </form>
-    
+
     <script>
         function checkUnverified() {
 			if(!$('.autofill-error:visible').length) {
@@ -168,16 +168,16 @@
             $('#sender_reply_to_input').focusout();
             box2.updateErrorMessage();
         })
-        
+
         $('#emailSetup').submit(function(e) {
             e.preventDefault();
-            
+            console.log('h1');
             var form = $(this);
             var url = form.attr('action');
-            
+
             // loading effect
             popup.loading();
-            
+
             $.ajax({
                 url: url,
                 method: 'POST',
@@ -191,7 +191,7 @@
                  },
                  success: function (response) {
                     popup.load(response.url);
-                    
+
                     // set node title
                     tree.getSelected().setTitle(response.title);
                     // merge options with reponse options
@@ -202,10 +202,10 @@
 
                     // validate
 					tree.getSelected().validate();
-                    
+
                     // save tree
 					saveData();
-                    
+
                     notify({
     type: 'success',
     title: '{!! trans('messages.notify.success') !!}',

@@ -6,44 +6,44 @@
  * Model for automations
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 use DB;
-use Acelle\Library\Automation\Action;
-use Acelle\Library\Automation\Trigger;
-use Acelle\Library\Automation\Send;
-use Acelle\Library\Automation\Wait;
-use Acelle\Library\Automation\Evaluate;
-use Acelle\Library\Automation\Operate;
+use App\Library\Automation\Action;
+use App\Library\Automation\Trigger;
+use App\Library\Automation\Send;
+use App\Library\Automation\Wait;
+use App\Library\Automation\Evaluate;
+use App\Library\Automation\Operate;
 use Carbon\Carbon;
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Formatter\LineFormatter;
-use Acelle\Library\Lockable;
-use Acelle\Model\Setting;
-use Acelle\Model\MailList;
-use Acelle\Model\Email;
+use App\Library\Lockable;
+use App\Models\Setting;
+use App\Models\MailList;
+use App\Models\Email;
 use DateTime;
 use DateTimeZone;
 use Exception;
 use Throwable;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 
 class Automation2 extends Model
 {
@@ -75,7 +75,11 @@ class Automation2 extends Model
      * @var array
      */
     protected $fillable = [
-        'uid', 'name', 'mail_list_id', 'status', 'data'
+        'uid',
+        'name',
+        'mail_list_id',
+        'status',
+        'data'
     ];
 
     /**
@@ -83,7 +87,7 @@ class Automation2 extends Model
      */
     public function mailList()
     {
-        return $this->belongsTo('Acelle\Model\MailList');
+        return $this->belongsTo('App\Models\MailList');
     }
 
     /**
@@ -91,7 +95,7 @@ class Automation2 extends Model
      */
     public function emailLinks()
     {
-        return $this->hasManyThrough('Acelle\Model\EmailLink', 'Acelle\Model\Email');
+        return $this->hasManyThrough('App\Models\EmailLink', 'App\Models\Email');
     }
 
     /**
@@ -99,7 +103,7 @@ class Automation2 extends Model
      */
     public function emails()
     {
-        return $this->hasMany('Acelle\Model\Email');
+        return $this->hasMany('App\Models\Email');
     }
 
     /**
@@ -107,7 +111,7 @@ class Automation2 extends Model
      */
     public function autoTriggers()
     {
-        return $this->hasMany('Acelle\Model\AutoTrigger');
+        return $this->hasMany('App\Models\AutoTrigger');
     }
 
     public function subscribersNotTriggeredThisYear()
@@ -118,10 +122,10 @@ class Automation2 extends Model
             $join->on('auto_triggers.subscriber_id', 'subscribers.id');
             $join->where('auto_triggers.automation2_id', $thisId);
         })
-                                   ->where(function ($query) use ($thisYear) {
-                                       $query->whereNull('auto_triggers.id')
-                                             ->orWhereRaw(sprintf('year(%s) < %s', table('auto_triggers.created_at'), $thisYear));
-                                   });
+            ->where(function ($query) use ($thisYear) {
+                $query->whereNull('auto_triggers.id')
+                    ->orWhereRaw(sprintf('year(%s) < %s', table('auto_triggers.created_at'), $thisYear));
+            });
     }
 
     /**
@@ -129,7 +133,7 @@ class Automation2 extends Model
      */
     public function segment()
     {
-        return $this->belongsTo('Acelle\Model\Segment');
+        return $this->belongsTo('App\Models\Segment');
     }
 
     /**
@@ -138,9 +142,9 @@ class Automation2 extends Model
     public function pendingAutoTriggers()
     {
         $leaves = $this->getLeafActions();
-        $condition = '('.implode(' AND ', array_map(function ($e) {
+        $condition = '(' . implode(' AND ', array_map(function ($e) {
             return "executed_index NOT LIKE '%{$e}'";
-        }, $leaves)).')';
+        }, $leaves)) . ')';
         $query = $this->autoTriggers()->whereRaw($condition);
         return $query;
     }
@@ -150,7 +154,7 @@ class Automation2 extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     /**
@@ -158,7 +162,7 @@ class Automation2 extends Model
      */
     public function timelines()
     {
-        return $this->hasMany('Acelle\Model\Timeline')->orderBy('created_at', 'DESC');
+        return $this->hasMany('App\Models\Timeline')->orderBy('created_at', 'DESC');
     }
 
     /**
@@ -179,7 +183,7 @@ class Automation2 extends Model
 
         // search by id
 
-        return $element;
+        return $data;
     }
 
     /**
@@ -191,7 +195,7 @@ class Automation2 extends Model
     {
         // Keyword
         if (!empty(trim($keyword))) {
-            $query = $query->where('name', 'like', '%'.trim($keyword).'%');
+            $query = $query->where('name', 'like', '%' . trim($keyword) . '%');
         }
 
         return $query;
@@ -272,6 +276,7 @@ class Automation2 extends Model
      * get all tree elements.
      */
     public function getElements($hash = false) # true => return hash, false (default) => return stdObject
+
     {
         return isset($this->data) && !empty($this->data) ? json_decode($this->data, $hash) : [];
     }
@@ -313,7 +318,7 @@ class Automation2 extends Model
     /**
      * Get delay options.
      */
-    public static function getDelayOptions($moreOptions=[])
+    public static function getDelayOptions($moreOptions = [])
     {
         return array_merge($moreOptions, [
             ['text' => trans_choice('messages.automation.delay.minute', 1), 'value' => '1 minute'],
@@ -420,7 +425,7 @@ class Automation2 extends Model
 
             $automations = $customer->activeAutomation2s;
             foreach ($automations as $automation) {
-                $automationLockFile = $customer->getLockPath('automation-lock-'.$automation->uid);
+                $automationLockFile = $customer->getLockPath('automation-lock-' . $automation->uid);
                 $lock = new Lockable($automationLockFile);
                 $timeout = 5; // seconds
                 $timeoutCallback = function () use ($automation) {
@@ -502,7 +507,7 @@ class Automation2 extends Model
                 break;
             case 'woo-abandoned-cart':
                 $this->checkForAbandonedCart();
-                // no break
+            // no break
             case 'others':
                 // others
                 break;
@@ -544,7 +549,7 @@ class Automation2 extends Model
             $join->where('auto_triggers.automation2_id', $thisId);
             $join->where('auto_triggers.created_at', '>=', $startOfDayUtc);
         })
-        ->whereNull('auto_triggers.subscriber_id')->get();
+            ->whereNull('auto_triggers.subscriber_id')->get();
 
         // init trigger
         foreach ($subscribers as $subscriber) {
@@ -584,7 +589,7 @@ class Automation2 extends Model
             $join->where('auto_triggers.automation2_id', $thisId);
             $join->where('auto_triggers.created_at', '>=', $startOfDayUtc);
         })
-        ->whereNull('auto_triggers.subscriber_id')->get();
+            ->whereNull('auto_triggers.subscriber_id')->get();
 
         // init trigger
         foreach ($subscribers as $subscriber) {
@@ -596,7 +601,7 @@ class Automation2 extends Model
     public function getSubscribersWithDateOfBirth()
     {
         $formatSql = config('custom.date_format_sql');
-        $formatCarbon  = 'Y-m-d'; // DO NOT READ FROM config(), as it is used here only
+        $formatCarbon = 'Y-m-d'; // DO NOT READ FROM config(), as it is used here only
         // TODAY + CURRENT TIME
         $currentTime = new DateTime(null, new DateTimeZone($this->customer->timezone));
         // TODAY + GIVEN TIME
@@ -615,10 +620,10 @@ class Automation2 extends Model
             ->where('subscriber_fields.field_id', $dobFieldId)
             /*
             ->whereIn(DB::raw(sprintf('SUBSTRING(%s, 1, 10)', table('subscriber_fields.value'))), [
-                $today->format('Y-m-d'),
-                $today->format('Y:m:d'),
-                $today->format('m/d/Y'),
-                $today->format('m-d-Y'),
+            $today->format('Y-m-d'),
+            $today->format('Y:m:d'),
+            $today->format('m/d/Y'),
+            $today->format('m-d-Y'),
             ])
             */
             ->addSelect('auto_triggers.created_at AS trigger_at')
@@ -627,7 +632,7 @@ class Automation2 extends Model
             ->addSelect(
                 // IMPORTANT HARD CODED "-" as y/m/d separator
                 DB::raw(
-                    "DATEDIFF(STR_TO_DATE(CONCAT('".$today->format('Y')."-', DATE_FORMAT(STR_TO_DATE(".table('subscriber_fields.value').", '{$formatSql}'), '%m-%d')), '".$formatSql."'), STR_TO_DATE('".$todayStr."', '".$formatSql."')) AS datediff"
+                    "DATEDIFF(STR_TO_DATE(CONCAT('" . $today->format('Y') . "-', DATE_FORMAT(STR_TO_DATE(" . table('subscriber_fields.value') . ", '{$formatSql}'), '%m-%d')), '" . $formatSql . "'), STR_TO_DATE('" . $todayStr . "', '" . $formatSql . "')) AS datediff"
                 )
             )
             ->leftJoin('auto_triggers', function ($join) use ($thisId) {
@@ -662,7 +667,7 @@ class Automation2 extends Model
             ->join('subscriber_fields', 'subscribers.id', 'subscriber_fields.subscriber_id')
             ->where('subscriber_fields.field_id', $dobFieldId)
             ->whereIn(
-                DB::raw("DATE_FORMAT(STR_TO_DATE(".table('subscriber_fields.value').", '".config('custom.date_format_sql')."'), '%m-%d')"),
+                DB::raw("DATE_FORMAT(STR_TO_DATE(" . table('subscriber_fields.value') . ", '" . config('custom.date_format_sql') . "'), '%m-%d')"),
                 [$today->format('m-d')]
             )->get();
 
@@ -682,7 +687,7 @@ class Automation2 extends Model
 
         /* FORCE RECHECK
         foreach ($this->autoTriggers as $trigger) {
-            $trigger->check();
+        $trigger->check();
         }*/
 
         foreach ($this->pendingAutoTriggers as $trigger) {
@@ -757,7 +762,7 @@ class Automation2 extends Model
         if (getenv('LOGFILE') != false) {
             $stream = new RotatingFileHandler(getenv('LOGFILE'), 0, Logger::DEBUG);
         } else {
-            $logfile = storage_path('logs/' . php_sapi_name() . '/automation-'.$this->uid.'.log');
+            $logfile = storage_path('logs/' . php_sapi_name() . '/automation-' . $this->uid . '.log');
             $stream = new RotatingFileHandler($logfile, 0, Logger::WARNING);
         }
 
@@ -898,7 +903,7 @@ class Automation2 extends Model
             }
         });
 
-        return  $trigger;
+        return $trigger;
     }
 
     // by Louis
@@ -947,7 +952,7 @@ class Automation2 extends Model
                 $instance = new Operate($attributes);
                 break;
             default:
-                throw new \Exception('Unknown Action type '.$attributes['type']);
+                throw new \Exception('Unknown Action type ' . $attributes['type']);
         }
 
         return $instance;
@@ -966,8 +971,8 @@ class Automation2 extends Model
         if (!is_null($actionId)) {
             // @deprecated, use the subscribersByLatestAction() method instead
             $query->join('auto_triggers', 'auto_triggers.subscriber_id', '=', 'subscribers.id')
-                 ->where('auto_triggers.executed_index', 'LIKE', '%'.$actionId.'%')
-                 ->where('auto_triggers.automation2_id', $this->id);
+                ->where('auto_triggers.executed_index', 'LIKE', '%' . $actionId . '%')
+                ->where('auto_triggers.automation2_id', $this->id);
         }
 
         return $query;
@@ -976,21 +981,21 @@ class Automation2 extends Model
     public function subscribersByLatestAction($actionId)
     {
         $query = $this->autoTriggers()->join('subscribers', 'auto_triggers.subscriber_id', '=', 'subscribers.id')
-                 ->where('auto_triggers.executed_index', 'LIKE', '%'.$actionId)->select('subscribers.*');
+            ->where('auto_triggers.executed_index', 'LIKE', '%' . $actionId)->select('subscribers.*');
         return $query;
     }
 
     public function subscribersByExecutedAction($actionId)
     {
         $query = $this->autoTriggers()->join('subscribers', 'auto_triggers.subscriber_id', '=', 'subscribers.id')
-                 ->where('auto_triggers.executed_index', 'LIKE', '%'.$actionId.'%')->select('subscribers.*');
+            ->where('auto_triggers.executed_index', 'LIKE', '%' . $actionId . '%')->select('subscribers.*');
         return $query;
     }
 
     public function getIntro()
     {
         $triggerType = $this->getTriggerAction()->getOption('key');
-        $translationKey = 'messages.automation.intro.'.$triggerType;
+        $translationKey = 'messages.automation.intro.' . $triggerType;
 
         return __($translationKey, ['list' => $this->mailList->name]);
     }
@@ -998,7 +1003,7 @@ class Automation2 extends Model
     public function getBriefIntro()
     {
         $triggerType = $this->getTriggerAction()->getOption('key');
-        $translationKey = 'messages.automation.brief-intro.'.$triggerType;
+        $translationKey = 'messages.automation.brief-intro.' . $triggerType;
 
         return __($translationKey, ['list' => $this->mailList->name]);
     }
@@ -1110,7 +1115,7 @@ class Automation2 extends Model
         $this->segment_id = null;
         if (!empty($request->segment_uid)) {
             foreach ($request->segment_uid as $segmentUid) {
-                $segments[] = \Acelle\Model\Segment::findByUid($segmentUid)->id;
+                $segments[] = \App\Models\Segment::findByUid($segmentUid)->id;
             }
 
             if (!empty($segments)) {
@@ -1128,7 +1133,7 @@ class Automation2 extends Model
             return collect([]);
         }
 
-        $segments = \Acelle\Model\Segment::whereIn('id', explode(',', $this->segment_id))->get();
+        $segments = \App\Models\Segment::whereIn('id', explode(',', $this->segment_id))->get();
 
         return $segments;
     }
@@ -1174,10 +1179,10 @@ class Automation2 extends Model
     public function notTriggeredSubscribers()
     {
         return $this->mailList->activeSubscribers()
-                                      ->leftJoin('auto_triggers', function ($join) {
-                                          $join->on('subscribers.id', '=', 'auto_triggers.subscriber_id')->where('auto_triggers.automation2_id', '=', $this->id);
-                                      })
-                                      ->whereNull('auto_triggers.id')->select('subscribers.*');
+            ->leftJoin('auto_triggers', function ($join) {
+                $join->on('subscribers.id', '=', 'auto_triggers.subscriber_id')->where('auto_triggers.automation2_id', '=', $this->id);
+            })
+            ->whereNull('auto_triggers.id')->select('subscribers.*');
     }
 
     public function allowApiCall()
@@ -1203,6 +1208,7 @@ class Automation2 extends Model
 
         // retrieve cached data
         $cache = json_decode($this->cache, true);
+
         if (is_null($cache)) {
             $cache = [];
         }
@@ -1225,7 +1231,10 @@ class Automation2 extends Model
 
         // write back to the DB
         $this->cache = json_encode($cache);
+        //dd($this->cache);
         $this->save();
+
+        return $this;
     }
 
     /**
@@ -1252,7 +1261,8 @@ class Automation2 extends Model
 
     public function updateCacheInBackground()
     {
-        dispatch(new \Acelle\Jobs\UpdateAutomation($this));
+        dispatch(new \App\Jobs\UpdateAutomation($this));
+        return $this;
     }
 
     public function setLastError($message)
@@ -1271,7 +1281,7 @@ class Automation2 extends Model
      *
      * @return array
      */
-    public static function waitTimeUnitOptions($moreOptions=[])
+    public static function waitTimeUnitOptions($moreOptions = [])
     {
         return array_merge($moreOptions, [
             ['value' => 'day', 'text' => trans('messages.day')],
@@ -1286,7 +1296,7 @@ class Automation2 extends Model
      *
      * @return array
      */
-    public static function cartWaitTimeUnitOptions($moreOptions=[])
+    public static function cartWaitTimeUnitOptions($moreOptions = [])
     {
         return array_merge($moreOptions, [
             ['value' => 'minute', 'text' => trans('messages.minute')],
@@ -1310,7 +1320,7 @@ class Automation2 extends Model
     public function getAbandonedCartEmail()
     {
         // var_dump($this->getElements()[1]->options);die();
-        return \Acelle\Model\Email::findByUid($this->getElements()[1]->options->email_uid);
+        return \App\Models\Email::findByUid($this->getElements()[1]->options->email_uid);
     }
 
     public function getTriggerType()
@@ -1327,12 +1337,12 @@ class Automation2 extends Model
     {
         $thisId = $this->id;
         return $this->subscribers()
-                ->leftJoin('auto_triggers', function ($join) use ($thisId) {
-                    $join->on('auto_triggers.subscriber_id', 'subscribers.id');
-                    $join->where('auto_triggers.automation2_id', $thisId);
-                })
-                ->addSelect('auto_triggers.id as auto_trigger_id')
-                ->addSelect('auto_triggers.created_at as triggered_at');
+            ->leftJoin('auto_triggers', function ($join) use ($thisId) {
+                $join->on('auto_triggers.subscriber_id', 'subscribers.id');
+                $join->where('auto_triggers.automation2_id', $thisId);
+            })
+            ->addSelect('auto_triggers.id as auto_trigger_id')
+            ->addSelect('auto_triggers.created_at as triggered_at');
     }
 
     public function getAutoTriggerFor($subscriber)
@@ -1361,7 +1371,7 @@ class Automation2 extends Model
         return $types;
     }
 
-    public function newDefault($fields=[])
+    public function newDefault($fields = [])
     {
         if (!isset($fields['name'])) {
             $this->name = trans('messages.automation.untitled');
@@ -1387,7 +1397,7 @@ class Automation2 extends Model
         $this->fill($params);
 
         // pass validation and save
-        $this->mail_list_id = \Acelle\Model\MailList::findByUid($params['mail_list_uid'])->id;
+        $this->mail_list_id = \App\Models\MailList::findByUid($params['mail_list_uid'])->id;
 
         $data = [
             $this->createTrigger($params)
@@ -1409,9 +1419,9 @@ class Automation2 extends Model
                 'type' => 'ElementTrigger',
                 'child' => null,
                 'options' => [
-                  'key' => 'welcome-new-subscriber',
-                  'type' => 'list-subscription',
-                  'init' => true,
+                    'key' => 'welcome-new-subscriber',
+                    'type' => 'list-subscription',
+                    'init' => true,
                 ],
                 'last_executed' => null,
                 'evaluationResult' => null,
@@ -1544,10 +1554,10 @@ class Automation2 extends Model
             ];
         }
 
-        throw new Exception("Invalid trigger type: ".$type);
+        throw new Exception("Invalid trigger type: " . $type);
     }
 
-    public static function getConditionWaitOptions($custom=null)
+    public static function getConditionWaitOptions($custom = null)
     {
         $result = [
             ['text' => trans_choice('messages.count_hour', 12), 'value' => '12 hours'],
@@ -1557,9 +1567,11 @@ class Automation2 extends Model
         ];
 
         if ($custom) {
-            if (!in_array($custom, array_map(function ($item) {
-                return $item['value'];
-            }, $result))) {
+            if (
+                !in_array($custom, array_map(function ($item) {
+                    return $item['value'];
+                }, $result))
+            ) {
                 $vals = explode(' ', $custom);
                 $result[] = [
                     'text' => trans_choice('messages.count_' . $vals[1], $vals[0]),

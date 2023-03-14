@@ -17,7 +17,7 @@
                     </div>
                 </td>
                 <td>
-                    <a class="kq_search fw-600 d-block list-title" href="{{ action('Automation2Controller@edit', $automation->uid) }}">
+                    <a class="kq_search fw-600 d-block list-title" href="{{ route('user.automation.edit', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}">
                         {{ $automation->name }}
                     </a>
                     <div class="" data-popup="tooltip">
@@ -60,65 +60,65 @@
                     </span>
                 </td>
                 <td class="text-end text-nowrap">
-                    @if (\Gate::allows('update', $automation))
-                        <a data-popup="tooltip" href="{{ action('Automation2Controller@edit', $automation->uid) }}" role="button" class="btn btn-secondary btn-icon">
+                    {{-- @if (\Gate::allows('update', $automation)) --}}
+                        <a data-popup="tooltip" href="{{ route('user.automation.edit', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}" role="button" class="btn btn-secondary btn-icon">
                             <i class="material-icons-outlined">multiline_chart</i> {{ trans('messages.automation.design') }}
                         </a>
-                    @endif
-                    @if (\Gate::allows('delete', $automation) || Auth::user()->can('disable', $automation) || Auth::user()->can('enable', $automation))
+                    {{-- @endif --}}
+                    {{-- @if (\Gate::allows('delete', $automation) || Auth::user()->can('disable', $automation) || Auth::user()->can('enable', $automation)) --}}
                         <div class="btn-group">
                             <button role="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"></button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                @can('enable', $automation)
+                                {{-- @can('enable', $automation) --}}
                                     <li>
                                         <a
                                             class="dropdown-item list-action-single"
                                             link-method="PATCH"
                                             link-confirm="{{ trans('messages.enable_automations_confirm') }}"
-                                            href="{{ action('Automation2Controller@enable', ["uids" => $automation->uid]) }}"
+                                            href="{{ route('user.automation.enable', ['username' => Auth::user()->username, "uids" => $automation->uid]) }}"
                                         >
                                             <span class="material-icons-outlined me-2">
 play_arrow
 </span> {{ trans('messages.enable') }}
                                         </a>
                                     </li>
-                                @endcan
-                                @can('disable', $automation)
+                                {{-- @endcan --}}
+                                {{-- @can('disable', $automation) --}}
                                     <li>
                                         <a
                                             class="dropdown-item list-action-single"
                                             link-method="PATCH" link-confirm="{{ trans('messages.disable_automations_confirm') }}"
-                                            href="{{ action('Automation2Controller@disable', ["uids" => $automation->uid]) }}"
+                                            href="{{ route('user.automation.disable', ['username' => Auth::user()->username, "uids" => $automation->uid]) }}"
                                         >
                                             <span class="material-icons-outlined me-2">
 hide_source
 </span> {{ trans('messages.disable') }}
                                         </a>
                                     </li>
-                                @endcan
-                                @if (\Gate::allows('delete', $automation))
+                                {{-- @endcan --}}
+                                {{-- @if (\Gate::allows('delete', $automation)) --}}
                                     <li>
-                                        <a  
+                                        <a
                                             class="dropdown-item list-action-single"
                                             link-method='delete'
                                             link-confirm="{{ trans('messages.delete_automations_confirm') }}"
-                                            href="{{ action('Automation2Controller@delete', ["uids" => $automation->uid]) }}"
+                                            href="{{ route('user.automation.delete', ['username' => Auth::user()->username, "uids" => $automation->uid]) }}"
                                         >
                                             <span class="material-icons-outlined me-2">
 delete_outline
 </span> {{ trans("messages.delete") }}
                                         </a>
                                     </li>
-                                @endif
+                                {{-- @endif --}}
                             </ul>
                         </div>
-                    @endif
+                    {{-- @endif --}}
                 </td>
             </tr>
         @endforeach
     </table>
     @include('elements/_per_page_select', ["items" => $automations])
-    
+
 @elseif (!empty(request()->keyword))
     <div class="empty-list">
         <span class="material-icons-outlined">

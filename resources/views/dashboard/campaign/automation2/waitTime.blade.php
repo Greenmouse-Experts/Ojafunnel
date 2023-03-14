@@ -4,15 +4,15 @@
 	<div class="row">
         <div class="col-md-12">
             <div class="mc_section">
-                <form class="custom-wait-time-form" action="{{ action('Automation2Controller@waitTime', $automation->uid) }}" method="POST">
+                <form class="custom-wait-time-form" action="{{ route('user.automation.waitTime', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}" method="POST">
                     {{ csrf_field() }}
-                    
+
                     <input type="hidden" name="plan[options][billing_cycle]" value="other" />
-                    
+
                     <h2 class="text-semibold">{{ trans('messages.automation.wait') }}</h2>
-                    
+
                     <p>{!! trans('messages.automation.wait.wording') !!}</p>
-                        
+
                     <div class="row">
                         <div class="col-md-6">
                             @include('helpers.form_control', [
@@ -25,11 +25,11 @@
                                 'required' => true,
                             ])
                         </div>
-                        <div class="col-md-6">                        
+                        <div class="col-md-6">
                             @include('helpers.form_control', ['type' => 'select',
                                 'name' => 'unit',
                                 'value' => '',
-                                'options' => Acelle\Model\Automation2::waitTimeUnitOptions(),
+                                'options' => \App\Models\Automation2::waitTimeUnitOptions(),
                                 'help_class' => 'plan',
                             ])
                         </div>
@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-        
+
     <script>
         $('.custom-wait-time-form').on('submit', function(e) {
             e.preventDefault();
@@ -62,7 +62,7 @@
                 success: function (response) {
                     $('.custom-wait-time').html(`<input type="hidden" name="time" value="`+response.amount+` `+response.unit+`" />`);
                     waitTimePopup.hide();
-                    
+
                     setTimeout(function() {
                         if($('.select-action-confirm').is(':visible')) {
                             $('.select-action-confirm').click();

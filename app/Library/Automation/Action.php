@@ -137,7 +137,7 @@ abstract class Action
     public function update(array $json)
     {
         // Keep the following attributes, do not overwrite
-        $keep = [ 'last_executed', 'evaluationResult' ];
+        $keep = ['last_executed', 'evaluationResult'];
 
         foreach ($json as $key => $value) {
             if (!in_array($key, $keep)) {
@@ -206,8 +206,9 @@ abstract class Action
             );
 
             $this->logger->error($msg);
-
-            throw new Exception($msg);
+            session()->flash('alert-error', $msg);
+            //return $msg;
+            //throw new Exception($msg);
         }
     }
 }

@@ -42,7 +42,7 @@ class Automation2Controller extends Controller
             ->orderBy($request->sort_order, $request->sort_direction)
             ->paginate($request->per_page);
 
-        return view('automation2._list', [
+        return view('dashboard.campaign.automation2._list', [
             'automations' => $automations,
         ]);
     }
@@ -54,7 +54,7 @@ class Automation2Controller extends Controller
         if ($request->trigger_type) {
             $automation = new Automation2();
 
-            return view('automation2.wizardTriggerOption', [
+            return view('dashboard.campaign.automation2.wizardTriggerOption', [
                 'automation' => $automation,
                 'trigger' => $automation->getTrigger(),
                 'trigger_type' => $request->trigger_type,
@@ -62,7 +62,7 @@ class Automation2Controller extends Controller
             ]);
         }
 
-        return view('automation2.wizardTrigger', [
+        return view('dashboard.campaign.automation2.wizardTrigger', [
             'types' => $types,
         ]);
     }
@@ -80,22 +80,22 @@ class Automation2Controller extends Controller
 
             // redirect if fails
             if ($validator->fails()) {
-                return response()->view('automation2.wizardTriggerOption', [
+                return response()->view('dashboard.campaign.automation2.wizardTriggerOption', [
                     'trigger_type' => $request->trigger_type,
                     'errors' => $validator->errors(),
                 ], 400);
             }
 
-            $customer = $request->user()->customer;
+            $customer = \Auth::user()->customer;
             $automation = $customer->automation2s()->make()->newDefault();
 
-            return view('automation2.wizard', [
+            return view('dashboard.campaign.automation2.wizard', [
                 'automation' => $automation,
                 'trigger_type' => $request->trigger_type,
             ]);
         }
 
-        return view('automation2.wizardTriggerOption', [
+        return view('dashboard.campaign.automation2.wizardTriggerOption', [
             'trigger_type' => $request->trigger_type,
         ]);
     }
@@ -108,7 +108,7 @@ class Automation2Controller extends Controller
 
         $list = \App\Models\MailList::findByUid($request->list_uid);
 
-        return view('automation2.wizardListFieldSelect', [
+        return view('dashboard.campaign.automation2.wizardListFieldSelect', [
             'list' => $list,
         ]);
     }
@@ -119,9 +119,9 @@ class Automation2Controller extends Controller
         $automation = $customer->automation2s()->make()->newDefault();
 
         // authorize
-        if (\Gate::denies('create', $automation)) {
-            return $this->noMoreItem();
-        }
+        // if (\Gate::denies('create', $automation)) {
+        //     return $this->noMoreItem();
+        // }
 
         // saving
         if ($request->isMethod('post')) {
@@ -138,11 +138,11 @@ class Automation2Controller extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => trans('messages.automation.created.redirecting'),
-                'url' => action('Automation2Controller@edit', ['uid' => $automation->uid])
+                'url' => route('user.automation.edit', ['username' => \Auth::user()->username, 'uid' => $automation->uid])
             ], 201);
         }
 
-        return view('automation2.wizard', [
+        return view('dashboard.campaign.automation2.wizard', [
             'automation' => $automation,
         ]);
     }
@@ -154,15 +154,15 @@ class Automation2Controller extends Controller
      */
     public function update(Request $request, $uid)
     {
-        $customer = $request->user()->customer;
+        $customer = \Auth::user()->customer;
 
         // find automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // fill before save
         $automation->fillRequest($request);
@@ -172,7 +172,7 @@ class Automation2Controller extends Controller
 
         // redirect if fails
         if ($validator->fails()) {
-            return response()->view('automation2.settings', [
+            return response()->view('dashboard.campaign.automation2.settings', [
                 'automation' => $automation,
                 'errors' => $validator->errors(),
             ], 400);
@@ -198,12 +198,12 @@ class Automation2Controller extends Controller
     public function saveData(Request $request, $uid)
     {
         // find automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         if ($request->resetTrigger) {
             $automation->saveDataAndResetTriggers($request->data);
@@ -220,15 +220,15 @@ class Automation2Controller extends Controller
     public function edit(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
+        //dd($automation->updateCacheInBackground(););
         $automation->updateCacheInBackground();
-
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.edit', [
+        return view('dashboard.campaign.automation2.edit', [
             'automation' => $automation,
         ]);
     }
@@ -241,14 +241,14 @@ class Automation2Controller extends Controller
     public function settings(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.settings', [
+        return view('dashboard.campaign.automation2.settings', [
             'automation' => $automation,
         ]);
     }
@@ -261,16 +261,16 @@ class Automation2Controller extends Controller
     public function triggerSelectPupop(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         $types = Automation2::getTriggerTypes();
 
-        return view('automation2.triggerSelectPupop', [
+        return view('dashboard.campaign.automation2.triggerSelectPupop', [
             'types' => $types,
             'automation' => $automation,
             'trigger' => $automation->getTrigger(),
@@ -285,15 +285,15 @@ class Automation2Controller extends Controller
     public function triggerSelectConfirm(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $rules = $this->triggerRules()[$request->key];
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.triggerSelectConfirm', [
+        return view('dashboard.campaign.automation2.triggerSelectConfirm', [
             'key' => $request->key,
             'automation' => $automation,
             'trigger' => $automation->getTrigger(),
@@ -366,18 +366,18 @@ class Automation2Controller extends Controller
     public function triggerSelect(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         list($validator, $result) = $this->vaidateTrigger($request, $request->options['key']);
 
         // redirect if fails
         if (!$result) {
-            return response()->view('automation2.triggerSelectConfirm', [
+            return response()->view('dashboard.campaign.automation2.triggerSelectConfirm', [
                 'key' => $request->options['key'],
                 'automation' => $automation,
                 'trigger' => $automation->getTrigger(),
@@ -405,12 +405,12 @@ class Automation2Controller extends Controller
     public function actionSelectPupop(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         $types = [
             'send-an-email',
@@ -419,7 +419,7 @@ class Automation2Controller extends Controller
             'operation',
         ];
 
-        return view('automation2.actionSelectPupop', [
+        return view('dashboard.campaign.automation2.actionSelectPupop', [
             'types' => $types,
             'automation' => $automation,
             'hasChildren' => $request->hasChildren,
@@ -434,14 +434,14 @@ class Automation2Controller extends Controller
     public function actionSelectConfirm(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.actionSelectConfirm', [
+        return view('dashboard.campaign.automation2.actionSelectConfirm', [
             'key' => $request->key,
             'automation' => $automation,
             'element' => $automation->getElement(),
@@ -456,14 +456,14 @@ class Automation2Controller extends Controller
     public function conditionSetting(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.condition.setting', [
+        return view('dashboard.campaign.automation2.condition.setting', [
             'automation' => $automation,
             'element' => $automation->getElement($request->element_id),
         ]);
@@ -477,12 +477,12 @@ class Automation2Controller extends Controller
     public function actionSelect(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         if ($request->key == 'wait') {
             $delayOptions = \App\Models\Automation2::getDelayOptions();
@@ -577,13 +577,13 @@ class Automation2Controller extends Controller
     public function triggerEdit(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $rules = $this->triggerRules()[$request->key];
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         if ($request->isMethod('post')) {
             list($validator, $result) = $this->vaidateTrigger($request, $request->options['key']);
@@ -609,7 +609,7 @@ class Automation2Controller extends Controller
             ]);
         }
 
-        return view('automation2.triggerEdit', [
+        return view('dashboard.campaign.automation2.triggerEdit', [
             'key' => $request->key,
             'automation' => $automation,
             'trigger' => $automation->getTrigger(),
@@ -625,12 +625,12 @@ class Automation2Controller extends Controller
     public function actionEdit(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // saving
         if ($request->isMethod('post')) {
@@ -720,7 +720,7 @@ class Automation2Controller extends Controller
             }
         }
 
-        return view('automation2.actionEdit', [
+        return view('dashboard.campaign.automation2.actionEdit', [
             'key' => $request->key,
             'automation' => $automation,
             'element' => $automation->getElement($request->id),
@@ -735,7 +735,7 @@ class Automation2Controller extends Controller
     public function emailSetup(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         if ($request->email_uid) {
             $email = Email::findByUid($request->email_uid);
@@ -749,9 +749,9 @@ class Automation2Controller extends Controller
         }
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // saving
         if ($request->isMethod('post')) {
@@ -775,7 +775,7 @@ class Automation2Controller extends Controller
 
             // redirect if fails
             if ($validator->fails()) {
-                return response()->view('automation2.email.setup', [
+                return response()->view('dashboard.campaign.automation2.email.setup', [
                     'automation' => $automation,
                     'email' => $email,
                     'errors' => $validator->errors(),
@@ -791,7 +791,8 @@ class Automation2Controller extends Controller
                 'status' => 'success',
                 'title' => trans('messages.automation.send_a_email', ['title' => $email->subject]),
                 'message' => trans('messages.automation.email.set_up.success'),
-                'url' => action('Automation2Controller@emailTemplate', [
+                'url' => route('user.automation.emailTemplate', [
+                    'username' => \Auth::user()->username,
                     'uid' => $automation->uid,
                     'email_uid' => $email->uid,
                 ]),
@@ -801,7 +802,7 @@ class Automation2Controller extends Controller
             ], 201);
         }
 
-        return view('automation2.email.setup', [
+        return view('dashboard.campaign.automation2.email.setup', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -815,13 +816,13 @@ class Automation2Controller extends Controller
     public function emailDelete(Request $request, $uid, $email_uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
-        $email = Email::findByUid($email_uid);
+        $automation = Automation2::findByUid($request->uid);
+        $email = \App\Models\Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // delete email
         $email->deleteAndCleanup();
@@ -840,22 +841,23 @@ class Automation2Controller extends Controller
     public function emailTemplate(Request $request, $uid, $email_uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
-        $email = Email::findByUid($email_uid);
-
+        $automation = Automation2::findByUid($request->uid);
+        $email = Email::findByUid($request->email_uid);
+        //dd('a');
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         if (!$email->hasTemplate()) {
-            return redirect()->action('Automation2Controller@templateCreate', [
+            return redirect()->route('user.automation.templateCreate', [
+                'username' => \Auth::user()->username,
                 'uid' => $automation->uid,
                 'email_uid' => $email->uid,
             ]);
         }
 
-        return view('automation2.email.template', [
+        return view('dashboard.campaign.automation2.email.template', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -869,15 +871,15 @@ class Automation2Controller extends Controller
     public function email(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.email.index', [
+        return view('dashboard.campaign.automation2.email.index', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -891,19 +893,19 @@ class Automation2Controller extends Controller
     public function emailConfirm(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // saving
         if ($request->isMethod('post')) {
         }
 
-        return view('automation2.email.confirm', [
+        return view('dashboard.campaign.automation2.email.confirm', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -918,15 +920,15 @@ class Automation2Controller extends Controller
      */
     public function templateCreate(Request $request, $uid, $email_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.email.template.create', [
+        return view('dashboard.campaign.automation2.email.template.create', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -941,13 +943,13 @@ class Automation2Controller extends Controller
      */
     public function templateLayout(Request $request, $uid, $email_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
-
+        //dd($automation);
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         if ($request->isMethod('post')) {
             $template = Template::findByUid($request->template_uid);
@@ -964,7 +966,7 @@ class Automation2Controller extends Controller
             $request->category_uid = TemplateCategory::first()->uid;
         }
 
-        return view('automation2.email.template.layout', [
+        return view('dashboard.campaign.automation2.email.template.layout', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -978,20 +980,21 @@ class Automation2Controller extends Controller
     public function templateLayoutList(Request $request)
     {
         $automation = Automation2::findByUid($request->uid);
+
         $email = Email::findByUid($request->email_uid);
 
         // from
         if ($request->from == 'mine') {
-            $templates = $request->user()->customer->templates();
+            $templates = \Auth::user()->customer->templates();
         } elseif ($request->from == 'gallery') {
             $templates = Template::shared();
         } else {
             $templates = Template::shared()
-                ->orWhere('customer_id', '=', $request->user()->customer->id);
+                ->orWhere('customer_id', '=', \Auth::user()->customer->id);
         }
 
         $templates = $templates->notAssociated()->search($request->keyword);
-
+        //dd($automation, $templates);
         // category id
         if ($request->category_uid) {
             $templates = $templates->categoryUid($request->category_uid);
@@ -1000,7 +1003,7 @@ class Automation2Controller extends Controller
         $templates = $templates->orderBy($request->sort_order, $request->sort_direction)
             ->paginate($request->per_page);
 
-        return view('automation2.email.template.layoutList', [
+        return view('dashboard.campaign.automation2.email.template.layoutList', [
             'automation' => $automation,
             'email' => $email,
             'templates' => $templates,
@@ -1016,15 +1019,15 @@ class Automation2Controller extends Controller
      */
     public function templateBuilderSelect(Request $request, $uid, $email_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.email.template.templateBuilderSelect', [
+        return view('dashboard.campaign.automation2.email.template.templateBuilderSelect', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -1039,13 +1042,13 @@ class Automation2Controller extends Controller
      */
     public function templateEdit(Request $request, $uid, $email_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // save campaign html
         if ($request->isMethod('post')) {
@@ -1071,7 +1074,7 @@ class Automation2Controller extends Controller
             ]);
         }
 
-        return view('automation2.email.template.edit', [
+        return view('dashboard.campaign.automation2.email.template.edit', [
             'automation' => $automation,
             'list' => $automation->mailList,
             'email' => $email,
@@ -1088,15 +1091,15 @@ class Automation2Controller extends Controller
      */
     public function templateContent(Request $request, $uid, $email_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.email.template.content', [
+        return view('dashboard.campaign.automation2.email.template.content', [
             'content' => $email->getTemplateContent(),
         ]);
     }
@@ -1110,13 +1113,13 @@ class Automation2Controller extends Controller
      */
     public function templateUpload(Request $request, $uid, $email_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // validate and save posted data
         if ($request->isMethod('post')) {
@@ -1131,7 +1134,7 @@ class Automation2Controller extends Controller
             // throw a validation error otherwise
         }
 
-        return view('automation2.email.template.upload', [
+        return view('dashboard.campaign.automation2.email.template.upload', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -1146,13 +1149,13 @@ class Automation2Controller extends Controller
      */
     public function templateRemove(Request $request, $uid, $email_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         $email->removeTemplate();
 
@@ -1171,15 +1174,15 @@ class Automation2Controller extends Controller
      */
     public function templatePreview(Request $request, $uid, $email_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.email.template.preview', [
+        return view('dashboard.campaign.automation2.email.template.preview', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -1194,13 +1197,13 @@ class Automation2Controller extends Controller
      */
     public function templatePreviewContent(Request $request, $uid, $email_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         echo $email->getHtmlContent();
     }
@@ -1214,13 +1217,13 @@ class Automation2Controller extends Controller
      */
     public function emailAttachmentUpload(Request $request, $uid, $email_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         foreach ($request->file as $file) {
             $email->uploadAttachment($file);
@@ -1236,13 +1239,13 @@ class Automation2Controller extends Controller
      */
     public function emailAttachmentRemove(Request $request, $uid, $email_uid, $attachment_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $attachment = Attachment::findByUid($request->attachment_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         $attachment->remove();
 
@@ -1261,14 +1264,14 @@ class Automation2Controller extends Controller
      */
     public function emailAttachmentDownload(Request $request, $uid, $email_uid, $attachment_uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $email = Email::findByUid($request->email_uid);
         $attachment = Attachment::findByUid($request->attachment_uid);
 
         // authorize
-        if (\Gate::denies('read', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('read', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         return response()->download(storage_path('app/' . $attachment->file), $attachment->name);
     }
@@ -1290,9 +1293,9 @@ class Automation2Controller extends Controller
 
         foreach ($automations->get() as $automation) {
             // authorize
-            if (\Gate::allows('enable', $automation)) {
-                $automation->enable();
-            }
+            // if (\Gate::allows('enable', $automation)) {
+            $automation->enable();
+            // }
         }
 
         return response()->json([
@@ -1318,9 +1321,9 @@ class Automation2Controller extends Controller
 
         foreach ($automations->get() as $automation) {
             // authorize
-            if (\Gate::allows('disable', $automation)) {
-                $automation->disable();
-            }
+            // if (\Gate::allows('disable', $automation)) {
+            $automation->disable();
+            // }
         }
 
         return response()->json([
@@ -1356,9 +1359,9 @@ class Automation2Controller extends Controller
 
         foreach ($automations->get() as $automation) {
             // authorize
-            if (\Gate::allows('delete', $automation)) {
-                $automation->delete();
-            }
+            // if (\Gate::allows('delete', $automation)) {
+            $automation->delete();
+            // }
         }
 
         return response()->json([
@@ -1376,14 +1379,14 @@ class Automation2Controller extends Controller
      */
     public function insight(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('view', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('view', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.insight', [
+        return view('dashboard.campaign.automation2.insight', [
             'automation' => $automation,
             'stats' => $automation->readCache('SummaryStats'),
             'insight' => $automation->getInsight(),
@@ -1399,17 +1402,17 @@ class Automation2Controller extends Controller
      */
     public function contacts(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('view', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('view', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         $subscribers = $automation->subscribers();
         $count = $subscribers->count();
 
-        return view('automation2.contacts.index', [
+        return view('dashboard.campaign.automation2.contacts.index', [
             'automation' => $automation,
             'count' => $count,
             'stats' => $automation->getSummaryStats(),
@@ -1424,12 +1427,12 @@ class Automation2Controller extends Controller
      */
     public function contactsList(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('view', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('view', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         $sortBy = $request->sortBy ?: 'subscribers.id';
         $sortOrder = $request->sortOrder ?: 'DESC';
@@ -1442,7 +1445,7 @@ class Automation2Controller extends Controller
             ->orderBy($sortBy, $sortOrder);
         $contacts = $subscribers->paginate($request->per_page);
 
-        return view('automation2.contacts.list', [
+        return view('dashboard.campaign.automation2.contacts.list', [
             'automation' => $automation,
             'contacts' => $contacts,
         ]);
@@ -1457,14 +1460,14 @@ class Automation2Controller extends Controller
      */
     public function timeline(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('view', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('view', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.timeline.index', [
+        return view('dashboard.campaign.automation2.timeline.index', [
             'automation' => $automation,
         ]);
     }
@@ -1476,16 +1479,16 @@ class Automation2Controller extends Controller
      */
     public function timelineList(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('view', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('view', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         $timelines = $automation->timelines()->paginate($request->per_page);
 
-        return view('automation2.timeline.list', [
+        return view('dashboard.campaign.automation2.timeline.list', [
             'automation' => $automation,
             'timelines' => $timelines,
         ]);
@@ -1546,13 +1549,13 @@ class Automation2Controller extends Controller
      */
     public function tagContact(Request $request, $uid, $contact_uid)
     {
-        $automation = Automation2::findByUid($uid);
-        $contact = Subscriber::findByUid($contact_uid);
+        $automation = Automation2::findByUid($request->uid);
+        $contact = Subscriber::findByUid($request->contact_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // saving
         if ($request->isMethod('post')) {
@@ -1566,7 +1569,7 @@ class Automation2Controller extends Controller
             ], 201);
         }
 
-        return view('automation2.contacts.tagContact', [
+        return view('dashboard.campaign.automation2.contacts.tagContact', [
             'automation' => $automation,
             'contact' => $contact,
         ]);
@@ -1581,13 +1584,13 @@ class Automation2Controller extends Controller
      */
     public function tagContacts(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
         $subscribers = $automation->subscribers();
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // saving
         if ($request->isMethod('post')) {
@@ -1598,7 +1601,7 @@ class Automation2Controller extends Controller
 
             // redirect if fails
             if ($validator->fails()) {
-                return response()->view('automation2.contacts.tagContacts', [
+                return response()->view('dashboard.campaign.automation2.contacts.tagContacts', [
                     'automation' => $automation,
                     'subscribers' => $subscribers,
                     'errors' => $validator->errors(),
@@ -1618,7 +1621,7 @@ class Automation2Controller extends Controller
             ], 201);
         }
 
-        return view('automation2.contacts.tagContacts', [
+        return view('dashboard.campaign.automation2.contacts.tagContacts', [
             'automation' => $automation,
             'subscribers' => $subscribers,
         ]);
@@ -1633,13 +1636,13 @@ class Automation2Controller extends Controller
      */
     public function removeTag(Request $request, $uid, $contact_uid)
     {
-        $automation = Automation2::findByUid($uid);
-        $contact = Subscriber::findByUid($contact_uid);
+        $automation = Automation2::findByUid($request->uid);
+        $contact = Subscriber::findByUid($request->contact_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         $contact->removeTag($request->tag);
 
@@ -1660,12 +1663,12 @@ class Automation2Controller extends Controller
      */
     public function exportContacts(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         $subscribers = $automation->subscribers();
 
@@ -1687,12 +1690,12 @@ class Automation2Controller extends Controller
      */
     public function copyToNewList(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         $subscribers = $subscribers = $automation->subscribers();
 
@@ -1732,7 +1735,7 @@ class Automation2Controller extends Controller
             ], 201);
         }
 
-        return view('automation2.contacts.copyToNewList', [
+        return view('dashboard.campaign.automation2.contacts.copyToNewList', [
             'automation' => $automation,
             'subscribers' => $subscribers,
         ]);
@@ -1748,13 +1751,13 @@ class Automation2Controller extends Controller
     public function templateEditClassic(Request $request, $uid, $email_uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
-        $email = Email::findByUid($email_uid);
+        $automation = Automation2::findByUid($request->uid);
+        $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // saving
         if ($request->isMethod('post')) {
@@ -1781,7 +1784,7 @@ class Automation2Controller extends Controller
             ], 201);
         }
 
-        return view('automation2.email.template.editClassic', [
+        return view('dashboard.campaign.automation2.email.template.editClassic', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -1797,13 +1800,13 @@ class Automation2Controller extends Controller
     public function templateEditPlain(Request $request, $uid, $email_uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
-        $email = Email::findByUid($email_uid);
+        $automation = Automation2::findByUid($request->uid);
+        $email = Email::findByUid($request->email_uid);
 
         // authorize
-        if (\Gate::denies('update', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
         // saving
         if ($request->isMethod('post')) {
@@ -1832,7 +1835,7 @@ class Automation2Controller extends Controller
             ], 201);
         }
 
-        return view('automation2.email.template.editPlain', [
+        return view('dashboard.campaign.automation2.email.template.editPlain', [
             'automation' => $automation,
             'email' => $email,
         ]);
@@ -1854,20 +1857,20 @@ class Automation2Controller extends Controller
             $automation = Automation2::findByUid($request->uid);
 
             // authorize
-            if (\Gate::denies('view', $automation)) {
-                return $this->notAuthorized();
-            }
+            // if (\Gate::denies('view', $automation)) {
+            //     return $this->notAuthorized();
+            // }
         } else {
             $automation = new Automation2();
 
             // authorize
-            if (\Gate::denies('create', $automation)) {
-                return $this->notAuthorized();
-            }
+            // if (\Gate::denies('create', $automation)) {
+            //     return $this->notAuthorized();
+            // }
         }
         $list = MailList::findByUid($request->list_uid);
 
-        return view('automation2.segmentSelect', [
+        return view('dashboard.campaign.automation2.segmentSelect', [
             'automation' => $automation,
             'list' => $list,
         ]);
@@ -2004,12 +2007,12 @@ class Automation2Controller extends Controller
     public function lastSaved(Request $request, $uid)
     {
         // init automation
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('view', $automation)) {
-            return;
-        }
+        // if (\Gate::denies('view', $automation)) {
+        //     return;
+        // }
 
         return trans('messages.automation.designer.last_saved', ['time' => $automation->updated_at->diffForHumans()]);
     }
@@ -2097,7 +2100,7 @@ class Automation2Controller extends Controller
         $existingTrigger = $automation->getAutoTriggerFor($subscriber);
 
         if (!is_null($existingTrigger)) {
-            echo sprintf("%s already triggered. Click <a href='%s'>here</a> for more details", $subscriber->email, action('AutoTrigger@show', ['id' => $existingTrigger->id]));
+            echo sprintf("%s already triggered. Click <a href='%s'>here</a> for more details", $subscriber->email, route('user.autotrigger.show', ['username' => \Auth::user()->username, 'id' => $existingTrigger->id]));
             return;
         }
 
@@ -2108,7 +2111,7 @@ class Automation2Controller extends Controller
         // Even inactive contacts - in case of Say-Goodbye-Trigger for example
         $trigger = $automation->initTrigger($subscriber, $force = true);
 
-        return redirect()->action('AutoTrigger@show', ['id' => $trigger->id]);
+        return redirect()->route('user.autotrigger.show', ['username' => \Auth::user()->username, 'id' => $trigger->id]);
     }
 
     /**
@@ -2118,14 +2121,14 @@ class Automation2Controller extends Controller
      */
     public function contactRetry(Request $request, $uid, $contact_uid)
     {
-        $automation = Automation2::findByUid($uid);
-        $contact = Subscriber::findByUid($contact_uid);
+        $automation = Automation2::findByUid($request->uid);
+        $contact = Subscriber::findByUid($request->contact_uid);
         // authorize
-        if (\Gate::denies('view', $automation)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('view', $automation)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('automation2.contacts.list.error_row', [
+        return view('dashboard.campaign.automation2.contacts.list.error_row', [
             'automation' => $automation,
             'contact' => $contact,
         ]);
@@ -2138,7 +2141,7 @@ class Automation2Controller extends Controller
      */
     public function waitTime(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // saving
         if ($request->isMethod('post')) {
@@ -2149,7 +2152,7 @@ class Automation2Controller extends Controller
             ]);
         }
 
-        return view('automation2.waitTime', [
+        return view('dashboard.campaign.automation2.waitTime', [
             'automation' => $automation,
         ]);
     }
@@ -2161,7 +2164,7 @@ class Automation2Controller extends Controller
      */
     public function cartWait(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // saving
         if ($request->isMethod('post')) {
@@ -2172,7 +2175,7 @@ class Automation2Controller extends Controller
             ]);
             // redirect if fails
             if ($validator->fails()) {
-                return response()->view('automation2.cartWait', [
+                return response()->view('dashboard.campaign.automation2.cartWait', [
                     'automation' => $automation,
                     'trigger' => $automation->getTrigger(),
                     'errors' => $validator->errors(),
@@ -2188,7 +2191,7 @@ class Automation2Controller extends Controller
             ]);
         }
 
-        return view('automation2.cartWait', [
+        return view('dashboard.campaign.automation2.cartWait', [
             'automation' => $automation,
             'trigger' => $automation->getTrigger(),
         ]);
@@ -2201,7 +2204,7 @@ class Automation2Controller extends Controller
      */
     public function cartChangeList(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // saving
         if ($request->isMethod('post')) {
@@ -2211,7 +2214,7 @@ class Automation2Controller extends Controller
             ]);
             // redirect if fails
             if ($validator->fails()) {
-                return response()->view('automation2.cartChangeList', [
+                return response()->view('dashboard.campaign.automation2.cartChangeList', [
                     'automation' => $automation,
                     'trigger' => $automation->getTrigger(),
                     'errors' => $validator->errors(),
@@ -2225,7 +2228,7 @@ class Automation2Controller extends Controller
             ]);
         }
 
-        return view('automation2.cartChangeList', [
+        return view('dashboard.campaign.automation2.cartChangeList', [
             'automation' => $automation,
             'trigger' => $automation->getTrigger(),
         ]);
@@ -2238,7 +2241,7 @@ class Automation2Controller extends Controller
      */
     public function cartChangeStore(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // saving
         if ($request->isMethod('post')) {
@@ -2248,7 +2251,7 @@ class Automation2Controller extends Controller
             ]);
             // redirect if fails
             if ($validator->fails()) {
-                return response()->view('automation2.cartChangeSore', [
+                return response()->view('dashboard.campaign.automation2.cartChangeSore', [
                     'automation' => $automation,
                     'trigger' => $automation->getTrigger(),
                     'errors' => $validator->errors(),
@@ -2262,7 +2265,7 @@ class Automation2Controller extends Controller
             ]);
         }
 
-        return view('automation2.cartChangeSore', [
+        return view('dashboard.campaign.automation2.cartChangeSore', [
             'automation' => $automation,
             'trigger' => $automation->getTrigger(),
         ]);
@@ -2275,9 +2278,9 @@ class Automation2Controller extends Controller
      */
     public function cartStats(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
-        return view('automation2.cart.stats', [
+        return view('dashboard.campaign.automation2.cart.stats', [
             'automation' => $automation,
         ]);
     }
@@ -2289,9 +2292,9 @@ class Automation2Controller extends Controller
      */
     public function cartList(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
-        return view('automation2.cart.list', [
+        return view('dashboard.campaign.automation2.cart.list', [
             'automation' => $automation,
         ]);
     }
@@ -2303,9 +2306,9 @@ class Automation2Controller extends Controller
      */
     public function cartItems(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
-        return view('automation2.cart.items', [
+        return view('dashboard.campaign.automation2.cart.items', [
             'automation' => $automation,
         ]);
     }
@@ -2317,7 +2320,7 @@ class Automation2Controller extends Controller
      */
     public function operationSelect(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // saving
         if ($request->isMethod('post')) {
@@ -2328,7 +2331,7 @@ class Automation2Controller extends Controller
             // ]);
         }
 
-        return view('automation2.operationSelect', [
+        return view('dashboard.campaign.automation2.operationSelect', [
             'automation' => $automation,
             'types' => [
                 'update_contact',
@@ -2345,7 +2348,7 @@ class Automation2Controller extends Controller
      */
     public function operationCreate(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // saving
         if ($request->isMethod('post')) {
@@ -2357,7 +2360,7 @@ class Automation2Controller extends Controller
             ]);
         }
 
-        return view('automation2.operationCreate', [
+        return view('dashboard.campaign.automation2.operationCreate', [
             'automation' => $automation,
             'types' => [
                 'update_contact',
@@ -2374,9 +2377,9 @@ class Automation2Controller extends Controller
      */
     public function operationShow(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
-        return view('automation2.operationShow', [
+        return view('dashboard.campaign.automation2.operationShow', [
             'automation' => $automation,
             'element' => $automation->getElement($request->id),
         ]);
@@ -2389,7 +2392,7 @@ class Automation2Controller extends Controller
      */
     public function operationEdit(Request $request, $uid)
     {
-        $automation = Automation2::findByUid($uid);
+        $automation = Automation2::findByUid($request->uid);
 
         // saving
         if ($request->isMethod('post')) {
@@ -2401,7 +2404,7 @@ class Automation2Controller extends Controller
             ]);
         }
 
-        return view('automation2.operationEdit', [
+        return view('dashboard.campaign.automation2.operationEdit', [
             'automation' => $automation,
             'element' => $automation->getElement($request->id),
         ]);
@@ -2429,14 +2432,14 @@ class Automation2Controller extends Controller
                     'message' => 'OK',
                 ]);
             } catch (Exception $ex) {
-                return response()->view('automation2.sendTestEmail', [
+                return response()->view('dashboard.campaign.automation2.sendTestEmail', [
                     'email' => $email,
                     'error' => $ex->getMessage(),
                 ], 400);
             }
         }
 
-        return view('automation2.sendTestEmail', [
+        return view('dashboard.campaign.automation2.sendTestEmail', [
             'email' => $email,
         ]);
     }
@@ -2452,14 +2455,14 @@ class Automation2Controller extends Controller
 
             // redirect if fails
             if ($validator->fails()) {
-                return response()->view('automation2.condition.conditionWaitCustom', [
+                return response()->view('dashboard.campaign.automation2.condition.conditionWaitCustom', [
                     'errors' => $validator->errors(),
                 ], 400);
             }
 
-            return view('automation2.condition._wait_select');
+            return view('dashboard.campaign.automation2.condition._wait_select');
         }
 
-        return view('automation2.condition.conditionWaitCustom');
+        return view('dashboard.automation2.condition.conditionWaitCustom');
     }
 }
