@@ -26,7 +26,7 @@
             </div>
             <!-- account container form -->
             <div class="container">
-                <div class="account-con">
+                <div class="account-con mb-4">
                     <form method="POST" action="{{ route('user.profile.update')}}" enctype="multipart/form-data">
                         @csrf
                         <div>

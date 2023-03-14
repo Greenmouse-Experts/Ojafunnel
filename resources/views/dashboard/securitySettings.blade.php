@@ -26,7 +26,7 @@
             </div>
             <!-- account container form -->
             <div class="container">
-                <div class="account-con">
+                <div class="account-con mb-4">
                     <div class="Edit">
                     <form method="POST" action="{{ route('user.password.update')}}">
                     @csrf

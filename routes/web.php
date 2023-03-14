@@ -639,6 +639,13 @@ Route::prefix('{username}')->group(function () {
                         Route::get('/sales-analytics', [App\Http\Controllers\DashboardController::class, 'main_sales'])->name('user.main.sales');
                     }
             );
+
+            Route::prefix('/withdrawal')->group(
+                function () {
+                        Route::get('/withdrawal', [App\Http\Controllers\DashboardController::class, 'withdrawal'])->name('user.withdrawal');
+                    }
+            );
+
             Route::prefix('/support')->group(
                 function () {
                         Route::get('/index', [App\Http\Controllers\DashboardController::class, 'main_support'])->name('user.main.support');
