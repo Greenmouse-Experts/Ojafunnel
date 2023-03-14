@@ -11,4 +11,4 @@
     'rules' => [],
 ])
 
-@include('automation2.condition._wait')
+@include('dashboard.campaign.automation2.condition._wait')

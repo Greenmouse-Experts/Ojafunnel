@@ -17,6 +17,7 @@
         "guzzlehttp/guzzle": "^7.5",
         "guzzlehttp/psr7": "^2.4",
         "jd-dotlogics/laravel-grapesjs": "^3.4",
+        "kub-at/php-simple-html-dom-parser": "^1.9",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",

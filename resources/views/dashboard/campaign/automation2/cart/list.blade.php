@@ -1,8 +1,8 @@
 @extends('layouts.popup.small')
 
-@section('content')     
+@section('content')
     <a class="mb-4 d-flex align-items-center back-to-automation" href="javascript:;"
-        onclick="timelinePopup.load('{{ action('Automation2Controller@cartStats', $automation->uid) }}')"
+        onclick="timelinePopup.load('{{ route('user.automation.cartStats', ['username' => Auth::user->username, 'uid' => $automation->uid]) }}')"
     >
         <span class="material-icons-outlined me-2">
             arrow_back

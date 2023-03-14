@@ -3,8 +3,8 @@
 @section('content')
 	<div class="row">
         <div class="col-md-12">
-            <form id="automationCreate" action="{{ action("Automation2Controller@wizard") }}" method="POST" class="form-validate-jqueryz">
-                {{ csrf_field() }}            
+            <form id="automationCreate" action="{{ route("user.automation.wizard", Auth::user()->username) }}" method="POST" class="form-validate-jqueryz">
+                {{ csrf_field() }}
 
                 @foreach(request()->all() as $key => $value)
                     @if (is_array($value))
@@ -16,17 +16,17 @@
                             @else
                                 <input type="hidden" name="{{ $key }}[{{ $key2 }}]" value="{{ $value2 }}" />
                             @endif
-                        @endforeach 
+                        @endforeach
                     @else
                         <input type="hidden" name="{{ $key }}" value="{{ $value }}" />
                     @endif
-                    
+
                 @endforeach
-        
+
                 <h1 class="mb-20">{{ trans('messages.automation.create_automation') }}</h1>
-            
+
                 <p class="mb-10">{{ trans('messages.automation.name_your_automation') }}</p>
-                
+
                 <div class="row mb-4">
                     <div class="col-md-8">
                         @include('helpers.form_control', [
@@ -40,26 +40,26 @@
                         ])
                     </div>
                 </div>
-                
+
                 <div class="text-center">
                     <button class="btn btn-secondary mt-20">{{ trans('messages.automation.get_started') }}</button>
                 </div>
-                    
+
             </form>
-                
+
         </div>
     </div>
-        
+
     <script>
         $('#automationCreate').submit(function(e) {
             e.preventDefault();
-            
+
             var form = $(this);
             var url = form.attr('action');
-            
+
             // loading effect
             createAutomationPopup.loading();
-            
+
             $.ajax({
                 url: url,
                 method: 'POST',
@@ -73,7 +73,7 @@
                 },
                 success: function (res) {
                     createAutomationPopup.hide();
-                    
+
                     addMaskLoading(res.message, function() {
                         setTimeout(function() {
                             window.location = res.url;

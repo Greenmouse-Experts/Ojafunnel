@@ -14,6 +14,7 @@
         <!-- /basic column chart -->
 
         <script>
+            var ECHARTS_THEME = '{{ Auth::user()->customer->theme_mode == 'dark' ? 'dark' : null }}';
             var ListsGrowthChart1 = {
                 url: '{{ route('user.list.listGrowthChart', ['username' => Auth::user()->username, 'uid' => $list->uid]) }}',
                 getChart: function() {

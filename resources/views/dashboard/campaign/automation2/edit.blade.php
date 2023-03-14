@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 
     <script type="text/javascript" src="{{ URL::asset('core/echarts/echarts.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('core/echarts/dark.js') }}"></script> 
+    <script type="text/javascript" src="{{ URL::asset('core/echarts/dark.js') }}"></script>
 @endsection
 
 @section('menu_title')
@@ -32,8 +32,8 @@
 @section('menu_right')
     <li class="d-flex align-items-center">
         <div class="d-flex align-items-center automation-top-actions">
-            <span class="me-4"><i class="last_save_time" data-url="{{ action('Automation2Controller@lastSaved', $automation->uid) }}">{{ trans('messages.automation.designer.last_saved', ['time' => $automation->updated_at->diffForHumans()]) }}</i></span>
-            <a href="{{ action('Automation2Controller@index') }}" class="action me-4">
+            <span class="me-4"><i class="last_save_time" data-url="{{ route('user.automation.lastSaved', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}">{{ trans('messages.automation.designer.last_saved', ['time' => $automation->updated_at->diffForHumans()]) }}</i></span>
+            <a href="{{ route('user.automation.index', Auth::user()->username) }}" class="action me-4">
                 <i class="material-icons-outlined me-2">arrow_back</i>
                 {{ trans('messages.automation.go_back') }}
             </a>
@@ -43,7 +43,7 @@
                     <select class="select select2 top-menu-select" name="switch_automation">
                         <option value="--hidden--"></option>
                         @foreach($automation->getSwitchAutomations(Auth::user()->customer)->get() as $auto)
-                            <option value='{{ action('Automation2Controller@edit', $auto->uid) }}'>{{ $auto->name }}</option>
+                            <option value='{{ route('user.automation.edit', ['username' => Auth::user()->username, 'uid' => $auto->uid]) }}'>{{ $auto->name }}</option>
                         @endforeach
                     </select>
 
@@ -57,8 +57,6 @@
             @endif
         </div>
     </li>
-
-    @include('layouts.core._menu_frontend_user')
 @endsection
 
 @section('content')
@@ -106,10 +104,10 @@
             fill: pink !important;
         }
     </style>
-    
+
     <main role="main">
         <div class="automation2">
-            <div class="diagram text-center scrollbar-inner">                
+            <div class="diagram text-center scrollbar-inner">
                 <svg id="svg" style="overflow: auto" width="3800" height="6800" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <text x="475" y="30" alignment-baseline="middle" text-anchor="middle">{{ trans('messages.automation.designer.intro') }}</text>
 
@@ -167,12 +165,12 @@
             </div>
             <div class="sidebar scrollbar-inner">
                 <div class="sidebar-content">
-                    
+
                 </div>
             </div>
         </div>
     </main>
-        
+
     <script>
         // timeline popup
         var timelinePopup = new Popup(undefined, undefined, {
@@ -203,7 +201,7 @@
 
         function openBuilder(url) {
             var div = $('<div class="full-iframe-popup">').html('<iframe scrolling="no" class="builder d-none" src="'+url+'"></iframe>');
-            
+
             $('body').append(div);
 
             // open builder effects
@@ -217,7 +215,7 @@
 
         function openBuilderClassic(url) {
             var div = $('<div class="full-iframe-popup">').html('<iframe scrolling="yes" class="builder d-none" src="'+url+'"></iframe>');
-            
+
             $('body').append(div);
 
             // open builder effects
@@ -228,7 +226,7 @@
                 $(this).removeClass("d-none");
             });
         }
-        
+
         function saveData(callback, extra = {}) {
             if (!(extra instanceof Object)) {
                 alert("A hash is required");
@@ -240,8 +238,8 @@
                 return false;
             }
 
-            var url = '{{ action('Automation2Controller@saveData', $automation->uid) }}';
-        
+            var url = '{{ route('user.automation.saveData', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}';
+
             var postContent = {
                 _token: CSRF_TOKEN,
                 data: JSON.stringify(tree.toJson()),
@@ -262,22 +260,22 @@
                 lastSaved.load();
             });
         }
-        
+
         function setAutomationName(name) {
             $('.navbar h1').html(name);
         }
 
         function SelectActionConfirm(key) {
-            var url = '{{ action('Automation2Controller@actionSelectConfirm', $automation->uid) }}' + '?key=' + key;
-            
-            popup.load(url, function() {                
+            var url = '{{ route('user.automation.actionSelectConfirm', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}' + '?key=' + key;
+
+            popup.load(url, function() {
                 // when click confirm select trigger type
                 popup.popup.find('#action-select').submit(function(e) {
                     e.preventDefault();
-                
+
                     var url = $(this).attr('action');
                     var data = $(this).serialize();
-                    
+
                     // show loading effect
                     popup.loading();
                     $.ajax({
@@ -286,22 +284,22 @@
                         data: data,
                     }).always(function(response) {
                         if (response.options.key == 'wait') {
-                            var newE = new ElementWait({title: response.title, options: response.options});                            
+                            var newE = new ElementWait({title: response.title, options: response.options});
                         } else if (response.options.key == 'condition') {
-                            var newE = new ElementCondition({title: response.title, options: response.options});                            
+                            var newE = new ElementCondition({title: response.title, options: response.options});
                         }
 
                         MyAutomation.addToTree(newE);
 
                         newE.validate();
-                        
+
                         // save tree
                         saveData(function() {
                             // hide popup
                             popup.hide();
 
                             doSelect(newE);
-                            
+
                             notify({
                                 type: 'success',
                                 title: '{!! trans('messages.notify.success') !!}',
@@ -314,9 +312,9 @@
         }
 
         function EmailSetup(id) {
-            var url = '{{ action('Automation2Controller@emailSetup', $automation->uid) }}' + '?action_id=' + id;
-            
-            popup.load(url, function() {
+            var url = '{{ route('user.automation.emailSetup', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}' + '?action_id=' + id;
+
+                popup.load(url, function() {
             });
         }
 
@@ -330,9 +328,9 @@
                 hasChildren = tree.getSelected().hasChildNo();
             }
 
-            popup.load('{{ action('Automation2Controller@actionSelectPupop', $automation->uid) }}?hasChildren=' + hasChildren, function() {
+            popup.load('{{ route('user.automation.actionSelectPupop', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}?hasChildren=' + hasChildren, function() {
                 console.log('Select action popup loaded!');
-                
+
                 // when click on action type
                 popup.popup.find('.action-select-but').click(function() {
                     var key = $(this).attr('data-key');
@@ -343,7 +341,7 @@
                             title: '{{ trans('messages.automation.tree.action_not_set') }}',
                             options: {init: "false"}
                         });
-                        
+
                         // add email to tree
                         MyAutomation.addToTree(newE);
 
@@ -361,53 +359,53 @@
                 });
             });
         }
-        
+
         function OpenTriggerSelectPopup() {
-            popup.load('{{ action('Automation2Controller@triggerSelectPupop', $automation->uid) }}', function() {
+            popup.load('{{ route('user.automation.triggerSelectPupop', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}', function() {
                 console.log('Select trigger popup loaded!');
-                
+
                 // when click on trigger type
                 popup.popup.find('.trigger-select-but').click(function() {
                     var key = $(this).attr('data-key');
-                    
+
                     // show select trigger confirm box
                     SelectTriggerConfirm(key);
                 });
             });
         }
-        
+
         function SelectTriggerConfirm(key) {
-            var url = '{{ action('Automation2Controller@triggerSelectConfirm', $automation->uid) }}' + '?key=' + key;
-            
+            var url = '{{ route('user.automation.triggerSelectConfirm', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}' + '?key=' + key;
+
             popup.load(url, function() {
                 console.log('Confirm trigger type popup loaded!');
             });
         }
-        
+
         function EditTrigger(url) {
             sidebar.load(url);
         }
-        
+
         function EditAction(url) {
             sidebar.load(url);
         }
-    
+
         $(document).ready(function() {
             lastSaved.load();
 
             // load sidebar
-            sidebar.load('{{ action('Automation2Controller@settings', $automation->uid) }}');
+            sidebar.load('{{ route('user.automation.settings', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}');
 
             // history toggle
             $('.diagram .history .history-list').click(function() {
                 toggleHistory();
             });
-            $(document).mouseup(function(e) 
+            $(document).mouseup(function(e)
             {
                 var container = $(".history .history-list-items");
 
                 // if the target of the click isn't the container nor a descendant of the container
-                if (!container.is(e.target) && container.has(e.target).length === 0) 
+                if (!container.is(e.target) && container.has(e.target).length === 0)
                 {
                     container.fadeOut();
                 }
@@ -417,12 +415,12 @@
             $('[name=switch_automation]').change(function() {
                 var val = $(this).val();
                 var text = $('[name=switch_automation] option:selected').text();
-                var confirm = "{{ trans('messages.automation.switch_automation.confirm') }} <span class='font-weight-semibold'>" + text + "</span>"; 
+                var confirm = "{{ trans('messages.automation.switch_automation.confirm') }} <span class='font-weight-semibold'>" + text + "</span>";
 
                 var dialog = new Dialog('confirm', {
                     message: confirm,
                     ok: function(dialog) {
-                        window.location = val; 
+                        window.location = val;
                     },
                     cancel: function() {
                         $('[name=switch_automation]').val('');
@@ -442,7 +440,7 @@
                     message: 'Automation is already finallized. Cannot rollback to previous state.',
                 });
             });
-            
+
             // quota view
             $('.quota-view').click(function(e) {
                 e.preventDefault();
@@ -463,36 +461,36 @@
             // Prams: e.getId()
             // Trả về thông tin chi tiết của action để load nội dung bên phải
             // Trên server: gọi hàm model: Automation2::getActionInfo(id)
-            
+
             e.select(); // highlight
-            
+
             // if click on a trigger
             if (e.getType() == 'ElementTrigger') {
                 var options = e.getOptions();
-                
+
                 // check if trigger is not init
                 if (options.init == "false") {
                     OpenTriggerSelectPopup();
                 }
                 // trigger was init
                 else {
-                    var url = '{{ action('Automation2Controller@triggerEdit', $automation->uid) }}' + '?key=' + e.getOptions().key + '&id=' + e.getId();
-                    
+                    var url = '{{ route('user.automation.triggerEdit', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}' + '?key=' + e.getOptions().key + '&id=' + e.getId();
+
                     // Open trigger types select list
                     EditTrigger(url);
                 }
             }
             // is WAIT
             else if (e.getType() == 'ElementWait') {
-                    var url = '{{ action('Automation2Controller@actionEdit', $automation->uid) }}' + '?key=' + e.getOptions().key + '&id=' + e.getId();
-                    
+                    var url = '{{ route('user.automation.actionEdit', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}' + '?key=' + e.getOptions().key + '&id=' + e.getId();
+
                     // Open trigger types select list
                     EditAction(url);
             }
             // is Condition
             else if (e.getType() == 'ElementCondition') {
-                    var url = '{{ action('Automation2Controller@actionEdit', $automation->uid) }}' + '?key=' + e.getOptions().key + '&id=' + e.getId();
-                    
+                    var url = '{{ route('user.automation.actionEdit', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}' + '?key=' + e.getOptions().key + '&id=' + e.getId();
+
                     // Open trigger types select list
                     EditAction(url);
             }
@@ -500,8 +498,8 @@
             else if (e.getType() == 'ElementAction') {
                 if (e.getOptions().init == "true") {
                     var type = $(this).attr('data-type');
-                    var url = '{{ action('Automation2Controller@email', $automation->uid) }}?email_uid=' + e.getOptions().email_uid;
-                    
+                    var url = '{{ route('user.automation.email', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}?email_uid=' + e.getOptions().email_uid;
+
                     // Open trigger types select list
                     EditAction(url);
                 } else {
@@ -512,8 +510,8 @@
             // is Email
             else if (e.getType() == 'ElementOperation') {
                 var type = $(this).attr('data-type');
-                var url = '{{ action('Automation2Controller@operationShow', $automation->uid) }}?operation=' + e.getOptions().operation_type + '&id=' + e.getId();
-                
+                var url = '{{ route('user.automation.operationShow', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}?operation=' + e.getOptions().operation_type + '&id=' + e.getId();
+
                 // Open trigger types select list
                 sidebar.load(url);
             }
@@ -529,7 +527,7 @@
             //var json = [
             //    {title: "Click to choose a trigger", id: "trigger", type: "ElementTrigger", options: {init: false}}
             //];
-            
+
             @if ($automation->data)
                 var json = {!! $automation->getData() !!};
             @else
@@ -615,9 +613,9 @@
                     }
 
                     if (e.getType() == 'ElementCondition') {
-                        if     (      e.getOptions()['type'] == null || 
-                                 (e.getOptions()['type'] == 'click' && e.getOptions()['email_link'] == null ) ||
-                                (e.getOptions()['type'] == 'open' && e.getOptions()['email'] == null ) || 
+                        if     (      e.getOptions()['type'] == null ||
+                                (e.getOptions()['type'] == 'click' && e.getOptions()['email_link'] == null ) ||
+                                (e.getOptions()['type'] == 'open' && e.getOptions()['email'] == null ) ||
                                 (e.getOptions()['type'] == 'cart_buy_item' && !e.getOptions()['item_id'] )
                             ) {
                             e.showNotice('Condition not set up yet');
@@ -663,3 +661,4 @@
         })();
     </script>
 @endsection
+

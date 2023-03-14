@@ -1,10 +1,10 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 
 class Attachment extends Model
 {
@@ -15,14 +15,16 @@ class Attachment extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'size',    ];
+        'name',
+        'size',
+    ];
 
     /**
      * Association with mailList through mail_list_id column.
      */
     public function email()
     {
-        return $this->belongsTo('Acelle\Model\Email');
+        return $this->belongsTo('App\Models\Email');
     }
 
     /**

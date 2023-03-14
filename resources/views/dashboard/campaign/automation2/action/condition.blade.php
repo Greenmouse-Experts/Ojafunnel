@@ -36,19 +36,17 @@
             'rules' => [],
         ])
     </div>
-        
+
     <div class="condition-setting">
     </div>
 </div>
-    
+
 <script>
 
     function showSetting(container) {
         var box = new Box(container.find('.condition-setting'));
         var type = container.find('[name=type]').val();
-        var url = '{{ action('Automation2Controller@conditionSetting', [
-        'uid' => $automation->uid,
-    ]) }}?type=' + type + '&element_id={{ $element->get('id') }}';
+        var url = '{{ route('user.automation.conditionSetting', ['username' => Auth::user()->username,'uid' => $automation->uid]) }}?type=' + type + '&element_id={{ $element->get('id') }}';
 
         box.load(url);
     }
@@ -57,7 +55,7 @@
     $(document).on('change', '.condition-type [name=type]', function() {
         showSetting($(this).closest('.condition-type'));
     });
-    
+
     $('.container-{{ $id }}').each(function() {
         showSetting($(this));
     });

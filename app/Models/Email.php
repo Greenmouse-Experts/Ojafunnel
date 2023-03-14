@@ -1,21 +1,21 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use File;
 use Validator;
 use ZipArchive;
 use KubAT\PhpSimple\HtmlDomParser;
-use Acelle\Library\Tool;
-use Acelle\Library\StringHelper;
-use Acelle\Library\Log as MailLog;
-use Acelle\Model\Setting;
+use App\Library\Tool;
+use App\Library\StringHelper;
+use App\Library\Log as MailLog;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
-use Acelle\Jobs\SendMessage;
-use Acelle\Library\Traits\HasTemplate;
-use Acelle\Library\Traits\HasUid;
+use App\Jobs\SendMessage;
+use App\Library\Traits\HasTemplate;
+use App\Library\Traits\HasUid;
 use Exception;
 
 class Email extends Model
@@ -33,7 +33,14 @@ class Email extends Model
      * @var array
      */
     protected $fillable = [
-        'subject', 'from_email', 'from_name', 'reply_to', 'sign_dkim', 'track_open', 'track_click', 'action_id',
+        'subject',
+        'from_email',
+        'from_name',
+        'reply_to',
+        'sign_dkim',
+        'track_open',
+        'track_click',
+        'action_id',
     ];
 
     // Cached HTML content
@@ -44,7 +51,7 @@ class Email extends Model
      */
     public function automation()
     {
-        return $this->belongsTo('Acelle\Model\Automation2', 'automation2_id');
+        return $this->belongsTo('App\Models\Automation2', 'automation2_id');
     }
 
     /**
@@ -52,7 +59,7 @@ class Email extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('Acelle\Model\Customer');
+        return $this->belongsTo('App\Models\Customer');
     }
 
     /**
@@ -60,7 +67,7 @@ class Email extends Model
      */
     public function attachments()
     {
-        return $this->hasMany('Acelle\Model\Attachment');
+        return $this->hasMany('App\Models\Attachment');
     }
 
     /**
@@ -68,7 +75,7 @@ class Email extends Model
      */
     public function emailLinks()
     {
-        return $this->hasMany('Acelle\Model\EmailLink');
+        return $this->hasMany('App\Models\EmailLink');
     }
 
     /**
@@ -76,12 +83,12 @@ class Email extends Model
      */
     public function trackingLogs()
     {
-        return $this->hasMany('Acelle\Model\TrackingLog');
+        return $this->hasMany('App\Models\TrackingLog');
     }
 
     public function deliveryAttempts()
     {
-        return $this->hasMany('Acelle\Model\DeliveryAttempt');
+        return $this->hasMany('App\Models\DeliveryAttempt');
     }
 
     /**
@@ -89,7 +96,7 @@ class Email extends Model
      */
     public function trackingDomain()
     {
-        return $this->belongsTo('Acelle\Model\TrackingDomain', 'tracking_domain_id');
+        return $this->belongsTo('App\Models\TrackingDomain', 'tracking_domain_id');
     }
 
     /**
@@ -105,7 +112,7 @@ class Email extends Model
      *
      * @return array
      */
-    public function rules($request=null)
+    public function rules($request = null)
     {
         $rules = [
             'subject' => 'required',
@@ -189,17 +196,19 @@ class Email extends Model
     {
         $server = $subscriber->mailList->pickSendingServer();
 
-        dispatch(new SendMessage(
-            $this,
-            $subscriber,
-            $server,
-            $triggerId
-        ));
+        dispatch(
+            new SendMessage(
+                $this,
+                $subscriber,
+                $server,
+                $triggerId
+            )
+        );
     }
 
     public function sendTestEmail($emailAddress)
     {
-        $validator = Validator::make([ 'email' => $emailAddress ], [
+        $validator = Validator::make(['email' => $emailAddress], [
             'email' => 'required|email',
         ]);
 
@@ -224,14 +233,15 @@ class Email extends Model
     {
 
         // @todo: customerneedcheck
-        $params = array_merge(array(
-            'email_id' => $this->id,
-            'message_id' => $msgId,
-            'subscriber_id' => $subscriber->id,
-            'sending_server_id' => $server->id,
-            'customer_id' => $this->automation->customer->id,
-            'auto_trigger_id' => $triggerId,
-        ), $response);
+        $params = array_merge(
+            array(
+                'email_id' => $this->id,
+                'message_id' => $msgId,
+                'subscriber_id' => $subscriber->id,
+                'sending_server_id' => $server->id,
+                'customer_id' => $this->automation->customer->id,
+                'auto_trigger_id' => $triggerId,
+            ), $response);
 
         if (!isset($params['runtime_message_id'])) {
             $params['runtime_message_id'] = $msgId;
@@ -244,13 +254,13 @@ class Email extends Model
     public function isOpened($subscriber)
     {
         return $this->trackingLogs()->where('subscriber_id', $subscriber->id)
-                            ->join('open_logs', 'open_logs.message_id', '=', 'tracking_logs.message_id')->exists();
+            ->join('open_logs', 'open_logs.message_id', '=', 'tracking_logs.message_id')->exists();
     }
 
     public function isClicked($subscriber)
     {
         return $this->trackingLogs()->where('subscriber_id', $subscriber->id)
-                            ->join('click_logs', 'click_logs.message_id', '=', 'tracking_logs.message_id')->exists();
+            ->join('click_logs', 'click_logs.message_id', '=', 'tracking_logs.message_id')->exists();
     }
 
     /**
@@ -262,7 +272,7 @@ class Email extends Model
 
         // Tacking domain
         if (isset($params['custom_tracking_domain']) && $params['custom_tracking_domain'] && isset($params['tracking_domain_uid'])) {
-            $tracking_domain = \Acelle\Model\TrackingDomain::findByUid($params['tracking_domain_uid']);
+            $tracking_domain = \App\Models\TrackingDomain::findByUid($params['tracking_domain_uid']);
             if (is_object($tracking_domain)) {
                 $this->tracking_domain_id = $tracking_domain->id;
             } else {

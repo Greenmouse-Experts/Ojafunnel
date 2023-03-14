@@ -20,7 +20,7 @@ class TemplateController extends Controller
      */
     public function index(Request $request)
     {
-        return view('templates.index');
+        return view('dashboard.campaign.templates.index');
     }
 
     /**
@@ -64,16 +64,16 @@ class TemplateController extends Controller
         $template = new Template();
 
         // authorize
-        if (!$request->user()->customer->can('create', Template::class)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('create', Template::class)) {
+        //     return $this->notAuthorized();
+        // }
 
         // Get old post values
         if (null !== $request->old()) {
             $template->fill($request->old());
         }
 
-        return view('templates.create', [
+        return view('dashboard.campaign.templates.create', [
             'template' => $template,
         ]);
     }
@@ -88,20 +88,20 @@ class TemplateController extends Controller
     public function edit(Request $request, $uid)
     {
         // Generate info
-        $user = $request->user();
+        $user = \Auth::user();
         $template = Template::findByUid($uid);
 
         // authorize
-        if (!$request->user()->customer->can('update', $template)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $template)) {
+        //     return $this->notAuthorized();
+        // }
 
         // Get old post values
         if (null !== $request->old()) {
             $template->fill($request->old());
         }
 
-        return view('templates.edit', [
+        return view('dashboard.campaign.templates.edit', [
             'template' => $template,
         ]);
     }
@@ -121,9 +121,9 @@ class TemplateController extends Controller
         $template = Template::findByUid($request->uid);
 
         // authorize
-        if (!$request->user()->customer->can('update', $template)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $template)) {
+        //     return $this->notAuthorized();
+        // }
 
         // Save template
         $template->fill($request->all());
@@ -161,9 +161,9 @@ class TemplateController extends Controller
     public function uploadTemplate(Request $request)
     {
         // authorize
-        if (!$request->user()->customer->can('create', Template::class)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('create', Template::class)) {
+        //     return $this->notAuthorized();
+        // }
 
         // validate and save posted data
         if ($request->isMethod('post')) {
@@ -172,7 +172,7 @@ class TemplateController extends Controller
             $request->session()->flash('alert-success', trans('messages.template.uploaded'));
             return redirect()->action('TemplateController@index');
         } else {
-            return view('templates.upload');
+            return view('dashboard.templates.upload');
         }
     }
 
@@ -218,14 +218,14 @@ class TemplateController extends Controller
      */
     public function preview(Request $request, $id)
     {
-        $template = Template::findByUid($id);
+        $template = Template::findByUid($request->id);
 
         // authorize
-        if (!$request->user()->customer->can('preview', $template)) {
-            return $this->notAuthorized();
-        }
+        // if (!\Auth::user()->customer->can('preview', $template)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('templates.preview', [
+        return view('dashboard.campaign.templates.preview', [
             'template' => $template,
         ]);
     }
@@ -243,9 +243,9 @@ class TemplateController extends Controller
 
         if ($request->isMethod('post')) {
             // authorize
-            if (!$request->user()->customer->can('copy', $template)) {
-                return $this->notAuthorized();
-            }
+            // if (!$request->user()->customer->can('copy', $template)) {
+            //     return $this->notAuthorized();
+            // }
 
             $template->copy([
                 'name' => $request->name,
@@ -256,7 +256,7 @@ class TemplateController extends Controller
             return;
         }
 
-        return view('templates.copy', [
+        return view('dashboard.campaign.templates.copy', [
             'template' => $template,
         ]);
     }
@@ -271,13 +271,13 @@ class TemplateController extends Controller
     public function builderEdit(Request $request, $uid)
     {
         // Generate info
-        $user = $request->user();
-        $template = Template::findByUid($uid);
+        $user = \Auth::user();
+        $template = Template::findByUid($request->uid);
 
         // authorize
-        if (!$request->user()->customer->can('update', $template)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $template)) {
+        //     return $this->notAuthorized();
+        // }
 
         // validate and save posted data
         if ($request->isMethod('post')) {
@@ -294,7 +294,7 @@ class TemplateController extends Controller
             ]);
         }
 
-        return view('templates.builder.edit', [
+        return view('dashboard.campaign.templates.builder.edit', [
             'template' => $template,
             'templates' => $request->user()->customer->getBuilderTemplates(),
         ]);
@@ -311,13 +311,13 @@ class TemplateController extends Controller
     {
         // Generate info
         $user = $request->user();
-        $template = Template::findByUid($uid);
-        $changeTemplate = Template::findByUid($change_uid);
+        $template = Template::findByUid($request->uid);
+        $changeTemplate = Template::findByUid($request->change_uid);
 
         // authorize
-        if (!$request->user()->customer->can('update', $template)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $template)) {
+        //     return $this->notAuthorized();
+        // }
 
         $template->changeTemplate($changeTemplate);
     }
@@ -332,15 +332,15 @@ class TemplateController extends Controller
     public function builderEditContent(Request $request, $uid)
     {
         // Generate info
-        $user = $request->user();
-        $template = Template::findByUid($uid);
+        $user = \Auth::user();
+        $template = Template::findByUid($request->uid);
 
         // authorize
-        if (!$request->user()->customer->can('update', $template)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('update', $template)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('templates.builder.content', [
+        return view('dashboard.campaign.templates.builder.content', [
             'content' => $template->content,
         ]);
     }
@@ -384,9 +384,9 @@ class TemplateController extends Controller
     public function builderCreate(Request $request)
     {
         // authorize
-        if (!$request->user()->customer->can('create', Template::class)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->customer->can('create', Template::class)) {
+        //     return $this->notAuthorized();
+        // }
 
         // validate and save posted data
         if ($request->isMethod('post')) {
@@ -401,7 +401,7 @@ class TemplateController extends Controller
             $template = new Template();
             $template->name = trans('messages.untitled_template');
 
-            return view('templates.builder.create', [
+            return view('dashboard.campaign.templates.builder.create', [
                 'template' => $template,
             ]);
         }

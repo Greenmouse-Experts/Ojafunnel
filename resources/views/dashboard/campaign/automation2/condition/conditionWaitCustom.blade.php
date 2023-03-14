@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="">
-        <form id="conditionWaitCustom" action="{{ action('Automation2Controller@conditionWaitCustom') }}" method="POST">
+        <form id="conditionWaitCustom" action="{{ route('user.automation.conditionWaitCustom', Auth::user()->username) }}" method="POST">
             {{ csrf_field() }}
-        
+
             <h4 class="text-semibold mt-0 mb-4">{{ trans('messages.condition.custom_wait') }}</h4>
-            
+
             <div class="row boxing">
                 <div class="col-md-4">
                     @include('helpers.form_control.number', [
@@ -41,10 +41,10 @@
 
     <script>
         $(function() {
-            // 
+            //
             $("#conditionWaitCustom").submit(function( e ) {
                 e.preventDefault();
-                
+
                 var url = $(this).attr('action');
                 var data = $(this).serialize();
                 var form = $(this);

@@ -51,7 +51,10 @@ Route::get('assets/{dirname}/{basename}', [
     }
 ])->name('public_assets');
 
-
+Route::get('p/{message_id}/open', [\App\Controller\Mail\CampaignController::class, 'open'])->name('openTrackingUrl');
+Route::get('p/{url}/click/{message_id?}', [\App\Controller\Mail\CampaignController::class, 'click'])->name('clickTrackingUrl');
+Route::get('c/{subscriber}/unsubscribe/{message_id?}', [\App\Controller\Mail\CampaignController::class, 'unsubscribe'])->name('unsubscribeUrl');
+Route::get('campaigns/{message_id}/web-view', [\App\Controller\Mail\CampaignController::class, 'webView'])->name('webViewerUrl');
 // Route::domain(config('app.domain_url'))->group(function() {
 Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
 // Faqs
@@ -360,8 +363,89 @@ Route::prefix('{username}')->group(function () {
 
             Route::prefix('/automation')->group(
                 function () {
-                        Route::get('/index', [App\Http\Controllers\Mail\Automation2Controller::class, 'contact'])->name('user.automation.index');
-
+                        Route::get('/index', [App\Http\Controllers\Mail\Automation2Controller::class, 'index'])->name('user.automation.index');
+                        Route::get('/edit/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'edit'])->name('user.automation.edit');
+                        Route::get('/listing', [App\Http\Controllers\Mail\Automation2Controller::class, 'listing'])->name('user.automation.listing');
+                        Route::patch('/enable', [App\Http\Controllers\Mail\Automation2Controller::class, 'enable'])->name('user.automation.enable');
+                        Route::patch('/disable', [App\Http\Controllers\Mail\Automation2Controller::class, 'disable'])->name('user.automation.disable');
+                        Route::delete('/delete', [App\Http\Controllers\Mail\Automation2Controller::class, 'delete'])->name('user.automation.delete');
+                        Route::get('/wizard', [App\Http\Controllers\Mail\Automation2Controller::class, 'wizard'])->name('user.automation.wizard');
+                        Route::post('/wizard', [App\Http\Controllers\Mail\Automation2Controller::class, 'wizard'])->name('user.automation.wizard');
+                        Route::get('/wizardTrigger', [App\Http\Controllers\Mail\Automation2Controller::class, 'wizardTrigger'])->name('user.automation.wizardTrigger');
+                        Route::get('/wizardTriggerOption/{trigger_type}', [App\Http\Controllers\Mail\Automation2Controller::class, 'wizardTriggerOption'])->name('user.automation.wizardTriggerOption');
+                        Route::post('/wizardTriggerOptionPost', [App\Http\Controllers\Mail\Automation2Controller::class, 'wizardTriggerOption'])->name('user.automation.wizardTriggerOptionPost');
+                        Route::post('/segmentSelectPost', [App\Http\Controllers\Mail\Automation2Controller::class, 'segmentSelect'])->name('user.automation.segmentSelectPost');
+                        Route::get('/segmentSelectPost', [App\Http\Controllers\Mail\Automation2Controller::class, 'segmentSelect'])->name('user.automation.segmentSelectPost');
+                        Route::post('/saveData/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'saveData'])->name('user.automation.saveData');
+                        Route::match(['get', 'post'], '/lastSaved/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'lastSaved'])->name('user.automation.lastSaved');
+                        Route::match(['get', 'post'], '/update/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'update'])->name('user.automation.update');
+                        Route::get('/actionSelectConfirm/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'actionSelectConfirm'])->name('user.automation.actionSelectConfirm');
+                        Route::match(['get', 'post'], '/actionSelect/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'actionSelect'])->name('user.automation.actionSelect');
+                        Route::match(['get', 'post'], '/actionSelectPupop/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'actionSelectPupop'])->name('user.automation.actionSelectPupop');
+                        Route::match(['get', 'post'], '/conditionSetting/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'conditionSetting'])->name('user.automation.conditionSetting');
+                        Route::match(['get', 'post'], '/waitTime/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'waitTime'])->name('user.automation.waitTime');
+                        Route::match(['get', 'post'], '/conditionWaitCustom', [App\Http\Controllers\Mail\Automation2Controller::class, 'conditionWaitCustom'])->name('user.automation.conditionWaitCustom');
+                        Route::post('/actionSelectConfirm/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'actionSelectConfirm'])->name('user.automation.actionSelectConfirm');
+                        Route::get('/emailSetup/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'emailSetup'])->name('user.automation.emailSetup');
+                        Route::post('/emailSetup/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'emailSetup'])->name('user.automation.emailSetup');
+                        Route::match(['get', 'post'], '/emailTemplate/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'emailTemplate'])->name('user.automation.emailTemplate');
+                        Route::match(['get', 'post'], '/emailConfirm/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'emailConfirm'])->name('user.automation.emailConfirm');
+                        Route::match(['get', 'post'], '/templateCreate/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateCreate'])->name('user.automation.templateCreate');
+                        Route::match(['get', 'post'], '/templateLayout/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateLayout'])->name('user.automation.templateLayout');
+                        Route::match(['get', 'post'], '/templateBuilderSelect/{uid}/', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateBuilderSelect'])->name('user.automation.templateBuilderSelect');
+                        Route::match(['get', 'post'], '/templateEdit/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateEdit'])->name('user.automation.templateEdit');
+                        Route::match(['get', 'post'], '/templateContent/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateContent'])->name('user.automation.templateContent');
+                        Route::match(['get', 'post'], '/uploadTemplateAssets/{uid}', [App\Http\Controllers\Mail\TemplateController::class, 'uploadTemplateAssets'])->name('user.template.uploadTemplateAssets');
+                        Route::match(['get', 'post'], '/templateEditClassic/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateEditClassic'])->name('user.automation.templateEditClassic');
+                        Route::match(['get', 'post'], '/templateEditPlain/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateEditPlain'])->name('user.automation.templateEditPlain');
+                        Route::get('/actionSelectPupop/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'actionSelectPupop'])->name('user.automation.actionSelectPupop');
+                        Route::post('/actionSelectPupop/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'actionSelectPupop'])->name('user.automation.actionSelectPupop');
+                        Route::get('/triggerSelectPupop/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'triggerSelectPupop'])->name('user.automation.triggerSelectPupop');
+                        Route::post('/triggerSelectPupop/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'triggerSelectPupop'])->name('user.automation.triggerSelectPupop');
+                        Route::get('/triggerSelectConfirm/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'triggerSelectConfirm'])->name('user.automation.triggerSelectConfirm');
+                        Route::post('/triggerSelectConfirm/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'triggerSelectConfirm'])->name('user.automation.triggerSelectConfirm');
+                        Route::get('/settings/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'settings'])->name('user.automation.settings');
+                        Route::post('/settings/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'settings'])->name('user.automation.settings');
+                        Route::get('/actionEdit/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'actionEdit'])->name('user.automation.actionEdit');
+                        Route::post('/actionEdit/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'actionEdit'])->name('user.automation.actionEdit');
+                        Route::get('/email/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'email'])->name('user.automation.email');
+                        Route::post('/email/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'email'])->name('user.automation.email');
+                        Route::match(['get', 'post'], '/insight/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'insight'])->name('user.automation.insight');
+                        Route::match(['get', 'post'], '/cartStats/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'cartStats'])->name('user.automation.cartStats');
+                        Route::match(['get', 'post'], '/cartList/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'cartList'])->name('user.automation.cartList');
+                        Route::match(['get', 'post'], '/cartChangeList/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'cartChangeList'])->name('user.automation.cartChangeList');
+                        Route::match(['get', 'post'], '/cartWait/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'cartWait'])->name('user.automation.cartWait');
+                        Route::match(['get', 'post'], '/cartChangeStore/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'cartChangeStore'])->name('user.automation.cartChangeStore');
+                        Route::match(['get', 'post'], '/contacts/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'contacts'])->name('user.automation.contacts');
+                        Route::match(['get', 'post'], '/contactsList/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'contactsList'])->name('user.automation.contactsList');
+                        Route::match(['get', 'post'], '/contactRetry/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'contactRetry'])->name('user.automation.contactRetry');
+                        Route::match(['get', 'post'], '/timeline/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'timeline'])->name('user.automation.timeline');
+                        Route::match(['get', 'post'], '/timelineList/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'timelineList'])->name('user.automation.timelineList');
+                        Route::match(['get', 'post'], '/exportContacts/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'exportContacts'])->name('user.automation.exportContacts');
+                        Route::match(['get', 'post'], '/copyToNewList/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'copyToNewList'])->name('user.automation.copyToNewList');
+                        Route::match(['get', 'post'], '/tagContacts/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'tagContacts'])->name('user.automation.tagContacts');
+                        Route::match(['get', 'post'], '/tagContact/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'tagContact'])->name('user.automation.tagContact');
+                        Route::match(['get', 'post'], '/triggerNow/{automation}', [App\Http\Controllers\Mail\Automation2Controller::class, 'triggerNow'])->name('user.automation.triggerNow');
+                        Route::match(['get', 'post'], '/trigger/{id}', [App\Http\Controllers\Mail\AutoTrigger::class, 'show'])->name('user.autotrigger.show');
+                        Route::match(['get', 'post'], '/checkAutotrigger/{id}', [App\Http\Controllers\Mail\AutoTrigger::class, 'check'])->name('user.autotrigger.check');
+                        Route::match(['get', 'post'], '/profile/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'profile'])->name('user.automation.profile');
+                        Route::match(['get', 'post'], '/operationSelect/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'operationSelect'])->name('user.automation.operationSelect');
+                        Route::match(['get', 'post'], '/operationCreate/{uid}/{operation}', [App\Http\Controllers\Mail\Automation2Controller::class, 'operationCreate'])->name('user.automation.operationCreate');
+                        Route::match(['get', 'post'], '/operationEdit/{uid}/{operation}', [App\Http\Controllers\Mail\Automation2Controller::class, 'operationEdit'])->name('user.automation.operationEdit');
+                        Route::match(['get', 'post'], '/operationShow/{uid}/', [App\Http\Controllers\Mail\Automation2Controller::class, 'operationShow'])->name('user.automation.operationShow');
+                        Route::match(['get', 'post'], '/triggerSelect/{uid}/', [App\Http\Controllers\Mail\Automation2Controller::class, 'triggerSelect'])->name('user.automation.triggerSelect');
+                        Route::match(['get', 'post'], '/triggerEdit/{uid}/', [App\Http\Controllers\Mail\Automation2Controller::class, 'triggerEdit'])->name('user.automation.triggerEdit');
+                        Route::match(['get', 'post'], '/templatePreview/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templatePreview'])->name('user.automation.templatePreview');
+                        Route::match(['get', 'post'], '/templatePreviewContent/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templatePreviewContent'])->name('user.automation.templatePreviewContent');
+                        Route::match(['get', 'post'], '/templateLayout/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateLayout'])->name('user.automation.templateLayout');
+                        Route::match(['get', 'post'], '/templateUpload/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateUpload'])->name('user.automation.templateUpload');
+                        Route::match(['get', 'post'], '/templateLayoutList/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateLayoutList'])->name('user.automation.templateLayoutList');
+                        Route::match(['get', 'post'], '/templateRemove/{uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'templateRemove'])->name('user.automation.templateRemove');
+                        Route::match(['get', 'post'], '/mailDelete/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'emailDelete'])->name('user.automation.mailDelete');
+                        Route::match(['get', 'post'], '/emailAttachmentUpload/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'emailAttachmentUpload'])->name('user.automation.emailAttachmentUpload');
+                        Route::match(['get', 'post'], '/emailAttachmentDownload/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'emailAttachmentDownload'])->name('user.automation.emailAttachmentDownload');
+                        Route::match(['get', 'post'], '/emailAttachmentRemove/{uid}/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'emailAttachmentRemove'])->name('user.automation.emailAttachmentRemove');
+                        Route::match(['get', 'post'], '/sendTestEmail/{email_uid}', [App\Http\Controllers\Mail\Automation2Controller::class, 'sendTestEmail'])->name('user.automation.sendTestEmail');
                     }
             );
 

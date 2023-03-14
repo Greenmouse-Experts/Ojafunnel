@@ -6,33 +6,37 @@ full-height
 
 @section('content')
                     
-    @include('automation2._tabs_timeline', [
+    @include('dashboard.campaign.automation2._tabs_timeline', [
         'tab' => 'statistics'
     ])
 
     <div class="contacts-stats-boxes d-flex align-items-center" style="pointer-events: none;">
-        <div class="contacts-stats-box" onclick="timelinePopup.load('{{ action('Automation2Controller@contacts', [
+        <div class="contacts-stats-box" onclick="timelinePopup.load('{{ route('user.automation.contacts', [
+            'username' => Auth::user()->username,
             'uid' => $automation->uid,
             'type' => 'in_action',
         ]) }}')">
             <label class="{{ request()->type == 'in_action' ? 'text-warning' : '' }}">{{ number_with_delimiter($stats['involed']) }}</label>
             <div class="desc">{{ trans('messages.automation.box.contacts_in_action') }}</div>
         </div>
-        <div class="contacts-stats-box" onclick="timelinePopup.load('{{ action('Automation2Controller@contacts', [
+        <div class="contacts-stats-box" onclick="timelinePopup.load('{{ route('user.automation.contacts', [
+            'username' => Auth::user()->username,
             'uid' => $automation->uid,
             'type' => 'done',
         ]) }}')">
             <label class="{{ request()->type == 'done' ? 'text-warning' : '' }}">{{ number_to_percentage($stats['complete']) }}</label>
             <div class="desc">{{ trans('messages.automation.box.contacts_done') }}</div>
         </div>
-        <div class="contacts-stats-box skipped" onclick="timelinePopup.load('{{ action('Automation2Controller@contacts', [
+        <div class="contacts-stats-box skipped" onclick="timelinePopup.load('{{ route('user.automation.contacts', [
+            'username' => Auth::user()->username,
             'uid' => $automation->uid,
             'type' => 'pending',
         ]) }}')">
             <label class="{{ request()->type == 'pending' ? 'text-warning' : '' }}">{{ number_with_delimiter($stats['pending']) }}</label>
             <div class="desc">{{ trans('messages.automation.box.contacts_skip_pending') }}</div>
         </div>
-        <div class="contacts-stats-box error" onclick="timelinePopup.load('{{ action('Automation2Controller@contacts', [
+        <div class="contacts-stats-box error" onclick="timelinePopup.load('{{ route('user.automation.contacts', [
+            'username' => Auth::user()->username,
             'uid' => $automation->uid,
             'type' => 'error',
         ]) }}')">
@@ -72,19 +76,22 @@ full-height
                     </button>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="btnGroupDrop1">
                         <a class="dropdown-item list-export-contacts"
-                            href="{{ action('Automation2Controller@exportContacts', [
+                            href="{{ route('user.automation.exportContacts', [
+                                'username' => Auth::user()->username,
                                 'uid' => $automation->uid,
                                 'action_id' => request()->action_id,
                             ]) }}"
                         >{{ trans('messages.automation.export_this_list') }}</a>
                         <a class="dropdown-item list-copy-contacts-new-list"
-                            href="{{ action('Automation2Controller@copyToNewList', [
+                            href="{{ route('user.automation.copyToNewList', [
+                                'username' => Auth::user()->username,
                                 'uid' => $automation->uid,
                                 'action_id' => request()->action_id,
                             ]) }}"
                         >{{ trans('messages.automation.copy_to_new_list') }}</a>
                         <a class="dropdown-item list-tag-contacts"
-                            href="{{ action('Automation2Controller@tagContacts', [
+                            href="{{ route('user.automation.tagContacts', [
+                                'username' => Auth::user()->username,
                                 'uid' => $automation->uid,
                                 'action_id' => request()->action_id,
                             ]) }}"
@@ -105,7 +112,8 @@ full-height
         
     <script>
         var listContact = makeList({
-            url: '{{ action('Automation2Controller@contactsList', [
+            url: '{{ route('user.automation.contactsList', [
+                'username' => Auth::user()->username,
                 'uid' => $automation->uid,
                 'action_id' => request()->action_id,
                 'type' => request()->type,

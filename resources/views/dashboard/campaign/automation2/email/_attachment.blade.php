@@ -1,4 +1,5 @@
-<form action="{{ action('Automation2Controller@emailAttachmentUpload', [
+<form action="{{ route('user.automation.emailAttachmentUpload', [
+  'username' => Auth::user()->username,
   'uid' => $automation->uid,
   'email_uid' => $email->uid,
 ]) }}" class="dropzone">
@@ -8,10 +9,10 @@
     <input name="files[]" type="file" multiple />
   </div>
 </form>
-  
+
 @if($email->attachments()->count())
     <h5 class="mt-4 mb-3">{{ trans('messages.automation.email.attached_files') }}</h5>
-        
+
     <div class="row">
         <div class="col-md-12">
             <ul class="key-value-list list-small">
@@ -31,8 +32,9 @@ attach_email
                             </div>
                         </div>
                         <div class="action">
-                            <a                                
-                                href="{{ action('Automation2Controller@emailAttachmentDownload', [
+                            <a
+                                href="{{ route('user.automation.emailAttachmentDownload', [
+                                    'username' => Auth::user()->username,
                                     'uid' => $automation->uid,
                                     'email_uid' => $email->uid,
                                     'attachment_uid' => $attachment->uid,
@@ -44,8 +46,9 @@ attach_email
 file_download
 </span>
                             </a>
-                            <a                                
-                                href="{{ action('Automation2Controller@emailAttachmentRemove', [
+                            <a
+                                href="{{ route('user.automation.emailAttachmentRemove', [
+                                    'username' => Auth::user()->username,
                                     'uid' => $automation->uid,
                                     'email_uid' => $email->uid,
                                     'attachment_uid' => $attachment->uid,
@@ -64,7 +67,7 @@ delete
         </div>
     </div>
 @endif
-  
+
 <script>
     //
     // Dropzone
@@ -75,13 +78,13 @@ delete
             popup.load();
         }
     });
-    
+
     $('.attachment-remove').click(function(e) {
         e.preventDefault();
-        
+
         var link = $(this);
         var url = link.attr('href');
-        
+
         $.ajax({
             url: url,
             method: 'POST',
@@ -90,7 +93,7 @@ delete
             },
             success: function (response) {
                 popup.load();
-                
+
                 notify({
     type: 'success',
     title: '{!! trans('messages.notify.success') !!}',

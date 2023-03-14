@@ -1,6 +1,6 @@
 @extends('layouts.popup.medium')
 
-@section('content')  
+@section('content')
     <div class="d-flex">
         <div class="pr-4">
             <h4 class="mt-0">Little Kitty Store</h4>
@@ -10,8 +10,8 @@
         <div class="ml-auto pl-4">
             <button class="btn btn-secondary" onclick="timelinePopup.load()">Refresh</button>
         </div>
-    </div>  
-           
+    </div>
+
 
     <div class="">
         <div class="email-row d-flex align-items-center">
@@ -41,7 +41,7 @@
 
     <div class="tab-boxes mt-4 d-flex justify-content-space-between">
         <div class="tab-box bg-yellow-light" onclick="timelinePopup.load('{!!
-                action('Automation2Controller@cartList', $automation->uid)
+                route('user.automation.cartList', ['username' => Auth::user->username, 'uid' => $automation->uid])
             !!}')">
             <div class="number mb-2">
                 14 / $120
@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="tab-box" onclick="timelinePopup.load('{!!
-            action('Automation2Controller@cartItems', $automation->uid)
+            route('user.automation.cartItems', ['username' => Auth::user->username, 'uid' => $automation->uid])
         !!}')">
             <div class="number mb-2">
                 75
@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="tab-box" onclick="timelinePopup.load('{!!
-            action('Automation2Controller@cartItems', $automation->uid)
+            route('user.automation.cartItems', ['username' => Auth::user->username, 'uid' => $automation->uid])
         !!}')">
             <div class="number mb-2">
                 $1,200
@@ -86,7 +86,7 @@
                 getChart: function() {
                     return $('#myChart');
                 },
-        
+
                 showChart: function() {
                     $.ajax({
                         method: "GET",
@@ -96,7 +96,7 @@
                         myChart.renderChart({});
                     });
                 },
-        
+
                 renderChart: function(data) {
                     // based on prepared DOM, initialize echarts instance
                     var chart = echarts.init(myChart.getChart()[0]);
@@ -116,11 +116,11 @@
                             areaStyle: {}
                         }]
                     };
-        
+
                     // use configuration item and data specified to show chart
                     chart.setOption(option);
                 }
-            }    
+            }
         </script>
     </div>
 @endsection

@@ -33,7 +33,8 @@
             </div>
         </div>
         <div class="list-action">
-            <a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@emailSetup', [
+            <a href="javascript:;" onclick="popup.load('{{ route('user.automation.emailSetup', [
+                'username' => Auth::user()->username,
                 'uid' => $automation->uid,
                 'email_uid' => $email->uid,
             ]) }}')" class="btn btn-secondary btn-sm">
@@ -54,7 +55,8 @@
             </div>
         </div>
         <div class="list-action">
-            <a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@emailSetup', [
+            <a href="javascript:;" onclick="popup.load('{{ route('user.automation.emailSetup', [
+                'username' => Auth::user()->username,
                 'uid' => $automation->uid,
                 'email_uid' => $email->uid,
             ]) }}')" class="btn btn-secondary btn-sm">
@@ -82,7 +84,8 @@
             </div>
         </div>
         <div class="list-action">
-            <a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@emailSetup', [
+            <a href="javascript:;" onclick="popup.load('{{ route('user.automation.emailSetup', [
+                'username' => Auth::user()->username,
                 'uid' => $automation->uid,
                 'email_uid' => $email->uid,
             ]) }}')" class="btn btn-secondary btn-sm">
@@ -116,7 +119,8 @@
             </div>
         </div>
         <div class="list-action">
-            <a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@emailTemplate', [
+            <a href="javascript:;" onclick="popup.load('{{ route('user.automation.emailTemplate', [
+                'username' => Auth::user()->username,
                 'uid' => $automation->uid,
                 'email_uid' => $email->uid,
             ]) }}')" class="btn btn-secondary btn-sm">
@@ -142,7 +146,8 @@
             </div>
         </div>
         <div class="list-action">
-            <a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@emailSetup', [
+            <a href="javascript:;" onclick="popup.load('{{ route('user.automation.emailSetup', [
+                'username' => Auth::user()->username,
                 'uid' => $automation->uid,
                 'email_uid' => $email->uid,
             ]) }}')" class="btn btn-secondary btn-sm">
@@ -150,4 +155,4 @@
             </a>
         </div>
     </li>
-</ul> 
+</ul>

@@ -68,10 +68,11 @@
         </div>
 
         <div id="html" class="tabcontent" style="display: block">
-            <iframe class="email_preview_frame" src="{{ action('Automation2Controller@templatePreviewContent', [
+            <iframe class="email_preview_frame" src="{{ route('user.automation.templatePreviewContent', [
+                'username' => Auth::user()->username,
                 'uid' => $automation->uid,
                 'email_uid' => $email->uid,
-            ]) }}"></iframe>            
+            ]) }}"></iframe>
         </div>
 
 

@@ -3,7 +3,10 @@
 @section('content')
 	<div class="row">
         <div class="col-md-12">
-            <form class="tag-contacts" action="{{ action("Automation2Controller@tagContacts", $automation->uid) }}"
+            <form class="tag-contacts" action="{{ route("user.automation.tagContacts", [
+                'username' => Auth::username,
+                    'uid' => $automation->uid
+            ]) }}"
                 method="POST" class="form-validate-jqueryz"
             >
                 {{ csrf_field() }}

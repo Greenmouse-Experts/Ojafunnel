@@ -18,7 +18,7 @@
                 'name' => 'automation_status',
                 'label' => '',
                 'class' => 'automation_status styled3',
-                'value' => ($automation->status == \Acelle\Model\Automation2::STATUS_ACTIVE ? true : false),
+                'value' => ($automation->status == \App\Models\Automation2::STATUS_ACTIVE ? true : false),
                 'options' => [false,true],
                 'help_class' => '',
                 'rules' => []
@@ -31,23 +31,23 @@
         {!! $automation->getIntro() !!}
     </p>
     <div>
-        <a href="javascript:;" class="btn btn-info text-nowrap d-flex align-items-center" onclick="sidebar.load('{{ action('Automation2Controller@settings', $automation->uid) }}')">
+        <a href="javascript:;" class="btn btn-info text-nowrap d-flex align-items-center" onclick="sidebar.load('{{ route('user.automation.settings', ['username' => Auth::user()->username, 'uid' => $automation->uid]) }}')">
             <i class="material-icons-outlined me-2">auto_graph</i> {{ trans('messages.automation.settings') }}
         </a>
-    </div>         
+    </div>
 </div>
-    
+
 <script>
     // change automation status
     $('[name="automation_status"]').change(function() {
         var value = $(this).is(":checked");
         var url, confirm;
-        
+
         if (value) {
-            url = '{{ action('Automation2Controller@enable', ["uids" => $automation->uid]) }}';
+            url = '{{ route('user.automation.enable', ['username' => Auth::user()->username, "uids" => $automation->uid]) }}';
             confirm = '{!! trans('messages.automation.enable.confirm', ['name' => $automation->name]) !!}';
         } else {
-            url = '{{ action('Automation2Controller@disable', ["uids" => $automation->uid]) }}';
+            url = '{{ route('user.automation.disable', ['username' => Auth::user()->username, "uids" => $automation->uid]) }}';
             confirm = '{!! trans('messages.automation.disable.confirm', ['name' => $automation->name]) !!}';
         }
 
@@ -68,8 +68,8 @@
                         var dialog = new Dialog('alert', {
                             title: '{{ trans('messages.automation.started.title') }}  ',
                             message: `{!! trans('messages.automation.started.desc') !!}`,
-                            ok: function(dialog) {        
-                                sidebar.load();                    
+                            ok: function(dialog) {
+                                sidebar.load();
                             },
                             cancel: function(dialog) {
                                 sidebar.load();
@@ -79,7 +79,7 @@
                             },
                         });
                     }
-                
+
                     sidebar.load();
                 }).fail(function(e) {
                     var error = JSON.parse(e.responseText);
@@ -89,7 +89,7 @@
                         message: error.message
                     });
                     sidebar.load();
-                });      
+                });
             },
             cancel: function(dialog) {
                 sidebar.load();
@@ -98,6 +98,6 @@
                 sidebar.load();
             },
         });
-          
+
     });
 </script>

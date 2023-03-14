@@ -6,7 +6,7 @@
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
             <div class="btn-group btn-group-sm" role="group">
                 <button id="btnGroupDrop1" role="button" class="btn btn-secondary dropdown-toggle timeline-sort-title" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @if (request()->sortBy) 
+                    @if (request()->sortBy)
                         {{ trans('messages.timeline.sort.' . request()->sortBy) }}
                     @else
                         {{ trans('messages.timeline.sort') }}
@@ -26,26 +26,28 @@
         <p class="insight-intro mb-2 mt-3 small">
         {{ trans('messages.automation.all_activities') }}
     </p>
-        
+
     <div class="mc-table small border-top">
         @foreach ($timelines as $key => $timeline)
             <div class="mc-row d-flex align-items-center">
                 <div class="media trigger">
-                    <a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@profile', [
+                    <a href="javascript:;" onclick="popup.load('{{ route('user.automation.profile', [
+                        'username' => Auth::user()->username,
                         'uid' => $automation->uid,
                         'contact_uid' => $timeline->subscriber->uid,
                     ]) }}')" class="font-weight-semibold d-block">
                         @if ($timeline->subscriber->avatar)
-                            <img src="{{ action('SubscriberController@avatar',  $timeline->subscriber->uid) }}" />
+                            <img src="{{ route('user.subscriber.avatar',  ['username' => Auth::user()->username, 'contact_uid' => $timeline->subscriber->uid]) }}" />
                         @elseif(isSiteDemo())
                             <img src="https://i.pravatar.cc/30{{ $key }}" />
                         @else
                             <i style="opacity: 0.7" class="lnr lnr-user bg-{{ rand_item(['info', 'success', 'secondary', 'primary', 'danger', 'warning']) }}"></i>
-                        @endif                        
+                        @endif
                     </a>
                 </div>
                 <div class="flex-fill flex-grow-1" style="width: 50%">
-                    <a href="javascript:;" onclick="popup.load('{{ action('Automation2Controller@profile', [
+                    <a href="javascript:;" onclick="popup.load('{{ route('user.automation.profile', [
+                        'username' => Auth::user()->username,
                         'uid' => $automation->uid,
                         'contact_uid' => $timeline->subscriber->uid,
                     ]) }}')" class="font-weight-semibold d-block">
@@ -59,8 +61,8 @@
             </div>
         @endforeach
     </div>
-        
-    
+
+
 @else
     <div class="empty-list">
         <i class="material-icons-outlined">timeline</i>
@@ -104,4 +106,4 @@
         $('.timeline-sort-title').html(text);
     });
 </script>
-    
+
