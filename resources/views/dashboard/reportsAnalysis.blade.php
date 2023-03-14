@@ -226,10 +226,10 @@ if (bars_basic_element) {
                 type: 'bar',
                 barWidth: '20%',
                 data: [
-                    {{$coursePurchase}},
-                    {{$referralBonus}}, 
-                    {{$productPurchase}},
-                    {{$topUp}}
+                    '{{$coursePurchase}}',
+                    '{{$referralBonus}}', 
+                    '{{$productPurchase}}',
+                    '{{$topUp}}'
                 ]
             }
         ]

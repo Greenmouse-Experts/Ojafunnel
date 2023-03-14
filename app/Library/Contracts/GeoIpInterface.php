@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Library\Contracts;
+namespace App\Library\Contracts;
 
 interface GeoIpInterface
 {

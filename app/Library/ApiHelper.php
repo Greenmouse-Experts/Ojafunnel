@@ -6,21 +6,21 @@
  * Misc helper tool
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
- * @category   Acelle Library
+ * @category   App Library
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Library;
+namespace App\Library;
 
 class ApiHelper
 {
@@ -48,8 +48,8 @@ class ApiHelper
                     ],
                     'returns' => 'Token string',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .str_replace('-uid-', '<redbold>{uid}</redbold>', action("Api\CustomerController@loginToken")).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-uid-', '<redbold>{uid}</redbold>', action("Api\CustomerController@loginToken")) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
             ],
         ];
@@ -86,8 +86,8 @@ class ApiHelper
                     ],
                     'returns' => 'Creation messages in json',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .action("Api\MailListController@store").' \
--d api_token=' .\Auth::user()->api_token.' \
+' . action("Api\MailListController@store") . ' \
+-d api_token=' . \Auth::user()->api_token . ' \
 -d name=List+1 \
 -d from_email=admin@abccorp.org \
 -d from_name=ABC+Corp. \
@@ -99,7 +99,7 @@ class ApiHelper
 -d contact[city]=Noname \
 -d contact[zip]=80000 \
 -d contact[phone]=123+456+889 \
--d contact[country_id]=' .\Acelle\Model\Country::first()->id.' \
+-d contact[country_id]=' . \App\Model\Country::first()->id . ' \
 -d contact[email]=info@abccorp.org \
 -d contact[url]=http://www.abccorp.org \
 -d subscribe_confirmation=1 \
@@ -114,8 +114,8 @@ class ApiHelper
                     'parameters' => [],
                     'returns' => 'List of all user\'s mail lists in json',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .action("Api\MailListController@index").' \
--d api_token=' .\Auth::user()->api_token,
+' . action("Api\MailListController@index") . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -125,8 +125,8 @@ class ApiHelper
                     'parameters' => [],
                     'returns' => 'All list informations in json',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\MailListController@show", '-ID-')).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\MailListController@show", '-ID-')) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -141,8 +141,8 @@ class ApiHelper
                     ],
                     'returns' => 'Creation messages in json',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\MailListController@addField", '-ID-')).' \
--d api_token=' .\Auth::user()->api_token . ' \
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\MailListController@addField", '-ID-')) . ' \
+-d api_token=' . \Auth::user()->api_token . ' \
 -d type=text \
 -d label=Custom \
 -d tag=CUSTOM_FIELD_1 \
@@ -158,8 +158,8 @@ class ApiHelper
                     ],
                     'returns' => 'Result messages in json',
                     'example' => 'curl -X DELETE -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\MailListController@delete", ['uid' => '-ID-']))).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\MailListController@delete", ['uid' => '-ID-']))) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
             ],
         ];
@@ -176,8 +176,8 @@ class ApiHelper
                     'parameters' => [],
                     'returns' => 'List of all user\'s campaigns in json',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .action("Api\CampaignController@index").' \
--d api_token=' .\Auth::user()->api_token,
+' . action("Api\CampaignController@index") . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -187,8 +187,8 @@ class ApiHelper
                     'parameters' => [],
                     'returns' => 'Campaign\'s information in json',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CampaignController@show", '-ID-')).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CampaignController@show", '-ID-')) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -198,8 +198,8 @@ class ApiHelper
                     'parameters' => [],
                     'returns' => 'Action messages in json',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CampaignController@pause", '-ID-')).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CampaignController@pause", '-ID-')) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
             ],
         ];
@@ -222,8 +222,8 @@ class ApiHelper
                     ],
                     'returns' => 'List of all list\'s subscribers in json',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@index", ['list_uid' => '-LIST_ID-'])).' \
--d api_token=' .\Auth::user()->api_token.' \
+' . str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@index", ['list_uid' => '-LIST_ID-'])) . ' \
+-d api_token=' . \Auth::user()->api_token . ' \
 -d per_page=20 \
 -d page=1',
                 ],
@@ -240,8 +240,8 @@ class ApiHelper
                     ],
                     'returns' => 'Creation messages in json',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@store", ['list_uid' => '-LIST_ID-'])).' \
--d api_token=' .\Auth::user()->api_token.' \
+' . str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@store", ['list_uid' => '-LIST_ID-'])) . ' \
+-d api_token=' . \Auth::user()->api_token . ' \
 -d EMAIL=test@gmail.com \
 -d tag=foo,bar,tag+with+space, \
 -d FIRST_NAME=Marine \
@@ -257,8 +257,8 @@ class ApiHelper
                     ],
                     'returns' => 'All subscriber information in json',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@show", ['subscriber' => '-ID-']))).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@show", ['subscriber' => '-ID-']))) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -273,8 +273,8 @@ class ApiHelper
                     ],
                     'returns' => 'Update messages in json',
                     'example' => 'curl -X PATCH -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@update", ['subscriber' => '-ID-']))).' \
--d api_token=' .\Auth::user()->api_token.' \
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@update", ['subscriber' => '-ID-']))) . ' \
+-d api_token=' . \Auth::user()->api_token . ' \
 -d EMAIL=test@gmail.com \
 -d tag=foo,bar,tag+with+space, \
 -d FIRST_NAME=Marine \
@@ -290,8 +290,8 @@ class ApiHelper
                     ],
                     'returns' => 'Creation messages in json',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .str_replace('-UID-', '<redbold>{uid}</redbold>', action("Api\SubscriberController@addTag", ['uid' => '-UID-'])).' \
--d api_token=' .\Auth::user()->api_token.' \
+' . str_replace('-UID-', '<redbold>{uid}</redbold>', action("Api\SubscriberController@addTag", ['uid' => '-UID-'])) . ' \
+-d api_token=' . \Auth::user()->api_token . ' \
 -d tag=foo,bar,tag+with+space',
                 ],
 
@@ -304,8 +304,8 @@ class ApiHelper
                     ],
                     'returns' => 'All subscribers with the email',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{email}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@showByEmail", ['email' => '-ID-']))).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{email}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@showByEmail", ['email' => '-ID-']))) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -318,8 +318,8 @@ class ApiHelper
                     ],
                     'returns' => 'Result messages in json',
                     'example' => 'curl -X PATCH -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@subscribe", ['uid' => '-ID-']))).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@subscribe", ['uid' => '-ID-']))) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -332,8 +332,8 @@ class ApiHelper
                     ],
                     'returns' => 'Result messages in json',
                     'example' => 'curl -X PATCH -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@unsubscribe", ['uid' => '-ID-']))).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@unsubscribe", ['uid' => '-ID-']))) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -346,8 +346,8 @@ class ApiHelper
                     ],
                     'returns' => 'Result messages in json',
                     'example' => 'curl -X DELETE -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@delete", ['uid' => '-ID-']))).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', str_replace('-LIST_ID-', '<redbold>{list_uid}</redbold>', action("Api\SubscriberController@delete", ['uid' => '-ID-']))) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
             ],
         ];
@@ -368,8 +368,8 @@ class ApiHelper
                     ],
                     'returns' => 'Token string',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .str_replace('-uid-', '<redbold>{uid}</redbold>', action("Api\CustomerController@loginToken")).' \
--d api_token=' .\Auth::user()->api_token.' \
+' . str_replace('-uid-', '<redbold>{uid}</redbold>', action("Api\CustomerController@loginToken")) . ' \
+-d api_token=' . \Auth::user()->api_token . ' \
 -d customer_uid=600684b234b98',
                 ],
             ],
@@ -387,8 +387,8 @@ class ApiHelper
                     'parameters' => [],
                     'returns' => 'List of all plans in json',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .action("Api\PlanController@index").' \
--d api_token=' .\Auth::user()->api_token,
+' . action("Api\PlanController@index") . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
                 [
                     'method' => 'POST',
@@ -401,50 +401,54 @@ class ApiHelper
                         ['name' => '$frequency_unit', 'description' => 'Time unit for billing recurs (day, week, month, year, unlimited)'],
                         ['name' => '$price', 'description' => 'Plan\'s price'],
                         ['name' => '$color', 'description' => 'Plan\'s color (red, blue, #008c6e, #917319,...)'],
-                        ['name' => '$options[...]', 'description' => 'Plan\'s options...<br>
+                        [
+                            'name' => '$options[...]',
+                            'description' => 'Plan\'s options...<br>
                             <ul>
-                                <li><span class="text-semibold">email_max</span>: '.trans('messages.max_emails').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">list_max</span>: '.trans('messages.max_lists').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">subscriber_max</span>: '.trans('messages.max_subscribers').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">subscriber_per_list_max</span>: '.trans('messages.max_subscribers_per_list').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">segment_per_list_max</span>: '.trans('messages.segment_per_list_max').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">campaign_max</span>: '.trans('messages.max_campaigns').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">automation_max</span>: '.trans('messages.max_automations').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">sending_quota</span>: '.trans('messages.sending_quota').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">sending_quota_time</span>: '.trans('messages.quota_time').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">sending_quota_time_unit</span>: '.trans('messages.quota_time_unit').' (day|hour|minute)</li>
-                                <li><span class="text-semibold">max_process</span>: '.trans('messages.max_number_of_processes').' (number)</li>
-                                <li><span class="text-semibold">all_sending_servers</span>: '.trans('messages.use_all_sending_servers').' (yes|no)</li>
-                                <li><span class="text-semibold">max_size_upload_total</span>: '.trans('messages.max_size_upload_total').' (number)</li>
-                                <li><span class="text-semibold">max_file_size_upload</span>: '.trans('messages.max_file_size_upload').' (number)</li>
-                                <li><span class="text-semibold">unsubscribe_url_required</span>: '.trans('messages.unsubscribe_url_required').' (yes|no)</li>
-                                <li><span class="text-semibold">access_when_offline</span>: '.trans('messages.access_when_offline').' (yes|no)</li>
-                                <li><span class="text-semibold">create_sending_domains</span>: '.trans('messages.allow_customer_create_sending_domains').' (yes|no)</li>
-                                <li><span class="text-semibold">sending_servers_max</span>: '.trans('messages.max_sending_servers').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">sending_domains_max</span>: '.trans('messages.max_sending_domains').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">all_email_verification_servers</span>: '.trans('messages.use_all_email_verification_servers').' (yes|no)</li>
-                                <li><span class="text-semibold">create_email_verification_servers</span>: '.trans('messages.allow_customer_create_email_verification_servers').' (yes|no)</li>
-                                <li><span class="text-semibold">email_verification_servers_max</span>: '.trans('messages.max_email_verification_servers').' (number, -1 for unlimited)</li>
-                                <li><span class="text-semibold">list_import</span>: '.trans('messages.can_import_list').' (yes|no)</li>
-                                <li><span class="text-semibold">list_export</span>: '.trans('messages.can_export_list').' (yes|no)</li>
-                                <li><span class="text-semibold">all_sending_server_types</span>: '.trans('messages.allow_adding_all_sending_server_types').' (yes|no)</li>
+                                <li><span class="text-semibold">email_max</span>: ' . trans('messages.max_emails') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">list_max</span>: ' . trans('messages.max_lists') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">subscriber_max</span>: ' . trans('messages.max_subscribers') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">subscriber_per_list_max</span>: ' . trans('messages.max_subscribers_per_list') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">segment_per_list_max</span>: ' . trans('messages.segment_per_list_max') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">campaign_max</span>: ' . trans('messages.max_campaigns') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">automation_max</span>: ' . trans('messages.max_automations') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">sending_quota</span>: ' . trans('messages.sending_quota') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">sending_quota_time</span>: ' . trans('messages.quota_time') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">sending_quota_time_unit</span>: ' . trans('messages.quota_time_unit') . ' (day|hour|minute)</li>
+                                <li><span class="text-semibold">max_process</span>: ' . trans('messages.max_number_of_processes') . ' (number)</li>
+                                <li><span class="text-semibold">all_sending_servers</span>: ' . trans('messages.use_all_sending_servers') . ' (yes|no)</li>
+                                <li><span class="text-semibold">max_size_upload_total</span>: ' . trans('messages.max_size_upload_total') . ' (number)</li>
+                                <li><span class="text-semibold">max_file_size_upload</span>: ' . trans('messages.max_file_size_upload') . ' (number)</li>
+                                <li><span class="text-semibold">unsubscribe_url_required</span>: ' . trans('messages.unsubscribe_url_required') . ' (yes|no)</li>
+                                <li><span class="text-semibold">access_when_offline</span>: ' . trans('messages.access_when_offline') . ' (yes|no)</li>
+                                <li><span class="text-semibold">create_sending_domains</span>: ' . trans('messages.allow_customer_create_sending_domains') . ' (yes|no)</li>
+                                <li><span class="text-semibold">sending_servers_max</span>: ' . trans('messages.max_sending_servers') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">sending_domains_max</span>: ' . trans('messages.max_sending_domains') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">all_email_verification_servers</span>: ' . trans('messages.use_all_email_verification_servers') . ' (yes|no)</li>
+                                <li><span class="text-semibold">create_email_verification_servers</span>: ' . trans('messages.allow_customer_create_email_verification_servers') . ' (yes|no)</li>
+                                <li><span class="text-semibold">email_verification_servers_max</span>: ' . trans('messages.max_email_verification_servers') . ' (number, -1 for unlimited)</li>
+                                <li><span class="text-semibold">list_import</span>: ' . trans('messages.can_import_list') . ' (yes|no)</li>
+                                <li><span class="text-semibold">list_export</span>: ' . trans('messages.can_export_list') . ' (yes|no)</li>
+                                <li><span class="text-semibold">all_sending_server_types</span>: ' . trans('messages.allow_adding_all_sending_server_types') . ' (yes|no)</li>
                                 <li><span class="text-semibold">sending_server_types</span>: (array)</li>
-                                <li><span class="text-semibold">sending_server_option</span>: ('.\Acelle\Model\Plan::SENDING_SERVER_OPTION_SYSTEM.'|'.\Acelle\Model\Plan::SENDING_SERVER_OPTION_OWN.'|'.\Acelle\Model\Plan::SENDING_SERVER_OPTION_SUBACCOUNT.')</li>
+                                <li><span class="text-semibold">sending_server_option</span>: (' . \App\Model\Plan::SENDING_SERVER_OPTION_SYSTEM . '|' . \App\Model\Plan::SENDING_SERVER_OPTION_OWN . '|' . \App\Model\Plan::SENDING_SERVER_OPTION_SUBACCOUNT . ')</li>
                                 <li><span class="text-semibold">sending_server_subaccount_uid</span></li>
                             </ul>
-                        ', 'optional' => true],
+                        ',
+                            'optional' => true
+                        ],
                     ],
                     'returns' => 'Creation messages in json',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .action("Api\PlanController@store").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\PlanController@store") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d name=Advanced \
--d currency_id=' .\Acelle\Model\Currency::first()->id.' \
+-d currency_id=' . \App\Model\Currency::first()->id . ' \
 -d frequency_amount=1 \
 -d frequency_unit=month \
 -d price=20 \
 -d color=red \
--d options[sending_server_option]=' .\Acelle\Model\Plan::SENDING_SERVER_OPTION_OWN.' \
+-d options[sending_server_option]=' . \App\Model\Plan::SENDING_SERVER_OPTION_OWN . ' \
 -d options[email_max]=10000',
                 ],
             ],
@@ -462,8 +466,8 @@ class ApiHelper
                     'parameters' => [],
                     'returns' => 'List of all sending servers in json',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .action("Api\SendingServerController@index").' \
--d api_token=' .\Auth::user()->api_token,
+' . action("Api\SendingServerController@index") . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
             ],
         ];
@@ -481,8 +485,8 @@ class ApiHelper
                     ],
                     'returns' => 'Creation messages in json',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .action("Api\CustomerController@store").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\CustomerController@store") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d email=user_name@gmail.com \
 -d first_name=Luan \
 -d last_name=Pham \
@@ -501,8 +505,8 @@ class ApiHelper
                     ],
                     'returns' => 'Customer information in json (profile, contact, sunscriptions,... )',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CustomerController@update", '-ID-')).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CustomerController@update", '-ID-')) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -514,8 +518,8 @@ class ApiHelper
                     ],
                     'returns' => 'Creation messages in json',
                     'example' => 'curl -X PATCH -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CustomerController@update", '-ID-')).' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CustomerController@update", '-ID-')) . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d email=user_name@gmail.com \
 -d first_name=Luan \
 -d last_name=Pham \
@@ -533,8 +537,8 @@ class ApiHelper
                     ],
                     'returns' => 'Action messages in json',
                     'example' => 'curl -X PATCH -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CustomerController@enable", '-ID-')).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CustomerController@enable", '-ID-')) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -546,8 +550,8 @@ class ApiHelper
                     ],
                     'returns' => 'Action messages in json',
                     'example' => 'curl -X PATCH -H "accept:application/json" -G \
-' .str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CustomerController@disable", '-ID-')).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-ID-', '<redbold>{uid}</redbold>', action("Api\CustomerController@disable", '-ID-')) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
 
                 [
@@ -560,8 +564,8 @@ class ApiHelper
                     ],
                     'returns' => 'Action messages in json',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .str_replace('-plan_uid-', '<redbold>{plan_uid}</redbold>', str_replace('-uid-', '<redbold>{uid}</redbold>', action("Api\CustomerController@assignPlan", ['uid' => '-uid-', 'plan_uid' => '-plan_uid-']))).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-plan_uid-', '<redbold>{plan_uid}</redbold>', str_replace('-uid-', '<redbold>{uid}</redbold>', action("Api\CustomerController@assignPlan", ['uid' => '-uid-', 'plan_uid' => '-plan_uid-']))) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
             ],
         ];
@@ -582,8 +586,8 @@ class ApiHelper
                     ],
                     'returns' => 'Subscriptions information in json (plan, customer,... )',
                     'example' => 'curl -X GET -H "accept:application/json" -G \
-' .action("Api\SubscriptionController@index").' \
--d api_token=' .\Auth::user()->api_token.' \
+' . action("Api\SubscriptionController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . ' \
 -d page=1',
                 ],
 
@@ -597,8 +601,8 @@ class ApiHelper
                     ],
                     'returns' => 'Action messages in json',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .str_replace('-plan_uid-', '<redbold>{plan_uid}</redbold>', str_replace('-uid-', '<redbold>{uid}</redbold>', action("Api\CustomerController@assignPlan", ['uid' => '-uid-', 'plan_uid' => '-plan_uid-']))).' \
--d api_token=' .\Auth::user()->api_token,
+' . str_replace('-plan_uid-', '<redbold>{plan_uid}</redbold>', str_replace('-uid-', '<redbold>{uid}</redbold>', action("Api\CustomerController@assignPlan", ['uid' => '-uid-', 'plan_uid' => '-plan_uid-']))) . ' \
+-d api_token=' . \Auth::user()->api_token,
                 ],
             ],
         ];
@@ -611,7 +615,7 @@ class ApiHelper
                 [
                     'method' => 'POST',
                     'uri' => '/api/v1/notification',
-                    'description' => 'Send a delivery or abuse report to Acelle Mail which could be a success / bounce / feedback or abuse report',
+                    'description' => 'Send a delivery or abuse report to App Mail which could be a success / bounce / feedback or abuse report',
                     'parameters' => [
                         ['name' => '$message_id', 'description' => 'Message\'s id'],
                         ['name' => '$type', 'description' => 'One of 4 types: sent | bounced | reported | failed'],
@@ -622,30 +626,30 @@ class ApiHelper
                     'returns' => 'Action messages in json',
                     'example' => [
                         'curl -X POST -H "accept:application/json" -G \
-' .action("Api\NotificationController@index").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\NotificationController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d type=sent',
                         'curl -X POST -H "accept:application/json" -G \
-' .action("Api\NotificationController@index").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\NotificationController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d type=bounced \
 -d bounce_type=hard \
 -d description=Email+address+does+not+exist',
                         'curl -X POST -H "accept:application/json" -G \
-' .action("Api\NotificationController@index").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\NotificationController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d type=abuse \
 -d report_type=hard \
 -d description=Email+address+does+not+exist',
                         'curl -X POST -H "accept:application/json" -G \
-' .action("Api\NotificationController@index").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\NotificationController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d type=spam \
 -d report_type=hard \
 -d description=Email+address+does+not+exist',
                         'curl -X POST -H "accept:application/json" -G \
-' .action("Api\NotificationController@index").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\NotificationController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d type=failed \
 -d description=Email+address+does+not+exist',
                     ],
@@ -661,7 +665,7 @@ class ApiHelper
                 [
                     'method' => 'POST',
                     'uri' => '/api/v1/notification',
-                    'description' => 'Send a delivery or abuse report to Acelle Mail which could be a success / bounce / feedback or abuse report',
+                    'description' => 'Send a delivery or abuse report to App Mail which could be a success / bounce / feedback or abuse report',
                     'parameters' => [
                         ['name' => '$message_id', 'description' => 'Message\'s id'],
                         ['name' => '$type', 'description' => 'One of 4 types: sent | bounced | reported | failed'],
@@ -672,30 +676,30 @@ class ApiHelper
                     'returns' => 'Action messages in json',
                     'example' => [
                         'curl -X POST -H "accept:application/json" -G \
-' .action("Api\NotificationController@index").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\NotificationController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d type=sent',
                         'curl -X POST -H "accept:application/json" -G \
-' .action("Api\NotificationController@index").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\NotificationController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d type=bounced \
 -d bounce_type=hard \
 -d description=Email+address+does+not+exist',
                         'curl -X POST -H "accept:application/json" -G \
-' .action("Api\NotificationController@index").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\NotificationController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d type=abuse \
 -d report_type=hard \
 -d description=Email+address+does+not+exist',
                         'curl -X POST -H "accept:application/json" -G \
-' .action("Api\NotificationController@index").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\NotificationController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d type=spam \
 -d report_type=hard \
 -d description=Email+address+does+not+exist',
                         'curl -X POST -H "accept:application/json" -G \
-' .action("Api\NotificationController@index").' \
--d api_token=' .\Auth::user()->api_token.'  \
+' . action("Api\NotificationController@index") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
 -d type=failed \
 -d description=Email+address+does+not+exist',
                     ],
@@ -718,9 +722,9 @@ class ApiHelper
                     ],
                     'returns' => 'Upload result message',
                     'example' => 'curl -X POST -H "accept:application/json" -G \
-' .action("Api\FileController@upload").' \
--d api_token=' .\Auth::user()->api_token.'  \
--d files=\'[{"url":"http://demo.acellemail.com/images/logo_big.svg","subdirectory":"path/to/file"},{"url":"http://demo.acellemail.com/images/logo_big.svg","subdirectory":"path/to/file2"}]\'',
+' . action("Api\FileController@upload") . ' \
+-d api_token=' . \Auth::user()->api_token . '  \
+-d files=\'[{"url":"http://demo.Appmail.com/images/logo_big.svg","subdirectory":"path/to/file"},{"url":"http://demo.Appmail.com/images/logo_big.svg","subdirectory":"path/to/file2"}]\'',
                 ],
             ],
         ];

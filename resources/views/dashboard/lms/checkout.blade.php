@@ -204,7 +204,7 @@
                                                     <thead class="tread">
                                                         <tr>
                                                             <th scope="col">Course</th>
-                                                            <th scope="col">Course Desc</th>
+                                                            <th scope="col">Course Title</th>
                                                             <th scope="col">Price</th>
                                                         </tr>
                                                     </thead>

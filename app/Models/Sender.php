@@ -198,6 +198,7 @@ class Sender extends Model
     {
         // only work for server of allowVerifyingOwnEmailsRemotely() == true
         $server = $this->sendingServer;
+        //dd($server);
         if (!is_null($server)) {
             $verified = $server->mapType()->verifyIdentity($this->email);
             $this->status = $verified ? self::STATUS_VERIFIED : self::STATUS_PENDING;

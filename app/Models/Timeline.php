@@ -1,9 +1,9 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 
 class Timeline extends Model
 {
@@ -18,6 +18,6 @@ class Timeline extends Model
      */
     public function subscriber()
     {
-        return $this->belongsTo('Acelle\Model\Subscriber');
+        return $this->belongsTo('App\Models\Subscriber');
     }
 }

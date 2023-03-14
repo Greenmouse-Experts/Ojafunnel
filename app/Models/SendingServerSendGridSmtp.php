@@ -6,23 +6,23 @@
  * Abstract class for SendGrid API sending server
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
+use App\Library\Log as MailLog;
 use Smtpapi\Header;
 
 class SendingServerSendGridSmtp extends SendingServerSendGrid
@@ -39,7 +39,7 @@ class SendingServerSendGridSmtp extends SendingServerSendGrid
     // Inherit class to implementation of this method
     public function send($message, $params = array())
     {
-        $msgId = $message->getHeaders()->get('X-Acelle-Message-Id')->getFieldBody();
+        $msgId = $message->getHeaders()->get('X-App-Message-Id')->getFieldBody();
 
         $header = new \Smtpapi\Header();
         $header->setUniqueArgs(array('runtime_message_id' => $msgId));

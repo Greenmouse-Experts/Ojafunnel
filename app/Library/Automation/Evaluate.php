@@ -1,24 +1,21 @@
 <?php
 
-namespace Acelle\Library\Automation;
+namespace App\Library\Automation;
 
-use Acelle\Model\Email;
-use Acelle\Model\EmailLink;
+use App\Models\Email;
+use App\Models\EmailLink;
 use Illuminate\Support\Carbon;
 
 class Evaluate extends Action
 {
     /*****
-
-        Evaluate action may result in the following cases:
-          + Check OK (result is true or false, no care)
-          + Exception (email UID not found for example, other exception...)
-        In case of Exception, it is better to stop the whole automation process and write error log to the automation
-        so that the responsible person can check it
-
-        Then, "last_executed" is used as a flag indicating that the process is done
-        Execution always returns TRUE
-
+    Evaluate action may result in the following cases:
+    + Check OK (result is true or false, no care)
+    + Exception (email UID not found for example, other exception...)
+    In case of Exception, it is better to stop the whole automation process and write error log to the automation
+    so that the responsible person can check it
+    Then, "last_executed" is used as a flag indicating that the process is done
+    Execution always returns TRUE
     ****/
 
     protected $childYes;
@@ -68,7 +65,7 @@ class Evaluate extends Action
         // In case condition is not met,
         // double check for wait time before proceeding
         $now = Carbon::now();
-        $waitDuration = $this->getOption('wait');  // 1 hour, 1 day, 2 days
+        $waitDuration = $this->getOption('wait'); // 1 hour, 1 day, 2 days
         $parentExecutionTime = Carbon::createFromTimestamp($this->getParent()->getLastExecuted());
         $due = $parentExecutionTime->modify($waitDuration);
 

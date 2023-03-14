@@ -140,7 +140,7 @@ class MailList extends Model
 
     public function pages()
     {
-        return $this->hasMany('App\Models\Page');
+        return $this->hasMany('App\Models\Mailpage');
     }
 
     public function page($layout)
@@ -246,6 +246,7 @@ class MailList extends Model
         // Example: /home/App/storage/app/tmp/import-000000.csv
         $job = new ImportSubscribersJob($this, $filepath);
         $monitor = $this->dispatchWithMonitor($job);
+        //dd($monitor);
         return $monitor;
     }
 
@@ -852,7 +853,7 @@ class MailList extends Model
         $list = $this;
 
         $layout = \App\Models\Layout::where('alias', 'sign_up_confirmation_email')->first();
-        $send_page = \App\Models\Page::findPage($list, $layout);
+        $send_page = \App\Models\Mailpage::findPage($list, $layout);
         $send_page->renderContent(null, $subscriber);
         $this->sendMail($subscriber, $send_page, $send_page->getTransformedSubject($subscriber));
         MailLog::info('Sent subscription confirmation email to ' . $subscriber->email);
@@ -877,7 +878,7 @@ class MailList extends Model
         $list = $this;
 
         $layout = \App\Models\Layout::where('alias', 'sign_up_welcome_email')->first();
-        $send_page = \App\Models\Page::findPage($list, $layout);
+        $send_page = \App\Models\Mailpage::findPage($list, $layout);
         $this->sendMail($subscriber, $send_page, $send_page->getTransformedSubject($subscriber));
     }
 
@@ -889,7 +890,7 @@ class MailList extends Model
         $list = $this;
 
         $layout = \App\Models\Layout::where('alias', 'unsubscribe_goodbye_email')->first();
-        $send_page = \App\Models\Page::findPage($list, $layout);
+        $send_page = \App\Models\Mailpage::findPage($list, $layout);
         $this->sendMail($subscriber, $send_page, $send_page->getTransformedSubject($subscriber));
     }
 
@@ -931,7 +932,7 @@ class MailList extends Model
         $list = $this;
 
         $layout = \App\Models\Layout::where('alias', 'profile_update_email')->first();
-        $send_page = \App\Models\Page::findPage($list, $layout);
+        $send_page = \App\Models\Mailpage::findPage($list, $layout);
         $this->sendMail($subscriber, $send_page, $send_page->getTransformedSubject($subscriber));
     }
 

@@ -345,6 +345,7 @@ class Segment extends Model
     public function subscribers($request = null)
     {
         $query = \App\Models\Subscriber::select('subscribers.*');
+
         $query = Subscriber::filter($query, $request);
 
         $conditions = $this->getSubscribersConditions();
@@ -363,6 +364,7 @@ class Segment extends Model
             }
         }
 
+
         // WHERE...
         $query = $query->where('subscribers.mail_list_id', $this->mail_list_id);
         // var_dump($conditions['conditions']);die();
@@ -374,7 +376,6 @@ class Segment extends Model
         if (isset($request)) {
             $query = $query->orderBy($request->sort_order, $request->sort_direction);
         }
-
         // var_dump($query->toSql());die();
 
         return $query;

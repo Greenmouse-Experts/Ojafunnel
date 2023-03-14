@@ -113,7 +113,7 @@ class ShopFrontController extends Controller
         $trans = new Transaction();
         $trans->user_id = $shop->user_id;
         $trans->amount = $totalAmount;
-        $trans->reference = Str::random(8);
+        $trans->reference = 'Payment from '.$enroll->name.' with order no:'.$enroll->order_no;
         $trans->status = 'Course Purchase';
         $trans->save();
 
@@ -161,9 +161,6 @@ class ShopFrontController extends Controller
         $pdf = PDF::loadView('myPDFlms', $data);
 
         return view('myPDFlms', compact('shop', 'enroll'));
-        //return redirect()->back()->with('success', 'Order Completed!');
-
-        //dd($request, $cart, $totalAmount, $store->id);
 
     }
 

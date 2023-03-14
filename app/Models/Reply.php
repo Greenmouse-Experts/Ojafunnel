@@ -1,10 +1,10 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\StringHelper;
-use Acelle\Library\Log as MailLog;
+use App\Library\StringHelper;
+use App\Library\Log as MailLog;
 
 class Reply extends Model
 {
@@ -15,7 +15,7 @@ class Reply extends Model
      */
     public function trackingLog()
     {
-        return $this->belongsTo('Acelle\Model\TrackingLog', 'message_id', 'message_id');
+        return $this->belongsTo('App\Models\TrackingLog', 'message_id', 'message_id');
     }
 
     public static function run()
@@ -60,7 +60,7 @@ class Reply extends Model
             // see http://stackoverflow.com/questions/5422405/cant-silence-imap-open-error-notices-in-php
             imap_errors();
             imap_alerts();
-            MailLog::error('Cannot connect to reply handler '.$e->getMessage());
+            MailLog::error('Cannot connect to reply handler ' . $e->getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ class Reply extends Model
                 throw new \Exception('Cannot find Message-ID, skipped');
             }
 
-            Log::info('Processing reply detection for message '.$msgId);
+            Log::info('Processing reply detection for message ' . $msgId);
 
             $trackingLog = TrackingLog::where('message_id', $msgId)->first();
 
@@ -93,7 +93,7 @@ class Reply extends Model
             // record a bounce log, one message may have more than one
             $reply = new self();
             $reply->message_id = $msgId;
-            $reply->content = $header.PHP_EOL.$body;
+            $reply->content = $header . PHP_EOL . $body;
             $reply->save();
 
             // just delete
@@ -101,7 +101,7 @@ class Reply extends Model
             // flag as seen
             imap_setflag_full($mbox, $msgNo, '\\Seen \\Flagged');
 
-            Log::info('Feedback recorded for message '.$msgId);
+            Log::info('Feedback recorded for message ' . $msgId);
         } catch (\Exception $ex) {
             Log::warning($ex->getMessage());
         }
@@ -114,12 +114,12 @@ class Reply extends Model
      */
     public function getMessageId($message)
     {
-        preg_match('/(?<=X-Acelle-Message-Id:)\s{0,1}<{0,1}(?<id>[a-zA-Z0-9\.]+[a-zA-Z0-9]+@[a-zA-Z0-9\.\-]+[a-zA-Z0-9]+)/', $message, $matched);
+        preg_match('/(?<=X-App-Message-Id:)\s{0,1}<{0,1}(?<id>[a-zA-Z0-9\.]+[a-zA-Z0-9]+@[a-zA-Z0-9\.\-]+[a-zA-Z0-9]+)/', $message, $matched);
         if (array_key_exists('id', $matched)) {
             return StringHelper::cleanupMessageId($matched['id']);
         }
 
-        // more tolerant matching (case-insensitive, no need for Acelle prefix, etc.)
+        // more tolerant matching (case-insensitive, no need for App prefix, etc.)
         preg_match('/(?<=Message-Id:)\s{0,1}<{0,1}(?<id>[a-zA-Z0-9\.]+[a-zA-Z0-9]+@[a-zA-Z0-9\.\-]+[a-zA-Z0-9]+)/i', $message, $matched);
         if (array_key_exists('id', $matched)) {
             return StringHelper::cleanupMessageId($matched['id']);

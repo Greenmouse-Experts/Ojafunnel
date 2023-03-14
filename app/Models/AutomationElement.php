@@ -6,21 +6,21 @@
  * Model for automation elements
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 class AutomationElement
 {
@@ -88,7 +88,7 @@ class AutomationElement
         switch ($this->get('type')) {
             case 'ElementTrigger':
                 return trans('messages.automation.trigger.title', [
-                    'title' => trans('messages.automation.trigger.'.$this->getOption('key')),
+                    'title' => trans('messages.automation.trigger.' . $this->getOption('key')),
                 ]);
                 break;
             case 'ElementAction':
@@ -101,7 +101,7 @@ class AutomationElement
 
                 break;
             case 'ElementWait':
-                return trans('messages.automation.wait.delay.'.$this->getOption('time'));
+                return trans('messages.automation.wait.delay.' . $this->getOption('time'));
                 break;
             case 'ElementCondition':
                 if ($this->getOption('type') == 'open') {

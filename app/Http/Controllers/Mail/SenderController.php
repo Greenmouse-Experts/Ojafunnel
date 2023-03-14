@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Sender;
 use App\Models\SendingDomain;
+use Illuminate\Support\Facades\Auth;
 
 class SenderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     /**
      * Search items.
      */
@@ -52,13 +57,13 @@ class SenderController extends Controller
         //Later Continuatiion
 
 
-        // if ($domain && !$email) {
-        //     return redirect(url('sending_domains'));
-        // } else {
-        //     return view('senders.index', [
-        //         'senders' => $this->search($request),
-        //     ]);
-        // }
+        if ($domain && !$email) {
+            return redirect(url('sending_domains'));
+        } else {
+            return view('dashboard.campaign.senders.index', [
+                'senders' => $this->search($request),
+            ]);
+        }
         return true;
     }
 
@@ -69,11 +74,11 @@ class SenderController extends Controller
      */
     public function listing(Request $request)
     {
-        if (\Gate::denies('listing', new Sender())) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('listing', new Sender())) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('senders._list', [
+        return view('dashboard.campaign.senders._list', [
             'senders' => $this->search($request)->paginate($request->per_page),
         ]);
     }
@@ -90,11 +95,11 @@ class SenderController extends Controller
         $sender->fill($request->old());
 
         // authorize
-        if (\Gate::denies('create', $sender)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('create', $sender)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('senders.create', [
+        return view('dashboard.campaign.senders.create', [
             'sender' => $sender,
         ]);
     }
@@ -115,12 +120,12 @@ class SenderController extends Controller
         //     return $this->notAuthorized();
         // }
 
-        $plan = $request->user()->customer->activeSubscription()->plan;
+        $plan = Auth::user()->customer->activeSubscription()->plan;
 
         $sender->fill($request->all());
-        $sender->customer_id = $request->user()->customer->id;
+        $sender->customer_id = Auth::user()->customer->id;
         $sender->status = Sender::STATUS_PENDING;
-
+        //dd($sender->customer_id);
         $this->validate($request, $sender->rules());
 
         try {
@@ -131,13 +136,12 @@ class SenderController extends Controller
             } else {
                 $server = null;
             }
-
-            $sender->verifyWith($server);
-            return redirect()->action('SenderController@show', $sender->uid);
+            //$sender->verifyWith($server);
+            return redirect()->route('user.sender.show', ['username' => Auth::user()->username, 'uid' => $sender->uid]);
         } catch (\Exception $ex) {
             $sender->delete();
             $request->session()->flash('alert-error', $ex->getMessage());
-            return redirect()->action('SenderController@index');
+            return redirect()->route('user.sender.index', Auth::user()->username);
         }
     }
 
@@ -148,9 +152,10 @@ class SenderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, $uid)
     {
-        $sender = Sender::findByUid($id);
+        $sender = Sender::findByUid($request->uid);
+        //dd($sender);
         $sender->updateVerificationStatus();
 
         // authorize
@@ -158,7 +163,7 @@ class SenderController extends Controller
         //     return $this->notAuthorized();
         // }
 
-        return view('senders.show', [
+        return view('dashboard.campaign.senders.show', [
             'sender' => $sender,
         ]);
     }
@@ -172,7 +177,7 @@ class SenderController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $sender = Sender::findByUid($id);
+        $sender = Sender::findByUid($request->uid);
 
         // authorize
         // if (\Gate::denies('update', $sender)) {
@@ -181,7 +186,7 @@ class SenderController extends Controller
 
         $sender->fill($request->old());
 
-        return view('senders.edit', [
+        return view('dashboard.campaign.senders.edit', [
             'sender' => $sender,
         ]);
     }
@@ -196,7 +201,7 @@ class SenderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $sender = Sender::findByUid($id);
+        $sender = Sender::findByUid($request->uid);
 
         // authorize
         // if (\Gate::denies('update', $sender)) {
@@ -211,7 +216,7 @@ class SenderController extends Controller
 
             if ($sender->save()) {
                 $request->session()->flash('alert-success', trans('messages.sender.updated'));
-                return redirect()->action('SenderController@show', $sender->uid);
+                return redirect()->route('user.sender.show', ['username' => Auth::user()->username, 'uid' => $sender->uid]);
             }
         }
     }
@@ -228,11 +233,11 @@ class SenderController extends Controller
     {
         try {
             $sender = Sender::verifyToken($request->token);
-            return view('senders.verified', [
+            return view('dashboard.campaign.senders.verified', [
                 'sender' => $sender,
             ]);
         } catch (\Exception $ex) {
-            return view('senders.failed', [
+            return view('dashboard.campaign.senders.failed', [
                 'message' => $ex->getMessage(),
             ]);
         }
@@ -252,11 +257,11 @@ class SenderController extends Controller
         $sender->updateVerificationStatus();
 
         if ($sender->isVerified()) {
-            return view('senders.verified', [
+            return view('dashboard.campaign.senders.verified', [
                 'sender' => $sender,
             ]);
         } else {
-            return view('senders.failed', [
+            return view('dashboard.campaign.senders.failed', [
                 'message' => 'Failed to verify identity',
             ]);
         }
@@ -271,6 +276,7 @@ class SenderController extends Controller
      */
     public function delete(Request $request)
     {
+
         if ($request->select_tool == 'all_items') {
             $senders = $this->search($request);
         } else {
@@ -282,9 +288,9 @@ class SenderController extends Controller
 
         foreach ($senders->get() as $sender) {
             // authorize
-            if ($request->user()->customer->can('delete', $sender)) {
-                $sender->delete();
-            }
+            //if ($request->user()->customer->can('delete', $sender)) {
+            $sender->delete();
+            //}
         }
 
         // Redirect to my lists page
@@ -319,7 +325,7 @@ class SenderController extends Controller
         }
 
 
-        return view('senders.import', [
+        return view('dashboard.campaign.senders.import', [
 
         ]);
     }

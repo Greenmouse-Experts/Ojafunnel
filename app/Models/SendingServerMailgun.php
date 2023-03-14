@@ -6,24 +6,24 @@
  * Abstract class for Mailgun sending servers
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
-use Acelle\Library\StringHelper;
+use App\Library\Log as MailLog;
+use App\Library\StringHelper;
 use Mailgun\Mailgun;
 
 class SendingServerMailgun extends SendingServer
@@ -70,7 +70,7 @@ class SendingServerMailgun extends SendingServer
         $domain = $this->domain;
         $subscribeUrl = StringHelper::joinUrl(Setting::get('url_delivery_handler'), self::WEBHOOK);
 
-        MailLog::info('Webhook set to: '.$subscribeUrl);
+        MailLog::info('Webhook set to: ' . $subscribeUrl);
 
         try {
             $result = $this->client()->webhooks()->delete($domain, 'complained');
@@ -84,8 +84,8 @@ class SendingServerMailgun extends SendingServer
             // just ignore
         }
 
-        $result = $this->client()->webhooks()->create($domain, 'complained', [ $subscribeUrl ]);
-        $result = $this->client()->webhooks()->create($domain, 'permanent_fail', [ $subscribeUrl ]);
+        $result = $this->client()->webhooks()->create($domain, 'complained', [$subscribeUrl]);
+        $result = $this->client()->webhooks()->create($domain, 'permanent_fail', [$subscribeUrl]);
 
         MailLog::info('3 webhooks created');
 
@@ -129,7 +129,7 @@ class SendingServerMailgun extends SendingServer
     }
 
     /**
-     * Allow user to verify his/her own sending domain against Acelle Mail.
+     * Allow user to verify his/her own sending domain against App Mail.
      *
      * @return bool
      */
@@ -139,7 +139,7 @@ class SendingServerMailgun extends SendingServer
     }
 
     /**
-     * Allow user to verify his/her own sending domain against Acelle Mail.
+     * Allow user to verify his/her own sending domain against App Mail.
      *
      * @return bool
      */
@@ -170,7 +170,7 @@ class SendingServerMailgun extends SendingServer
 
     public static function handleNofification()
     {
-        MailLog::configure(storage_path().'/logs/handler-mailgun.log');
+        MailLog::configure(storage_path() . '/logs/handler-mailgun.log');
 
         $inputJSON = file_get_contents('php://input');
         $input = json_decode($inputJSON, true);
@@ -184,7 +184,7 @@ class SendingServerMailgun extends SendingServer
                 $feedbackLog->feedback_type = 'spam';
                 $feedbackLog->raw_feedback_content = $inputJSON;
                 $feedbackLog->save();
-                MailLog::info('Feedback recorded for message '.$feedbackLog->runtime_message_id);
+                MailLog::info('Feedback recorded for message ' . $feedbackLog->runtime_message_id);
                 $subscriber = $feedbackLog->findSubscriberByRuntimeMessageId();
                 if (!is_null($subscriber)) {
                     $subscriber->sendToBlacklist($feedbackLog->raw_feedback_content);
@@ -197,7 +197,7 @@ class SendingServerMailgun extends SendingServer
                 $bounceLog->bounce_type = BounceLog::HARD;
                 $bounceLog->raw = $inputJSON;
                 $bounceLog->save();
-                MailLog::info('Bounce recorded for message '.$bounceLog->runtime_message_id);
+                MailLog::info('Bounce recorded for message ' . $bounceLog->runtime_message_id);
                 MailLog::info('Adding email to blacklist');
                 $subscriber = $bounceLog->findSubscriberByRuntimeMessageId();
                 if (!is_null($subscriber)) {
@@ -205,7 +205,7 @@ class SendingServerMailgun extends SendingServer
                 }
             }
         } else {
-            MailLog::warning('Invalid request: '.$inputJSON);
+            MailLog::warning('Invalid request: ' . $inputJSON);
         }
         header('X-PHP-Response-Code: 200', true, 200);
     }

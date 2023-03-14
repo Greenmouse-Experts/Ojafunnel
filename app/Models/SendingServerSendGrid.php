@@ -6,29 +6,29 @@
  * Abstract class for SendGrid sending servers
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
-use Acelle\Library\StringHelper;
+use App\Library\Log as MailLog;
+use App\Library\StringHelper;
 use SendGrid\Mail;
 use SendGrid\Email;
 use SendGrid\Content;
 use SendGrid\Attachment;
-use Acelle\Library\SendingServer\DomainVerificationInterface;
+use App\Library\SendingServer\DomainVerificationInterface;
 
 class SendingServerSendGrid extends SendingServer implements DomainVerificationInterface
 {
@@ -85,7 +85,7 @@ class SendingServerSendGrid extends SendingServer implements DomainVerificationI
             "processed": false,
             "spam_report": true,
             "unsubscribe": false,
-            "url": "'.$subscribeUrl.'"
+            "url": "' . $subscribeUrl . '"
             }'
         );
         $response = $this->client()->client->user()->webhooks()->event()->settings()->patch($request_body);
@@ -206,7 +206,7 @@ class SendingServerSendGrid extends SendingServer implements DomainVerificationI
         }
 
         // to track bounce/feedback notification
-        $mail->addCustomArg('runtime_message_id', $message->getHeaders()->get('X-Acelle-Message-Id')->getFieldBody());
+        $mail->addCustomArg('runtime_message_id', $message->getHeaders()->get('X-App-Message-Id')->getFieldBody());
 
         return $mail;
     }
@@ -219,9 +219,10 @@ class SendingServerSendGrid extends SendingServer implements DomainVerificationI
     public function syncIdentities()
     {
         $response = $this->client()->client->whitelabel()->domains()->get();
+        //dd($response);
         $json = json_decode($response->body(), true);
         if (array_key_exists('errors', $json)) {
-            throw new \Exception('Failed to connect to SendGrid: '.$response->body());
+            throw new \Exception('Failed to connect to SendGrid: ' . $response->body());
         }
 
         $identities = [];
@@ -256,9 +257,10 @@ class SendingServerSendGrid extends SendingServer implements DomainVerificationI
     public function test()
     {
         $response = $this->client()->client->whitelabel()->domains()->get();
+        //dd($response);
         $json = json_decode($response->body(), true);
         if (array_key_exists('errors', $json)) {
-            throw new \Exception('Failed to connect to SendGrid: '.$response->body());
+            throw new \Exception('Failed to connect to SendGrid: ' . $response->body());
         }
 
         return true;
@@ -269,9 +271,9 @@ class SendingServerSendGrid extends SendingServer implements DomainVerificationI
         $body = json_decode('{
           "automatic_security": false,
           "custom_spf": false,
-          "subdomain": "'.$this->getDefaultSubdomainName($domain).'",
+          "subdomain": "' . $this->getDefaultSubdomainName($domain) . '",
           "default": false,
-          "domain": "'.$domain.'"
+          "domain": "' . $domain . '"
         }');
 
         $response = $this->client()->client->whitelabel()->domains()->post($body);
@@ -305,8 +307,9 @@ class SendingServerSendGrid extends SendingServer implements DomainVerificationI
 
         return [
             'identity' => $identityRecord,
-            'dkim' => [ $dkimRecord ], // there may be more than one DKIM, AWS for example
-            'spf' => [ $spfRecord ],
+            'dkim' => [$dkimRecord],
+            // there may be more than one DKIM, AWS for example
+            'spf' => [$spfRecord],
             'results' => [
                 'identity' => false,
                 'dkim' => false,
@@ -330,7 +333,7 @@ class SendingServerSendGrid extends SendingServer implements DomainVerificationI
 
         $finalStatus = $identity && $dkim && $spf;
 
-        return [ $identity, $dkim, $spf, $finalStatus ];
+        return [$identity, $dkim, $spf, $finalStatus];
     }
 
     private function getDefaultSubdomainName($domain)
@@ -366,7 +369,7 @@ class SendingServerSendGrid extends SendingServer implements DomainVerificationI
     }
 
     /**
-     * Allow user to verify his/her own sending domain against Acelle Mail.
+     * Allow user to verify his/her own sending domain against App Mail.
      *
      * @return bool
      */
@@ -376,7 +379,7 @@ class SendingServerSendGrid extends SendingServer implements DomainVerificationI
     }
 
     /**
-     * Allow user to verify his/her own sending domain against Acelle Mail.
+     * Allow user to verify his/her own sending domain against App Mail.
      *
      * @return bool
      */

@@ -63,7 +63,7 @@
                         <div id='chart1'></div>
                     </div>
                     <div class='analytics-header-box box3'>
-                        <p class='text-center label1'>L.M.S Sales</p>
+                        <p class='text-center label1'>Course Sales</p>
                         <p class='text-center label2'>
                           @php
                             $shop = \App\Models\Shop::where('user_id', Auth::user()->id)->first();
@@ -76,18 +76,13 @@
                         </p>
                         <div id='chart2'></div>
                     </div>
-                    <div class='analytics-header-box box4'>
-                        <p class='text-center label1'>Other Sales</p>
-                        <p class='text-center label2'>40,000.00</p>
-                        <div id='chart3'></div>
-                    </div>
                 </div>
                 <div class='product-numbers'>
                     <div class='product-numbers-graph'>
-                        <p class='fs-5 fw-bold'>Product Data</p>
+                        <p class='fs-5 fw-bold'>Analysis Data</p>
                         <div id="products"></div>
                     </div>
-                    <div class='product-numbers-products'>
+                    <!-- <div class='product-numbers-products'>
                         <p class='fs-5 fw-bold'>Top Product Sales</p>
                         <div>
                             <div class='product-details-box'>
@@ -127,7 +122,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -394,7 +389,7 @@
     <script> 
       var options = {
         series: [{
-        data: [20, 5 , 10, 15, 18, 21, 28]
+        data: ['{{$shopOrderCount}}', '{{$students}}', '{{$storeOrderCount}}']
       }],
         chart: {
         type: 'bar',
@@ -410,8 +405,7 @@
         enabled: false
       },
       xaxis: {
-          categories: ['Course Sales', 'Automation To..', 'Affiliate Top', 'Tract Tamp','Page Builder', 'Email World', 'Funnel Pro'
-        ],
+          categories: ['Course Sales', 'Students', 'Ecommerce Sales'],
       },
       fill: {
           colors: ['#713f93']

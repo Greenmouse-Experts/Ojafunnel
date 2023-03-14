@@ -6,34 +6,34 @@
  * An abstract class for different types of Amazon sending servers
  *
  * LICENSE: This product includes software developed at
- * the Acelle Co., Ltd. (http://acellemail.com/).
+ * the App Co., Ltd. (http://Appmail.com/).
  *
  * @category   MVC Model
  *
- * @author     N. Pham <n.pham@acellemail.com>
- * @author     L. Pham <l.pham@acellemail.com>
- * @copyright  Acelle Co., Ltd
- * @license    Acelle Co., Ltd
+ * @author     N. Pham <n.pham@Appmail.com>
+ * @author     L. Pham <l.pham@Appmail.com>
+ * @copyright  App Co., Ltd
+ * @license    App Co., Ltd
  *
  * @version    1.0
  *
- * @link       http://acellemail.com
+ * @link       http://Appmail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
-use Acelle\Library\Log as MailLog;
-use Acelle\Library\StringHelper;
-use Acelle\Library\Lockable;
-use Acelle\Library\IdentityStore;
-use Acelle\Library\SendingServer\DomainVerificationInterface;
-use Acelle\Model\SendingDomain;
+use App\Library\Log as MailLog;
+use App\Library\StringHelper;
+use App\Library\Lockable;
+use App\Library\IdentityStore;
+use App\Library\SendingServer\DomainVerificationInterface;
+use App\Models\SendingDomain;
 use Aws\Route53\Route53Client;
-use Acelle\Library\Facades\Hook;
+use App\Library\Facades\Hook;
 
 class SendingServerAmazon extends SendingServer implements DomainVerificationInterface
 {
-    public const SNS_TOPIC = 'ACELLEHANDLER';
+    public const SNS_TOPIC = 'AppHANDLER';
     public const SNS_TYPE = 'amazon'; // @TODO
     public const SPF_DNS_RECORD = 'v=spf1 include:amazonses.com ~all';
 
@@ -50,14 +50,16 @@ class SendingServerAmazon extends SendingServer implements DomainVerificationInt
     public function snsClient()
     {
         if (!self::$snsClient) {
-            self::$snsClient = \Aws\Sns\SnsClient::factory(array(
-                'credentials' => array(
-                    'key' => trim($this->aws_access_key_id),
-                    'secret' => trim($this->aws_secret_access_key),
-                ),
-                'region' => $this->aws_region,
-                'version' => '2010-03-31',
-            ));
+            self::$snsClient = \Aws\Sns\SnsClient::factory(
+                array(
+                    'credentials' => array(
+                        'key' => trim($this->aws_access_key_id),
+                        'secret' => trim($this->aws_secret_access_key),
+                    ),
+                    'region' => $this->aws_region,
+                    'version' => '2010-03-31',
+                )
+            );
         }
 
         return self::$snsClient;
@@ -71,14 +73,16 @@ class SendingServerAmazon extends SendingServer implements DomainVerificationInt
     public function sesClient()
     {
         if (!self::$sesClient) {
-            self::$sesClient = \Aws\Ses\SesClient::factory(array(
-                'credentials' => array(
-                    'key' => trim($this->aws_access_key_id),
-                    'secret' => trim($this->aws_secret_access_key),
-                ),
-                'region' => $this->aws_region,
-                'version' => '2010-12-01',
-            ));
+            self::$sesClient = \Aws\Ses\SesClient::factory(
+                array(
+                    'credentials' => array(
+                        'key' => trim($this->aws_access_key_id),
+                        'secret' => trim($this->aws_secret_access_key),
+                    ),
+                    'region' => $this->aws_region,
+                    'version' => '2010-12-01',
+                )
+            );
         }
 
         return self::$sesClient;
@@ -91,7 +95,7 @@ class SendingServerAmazon extends SendingServer implements DomainVerificationInt
 
         return [
             'identity' => $identity,
-            'dkim' =>  $dkim,
+            'dkim' => $dkim,
             'spf' => [
                 [
                     'type' => 'TXT',
@@ -156,10 +160,12 @@ class SendingServerAmazon extends SendingServer implements DomainVerificationInt
         $awsIdentity = $fromEmailAddress;
         $verifyByDomain = false;
         try {
-            $this->sesClient()->setIdentityFeedbackForwardingEnabled(array(
-                'Identity' => $awsIdentity,
-                'ForwardingEnabled' => true,
-            ));
+            $this->sesClient()->setIdentityFeedbackForwardingEnabled(
+                array(
+                    'Identity' => $awsIdentity,
+                    'ForwardingEnabled' => true,
+                )
+            );
         } catch (\Exception $e) {
             $verifyByDomain = true;
             MailLog::warning("From Email address {$fromEmailAddress} not verified by Amazon SES, using domain instead");
@@ -168,31 +174,38 @@ class SendingServerAmazon extends SendingServer implements DomainVerificationInt
         if ($verifyByDomain) {
             // Use domain name as Aws Identity
             $awsIdentity = substr(strrchr($fromEmailAddress, '@'), 1); // extract domain from email
-            $this->sesClient()->setIdentityFeedbackForwardingEnabled(array(
-                'Identity' => $awsIdentity, // extract domain from email
-                'ForwardingEnabled' => true,
-            ));
+            $this->sesClient()->setIdentityFeedbackForwardingEnabled(
+                array(
+                    'Identity' => $awsIdentity,
+                    // extract domain from email
+                    'ForwardingEnabled' => true,
+                )
+            );
         }
 
         $topicResponse = $this->snsClient()->createTopic(array('Name' => self::SNS_TOPIC));
         $subscribeUrl = StringHelper::joinUrl(Setting::get('url_delivery_handler'), self::SNS_TYPE);
 
-        $subscribeResponse = $this->snsClient()->subscribe(array(
-            'TopicArn' => $topicResponse->get('TopicArn'),
-            'Protocol' => stripos($subscribeUrl, 'https') === 0 ? 'https' : 'http',
-            'Endpoint' => $subscribeUrl,
-        ));
+        $subscribeResponse = $this->snsClient()->subscribe(
+            array(
+                'TopicArn' => $topicResponse->get('TopicArn'),
+                'Protocol' => stripos($subscribeUrl, 'https') === 0 ? 'https' : 'http',
+                'Endpoint' => $subscribeUrl,
+            )
+        );
 
         if (stripos($subscribeResponse->get('SubscriptionArn'), 'pending') === false) {
             $this->subscription_arn = $result->get('SubscriptionArn');
         }
 
         foreach ($this->notificationTypes as $type) {
-            $this->sesClient()->setIdentityNotificationTopic(array(
-                'Identity' => $awsIdentity,
-                'NotificationType' => $type,
-                'SnsTopic' => $topicResponse->get('TopicArn'),
-            ));
+            $this->sesClient()->setIdentityNotificationTopic(
+                array(
+                    'Identity' => $awsIdentity,
+                    'NotificationType' => $type,
+                    'SnsTopic' => $topicResponse->get('TopicArn'),
+                )
+            );
         }
 
         self::$isSnsSetup = true;
@@ -209,7 +222,7 @@ class SendingServerAmazon extends SendingServer implements DomainVerificationInt
             return true;
         }
 
-        $lock = new Lockable(storage_path('locks/sending-server-sns-'.$this->uid));
+        $lock = new Lockable(storage_path('locks/sending-server-sns-' . $this->uid));
         $lock->getExclusiveLock(function () use ($fromEmailAddress) {
             $this->setupSns($fromEmailAddress);
             sleep(1); // SNS request rate limit
@@ -331,14 +344,16 @@ class SendingServerAmazon extends SendingServer implements DomainVerificationInt
      */
     public static function testConnection($key, $secret, $region)
     {
-        $iamClient = \Aws\Iam\IamClient::factory(array(
-            'credentials' => array(
-                'key' => trim($key),
-                'secret' => trim($secret),
-            ),
-            'region' => $region,
-            'version' => '2010-05-08',
-        ));
+        $iamClient = \Aws\Iam\IamClient::factory(
+            array(
+                'credentials' => array(
+                    'key' => trim($key),
+                    'secret' => trim($secret),
+                ),
+                'region' => $region,
+                'version' => '2010-05-08',
+            )
+        );
 
         // getting API caller
         $arn = $iamClient->getUser()->get('User')['Arn'];
@@ -377,7 +392,7 @@ class SendingServerAmazon extends SendingServer implements DomainVerificationInt
     }
 
     /**
-     * Allow user to verify his/her own sending domain against Acelle Mail.
+     * Allow user to verify his/her own sending domain against App Mail.
      *
      * @return bool
      */
@@ -387,7 +402,7 @@ class SendingServerAmazon extends SendingServer implements DomainVerificationInt
     }
 
     /**
-     * Allow user to verify his/her own sending domain against Acelle Mail.
+     * Allow user to verify his/her own sending domain against App Mail.
      *
      * @return bool
      */
@@ -451,33 +466,33 @@ class SendingServerAmazon extends SendingServer implements DomainVerificationInt
 
     private function generateCustomVerificationEmailTemplateName()
     {
-        $pattern = "acelle-";
+        $pattern = "App-";
         $from = 1;
         $max = 50;
 
         // There are 50 slots for a limit of 50 templates
         $r = $this->sesClient()->ListCustomVerificationEmailTemplates(['MaxResults' => $max]);
 
-        // Something like ['acelle-1', 'acelle-2', 'acelle-5', ..., 'acelle-50'];
+        // Something like ['App-1', 'App-2', 'App-5', ..., 'App-50'];
         $names = array_map(function ($record) {
             return $record['TemplateName'];
         }, $r->toArray()['CustomVerificationEmailTemplates']);
 
         // Something like [1, 2, 5, ..., 50];
         $numbers = array_map(function ($name) {
-            return (int)explode('-', $name)[1];
+            return (int) explode('-', $name)[1];
         }, $names);
 
         // Take $selected slot and make $next slot available
         list($selected, $next) = $this->pickAvailableSlot($from, $max, $numbers);
 
         // Take selected template (delete if exists)
-        $selectedTemplate = $pattern.$selected;
+        $selectedTemplate = $pattern . $selected;
         $this->deleteCustomVerificationEmailTemplateIfExists($selectedTemplate);
 
         // Delete next slot if exists
         if (!is_null($next)) {
-            $nextTemplate = $pattern.$next;
+            $nextTemplate = $pattern . $next;
             $this->deleteCustomVerificationEmailTemplateIfExists($nextTemplate);
         }
 

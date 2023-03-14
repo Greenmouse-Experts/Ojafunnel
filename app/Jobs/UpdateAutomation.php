@@ -1,14 +1,14 @@
 <?php
 
-namespace Acelle\Jobs;
+namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Acelle\Model\Automation2;
-use Acelle\Library\Log as MailLog;
+use App\Models\Automation2;
+use App\Library\Log as MailLog;
 
 class UpdateAutomation extends Base
 {

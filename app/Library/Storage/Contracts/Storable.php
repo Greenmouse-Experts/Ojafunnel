@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Library\Storage\Contracts;
+namespace App\Library\Storage\Contracts;
 
 interface Storable
 {

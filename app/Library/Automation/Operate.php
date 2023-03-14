@@ -1,8 +1,8 @@
 <?php
 
-namespace Acelle\Library\Automation;
+namespace App\Library\Automation;
 
-use Acelle\Model\MailList;
+use App\Models\MailList;
 use Exception;
 
 class Operate extends Action
@@ -12,16 +12,13 @@ class Operate extends Action
     public const OPERATION_MOVE = 'move';
 
     /*****
-
-        Operate action may result in the following cases:
-          + Done OK
-          + Exception (any type of exception...)
-        In case of Exception, it is better to stop the whole automation process and write error log to the automation
-        so that the responsible person can check it
-
-        Then, "last_executed" is used as a flag indicating that the process is done
-        Execution always returns TRUE
-
+    Operate action may result in the following cases:
+    + Done OK
+    + Exception (any type of exception...)
+    In case of Exception, it is better to stop the whole automation process and write error log to the automation
+    so that the responsible person can check it
+    Then, "last_executed" is used as a flag indicating that the process is done
+    Execution always returns TRUE
     ****/
     protected function doExecute()
     {

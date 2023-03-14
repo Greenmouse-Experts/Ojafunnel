@@ -20,7 +20,7 @@
  * @link       http://acellemail.com
  */
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,7 +32,9 @@ class UnsubscribeLog extends Model
      * @var array
      */
     protected $fillable = [
-        'message_id', 'ip_address', 'user_agent'
+        'message_id',
+        'ip_address',
+        'user_agent'
     ];
 
     /**
@@ -42,7 +44,7 @@ class UnsubscribeLog extends Model
      */
     public function trackingLog()
     {
-        return $this->belongsTo('Acelle\Model\TrackingLog', 'message_id', 'message_id');
+        return $this->belongsTo('App\Models\TrackingLog', 'message_id', 'message_id');
     }
 
     /**
@@ -52,7 +54,7 @@ class UnsubscribeLog extends Model
      */
     public function subscriber()
     {
-        return $this->belongsTo('Acelle\Model\Subscriber');
+        return $this->belongsTo('App\Models\Subscriber');
     }
 
     /**
@@ -85,11 +87,11 @@ class UnsubscribeLog extends Model
         if (!empty(trim($request->keyword))) {
             foreach (explode(' ', trim($request->keyword)) as $keyword) {
                 $query = $query->where(function ($q) use ($keyword) {
-                    $q->orwhere('campaigns.name', 'like', '%'.$keyword.'%')
-                        ->orwhere('unsubscribe_logs.ip_address', 'like', '%'.$keyword.'%')
-                        ->orwhere('unsubscribe_logs.user_agent', 'like', '%'.$keyword.'%')
-                        ->orwhere('sending_servers.name', 'like', '%'.$keyword.'%')
-                        ->orwhere('subscribers.email', 'like', '%'.$keyword.'%');
+                    $q->orwhere('campaigns.name', 'like', '%' . $keyword . '%')
+                        ->orwhere('unsubscribe_logs.ip_address', 'like', '%' . $keyword . '%')
+                        ->orwhere('unsubscribe_logs.user_agent', 'like', '%' . $keyword . '%')
+                        ->orwhere('sending_servers.name', 'like', '%' . $keyword . '%')
+                        ->orwhere('subscribers.email', 'like', '%' . $keyword . '%');
                 });
             }
         }

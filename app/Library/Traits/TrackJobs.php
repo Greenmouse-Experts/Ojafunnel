@@ -40,7 +40,7 @@ trait TrackJobs
         // Destroy closure attributes which cannot be serialized
         $job->eventAfterDispatched = null; // Destroy the closure
 
-        dd($job);
+        //dd($job);
         // Actually dispatch
         $dispatchedJobId = app(Dispatcher::class)->dispatch($job);
 

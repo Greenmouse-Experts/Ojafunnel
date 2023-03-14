@@ -1,6 +1,6 @@
 <?php
 
-namespace Acelle\Library;
+namespace App\Library;
 
 use GuzzleHttp\Client;
 
@@ -58,7 +58,7 @@ class MtaSync
         $response = $this->getClient()->request($type, $action, [
             'headers' => [
                 'Accept' => 'application/json',
-                'Authorization' => 'Bearer '.$this->apiKey,
+                'Authorization' => 'Bearer ' . $this->apiKey,
             ],
             'form_params' => $params,
         ]);

@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class SegmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +18,9 @@ class SegmentController extends Controller
      */
     public function index(Request $request)
     {
-        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->uid);
 
-        return view('segments.index', [
+        return view('dashboard.campaign.segment.index', [
             'list' => $list,
         ]);
     }
@@ -35,7 +39,7 @@ class SegmentController extends Controller
             $segment->updateCacheDelayed();
         }
 
-        return view('segments._list', [
+        return view('dashboard.campaign.segment._list', [
             'segments' => $segments,
             'list' => $list,
         ]);
@@ -48,14 +52,14 @@ class SegmentController extends Controller
      */
     public function create(Request $request)
     {
-        $list = \App\Models\MailList::findByUid($request->list_uid);
+        $list = \App\Models\MailList::findByUid($request->uid);
         $segment = new \App\Models\Segment();
         $segment->mail_list_id = $list->id;
 
         // authorize
-        if (\Gate::denies('create', $segment)) {
-            return $this->noMoreItem();
-        }
+        // if (\Gate::denies('create', $segment)) {
+        // return $this->noMoreItem();
+        // }
 
         // Get old post values
         if (isset($request->old()['conditions'])) {
@@ -70,7 +74,7 @@ class SegmentController extends Controller
             }
         }
 
-        return view('segments.create', [
+        return view('dashboard.campaign.segment.create', [
             'list' => $list,
             'segment' => $segment,
         ]);
@@ -91,9 +95,9 @@ class SegmentController extends Controller
         $segment->mail_list_id = $list->id;
 
         // authorize
-        if (\Gate::denies('create', $segment)) {
-            return $this->noMoreItem();
-        }
+        // if (\Gate::denies('create', $segment)) {
+        //     return $this->noMoreItem();
+        // }
 
         // validate and save posted data
         if ($request->isMethod('post')) {
@@ -144,7 +148,7 @@ class SegmentController extends Controller
             // Redirect to my lists page
             $request->session()->flash('alert-success', trans('messages.segment.created'));
 
-            return redirect()->action('SegmentController@index', $list->uid);
+            return redirect()->route('user.segment.index', ['username' => \Auth::user()->username, 'uid' => $list->uid]);
         }
     }
 
@@ -171,7 +175,7 @@ class SegmentController extends Controller
         $list = \App\Models\MailList::findByUid($request->list_uid);
         $segment = \App\Models\Segment::findByUid($request->uid);
 
-        return view('segments.subscribers', [
+        return view('dashboard.campaign.segment.subscribers', [
             'subscribers' => $segment->subscribers(),
             'list' => $list,
             'segment' => $segment,
@@ -189,15 +193,16 @@ class SegmentController extends Controller
     {
         $list = \App\Models\MailList::findByUid($request->list_uid);
         $segment = \App\Models\Segment::findByUid($request->uid);
-
+        //dd($request->uid);
         $subscribers = $segment->subscribers($request);
+
         $total = $subscribers->count();
 
         $subscribers = $subscribers->orderBy($request->sort_order, $request->sort_direction)
             ->paginate($request->per_page);
 
         $fields = $list->getFields->whereIn('uid', explode(',', $request->columns));
-        return view('subscribers._list', [
+        return view('dashboard.campaign.subscribers._list', [
             'subscribers' => $subscribers,
             'total' => $total,
             'list' => $list,
@@ -219,9 +224,9 @@ class SegmentController extends Controller
         $segment = \App\Models\Segment::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $segment)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $segment)) {
+        //     return $this->notAuthorized();
+        // }
 
         // Get old post values
         if (isset($request->old()['conditions'])) {
@@ -236,7 +241,7 @@ class SegmentController extends Controller
             }
         }
 
-        return view('segments.edit', [
+        return view('dashboard.campaign.segment.edit', [
             'list' => $list,
             'segment' => $segment,
         ]);
@@ -257,9 +262,9 @@ class SegmentController extends Controller
         $segment = \App\Models\Segment::findByUid($request->uid);
 
         // authorize
-        if (\Gate::denies('update', $segment)) {
-            return $this->notAuthorized();
-        }
+        // if (\Gate::denies('update', $segment)) {
+        //     return $this->notAuthorized();
+        // }
 
         // validate and save posted data
         if ($request->isMethod('patch')) {
@@ -308,12 +313,12 @@ class SegmentController extends Controller
             $segment->log('updated', $request->user()->customer);
 
             // update cached information
-            event(new \Acelle\Events\MailListUpdated($segment->mailList));
+            event(new \App\Events\MailListUpdated($segment->mailList));
 
             // Redirect to my lists page
             $request->session()->flash('alert-success', trans('messages.segment.updated'));
 
-            return redirect()->action('SegmentController@index', $list->uid);
+            return redirect()->route('user.segment.index', ['username' => \Auth::user()->username, 'uid' => $list->uid]);
         }
     }
 
@@ -361,7 +366,7 @@ class SegmentController extends Controller
     {
         $list = \App\Models\MailList::findByUid($request->list_uid);
 
-        return view('segments._sample_condition', [
+        return view('dashboard.campaign.segment._sample_condition', [
             'list' => $list,
         ]);
     }
@@ -377,7 +382,7 @@ class SegmentController extends Controller
     {
         $list = \App\Models\MailList::findByUid($request->list_uid);
 
-        return view('segments._select_box', [
+        return view('dashboard.campaign.segment._select_box', [
             'options' => collect($list->readCache('SegmentSelectOptions', [])),
             'index' => $request->index,
         ]);
@@ -394,7 +399,7 @@ class SegmentController extends Controller
     {
         $field = \App\Models\Field::findByUid($request->field_uid);
 
-        return view('segments._condition_value_control', [
+        return view('dashboard.campaign.segment._condition_value_control', [
             'operator' => $request->operator,
             'field_uid' => $request->field_uid,
             'field' => $field,

@@ -1,11 +1,11 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Validator;
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Model\Source;
-use Acelle\Model\Product;
+use App\Models\Source;
+use App\Models\Product;
 
 class WooCommerce extends Source
 {
@@ -39,7 +39,7 @@ class WooCommerce extends Source
                     ],
                 ]);
             } catch (\Exception $e) {
-                $validator->errors()->add('connect_url', trans('messages.can_not_connect_acelle_sync', ['error' => $e->getMessage()]));
+                $validator->errors()->add('connect_url', trans('messages.can_not_connect_App_sync', ['error' => $e->getMessage()]));
                 return;
             }
 
@@ -104,8 +104,8 @@ class WooCommerce extends Source
     {
         $client = new \GuzzleHttp\Client();
         $sign = (strpos($this->getData()['connect_url'], '?') !== false) ? '&' : '?';
-        $uri =  $this->getData()['connect_url'] . $sign .
-                'action=list&max=100&sort_by=';
+        $uri = $this->getData()['connect_url'] . $sign .
+            'action=list&max=100&sort_by=';
 
         $response = $client->request('GET', $uri, [
             'Content-Type' => 'application/json',

@@ -1,9 +1,9 @@
 <?php
 
-namespace Acelle\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Acelle\Library\Traits\HasUid;
+use App\Library\Traits\HasUid;
 
 class EmailLink extends Model
 {
@@ -23,6 +23,6 @@ class EmailLink extends Model
      */
     public function email()
     {
-        return $this->belongsTo('Acelle\Model\Email');
+        return $this->belongsTo('App\Models\Email');
     }
 }
