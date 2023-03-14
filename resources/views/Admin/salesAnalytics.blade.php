@@ -23,12 +23,12 @@
             <!-- start page title -->
             <div>
                 <div class="monthly-sales">
-                    <p class="fw-bold">Number of Sales</p>
+                    <p class="fw-bold">Amount of Sales</p>
                     <div id="chart1"></div>
                 </div>
                 <div class="analysis-second-row">
                     <div class="sales-money">
-                        <p class="fw-bold">Amount Sales</p>
+                        <p class="fw-bold">Total Amount Sales</p>
                         <div id='chart2'></div>
                     </div>
                     <div class="subscription-money">
@@ -47,10 +47,10 @@
     let option = {
           series: [{
           name: 'LMS Sales',
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+          data: ['{{$lms['January']}}', '{{$lms['February']}}', '{{$lms['March']}}', '{{$lms['April']}}', '{{$lms['May']}}', '{{$lms['June']}}', '{{$lms['July']}}', '{{$lms['August']}}', '{{$lms['September']}}', '{{$lms['October']}}', '{{$lms['November']}}', '{{$lms['December']}}'],
         }, {
           name: 'Ecommerce Sales',
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+          data: ['{{$ecommerce['January']}}', '{{$ecommerce['February']}}', '{{$ecommerce['March']}}', '{{$ecommerce['April']}}', '{{$ecommerce['May']}}', '{{$ecommerce['June']}}', '{{$ecommerce['July']}}', '{{$ecommerce['August']}}', '{{$ecommerce['September']}}', '{{$ecommerce['October']}}', '{{$ecommerce['November']}}', '{{$ecommerce['December']}}']
         }],
           chart: {
           type: 'bar',
@@ -72,7 +72,7 @@
           colors: ['transparent']
         },
         xaxis: {
-          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           colors: ['#713f93', 'rgba(248, 132, 21, 0.8)']
         },
         yaxis: {
@@ -100,7 +100,7 @@
 <script>
     var option2 = {
           series: [{
-          data: [520000, 430000, 50000]
+          data: ['{{$totalLMSSales}}', '{{$totalEcommerceSales}}']
         }],
           chart: {
           type: 'bar',
@@ -116,8 +116,7 @@
           enabled: false
         },
         xaxis: {
-          categories: ['LMS Sales', 'Ecom Sales', 'Other Sales'
-          ],
+          categories: ['LMS Sales', 'Ecom Sales'],
           title: {
             text: 'Sales Amount'
           }

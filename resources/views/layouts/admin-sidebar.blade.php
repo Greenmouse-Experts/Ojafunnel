@@ -149,6 +149,7 @@
                         <span key="t-dashboards">Support</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('whatsappSupport')}}" key="t-full-calendar">Whatsapp Support</a></li>
                         <li><a href="{{route('chatSupport')}}" key="t-full-calendar">Chat Support</a></li>
                         <li><a href="{{route('emailSupport')}}" key="t-full-calendar">Email Support</a></li>
                     </ul>

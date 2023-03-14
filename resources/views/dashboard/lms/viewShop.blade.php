@@ -101,7 +101,7 @@
             </div>
         </div>
     </section>
-    <section class="container home-banner-area">
+    <section class="container home-banner-area" style="background-image: linear-gradient(50deg, #0000007e, #0000007e), url(https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg)">
         <div class="container">
             <div class="row">
                 <div class="col-lg-1">

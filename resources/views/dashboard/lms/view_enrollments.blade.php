@@ -56,7 +56,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                        @foreach (\App\Models\ShopOrder::where('shop_id', $shop->id)->get() as $item)
+                        @foreach (\App\Models\ShopOrder::latest()->where('shop_id', $shop->id)->get() as $item)
                         <tr>
                             <th scope="row">{{$loop->iteration}}</th>
                             <td><a href="#" data-bs-toggle="modal" data-bs-target="#view-student-{{$item->id}}">View Student</a></td>

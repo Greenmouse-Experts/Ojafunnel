@@ -13,9 +13,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
+    @stack('css')
+    
     <!-- Bootstrap Css -->
     <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -352,6 +351,16 @@
                 preview.style.display = "block";
             }
         }
+    </script>
+    <script>
+            $(function(){
+        $("body").on('hidden.bs.modal', function (e) {
+            var $iframes = $(e.target).find("iframe");
+            $iframes.each(function(index, iframe){
+            $(iframe).attr("src", $(iframe).attr("src"));
+            });
+        });
+        });
     </script>
 </body>
 

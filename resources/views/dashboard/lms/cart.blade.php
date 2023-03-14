@@ -108,7 +108,7 @@
                                                         <h5 class="font-size-14 text-wrap" style="width: 330px;"><a href="#" class="text-dark">{{ $details['description'] }}</a></h5>
                                                     </td>
                                                     <td>
-                                                        {{ $details['currency'] }}{{ $details['price'] }}
+                                                        {{ $details['currency'] }}{{ number_format($details['price'], 2) }}
                                                     </td>
                                                     <td>
                                                         {{ $details['currency'] }}{{ number_format($details['price'], 2)}}
@@ -129,11 +129,11 @@
                         </div>
                         <div class="mt-4" style="display: flex; justify-content: space-between;">
                             <div class="">
-                                <a href="{{route('user.shops.link', $shop->name)}}" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" class="btn d-none d-sm-inline-block btn-link">
+                                <a href="{{route('user.shops.link', $shop->name)}}" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}}; color: #fff !important;" class="btn d-none d-sm-inline-block btn-link">
                                     <i class="fas fa-arrow-left me-1"></i> Continue Shopping </a>
                             </div>
                             <div>
-                                    <a href="{{route('course.checkout', $shop->name)}}" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};"  class="btn d-none d-sm-inline-block btn-link" style="display: flex; justify-content: flex-end;">
+                                    <a href="{{route('course.checkout', $shop->name)}}" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}}; color: #fff !important;"  class="btn d-none d-sm-inline-block btn-link" style="display: flex; justify-content: flex-end;">
                                     <i class="fas fa-truck-fast me-1"></i> Proceed to Checkout </a>
                             </div>
                         </div>
