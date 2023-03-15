@@ -657,7 +657,7 @@
                             <a href="{{route('terms')}}">Terms & Condition</a>
                         </li>
                     </ul>
-                </div>
+                </div>¡
             </div>
             <div class="col-lg-3">
                 <div class="quick">
