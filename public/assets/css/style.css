@@ -3121,16 +3121,16 @@ header nav .offcanvas-header button i {
 
 .email-section .btn-text h1 {
     padding: 50px 0px 0px 0px;
-    font-size: 30px;
+    font-size: 28px;
     line-height: 1.6;
-    font-weight: 700;
+    font-weight: 600;
     color: #fff;
 }
 
 .email-section .btn-text p {
     padding: 10px 0px 0px 0px;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 300;
     color: #fff;
 }
 
@@ -3153,9 +3153,10 @@ header nav .offcanvas-header button i {
 @media (max-width:1300px) {
     .email-section .btn-text h1 {
         padding: 50px 0px 0px 0px;
-        font-size: 40px;
-        font-weight: 900;
+        font-size: 28px;
+        font-weight: 600;
         color: #fff;
+        line-height: 1.6;
     }
 
     .email-section {
@@ -3271,15 +3272,15 @@ header nav .offcanvas-header button i {
 
 .chat-automation .btn-text h1 {
     padding: 50px 0px 0px 0px;
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 600;
     color: #fff;
 }
 
 .chat-automation .btn-text p {
     padding: 10px 0px 0px 0px;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 300;
     color: #fff;
 }
 
@@ -3302,8 +3303,9 @@ header nav .offcanvas-header button i {
 @media (max-width:1300px) {
     .chat-automation .btn-text h1 {
         padding: 50px 0px 0px 0px;
-        font-size: 40px;
-        font-weight: 900;
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1.6;
         color: #fff;
     }
 
@@ -3421,8 +3423,8 @@ header nav .offcanvas-header button i {
 
 .Automation .btn-text h1 {
     padding: 50px 0px 0px 0px;
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 25px;
+    font-weight: 600;
     color: #fff;
 }
 
@@ -3452,8 +3454,9 @@ header nav .offcanvas-header button i {
 @media (max-width:1300px) {
     .Automation .btn-text h1 {
         padding: 50px 0px 0px 0px;
-        font-size: 40px;
-        font-weight: 900;
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1.5;
         color: #fff;
     }
 
@@ -3580,7 +3583,7 @@ header nav .offcanvas-header button i {
 .page-builder .btn-text p {
     padding: 10px 0px 0px 0px;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 300;
     color: #fff;
 }
 
@@ -3603,8 +3606,9 @@ header nav .offcanvas-header button i {
 @media (max-width:1300px) {
     .page-builder .btn-text h1 {
         padding: 50px 0px 0px 0px;
-        font-size: 40px;
-        font-weight: 900;
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 1.6;
         color: #fff;
     }
 
@@ -4891,7 +4895,7 @@ header nav .offcanvas-header button i {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     display: none;
-    place-content: center;    
+    place-content: center;
     transition: 2s ease-in-out;
   }
   .single-template .first-grid{
