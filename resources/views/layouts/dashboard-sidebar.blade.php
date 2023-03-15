@@ -77,6 +77,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('user.withdrawal', Auth::user()->username)}}">
+                        <i class="bi bi-cash-coin"></i>
+                        <span key="t-chat">Withdrawal</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{route('user.subscription', Auth::user()->username)}}">
                         <i class="bi bi-award"></i>
                         <span key="t-chat">Subscriptions</span>
