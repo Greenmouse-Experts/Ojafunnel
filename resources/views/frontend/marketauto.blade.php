@@ -286,17 +286,21 @@
                         <p>
                             Convert more leads and close more deals with highly personalized and automated follow-up.
                         </p>
-                        <button style="background-color: #fff;color:#000">
-                            Get Started
-                        </button>
-                        <button>
-                            See Demo
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button style="background-color: #fff;color:#000">
+                                Get Started
+                            </button>
+                        </a>
+                        <a href="{{route('demo')}}">
+                            <button>
+                                See Demo
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="context">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661267657/OjaFunnel-Images/banner_ajpxfj.png" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1678895618/OjaFunnel-Images/Automation_1_bfyz0j-removebg-preview_bzukxo.png" draggable="false">
                     </div>
                 </div>
             </div>
