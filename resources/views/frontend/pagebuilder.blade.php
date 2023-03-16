@@ -271,12 +271,16 @@
                         <p>
                             Building landing pages, pre sales pages, sales page, opt-in page, thank you page, and more with ease.
                         </p>
-                        <button style="background-color: #fff;color:#000">
-                            Get Started
-                        </button>
-                        <button>
-                            See Demo
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button style="background-color: #fff;color:#000">
+                                Get Started
+                            </button>
+                        </a>
+                        <a href="{{route('demo')}}">
+                            <button>
+                                See Demo
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">

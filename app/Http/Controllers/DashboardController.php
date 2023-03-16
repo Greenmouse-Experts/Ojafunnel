@@ -637,6 +637,27 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function withdrawal($username)
+    {
+        return view('dashboard.withdrawal.withdrawal', [
+            'username' => $username
+        ]);
+    }
+
+    public function bank($username)
+    {
+        return view('dashboard.withdrawal.bank', [
+            'username' => $username
+        ]);
+    }
+
+    public function payment($username)
+    {
+        return view('dashboard.withdrawal.payment', [
+            'username' => $username
+        ]);
+    }
+
     public function create_course_start($username)
     {
         $categories = Category::latest()->get();
