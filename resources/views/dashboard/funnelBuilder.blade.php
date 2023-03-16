@@ -15,7 +15,7 @@
                         <div class="col-md-9">
                             <h4 class="font-60">Create A Funnel</h4>
                             <p>
-                                 Create a funnel templates to begin building your funnel
+                                Create a funnel templates to begin building your funnel
                             </p>
                         </div>
                         <div class="col-md-3">
@@ -25,12 +25,21 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- <div class="col-md-3">
-                            <div class="form">
-                                <input type="text">
-                            </div>
-                        </div> -->
                     </div>
+                    <div class="row">
+                            <div class="col-md-10"></div>
+                            <div class="col-md-1">
+                                <div class="exaplaner" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1678461136/OjaFunnel-Images/multimedia_yugciw.png" draggable="false" alt="">
+
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="exaplanerr" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1678959746/OjaFunnel-Images/written-paper_1_wlsmrq.png" draggable="false" alt="">
+                                </div>
+                            </div>
+                        </div>
                     <div class="d-flex account-nav">
                         <p class="ps-0 active">
                             <a href="#" class="text-decoration-none text-dark">All</a>
@@ -67,16 +76,16 @@
                                             <td>{{$funnel->folder}}</td>
                                             <td>{{\App\Models\FunnelPage::where('folder_id', $funnel->id)->count()}}</td>
                                             <td>
-                                            <div class="dropdown-center">
-                                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Options
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li><a class="dropdown-item" href="{{route('user.view.funnel.pages', [Auth::user()->username, Crypt::encrypt($funnel->id)])}}">View Pages</a></li>
-                                                    <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit-{{$funnel->id}}">Edit</a></li>
-                                                    <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$funnel->id}}">Delete</a></li>
-                                                </ul>
-                                            </div>
+                                                <div class="dropdown-center">
+                                                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Options
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li><a class="dropdown-item" href="{{route('user.view.funnel.pages', [Auth::user()->username, Crypt::encrypt($funnel->id)])}}">View Pages</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit-{{$funnel->id}}">Edit</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$funnel->id}}">Delete</a></li>
+                                                    </ul>
+                                                </div>
                                                 <!-- Modal START -->
                                                 <div class="modal fade" id="edit-{{$funnel->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
