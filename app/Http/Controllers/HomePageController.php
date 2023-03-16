@@ -144,7 +144,6 @@ class HomePageController extends Controller
     public function template_details($id)
     {
         $idFinder = Crypt::decrypt($id);
-        
         $page = Page::find($idFinder);
 
         return view('frontend.templateDetail', [
