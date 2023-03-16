@@ -21,13 +21,19 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <div class="exaplaner" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1678461136/OjaFunnel-Images/multimedia_yugciw.png" draggable="false" alt="">
+
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="exaplanerr" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1678959746/OjaFunnel-Images/written-paper_1_wlsmrq.png" draggable="false" alt="">
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="click py-2">
+                        <div class="click">
                             <button type="button" class="px-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 + Create
                             </button>
@@ -330,8 +336,33 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
                         <div class="aller">
                             <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                           <p>
+                           Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, ducimus iste. Consequuntur doloremque voluptatem officia, quos laborum delectus atque distinctio reprehenderit earum iure. Sequi voluptate architecto libero, repellat neque deserunt assumenda sunt in sit ipsam delectus nostrum qui ratione. Laboriosam aliquid obcaecati vitae voluptatum ea minus quidem! Pariatur soluta quasi modi harum aut quas veritatis et. Necessitatibus fuga illo ipsa dicta aut nisi laborum nam at, id eveniet consectetur praesentium enim, cum dignissimos ipsum rem odio. Atque, eaque magni aut incidunt quo laudantium repudiandae quae modi officiis in, iusto suscipit fugiat rem inventore non dolorum adipisci rerum dolorem. Nulla, vero!
+                           </p>
                         </div>
                     </div>
                 </div>
