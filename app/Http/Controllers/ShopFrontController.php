@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 
 class ShopFrontController extends Controller
 {
@@ -152,6 +153,18 @@ class ShopFrontController extends Controller
         ]);
         
         session()->forget('cart');
+
+        /** Store information to include in mail in $data as an array */
+        $data = array(
+            'shop' => $shop,
+            'enroll' => $enroll,
+            'email' => $enroll->email
+        );
+        
+        /** Send message to the user */
+        Mail::send('emails.receiptlms', $data, function ($m) use ($data) {
+            $m->to($data['email'])->subject(config('app.name'));
+        });
 
         $data = [
             'shop' => $shop,

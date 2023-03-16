@@ -10,13 +10,13 @@
   <link rel="shortcut icon" href="{{Storage::url($shop->logo)}}" />
 
   <!-- App Css-->
-  <link href="{{URL::asset('dash/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+  <link href="{{URL::asset('http://127.0.0.1:8000/dash/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
   <!-- Bootstrap Css -->
-  <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+  <link href="{{URL::asset('http://127.0.0.1:8000/dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
   <!-- Icons Css -->
-  <link href="{{URL::asset('dash/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{URL::asset('http://127.0.0.1:8000/dash/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
   <!-- style Css -->
-  <link href="{{URL::asset('dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{URL::asset('http://127.0.0.1:8000/dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
   <!-- App Css-->
   <!-- Font Css-->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
