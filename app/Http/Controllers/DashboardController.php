@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\BankDetail;
 use App\Models\Category;
 use App\Models\Chat;
 use App\Models\Course;
@@ -646,14 +647,27 @@ class DashboardController extends Controller
 
     public function bank($username)
     {
+        $bank_details = BankDetail::latest()->where('user_id', Auth::user()->id)->where('type', 'NGN')->get();
+
         return view('dashboard.withdrawal.bank', [
-            'username' => $username
+            'username' => $username,
+            'bank_details' => $bank_details
         ]);
     }
 
-    public function payment($username)
+    public function other_payment_method($username)
     {
-        return view('dashboard.withdrawal.payment', [
+        $bank_details = BankDetail::latest()->where('user_id', Auth::user()->id)->where('type', '!=', 'NGN')->get();
+
+        return view('dashboard.withdrawal.other_payment_method', [
+            'username' => $username,
+            'bank_details' => $bank_details
+        ]);
+    }
+
+    public function direct_us_bank($username)
+    {
+        return view('dashboard.withdrawal.direct_us_bank', [
             'username' => $username
         ]);
     }
