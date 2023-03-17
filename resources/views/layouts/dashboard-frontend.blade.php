@@ -339,9 +339,7 @@
         var chart = new ApexCharts(document.getElementById("sales"), options);
         chart.render();
     </script>
-
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
-
     <script>
         function showPreview(event) {
             if (event.target.files.length > 0) {
@@ -363,5 +361,4 @@
         });
     </script>
 </body>
-
 </html>
