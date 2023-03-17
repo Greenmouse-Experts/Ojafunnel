@@ -114,7 +114,7 @@ class ShopFrontController extends Controller
         $trans = new Transaction();
         $trans->user_id = $shop->user_id;
         $trans->amount = $totalAmount;
-        $trans->reference = 'Payment from '.$enroll->name.' with order no:'.$enroll->order_no;
+        $trans->reference = 'Payment from '.$enroll->name.' with order no: '.$enroll->order_no;
         $trans->status = 'Course Purchase';
         $trans->save();
 

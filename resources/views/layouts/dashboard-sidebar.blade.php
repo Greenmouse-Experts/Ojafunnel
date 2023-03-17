@@ -84,7 +84,7 @@
                 <ul class="sub-menu" aria-expanded="false">
                 <li><a href="{{route('user.withdrawal', Auth::user()->username)}}" key="t-tui-calendar">Withdraw</a></li>
                     <li><a href="{{route('user.bank.details', Auth::user()->username)}}" key="t-tui-calendar">Bank Details</a></li>
-                    <li><a href="{{route('user.payment.gateway', Auth::user()->username)}}" key="t-tui-calendar">Payment Gateway</a></li>
+                    <li><a href="{{route('user.other.payment.method', Auth::user()->username)}}" key="t-tui-calendar">Payment Method</a></li>
                 </ul>
             </li>
             <li>
