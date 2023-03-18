@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <title> {{config('app.name')}} | Dashboard</title>
@@ -9,12 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     @stack('css')
-
     <!-- Bootstrap Css -->
     <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
