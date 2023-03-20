@@ -639,9 +639,10 @@ Route::prefix('{username}')->group(function () {
 
             Route::prefix('/withdrawal')->group(
                 function () {
-                        Route::get('/withdrawal', [App\Http\Controllers\DashboardController::class, 'withdrawal'])->name('user.withdrawal');
-                        Route::get('/withdrawal/bank', [App\Http\Controllers\DashboardController::class, 'bank'])->name('user.bank.details');
-                        Route::get('/withdrawal/payment', [App\Http\Controllers\DashboardController::class, 'payment'])->name('user.payment.gateway');
+                        Route::get('/', [App\Http\Controllers\DashboardController::class, 'withdrawal'])->name('user.withdrawal');
+                        Route::get('/bank', [App\Http\Controllers\DashboardController::class, 'bank'])->name('user.bank.details');
+                        Route::get('/other_payment_method', [App\Http\Controllers\DashboardController::class, 'other_payment_method'])->name('user.other.payment.method');
+                        Route::get('/direct_us_bank', [App\Http\Controllers\DashboardController::class, 'direct_us_bank'])->name('user.direct.us.bank');
                     }
             );
 

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
-use App\Models\Category;
 use App\Models\Chat;
 use App\Models\Page;
 use App\Models\Plan;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\BankDetail;
 use App\Models\Course;
 use App\Models\Funnel;
 use App\Models\OjaPlan;
