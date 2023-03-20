@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
-use App\Models\Category;
 use App\Models\Chat;
 use App\Models\Page;
 use App\Models\Plan;
