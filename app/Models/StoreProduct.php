@@ -23,4 +23,14 @@ class StoreProduct extends Model
     {
         return self::select('store_products.*');
     }
+
+    /**
+     * generateReferral
+     *
+     * @return void
+     */
+    public static function generateReferral()
+    {
+        return substr(sha1(mt_rand()), 17, 20);
+    }
 }
