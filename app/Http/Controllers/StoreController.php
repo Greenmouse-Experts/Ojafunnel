@@ -116,6 +116,7 @@ class StoreController extends Controller
     {
         $product = StoreProduct::latest()->where('store_id', $request->store_id)->get();
         $store_id = $request->store_id;
+
         return view('dashboard.AvailableProduct', compact('product', 'store_id', 'username'));
     }
 
@@ -149,7 +150,9 @@ class StoreController extends Controller
             'description' => 'required',
             'price' => 'required',
             'image' => 'required|image',
-            'quantity' => 'required'
+            'quantity' => 'required',
+            'level1_comm' => 'required',
+            'level2_comm' => 'required',
         ]);
 
         if ($request->file('image')) {
@@ -164,8 +167,20 @@ class StoreController extends Controller
         $sp->description = $request->description;
         $sp->price = $request->price;
         $sp->quantity = $request->quantity;
+        $sp->level1_comm = $request->level1_comm;
+        $sp->level2_comm = $request->level2_comm;
         $sp->image = $image;
         $sp->store_id = $request->store_id;
+
+        // check if referral code not exist
+        $sp->ref_number = $this->generateAndValidateIfReferralNotExist();
+
+        // check if level1_comm <= level2_comm... then fail
+        if ($request->level1_comm <= $request->level2_comm) return back()->with([
+            'type' => 'danger',
+            'message' => 'Level 1 commission must be greater than level 2 commision'
+        ]);
+
         $sp->save();
 
         return back()->with([
@@ -181,6 +196,8 @@ class StoreController extends Controller
         $sp->description = $request->description;
         $sp->price = $request->price;
         $sp->quantity = $request->quantity;
+        $sp->level1_comm = $request->level1_comm;
+        $sp->level2_comm = $request->level2_comm;
         if ($request->file('image')) {
             $image = $request->file('image')->store(
                 'uploads/storeProduct/' . Auth::user()->username,
@@ -189,6 +206,13 @@ class StoreController extends Controller
             $sp->image = $image;
         }
         $sp->store_id = $request->store_id;
+
+        // check if level1_comm <= level2_comm... then fail
+        if ($request->level1_comm <= $request->level2_comm) return back()->with([
+            'type' => 'danger',
+            'message' => 'Level 1 commission must be greater than level 2 commision'
+        ]);
+
         $sp->update();
 
         return back()->with([
@@ -207,5 +231,16 @@ class StoreController extends Controller
             'type' => 'success',
             'message' => 'Product deleted successfully'
         ]);
+    }
+
+    public function generateAndValidateIfReferralNotExist()
+    {
+        $referral = StoreProduct::generateReferral();
+
+        $product = StoreProduct::where('ref_number', $referral);
+
+        if ($product->exists()) $this->generateAndValidateIfReferralNotExist();
+
+        return $referral;
     }
 }
