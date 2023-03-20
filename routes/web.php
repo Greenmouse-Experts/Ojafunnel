@@ -639,10 +639,10 @@ Route::prefix('{username}')->group(function () {
 
             Route::prefix('/withdrawal')->group(
                 function () {
-                    Route::get('/withdrawal', [App\Http\Controllers\DashboardController::class, 'withdrawal'])->name('user.withdrawal');
-                    Route::get('/withdrawal/bank', [App\Http\Controllers\DashboardController::class, 'bank'])->name('user.bank.details');
-                    Route::get('/withdrawal/payment', [App\Http\Controllers\DashboardController::class, 'payment'])->name('user.payment.gateway');
-                }
+                        Route::get('/withdrawal', [App\Http\Controllers\DashboardController::class, 'withdrawal'])->name('user.withdrawal');
+                        Route::get('/withdrawal/bank', [App\Http\Controllers\DashboardController::class, 'bank'])->name('user.bank.details');
+                        Route::get('/withdrawal/payment', [App\Http\Controllers\DashboardController::class, 'payment'])->name('user.payment.gateway');
+                    }
             );
 
             Route::prefix('/support')->group(
@@ -652,6 +652,7 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/email', [App\Http\Controllers\DashboardController::class, 'support_email'])->name('user.main.email');
                 }
             );
+            
         }
     );
 });

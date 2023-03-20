@@ -109,14 +109,6 @@
                                         {{-- <th scope="col">Unsubscribed</th> --}}
                                     </tr>
                                 </thead>
-                                @if($contact_lists->isEmpty())
-                                    <tbody>
-                                        <tr>
-                                            <td class="align-enter text-dark font-15" colspan="8">No contact list added.</td>
-                                        </tr>
-                                    </tbody>
-                                @else
-
                                 <tbody>
                                     @foreach($contact_lists as $key => $item)
                                     <tr>

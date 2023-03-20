@@ -99,7 +99,7 @@
                             </div>
                         </div>
                     </div>
-                    @foreach(App\Models\OjafunnelNotification::latest()->where('to', Auth::user()->id)->where('status', 'Unread')->get() as $OjaNotification)
+                    @foreach(App\Models\OjafunnelNotification::latest()->where('to', Auth::user()->id)->where('status', 'Unread')->get()->take(5) as $OjaNotification)
                     <div data-simplebar style="max-height: 230px">
                         <a href="{{route('user.main.notification', Auth::user()->username)}}" class="text-reset notification-item">
                             <div class="d-flex">
