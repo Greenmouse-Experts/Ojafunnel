@@ -228,20 +228,20 @@
                             </li>
                         </ul>
                         @auth
-                            <div class="login-div">
-                                <a href="{{route('user.dashboard', Auth::user()->username)}}" class="btn-signup">Dashboard <i class="bi bi-box-arrow-right"></i></a>
-                            </div>
+                        <div class="login-div">
+                            <a href="{{route('user.dashboard', Auth::user()->username)}}" class="btn-signup">Dashboard <i class="bi bi-box-arrow-right"></i></a>
+                        </div>
                         @else
-                            @if(Auth::guard('admin')->user())
-                                <div class="login-div">
-                                    <a href="{{route('adminDashboard')}}" class="btn-signup">Dashboard <i class="bi bi-box-arrow-right"></i></a>
-                                </div>
-                            @else
-                                <div class="login-div">
-                                    <a href="{{route('login')}}" class="btn-login">Login</a>
-                                    <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
-                                </div>
-                            @endif
+                        @if(Auth::guard('admin')->user())
+                        <div class="login-div">
+                            <a href="{{route('adminDashboard')}}" class="btn-signup">Dashboard <i class="bi bi-box-arrow-right"></i></a>
+                        </div>
+                        @else
+                        <div class="login-div">
+                            <a href="{{route('login')}}" class="btn-login">Login</a>
+                            <a href="{{route('signup')}}" class="btn-signup">Sign Up <i class="bi bi-box-arrow-right"></i></a>
+                        </div>
+                        @endif
                         @endauth
                     </div>
                 </div>
@@ -314,7 +314,7 @@
                 </div>
                 <div class="col-lg-4 mb-4">
                     <div class="bording">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Launch for free</span>
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679414663/OjaFunnel-Images/Launch_for_free_wqz2fo.png" draggable="false" alt=""> <span>Launch for free</span>
                         <p>
                             Create a website with a product catalog at no cost—you only pay when you make a sale.
                         </p>
@@ -322,7 +322,7 @@
                 </div>
                 <div class="col-lg-4  mb-4">
                     <div class="bording">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Find new customers</span>
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679414937/OjaFunnel-Images/Find_new_customers_nt7bqb.png" draggable="false" alt=""> <span>Find new customers</span>
                         <p>
                             Drive traffic and e-commerce sales with the free, powerful marketing tools that come with your store.
                         </p>
@@ -330,7 +330,7 @@
                 </div>
                 <div class="col-lg-4  mb-4">
                     <div class="bording">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Own your brand</span>
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679414937/OjaFunnel-Images/Own_your_brand_dr2vnq.png" draggable="false" alt=""> <span>Own your brand</span>
                         <p>
                             Create a seamless brand experience across the web with ojafunnel and with our intuitive design tools.
                         </p>
@@ -346,7 +346,6 @@
     <section class="Increasing" style="background: #FCFCFE !important;">
         <div class="container">
             <div class="row">
-
                 <div class="col-lg-6">
                     <div class="thread-text">
                         <h4>
@@ -365,7 +364,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="imagess">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679415261/OjaFunnel-Images/UPSELLS_hlrvvx.jpg" draggable="false">
                     </div>
                 </div>
             </div>
@@ -379,10 +378,27 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679414659/OjaFunnel-Images/INTEGRATED_CHECKOUT_fy4kh6.jpg" draggable="false" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="thread-text">
+                        <h4>
+                            Payout Checkout
+                        </h4>
+                        <h2>
+                            Integrated lightning-fast checkou
+                        </h2>
+                        <p>
+                            Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
+                        </p>
+                        <button>
+                            Explore
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
     <!-- Communication Ends -->
 
@@ -409,7 +425,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="imagess">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679415774/OjaFunnel-Images/PAGES_AND_PRODUCTS_zg0tue.jpg" draggable="false">
                     </div>
                 </div>
             </div>
@@ -421,158 +437,127 @@
     <!-- Communication -->
     <section class="communication display">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                            Payout Checkout
-                        </h4>
-                        <h2>
-                            Integrated lightning-fast checkout
-                        </h2>
-                        <p>
-                            Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
-                        </p>
-                        <button>
-                            Explore Now
-                        </button>
-                    </div>
-                </div>
+            <div class="col-lg-6">
                 <div class="el-icon-message">
-                    <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false" alt="">
+                    <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679414659/OjaFunnel-Images/INTEGRATED_CHECKOUT_fy4kh6.jpg" draggable="false" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="thread-text">
+                    <h4>
+                        Payout Checkout
+                    </h4>
+                    <h2>
+                        Integrated lightning-fast checkout
+                    </h2>
+                    <p>
+                        Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
+                    </p>
+                    <button>
+                        Explore
+                    </button>
                 </div>
             </div>
         </div>
     </section>
     <!-- Communication Ends -->
 
-    <!-- Increasing -->
-    <section class="Increasing" style="background: #FCFCFE !important;">
+    <!-- Features -->
+    <section class="offer">
         <div class="container">
             <div class="row">
-
-                <div class="col-lg-6">
-                    <div class="thread-text">
-                        <h4>
-                            PAGES AND PRODUCTS
-                        </h4>
-                        <h2>
-                            Boost conversions with a unique page for every product
-                        </h2>
-                        <p>
-                            Set up your store easily by picking a template. Customize it with ease. Then publish. You’ll be ready to start accepting orders in minutes.
-                        </p>
-                        <button>
-                            Explore
-                        </button>
+                <div class="col-lg-12">
+                    <div class="what">
+                        <h1>
+                            Enjoy All-In-One features
+                        </h1>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="imagess">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
-                    </div>
+                <div class="what"></div>
+                <div class="col-lg-3">
+                    <a href="{{route('pagebuilder')}}">
+                        <div class="card" data-aos="zoom-in-right">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669720/OjaFunnel-Images/page_kunfbn.png" draggable="false" alt="">
+                            <h1>
+                                Page Builder
+                            </h1>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="{{route('funnelbuilder')}}">
+                        <div class="card" data-aos="zoom-in-right">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669823/OjaFunnel-Images/landing-page_moq46w.png" draggable="false" alt="">
+                            <h1>
+                                Funnel Builder
+                            </h1>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="{{route('marketauto')}}">
+                        <div class="card" data-aos="zoom-in-left">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669907/OjaFunnel-Images/email-marketing_o5cvun.png" draggable="false" alt="">
+                            <h1>
+                                Email Marketing
+                            </h1>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="{{route('chatautomation')}}">
+                        <div class="card" data-aos="zoom-in-left">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
+                            <h1>
+                                SMS Automation
+                            </h1>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="{{route('affiliate')}}">
+                        <div class="card" data-aos="zoom-in-right">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
+                            <h1>
+                                Analysis and Reporting
+                            </h1>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="{{route('ecommerce')}}">
+                        <div class="card" data-aos="zoom-in-right">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670372/OjaFunnel-Images/shopping_seidhl.png" draggable="false" alt="">
+                            <h1>
+                                Ecommerce
+                            </h1>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="{{route('affiliate')}}">
+                        <div class="card" data-aos="zoom-in-left">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670416/OjaFunnel-Images/affiliate-marketing_cycnqk.png" draggable="false" alt="">
+                            <h1>
+                                Affiliate Module
+                            </h1>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-3">
+                    <a href="{{route('integrations')}}">
+                        <div class="card" data-aos="zoom-in-left">
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670479/OjaFunnel-Images/gateway_durgdd.png" draggable="false" alt="">
+                            <h1>
+                                Payment Integration
+                            </h1>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Increasing Ends -->
-
-    <!-- Features -->
- <section class="offer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="what">
-                    <h1>
-                        Enjoy All-In-One features
-                    </h1>
-                </div>
-            </div>
-            <div class="what"></div>
-            <div class="col-lg-3">
-                <a href="{{route('pagebuilder')}}">
-                    <div class="card" data-aos="zoom-in-right">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669720/OjaFunnel-Images/page_kunfbn.png" draggable="false" alt="">
-                        <h1>
-                            Page Builder
-                        </h1>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3">
-                <a href="{{route('funnelbuilder')}}">
-                    <div class="card" data-aos="zoom-in-right">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669823/OjaFunnel-Images/landing-page_moq46w.png" draggable="false" alt="">
-                        <h1>
-                            Funnel Builder
-                        </h1>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3">
-                <a href="{{route('marketauto')}}">
-                    <div class="card" data-aos="zoom-in-left">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677669907/OjaFunnel-Images/email-marketing_o5cvun.png" draggable="false" alt="">
-                        <h1>
-                            Email Marketing
-                        </h1>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3">
-                <a href="{{route('chatautomation')}}">
-                    <div class="card" data-aos="zoom-in-left">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
-                        <h1>
-                            SMS Automation
-                        </h1>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3">
-                <a href="{{route('affiliate')}}">
-                    <div class="card" data-aos="zoom-in-right">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
-                        <h1>
-                            Analysis and Reporting
-                        </h1>
-
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3">
-                <a href="{{route('ecommerce')}}">
-                    <div class="card" data-aos="zoom-in-right">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670372/OjaFunnel-Images/shopping_seidhl.png" draggable="false" alt="">
-                        <h1>
-                            Ecommerce
-                        </h1>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3">
-                <a href="{{route('affiliate')}}">
-                    <div class="card" data-aos="zoom-in-left">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670416/OjaFunnel-Images/affiliate-marketing_cycnqk.png" draggable="false" alt="">
-                        <h1>
-                            Affiliate Module
-                        </h1>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3">
-                <a href="{{route('integrations')}}">
-                    <div class="card" data-aos="zoom-in-left">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670479/OjaFunnel-Images/gateway_durgdd.png" draggable="false" alt="">
-                        <h1>
-                            Payment Integration
-                        </h1>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
     <!-- Features Ends -->
 
     <section class="footer">
