@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">Transaction History</h4>
+                        <h4 class="mb-sm-0 font-size-13">Transaction History</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
@@ -20,6 +20,32 @@
                             </ol>
                         </div>
 
+                    </div>
+                </div>
+            </div>
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="font-60">Transaction History</h4>
+                            <p>
+                                View all your Transaction History in one place
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <p class="cash">Explainer Video Here</p> -->
+                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                <i class="bi bi-play-btn"></i>
+                            </div>
+                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                <i class="bi bi-card-text"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,4 +96,50 @@
     <!-- End Page-content -->
 </div>
 <!-- END layout-wrapper -->
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
+                        <div class="aller">
+                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, ducimus iste. Consequuntur doloremque voluptatem officia, quos laborum delectus atque distinctio reprehenderit earum iure. Sequi voluptate architecto libero, repellat neque deserunt assumenda sunt in sit ipsam delectus nostrum qui ratione. Laboriosam aliquid obcaecati vitae voluptatum ea minus quidem! Pariatur soluta quasi modi harum aut quas veritatis et. Necessitatibus fuga illo ipsa dicta aut nisi laborum nam at, id eveniet consectetur praesentium enim, cum dignissimos ipsum rem odio. Atque, eaque magni aut incidunt quo laudantium repudiandae quae modi officiis in, iusto suscipit fugiat rem inventore non dolorum adipisci rerum dolorem. Nulla, vero!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
 @endsection

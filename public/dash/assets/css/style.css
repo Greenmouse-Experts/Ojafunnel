@@ -167,7 +167,6 @@ body {
   }
 }
 .Ensure {
-  margin-top: 20px;
   padding: 20px 5px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -380,7 +379,6 @@ body {
 
 .store-table {
   background-color: #ffffff;
-  margin-top: 10px;
   padding: 10px 15px;
   border-radius: 10px;
 }
@@ -1071,30 +1069,36 @@ body {
 /* Email  Summary  Ends*/
 
 /* Email  Campaign */
-.all-create button,
-.all-create .btn {
+.all-create button{
   border: 1px solid #70418F;
   padding: 10px 20px 10px 20px;
-  background-color: #fff;
-  color: #70418F;
-}
-.all-create button a{
-  text-decoration: none;
-  color: #70418F;
-}
-.all-create button a:hover{
-  text-decoration: none;
+  background-color: #70418F;
   color: #fff;
+  display: block;
+  margin: auto;
+  border-radius: 5px;
+}
+.all-create button:hover{
+    background-color: #000;
 }
 .tread{
   background-color: #F5E6FE !important;
-  /* padding: 10px 0px 10px 0; */
 }
-.all-create button,
-.all-create .btn:hover{
-  background-color: #000;
-  color: #fff;
-  border: none;
+
+.aminn{
+    margin-top: 20px !important;
+}
+@media (max-width:1000px) {
+    .aminn{
+        margin-top: 1px !important;
+    }
+}
+.here i{
+    font-size: 22px;
+    color: #70418F;
+}
+.here i:hover{
+    color: #000;
 }
 .all-create{
   margin-bottom: 22px !important;
