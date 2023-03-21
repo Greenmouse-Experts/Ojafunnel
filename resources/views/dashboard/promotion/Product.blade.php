@@ -56,36 +56,40 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                26784442
-                                            </td>
-                                            <td>
-                                                Hamzat Abdulazeez
-                                            </td>
-                                            <td>
-                                                ₦10,000.00
-                                            </td>
-                                            <td>
-                                                Level 1: 50%, Level 2: 10% (Super Affiliates only)
-                                            </td>
-                                            <td>
-                                                Yes
-                                            </td>
-                                            <td>
-                                                0
-                                            </td>
-                                            <td>
-                                                16/02/2023
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top">
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#onlineStore" title="View" class="btn btn-sm btn-soft-success"><i class="bi bi-eye-slash-fill"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
+                                        @forelse ($products as $product)
+                                            <tr>
+                                                <td>
+                                                    {{ $product->id }}
+                                                </td>
+                                                <td>
+                                                    {{ $product->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $product->price }}
+                                                </td>
+                                                <td>
+                                                    Level 1: <b>{{ $product->level1_comm }}%</b>, Level 2: <b>{{ $product->level2_comm }}%</b> (Super Affiliates only)
+                                                </td>
+                                                <td>
+                                                    Yes
+                                                </td>
+                                                <td>
+                                                    0
+                                                </td>
+                                                <td>
+                                                    {{ $product->created_at }}
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled hstack gap-1 mb-0">
+                                                        <li data-bs-toggle="tooltip" data-bs-placement="top">
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#onlineStore-{{ $product->id }}" title="View" class="btn btn-sm btn-soft-success"><i class="bi bi-eye-slash-fill"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            No product(s) in any of Ojafunnel stores. Check back later.
+                                        @endforelse  
                                     </tbody>
                                 </table>
                             </div>
@@ -96,19 +100,21 @@
         </div>
     </div>
 </div>
+
+@foreach ($products as $product)
 <!-- SuccessModal -->
-<div class="modal fade" id="onlineStore" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+<div class="modal fade" id="onlineStore-{{ $product->id }}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content pb-3">
             <div class="modal-header border-bottom-0">
-                <h4 class="card-title mb-4">View Product: 26784442</h4>
+                <h4 class="card-title mb-4">View Product: 0</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="last">
                     <div class="col-lg-12">
                         <div class="images">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" draggable="false" width="100%" alt="">
+                            <img src="{{ Storage::url($product->image) }}" draggable="false" width="100%" alt="">
                         </div>
                     </div>
                     <div class="row">
@@ -116,25 +122,25 @@
                             <b>Vendor</b>
                         </div>
                         <div class="col-md-8 mt-4">
-                            Seun Smith
+                            {{ 'vendor name here' }}
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Name</b>
                         </div>
                         <div class="col-md-8 mt-3">
-                            Learn How To Teach Your Child About Sex
+                            {{ $product->name }}
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Description</b>
                         </div>
                         <div class="col-md-8 mt-3">
-                            Learn How To Teach Your Child About Sex
+                            {{ $product->description }}
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Price</b>
                         </div>
                         <div class="col-md-8 mt-3">
-                            ₦10,000.00
+                            {{ $product->price }}
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Commission Type</b>
@@ -146,7 +152,7 @@
                             <b>Commissions</b>
                         </div>
                         <div class="col-md-8 mt-3">
-                            Level 1: 50%, Level 2: 10% (Super Affiliates only)
+                            Level 1: <b>{{ $product->level1_comm }}%</b>, Level 2: <b>{{ $product->level2_comm }}%</b> (Super Affiliates only)
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Promotion Material(s)</b>
@@ -160,7 +166,7 @@
                             <b>Created At</b>
                         </div>
                         <div class="col-md-8 mt-3">
-                            2020-09-21 12:52 pm
+                            {{ $product->created_at }}
                         </div>
                         <div class="col-md-12 mt-4 mb-4 text-center">
                             <b>Affiliate Links</b>
@@ -169,7 +175,7 @@
                             <div class="form">
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <input type="text" value=" {{ route('signup', ['ref' => Auth::user()->affiliate_link]) }}" name="name" id="myInput" class="input mov" readonly required>
+                                        <input type="text" value="http" name="name" id="myInput" class="input mov" readonly required>
                                     </div>
                                     <div class="col-md-2">
                                         <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
@@ -184,4 +190,6 @@
     </div>
 </div>
 <!-- end modal -->
+@endforeach
+
 @endsection

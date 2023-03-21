@@ -117,16 +117,16 @@ class PageController extends Controller
         return view('dashboard.page', compact('page'));
     }
 
-    public function page_builder_save_page(Request $request)
+    public function page_builder_save_page()
     {
-        $page = Page::find($request->id);
+        $page = Page::find($_POST['id']);
 
         define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
 
         $html = "";
 
-        if (isset($request->html)) {
-            $html = substr($request->html, 0, MAX_FILE_LIMIT);
+        if (isset($_POST['html'])) {
+            $html = substr($_POST['html'], 0, MAX_FILE_LIMIT);
         }
 
         $disk = public_path('pageBuilder/' . $page->folder . '/' . $page->name);
@@ -516,17 +516,17 @@ class PageController extends Controller
         ]);
     }
 
-    public function funnel_builder_save_page(Request $request)
+    public function funnel_builder_save_page()
     {
-        $page = FunnelPage::find($request->id);
+        $page = FunnelPage::find($_POST['id']);
         $funnel = Funnel::findorfail($page->folder_id);
 
         define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
 
         $html = "";
 
-        if (isset($request->html)) {
-            $html = substr($request->html, 0, MAX_FILE_LIMIT);
+        if (isset($_POST['html'])) {
+            $html = substr($_POST['html'], 0, MAX_FILE_LIMIT);
         }
 
         $disk = public_path('funnelBuilder/' . $funnel->folder . '/' . $page->name);
