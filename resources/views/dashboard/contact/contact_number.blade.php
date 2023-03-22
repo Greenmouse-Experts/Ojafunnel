@@ -115,7 +115,6 @@
                                             {{ \Carbon\Carbon::parse($item->created_at)->isoFormat('llll') }}
                                         </td>
                                         <td>
-
                                             <button class="btn-list" data-bs-toggle="modal" data-bs-target="#updateContact-{{$item->id}}">
                                                 <span data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Contact" class="material-icons-outlined">
                                                     edit
@@ -219,7 +218,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </form>
-
                                                                 </div>
                                                             </div>
                                                         </div>
