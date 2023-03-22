@@ -111,7 +111,7 @@ class TransactionController extends Controller
         {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'You are not allowed to enter more than three(3) bank informations.'
+                'message' => 'You are not allowed to enter more than ten(10) payment methods.'
             ]);  
         }
 
@@ -138,7 +138,7 @@ class TransactionController extends Controller
 
                             return back()->with([
                                 'type' => 'success',
-                                'message' => 'Bank Details added successfully.'
+                                'message' => 'Payment method added successfully.'
                             ]);  
                         } else {
                             foreach ($bankInformations as $bank) {
@@ -147,7 +147,7 @@ class TransactionController extends Controller
                             if (in_array($response['account_number'], $bank_number)) {
                                 return back()->with([
                                     'type' => 'danger',
-                                    'message' => 'Bank Details added before.'
+                                    'message' => 'Payment method added before.'
                                 ]); 
                             } else {
                                 BankDetail::create([
@@ -161,7 +161,7 @@ class TransactionController extends Controller
         
                                 return back()->with([
                                     'type' => 'success',
-                                    'message' => 'Bank Details added successfully.'
+                                    'message' => 'Payment method added successfully.'
                                 ]);  
                             }
                         }
@@ -218,11 +218,11 @@ class TransactionController extends Controller
 
         $bankInformations = BankDetail::where('user_id', Auth::user()->id)->get();
 
-        if($bankInformations->count() == 3)
+        if($bankInformations->count() == 10)
         {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'You are not allowed to enter more than three(3) bank informations.'
+                'message' => 'You are not allowed to enter more than ten(10) payment methods.'
             ]);  
         }
 
@@ -239,7 +239,7 @@ class TransactionController extends Controller
 
             return back()->with([
                 'type' => 'success',
-                'message' => 'Bank Details added successfully.'
+                'message' => 'Payment method added successfully.'
             ]);  
         } else {
             foreach ($bankInformations as $bank) {
@@ -248,7 +248,7 @@ class TransactionController extends Controller
             if (in_array($request->account_number, $bank_number)) {
                 return back()->with([
                     'type' => 'danger',
-                    'message' => 'Details added before.'
+                    'message' => 'Payment method added before.'
                 ]); 
             } else {
                 BankDetail::create([
@@ -262,7 +262,7 @@ class TransactionController extends Controller
 
                 return back()->with([
                     'type' => 'success',
-                    'message' => 'Details added successfully.'
+                    'message' => 'Payment method added successfully.'
                 ]);  
             }
         }
@@ -298,7 +298,7 @@ class TransactionController extends Controller
         {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'You are not allowed to enter more than three(3) bank informations.'
+                'message' => 'You are not allowed to enter more than ten(10) payment methods.'
             ]);  
         }
 
@@ -313,7 +313,7 @@ class TransactionController extends Controller
 
             return back()->with([
                 'type' => 'success',
-                'message' => 'Details updated successfully.'
+                'message' => 'Payment method updated successfully.'
             ]);  
         // } else {
         //     foreach ($bankInformations as $bank) {
@@ -338,6 +338,90 @@ class TransactionController extends Controller
         //         ]);  
         //     }
         // }
+    }
+
+    public function add_paystack(Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'account_name' => ['required', 'string'],
+            'secret_key' => ['required'],
+            'public_key' => ['required', 'string'],
+        ]);
+
+        $bankInformations = BankDetail::where('user_id', Auth::user()->id)->get();
+
+        if($bankInformations->count() == 10)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'You are not allowed to enter more than ten(10) payment methods.'
+            ]);  
+        }
+
+        if($bankInformations->isEmpty())
+        {
+            BankDetail::create([
+                'user_id' => Auth::user()->id,
+                'type' => 'PAYSTACK',
+                'account_name' => $request->account_name,
+                'secret_key' => $request->secret_key,
+                'public_key' => $request->public_key,
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Payment method added successfully.'
+            ]);  
+        } else {
+            foreach ($bankInformations as $bank) {
+                $public_key[] = $bank->public_key;
+            }
+            if (in_array($request->public_key, $public_key)) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Payment method added before.'
+                ]); 
+            } else {
+                BankDetail::create([
+                    'user_id' => Auth::user()->id,
+                    'type' => 'PAYSTACK',
+                    'account_name' => $request->account_name,
+                    'secret_key' => $request->secret_key,
+                    'public_key' => $request->public_key,
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'Payment method added successfully.'
+                ]);  
+            }
+        }
+    }
+
+    public function update_paystack($id, Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'account_name' => ['required', 'string'],
+            'secret_key' => ['required'],
+            'public_key' => ['required', 'string'],
+        ]);
+
+        $idFinder = Crypt::decrypt($id);
+
+        $bank = BankDetail::find($idFinder);
+
+        $bank->update([
+            'account_name' => $request->account_name,
+            'secret_key' => $request->secret_key,
+            'public_key' => $request->public_key,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Payment method updated successfully.'
+        ]);  
     }
 
     public function withdraw(Request $request)
@@ -428,5 +512,4 @@ class TransactionController extends Controller
             'message' => 'Cannot delete this withdrawal request!'
         ]);
     }
-
 }

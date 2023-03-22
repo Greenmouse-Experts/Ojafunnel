@@ -22,9 +22,12 @@ use App\Models\OrderItem;
 use App\Models\Page;
 use App\Models\Shop;
 use App\Models\ShopOrder;
+use App\Models\Transaction;
 use App\Models\WhatsappNumber;
+use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -1037,6 +1040,98 @@ class AdminController extends Controller
             'type' => 'success',
             'message' => 'Whatsapp number deleted successfully.',
         ]); 
+    }
+
+    public function pending_payouts()
+    {
+        return view('Admin.payouts.pending_payouts');
+    }
+
+    public function process_payouts($id, Request $request)
+    {
+        $Finder = Crypt::decrypt($id);
+
+        $payout = Withdrawal::find($Finder);
+
+        if($request->status == 'finalized')
+        {
+            $payout->description = $request->description;
+            $payout->status = $request->status;
+
+            $transaction = Transaction::create([
+                'user_id' => $payout->user_id,
+                'amount' => $payout->amount,
+                'reference' => Str::random(6),
+                'status' => 'Withdrawal'
+            ]);
+
+            $payout->transaction_id = $transaction->id;
+            $payout->save();
+
+            OjafunnelNotification::create([
+                'to' => $payout->user_id,
+                'title' => config('app.name').' Withdrawal Alert',
+                'body' => $request->description,
+            ]);
+
+            $user = User::where('id', $payout->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $this->fcm('Withdrawal Alert', $user);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Request processed successfully.',
+            ]); 
+        }
+        if($request->status == 'refunded')
+        {
+            $payout->description = $request->description;
+            $payout->status = $request->status;
+            $payout->save();
+
+            $user = User::find($payout->user_id);
+
+            $user->wallet += $payout->amount;
+            $user->save();
+
+            Transaction::create([
+                'user_id' => $payout->user_id,
+                'amount' => $payout->amount,
+                'reference' => 'Withdrawal request of '.$payout->amount.' has been refunded',
+                'status' => 'Withdraw Refunded'
+            ]);
+
+            OjafunnelNotification::create([
+                'to' => $payout->user_id,
+                'title' => config('app.name').' Withdrawal Alert',
+                'body' => $request->description,
+            ]);
+
+            $user = User::where('id', $payout->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $this->fcm('Withdrawal Alert', $user);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Request processed successfully.',
+            ]); 
+        }
+
+        return back()->with([
+            'type' => 'danger',
+            'message' => 'Action failed.',
+        ]); 
+    }
+
+    public function transaction_confirm($id, $response, $amount)
+    {
+        $payout = Withdrawal::find($id);
+
+        return $payout;
+
+    }
+
+    public function finalized_payouts()
+    {
+        return view('Admin.payouts.finalized_payouts');
     }
 
 }
