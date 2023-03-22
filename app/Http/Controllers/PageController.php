@@ -24,11 +24,11 @@ class PageController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth', 'verified']);
     }
-    
+
     public function page_builder_create(Request $request)
-    {   
+    {
         //Validate Request
         $this->validate($request, [
             'title' => ['required', 'string', 'max:255'],
@@ -43,10 +43,10 @@ class PageController extends Controller
             ]);
         }
 
-        $file = $request->file_name.'.html';
-        
-        define('MAX_FILE_LIMIT', 1024 * 1024 * 2);//2 Megabytes max html file size
-        
+        $file = $request->file_name . '.html';
+
+        define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
+
         $data = file_get_contents(resource_path('views/builder/new-page-blank-template.blade.php'));
 
         $html = substr($data, 0, MAX_FILE_LIMIT);
@@ -57,7 +57,7 @@ class PageController extends Controller
 
         $disk = Storage::build([
             'driver' => 'local',
-            'root'   => public_path('pageBuilder') . '/'.$request->file_folder,
+            'root'   => public_path('pageBuilder') . '/' . $request->file_folder,
             'permissions' => [
                 'file' => [
                     'public' => 0777,
@@ -71,12 +71,12 @@ class PageController extends Controller
                 ],
             ],
         ]);
-        
-        if(!$disk->put($file, $html)){
+
+        if (!$disk->put($file, $html)) {
             header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Error saving file  '.$file.'\nPossible causes are missing write permission or incorrect file path!'
+                'message' => 'Error saving file  ' . $file . '\nPossible causes are missing write permission or incorrect file path!'
             ]);
         } else {
             $page = Page::create([
@@ -84,12 +84,12 @@ class PageController extends Controller
                 'title' => $request->title,
                 'name' => $file,
                 'folder' => $request->file_folder,
-                'file_location' => config('app.url').'/pageBuilder/'.$request->file_folder.'/'.$file
+                'file_location' => config('app.url') . '/pageBuilder/' . $request->file_folder . '/' . $file
             ]);
 
             return back()->with([
                 'type' => 'success',
-                'message' => $page->name.' created.'
+                'message' => $page->name . ' created.'
             ]);
         };
     }
@@ -97,7 +97,7 @@ class PageController extends Controller
     function sanitizeFileName($file)
     {
         //sanitize, remove double dot .. and remove get parameters if any
-        $file = preg_replace('@\?.*$@' , '', preg_replace('@\.{2,}@' , '', preg_replace('@[^\/\\a-zA-Z0-9\-\._]@', '', $file)));
+        $file = preg_replace('@\?.*$@', '', preg_replace('@\.{2,}@', '', preg_replace('@[^\/\\a-zA-Z0-9\-\._]@', '', $file)));
         return $file;
     }
 
@@ -121,27 +121,26 @@ class PageController extends Controller
     {
         $page = Page::find($_POST['id']);
 
-        define('MAX_FILE_LIMIT', 1024 * 1024 * 2);//2 Megabytes max html file size
+        define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
 
         $html = "";
 
-        if (isset($_POST['html']))
-        {
+        if (isset($_POST['html'])) {
             $html = substr($_POST['html'], 0, MAX_FILE_LIMIT);
         }
 
-        $disk = public_path('pageBuilder/'.$page->folder.'/'.$page->name);
+        $disk = public_path('pageBuilder/' . $page->folder . '/' . $page->name);
 
         if (file_put_contents($disk, $html)) {
-        	echo "File saved.";
+            echo "File saved.";
         } else {
-        	header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
-        	echo "Error saving file. \nPossible causes are missing write permission or incorrect file path!";
-        }	
+            header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+            echo "Error saving file. \nPossible causes are missing write permission or incorrect file path!";
+        }
     }
 
     public function page_builder_update($id, Request $request)
-    {   
+    {
         //Validate Request
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
@@ -154,15 +153,15 @@ class PageController extends Controller
                 'message' => 'file name invalid.'
             ]);
         }
-         
+
         $idFinder = Crypt::decrypt($id);
         $page = Page::find($idFinder);
 
-        $file = $request->name.'.html';
-        
-        $disk = public_path('pageBuilder/'.$page->folder.'/'.$page->name);
+        $file = $request->name . '.html';
 
-        rename ($disk, public_path('pageBuilder/'.$page->folder.'/'.$file));
+        $disk = public_path('pageBuilder/' . $page->folder . '/' . $page->name);
+
+        rename($disk, public_path('pageBuilder/' . $page->folder . '/' . $file));
 
         //Validate User
         if (request()->hasFile('thumbnail')) {
@@ -170,16 +169,16 @@ class PageController extends Controller
                 'thumbnail' => 'required|mimes:jpeg,png,jpg',
             ]);
             $filename = request()->thumbnail->getClientOriginalName();
-            if($page->thumbnail) {
+            if ($page->thumbnail) {
                 Storage::delete(str_replace("storage", "public", $page->thumbnail));
             }
             request()->thumbnail->storeAs('pages', $filename, 'public');
 
             $page->update([
-                'thumbnail' => '/storage/pages/'.$filename,
+                'thumbnail' => '/storage/pages/' . $filename,
                 'name' => $file,
                 'title' => $request->title,
-                'file_location' => config('app.url').'/pageBuilder/'.$page->folder.'/'.$file
+                'file_location' => config('app.url') . '/pageBuilder/' . $page->folder . '/' . $file
             ]);
 
             return back()->with([
@@ -191,7 +190,7 @@ class PageController extends Controller
         $page->update([
             'name' => $file,
             'title' => $request->title,
-            'file_location' => config('app.url').'/pageBuilder/'.$page->folder.'/'.$file
+            'file_location' => config('app.url') . '/pageBuilder/' . $page->folder . '/' . $file
         ]);
 
         return back()->with([
@@ -207,18 +206,17 @@ class PageController extends Controller
             'delete_field' => ['required', 'string', 'max:255']
         ]);
 
-        if($request->delete_field == "DELETE")
-        {
+        if ($request->delete_field == "DELETE") {
             $idFinder = Crypt::decrypt($id);
 
             $page = Page::findorfail($idFinder);
 
-            if($page->thumbnail) {
+            if ($page->thumbnail) {
                 Storage::delete(str_replace("storage", "public", $page->thumbnail));
             }
 
-            if($page->file_location) {
-                File::deleteDirectory(public_path('pageBuilder/'.$page->folder));
+            if ($page->file_location) {
+                File::deleteDirectory(public_path('pageBuilder/' . $page->folder));
             }
 
             $page->delete();
@@ -226,18 +224,17 @@ class PageController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Page deleted successfully!'
-            ]); 
-        } 
+            ]);
+        }
 
         return back()->with([
             'type' => 'danger',
             'message' => "Field doesn't match, Try Again!"
-        ]); 
-        
+        ]);
     }
 
     public function funnel_builder_create_folder(Request $request)
-    {   
+    {
         //Validate Request
         $this->validate($request, [
             'file_folder' => ['required', 'string', 'max:255'],
@@ -245,7 +242,7 @@ class PageController extends Controller
 
         $disk = Storage::build([
             'driver' => 'local',
-            'root'   => public_path('funnelBuilder') . '/'.$request->file_folder,
+            'root'   => public_path('funnelBuilder') . '/' . $request->file_folder,
             'permissions' => [
                 'file' => [
                     'public' => 0777,
@@ -260,8 +257,7 @@ class PageController extends Controller
             ],
         ]);
 
-        if($disk)
-        {
+        if ($disk) {
             Funnel::create([
                 'user_id' => Auth::user()->id,
                 'folder' => $request->file_folder,
@@ -290,18 +286,16 @@ class PageController extends Controller
 
         $funnel = Funnel::findorfail($idFinder);
 
-        $disk = public_path('funnelBuilder/'.$funnel->folder.'/');
+        $disk = public_path('funnelBuilder/' . $funnel->folder . '/');
 
-        rename ($disk, public_path('funnelBuilder/'.$request->file_folder.'/'));
+        rename($disk, public_path('funnelBuilder/' . $request->file_folder . '/'));
 
         $pages = FunnelPage::where('folder_id', $funnel->id)->get();
 
-        if($pages)
-        {
-            foreach($pages as $page)
-            {
+        if ($pages) {
+            foreach ($pages as $page) {
                 $page->update([
-                    'file_location' => config('app.url').'/funnelBuilder/'.$request->file_folder.'/'.$page->name
+                    'file_location' => config('app.url') . '/funnelBuilder/' . $request->file_folder . '/' . $page->name
                 ]);
             }
         }
@@ -312,7 +306,7 @@ class PageController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Updated successfully.'
-        ]); 
+        ]);
     }
 
     public function funnel_builder_delete($id, Request $request)
@@ -322,22 +316,19 @@ class PageController extends Controller
             'delete_field' => ['required', 'string', 'max:255']
         ]);
 
-        if($request->delete_field == "DELETE")
-        {
+        if ($request->delete_field == "DELETE") {
             $idFinder = Crypt::decrypt($id);
 
             $funnel = Funnel::findorfail($idFinder);
 
-            $disk = public_path('funnelBuilder/'.$funnel->folder.'/');
+            $disk = public_path('funnelBuilder/' . $funnel->folder . '/');
 
             File::deleteDirectory($disk);
 
             $pages = FunnelPage::where('folder_id', $funnel->id)->get();
 
-            if($pages)
-            {
-                foreach($pages as $page)
-                {
+            if ($pages) {
+                foreach ($pages as $page) {
                     $page->delete();
                 }
             }
@@ -347,13 +338,13 @@ class PageController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Deleted successfully.'
-            ]); 
-        } 
+            ]);
+        }
 
         return back()->with([
             'type' => 'danger',
             'message' => "Field doesn't match, try again."
-        ]); 
+        ]);
     }
 
     public function funnel_builder_create_page(Request $request)
@@ -374,23 +365,23 @@ class PageController extends Controller
             ]);
         }
 
-        $file = $request->file_name.'.html';
-        
-        define('MAX_FILE_LIMIT', 1024 * 1024 * 2);//2 Megabytes max html file size
-        
+        $file = $request->file_name . '.html';
+
+        define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
+
         $data = file_get_contents(resource_path('views/builder/new-page-blank-template.blade.php'));
 
         $html = substr($data, 0, MAX_FILE_LIMIT);
 
         $file = $this->sanitizeFileName($file);
 
-        $disk = public_path('funnelBuilder/'.$funnel->folder.'/');
-        
-        if(!file_put_contents($disk.$file, $html)){
+        $disk = public_path('funnelBuilder/' . $funnel->folder . '/');
+
+        if (!file_put_contents($disk . $file, $html)) {
             header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Error saving file  '.$file.'\nPossible causes are missing write permission or incorrect file path!'
+                'message' => 'Error saving file  ' . $file . '\nPossible causes are missing write permission or incorrect file path!'
             ]);
         } else {
             $page = FunnelPage::create([
@@ -398,12 +389,12 @@ class PageController extends Controller
                 'folder_id' => $funnel->id,
                 'name' => $file,
                 'title' => ucfirst($request->title),
-                'file_location' => config('app.url').'/funnelBuilder/'.$funnel->folder.'/'.$file
+                'file_location' => config('app.url') . '/funnelBuilder/' . $funnel->folder . '/' . $file
             ]);
 
             return back()->with([
                 'type' => 'success',
-                'message' => $page->name.' created.'
+                'message' => $page->name . ' created.'
             ]);
         }
     }
@@ -413,7 +404,7 @@ class PageController extends Controller
         $finder = Crypt::decrypt($id);
 
         $currentpage = FunnelPage::find($finder);
-        
+
         $pages = FunnelPage::where('user_id', Auth::user()->id)->get();
         $funnel = Funnel::where('id', $currentpage->folder_id)->first();
 
@@ -445,11 +436,11 @@ class PageController extends Controller
             ]);
         }
 
-        $file = $request->file_name.'.html';
-        
-        $disk = public_path('funnelBuilder/'.$funnel->folder.'/'.$page->name);
+        $file = $request->file_name . '.html';
 
-        rename ($disk, public_path('funnelBuilder/'.$funnel->folder.'/'.$file));
+        $disk = public_path('funnelBuilder/' . $funnel->folder . '/' . $page->name);
+
+        rename($disk, public_path('funnelBuilder/' . $funnel->folder . '/' . $file));
 
         //Validate User
         if (request()->hasFile('thumbnail')) {
@@ -458,22 +449,22 @@ class PageController extends Controller
             ]);
 
             $filename = request()->thumbnail->getClientOriginalName();
-            if($page->thumbnail) {
+            if ($page->thumbnail) {
                 Storage::delete(str_replace("storage", "public", $page->thumbnail));
             }
             request()->thumbnail->storeAs('funnel_page_thumbnails', $filename, 'public');
-            
+
             $page->update([
                 'folder_id' => $funnel->id,
                 'name' => $file,
                 'title' => ucfirst($request->title),
-                'thumbnail' => '/storage/funnel_page_thumbnails/'.$filename,
-                'file_location' => config('app.url').'/funnelBuilder/'.$funnel->folder.'/'.$file
+                'thumbnail' => '/storage/funnel_page_thumbnails/' . $filename,
+                'file_location' => config('app.url') . '/funnelBuilder/' . $funnel->folder . '/' . $file
             ]);
 
             return back()->with([
                 'type' => 'success',
-                'message' => $page->name.' updated.'
+                'message' => $page->name . ' updated.'
             ]);
         }
 
@@ -481,15 +472,15 @@ class PageController extends Controller
             'folder_id' => $funnel->id,
             'name' => $file,
             'title' => ucfirst($request->title),
-            'file_location' => config('app.url').'/funnelBuilder/'.$funnel->folder.'/'.$file
+            'file_location' => config('app.url') . '/funnelBuilder/' . $funnel->folder . '/' . $file
         ]);
 
         return back()->with([
             'type' => 'success',
-            'message' => $page->name.' updated.'
+            'message' => $page->name . ' updated.'
         ]);
     }
-    
+
     public function funnel_builder_delete_page($id, Request $request)
     {
         //Validate Request
@@ -497,18 +488,17 @@ class PageController extends Controller
             'delete_field' => ['required', 'string', 'max:255']
         ]);
 
-        if($request->delete_field == "DELETE")
-        {
+        if ($request->delete_field == "DELETE") {
             $idFinder = Crypt::decrypt($id);
 
             $page = FunnelPage::findorfail($idFinder);
             $funnel = Funnel::findorfail($page->folder_id);
 
-            $disk = public_path('funnelBuilder/'.$funnel->folder.'/'.$page->name);
+            $disk = public_path('funnelBuilder/' . $funnel->folder . '/' . $page->name);
 
             File::delete($disk);
 
-            if($page->thumbnail) {
+            if ($page->thumbnail) {
                 Storage::delete(str_replace("storage", "public", $page->thumbnail));
             }
 
@@ -517,13 +507,13 @@ class PageController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Deleted successfully.'
-            ]); 
-        } 
+            ]);
+        }
 
         return back()->with([
             'type' => 'danger',
             'message' => "Field doesn't match, try again."
-        ]); 
+        ]);
     }
 
     public function funnel_builder_save_page()
@@ -531,23 +521,22 @@ class PageController extends Controller
         $page = FunnelPage::find($_POST['id']);
         $funnel = Funnel::findorfail($page->folder_id);
 
-        define('MAX_FILE_LIMIT', 1024 * 1024 * 2);//2 Megabytes max html file size
+        define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
 
         $html = "";
 
-        if (isset($_POST['html']))
-        {
+        if (isset($_POST['html'])) {
             $html = substr($_POST['html'], 0, MAX_FILE_LIMIT);
         }
 
-        $disk = public_path('funnelBuilder/'.$funnel->folder.'/'.$page->name);
+        $disk = public_path('funnelBuilder/' . $funnel->folder . '/' . $page->name);
 
         if (file_put_contents($disk, $html)) {
-        	echo "File saved.";
+            echo "File saved.";
         } else {
-        	header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
-        	echo "Error saving file. \nPossible causes are missing write permission or incorrect file path!";
-        }	
+            header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+            echo "Error saving file. \nPossible causes are missing write permission or incorrect file path!";
+        }
     }
 
     public function general_builder_scan()
@@ -557,26 +546,26 @@ class PageController extends Controller
         } else {
             define('UPLOAD_PATH', 'media');
         }
-        
+
         $scandir = __DIR__ . '/' . UPLOAD_PATH;
-        
+
         // Run the recursive function
         // This function scans the files folder recursively, and builds a large array
-        
+
         $scan = function ($dir) use ($scandir, &$scan) {
             $files = [];
-        
+
             // Is there actually such a folder/file?
-        
+
             if (file_exists($dir)) {
                 foreach (scandir($dir) as $f) {
-                    if (! $f || $f[0] == '.') {
+                    if (!$f || $f[0] == '.') {
                         continue; // Ignore hidden files
                     }
-        
+
                     if (is_dir($dir . '/' . $f)) {
                         // The path is a folder
-        
+
                         $files[] = [
                             'name'  => $f,
                             'type'  => 'folder',
@@ -585,7 +574,7 @@ class PageController extends Controller
                         ];
                     } else {
                         // It is a file
-        
+
                         $files[] = [
                             'name' => $f,
                             'type' => 'file',
@@ -595,16 +584,16 @@ class PageController extends Controller
                     }
                 }
             }
-        
+
             return $files;
         };
-        
+
         $response = $scan($scandir);
-        
+
         // Output the directory listing as JSON
-        
+
         header('Content-type: application/json');
-        
+
         echo json_encode([
             'name'  => '',
             'type'  => 'folder',
@@ -618,13 +607,13 @@ class PageController extends Controller
         define('UPLOAD_FOLDER', __DIR__ . '/');
 
         if (isset($_POST['mediaPath'])) {
-            define('UPLOAD_PATH', $this->sanitizeFileName($_POST['mediaPath']) .'/');
+            define('UPLOAD_PATH', $this->sanitizeFileName($_POST['mediaPath']) . '/');
         } else {
             define('UPLOAD_PATH', '/');
         }
 
         // $destination = UPLOAD_FOLDER . UPLOAD_PATH . '/' . $_FILES['file']['name'];
-        $disk = public_path('builder/media/'.$_FILES['file']['name']);
+        $disk = public_path('builder/media/' . $_FILES['file']['name']);
         move_uploaded_file($_FILES['file']['tmp_name'], $disk);
 
         if (isset($_POST['onlyFilename'])) {

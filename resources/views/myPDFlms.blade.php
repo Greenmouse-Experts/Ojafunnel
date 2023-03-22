@@ -10,13 +10,13 @@
   <link rel="shortcut icon" href="{{Storage::url($shop->logo)}}" />
 
   <!-- App Css-->
-  <link href="{{URL::asset('dash/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+  <link href="{{URL::asset('http://127.0.0.1:8000/dash/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
   <!-- Bootstrap Css -->
-  <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+  <link href="{{URL::asset('http://127.0.0.1:8000/dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
   <!-- Icons Css -->
-  <link href="{{URL::asset('dash/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{URL::asset('http://127.0.0.1:8000/dash/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
   <!-- style Css -->
-  <link href="{{URL::asset('dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{URL::asset('http://127.0.0.1:8000/dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
   <!-- App Css-->
   <!-- Font Css-->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -121,8 +121,8 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{\App\Models\Course::find($item->course_id)->title}}</td>
                                             <td><img style="width: 50px" src="{{\App\Models\Course::find($item->course_id)->image ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" srcset=""></td>
-                                            <td class="text-wrap" style="width: 330px;">{{\App\Models\Course::find($item->course_id)->description}}</td>
-                                            <td>₦{{$item->amount}}</td>
+                                            <td class="text-wrap" style="width: 330px;">₦{{$item->amount}}</td>
+                                            <td>₦{{number_format($item->amount)}}</td>
                                             <td>₦{{number_format($item->amount, 2)}}</td>
                                         </tr>
                                         @endforeach

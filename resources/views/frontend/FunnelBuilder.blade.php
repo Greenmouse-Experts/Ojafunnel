@@ -369,25 +369,25 @@
                             Do more with our funnel builder
                         </h2>
                         <div class="bording mb-4">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Drag, drop and connect</span>
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679416280/OjaFunnel-Images/drag-and-drop_sjeler.png" draggable="false" alt=""> <span>Drag, drop and connect</span>
                             <p>
                                 Easily drag the different events into the canvas and connect the flow with arrows.
                             </p>
                         </div>
                         <div class="bording mb-4">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Runs on autopilot for you, 24-7-365</span>
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679416311/OjaFunnel-Images/autopilot_vz24hz.png" draggable="false" alt=""> <span>Runs on autopilot for you, 24-7-365</span>
                             <p>
                                 Ojafunnel automates your sales funnels, running 24/7 for maximum conversion
                             </p>
                         </div>
                         <div class="bording mb-4">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Funnel Templates </span>
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679416285/OjaFunnel-Images/Funnel_Template_qlgliz.png" draggable="false" alt=""> <span>Funnel Templates </span>
                             <p>
                                 We have pre-build funnels for different businesses already set for you
                             </p>
                         </div>
                         <div class="bording mb-4">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674129297/OjaFunnel-Images/Rectangle_19420_rrulf4.png" draggable="false" alt=""> <span>Flow mapping</span>
+                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679416286/OjaFunnel-Images/mind-map_ac5zvf.png" draggable="false" alt=""> <span>Flow mapping</span>
                             <p>
                                 Set the flow of your funnel, ie set the page that comes first, second and third.
                             </p>
@@ -469,7 +469,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="imagess">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1674133362/OjaFunnel-Images/Rectangle_18987_1_wvh6u2.png" draggable="false">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1679416257/OjaFunnel-Images/Share_your_built_funnels_with_others_qcq8l0.jpg" draggable="false">
                     </div>
                 </div>
                 <div class="col-lg-6">

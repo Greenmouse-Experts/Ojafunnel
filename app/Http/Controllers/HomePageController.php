@@ -144,7 +144,6 @@ class HomePageController extends Controller
     public function template_details($id)
     {
         $idFinder = Crypt::decrypt($id);
-        
         $page = Page::find($idFinder);
 
         return view('frontend.templateDetail', [
@@ -191,7 +190,7 @@ class HomePageController extends Controller
         //Validate Request
         $this->validate($request, [
             'phone' => 'required|numeric',
-            'g-recaptcha-response' => 'required|captcha'
+            // 'g-recaptcha-response' => 'required|captcha'
         ]);
 
         $contact = ContactUs::create([
@@ -218,7 +217,7 @@ class HomePageController extends Controller
             "registration_ids" => $firebaseToken,
             "notification" => [
                 "title" => config('app.name'),
-                "body" => 'Contact form submitted by ' . $contact->name,
+                "body" => 'Contact form submitted from ' . $contact->name,
                 'image' => URL::asset('assets/images/Logo-fav.png'),
             ],
             'vibrate' => 1,

@@ -18,10 +18,18 @@ use App\Models\Course;
 use App\Models\Message;
 use App\Models\MessageUser;
 use App\Models\OjafunnelNotification;
+use App\Models\OrderItem;
 use App\Models\Page;
+use App\Models\Shop;
+use App\Models\ShopOrder;
+use App\Models\Transaction;
+use App\Models\WhatsappNumber;
+use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
@@ -451,10 +459,53 @@ class AdminController extends Controller
     }
 
     // sales analytics
-
-    public function sales_analytics()
+    public function sales_analytics(Request $request)
     {
-        return view('Admin.salesAnalytics');
+        $lms = [];
+        $ecommerce = [];
+
+        $year = now()->format('Y');
+
+        $lms['January'] = ShopOrder::latest()->whereMonth('created_at', 1)->whereYear('created_at', $year)->sum('amount');
+        $lms['February'] = ShopOrder::latest()->whereMonth('created_at', 2)->whereYear('created_at', $year)->sum('amount');
+        $lms['March'] = ShopOrder::latest()->whereMonth('created_at', 3)->whereYear('created_at', $year)->sum('amount');
+        $lms['April'] = ShopOrder::latest()->whereMonth('created_at', 4)->whereYear('created_at', $year)->sum('amount');
+        $lms['May'] = ShopOrder::latest()->whereMonth('created_at', 5)->whereYear('created_at', $year)->sum('amount');
+        $lms['June'] = ShopOrder::latest()->whereMonth('created_at', 6)->whereYear('created_at', $year)->sum('amount');
+        $lms['July'] = ShopOrder::latest()->whereMonth('created_at', 7)->whereYear('created_at', $year)->sum('amount');
+        $lms['August'] = ShopOrder::latest()->whereMonth('created_at', 8)->whereYear('created_at', $year)->sum('amount');
+        $lms['September'] = ShopOrder::latest()->whereMonth('created_at', 9)->whereYear('created_at', $year)->sum('amount');
+        $lms['October'] = ShopOrder::latest()->whereMonth('created_at', 10)->whereYear('created_at', $year)->sum('amount');
+        $lms['November'] = ShopOrder::latest()->whereMonth('created_at', 11)->whereYear('created_at', $year)->sum('amount');
+        $lms['December'] = ShopOrder::latest()->whereMonth('created_at', 12)->whereYear('created_at', $year)->sum('amount');
+
+
+        $ecommerce['January'] = OrderItem::latest()->whereMonth('created_at', 1)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['February'] = OrderItem::latest()->whereMonth('created_at', 2)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['March'] = OrderItem::latest()->whereMonth('created_at', 3)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['April'] = OrderItem::latest()->whereMonth('created_at', 4)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['May'] = OrderItem::latest()->whereMonth('created_at', 5)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['June'] = OrderItem::latest()->whereMonth('created_at', 6)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['July'] = OrderItem::latest()->whereMonth('created_at', 7)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['August'] = OrderItem::latest()->whereMonth('created_at', 8)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['September'] = OrderItem::latest()->whereMonth('created_at', 9)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['October'] = OrderItem::latest()->whereMonth('created_at', 10)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['November'] = OrderItem::latest()->whereMonth('created_at', 11)->whereYear('created_at', $year)->sum('amount');
+        $ecommerce['December'] = OrderItem::latest()->whereMonth('created_at', 12)->whereYear('created_at', $year)->sum('amount');
+
+
+        $totalLMSSales = ShopOrder::latest()->sum('amount');
+        $totalEcommerceSales = OrderItem::latest()->sum('amount');
+
+        // return $lms;
+        // return $ecommerce;
+
+        return view('Admin.salesAnalytics', [
+            'lms' => $lms,
+            'ecommerce' => $ecommerce,
+            'totalLMSSales' => $totalLMSSales,
+            'totalEcommerceSales' => $totalEcommerceSales
+        ]);
     }
 
     // EMAIL-MARKETING
@@ -774,7 +825,7 @@ class AdminController extends Controller
             ]);
         } else {
             $page = Page::create([
-                'user_id' => Auth::guard('admin')->user()->id,
+                'admin_id' => Auth::guard('admin')->user()->id,
                 'title' => $request->title,
                 'name' => $file,
                 'folder' => $request->file_folder,
@@ -956,6 +1007,131 @@ class AdminController extends Controller
                 'message' => "Page Unpublish"
             ]); 
         }
+    }
+
+    public function support_whatsapp()
+    {
+        return view('Admin.support.whatsappSupport');
+    }
+
+    public function add_support_whatsapp(Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'phone_number' => ['required', 'numeric'],
+        ]);
+
+        WhatsappNumber::create([
+            'phone_number' => $request->phone_number
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Whatapp number added successfully.',
+        ]); 
+    }
+
+    public function delete_support_whatsapp($id)
+    {
+        $Finder = Crypt::decrypt($id);
+        WhatsappNumber::find($Finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Whatsapp number deleted successfully.',
+        ]); 
+    }
+
+    public function pending_payouts()
+    {
+        return view('Admin.payouts.pending_payouts');
+    }
+
+    public function process_payouts($id, Request $request)
+    {
+        $Finder = Crypt::decrypt($id);
+
+        $payout = Withdrawal::find($Finder);
+
+        if($request->status == 'finalized')
+        {
+            $payout->description = $request->description;
+            $payout->status = $request->status;
+
+            $transaction = Transaction::create([
+                'user_id' => $payout->user_id,
+                'amount' => $payout->amount,
+                'reference' => Str::random(6),
+                'status' => 'Withdrawal'
+            ]);
+
+            $payout->transaction_id = $transaction->id;
+            $payout->save();
+
+            OjafunnelNotification::create([
+                'to' => $payout->user_id,
+                'title' => config('app.name').' Withdrawal Alert',
+                'body' => $request->description,
+            ]);
+
+            $user = User::where('id', $payout->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $this->fcm('Withdrawal Alert', $user);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Request processed successfully.',
+            ]); 
+        }
+        if($request->status == 'refunded')
+        {
+            $payout->description = $request->description;
+            $payout->status = $request->status;
+            $payout->save();
+
+            $user = User::find($payout->user_id);
+
+            $user->wallet += $payout->amount;
+            $user->save();
+
+            Transaction::create([
+                'user_id' => $payout->user_id,
+                'amount' => $payout->amount,
+                'reference' => 'Withdrawal request of '.$payout->amount.' has been refunded',
+                'status' => 'Withdraw Refunded'
+            ]);
+
+            OjafunnelNotification::create([
+                'to' => $payout->user_id,
+                'title' => config('app.name').' Withdrawal Alert',
+                'body' => $request->description,
+            ]);
+
+            $user = User::where('id', $payout->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $this->fcm('Withdrawal Alert', $user);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Request processed successfully.',
+            ]); 
+        }
+
+        return back()->with([
+            'type' => 'danger',
+            'message' => 'Action failed.',
+        ]); 
+    }
+
+    public function transaction_confirm($id, $response, $amount)
+    {
+        $payout = Withdrawal::find($id);
+
+        return $payout;
+
+    }
+
+    public function finalized_payouts()
+    {
+        return view('Admin.payouts.finalized_payouts');
     }
 
 }

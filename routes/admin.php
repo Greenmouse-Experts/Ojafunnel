@@ -63,6 +63,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/integration', [App\Http\Controllers\Admin\AdminController::class, 'integration'])->name('integration');
             Route::get('/birthday-module', [App\Http\Controllers\Admin\AdminController::class, 'birthday_module'])->name('birthdayModule');
 
+            // Whatsapp Support
+            Route::get('/support/whatsapp', [App\Http\Controllers\Admin\AdminController::class, 'support_whatsapp'])->name('whatsappSupport');
+            Route::post('/add/support/whatsapp', [App\Http\Controllers\Admin\AdminController::class, 'add_support_whatsapp'])->name('whatsappSupportAdd');
+            Route::post('/delete-support-whatsapp/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_support_whatsapp'])->name('deleteWhatsappSupport');
+
             // Support
             Route::get('/support/checkConvo/{recieverId}', [App\Http\Controllers\Admin\AdminController::class, 'check']);
             Route::post('/support/sendMessage', [App\Http\Controllers\Admin\AdminController::class, 'store'])->name('sendMessage');
@@ -148,6 +153,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             // Save FCM Token
             Route::post('/save-token', [AdminController::class, 'saveToken'])->name('admin.save.token');
+
+            // Payouts
+            Route::get('/pending/payouts', [App\Http\Controllers\Admin\AdminController::class, 'pending_payouts'])->name('pending.payouts');
+            Route::post('/process/payouts/{id}', [App\Http\Controllers\Admin\AdminController::class, 'process_payouts'])->name('process.payouts');
+            Route::get('/transaction/confirm/{id}/{response}/{amount}', [App\Http\Controllers\Admin\AdminController::class, 'transaction_confirm'])->name('transaction.confirm');
+            Route::get('/finalized/payouts', [App\Http\Controllers\Admin\AdminController::class, 'finalized_payouts'])->name('finalized.payouts');
         }
     );
 });

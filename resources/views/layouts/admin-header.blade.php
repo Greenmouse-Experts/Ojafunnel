@@ -83,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    @foreach(App\Models\OjafunnelNotification::latest()->where('admin_id', Auth::guard('admin')->user()->id)->where('status', 'Unread')->get() as $OjaNotification)
+                    @foreach(App\Models\OjafunnelNotification::latest()->where('admin_id', Auth::guard('admin')->user()->id)->where('status', 'Unread')->get()->take(5) as $OjaNotification)
                     <div data-simplebar style="max-height: 230px">
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="d-flex">
@@ -132,11 +132,9 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i>
+                    <a class="dropdown-item" href="{{route('general')}}"><i class="bx bx-user font-size-16 align-middle me-1"></i>
                         <span key="t-profile">Profile</span></a>
-                    {{-- <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i>
-                        <span key="t-my-wallet">Fund Wallet</span></a> --}}
-                    <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i>
+                    <a class="dropdown-item d-block" href="{{route('general')}}"><i class="bx bx-wrench font-size-16 align-middle me-1"></i>
                         <span key="t-settings">Settings</span></a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="{{route('adminLogout')}}"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>

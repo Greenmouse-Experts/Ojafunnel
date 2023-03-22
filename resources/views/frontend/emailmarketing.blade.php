@@ -14,17 +14,21 @@
                             Our email tools will help your business get the most out of your email marketing.
 
                         </p>
-                        <button style="background-color: #fff;color:#000">
-                            Get Started
-                        </button>
-                        <button>
-                            See Demo
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button style="background-color: #fff;color:#000">
+                                Get Started
+                            </button>
+                        </a>
+                        <a href="{{route('demo')}}">
+                            <button>
+                                See Demo
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="context">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661267657/OjaFunnel-Images/banner_ajpxfj.png" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1678894886/OjaFunnel-Images/Email_Marketing_1_h1tucd-removebg-preview_smhvok.png" draggable="false">
                     </div>
                 </div>
             </div>

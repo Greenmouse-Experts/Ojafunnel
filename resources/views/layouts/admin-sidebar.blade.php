@@ -76,6 +76,16 @@
                     </a>
                 </li>
                 <li>
+                    <a href="#" class="has-arrow">
+                        <i class="bi bi-bank"></i>
+                        <span key="t-chat">Payouts</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('pending.payouts')}}">Pending</a></li>
+                        <li><a href="{{route('finalized.payouts')}}">Finalized</a></li>
+                    </ul>
+                </li>
+                <li>
                     <a href="{{route('transactions')}}">
                         <i class="bi bi-bank"></i>
                         <span key="t-chat">Transactions</span>
@@ -149,6 +159,7 @@
                         <span key="t-dashboards">Support</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('whatsappSupport')}}" key="t-full-calendar">Whatsapp Support</a></li>
                         <li><a href="{{route('chatSupport')}}" key="t-full-calendar">Chat Support</a></li>
                         <li><a href="{{route('emailSupport')}}" key="t-full-calendar">Email Support</a></li>
                     </ul>

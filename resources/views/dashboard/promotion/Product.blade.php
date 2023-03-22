@@ -21,16 +21,25 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card account-head">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="py-2">
-                                    <h4 class="font-500">Market Product</h4>
-                                    <p>
-                                        All your Market Product in one Place
-                                    </p>
-                                </div>
+                <div class="col-lg-11">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="font-60">Market Product</h4>
+                            <p>
+                            All your Market Product in one Place
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <p class="cash">Explainer Video Here</p> -->
+                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                <i class="bi bi-play-btn"></i>
+                            </div>
+                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                <i class="bi bi-card-text"></i>
                             </div>
                         </div>
                     </div>
@@ -56,36 +65,40 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                26784442
-                                            </td>
-                                            <td>
-                                                Hamzat Abdulazeez
-                                            </td>
-                                            <td>
-                                                ₦10,000.00
-                                            </td>
-                                            <td>
-                                                Level 1: 50%, Level 2: 10% (Super Affiliates only)
-                                            </td>
-                                            <td>
-                                                Yes
-                                            </td>
-                                            <td>
-                                                0
-                                            </td>
-                                            <td>
-                                                16/02/2023
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled hstack gap-1 mb-0">
-                                                    <li data-bs-toggle="tooltip" data-bs-placement="top">
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#onlineStore" title="View" class="btn btn-sm btn-soft-success"><i class="bi bi-eye-slash-fill"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
+                                        @forelse ($products as $product)
+                                            <tr>
+                                                <td>
+                                                    {{ $product->id }}
+                                                </td>
+                                                <td>
+                                                    {{ $product->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $product->price }}
+                                                </td>
+                                                <td>
+                                                    Level 1: <b>{{ $product->level1_comm }}%</b>, Level 2: <b>{{ $product->level2_comm }}%</b> (Super Affiliates only)
+                                                </td>
+                                                <td>
+                                                    Yes
+                                                </td>
+                                                <td>
+                                                    0
+                                                </td>
+                                                <td>
+                                                    {{ $product->created_at }}
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled hstack gap-1 mb-0">
+                                                        <li data-bs-toggle="tooltip" data-bs-placement="top">
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#onlineStore-{{ $product->id }}" title="View" class="btn btn-sm btn-soft-success"><i class="bi bi-eye-slash-fill"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            No product(s) in any of Ojafunnel stores. Check back later.
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -96,19 +109,67 @@
         </div>
     </div>
 </div>
+<!-- end modal -->
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
+                        <div class="aller">
+                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, ducimus iste. Consequuntur doloremque voluptatem officia, quos laborum delectus atque distinctio reprehenderit earum iure. Sequi voluptate architecto libero, repellat neque deserunt assumenda sunt in sit ipsam delectus nostrum qui ratione. Laboriosam aliquid obcaecati vitae voluptatum ea minus quidem! Pariatur soluta quasi modi harum aut quas veritatis et. Necessitatibus fuga illo ipsa dicta aut nisi laborum nam at, id eveniet consectetur praesentium enim, cum dignissimos ipsum rem odio. Atque, eaque magni aut incidunt quo laudantium repudiandae quae modi officiis in, iusto suscipit fugiat rem inventore non dolorum adipisci rerum dolorem. Nulla, vero!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+@foreach ($products as $product)
 <!-- SuccessModal -->
-<div class="modal fade" id="onlineStore" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+<div class="modal fade" id="onlineStore-{{ $product->id }}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content pb-3">
             <div class="modal-header border-bottom-0">
-                <h4 class="card-title mb-4">View Product: 26784442</h4>
+                <h4 class="card-title mb-4">View Product: 0</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="last">
                     <div class="col-lg-12">
                         <div class="images">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" draggable="false" width="100%" alt="">
+                            <img src="{{ Storage::url($product->image) }}" draggable="false" width="100%" alt="">
                         </div>
                     </div>
                     <div class="row">
@@ -116,25 +177,25 @@
                             <b>Vendor</b>
                         </div>
                         <div class="col-md-8 mt-4">
-                            Seun Smith
+                            {{ 'vendor name here' }}
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Name</b>
                         </div>
                         <div class="col-md-8 mt-3">
-                            Learn How To Teach Your Child About Sex
+                            {{ $product->name }}
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Description</b>
                         </div>
                         <div class="col-md-8 mt-3">
-                            Learn How To Teach Your Child About Sex
+                            {{ $product->description }}
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Price</b>
                         </div>
                         <div class="col-md-8 mt-3">
-                            ₦10,000.00
+                            {{ $product->price }}
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Commission Type</b>
@@ -146,7 +207,7 @@
                             <b>Commissions</b>
                         </div>
                         <div class="col-md-8 mt-3">
-                            Level 1: 50%, Level 2: 10% (Super Affiliates only)
+                            Level 1: <b>{{ $product->level1_comm }}%</b>, Level 2: <b>{{ $product->level2_comm }}%</b> (Super Affiliates only)
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Promotion Material(s)</b>
@@ -160,7 +221,7 @@
                             <b>Created At</b>
                         </div>
                         <div class="col-md-8 mt-3">
-                            2020-09-21 12:52 pm
+                            {{ $product->created_at }}
                         </div>
                         <div class="col-md-12 mt-4 mb-4 text-center">
                             <b>Affiliate Links</b>
@@ -169,7 +230,7 @@
                             <div class="form">
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <input type="text" value=" {{ route('signup', ['ref' => Auth::user()->affiliate_link]) }}" name="name" id="myInput" class="input mov" readonly required>
+                                        <input type="text" value="http" name="name" id="myInput" class="input mov" readonly required>
                                     </div>
                                     <div class="col-md-2">
                                         <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
@@ -184,4 +245,6 @@
     </div>
 </div>
 <!-- end modal -->
+@endforeach
+
 @endsection

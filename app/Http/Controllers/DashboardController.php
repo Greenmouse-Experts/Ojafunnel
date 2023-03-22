@@ -2,33 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
-use App\Models\Category;
 use App\Models\Chat;
-use App\Models\Course;
-use App\Models\Funnel;
-use App\Models\FunnelPage;
-use App\Models\Integration;
-use App\Models\Mailinglist;
-use App\Models\OjaPlan;
 use App\Models\Page;
-use App\Models\PersonalChatroom;
 use App\Models\Plan;
 use App\Models\Shop;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\BankDetail;
+use App\Models\Course;
+use App\Models\Funnel;
+use App\Models\OjaPlan;
+use App\Models\Category;
 use App\Models\ShopOrder;
-use App\Models\SmsAutomation;
-use App\Models\SmsCampaign;
+use Tzsk\Sms\Facades\Sms;
+use App\Models\Enrollment;
+use App\Models\FunnelPage;
 use App\Models\StoreOrder;
 use App\Models\Subscriber;
+use App\Models\Integration;
+use App\Models\Mailinglist;
+use App\Models\SmsCampaign;
 use App\Models\Transaction;
-use App\Models\User;
+use App\Models\StoreProduct;
 use Illuminate\Http\Request;
+use App\Models\SmsAutomation;
+use App\Models\PersonalChatroom;
+use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Tzsk\Sms\Facades\Sms;
-use Exception;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
@@ -425,7 +428,6 @@ class DashboardController extends Controller
         } else {
             return view('dashboard.contact.list', compact('contact_lists'));
         }
-
     }
 
     public function contact_list_update(Request $request)
@@ -446,7 +448,6 @@ class DashboardController extends Controller
         } else {
             return view('dashboard.contact.list', compact('contact_lists'));
         }
-
     }
 
     public function contact_list_delete(Request $request)
@@ -465,7 +466,6 @@ class DashboardController extends Controller
         } else {
             return view('dashboard.contact.list', compact('contact_lists'));
         }
-
     }
 
     public function add_contact_to_list(Request $request)
@@ -486,7 +486,6 @@ class DashboardController extends Controller
         } else {
             return view('dashboard.contact.contact_number', compact('contact', 'list_id'));
         }
-
     }
 
     public function update_contact_num(Request $request)
@@ -505,7 +504,6 @@ class DashboardController extends Controller
         } else {
             return view('dashboard.contact.contact_number', compact('contact', 'list_id'));
         }
-
     }
 
     public function delete_contact_num(Request $request)
@@ -521,7 +519,6 @@ class DashboardController extends Controller
         } else {
             return view('dashboard.contact.contact_number', compact('contact', 'list_id'));
         }
-
     }
 
     public function whatsapp_automation($username)
@@ -636,6 +633,54 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function withdrawal($username)
+    {
+        return view('dashboard.withdrawal.withdrawal', [
+            'username' => $username
+        ]);
+    }
+
+    public function bank($username)
+    {
+        $bank_details = BankDetail::latest()->where('user_id', Auth::user()->id)->where('type', 'NGN')->get();
+
+        return view('dashboard.withdrawal.bank', [
+            'username' => $username,
+            'bank_details' => $bank_details
+        ]);
+    }
+
+    public function other_payment_method($username)
+    {
+        $bank_details = BankDetail::latest()->where('user_id', Auth::user()->id)->where('type', '!=', 'NGN')->get();
+
+        return view('dashboard.withdrawal.other_payment_method', [
+            'username' => $username,
+            'bank_details' => $bank_details
+        ]);
+    }
+
+    public function direct_us_bank($username)
+    {
+        return view('dashboard.withdrawal.direct_us_bank', [
+            'username' => $username
+        ]);
+    }
+
+    public function paystack($username)
+    {
+        return view('dashboard.withdrawal.paystack', [
+            'username' => $username
+        ]);
+    }
+
+    public function paypal($username)
+    {
+        return view('dashboard.withdrawal.paypal', [
+            'username' => $username
+        ]);
+    }
+
     public function create_course_start($username)
     {
         $categories = Category::latest()->get();
@@ -690,8 +735,17 @@ class DashboardController extends Controller
 
     public function main_promo($username)
     {
+        // // $user_id = Auth::user()->id;
+        // $stores = Store::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+
+        // foreach ($stores as $key => $value) {
+        //     # code...
+        // }
+        $products = StoreProduct::orderBy('id', 'DESC')->get();
+
         return view('dashboard.promotion.Product', [
-            'username' => $username
+            'username' => $username,
+            'products' => $products
         ]);
     }
 
@@ -808,7 +862,6 @@ class DashboardController extends Controller
         ]);
     }
 
-
     public function main_notify($username)
     {
         return view('dashboard.notification', [
@@ -821,24 +874,25 @@ class DashboardController extends Controller
         $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
         $shop = \App\Models\Shop::where('user_id', Auth::user()->id)->first();
 
-        if($store != null)
-        {
+        if ($store != null) {
             $storeOrderCount = StoreOrder::where('store_id', $store->id)->get()->count();
         } else {
             $storeOrderCount = 0;
         }
 
-        if($shop != null)
-        {
+        if ($shop != null) {
             $shopOrderCount = ShopOrder::where('shop_id', $shop->id)->get()->count();
+            $students = Enrollment::where('shop_id', $shop->id)->get()->count();
         } else {
             $shopOrderCount = 0;
+            $students = 0;
         }
 
         return view('dashboard.salesAnalytics', [
             'username' => $username,
             'storeOrderCount' => $storeOrderCount,
-            'shopOrderCount' => $shopOrderCount
+            'shopOrderCount' => $shopOrderCount,
+            'students' => $students
         ]);
     }
 

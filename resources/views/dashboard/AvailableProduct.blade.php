@@ -130,6 +130,14 @@
                                                                                                 <label for="Name">Quantity</label>
                                                                                                 <input type="text" name="quantity" value="{{$item->quantity}}" required />
                                                                                             </div>
+                                                                                            <div class="col-lg-12 mb-4">
+                                                                                                <label for="Name">Level 1 Commission (%)</label>
+                                                                                                <input type="text" name="level1_comm" value="{{$item->level1_comm}}" required />
+                                                                                            </div>
+                                                                                            <div class="col-lg-12 mb-4">
+                                                                                                <label for="Name">Level 2 Commission (%)</label>
+                                                                                                <input type="text" name="level2_comm" value="{{$item->level2_comm}}" required />
+                                                                                            </div>
                                                                                             <div class="text-end mt-2">
                                                                                                 <a href="#" class="text-decoration-none">
                                                                                                     <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
@@ -230,7 +238,15 @@
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Quantity</label>
-                                    <input type="text" name="quantity" required />
+                                    <input type="text" name="quantity"  placeholder="Enter quantity" required />
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Level 1 Commision (%)</label>
+                                    <input type="text" name="level1_comm" placeholder="Enter level 1 commission" required />
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Level 2 Commision (%)</label>
+                                    <input type="text" name="level2_comm" placeholder="Enter level 2 commission" required />
                                 </div>
                                 <div class="text-end mt-2">
                                     <a href="#" class="text-decoration-none">
