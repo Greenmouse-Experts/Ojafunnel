@@ -84,7 +84,7 @@
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <p class="text-muted fw-medium">Total Withdrawal</p>
-                                        <h4 class="mb-0">₦{{number_format(App\Models\Withdrawal::latest()->where('user_id', Auth::user()->id)->sum('amount'), 2)}}</h4>
+                                        <h4 class="mb-0">₦{{number_format(App\Models\Withdrawal::latest()->where('user_id', Auth::user()->id)->where('status', '!=', 'refunded')->sum('amount'), 2)}}</h4>
                                     </div>
 
                                     <div class="flex-shrink-0 align-self-center">
@@ -149,6 +149,7 @@
                                                 {{ \Carbon\Carbon::parse($withdraw->created_at)->isoFormat('llll') }}
                                             </td>
                                             <td>
+                                                @if ($withdraw->status == 'created')
                                                 <a style="cursor: pointer;" class="btn btn-sm btn-soft-danger" data-bs-toggle="modal" data-bs-target="#delete-{{$withdraw->id}}">Delete</a>
                                                 <!-- Modal START -->
                                                 <div class="modal fade" id="delete-{{$withdraw->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
@@ -185,6 +186,9 @@
                                                     </div>
                                                 </div>
                                                 <!-- end modal -->
+                                                @else
+                                                <a class="btn btn-sm btn-soft-primary">{{$withdraw->status}}</a>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('bank_code')->nullable();
             $table->string('type_of_bank_account')->nullable();
             $table->string('routing_number')->nullable();
+            $table->string('secret_key')->nullable();
+            $table->string('public_key')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });
