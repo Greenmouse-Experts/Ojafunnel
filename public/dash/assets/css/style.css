@@ -6469,12 +6469,7 @@ h3, h4 [class^="material-"] {
 .list-loading-init::after {
     left: calc(50% - 110px);
 }
-.dropdown-item.active, .dropdown-item:active {
-    background-color: #007ca8;
-}
-.dropdown-menu li:hover > a {
-    color: #222;
-}
+
 .text-primary {
     color: #000!important;
 }

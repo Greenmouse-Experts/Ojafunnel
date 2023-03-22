@@ -70,7 +70,31 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [App\Http\Controllers\Admin\AdminController::class, 'retrieveNew']);
 
             // Email Marketing
-            Route::get('sending/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('sending.server');
+
+            Route::prefix('/sending-server')->group(
+                function () {
+                        Route::get('/sort', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'sort'])->name('sending.server.sort');
+                        Route::get('/listing', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'listing'])->name('sending.server.listing');
+                        Route::get('/enable', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'enable'])->name('sending.server.enable');
+                        Route::get('/disable', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'disable'])->name('sending.server.disable');
+                        Route::get('/delete', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'delete'])->name('sending.server.delete');
+                        Route::get('/select', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'select'])->name('sending.server.select');
+                        Route::get('/create', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'create'])->name('sending.server.create');
+                        Route::get('/edit/{id}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'edit'])->name('sending.server.edit');
+                        Route::match(['get', 'post'], '/sendingLimit', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'sendingLimit'])->name('sending.server.sendingLimit');
+                        Route::post('/store', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'store'])->name('sending.server.store');
+                        Route::patch('/update', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'update'])->name('sending.server.update');
+                        Route::match(['get', 'post'], '/testConnection/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'testConnection'])->name('sending.server.testConnection');
+                        Route::match(['get', 'post'], '/test/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'test'])->name('sending.server.test');
+                        Route::match(['get', 'post'], '/awsRegionHost', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'awsRegionHost'])->name('sending.server.awsRegionHost');
+                        Route::match(['get', 'post'], '/addDomain', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'addDomain'])->name('sending.server.addDomain');
+                        Route::match(['get', 'post'], '/removeDomain', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'removeDomain'])->name('sending.server.removeDomain');
+                        Route::match(['get', 'post'], '/fromDropbox/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'fromDropbox'])->name('sending.server.fromDropbox');
+                        Route::post('/config/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'config'])->name('sending.server.config');
+                    }
+            );
+            Route::get('sending/index', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'index'])->name('sending.server');
+            Route::get('sending-server/index', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'index'])->name('sending.server.index');
             Route::get('sending/index/new-server', [App\Http\Controllers\Admin\AdminController::class, 'new_server'])->name('new.server');
             Route::get('sending/index/new-server/choose', [App\Http\Controllers\Admin\AdminController::class, 'choose_server'])->name('choose.server');
             Route::get('main-bounce', [App\Http\Controllers\Admin\AdminController::class, 'main_bounce'])->name('main.bounce');
@@ -102,7 +126,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             // Admin page builder
             Route::get('page-builder', [App\Http\Controllers\Admin\AdminController::class, 'page_builder'])->name('pageBuilder');
 
-             // Admin Page Builder
+            // Admin Page Builder
             Route::post('/page/builder/create', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_create'])->name('admin.page.builder.create');
             Route::any('/page/builder/save/page', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_save_page'])->name('admin.page.builder.save.page');
             Route::post('/page/builder/update/{id}', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_update'])->name('admin.page.builder.update');
