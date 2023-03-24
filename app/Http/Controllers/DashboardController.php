@@ -8,13 +8,15 @@ use App\Models\Plan;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\Admin;
-use App\Models\BankDetail;
+use App\Models\Store;
 use App\Models\Course;
 use App\Models\Funnel;
 use App\Models\OjaPlan;
 use App\Models\Category;
+use App\Models\WaQueues;
 use App\Models\ShopOrder;
 use Tzsk\Sms\Facades\Sms;
+use App\Models\BankDetail;
 use App\Models\Enrollment;
 use App\Models\FunnelPage;
 use App\Models\StoreOrder;
@@ -23,15 +25,22 @@ use App\Models\Integration;
 use App\Models\Mailinglist;
 use App\Models\SmsCampaign;
 use App\Models\Transaction;
+use App\Models\WaCampaigns;
 use App\Models\StoreProduct;
 use Illuminate\Http\Request;
+use App\Models\ContactNumber;
 use App\Models\SmsAutomation;
+use App\Models\WhatsappNumber;
+use Illuminate\Support\Carbon;
 use App\Models\PersonalChatroom;
-use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use App\Jobs\ProcessTemplate1BulkWAMessages;
+use App\Jobs\ProcessTemplate2BulkWAMessages;
+use App\Jobs\ProcessTemplate3BulkWAMessages;
 
 class DashboardController extends Controller
 {
@@ -521,12 +530,180 @@ class DashboardController extends Controller
         }
     }
 
+    public function wa_number($username)
+    {
+        $whatsapp_numbers = WhatsappNumber::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+
+        $_whatsapp_numbers = $whatsapp_numbers->map(function ($whatsapp_number) {
+            $full_jwt_session = explode(':', $whatsapp_number->full_jwt_session);
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $full_jwt_session[1]
+            ])->get('http://localhost:1000/api/' . $full_jwt_session[0] . '/check-connection-session');
+            $data = $response->json();
+
+            // re-generate jwt
+            if (array_key_exists('error', $data)) {
+                $response = Http::post(
+                    'http://localhost:1000/api/' . $whatsapp_number->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+                );
+                $data = $response->json();
+
+                // update full_jwt_session
+                $wa_number = WhatsappNumber::find($whatsapp_number->id);
+                $wa_number->update([
+                    'full_jwt_session' => $data['full']
+                ]);
+
+                $full_jwt_session = explode(':', $data['full']);
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $full_jwt_session[1]
+                ])->get('http://localhost:1000/api/' . $full_jwt_session[0] . '/check-connection-session');
+
+                $data = $response->json();
+
+                return [
+                    'id' => $whatsapp_number->id,
+                    'phone_number' => $whatsapp_number->phone_number,
+                    'full_jwt_session' => $whatsapp_number->full_jwt_session,
+                    'status' => $data['message'],
+                    'created_at' => $whatsapp_number->created_at,
+                    'updated_at' => $whatsapp_number->updated_at
+                ];
+            }
+
+            return [
+                'id' => $whatsapp_number->id,
+                'phone_number' => $whatsapp_number->phone_number,
+                'full_jwt_session' => $whatsapp_number->full_jwt_session,
+                'status' => $data['message'],
+                'created_at' => $whatsapp_number->created_at,
+                'updated_at' => $whatsapp_number->updated_at
+            ];
+        })->all();
+
+        return view('dashboard.wa-number.index', ['whatsapp_numbers' => $_whatsapp_numbers]);
+    }
+
+    public function generate_wa_qr(Request $request, $username)
+    {
+        $full_jwt_session = explode(':', $request->full_jwt_session);
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $full_jwt_session[1]
+        ])->post('http://localhost:1000/api/' . $full_jwt_session[0] . '/start-session');
+        $data = $response->json();
+
+        return response()->json($data, 200);
+    }
+
+    public function logout_wa_session(Request $request, $username)
+    {
+        $full_jwt_session = explode(':', $request->full_jwt_session);
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $full_jwt_session[1]
+        ])->post('http://localhost:1000/api/' . $full_jwt_session[0] . '/logout-session');
+        $data = $response->json();
+
+        return response()->json($data, 200);
+    }
+
+    public function check_wa_session_connection(Request $request, $username)
+    {
+        $full_jwt_session = explode(':', $request->full_jwt_session);
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $full_jwt_session[1]
+        ])->get('http://localhost:1000/api/' . $full_jwt_session[0] . '/check-connection-session');
+
+        $data = $response->json();
+
+        return response()->json($data, 200);
+    }
+
+    public function create_wa_number(Request $request, $username)
+    {
+        // validate
+        $request->validate([
+            'phone_number' => 'required|unique:whatsapp_numbers'
+        ]);
+
+        $wa_number = new WhatsappNumber();
+        $wa_number->phone_number = $request->phone_number;
+
+        $response = Http::post(
+            'http://localhost:1000/api/' . $request->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+        );
+        $data = $response->json();
+
+        $wa_number->full_jwt_session = $data['full'];
+        $wa_number->user_id = Auth::user()->id;
+
+        $wa_number->save();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The WA Number added successfully.'
+        ]);
+    }
+
+    public function update_wa_number(Request $request, $username)
+    {
+        // validate
+        $request->validate([
+            'phone_number' => 'required|unique:whatsapp_numbers'
+        ]);
+
+        $wa_number = WhatsappNumber::find($request->id);
+
+        $response = Http::post(
+            'http://localhost:1000/api/' . $request->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+        );
+        $data = $response->json();
+
+        $wa_number->update([
+            'phone_number' => $request->phone_number,
+            'full_jwt_session' => $data['full'],
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The WA Number updated successfully.'
+        ]);
+    }
+
+    public function delete_wa_number(Request $request, $username)
+    {
+        $wa_number = WhatsappNumber::find($request->id);
+
+        $wa_number->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The WA Number deleted successfully.'
+        ]);
+    }
+
     public function whatsapp_automation($username)
     {
-        $whatsappAutomations = SmsCampaign::latest()->where('user_id', Auth::user()->id)->where('sms_type', 'whatsapp')->cursor();
+        $whatsapp_campaigns = WaCampaigns::where('user_id', Auth::user()->id)->get();
+
         return view('dashboard.whatsappAutomation', [
             'username' => $username,
-            'whatsappAutomations' => $whatsappAutomations
+            'whatsapp_campaigns' => $whatsapp_campaigns
+        ]);
+    }
+
+    public function whatsapp_automation_campaign(Request $request, $username)
+    {
+        $wa_campaign = WaCampaigns::find($request->campaign_id);
+        $wa_queues = WaQueues::where('wa_campaign_id', $request->campaign_id)->orderBy('updated_at', 'DESC')->get();
+
+        return view('dashboard.whatsappAutomationOverview', [
+            'username' => $username,
+            'wa_campaign' => $wa_campaign,
+            'wa_queues' => $wa_queues,
         ]);
     }
 
@@ -534,10 +711,307 @@ class DashboardController extends Controller
     {
         $contact_lists = \App\Models\ContactList::where('user_id', Auth::user()->id)->get();
         $integrations = Integration::latest()->where('user_id', Auth::user()->id)->get();
+
+        $whatsapp_numbers = WhatsappNumber::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+
+        $_whatsapp_numbers = $whatsapp_numbers->map(function ($whatsapp_number) {
+            $full_jwt_session = explode(':', $whatsapp_number->full_jwt_session);
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $full_jwt_session[1]
+            ])->get('http://localhost:1000/api/' . $full_jwt_session[0] . '/check-connection-session');
+            $data = $response->json();
+
+            // re-generate jwt
+            if (array_key_exists('error', $data)) {
+                $response = Http::post(
+                    'http://localhost:1000/api/' . $whatsapp_number->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+                );
+                $data = $response->json();
+
+                // update full_jwt_session
+                $wa_number = WhatsappNumber::find($whatsapp_number->id);
+                $wa_number->update([
+                    'full_jwt_session' => $data['full']
+                ]);
+
+                $full_jwt_session = explode(':', $data['full']);
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $full_jwt_session[1]
+                ])->get('http://localhost:1000/api/' . $full_jwt_session[0] . '/check-connection-session');
+
+                $data = $response->json();
+
+                return [
+                    'id' => $whatsapp_number->id,
+                    'phone_number' => $whatsapp_number->phone_number,
+                    'full_jwt_session' => $whatsapp_number->full_jwt_session,
+                    'status' => $data['message'],
+                    'created_at' => $whatsapp_number->created_at,
+                    'updated_at' => $whatsapp_number->updated_at
+                ];
+            }
+
+            return [
+                'id' => $whatsapp_number->id,
+                'phone_number' => $whatsapp_number->phone_number,
+                'full_jwt_session' => $whatsapp_number->full_jwt_session,
+                'status' => $data['message'],
+                'created_at' => $whatsapp_number->created_at,
+                'updated_at' => $whatsapp_number->updated_at
+            ];
+        })->all();
+
+
+
         return view('dashboard.sendbroadcast', [
             'username' => $username,
             'contact_lists' => $contact_lists,
+            'whatsapp_numbers' => $_whatsapp_numbers,
             'integrations' => $integrations
+        ]);
+    }
+
+    public function sendbroadcastcreate(Request $request, $username)
+    {
+        // validations
+        $request->validate([
+            'campaign_name' => 'required',
+            'whatsapp_account' => 'required',
+            'contact_list' => 'required',
+            'template' => 'required',
+        ]);
+        $this->template_validate($request);
+        $request->validate(['message_timing' => 'required']);
+
+        $whatsapp_account = explode('-', $request->whatsapp_account);
+
+        if ($whatsapp_account[2] != "Connected") return back()->with([
+            'type' => 'danger',
+            'message' => 'The WA account is not connected. Connect and try again'
+        ]);
+
+        // get contact list
+        $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
+        $wa_campaign_receivers = $contacts->map(function ($_contact) {
+            return $_contact->phone_number;
+        });
+
+        if ($request->message_timing == 'Immediately') {
+            if ($request->template == 'template1') {
+                // create new row on campaign table
+                $waCaimpagn = new WaCampaigns();
+                $waCaimpagn->name = $request->campaign_name;
+                $waCaimpagn->whatsapp_account = $whatsapp_account[1];
+                $waCaimpagn->user_id = Auth::user()->id;
+                $waCaimpagn->receivers = $wa_campaign_receivers;
+                $waCaimpagn->template = $request->template;
+                $waCaimpagn->template1_message = $request->template1_message;
+                $waCaimpagn->message_timing = $request->message_timing;
+                $waCaimpagn->save();
+
+                // build each wa queue data based on contacts
+                $wa_queue = $contacts->map(function ($_contact) use ($waCaimpagn) {
+                    $timestamp = Carbon::now();
+
+                    return [
+                        'wa_campaign_id' => $waCaimpagn->id,
+                        'phone_number' => $_contact->phone_number,
+                        'status' => 'Waiting',
+                        'created_at' => $timestamp,
+                        'updated_at' => $timestamp,
+                    ];
+                })->toArray();
+                // bulk insert
+                WaQueues::insert($wa_queue);
+
+                // dispatch job
+                ProcessTemplate1BulkWAMessages::dispatch($contacts, $request->whatsapp_account, [
+                    'template1_message' => $request->template1_message,
+                    'wa_campaign_id' => $waCaimpagn->id
+                ])->onQueue('waTemplate1');
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'The WA campaign has been created and execution will begin soon.'
+                ]);
+            }
+
+            if ($request->template == 'template2') {
+                // create new row on campaign table
+                $waCaimpagn = new WaCampaigns();
+                $waCaimpagn->name = $request->campaign_name;
+                $waCaimpagn->whatsapp_account = $whatsapp_account[1];
+                $waCaimpagn->user_id = Auth::user()->id;
+                $waCaimpagn->receivers = $wa_campaign_receivers;
+                $waCaimpagn->template = $request->template;
+                $waCaimpagn->template2_message = $request->template2_message;
+
+                // filename 
+                $file = $request->file('template2_file');
+                $path = $file->storeAs(
+                    '/public/WAfiles',
+                    substr(md5(mt_rand()), 0, 7) . '-' . $file->getClientOriginalName()
+                );
+
+                $waCaimpagn->template2_file = $path;
+                $waCaimpagn->message_timing = $request->message_timing;
+                $waCaimpagn->save();
+
+                // build each wa queue data based on contacts
+                $wa_queue = $contacts->map(function ($_contact) use ($waCaimpagn) {
+                    $timestamp = Carbon::now();
+
+                    return [
+                        'wa_campaign_id' => $waCaimpagn->id,
+                        'phone_number' => $_contact->phone_number,
+                        'status' => 'Waiting',
+                        'created_at' => $timestamp,
+                        'updated_at' => $timestamp,
+                    ];
+                })->toArray();
+                // bulk insert
+                WaQueues::insert($wa_queue);
+
+                // dispatch job
+                ProcessTemplate2BulkWAMessages::dispatch($contacts, $request->whatsapp_account, [
+                    'template2_message' => $request->template2_message,
+                    'template2_file' => $path,
+                    'wa_campaign_id' => $waCaimpagn->id
+                ])->onQueue('waTemplate2');
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'The WA campaign has been created and execution will begin soon.'
+                ]);
+            }
+
+            if ($request->template == 'template3') {
+                // create new row on campaign table
+                // create new row on campaign table
+                $waCaimpagn = new WaCampaigns();
+                $waCaimpagn->name = $request->campaign_name;
+                $waCaimpagn->whatsapp_account = $whatsapp_account[1];
+                $waCaimpagn->user_id = Auth::user()->id;
+                $waCaimpagn->receivers = $wa_campaign_receivers;
+                $waCaimpagn->template = $request->template;
+                $waCaimpagn->template3_header = $request->template3_header;
+                $waCaimpagn->template3_message = $request->template3_message;
+                $waCaimpagn->template3_footer = $request->template3_footer;
+                $waCaimpagn->template3_link_url = $request->template3_link_url;
+                $waCaimpagn->template3_link_cta = $request->template3_link_cta;
+                $waCaimpagn->template3_phone_number = $request->template3_phone_number;
+                $waCaimpagn->template3_phone_cta = $request->template3_phone_cta;
+                $waCaimpagn->message_timing = $request->message_timing;
+                $waCaimpagn->save();
+
+                // build each wa queue data based on contacts
+                $wa_queue = $contacts->map(function ($_contact) use ($waCaimpagn) {
+                    $timestamp = Carbon::now();
+
+                    return [
+                        'wa_campaign_id' => $waCaimpagn->id,
+                        'phone_number' => $_contact->phone_number,
+                        'status' => 'Waiting',
+                        'created_at' => $timestamp,
+                        'updated_at' => $timestamp,
+                    ];
+                })->toArray();
+                // bulk insert
+                WaQueues::insert($wa_queue);
+
+                // dispatch job
+                ProcessTemplate3BulkWAMessages::dispatch($contacts, $request->whatsapp_account, [
+                    'template3_header' => $request->template3_header,
+                    'template3_message' => $request->template3_message,
+                    'template3_footer' => $request->template3_footer,
+                    'template3_link_url' => $request->template3_link_url,
+                    'template3_link_cta' => $request->template3_link_cta,
+                    'template3_phone_number' => $request->template3_phone_number,
+                    'template3_phone_cta' => $request->template3_phone_cta,
+                    'wa_campaign_id' => $waCaimpagn->id
+                ])->onQueue('waTemplate3');
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'The WA campaign has been created and execution will begin soon.'
+                ]);
+            }
+        }
+
+        if ($request->message_timing == 'Schedule') {
+            if ($request->template == 'template1') {
+            }
+
+            if ($request->template == 'template2') {
+            }
+
+            if ($request->template == 'template3') {
+            }
+        }
+    }
+
+    public function editWAbroadcast(Request $request, $username)
+    {
+        $request->validate(['name' => 'required']);
+
+        $whatsapp_campaign = WaCampaigns::find($request->id);
+
+        $whatsapp_campaign->update([
+            'name' => $request->name
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The WA campaign has been updated successfully.'
+        ]);
+    }
+
+    public function deleteWAbroadcast(Request $request, $username)
+    {
+        $whatsapp_campaign = WaCampaigns::find($request->id);
+
+        if (count($whatsapp_campaign->wa_queues->where('status', 'Waiting')) > 0) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'The WA campaign can\'t be deleted during execution.'
+            ]);
+        }
+
+        // delete all related wa_queues
+        $whatsapp_campaign->wa_queues()->delete();
+
+        // delete campaign
+        $whatsapp_campaign->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The WA campaign has been deleted successfully.'
+        ]);
+    }
+
+    public function template_validate(Request $request)
+    {
+        // validation for template 1
+        if ($request->template == 'template1') $request->validate([
+            'template1_message' => 'required',
+        ]);
+
+        // validation for template 2
+        if ($request->template == 'template2') $request->validate([
+            'template2_message' => 'required',
+            'template2_file' => 'required|file'
+        ]);
+
+        // validation for template 3
+        if ($request->template == 'template3') $request->validate([
+            'template3_header' => 'required',
+            'template3_message' => 'required',
+            'template3_footer' => 'required',
+            'template3_link_url' => 'required',
+            'template3_link_cta' => 'required',
+            'template3_phone_number' => 'required',
+            'template3_phone_cta' => 'required'
         ]);
     }
 

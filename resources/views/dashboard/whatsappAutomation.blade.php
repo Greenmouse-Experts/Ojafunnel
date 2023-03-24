@@ -47,22 +47,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        {{-- <div class="py-2">
-                            <h4 class="font-500">WhatsApp Automation</h4>
-                            <p>
-                                Send instant, scheduled or automated messages to your contact
-                            </p>
-                            <div class="">
-                                <div class="all-create">
-                                    <button>
-                                        <a href="{{route('user.send.broadcast', Auth::user()->username)}}">
-                                            Send Brodcast Messsage
-                                        </a>
-                                    </button>
-                                </div>
-                            </div>
-                        </div> --}}
+                        </div> 
                         <div class="d-flex account-nav">
                             {{-- <p class="ps-0">New Campaign</p> --}}
                             {{-- <p>
@@ -104,219 +89,172 @@
                                     <tr>
                                         <th scope="col">S/N</th>
                                         <th scope="col">Campaign Name</th>
+                                        <th scope="col">Whatsapp Account</th>
                                         <th scope="col">Contact</th>
                                         <th scope="col">Sent</th>
                                         <th scope="col">Failed</th>
-                                        <th scope="col">Campaign Type</th>
+                                        <th scope="col">Campaign Template</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                         <!-- <th scope="col">Opens</th> -->
                                         {{-- <th scope="col">Unsubscribed</th> --}}
                                     </tr>
-                                </thead>
-                                @foreach($whatsappAutomations as $key => $campaign)
+                                </thead>  
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">{{$loop->iteration}}</th>
-                                        <td>
-                                            <p class='text-bold-600'> {{$campaign->title}} </p>
-                                            <p class='text-muted'>Created at: {{$campaign->created_at->toDayDateTimeString()}}</p>
-                                        </td>
-                                        <td>
-                                            {{ $campaign->readCache('ContactCount') }}
-                                        </td>
-                                        <td>
-                                            {{ $campaign->readCache('DeliveredCount') }}
-                                        </td>
-                                        <td>
-                                            {{ $campaign->readCache('FailedDeliveredCount') }}
-                                        </td>
-                                        <td>
-                                            {!!$campaign->getCampaignType()!!}
-                                        </td>
-                                        <td>
-                                            {!!$campaign->getStatus()!!}
-                                        </td>
-                                        <td>
-                                            <div class="dropdown dropstart">
-                                                <button class="btn-list dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">
-                                                            Overview
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" type="button" >
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" type="button" >
-                                                            Pause
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" type="button">
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                    @forelse ($whatsapp_campaigns as $whatsapp_campaign)
+                                        <tr>
+                                            <th scope="row">{{$whatsapp_campaign->id}}</th>
+                                            <th scope="row" class="text-capitalize">{{$whatsapp_campaign->name}}</th>
+                                            <td>
+                                                <p class='text-bold-600'> {{$whatsapp_campaign->whatsapp_account}} </p> 
+                                            </td>
+                                            <td>
+                                                {{ count($whatsapp_campaign->wa_queues) }}
+                                            </td>
+                                            <td>
+                                                {{ count($whatsapp_campaign->wa_queues->where('status', 'Sent')) }}
+                                            </td>
+                                            <td>
+                                                {{ count($whatsapp_campaign->wa_queues->where('status', 'Invalid')) }}
+                                            </td>
+                                            <td>
+                                                @if ($whatsapp_campaign->template == 'template1')
+                                                    {{ 'Template 1 (Text) '}}  
+                                                @endif 
+
+                                                @if ($whatsapp_campaign->template == 'template2')
+                                                    {{ 'Template 2 (Text & File) '}}  
+                                                @endif 
+
+                                                @if ($whatsapp_campaign->template == 'template3')
+                                                    {{ 'Template 3 (Header, Text, Footer, Link, & Call) '}}  
+                                                @endif 
+                                            </td>
+                                            <td>  
+                                                @if (count($whatsapp_campaign->wa_queues->where('status', 'Waiting')) > 0)
+                                                    {{ 'Ongoing' }}
+                                                @else
+                                                    {{ 'Done' }}
+                                                @endif 
+                                            </td>
+                                            <td>
+                                                <div class="dropdown dropstart">
+                                                    <button class="btn-list dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="{{ route('user.whatsapp.automation.campaign', ['username' => Auth::user()->id, 'campaign_id' => $whatsapp_campaign->id]) }}">
+                                                                Overview
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#edit-{{ $whatsapp_campaign->id }}">
+                                                                Edit
+                                                            </a> 
+                                                        </li>
+                                                        {{-- <li>
+                                                            <a class="dropdown-item" type="button" >
+                                                                Pause
+                                                            </a>
+                                                        </li> --}}
+                                                        <li>
+                                                            <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#delete-{{ $whatsapp_campaign->id }}">
+                                                                Delete
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td> 
+                                            
+                                            {{-- modal --}}
+                                            <div class="modal fade" id="edit-{{ $whatsapp_campaign->id }}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content pb-3">
+                                                        <div class="modal-header border-bottom-0">
+                                                            <h4 class="card-title mb-4">Edit Campaign</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="Editt">
+                                                                <form action="{{ route('user.wa.campaign.edit', ['username' => Auth::user()->username ]) }}" method="POST">
+                                                                    @csrf
+                                                                    <div class="form">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 mb-4">
+                                                                                <label for="Name">Campaign name</label>
+                                                                                <input type="hidden" name="id" value="{{ $whatsapp_campaign->id }}">
+                                                                                <input type="text" name="name" value="{{ $whatsapp_campaign->name }}" placeholder="Enter your Campaign name"/>
+                                                                            </div>   
+                                                                            <div class="text-end mt-2">
+                                                                                <a href="#" class="text-decoration-none">
+                                                                                    <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                                                                        Submit
+                                                                                    </button>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </td>
-                                        {{-- <td>{{$smsAutomation->created_at->toDayDateTimeString()}}</td>
-                                        <td>{{$smsAutomation->sms_sent}}</td>
-                                        <td>{{$smsAutomation->delivered}}</td>
-                                        <td>{{$smsAutomation->not_delivered}}</td>
-                                        <!-- <td>{{$smsAutomation->opens}}</td> -->
-                                        <td>{{$smsAutomation->unsubscribed}}</td> --}}
-                                    </tr>
-                                </tbody>
-                                @endforeach
+
+                                            {{-- modal --}}
+                                            <div class="modal fade" id="delete-{{ $whatsapp_campaign->id }}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content pb-3">
+                                                        <div class="modal-header border-bottom-0">
+                                                            <h4 class="card-title mb-4">Delete Campaign</h4>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="Editt">
+                                                                <form action="{{ route('user.wa.campaign.delete', ['username' => Auth::user()->username ]) }}" method="POST">
+                                                                    @csrf 
+                                                                    <div class="form">
+                                                                        <div class="row">
+                                                                            <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to delete this campaign?</h3>
+                                                                            <div class="row justify-content-between">
+                                                                                <div class="col-6">
+                                                                                    <a href="#" class="text-decoration-none">
+                                                                                        <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                            Cancel
+                                                                                        </button></a>
+                                                                                </div>
+                                                                                <div class="col-6 text-end">
+                                                                                    <input type="hidden" name="id" value="{{ $whatsapp_campaign->id }}">
+                                                                                    <a href="#" class="text-decoration-none">
+                                                                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #BA0028"
+                                                                                            >
+                                                                                            Delete
+                                                                                        </button>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </tr>
+                                    @empty
+                                        No whatsapp automation yet!
+                                    @endforelse 
+                                </tbody> 
                             </table>
                         </div>
                     </div>
-                </div>
-                {{-- <div class="col-lg-8">
-                    <div class="Edit">
-                        <div class="form">
-                            <div class="row">
-                                <p class="tell mb-4">
-                                    <b>
-                                        Sender Accounts
-                                    </b> <br>
-                                    <span>
-                                        Add one or more whatsapp number to start your automation
-                                    </span>
-                                </p>
-                                <div class="col-lg-12">
-                                    <label>Whatsapp Number</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="col-md-8"></div>
-                                            <div class="col-md-4">
-                                                <div class="boding">
-                                                    <button data-bs-toggle="modal" data-bs-target="#emailConfirm">
-                                                        Add New
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="Edit">
-                            <div class="form">
-                                <div class="row">
-                                    <p class="tell mb-4">
-                                        <b>
-                                            Sending Configuration
-                                        </b> <br>
-                                        <span>
-                                            Reduce the chances of geting blocked by setting the speed for bulk
-                                            messages
-                                        </span>
-                                    </p>
-                                    <div class="col-lg-12">
-                                        <label>Connection Speed :</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <select>
-                                                    <option>
-                                                        Fast
-                                                    </option>
-                                                    <option> Low </option>
-                                                    <option> Medium </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="col-md-8"></div>
-                                            <div class="col-md-4">
-                                                <div class="boding">
-                                                    <button>
-                                                        <a href="" style="color: #fff;">
-                                                            Update Setting
-                                                        </a>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+                </div> 
                 <div class="col-lg-2"></div>
             </div>
         </div>
-    </div>
-    <!-- End Page-content -->
-    <!-- email confirm modal -->
-    <div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Add Whatsapp Number
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
-                            <div class="form">
-                                <div class="col-lg-12">
-                                    <label>Phone Number</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <label>Description</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <textarea name="" placeholder="Enter a description, eg for book sales" id="" cols="30" rows="5"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row justify-content-between">
-                                    <div class="col-6">
-                                        <a href="#" class="text-decoration-none">
-                                            <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                Cancel
-                                            </button></a>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <a href="#" class="text-decoration-none">
-                                            <button class="btn px-4" style="color: #ffffff; background-color: #714091">
-                                                Save Number
-                                            </button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<!-- end modal -->
+    </div> 
 <style>
     .btn-list{
         border: 0;
