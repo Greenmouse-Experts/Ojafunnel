@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\WaCampaigns;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class WhatsappNumber extends Model
+class WaQueues extends Model
 {
     use HasFactory;
 
@@ -15,10 +16,13 @@ class WhatsappNumber extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'wa_campaign_id',
         'phone_number',
-        'full_jwt_session',
-        'user_id',
+        'status'
     ];
 
-    protected $guarded = [];
+    public function wa_campaign()
+    {
+        return $this->belongsTo(WaCampaigns::class);
+    }
 }
