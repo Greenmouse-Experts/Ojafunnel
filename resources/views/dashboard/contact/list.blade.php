@@ -311,6 +311,7 @@
                                         <td>{{$smsAutomation->unsubscribed}}</td> --}}
                                     </tr>
                                     @endforeach
+                                </tbody>
                                 </tbody> 
                             </table>
                         </div>

@@ -161,7 +161,7 @@
                                                         <label for="Time">End Time</label>
                                                         <input type="Time" name="recurring_time" />
                                                     </div>
-                                                </div>
+                                                </div>              
                                             </div>
                                         </div>
                                     </div>

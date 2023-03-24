@@ -400,9 +400,7 @@ class DashboardController extends Controller
 
     public function sms_automation($username)
     {
-        $smsAutomations = SmsCampaign::latest()->where('user_id', Auth::user()->id);
-
-        dd($smsAutomations);
+        $smsAutomations = SmsCampaign::latest()->where('user_id', Auth::user()->id)->where('sms_type', 'plain')->cursor();
 
         return view('dashboard.smsAutomation', [
             'username' => $username,
