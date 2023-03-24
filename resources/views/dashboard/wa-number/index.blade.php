@@ -71,17 +71,23 @@
                                                     {{ $whatsapp_number['status'] }}
                                                 </td>
                                                 <td>
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        </button>
-                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit-{{ $whatsapp_number['id'] }}" type="button">Edit</a></li>
+                                                    <div class="dropdown"> 
+                                                        <ul class="list-unstyled hstack gap-1 mb-0"> 
+                                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                                <a href="#edit-{{ $whatsapp_number['id'] }}" data-bs-toggle="modal" class="btn btn-sm btn-soft-info"><i class="mdi mdi-pencil-outline"></i></a>
+                                                            </li>
                                                             @if ($whatsapp_number['status'] == 'Connected')
-                                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#disconnect-{{ $whatsapp_number['id'] }}" type="button">Disconnect</a></li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Disconnect">
+                                                                    <a href="#disconnect-{{ $whatsapp_number['id'] }}" data-bs-toggle="modal" class="btn btn-sm btn-soft-primary"><i class="bi bi-power"></i></a>
+                                                                </li> 
                                                             @else
-                                                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#connect-{{ $whatsapp_number['id'] }}" type="button">Connect</a></li>
+                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Connect">
+                                                                    <a href="#connect-{{ $whatsapp_number['id'] }}" data-bs-toggle="modal" class="btn btn-sm btn-soft-primary"><i class="bi bi-arrow-repeat"></i></a>
+                                                                </li>
                                                             @endif 
-                                                            <li><a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#delete-{{ $whatsapp_number['id'] }}">Delete</a></li>
+                                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                                <a href="#delete-{{ $whatsapp_number['id'] }}" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                            </li>
                                                         </ul>
 
                                                         {{-- modal --}}

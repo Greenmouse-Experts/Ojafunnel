@@ -168,35 +168,22 @@
                                             </td>
                                             <td>  
                                                 @if (count($whatsapp_campaign->wa_queues->where('status', 'Waiting')) > 0)
-                                                    {{ 'Ongoing' }}
+                                                    <span class="badge bg-info font-size-10">{{ 'Ongoing' }}</span>
                                                 @else
-                                                    {{ 'Done' }}
+                                                    <span class="badge bg-success font-size-10">{{ 'Completed' }}</span>
                                                 @endif 
                                             </td>
                                             <td>
-                                                <div class="dropdown dropstart">
-                                                    <button class="btn-list dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li>
-                                                            <a class="dropdown-item" href="{{ route('user.whatsapp.automation.campaign', ['username' => Auth::user()->id, 'campaign_id' => $whatsapp_campaign->id]) }}">
-                                                                Overview
-                                                            </a>
+                                                <div class="dropdown dropstart"> 
+                                                    <ul class="list-unstyled hstack gap-1 mb-0"> 
+                                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Overview">
+                                                            <a href="{{ route('user.whatsapp.automation.campaign', ['username' => Auth::user()->id, 'campaign_id' => $whatsapp_campaign->id]) }}" class="btn btn-sm btn-soft-info"><i class="mdi mdi-eye-outline"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#edit-{{ $whatsapp_campaign->id }}">
-                                                                Edit
-                                                            </a> 
-                                                        </li>
-                                                        {{-- <li>
-                                                            <a class="dropdown-item" type="button" >
-                                                                Pause
-                                                            </a>
-                                                        </li> --}}
-                                                        <li>
-                                                            <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#delete-{{ $whatsapp_campaign->id }}">
-                                                                Delete
-                                                            </a>
+                                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                            <a href="#edit-{{ $whatsapp_campaign->id }}" data-bs-toggle="modal" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-pencil-outline"></i></a>
+                                                        </li>  
+                                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                            <a href="#delete-{{ $whatsapp_campaign->id }}" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
                                                         </li>
                                                     </ul>
                                                 </div>

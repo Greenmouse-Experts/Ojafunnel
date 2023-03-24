@@ -95,7 +95,21 @@
                                                 {{ $wa_queue->phone_number }}
                                             </td>
                                             <td>
-                                                {{ $wa_queue->status }}
+                                                @if ($wa_queue->status == 'Sent')
+                                                    <span class="badge bg-success font-size-10">{{ $wa_queue->status }}</span>
+                                                @endif
+                                                
+                                                @if ($wa_queue->status == 'Waiting')
+                                                    <span class="badge bg-info font-size-10">{{ $wa_queue->status }}</span>
+                                                @endif 
+
+                                                @if ($wa_queue->status == 'Invalid')
+                                                    <span class="badge bg-danger font-size-10">{{ $wa_queue->status }}</span>
+                                                @endif 
+
+                                                @if ($wa_queue->status == 'Disconnected')
+                                                    <span class="badge bg-danger font-size-10">{{ $wa_queue->status }}</span>
+                                                @endif 
                                             </td> 
                                         </tr>
                                     @empty

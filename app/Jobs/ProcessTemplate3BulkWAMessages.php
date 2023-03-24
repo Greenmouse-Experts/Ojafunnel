@@ -46,66 +46,84 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
         $data = $this->data;
         $wa_campaign_id = $this->data['wa_campaign_id'];
 
-        $this->contacts->map(function ($_contact) use ($whatsapp_account, $full_jwt_session, $data, $wa_campaign_id) {
-            $contact = strpos($_contact->phone_number, '+') === 0
-                ? substr($_contact->phone_number, 1) . "@c.us"
-                : $_contact->phone_number  . "@c.us";
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $full_jwt_session[1]
+        ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account[1] . '/check-connection-session');
+        $res = $response->json();
 
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $full_jwt_session[1]
-            ])->post(
-                env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account[1] . '/send-message',
-                [
-                    "phone" => $contact,
-                    "message" => $data['template3_message'],
-                    "options" => [
-                        "useTemplateButtons" => true,
-                        "title" =>  $data['template3_header'],
-                        "footer" =>  $data['template3_footer'],
-                        "buttons" => [
-                            [
-                                "url" =>  $data['template3_link_url'],
-                                "text" =>  $data['template3_link_cta']
-                            ],
-                            [
-                                "phoneNumber" =>  $data['template3_phone_number'],
-                                "text" => $data['template3_phone_cta']
-                            ]
-                        ],
-                    ]
-                ]
-            );
-
-            $data = $response->json();
-
-            if (array_key_exists('message', $data)) {
-                // invalid 
-                if (str_ends_with($data['message'], 'não existe.')) {
-                    // invalid
-                    WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number])->update([
-                        'status' => 'Invalid'
-                    ]);
-                }
-
-                // disconnect
-                if (str_ends_with($data['message'], 'não está ativa.')) {
-                    // send mail for schedule if disconnected
-
-                    // disconnect
-                    WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number])->update([
-                        'status' => 'Disconnected'
-                    ]);
-                }
-            }
-
-            // sent
-            if (array_key_exists('response', $data)) {
-                if ($data['response'] != null) WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number])->update([
-                    'status' => 'Sent'
+        // check connection
+        if (array_key_exists('status', $res) && array_key_exists('message', $res)) {
+            if ($res['status'] == false && $res['message'] == 'Disconnected') {
+                // update the wa queues to disconnected
+                WaQueues::where(['wa_campaign_id' => $wa_campaign_id])->update([
+                    'status' => 'Disconnected'
                 ]);
-            }
 
-            Log::info($data);
-        });
+                // send mail to inform that their whatsapp account is not connected
+            } else {
+                // start sending
+                $this->contacts->map(function ($_contact) use ($whatsapp_account, $full_jwt_session, $data, $wa_campaign_id) {
+                    $contact = strpos($_contact->phone_number, '+') === 0
+                        ? substr($_contact->phone_number, 1) . "@c.us"
+                        : $_contact->phone_number  . "@c.us";
+
+                    $response = Http::withHeaders([
+                        'Authorization' => 'Bearer ' . $full_jwt_session[1]
+                    ])->post(
+                        env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account[1] . '/send-message',
+                        [
+                            "phone" => $contact,
+                            "message" => $data['template3_message'],
+                            "options" => [
+                                "useTemplateButtons" => true,
+                                "title" =>  $data['template3_header'],
+                                "footer" =>  $data['template3_footer'],
+                                "buttons" => [
+                                    [
+                                        "url" =>  $data['template3_link_url'],
+                                        "text" =>  $data['template3_link_cta']
+                                    ],
+                                    [
+                                        "phoneNumber" =>  $data['template3_phone_number'],
+                                        "text" => $data['template3_phone_cta']
+                                    ]
+                                ],
+                            ]
+                        ]
+                    );
+
+                    $data = $response->json();
+
+                    if (array_key_exists('message', $data)) {
+                        // invalid 
+                        if (str_ends_with($data['message'], 'não existe.')) {
+                            // invalid
+                            WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number])->update([
+                                'status' => 'Invalid'
+                            ]);
+                        }
+
+                        // disconnect
+                        if (str_ends_with($data['message'], 'não está ativa.')) {
+                            // send mail for schedule if disconnected
+
+                            // disconnect
+                            WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number])->update([
+                                'status' => 'Disconnected'
+                            ]);
+                        }
+                    }
+
+                    // sent
+                    if (array_key_exists('response', $data)) {
+                        if ($data['response'] != null) WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number])->update([
+                            'status' => 'Sent'
+                        ]);
+                    }
+
+                    Log::info($data);
+                });
+            }
+        }
     }
 }

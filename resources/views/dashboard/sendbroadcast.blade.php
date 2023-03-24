@@ -215,11 +215,11 @@
                                     <div class="col-12" id="schedule" style="display: none;">
                                         <div class="row">
                                             <div class="col-md-6 mt-4">
-                                                <label for="Time">Date</label>
+                                                <label for="Time">Start Date</label>
                                                 <input type="date" name="schedule_date" />
                                             </div>
                                             <div class="col-md-6 mt-4">
-                                                <label for="Time">Time</label>
+                                                <label for="Time">Start Time</label>
                                                 <input type="Time" name="schedule_time" />
                                             </div>
                                             <div class="col-md-12 mt-5">
