@@ -539,13 +539,13 @@ class DashboardController extends Controller
 
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $full_jwt_session[1]
-            ])->get('http://localhost:1000/api/' . $full_jwt_session[0] . '/check-connection-session');
+            ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
             $data = $response->json();
 
             // re-generate jwt
             if (array_key_exists('error', $data)) {
                 $response = Http::post(
-                    'http://localhost:1000/api/' . $whatsapp_number->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+                    env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_number->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
                 );
                 $data = $response->json();
 
@@ -558,7 +558,7 @@ class DashboardController extends Controller
                 $full_jwt_session = explode(':', $data['full']);
                 $response = Http::withHeaders([
                     'Authorization' => 'Bearer ' . $full_jwt_session[1]
-                ])->get('http://localhost:1000/api/' . $full_jwt_session[0] . '/check-connection-session');
+                ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
 
                 $data = $response->json();
 
@@ -591,7 +591,7 @@ class DashboardController extends Controller
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $full_jwt_session[1]
-        ])->post('http://localhost:1000/api/' . $full_jwt_session[0] . '/start-session');
+        ])->post(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/start-session');
         $data = $response->json();
 
         return response()->json($data, 200);
@@ -603,7 +603,7 @@ class DashboardController extends Controller
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $full_jwt_session[1]
-        ])->post('http://localhost:1000/api/' . $full_jwt_session[0] . '/logout-session');
+        ])->post(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/logout-session');
         $data = $response->json();
 
         return response()->json($data, 200);
@@ -615,7 +615,7 @@ class DashboardController extends Controller
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $full_jwt_session[1]
-        ])->get('http://localhost:1000/api/' . $full_jwt_session[0] . '/check-connection-session');
+        ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
 
         $data = $response->json();
 
@@ -633,7 +633,7 @@ class DashboardController extends Controller
         $wa_number->phone_number = $request->phone_number;
 
         $response = Http::post(
-            'http://localhost:1000/api/' . $request->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+            env('WA_BASE_ENDPOINT') . '/api/' . $request->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
         );
         $data = $response->json();
 
@@ -658,7 +658,7 @@ class DashboardController extends Controller
         $wa_number = WhatsappNumber::find($request->id);
 
         $response = Http::post(
-            'http://localhost:1000/api/' . $request->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+            env('WA_BASE_ENDPOINT') . '/api/' . $request->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
         );
         $data = $response->json();
 
@@ -719,13 +719,13 @@ class DashboardController extends Controller
 
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $full_jwt_session[1]
-            ])->get('http://localhost:1000/api/' . $full_jwt_session[0] . '/check-connection-session');
+            ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
             $data = $response->json();
 
             // re-generate jwt
             if (array_key_exists('error', $data)) {
                 $response = Http::post(
-                    'http://localhost:1000/api/' . $whatsapp_number->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+                    env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_number->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
                 );
                 $data = $response->json();
 
@@ -738,7 +738,7 @@ class DashboardController extends Controller
                 $full_jwt_session = explode(':', $data['full']);
                 $response = Http::withHeaders([
                     'Authorization' => 'Bearer ' . $full_jwt_session[1]
-                ])->get('http://localhost:1000/api/' . $full_jwt_session[0] . '/check-connection-session');
+                ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
 
                 $data = $response->json();
 

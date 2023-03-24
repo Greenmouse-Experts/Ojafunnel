@@ -60,7 +60,7 @@ class ProcessTemplate2BulkWAMessages implements ShouldQueue
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $full_jwt_session[1]
             ])->attach('file', $file, $filename)->post(
-                'http://localhost:1000/api/' . $whatsapp_account[1] . '/send-file',
+                env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account[1] . '/send-file',
                 [
                     "phone" => $contact,
                     "message" => $data['template2_message'],

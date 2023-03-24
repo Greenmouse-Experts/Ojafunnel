@@ -655,11 +655,13 @@ Route::prefix('{username}')->group(function () {
 
             Route::prefix('/withdrawal')->group(
                 function () {
-                        Route::get('/', [App\Http\Controllers\DashboardController::class, 'withdrawal'])->name('user.withdrawal');
-                        Route::get('/bank', [App\Http\Controllers\DashboardController::class, 'bank'])->name('user.bank.details');
-                        Route::get('/other_payment_method', [App\Http\Controllers\DashboardController::class, 'other_payment_method'])->name('user.other.payment.method');
-                        Route::get('/direct_us_bank', [App\Http\Controllers\DashboardController::class, 'direct_us_bank'])->name('user.direct.us.bank');
-                    }
+                    Route::get('/', [App\Http\Controllers\DashboardController::class, 'withdrawal'])->name('user.withdrawal');
+                    Route::get('/bank', [App\Http\Controllers\DashboardController::class, 'bank'])->name('user.bank.details');
+                    Route::get('/other_payment_method', [App\Http\Controllers\DashboardController::class, 'other_payment_method'])->name('user.other.payment.method');
+                    Route::get('/direct_us_bank', [App\Http\Controllers\DashboardController::class, 'direct_us_bank'])->name('user.direct.us.bank');
+                    Route::get('/paystack', [App\Http\Controllers\DashboardController::class, 'paystack'])->name('user.paystack');
+                    Route::get('/paypal', [App\Http\Controllers\DashboardController::class, 'paypal'])->name('user.paypal');
+                }
             );
 
             Route::prefix('/support')->group(

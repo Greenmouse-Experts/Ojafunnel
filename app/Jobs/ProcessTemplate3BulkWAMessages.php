@@ -54,7 +54,7 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $full_jwt_session[1]
             ])->post(
-                'http://localhost:1000/api/' . $whatsapp_account[1] . '/send-message',
+                env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account[1] . '/send-message',
                 [
                     "phone" => $contact,
                     "message" => $data['template3_message'],
