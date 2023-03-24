@@ -98,6 +98,9 @@ Route::prefix('user')->group(function () {
     Route::post('/withdrawal/update/bank/{id}', [App\Http\Controllers\TransactionController::class, 'update_bank_information'])->name('user.update.bank.details');
     Route::post('/withdrawal/delete/bank/{id}', [App\Http\Controllers\TransactionController::class, 'delete_bank_information'])->name('user.delete.bank.details');
     Route::post('/withdrawal/add/us/bank', [App\Http\Controllers\TransactionController::class, 'add_us_bank_information'])->name('user.add.us.bank.details');
+    Route::post('/withdrawal/add/paystack', [App\Http\Controllers\TransactionController::class, 'add_paystack'])->name('user.add.paystack');
+    Route::post('/withdrawal/update/paystack/{id}', [App\Http\Controllers\TransactionController::class, 'update_paystack'])->name('user.update.paystack');
+    Route::post('/withdrawal/add/paypal', [App\Http\Controllers\TransactionController::class, 'add_paypal'])->name('user.add.paypal');
     Route::post('/withdrawal/withdraw', [App\Http\Controllers\TransactionController::class, 'withdraw'])->name('user.withdraw');
     Route::post('/withdrawal/delete/withdraw/{id}', [App\Http\Controllers\TransactionController::class, 'delete_withdraw'])->name('user.delete.withdraw');
 }); 

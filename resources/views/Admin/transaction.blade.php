@@ -27,7 +27,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
-                            <h4 class="font-500">Transactions Histroy</h4>
+                            <h4 class="font-500">Transactions History</h4>
                         </div>
                     </div>
                 </div>

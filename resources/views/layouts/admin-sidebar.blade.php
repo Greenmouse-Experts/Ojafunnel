@@ -59,14 +59,14 @@
                                 <li><a href="{{route('unsubscribe.log')}}" key="t-full-calendar">Unsubcribe Log</a></li>
                             </ul>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Setting</a>
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="{{route('setting.general')}}" key="t-full-calendar">All Setting</a></li>
                                 <li><a href="{{route('payment.gateway')}}" key="t-full-calendar">Payment Gateway</a></li>
                                 <li><a href="{{route('plugin')}}" key="t-full-calendar">Plugins</a></li>
                             </ul>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
                 <li>
@@ -74,6 +74,16 @@
                         <i class="bi bi-view-list"></i>
                         <span key="t-dashboards">Affiliate list</span>
                     </a>
+                </li>
+                <li>
+                    <a href="#" class="has-arrow">
+                        <i class="bi bi-bank"></i>
+                        <span key="t-chat">Payouts</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('pending.payouts')}}">Pending</a></li>
+                        <li><a href="{{route('finalized.payouts')}}">Finalized</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="{{route('transactions')}}">

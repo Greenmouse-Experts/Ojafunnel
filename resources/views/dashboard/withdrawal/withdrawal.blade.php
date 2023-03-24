@@ -20,26 +20,38 @@
                     </div>
                 </div>
             </div>
+            <!-- start page title -->
             <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="py-2">
-                                    <h4>Withdrawal </h4>
-                                    <p>
-                                        All your Withdrawals in one Place
-                                    </p>
-                                </div>
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="font-60">Withdrawal</h4>
+                            <p>
+                                All your Withdrawals in one Place
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <p class="cash">Explainer Video Here</p> -->
+                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                <i class="bi bi-play-btn"></i>
                             </div>
-                            <div class="col-md-3">
-                                <div class="all-create">
-                                    <a href="#">
-                                        <button type="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                                            Click To Withdraw
-                                        </button>
-                                    </a>
-                                </div>
+                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                <i class="bi bi-card-text"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="all-create">
+                                <button type="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
+                                    Click To Withdraw
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -72,7 +84,7 @@
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <p class="text-muted fw-medium">Total Withdrawal</p>
-                                        <h4 class="mb-0">₦{{number_format(App\Models\Withdrawal::latest()->where('user_id', Auth::user()->id)->sum('amount'), 2)}}</h4>
+                                        <h4 class="mb-0">₦{{number_format(App\Models\Withdrawal::latest()->where('user_id', Auth::user()->id)->where('status', '!=', 'refunded')->sum('amount'), 2)}}</h4>
                                     </div>
 
                                     <div class="flex-shrink-0 align-self-center">
@@ -137,6 +149,7 @@
                                                 {{ \Carbon\Carbon::parse($withdraw->created_at)->isoFormat('llll') }}
                                             </td>
                                             <td>
+                                                @if ($withdraw->status == 'created')
                                                 <a style="cursor: pointer;" class="btn btn-sm btn-soft-danger" data-bs-toggle="modal" data-bs-target="#delete-{{$withdraw->id}}">Delete</a>
                                                 <!-- Modal START -->
                                                 <div class="modal fade" id="delete-{{$withdraw->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
@@ -173,6 +186,9 @@
                                                     </div>
                                                 </div>
                                                 <!-- end modal -->
+                                                @else
+                                                <a class="btn btn-sm btn-soft-primary">{{$withdraw->status}}</a>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
@@ -186,7 +202,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form method="post" action="{{route('user.withdraw')}}">
@@ -227,6 +243,53 @@
                 </button>
             </div>
             </form>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<!-- end modal -->
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
+                        <div class="aller">
+                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, ducimus iste. Consequuntur doloremque voluptatem officia, quos laborum delectus atque distinctio reprehenderit earum iure. Sequi voluptate architecto libero, repellat neque deserunt assumenda sunt in sit ipsam delectus nostrum qui ratione. Laboriosam aliquid obcaecati vitae voluptatum ea minus quidem! Pariatur soluta quasi modi harum aut quas veritatis et. Necessitatibus fuga illo ipsa dicta aut nisi laborum nam at, id eveniet consectetur praesentium enim, cum dignissimos ipsum rem odio. Atque, eaque magni aut incidunt quo laudantium repudiandae quae modi officiis in, iusto suscipit fugiat rem inventore non dolorum adipisci rerum dolorem. Nulla, vero!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
         </div>
     </div>
 </div>

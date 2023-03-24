@@ -10,7 +10,44 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="start">
+            <div class="row">
+                <div class="col-lg-9 aminn">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 style="color:#000; font-weight:600;">Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}} 👋</h4>
+                            <p>
+                                Start enjoying full control of your business all in
+                                one place
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1 aminn">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <p class="cash">Explainer Video Here</p> -->
+                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                            <i class="bi bi-play-btn"></i>
+                            </div>
+                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                            <i class="bi bi-card-text"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 aminn">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="all-create">
+                                <button type="button" class="px-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    + Create
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="start">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="start-main">
@@ -40,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="content-top-div">
                 <div class="top-div">
                     <div class="Ensure row align-items-center">

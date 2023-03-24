@@ -1141,6 +1141,20 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function paystack($username)
+    {
+        return view('dashboard.withdrawal.paystack', [
+            'username' => $username
+        ]);
+    }
+
+    public function paypal($username)
+    {
+        return view('dashboard.withdrawal.paypal', [
+            'username' => $username
+        ]);
+    }
+
     public function create_course_start($username)
     {
         $categories = Category::latest()->get();
@@ -1321,7 +1335,6 @@ class DashboardController extends Controller
             'username' => $username
         ]);
     }
-
 
     public function main_notify($username)
     {

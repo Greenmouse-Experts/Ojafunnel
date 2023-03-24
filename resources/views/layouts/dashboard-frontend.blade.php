@@ -61,7 +61,6 @@
 
     <!-- Dropzone -->
 	<script type="text/javascript" src="{{ URL::asset('core/dropzone/dropzone.js') }}"></script>
-
     <!-- App Css-->
     {{-- <script src=" http://localhost:8001/core/js/autofill.js"></script> --}}
     <script type="text/javascript" src="{{ URL::asset('core/js/app.js') }}"></script>
