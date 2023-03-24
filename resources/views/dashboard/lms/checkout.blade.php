@@ -147,28 +147,28 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
-                                    <div>
-                                        <h4 class="card-title">Payment information</h4>
-                                        <p class="card-title-desc">Select payment below</p>
-                                        <div>
-                                            <div class="form-check form-check-inline font-size-16">
-                                                <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" checked>
-                                                <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Paystack</label>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3">
-                                            <div class="form-check form-check-inline font-size-16">
-                                                <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" checked>
-                                                <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Flutterwave</label>
-                                            </div>
-                                        </div>
-                                        {{-- <h5 class="mt-3 mb-3 font-size-15">For card Payment</h5> --}}
-                                        <div class="form">
-                                            <div class="row">
-                                                {{-- <div class="col-lg-6 mb-4">
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
+                                                    <div>
+                                                        <h4 class="card-title">Payment information</h4>
+                                                        <p class="card-title-desc">Select payment below</p>
+                                                        <div>
+                                                            <div class="form-check form-check-inline font-size-16">
+                                                                <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" checked>
+                                                                <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Paystack</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt-3">
+                                                            <div class="form-check form-check-inline font-size-16">
+                                                                <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" checked>
+                                                                <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Flutterwave</label>
+                                                            </div>
+                                                        </div>
+                                                        {{-- <h5 class="mt-3 mb-3 font-size-15">For card Payment</h5> --}}
+                                                        <div class="form">
+                                                            <div class="row">
+                                                                {{-- <div class="col-lg-6 mb-4">
                                                                 <label for="Name">Name on card</label>
                                                                 <input type="text" name="name" placeholder="Enter card name" required />
                                                             </div>
@@ -184,79 +184,79 @@
                                                                 <label for="Name">CVV Code</label>
                                                                 <input type="date" name="name" placeholder="Enter cvv code" required />
                                                             </div> --}}
-                                                <div class="text-end mt-2">
-                                                    <a type="button" class="text-decoration-none">
-                                                        <button type="button" class="btn px-4 py-1" id="activeconfirm" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
-                                                            Next
-                                                        </button>
-                                                    </a>
+                                                                <div class="text-end mt-2">
+                                                                    <a type="button" class="text-decoration-none">
+                                                                        <button type="button" class="btn px-4 py-1" id="activeconfirm" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
+                                                                            Next
+                                                                        </button>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-confir" role="tabpanel" aria-labelledby="v-pills-confir-tab">
+                                                    <div class="card shadow-none border mb-0">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title mb-4">Order Summary</h4>
+                                                            <div class="table-responsive">
+                                                                <table class="table align-middle mb-0 table-nowrap">
+                                                                    <thead class="tread">
+                                                                        <tr>
+                                                                            <th scope="col">Course</th>
+                                                                            <th scope="col">Course Title</th>
+                                                                            <th scope="col">Price</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @php $total = 0 @endphp
+                                                                        @if(session('cart'))
+                                                                        @foreach(session('cart') as $id => $details)
+                                                                        @php $total += $details['price'] @endphp
+                                                                        <tr>
+                                                                            <th scope="row"><img src="{{ $details['image'] ?? URL::asset('dash/assets/image/store-logo.png') }}" alt="product-img" title="product-img" class="avatar-md"></th>
+                                                                            <td>
+                                                                                <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ $details['title'] }} </a></h5>
+                                                                            </td>
+                                                                            <td>{{ $details['currency'] }}{{ number_format($details['price'], 2) }}</td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                        @endif
+                                                                        <tr>
+                                                                            <td colspan="2">
+                                                                                <h6 class="m-0 text-end">Total:</h6>
+                                                                            </td>
+                                                                            <td>
+                                                                                {{ $details['currency'] }}{{ number_format($total, 2) }}
+                                                                                <input type="hidden" id="totalAmount" value="{{ $total }}" name="">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="row mt-4">
+                                                                <div class="col-sm-6">
+                                                                    <button type="button" id="makePayment" class="btn d-none d-sm-inline-block" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
+                                                                        PLACE ORDER
+                                                                    </button>
+                                                                </div> <!-- end col -->
+                                                                <!-- end col -->
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-confir" role="tabpanel" aria-labelledby="v-pills-confir-tab">
-                                    <div class="card shadow-none border mb-0">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-4">Order Summary</h4>
-                                            <div class="table-responsive">
-                                                <table class="table align-middle mb-0 table-nowrap">
-                                                    <thead class="tread">
-                                                        <tr>
-                                                            <th scope="col">Course</th>
-                                                            <th scope="col">Course Title</th>
-                                                            <th scope="col">Price</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @php $total = 0 @endphp
-                                                        @if(session('cart'))
-                                                        @foreach(session('cart') as $id => $details)
-                                                        @php $total += $details['price'] @endphp
-                                                        <tr>
-                                                            <th scope="row"><img src="{{ $details['image'] ?? URL::asset('dash/assets/image/store-logo.png') }}" alt="product-img" title="product-img" class="avatar-md"></th>
-                                                            <td>
-                                                                <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ $details['title'] }} </a></h5>
-                                                            </td>
-                                                            <td>{{ $details['currency'] }}{{ number_format($details['price'], 2) }}</td>
-                                                        </tr>
-                                                        @endforeach
-                                                        @endif
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <h6 class="m-0 text-end">Total:</h6>
-                                                            </td>
-                                                            <td>
-                                                                {{ $details['currency'] }}{{ number_format($total, 2) }}
-                                                                <input type="hidden" id="totalAmount" value="{{ $total }}" name="">
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="row mt-4">
-                                                <div class="col-sm-6">
-                                                    <button type="button" id="makePayment" class="btn d-none d-sm-inline-block" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
-                                                        PLACE ORDER
-                                                    </button>
-                                                </div> <!-- end col -->
-                                                <!-- end col -->
-                                            </div>
-
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>          
-    </div>
-    </div>
-    <!-- End Page-content -->
+        <!-- End Page-content -->
     </div>
     <!-- Modal -->
     <div class="modal fade" id="CartDelete" tabindex="-1" aria-labelledby="CartDeleteLabel" aria-hidden="true">
@@ -334,7 +334,7 @@
         $("#makePayment").click(function() {
             if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '') {
                 $('#error').html('Please fill the asterisks field to continue');
-            } 
+            }
             var handler = PaystackPop.setup({
                 key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
                 email: $('#email').val(),
