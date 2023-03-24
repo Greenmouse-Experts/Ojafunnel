@@ -1121,12 +1121,76 @@ class AdminController extends Controller
         ]); 
     }
 
-    public function transaction_confirm($id, $response, $amount)
+    public function transaction_confirm($id, $response, $status, $description)
     {
         $payout = Withdrawal::find($id);
 
-        return $payout;
+        if($status == 'finalized')
+        {
+            $payout->description = $description;
+            $payout->status = 'finalized';
 
+            $transaction = Transaction::create([
+                'user_id' => $payout->user_id,
+                'amount' => $payout->amount,
+                'reference' => $response,
+                'status' => 'Withdrawal'
+            ]);
+
+            $payout->transaction_id = $transaction->id;
+            $payout->save();
+
+            OjafunnelNotification::create([
+                'to' => $payout->user_id,
+                'title' => config('app.name').' Withdrawal Alert',
+                'body' => $description,
+            ]);
+
+            $user = User::where('id', $payout->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $this->fcm('Withdrawal Alert', $user);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Request processed successfully.',
+            ]); 
+        }
+        if($status == 'refunded')
+        {
+            $payout->description = $description;
+            $payout->status = 'refunded';
+            $payout->save();
+
+            $user = User::find($payout->user_id);
+
+            $user->wallet += $payout->amount;
+            $user->save();
+
+            Transaction::create([
+                'user_id' => $payout->user_id,
+                'amount' => $payout->amount,
+                'reference' => 'Withdrawal request of '.$payout->amount.' has been refunded',
+                'status' => 'Withdraw Refunded'
+            ]);
+
+            OjafunnelNotification::create([
+                'to' => $payout->user_id,
+                'title' => config('app.name').' Withdrawal Alert',
+                'body' => $description,
+            ]);
+
+            $user = User::where('id', $payout->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $this->fcm('Withdrawal Alert', $user);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Request processed successfully.',
+            ]); 
+        }
+        
+        return back()->with([
+            'type' => 'danger',
+            'message' => 'Action failed.',
+        ]); 
     }
 
     public function finalized_payouts()

@@ -79,6 +79,9 @@ $admin = auth()->guard('admin')->user();
                                                                         @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'US')
                                                                         <div class="row">
                                                                             <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
+                                                                                </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Holder Name</label>
                                                                                     <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}" readonly />
@@ -101,6 +104,9 @@ $admin = auth()->guard('admin')->user();
                                                                         @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'PAYSTACK')
                                                                         <div class="row">
                                                                             <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
+                                                                                </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Holder Name</label>
                                                                                     <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}" readonly />
@@ -119,6 +125,9 @@ $admin = auth()->guard('admin')->user();
                                                                         @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'NGN')
                                                                         <div class="row">
                                                                             <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
+                                                                                </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Name</label>
                                                                                     <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}" readonly />
@@ -162,129 +171,138 @@ $admin = auth()->guard('admin')->user();
                                             </td>
                                             <td>
                                                 @if(App\Models\BankDetail::find($withdraw->payment_method)->type != 'PAYSTACK')
-                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary" data-bs-toggle="modal" data-bs-target="#process-{{$withdraw->id}}">Process</a>
-                                                <!-- Modal START -->
-                                                <div class="modal fade" id="process-{{$withdraw->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content pb-3">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="myExtraLargeModalLabel">Process this payout</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <form method="post" action="{{route('process.payouts', Crypt::encrypt($withdraw->id))}}">
-                                                                @csrf
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="Editt">
-                                                                                <div class="form">
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-12 mb-4">
-                                                                                            <label for="user">User</label>
-                                                                                            <input id="user" type="text" value="{{ App\Models\User::find($withdraw->user_id)->first_name }} {{ App\Models\User::find($withdraw->user_id)->last_name }}" readonly />
-                                                                                        </div>
-                                                                                        <div class="col-lg-12 mb-4">
-                                                                                            <label for="amount">Amount</label>
-                                                                                            <input id="" type="text" value="₦{{number_format($withdraw->amount, 2)}}" readonly />
-                                                                                        </div>
-                                                                                        <div class="col-lg-12 mb-4">
-                                                                                            <label for="description">Description</label>
-                                                                                            <textarea id="description" name="description" type="text" required></textarea>
-                                                                                        </div>
-                                                                                        <div class="col-lg-12 mb-4">
-                                                                                            <label>Status</label>
-                                                                                            <select name="status" required>
-                                                                                                <option value="{{$withdraw->status}}"> {{$withdraw->status}}</option>
-                                                                                                <option value="created"> Created</option>
-                                                                                                <option value="refunded"> Refunded</option>
-                                                                                                <option value="finalized"> Finalized</option>
-                                                                                            </select>
+                                                    @if ($withdraw->status == 'created')
+                                                    <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary" data-bs-toggle="modal" data-bs-target="#process-{{$withdraw->id}}">Process</a>
+                                                    <!-- Modal START -->
+                                                    <div class="modal fade" id="process-{{$withdraw->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content pb-3">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="myExtraLargeModalLabel">Process this payout</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <form method="post" action="{{route('process.payouts', Crypt::encrypt($withdraw->id))}}">
+                                                                    @csrf
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="Editt">
+                                                                                    <div class="form">
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-12 mb-4">
+                                                                                                <label for="user">User</label>
+                                                                                                <input id="user" type="text" value="{{ App\Models\User::find($withdraw->user_id)->first_name }} {{ App\Models\User::find($withdraw->user_id)->last_name }}" readonly />
+                                                                                            </div>
+                                                                                            <div class="col-lg-12 mb-4">
+                                                                                                <label for="amount">Amount</label>
+                                                                                                <input id="" type="text" value="₦{{number_format($withdraw->amount, 2)}}" readonly />
+                                                                                            </div>
+                                                                                            <div class="col-lg-12 mb-4">
+                                                                                                <label for="description">Description</label>
+                                                                                                <textarea id="description" name="description" type="text" required></textarea>
+                                                                                            </div>
+                                                                                            <div class="col-lg-12 mb-4">
+                                                                                                <label>Status</label>
+                                                                                                <select name="status" required>
+                                                                                                    <option value="{{$withdraw->status}}"> {{$withdraw->status}}</option>
+                                                                                                    <option value="created"> Created</option>
+                                                                                                    <option value="refunded"> Refunded</option>
+                                                                                                    <option value="finalized"> Finalized</option>
+                                                                                                </select>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                                        Close
-                                                                    </button>
-                                                                    <button type="submit" class="btn" style="color: #714091; border: 1px solid #714091">
-                                                                        Submit
-                                                                    </button>
-                                                                </div>
-                                                            </form>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                            Close
+                                                                        </button>
+                                                                        <button type="submit" class="btn" style="color: #714091; border: 1px solid #714091">
+                                                                            Submit
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- end modal -->
+                                                    <!-- end modal -->
+                                                    @else
+                                                    <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary">{{$withdraw->status}}</a>
+                                                    @endif
                                                 @endif
                                                 @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'PAYSTACK')
-                                                <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#process-{{$withdraw->id}}" class="btn btn-sm btn-soft-primary">Process</a>
-                                                <!-- Modal START -->
-                                                <div class="modal fade" id="process-{{$withdraw->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content pb-3">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="myExtraLargeModalLabel">Process this payout</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <form class="processForm">
-                                                                            @csrf
-                                                                            <div class="form">
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-12 mb-4">
-                                                                                        <label for="user">User</label>
-                                                                                        <input id="paystack_id" value="{{ $withdraw->id }}" hidden />
-                                                                                        <input id="paystack_email" value="{{App\Models\User::find($withdraw->user_id)->email}}" hidden />
-                                                                                        <input id="paystack_public_key" value="{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}" hidden />
-                                                                                        <input id="user" value="{{ App\Models\User::find($withdraw->user_id)->first_name }} {{ App\Models\User::find($withdraw->user_id)->last_name }}" readonly />
-                                                                                    </div>
-                                                                                    <div class="col-lg-12 mb-4">
-                                                                                        <label for="amount">Amount</label>
-                                                                                        <input id="paystack_amount" value="{{$withdraw->amount}}" hidden />
-                                                                                        <input value="₦{{number_format($withdraw->amount, 2)}}" readonly />
-                                                                                    </div>
-                                                                                    <div class="col-lg-12 mb-4">
-                                                                                        <label for="description">Description</label>
-                                                                                        <textarea id="paystack_description" name="description" required></textarea>
-                                                                                    </div>
-                                                                                    <div class="col-lg-12 mb-4">
-                                                                                        <label>Status</label>
-                                                                                        <select name="status" class="paystack_status" required>
-                                                                                            <option value="{{$withdraw->status}}"> {{$withdraw->status}}</option>
-                                                                                            <option value="created"> Created</option>
-                                                                                            <option value="refunded"> Refunded</option>
-                                                                                            <option value="finalized"> Finalized</option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                    <div class="row justify-content-between">
-                                                                                        <div class="col-6">
-                                                                                            <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                                                                Cancel
-                                                                                            </button>
+                                                    @if ($withdraw->status == 'created')
+                                                    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#process-{{$withdraw->id}}" class="btn btn-sm btn-soft-primary">Process</a>
+                                                    <!-- Modal START -->
+                                                    <div class="modal fade" id="process-{{$withdraw->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content pb-3">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="myExtraLargeModalLabel">Process this payout</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12">
+                                                                            <form class="processForm">
+                                                                                @csrf
+                                                                                <div class="form">
+                                                                                    <span style="color: red; margin-bottom: 1rem;" id="error"></span>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-12 mb-4">
+                                                                                            <label for="user">User</label>
+                                                                                            <input id="paystack_id" value="{{ $withdraw->id }}" hidden />
+                                                                                            <input id="paystack_email" value="{{App\Models\User::find($withdraw->user_id)->email}}" hidden />
+                                                                                            <input id="paystack_public_key" value="{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}" hidden />
+                                                                                            <input id="user" value="{{ App\Models\User::find($withdraw->user_id)->first_name }} {{ App\Models\User::find($withdraw->user_id)->last_name }}" readonly />
                                                                                         </div>
-                                                                                        <div class="col-6 text-end">
-                                                                                            <script src="https://js.paystack.co/v1/inline.js"></script>
-                                                                                            <button class="form-btn btn px-4" type="button" onclick="payUserWithPaystack()" style="color: #ffffff; background-color: #714091">
-                                                                                                Proceed To Payment
-                                                                                            </button>
+                                                                                        <div class="col-lg-12 mb-4">
+                                                                                            <label for="amount">Amount</label>
+                                                                                            <input id="paystack_amount" value="{{$withdraw->amount}}" hidden />
+                                                                                            <input value="₦{{number_format($withdraw->amount, 2)}}" readonly />
+                                                                                        </div>
+                                                                                        <div class="col-lg-12 mb-4">
+                                                                                            <label for="description">Description <span class="text-danger">*</span></label>
+                                                                                            <textarea id="paystack_description" name="description" required></textarea>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12 mb-4">
+                                                                                            <label>Status</label>
+                                                                                            <select name="status" class="paystack_status" required>
+                                                                                                <option value="{{$withdraw->status}}"> {{$withdraw->status}}</option>
+                                                                                                <option value="created"> Created</option>
+                                                                                                <option value="refunded"> Refunded</option>
+                                                                                                <option value="finalized"> Finalized</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="row justify-content-between">
+                                                                                            <div class="col-6">
+                                                                                                <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                                    Cancel
+                                                                                                </button>
+                                                                                            </div>
+                                                                                            <div class="col-6 text-end">
+                                                                                                <script src="https://js.paystack.co/v1/inline.js"></script>
+                                                                                                <button class="form-btn btn px-4" type="button" onclick="payUserWithPaystack()" style="color: #ffffff; background-color: #714091">
+                                                                                                    Proceed To Payment
+                                                                                                </button>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </form>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- end modal -->
+                                                    <!-- end modal -->
+                                                    @else
+                                                    <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary">{{$withdraw->status}}</a>
+                                                    @endif
                                                 @endif
                                             </td>
                                         </tr>
@@ -305,24 +323,43 @@ $admin = auth()->guard('admin')->user();
     processForm.addEventListener("submit", payUserWithPaystack, false);
 
     function payUserWithPaystack(){
-        var handler = PaystackPop.setup({
-        key: document.getElementById("paystack_public_key").value,
-        email: document.getElementById("paystack_email").value,
-        amount: document.getElementById("paystack_amount").value * 100,
-        ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-        callback: function(response){
-            // alert(JSON.stringify(response))
-            let url = '{{ route("transaction.confirm", [":id", ":response", ":amount"]) }}';
-            url = url.replace(':id', document.getElementById("paystack_id"));
-            url = url.replace(':response', response.reference);
-            url = url.replace(':amount', document.getElementById("paystack_amount").value);
-            document.location.href=url;
-        },
-        onClose: function(){
-            alert('window closed');
+
+        if (document.getElementById("paystack_description").value == '') {
+            $('#error').html('Please fill the asterisks field to continue');
+        } else {
+            if(document.getElementsByClassName("paystack_status")[0].value == 'finalized')
+            {
+                var handler = PaystackPop.setup({
+                key: document.getElementById("paystack_public_key").value,
+                email: document.getElementById("paystack_email").value,
+                amount: document.getElementById("paystack_amount").value * 100,
+                ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                callback: function(response){
+                    // alert(JSON.stringify(response))
+                    let url = '{{ route("transaction.confirm", [":id", ":response", ":status", ":description"]) }}';
+                    url = url.replace(':id', document.getElementById("paystack_id").value);
+                    url = url.replace(':response', response.reference);
+                    url = url.replace(':status', document.getElementsByClassName("paystack_status")[0].value);
+                    url = url.replace(':description', document.getElementById("paystack_description").value);
+                    document.location.href=url;
+                },
+                onClose: function(){
+                    alert('window closed');
+                }
+                });
+                handler.openIframe();
+            } else {
+                alert(document.getElementsByClassName("paystack_status")[0].value);
+                
+                let url = '{{ route("transaction.confirm", [":id", ":response", ":status", ":description"]) }}';
+                    url = url.replace(':id', document.getElementById("paystack_id").value);
+                    url = url.replace(':response', 'status');
+                    url = url.replace(':status', document.getElementsByClassName("paystack_status")[0].value);
+                    url = url.replace(':description', document.getElementById("paystack_description").value);
+                    document.location.href=url;
+            }
+            
         }
-        });
-        handler.openIframe();
     }
 </script>
 @endsection

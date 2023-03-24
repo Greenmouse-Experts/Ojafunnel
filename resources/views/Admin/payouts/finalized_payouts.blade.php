@@ -53,7 +53,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach(App\Models\Withdrawal::latest()->get() as $key => $withdraw)
+                                        @foreach(App\Models\Withdrawal::latest()->where('status', 'finalized')->get() as $key => $withdraw)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>
@@ -74,6 +74,9 @@
                                                                         @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'US')
                                                                         <div class="row">
                                                                             <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
+                                                                                </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Holder Name</label>
                                                                                     <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}" readonly />
@@ -93,9 +96,33 @@
                                                                             </div>
                                                                         </div>
                                                                         @endif
+                                                                        @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'PAYSTACK')
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Holder Name</label>
+                                                                                    <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}" readonly />
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Secret Key</label>
+                                                                                    <input type="text" name="secret_key" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->secret_key}}" placeholder="Enter secret key" required />
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Public Key</label>
+                                                                                    <input type="text" name="public_key" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}" placeholder="Enter public key" required />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
                                                                         @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'NGN')
                                                                         <div class="row">
                                                                             <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
+                                                                                </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Name</label>
                                                                                     <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}" readonly />

@@ -676,3 +676,18 @@ Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [ChatCon
 // Builder
 Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');
 Route::post('/funnel/builder/save/page', [App\Http\Controllers\PageController::class, 'funnel_builder_save_page'])->name('user.funnel.builder.save.page');
+
+
+
+
+
+
+// Paypal Testing
+use App\Http\Controllers\PayPalController;
+Route::get('payment', [PayPalController::class, 'okpay'])->name('ok.pay');
+// Paypal Payment
+Route::prefix('paypal')->group(function () {
+    Route::post('payment' , [PayPalController::class, 'payment'])->name('payment');
+    Route::any('paymentSuccess' , [PayPalController::class, 'paymentSuccess'])->name('paymentSuccess');
+    Route::any('paymentFail' , [PayPalController::class, 'paymentFail'])->name('paymentFail');
+});

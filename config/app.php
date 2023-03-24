@@ -20,7 +20,7 @@ return [
     'domain_url' => preg_replace('#^https?://#', '', rtrim(env('APP_URL'), '/')),
 
     'fcm_token' => env('FIREBASE_SERVER_KEY'),
-    
+
     'url' => env('APP_URL'),
 
     'zerobounce_api_key' => 'f19198c3787742cf823b4a3156d4b714',
@@ -193,7 +193,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
-
             /*
              * Package Service Providers...
              */
