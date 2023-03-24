@@ -68,7 +68,6 @@
     <script type="text/javascript" src="{{ URL::asset('core/datetime/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('core/datetime/pickadate/picker.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('core/datetime/pickadate/picker.date.js') }}"></script>
-
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script>
         window.setTimeout(function() {

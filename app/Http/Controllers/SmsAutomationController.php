@@ -268,6 +268,7 @@ class SmsAutomationController extends Controller
         ]);
         if ($request->message_timimg == 'Immediately') {
             $new_campaign = SmsCampaign::create([
+                'user_id' => Auth::user()->id,
                 'title' => $request->campaign_name,
                 'user_id' => Auth::user()->id,
                 'message' => $request->message,
@@ -277,6 +278,99 @@ class SmsAutomationController extends Controller
                 'sms_type' => $sms_type,
                 'status' => 'send',
             ]);
+
+            if ($request->integration == "Multitexter") {
+                $data = "No Contact";
+
+                $message = $this->sendMessageMultitexter($request, $data);
+
+                $maillist = Mailinglist::findorfail($request->mailinglist_id);
+
+                $new_campaign = SmsCampaign::create([
+                    'title' => $request->campaign_name,
+                    'user_id' => Auth::user()->id,
+                    'message' => $request->message,
+                    'sender_name' => $request->sender_name,
+                    'integration' => $request->integration,
+                    'receivers' => $contact,
+                    'sms_type' => $sms_type,
+                    'status' => 'send',
+                ]);
+
+                
+                // SmsAutomation::create([
+                //     'user_id' => Auth::user()->id,
+                //     'mailinglist_id' => $request->mailinglist_id,
+                //     'integration' => $request->integration,
+                //     'campaign_name' => ucfirst($request->campaign_name),
+                //     'sms_sent' => $maillist->no_of_contacts,
+                //     'delivered' => $maillist->no_of_contacts,
+                //     'senders_name' => ucfirst($request->sender_name),
+                //     'message' => $request->message,
+                //     'contacts' => $request->contacts,
+                //     'optout_message' => $request->optout_message,
+                //     'message_timimg' => $request->message_timimg,
+                //     'schedule_date' => $request->schedule_date,
+                //     'schedule_time' => $request->schedule_time,
+                // ]);
+
+                return redirect()->route('user.sms.automation', Auth::user()->username)->with([
+                    'type' => 'success',
+                    'message' => $message->msg
+                ]);
+            } elseif ($request->integration == "NigeriaBulkSms") {
+                $data = "No Contact";
+
+                $message = $this->sendMessageNigeriaBulkSms($request, $data);
+
+                $maillist = Mailinglist::findorfail($request->mailinglist_id);
+
+                if(str_contains($message, 'Message sent'))
+                {
+                    // SmsAutomation::create([
+                    //     'user_id' => Auth::user()->id,
+                    //     'mailinglist_id' => $request->mailinglist_id,
+                    //     'integration' => $request->integration,
+                    //     'campaign_name' => ucfirst($request->campaign_name),
+                    //     'sms_sent' => $maillist->no_of_contacts,
+                    //     'delivered' => $maillist->no_of_contacts,
+                    //     'senders_name' => ucfirst($request->sender_name),
+                    //     'message' => $request->message,
+                    //     'contacts' => $request->contacts,
+                    //     'optout_message' => $request->optout_message,
+                    //     'message_timimg' => $request->message_timimg,
+                    //     'schedule_date' => $request->schedule_date,
+                    //     'schedule_time' => $request->schedule_time,
+                    // ]);
+
+                    $new_campaign = SmsCampaign::create([
+                        'title' => $request->campaign_name,
+                        'user_id' => Auth::user()->id,
+                        'message' => $request->message,
+                        'sender_name' => $request->sender_name,
+                        'integration' => $request->integration,
+                        'receivers' => $contact,
+                        'sms_type' => $sms_type,
+                        'status' => 'send',
+                    ]);
+        
+
+                    return redirect()->route('user.sms.automation', Auth::user()->username)->with([
+                        'type' => 'success',
+                        'message' => $message
+                    ]);
+                } else {
+                    return back()->with([
+                        'type' => 'danger',
+                        'message' => $message
+                    ]);
+                }
+            } else {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Integration service ongoing.'
+                ]);
+            }
         }
         if ($request->message_timimg == 'Schedule') {
             $schedule_date = $request->schedule_date . ' ' . $request->schedule_time;

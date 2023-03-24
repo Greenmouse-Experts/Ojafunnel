@@ -196,14 +196,14 @@
                                                                         @if($integrations->isEmpty())
                                                                         <div class="col-12">
                                                                             <div class="circle" style="padding: 20px 20px 20px 2px; text-align: center;">
-                                                                                No SMS Integration Gateway Added
+                                                                                <span class="text-dark">No SMS Integration Gateway Added</span>
                                                                             </div>
                                                                         </div>
                                                                         @else
                                                                         @foreach($integrations as $integration)
                                                                         <div class="col-md-6">
                                                                             <div class="circle" style="padding: 20px 20px 20px 20px;">
-                                                                                {{$integration->type}}
+                                                                                <span class="text-dark">{{$integration->type}}</span>
                                                                             </div>
                                                                             <div class="zazu">
                                                                                 <input type="radio" name="integration" value="{{$integration->type}}" style="margin-top: -70px !important;">
