@@ -53,14 +53,17 @@
                             <div class="favorite-icon">
                                 <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
                             </div>
-                            <img src="https://www.freeiconspng.com/thumbs/credit-card-icon-png/credit-card-2-icon-7.png" alt="" height="50" class="mb-3">
+                            <img src="https://www.freeiconspng.com/thumbs/credit-card-icon-png/credit-card-2-icon-7.png" alt="" height="50" class="mb-3"> &nbsp; {{$bank->type}}
                             <h5 class="fs-17 mb-2"><a href="#" class="text-dark">{{$bank->account_name}}</a> </h5>
                             <p class="text-muted fs-14 mb-1">{{$bank->type_of_bank_account}}</p>
                             <p class="text-muted fs-14 mb-0">{{$bank->routing_number}}</p>
+                            <p class="text-muted fs-14 mb-1 text-truncate">{{$bank->secret_key}}</p>
+                            <p class="text-muted fs-14 mb-1 text-truncate">{{$bank->public_key}}</p>
                             <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i> {{$bank->account_number}}</p>
                             <div class="mt-4 hstack gap-2">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#edit-{{$bank->id}}" class="btn text-light w-100" style="background: #70418f;">Edit</a>
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#delete-{{$bank->id}}" class="btn w-100 bg-danger text-light">Delete</a>
+                                @if($bank->type == 'US')
                                 <!-- Modal START -->
                                 <div class="modal fade" id="edit-{{$bank->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -126,6 +129,58 @@
                                     </div>
                                 </div>
                                 <!-- end modal -->
+                                @endif
+                                @if($bank->type == 'PAYSTACK')
+                                <!-- Modal START -->
+                                <div class="modal fade" id="edit-{{$bank->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content pb-3">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="myExtraLargeModalLabel">Update payment method</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body ">
+                                                <div class="row">
+                                                    <div class="Editt">
+                                                        <form method="POST" action="{{ route('user.update.paystack', Crypt::encrypt($bank->id))}}">
+                                                            @csrf
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="">Account Holder Name</label>
+                                                                        <input type="text" name="account_name" class="form-control" value="{{$bank->account_name}}" placeholder="Enter acount number" required />
+                                                                    </div>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <img alt="An illustration showing that the paystack public key and secret key." src="https://support.paystack.com/hc/article_attachments/6522729720732" style="width:100%;">
+                                                                    </div>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="">Secret Key</label>
+                                                                        <input type="password" name="secret_key" class="form-control" value="{{$bank->secret_key}}" placeholder="Enter secret key" required />
+                                                                    </div>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="">Public Key</label>
+                                                                        <input type="password" name="public_key" class="form-control" value="{{$bank->public_key}}" placeholder="Enter public key" required />
+                                                                    </div>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="">By adding this paystack method of payment you are confirming that you are the owner and have full authorization to this details.</label>
+                                                                    </div>
+                                                                    <div class="text-end mt-2">
+                                                                        <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                                                            Update
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end modal -->
+                                @endif
                                 <!-- Modal START -->
                                 <div class="modal fade" id="delete-{{$bank->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -222,7 +277,7 @@
                                             </td>
                                             <td>
                                                 <div class="text-center">
-                                                    <a href="javascript: void(0);" class="btn text-light btn-secondary">Set up</a>
+                                                    <a href="{{route('user.paystack', Auth::user()->username)}}" class="btn text-light btn-secondary">Set up</a>
                                                 </div>
                                             </td>
                                         </tr>

@@ -36,6 +36,7 @@
         "sendgrid/sendgrid": "^8.0",
         "sendgrid/smtpapi": "^0.7.0",
         "sparkpost/sparkpost": "^2.3",
+        "srmklive/paypal": "^3.0",
         "swiftmailer/swiftmailer": "^6.0",
         "twig/twig": "^3.5",
         "twilio/sdk": "^6.43",

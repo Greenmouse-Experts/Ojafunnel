@@ -8,7 +8,7 @@
 <!-- Bootstrap -->
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('core/bootstrap/css/bootstrap.min.css') }}">
 <script type="text/javascript" src="{{ URL::asset('core/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
+<script type="text/javascript" src="{{ URL::asset('core/js/group-manager.js') }}"></script>
 <!-- Select2 -->
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('core/select2/css/select2.min.css') }}">
 <script type="text/javascript" src="{{ URL::asset('core/select2/js/select2.min.js') }}"></script>

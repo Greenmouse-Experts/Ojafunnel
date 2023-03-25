@@ -41,7 +41,7 @@
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8">
                     <div class="Edit">
-                        <form method="POST" action="{{ route('user.sms.sendmessage.campaign')}}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('user.send.broadcast.create', ['username' => Auth::user()->username])}}" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="sms_type" value="whatsapp">
                             <div class="form">
@@ -60,11 +60,20 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <label>Senders Account :</label>
+                                        <label>WA Senders Account :</label>
                                         <div class="row">
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <input type="text" placeholder="Enter Sender Name" name="sender_name" class="input">
+                                                    <select name="whatsapp_account" class="bg-light w-100 py-2 rounded px-2 fs-6">
+                                                        <option value="">Choose from conneted WA Account list</option>
+                                                        @forelse ($whatsapp_numbers as $whatsapp_number)
+                                                            <option value="{{ $whatsapp_number['id'] }}-{{ $whatsapp_number['phone_number'] }}-{{ $whatsapp_number['status'] }}-{{ $whatsapp_number['full_jwt_session'] }}">
+                                                                {{ $whatsapp_number['phone_number'] }} ({{ $whatsapp_number['status'] }})
+                                                            </option>
+                                                        @empty
+                                                            <option value="">No WA account found</option>
+                                                        @endforelse
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -72,10 +81,10 @@
                                     <div class="col-lg-12">
                                         <label>Sending List :</label>
                                         <div class="col-md-12 mb-4">
-                                            <select name="mailinglist_id" class="bg-light w-100 py-2 rounded px-2 fs-6">
-                                                <option value="">Choose from mailing list</option>
+                                            <select name="contact_list" class="bg-light w-100 py-2 rounded px-2 fs-6">
+                                                <option value="">Choose from contact list</option>
                                                 @if($contact_lists->isEmpty())
-                                                <option value="">No Mailing List</option>
+                                                <option value="">No Contact List</option>
                                                 @else
                                                 @foreach($contact_lists as $contact_list)
                                                 <option value="{{$contact_list->id}}">{{$contact_list->name}}</option>
@@ -85,56 +94,132 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <label>Message</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <textarea placeholder="Type in your message" name="message" id="" cols="30" rows="4"></textarea>
-                                            </div>
+                                        <label>Message Template :</label>
+                                        <div class="col-md-12 mb-4">
+                                            <select class="bg-light w-100 py-2 rounded px-2 fs-6" id="template" name="template">
+                                                <option value="">Choose from template</option> 
+                                                <option value="template1">Template 1 (Text)</option>
+                                                <option value="template2">Template 2 (Text & File)</option>
+                                                <option value="template3">Template 3 (Header, Text, Footer, Link & Call)</option>
+                                            </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12">
-                                        <p>
-                                            Upload Attachment :
-                                        </p>
-                                    </div>
-                                    <div class="logo-input w-full px-5 py-4 pb-5">
-                                        <p>
-                                            <b>
-                                                Attach, images, videos, audios or files
-                                            </b>
-                                        </p>
-                                        <div class="logo-input2 border-in py-5 px-2">
-                                                <div class="avatar">
-                                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664984753/OjaFunnel-Images/Vectoor_rbkrfl.png" alt="">
+                                    <!-- Template 1 -->
+                                    <div id="template1" style="display: none;">
+                                        <div class="col-lg-12">
+                                            <label>Message</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <textarea placeholder="Type in your message" name="template1_message" id="" cols="30" rows="4"></textarea>
                                                 </div>
-                                            <div class="logo-file">
-                                                <input type="file" accept="image" name="mms_file" id=""
-                                                    class="mt-4 w-100" />
+                                            </div>
+                                        </div> 
+                                    </div>
+
+                                    <div id="template2" style="display: none;">
+                                        <div class="col-lg-12">
+                                            <label>Message</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <textarea placeholder="Type in your message" name="template2_message" id="" cols="30" rows="4"></textarea>
+                                                </div>
                                             </div>
                                         </div>
+    
+                                        <div class="col-lg-12">
+                                            <p>
+                                                Upload Attachment :
+                                            </p>
+                                        </div>
+                                        <div class="logo-input w-full px-5 py-4 pb-5">
+                                            <p>
+                                                <b>
+                                                    Attach, images, videos, audios or files
+                                                </b>
+                                            </p>
+                                            <div class="logo-input2 border-in py-5 px-2">
+                                                    <div class="avatar">
+                                                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664984753/OjaFunnel-Images/Vectoor_rbkrfl.png" alt="">
+                                                    </div>
+                                                <div class="logo-file">
+                                                    <input type="file" accept="image" name="template2_file" id=""
+                                                        class="mt-4 w-100" />
+                                                </div>
+                                            </div>
+                                        </div> 
                                     </div>
+
+                                    <div id="template3" style="display: none;">
+                                        <div class="col-lg-12">
+                                            <label>Header</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="text" placeholder="Enter message header" name="template3_header" class="input">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mb-4">
+                                            <label>Message</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <textarea placeholder="Type in your message" name="template3_message" id="" cols="30" rows="4"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <label>Footer</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="text" placeholder="Enter message footer" name="template3_footer" class="input">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <label>Link</label>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4">
+                                                    <input type="text" placeholder="Enter link url" name="template3_link_url" class="input">
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+                                                    <input type="text" placeholder="Enter link CTA" name="template3_link_cta" class="input">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <label>Phone</label>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4">
+                                                    <input type="text" placeholder="Enter phone number" name="template3_phone_number" class="input">
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+                                                    <input type="text" placeholder="Enter phone CTA" name="template3_phone_cta" class="input">
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div> 
+
                                     <div class="col-12 mb-4">
                                         <div class="row">
                                             <div class="col-md-4 col-12">
                                                 Send WhatsApp:
                                             </div>
                                             <div class="col-md-4 col-6">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timimg" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
                                             </div>
                                             <div class="col-md-4 col-6">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timimg" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12" id="schedule" style="display: none;">
                                         <div class="row">
                                             <div class="col-md-6 mt-4">
-                                                <label for="Time">Date</label>
+                                                <label for="Time">Start Date</label>
                                                 <input type="date" name="schedule_date" />
                                             </div>
                                             <div class="col-md-6 mt-4">
-                                                <label for="Time">Time</label>
+                                                <label for="Time">Start Time</label>
                                                 <input type="Time" name="schedule_time" />
                                             </div>
                                             <div class="col-md-12 mt-5">
@@ -189,14 +274,14 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="boding">
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#chooseIntegrationGateways">
+                                                    <button type="submit" name="submit">
                                                         Proceed
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="modal fade" id="chooseIntegrationGateways" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                    </div> 
+                                    {{-- <div class="modal fade" id="chooseIntegrationGateways" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header border-bottom-0">
@@ -251,7 +336,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <!-- <div class="col-lg-12">
                                         <div class="row">
                                             <div class="col-md-6"></div>
@@ -369,4 +454,31 @@
 </div>
 <!-- end modal -->
 <!-- end modal -->
+<script>
+    const template = document.getElementById('template');
+
+    const template1 = document.getElementById('template1');
+    const template2 = document.getElementById('template2');
+    const template3 = document.getElementById('template3');
+
+    template.addEventListener('change', function handleChange(event) {
+        if (event.target.value === 'template1') {
+            template1.style.display = 'block';
+            template2.style.display = 'none';
+            template3.style.display = 'none'; 
+        } else if (event.target.value === 'template2') {
+            template1.style.display = 'none';
+            template2.style.display = 'block';
+            template3.style.display = 'none'; 
+        } else if (event.target.value === 'template3') {
+            template1.style.display = 'none';
+            template2.style.display = 'none';
+            template3.style.display = 'block'; 
+        } else {
+            template1.style.display = 'none';
+            template2.style.display = 'none';
+            template3.style.display = 'none'; 
+        }
+    });
+</script>
 @endsection

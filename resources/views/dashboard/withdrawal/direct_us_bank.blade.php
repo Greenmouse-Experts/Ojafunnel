@@ -48,7 +48,7 @@
                                             <i class="bx bx-home"></i>
                                         </span>
                                         <h4 style="font-weight: 700;">Add a Bank Account</h4>
-                                        <p>Get access to your funds in 3-5 business days with no fees. See how bank transfers work.</p>
+                                        <p>Get access to your funds in 3-5 business days with no fees.</p>
                                         <p>Incorrect information can mean a delay in receiving funds or fees.</p>
                                         <p>This payment method will become active in 3 days.</p>
                                     </div>

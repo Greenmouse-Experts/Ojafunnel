@@ -312,7 +312,7 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
-                                @endif
+                                </tbody> 
                             </table>
                         </div>
                     </div>

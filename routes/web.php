@@ -546,8 +546,24 @@ Route::prefix('{username}')->group(function () {
                     Route::post('/automation/add_contact/{list_id}', [App\Http\Controllers\DashboardController::class, 'add_contact_to_list'])->name('user.automation.contact_add');
                     Route::post('/automation/update_contact/{contact_id}', [App\Http\Controllers\DashboardController::class, 'update_contact_num'])->name('user.automation.contact_num_update');
                     Route::post('/automation/delete_contact/{contact_id}', [App\Http\Controllers\DashboardController::class, 'delete_contact_num'])->name('user.automation.contact_num_delete');
+
+
+                    Route::get('/wa-number', [App\Http\Controllers\DashboardController::class, 'wa_number'])->name('user.whatsapp.wa-number');
+                    Route::post('/wa-number/generate-qr', [App\Http\Controllers\DashboardController::class, 'generate_wa_qr'])->name('user.whatsapp.wa-number-generate-qr');
+                    Route::post('/wa-number/logout-session', [App\Http\Controllers\DashboardController::class, 'logout_wa_session'])->name('user.whatsapp.wa-number-logout-session');
+                    Route::post('/wa-number/check-session-connection', [App\Http\Controllers\DashboardController::class, 'check_wa_session_connection'])->name('user.whatsapp.wa-number-check-session-connection');
+                    Route::post('/wa-number/create', [App\Http\Controllers\DashboardController::class, 'create_wa_number'])->name('user.whatsapp.create-wa-number');
+                    Route::post('/wa-number/update', [App\Http\Controllers\DashboardController::class, 'update_wa_number'])->name('user.whatsapp.update-wa-number');
+                    Route::post('/wa-number/delete', [App\Http\Controllers\DashboardController::class, 'delete_wa_number'])->name('user.whatsapp.delete-wa-number');
+
                     Route::get('/whatsapp-automation', [App\Http\Controllers\DashboardController::class, 'whatsapp_automation'])->name('user.whatsapp.automation');
+                    Route::get('/whatsapp-automation/campaign/{campaign_id}/overview', [App\Http\Controllers\DashboardController::class, 'whatsapp_automation_campaign'])->name('user.whatsapp.automation.campaign');
                     Route::get('/whatsapp-automation/sendbroadcast', [App\Http\Controllers\DashboardController::class, 'sendbroadcast'])->name('user.send.broadcast');
+
+                    Route::post('/whatsapp-automation/sendbroadcast/create', [App\Http\Controllers\DashboardController::class, 'sendbroadcastcreate'])->name('user.send.broadcast.create');
+
+                    Route::post('/whatsapp-automation/campaign/edit', [App\Http\Controllers\DashboardController::class, 'editWAbroadcast'])->name('user.wa.campaign.edit');
+                    Route::post('/whatsapp-automation/campaign/delete', [App\Http\Controllers\DashboardController::class, 'deleteWAbroadcast'])->name('user.wa.campaign.delete');
                 }
             );
             Route::prefix('/ecommerce')->group(
@@ -639,11 +655,13 @@ Route::prefix('{username}')->group(function () {
 
             Route::prefix('/withdrawal')->group(
                 function () {
-                        Route::get('/', [App\Http\Controllers\DashboardController::class, 'withdrawal'])->name('user.withdrawal');
-                        Route::get('/bank', [App\Http\Controllers\DashboardController::class, 'bank'])->name('user.bank.details');
-                        Route::get('/other_payment_method', [App\Http\Controllers\DashboardController::class, 'other_payment_method'])->name('user.other.payment.method');
-                        Route::get('/direct_us_bank', [App\Http\Controllers\DashboardController::class, 'direct_us_bank'])->name('user.direct.us.bank');
-                    }
+                    Route::get('/', [App\Http\Controllers\DashboardController::class, 'withdrawal'])->name('user.withdrawal');
+                    Route::get('/bank', [App\Http\Controllers\DashboardController::class, 'bank'])->name('user.bank.details');
+                    Route::get('/other_payment_method', [App\Http\Controllers\DashboardController::class, 'other_payment_method'])->name('user.other.payment.method');
+                    Route::get('/direct_us_bank', [App\Http\Controllers\DashboardController::class, 'direct_us_bank'])->name('user.direct.us.bank');
+                    Route::get('/paystack', [App\Http\Controllers\DashboardController::class, 'paystack'])->name('user.paystack');
+                    Route::get('/paypal', [App\Http\Controllers\DashboardController::class, 'paypal'])->name('user.paypal');
+                }
             );
 
             Route::prefix('/support')->group(
@@ -653,7 +671,6 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/email', [App\Http\Controllers\DashboardController::class, 'support_email'])->name('user.main.email');
                 }
             );
-            
         }
     );
 });
@@ -674,3 +691,18 @@ Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [ChatCon
 // Builder
 Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');
 Route::post('/funnel/builder/save/page', [App\Http\Controllers\PageController::class, 'funnel_builder_save_page'])->name('user.funnel.builder.save.page');
+
+
+
+
+
+
+// Paypal Testing
+use App\Http\Controllers\PayPalController;
+Route::get('payment', [PayPalController::class, 'okpay'])->name('ok.pay');
+// Paypal Payment
+Route::prefix('paypal')->group(function () {
+    Route::post('payment' , [PayPalController::class, 'payment'])->name('payment');
+    Route::any('paymentSuccess' , [PayPalController::class, 'paymentSuccess'])->name('paymentSuccess');
+    Route::any('paymentFail' , [PayPalController::class, 'paymentFail'])->name('paymentFail');
+});

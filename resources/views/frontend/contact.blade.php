@@ -109,7 +109,7 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <i class="bi bi-phone"></i>
-                                                    <input type="tel" placeholder="Enter your phone number" name="phone" class="input" required>
+                                                    <input type="tel" placeholder="Enter your phone number" name="phone" class="input" id="phone_number" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -194,4 +194,25 @@
             </div>
         </section>
     <!-- Digital Ends -->
+
+    <script>
+        $(document).ready(function () {
+            $("#phone_number").intlTelInput({
+                // preferredCountries: ["us", "ca"],
+                separateDialCode: true,
+                initialCountry: ""
+            }).on('countrychange', function (e, countryData) {
+                $("#phone_number").val('+'+($("#phone_number").intlTelInput("getSelectedCountryData").dialCode));
+            });
+        });
+    </script>
+
+    <style>
+        .iti {
+            display: block !important;
+        }
+        .iti__country-list {
+            z-index: 2000 !important;
+        }
+    </style>
 @endsection

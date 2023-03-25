@@ -68,7 +68,7 @@
                                         <div class="col-md-4">
                                             <div class="circle">
                                                 <img src="{{URL::asset('dash/assets/image/twilio-icon.png')}}" draggable="false" alt="">
-                                                Twillio
+                                                <span class="text-dark">Twillio</span>
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#Twillio">
                                                 <input type="radio" name="sms_gateways" value="Twillio">
@@ -77,7 +77,7 @@
                                         <div class="col-md-4">
                                             <div class="circle">
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668092970/OjaFunnel-Images/vikbooking-smslive247-300x300_xixgv5.jpg" draggable="false" alt="">
-                                                SMSlive247
+                                                <span class="text-dark">SMSlive247</span>
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#SMSlive247">
                                                 <input type="radio"  name="sms_gateways" value="SMSlive247">
@@ -86,7 +86,7 @@
                                         <div class="col-md-4">
                                             <div class="circle">
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668075784/OjaFunnel-Images/images_fwr3hr.jpg" draggable="false" alt="">
-                                                InfoBip
+                                                <span class="text-dark">InfoBip</span>
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#InfoBip">
                                                 <input type="radio" name="sms_gateways" value="InfoBip">
@@ -95,7 +95,7 @@
                                         <div class="col-md-4">
                                             <div class="circle">
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668076174/OjaFunnel-Images/download_2_ynzs6z.jpg" draggable="false" alt="">
-                                                AWS
+                                                <span class="text-dark">AWS</span>
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#AWS">
                                                 <input type="radio" name="sms_gateways" value="AWS">
@@ -104,7 +104,7 @@
                                         <div class="col-md-4">
                                             <div class="circle">
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668076411/OjaFunnel-Images/download_3_egam8e.jpg" draggable="false" alt="">
-                                                NigeriaBulkSms
+                                                <span class="text-dark">NigeriaBulkSms</span>
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#NigeriaBulkSms">
                                                 <input type="radio" name="sms_gateways" value="NigeriaBulkSms">
@@ -113,7 +113,7 @@
                                         <div class="col-md-4">
                                             <div class="circle">
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668076897/OjaFunnel-Images/download_4_1_jiimts.jpg" draggable="false" alt="">
-                                                Multitexter
+                                                <span class="text-dark">Multitexter</span>
                                             </div>
                                             <div class="zazu" data-bs-toggle="modal" data-bs-target="#Multitexter">
                                                 <input type="radio" name="sms_gateways" value="Multitexter">

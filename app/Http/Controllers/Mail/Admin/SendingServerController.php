@@ -1,11 +1,11 @@
 <?php
 
-namespace Acelle\Http\Controllers\Admin;
+namespace App\Http\Controllers\Mail\Admin;
 
 use Illuminate\Http\Request;
-use Acelle\Http\Controllers\Controller;
-use Acelle\Model\SendingServer;
-use Acelle\Library\Facades\Hook;
+use App\Http\Controllers\Controller;
+use App\Models\SendingServer;
+use App\Library\Facades\Hook;
 
 class SendingServerController extends Controller
 {
@@ -16,22 +16,22 @@ class SendingServerController extends Controller
      */
     public function index(Request $request)
     {
-        if (!$request->user()->admin->can('read', new SendingServer())) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->admin->can('read', new SendingServer())) {
+        //     return $this->notAuthorized();
+        // }
 
         // If admin can view all sending domains
-        if (!$request->user()->admin->can("readAll", new SendingServer())) {
-            $request->merge(array("admin_id" => $request->user()->admin->id));
-        }
+        // if (!$request->user()->admin->can("readAll", new SendingServer())) {
+        //     $request->merge(array("admin_id" => $request->user()->admin->id));
+        // }
 
         // exlude customer seding servers
         $request->merge(array("no_customer" => true));
 
-        $items = \Acelle\Model\SendingServer::search($request->keyword)
+        $items = \App\Models\SendingServer::search($request->keyword)
             ->filter($request);
 
-        return view('admin.sending_servers.index', [
+        return view('Admin.email.sending_servers.index', [
             'items' => $items,
         ]);
     }
@@ -43,24 +43,24 @@ class SendingServerController extends Controller
      */
     public function listing(Request $request)
     {
-        if (!$request->user()->admin->can('read', new SendingServer())) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->admin->can('read', new SendingServer())) {
+        //     return $this->notAuthorized();
+        // }
 
         // If admin can view all sending domains
-        if (!$request->user()->admin->can("readAll", new SendingServer())) {
-            $request->merge(array("admin_id" => $request->user()->admin->id));
-        }
+        // if (!$request->user()->admin->can("readAll", new SendingServer())) {
+        //     $request->merge(array("admin_id" => $request->user()->admin->id));
+        // }
 
         // exlude customer seding servers
         $request->merge(array("no_customer" => true));
 
-        $items = \Acelle\Model\SendingServer::search($request->keyword)
+        $items = \App\Models\SendingServer::search($request->keyword)
             ->filter($request)
             ->orderBy($request->sort_order, $request->sort_direction ? $request->sort_direction : 'asc')
             ->paginate($request->per_page);
 
-        return view('admin.sending_servers._list', [
+        return view('Admin.email.sending_servers._list', [
             'items' => $items,
         ]);
     }
@@ -74,7 +74,7 @@ class SendingServerController extends Controller
     {
         // Sending servers added by Plugins
         $more = Hook::execute('register_sending_server');
-        return view('admin.sending_servers.select', ['more' => $more]);
+        return view('Admin.email.sending_servers.select', ['more' => $more]);
     }
 
     /**
@@ -98,11 +98,11 @@ class SendingServerController extends Controller
         $server->name = trans('messages.' . $request->type);
 
         // authorize
-        if (!$request->user()->admin->can('create', SendingServer::class)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->admin->can('create', SendingServer::class)) {
+        //     return $this->notAuthorized();
+        // }
 
-        return view('admin.sending_servers.create', [
+        return view('Admin.email.sending_servers.create', [
             'server' => $server,
         ]);
     }
@@ -117,13 +117,13 @@ class SendingServerController extends Controller
     public function store(Request $request)
     {
         // authorize
-        if (!$request->user()->admin->can('create', SendingServer::class)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->admin->can('create', SendingServer::class)) {
+        //     return $this->notAuthorized();
+        // }
 
         // New sending server
         list($validator, $server) = SendingServer::createFromArray(array_merge($request->all(), [
-            'admin_id' => $request->user()->admin->id,
+            'admin_id' => auth()->guard('admin')->user()->id,
         ]));
 
         // Failed
@@ -132,8 +132,8 @@ class SendingServerController extends Controller
                 // Redirect to plugin's create page
                 return redirect()->back()->withErrors($validator)->withInput();
             } else {
-                return redirect()->action('Admin\SendingServerController@create', $server->type)
-                        ->withErrors($validator)->withInput();
+                return redirect()->route('sending.server.create', $server->type)
+                    ->withErrors($validator)->withInput();
             }
         }
 
@@ -144,7 +144,7 @@ class SendingServerController extends Controller
         if ($server->isExtended()) {
             return redirect($server->getEditUrl());
         } else {
-            return redirect()->action('Admin\SendingServerController@edit', [$server->uid, $server->type]);
+            return redirect()->route('sending.server.edit', [$server->uid, $server->type]);
         }
     }
 
@@ -171,9 +171,9 @@ class SendingServerController extends Controller
         $server = SendingServer::findByUid($id);
         $server = SendingServer::mapServerType($server);
         // authorize
-        if (!$request->user()->admin->can('update', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->admin->can('update', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         // bounce / feedback hanlder nullable
         if ($request->old() && empty($request->old()["bounce_handler_id"])) {
@@ -220,7 +220,7 @@ class SendingServerController extends Controller
 
         $bigNotices = Hook::execute('generate_big_notice_for_sending_server', [$server]);
 
-        return view('admin.sending_servers.edit', [
+        return view('Admin.email.sending_servers.edit', [
             'server' => $server,
             'bigNotices' => $bigNotices,
             'notices' => $notices,
@@ -240,14 +240,14 @@ class SendingServerController extends Controller
     public function update(Request $request, $id)
     {
         // Get current user
-        $current_user = $request->user();
+        $current_user = auth()->guard('admin')->user();
         $server = SendingServer::findByUid($id);
         $server = SendingServer::mapServerType($server);
 
         // authorize
-        if (!$request->user()->admin->can('update', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->admin->can('update', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         // save posted data
         if ($request->isMethod('patch')) {
@@ -260,11 +260,11 @@ class SendingServerController extends Controller
             if ($validator->fails()) {
                 if ($server->isExtended()) {
                     return redirect($server->getEditUrl())->withErrors($validator)
-                            ->withInput();
+                        ->withInput();
                 } else {
-                    return redirect()->action('Admin\SendingServerController@edit', [$server->uid, $server->type])
-                            ->withErrors($validator)
-                            ->withInput();
+                    return redirect()->route('sending.server.edit', [$server->uid, $server->type])
+                        ->withErrors($validator)
+                        ->withInput();
                 }
             }
 
@@ -282,7 +282,7 @@ class SendingServerController extends Controller
                 if ($server->isExtended()) {
                     return redirect($server->getEditUrl());
                 } else {
-                    return redirect()->action('Admin\SendingServerController@edit', [$server->uid, $server->type]);
+                    return redirect()->route('sending.server.edit', [$server->uid, $server->type]);
                 }
             }
         }
@@ -316,9 +316,9 @@ class SendingServerController extends Controller
 
         foreach ($items->get() as $item) {
             // authorize
-            if ($request->user()->admin->can('delete', $item)) {
-                $item->doDelete();
-            }
+            // if ($request->user()->admin->can('delete', $item)) {
+            $item->doDelete();
+            // }
         }
 
         // Redirect to my lists page
@@ -341,9 +341,9 @@ class SendingServerController extends Controller
 
         foreach ($items->get() as $item) {
             // authorize
-            if ($request->user()->admin->can('disable', $item)) {
-                $item->disable();
-            }
+            // if ($request->user()->admin->can('disable', $item)) {
+            $item->disable();
+            // }
         }
 
         // Redirect to my lists page
@@ -366,9 +366,9 @@ class SendingServerController extends Controller
 
         foreach ($items->get() as $item) {
             // authorize
-            if ($request->user()->admin->can('enable', $item)) {
-                $item->enable();
-            }
+            // if ($request->user()->admin->can('enable', $item)) {
+            $item->enable();
+            // }
         }
 
         // Redirect to my lists page
@@ -386,7 +386,7 @@ class SendingServerController extends Controller
     public function test(Request $request, $uid)
     {
         // Get current user
-        $current_user = $request->user();
+        $current_user = auth()->guard('admin')->user();
 
         // Fill new server info
         if ($uid) {
@@ -399,9 +399,9 @@ class SendingServerController extends Controller
         $server->fill($request->all());
 
         // authorize
-        if (!$current_user->admin->can('test', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$current_user->admin->can('test', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         if ($request->isMethod('post')) {
             // @todo testing method and return result here. Ex: echo json_encode($server->test())
@@ -414,20 +414,22 @@ class SendingServerController extends Controller
                 ]);
             } catch (\Exception $ex) {
                 return response()->json([
-                    'status' => 'error', // or success
+                    'status' => 'error',
+                    // or success
                     'message' => $ex->getMessage()
                 ], 401);
                 return;
             }
 
             return response()->json([
-                'status' => 'success', // or success
+                'status' => 'success',
+                // or success
                 'message' => trans('messages.sending_server.test_email_sent')
             ]);
             return;
         }
 
-        return view('admin.sending_servers.test', [
+        return view('Admin.email.sending_servers.test', [
             'server' => $server,
         ]);
     }
@@ -446,9 +448,9 @@ class SendingServerController extends Controller
         $server = SendingServer::mapServerType($server);
 
         // authorize
-        if (!$request->user()->admin->can('update', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->admin->can('update', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         try {
             $server->test();
@@ -502,7 +504,7 @@ class SendingServerController extends Controller
         if ($request->isMethod('post')) {
             $selectOptions = $server->getSendingLimitSelectOptions();
 
-            return view('admin.sending_servers.form._sending_limit', [
+            return view('Admin.email.sending_servers.form._sending_limit', [
                 'quotaValue' => $request->quota_value,
                 'quotaBase' => $request->quota_base,
                 'quotaUnit' => $request->quota_unit,
@@ -510,7 +512,7 @@ class SendingServerController extends Controller
             ]);
         }
 
-        return view('admin.sending_servers.form.sending_limit', [
+        return view('Admin.email.sending_servers.form.sending_limit', [
             'server' => $server,
         ]);
     }
@@ -529,9 +531,9 @@ class SendingServerController extends Controller
         $server = SendingServer::findByUid($uid)->mapType();
 
         // authorize
-        if (!$request->user()->admin->can('update', $server)) {
-            return $this->notAuthorized();
-        }
+        // if (!$request->user()->admin->can('update', $server)) {
+        //     return $this->notAuthorized();
+        // }
 
         // Save current user info
         $server->fill($request->all());
@@ -567,7 +569,7 @@ class SendingServerController extends Controller
             if ($server->isExtended()) {
                 return redirect($server->getEditUrl());
             } else {
-                return redirect()->action('Admin\SendingServerController@edit', [$server->uid, $server->type]);
+                return redirect()->route('sending.server.edit', [$server->uid, $server->type]);
             }
         }
     }
@@ -592,7 +594,7 @@ class SendingServerController extends Controller
                 $server->host = $option['host'];
             }
         }
-        return view('admin.sending_servers.form._aws_region_host', [
+        return view('Admin.email.sending_servers.form._aws_region_host', [
             'server' => $server,
         ]);
     }
@@ -625,9 +627,9 @@ class SendingServerController extends Controller
                 }
 
                 if (!$valid || $validator->fails()) {
-                    return redirect()->action('Admin\SendingServerController@addDomain', $server->uid)
-                                ->withErrors($validator)
-                                ->withInput();
+                    return redirect()->route('sending.server.addDomain', $server->uid)
+                        ->withErrors($validator)
+                        ->withInput();
                 }
             } else {
                 // validation
@@ -641,9 +643,9 @@ class SendingServerController extends Controller
                 }
 
                 if (!$valid || $validator->fails()) {
-                    return redirect()->action('Admin\SendingServerController@addDomain', $server->uid)
-                                ->withErrors($validator)
-                                ->withInput();
+                    return redirect()->route('sending.server.addDomain', $server->uid)
+                        ->withErrors($validator)
+                        ->withInput();
                 }
             }
 
@@ -653,7 +655,7 @@ class SendingServerController extends Controller
             return;
         }
 
-        return view('admin.sending_servers.add_domain', [
+        return view('Admin.email.sending_servers.add_domain', [
             'server' => $server,
         ]);
     }
@@ -675,7 +677,7 @@ class SendingServerController extends Controller
         if ($server->isExtended()) {
             return redirect($server->getEditUrl());
         } else {
-            return redirect()->action('Admin\SendingServerController@edit', [$server->uid, $server->type]);
+            return redirect()->route('sending.server.edit', [$server->uid, $server->type]);
         }
     }
 
