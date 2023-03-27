@@ -45,39 +45,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="py-2">
-                            <h4 class="font-500">WhatsApp Automation</h4>
-                            <p>
-                                Send instant, scheduled or automated messages to your contact
-                            </p>
-                            <div class="">
-                                <div class="all-create">
-                                    <button>
-                                        <a href="{{route('user.send.broadcast', Auth::user()->username)}}">
-                                            Send Brodcast Messsage
-                                        </a>
-                                    </button>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <div class="d-flex account-nav">
-                            {{-- <p class="ps-0">New Campaign</p> --}}
-                            {{-- <p>
-                                <a href="#" class="text-decoration-none text-dark">Recieved Messages</a>
-                            </p> --}}
-                            <p class="ps-0 active">
-                                <a href="#" class="text-decoration-none text-dark">Contacts</a>
-                            </p>
-                            {{-- <p>
-                                <a href="#" class="text-decoration-none text-dark">Auto Reply</a>
-                            </p> --}}
-                            {{-- <p>
-
-                            </p> --}}
-                            {{-- <p class="ps-0 active">
-                                <a href="#" class="text-decoration-none text-dark">Settings</a>
-                            </p> --}}
-                        </div>
                         <div class="acc-border"></div>
                     </div>
                 </div>
@@ -88,12 +55,6 @@
                             <div class="col-lg-12">
                                 <h4>Contact Lists</h4>
                             </div>
-                            <!-- <div class="col-lg-6 search-item">
-                                <div class="bg-light search-store border-in flex">
-                                    <input class="bg-light" type="search" placeholder="search by name" name="store" id="" />
-                                    <button><i class="bi bi-search"></i></button>
-                                </div>
-                            </div> -->
                         </div>
                         <div class="table-body mt-1 table-responsive">
                             <table id="datatable-buttons" class=" table table-bordered dt-responsive nowrap w-100">
@@ -283,6 +244,7 @@
                                             </div>
                                             <div class="dropdown">
                                                 <button class="btn-list dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Options
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                     <li>
@@ -317,85 +279,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="col-lg-8">
-                    <div class="Edit">
-                        <div class="form">
-                            <div class="row">
-                                <p class="tell mb-4">
-                                    <b>
-                                        Sender Accounts
-                                    </b> <br>
-                                    <span>
-                                        Add one or more whatsapp number to start your automation
-                                    </span>
-                                </p>
-                                <div class="col-lg-12">
-                                    <label>Whatsapp Number</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-md-9"></div>
-                                        <div class="col-md-3">
-                                            <div class="boding">
-                                                <button data-bs-toggle="modal" data-bs-target="#emailConfirm">
-                                                    Add New Number
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Edit">
-                        <div class="form">
-                            <div class="row">
-                                <p class="tell mb-4">
-                                    <b>
-                                        Sending Configuration
-                                    </b> <br>
-                                    <span>
-                                        Reduce the chances of geting blocked by setting the speed for bulk
-                                        messages
-                                    </span>
-                                </p>
-                                <div class="col-lg-12">
-                                    <label>Connection Speed :</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <select>
-                                                <option>
-                                                    Fast
-                                                </option>
-                                                <option> Low </option>
-                                                <option> Medium </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="row">
-                                        <div class="col-md-9"></div>
-                                        <div class="col-md-3">
-                                            <div class="boding">
-                                                <button>
-                                                    <a href="" style="color: #fff;">
-                                                        Update Setting
-                                                    </a>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="col-lg-2"></div>
             </div>
         </div>

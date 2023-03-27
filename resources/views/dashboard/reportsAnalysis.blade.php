@@ -81,8 +81,8 @@
                             <div class="chart has-fixed-height" id="bars_basic"></div>
                         </div>
                     </div>
-                    <div>
-                      <div class='subscribe-analysis'>
+                    <div class="row mt-4">
+                      <div class='col-md-6 subscribe-analysis'>
                         <p class="default-badge">Subscription Detail</p>
                         <div>
                           <p class="text-center fw-bold fs-4 text-warning">{{App\Models\OjaPlan::find(Auth::user()->plan)->name}} </p>
@@ -96,7 +96,7 @@
                           <p class="d-flex align-items-center">02-Feb-2023 <span><i class="bi bi-arrow-left-right px-1 text-danger"></i></span> 02-Mar-2023</p>
                         </div>
                       </div>
-                      <div class='affiliate-analysis'>
+                      <div class='col-md-6 affiliate-analysis' style="margin-top: 0px;">
                         <p class="default-badge">Affiliate Detail</p>
                         <div>
                           <p class="text-center fw-bold detail-fonting">{{App\Models\User::where('referral_link', Auth::user()->id)->get()->count()}}</p>

@@ -414,9 +414,6 @@ class SmsAutomationController extends Controller
             //dd($receivers);
             //$receivers = implode(';', $request->receivers);
 
-            // Create a campaign
-
-
             // Now add the phone numbers with messages to queue that will be handled further
             foreach ($contact as $receiver) {
                 \App\Models\SmsQueue::create([
