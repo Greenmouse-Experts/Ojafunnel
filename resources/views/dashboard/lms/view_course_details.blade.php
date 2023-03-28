@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <title> {{$shop->name}} | Oja Funnel | Shop</title>
@@ -16,11 +17,12 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
     <!-- Bootstrap Css -->
-   <!-- Font Css-->
-   <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- Font Css-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 </head>
+
 <body>
     <section class="menu-area">
         <div class="container">
@@ -84,7 +86,7 @@
                             <div class="user-box menu-icon-box">
                                 <div class="icon">
                                     <a href="#">
-                                        <img src="{{$shop->logo ?? URL::asset('dash/assets/image/shop-logo.png')}}" alt="" class="img-fluid"/>
+                                        <img src="{{$shop->logo ?? URL::asset('dash/assets/image/shop-logo.png')}}" alt="" class="img-fluid" />
                                     </a>
                                 </div>
                             </div>
@@ -128,7 +130,7 @@
                     <div class="course-sidebar">
                         <div class="course-sidebar-text-box">
                             <div class="buy-btns">
-                                    <a href="{{ route('add.course.to.cart', $course->id) }}" class="btn btn-add-cart">Add to cart</a>
+                                <a href="{{ route('add.course.to.cart', $course->id) }}" class="btn btn-add-cart">Add to cart</a>
                             </div>
 
                             <div class="includes">
@@ -254,63 +256,105 @@
 </body>
 
 <style>
-.dropdown button.btn-info{
-    color: {{$shop->color}};
-    background: {{$shop->theme}};
-}
-.dropdown .dropdown-menu{
-    padding:20px;
-    width:310px !important;
-    box-shadow:0px 4px 7px #a8a7a7;
-}
-.total-header-section{
-    border-bottom:1px solid #d2d2d2;
-}
-.total-section p{
-    margin-bottom:20px;
-}
-.cart-detail{
-    padding:15px 0px;
-}
-.cart-detail-img img{
-    width:100%;
-    height:100%;
-    padding-left:15px;
-}
-.cart-detail-product p{
-    margin:0px;
-    color:#000;
-    font-weight:500;
-}
+    .dropdown button.btn-info {
+        color: {
+                {
+                $shop->color
+            }
+        }
 
-span.text-info{
-    color: {{$shop->theme}} !important;
-}
-.cart-detail .price{
-    font-size:12px;
-    margin-right:10px;
-    font-weight:500;
-}
-.cart-detail .count{
-    color:#C2C2DC;
-}
-.checkout{
-    border-top:1px solid #d2d2d2;
-    padding-top: 15px;
-}
-.checkout .btn-primary{
-    color: {{$shop->color}};
-    background: {{$shop->theme}};
-}
-.dropdown-menu:before{
-    content: " ";
-    position:absolute;
-    top:-20px;
-    right:50px;
-    border:10px solid transparent;
-    border-bottom-color:#fff;
-}
+        ;
+
+        background: {
+                {
+                $shop->theme
+            }
+        }
+
+        ;
+    }
+
+    .dropdown .dropdown-menu {
+        padding: 20px;
+        width: 310px !important;
+        box-shadow: 0px 4px 7px #a8a7a7;
+    }
+
+    .total-header-section {
+        border-bottom: 1px solid #d2d2d2;
+    }
+
+    .total-section p {
+        margin-bottom: 20px;
+    }
+
+    .cart-detail {
+        padding: 15px 0px;
+    }
+
+    .cart-detail-img img {
+        width: 100%;
+        height: 100%;
+        padding-left: 15px;
+    }
+
+    .cart-detail-product p {
+        margin: 0px;
+        color: #000;
+        font-weight: 500;
+    }
+
+    span.text-info {
+        color: {
+                {
+                $shop->theme
+            }
+        }
+
+        !important;
+    }
+
+    .cart-detail .price {
+        font-size: 12px;
+        margin-right: 10px;
+        font-weight: 500;
+    }
+
+    .cart-detail .count {
+        color: #C2C2DC;
+    }
+
+    .checkout {
+        border-top: 1px solid #d2d2d2;
+        padding-top: 15px;
+    }
+
+    .checkout .btn-primary {
+        color: {
+                {
+                $shop->color
+            }
+        }
+
+        ;
+
+        background: {
+                {
+                $shop->theme
+            }
+        }
+
+        ;
+    }
+
+    .dropdown-menu:before {
+        content: " ";
+        position: absolute;
+        top: -20px;
+        right: 50px;
+        border: 10px solid transparent;
+        border-bottom-color: #fff;
+    }
 </style>
 
 </html>
-
