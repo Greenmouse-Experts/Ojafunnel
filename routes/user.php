@@ -89,6 +89,9 @@ Route::prefix('user')->group(function () {
     Route::get('/user/get/all/unread/notifications', [OjafunnelNotificationController::class, 'get_all_unread_notifications']);
     Route::get('/user/count/unread/notifications', [OjafunnelNotificationController::class, 'count_unread_notifications']);
 
+    // Sms Automation
+    Route::post('/sms-automation/delete/{id}', [App\Http\Controllers\DashboardController::class, 'delete_sms_campaign'])->name('user.delete.sms.campaign');
+    Route::post('/sms-automation/update/{id}', [App\Http\Controllers\DashboardController::class, 'update_sms_campaign'])->name('user.update.sms.campaign');
 
     // Notification
     Route::get('/user/read/notification/{id}', [OjafunnelNotificationController::class, 'read_notification'])->name('user.read.notification');

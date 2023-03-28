@@ -12,6 +12,9 @@ use App\Models\SmsCampaignList;
 use App\Models\SmsLog;
 use App\Models\SmsQueue;
 use \Carbon\Carbon;
+use Exception;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Auth;
 
 class SendSms extends Command
 {
@@ -52,27 +55,136 @@ class SendSms extends Command
         //collect recurring campaign and check status
         $recurring = SmsCampaign::where('schedule_type', 'recurring')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
         $onetime = SmsCampaign::where('schedule_type', 'onetime')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
-        //\Log::info(['hi', $onetime , $fromDate, $toDate]);
-        if($onetime->count() > 0){
+        $message = SmsCampaign::where('schedule_type', 'onetime')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
+        // \Log::info(['hi', $onetime, $fromDate, $toDate]);
+        if ($onetime->count() > 0) {
             foreach ($onetime as $sms) {
                 if ($sms->schedule_time < Carbon::now()->toDateTimeString()) {
-                    //\Log::info(['hi', $fromDate , $toDate]);
+                    // \Log::info([$sms->user_id, $fromDate , $toDate]);
                     //\Log::info([$sms->recurring_end, Carbon::now()->toDateTimeString()]);
                     // recurring running
                     dispatch(new StoreCampaignJob($sms->id));
 
-                    $contact = \App\Models\SMSQueue::where('sms_campaign_id', $sms->id)->select('phone_number')
-                        ->get();
+                    $contact = \App\Models\SMSQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
                     $sms->status = 'delivered';
                     $sms->delivery_at = Carbon::now()->toDateTimeString();
                     $sms->cache = json_encode([
                         'ContactCount' => $contact->count(),
-                        'DeliveredCount' => $sms->readCache('DeliveredCount')+1,
+                        // 'DeliveredCount' => $sms->readCache('DeliveredCount') + 1,
+                        'DeliveredCount' => $contact->count(),
                         'FailedDeliveredCount' => 0,
                         'NotDeliveredCount' => 0,
                     ]);
-                    $data = $sms->update();
 
+                    if ($sms->integration == "Multitexter") 
+                    {
+                        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+
+                        $d = $contact->toArray();
+
+                        foreach ($d as $val) {
+                            $str = implode(',', $val);
+                            $data[] = $str;
+                        }
+                        $datum = implode(',', $data);
+
+                        // \Log::info($datum);
+
+                        $email = $integration->email;
+                        $password = $integration->password;
+                        $message = $sms->message;
+                        $sender_name = $sms->sender_name;
+                        $recipients = $datum;
+                        $api_key = $integration->api_key;
+
+                        try {
+                            $client = new Client(); //GuzzleHttp\Client
+                            $url = "https://app.multitexter.com/v2/app/sendsms";
+
+                            $params = [
+                                "email" => $email,
+                                "password" => $password,
+                                "sender_name" => $sender_name,
+                                "message" => $message,
+                                "recipients" => $recipients
+                            ];
+
+                            $headers = [
+                                'Authorization' => 'Bearer ' . $api_key
+                            ];
+
+                            $response = $client->request('POST', $url, [
+                                'json' => $params,
+                                'headers' => $headers,
+                            ]);
+
+                            $responseBody = json_decode($response->getBody());
+                        } catch (Exception $e) {
+                            $responseBody = $e;
+                        }
+
+                        // return $responseBody;
+                    }
+
+                    if ($sms->integration == "NigeriaBulkSms") 
+                    {
+                        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+
+                        $d = $contact->toArray();
+
+                        foreach ($d as $val) {
+                            $str = implode(',', $val);
+                            $data[] = $str;
+                        }
+                        $datum = implode(',', $data);
+
+                        // Initialize variables ( set your variables here )
+                        $username = $integration->username;
+                        $password = $integration->password;
+                        $sender = $sms->sender_name;
+                        $message = $sms->message;
+                        $recipients = $datum;
+
+                        try {
+                            /*
+                            Sending messages using our API
+                            Requirements - PHP, cURL (enabled) function
+                            */
+
+                            // Separate multiple numbers by comma
+
+                            $mobiles = $recipients;
+
+                            // Set your domain's API URL
+
+                            $api_url = 'http://portal.nigeriabulksms.com/api/?';
+
+
+                            //Create the message data
+
+                            $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $message, 'mobiles' => $mobiles);
+
+                            //URL encode the message data
+
+                            $data = http_build_query($data);
+
+                            //Send the message
+
+                            $ch = curl_init(); // Initialize a cURL connection
+
+                            curl_setopt($ch, CURLOPT_URL, $api_url);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+                            $result = curl_exec($ch);
+
+                        } catch (Exception $e) {
+                            $responseBody = $e;
+                        }
+                    }
+
+                    $data = $sms->update();
                 }
             }
         }
@@ -94,8 +206,7 @@ class SendSms extends Command
                         $frequency_unit = $sms->frequency_unit;
                     }
 
-                    $contact = \App\Models\SmsQueue::where('sms_campaign_id', $sms->id)->select('phone_number')
-                        ->get();
+                    $contact = \App\Models\SmsQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
                     // \Log::info($contact);
                     $schedule_date = $sms->nextScheduleDate($sms->schedule_time, $frequency_unit, $frequency_amount);
 
@@ -107,10 +218,120 @@ class SendSms extends Command
                     $sms->schedule_time = $schedule_date;
                     $sms->cache = json_encode([
                         'ContactCount' => $contact->count(),
-                        'DeliveredCount' => $sms->readCache('DeliveredCount') + 1,
+                        // 'DeliveredCount' => $sms->readCache('DeliveredCount') + 1,
+                        'DeliveredCount' => $contact->count(),
                         'FailedDeliveredCount' => 0,
                         'NotDeliveredCount' => 0,
                     ]);
+
+                    if ($sms->integration == "Multitexter") 
+                    {
+                        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+
+                        $d = $contact->toArray();
+
+                        foreach ($d as $val) {
+                            $str = implode(',', $val);
+                            $data[] = $str;
+                        }
+                        $datum = implode(',', $data);
+
+                        // \Log::info($datum);
+
+                        $email = $integration->email;
+                        $password = $integration->password;
+                        $message = $sms->message;
+                        $sender_name = $sms->sender_name;
+                        $recipients = $datum;
+                        $api_key = $integration->api_key;
+
+                        try {
+                            $client = new Client(); //GuzzleHttp\Client
+                            $url = "https://app.multitexter.com/v2/app/sendsms";
+
+                            $params = [
+                                "email" => $email,
+                                "password" => $password,
+                                "sender_name" => $sender_name,
+                                "message" => $message,
+                                "recipients" => $recipients
+                            ];
+
+                            $headers = [
+                                'Authorization' => 'Bearer ' . $api_key
+                            ];
+
+                            $response = $client->request('POST', $url, [
+                                'json' => $params,
+                                'headers' => $headers,
+                            ]);
+
+                            $responseBody = json_decode($response->getBody());
+                        } catch (Exception $e) {
+                            $responseBody = $e;
+                        }
+
+                        // return $responseBody;
+                    }
+
+                    if ($sms->integration == "NigeriaBulkSms") 
+                    {
+                        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+
+                        $d = $contact->toArray();
+
+                        foreach ($d as $val) {
+                            $str = implode(',', $val);
+                            $data[] = $str;
+                        }
+                        $datum = implode(',', $data);
+
+                        // Initialize variables ( set your variables here )
+                        $username = $integration->username;
+                        $password = $integration->password;
+                        $sender = $sms->sender_name;
+                        $message = $sms->message;
+                        $recipients = $datum;
+
+                        try {
+                            /*
+                            Sending messages using our API
+                            Requirements - PHP, cURL (enabled) function
+                            */
+
+                            // Separate multiple numbers by comma
+
+                            $mobiles = $recipients;
+
+                            // Set your domain's API URL
+
+                            $api_url = 'http://portal.nigeriabulksms.com/api/?';
+
+
+                            //Create the message data
+
+                            $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $message, 'mobiles' => $mobiles);
+
+                            //URL encode the message data
+
+                            $data = http_build_query($data);
+
+                            //Send the message
+
+                            $ch = curl_init(); // Initialize a cURL connection
+
+                            curl_setopt($ch, CURLOPT_URL, $api_url);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_POST, true);
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+                            $result = curl_exec($ch);
+
+                        } catch (Exception $e) {
+                            $responseBody = $e;
+                        }
+                    }
+
                     $data = $sms->update();
 
                     // if ($data) {

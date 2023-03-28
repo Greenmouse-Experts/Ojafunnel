@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
+use App\Models\SmsQueue;
 
 class DashboardController extends Controller
 {
@@ -419,6 +420,46 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function delete_sms_campaign($id)
+    {
+        $Finder = Crypt::decrypt($id);
+
+        $smsAutomations = SmsCampaign::find($Finder);
+
+        $smsQueue = SmsQueue::where('sms_campaign_id', $smsAutomations->id)->get();
+
+        foreach($smsQueue as $sms)
+        {
+            $sms->delete();
+        }
+
+        $smsAutomations->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Sms Campaign deleted succesfully.'
+        ]);
+    }
+
+    public function update_sms_campaign($id, Request $request)
+    {
+        $Finder = Crypt::decrypt($id);
+
+        $smsAutomations = SmsCampaign::find($Finder);
+        
+        $smsAutomations->update([
+            'title' => $request->campaign_name,
+            'message' => $request->message,
+            'sender_name' => $request->sender_name,
+            'integration' => $request->integration,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Sms Campaign updated succesfully.'
+        ]);
+    }
+
     public function contact_list(Request $request)
     {
         $contact_lists = \App\Models\ContactList::latest()->where('user_id', Auth::user()->id)->cursor();
@@ -461,8 +502,6 @@ class DashboardController extends Controller
 
     public function contact_list_delete(Request $request)
     {
-
-
         if ($request->isMethod('post')) {
             $contact_num = \App\Models\ContactNumber::where('contact_list_id', $request->list_id)->delete();
             $c = \App\Models\ContactList::findOrFail($request->list_id);
@@ -517,7 +556,6 @@ class DashboardController extends Controller
 
     public function delete_contact_num(Request $request)
     {
-
         if ($request->isMethod('post')) {
             $c = \App\Models\ContactNumber::findOrFail($request->contact_id)->delete();
 
