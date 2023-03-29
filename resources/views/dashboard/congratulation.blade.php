@@ -55,17 +55,17 @@
                                             You have succefully purchase your glasses, delivery details would be sent to your email
                                         </p>
                                     </div>
-                                    
+
                                     <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="boding alert mb-4">
-                                            <a href="{{route('user.congratulation', Auth::user()->username)}}">
-                                                <button type="submit">
-                                                    Close
-                                                </button>
-                                            </a>
+                                        <div class="col-md-12">
+                                            <div class="boding alert mb-4">
+                                                <a href="{{route('user.congratulation', Auth::user()->username)}}">
+                                                    <button type="submit">
+                                                        Close
+                                                    </button>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                             </div>
