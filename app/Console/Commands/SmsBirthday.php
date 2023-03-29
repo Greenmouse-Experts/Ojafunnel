@@ -38,6 +38,10 @@ class SmsBirthday extends Command
                                     ->where('end_date', '>=', Carbon::today()->toDateString())
                                     ->get();
         
+        if($birthday->isEmpty())
+        {
+            return Command::SUCCESS;
+        }
         foreach($birthday as $key => $ba)
         {
             if($ba->sms_type == 'birthday')
