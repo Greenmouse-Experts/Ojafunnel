@@ -136,7 +136,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form method="post" action="{{route('user.add.bank.details')}}">
-             @csrf
+                @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
