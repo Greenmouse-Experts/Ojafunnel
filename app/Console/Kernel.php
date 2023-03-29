@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('smsCampaign:run')->everyFiveMinutes();
+        $schedule->command('smsBirthday:cron')->daily();
 
     }
 
