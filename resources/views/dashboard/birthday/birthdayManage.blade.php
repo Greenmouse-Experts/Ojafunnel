@@ -61,10 +61,11 @@
                                             <th scope="col">Status</th>
                                             <th scope="col">Start Date</th>
                                             <th scope="col">End Date</th>
+                                            <th scope="col">Schedule Status</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
-                                   <tbody>
+                                    <tbody>
                                         @foreach ($bm as $b)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
@@ -72,22 +73,155 @@
                                             <td>{{$b->title}}</td>
                                             <td>
                                                 @php
-                                                    $bb = json_decode($b->automation, true);
-
+                                                $bb = json_decode($b->automation, true);
                                                 @endphp
-                                                    @foreach ($bb as $key => $value)
-                                                        <p style="text-transform:capitalize">{{$value}}</p>
-                                                    @endforeach
+                                                @foreach ($bb as $key => $value)
+                                                <p style="text-transform:capitalize">{{$value}}</p>
+                                                @endforeach
                                             </td>
-                                            <td>{{$b->status}}</td>
+                                            <td><span class="bg-success p-2" style="color: #fff;">{{$b->status}}</span></td>
                                             <td>{{$b->start_date}}</td>
                                             <td>{{$b->end_date}}</td>
                                             <td>
+                                                @if($b->action == 'Play')
+                                                <span class="bg-success p-2" style="color: #fff;">{{$b->action}}</span>
+                                                @endif
+                                                @if($b->action == 'Pause')
+                                                <span class="bg-danger p-2" style="color: #fff;">{{$b->action}}</span>
+                                                @endif
+                                            </td>
+                                            <td>
                                                 <div class="row fs-5">
-                                                    {{-- <div class='col'><a href="{{route('user.edit.birthday', ['username' => Auth::user()->username, 'id' => $b->id])}}"><i class="bi bi-eye-fill"></i></a></div> --}}
+                                                    <div class='col'><a data-bs-toggle="modal" data-bs-target="#editBirthdayList-{{$b->id}}"><i class="bi bi-eye-fill cursor-pointer"></i></a></div>
                                                     <div class='col'><i class="bi bi-trash3-fill text-danger cursor-pointer" data-bs-toggle="modal" data-bs-target="#deleteBirthdayList-{{$b->id}}"></i></div>
                                                 </div>
                                             </td>
+                                            <!-- End Page-content -->
+                                            <div class="modal fade" id="editBirthdayList-{{$b->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header border-bottom-0">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">
+                                                                Edit {{$b->title}}
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="Edit-level">
+                                                                    <form action="{{route('user.update.birthday', Crypt::encrypt($b->id))}}" method="post">
+                                                                        @csrf
+                                                                        <div class="form">
+                                                                            <div class="col-lg-12">
+                                                                                <label>Message Title</label>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12 mb-4">
+                                                                                        <input type="text" placeholder="Enter the message title" value="{{$b->title}}" name="title" class="input"
+                                                                                            required>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <label>Sender Name</label>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12 mb-4">
+                                                                                        <input type="text" placeholder="Enter the message title" name="sender_name" value="{{$b->sender_name}}" class="input"
+                                                                                            required>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <label>Select Recipient List</label>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12 mb-4">
+                                                                                        <select name="birthday_list_id" id="" class='py-3 fs-6' required>
+                                                                                            <option selected value="{{$b->birthday_contact_list_id}}">{{App\Models\BirthdayContactList::find($b->birthday_contact_list_id)->name}}</option>
+                                                                                            <option disabled class='p-5'>Choose from birthday listing</option>
+                                                                                            @if($birthlist->isEmpty())
+                                                                                                <option disabled value="">No Birthday List</option>
+                                                                                            @else
+                                                                                                @foreach ($birthlist as $item)
+                                                                                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                                                                                @endforeach
+                                                                                            @endif
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <label>Select Automation Type</label>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12 mb-4">
+                                                                                        <select name="sms_type" id="" class='py-3 fs-6'>
+                                                                                            <option selected value="{{$b->sms_type}}">{{$b->sms_type}}</option>
+                                                                                            <option disabled class='p-5'>Select Automation Type</option>
+                                                                                            <option value="birthday">Birthday</option>
+                                                                                            <option value="anniversary">Aniversary</option>
+                                                                                            <!-- <option value="other">Other</option> -->
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <label>Message Body</label>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12 mb-4">
+                                                                                        <textarea placeholder="Enter the message here" value="{{$b->message}}" name="message">{{$b->message}}</textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <div class='row'>
+                                                                                    <div class='col-lg-6'>
+                                                                                        <label>Start Date</label>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 mb-4">
+                                                                                                <input type="date" value="{{$b->start_date}}" name="start_date" class="input"
+                                                                                                    required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class='col-lg-6'>
+                                                                                        <label>End Date</label>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 mb-5">
+                                                                                                <input type="date" value="{{$b->end_date}}" name="end_date" class="input"
+                                                                                                    required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-12">
+                                                                                <label>Select Action</label>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12 mb-4">
+                                                                                        <select name="action" class='py-3 fs-6' required>
+                                                                                            <option selected value="{{$b->action}}">{{$b->action}}</option>
+                                                                                            <option disabled class='p-5'>Choose options</option>
+                                                                                            <option value="Play">Play</option>
+                                                                                            <option value="Pause">Pause</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row justify-content-between">
+                                                                                <div class="col-6"></div>
+                                                                                <div class="col-6 text-end">
+                                                                                    <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
+                                                                                        Update
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Edit contacts modal -->
                                             <div class="modal fade" id="deleteBirthdayList-{{$b->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
@@ -97,6 +231,7 @@
                                                             </h5>
                                                         </div>
                                                         <form action="{{route('user.delete.birthday', ['username' => Auth::user()->username, 'id' => $b->id])}}" method="post">
+                                                            @csrf
                                                             <div class='row justify-content-between p-3'>
                                                                 <div class='col'>
                                                                     <button type="button" class="mybtnprimary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
@@ -111,7 +246,7 @@
                                             </div>
                                         </tr>
                                         @endforeach
-                                   </tbody>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -120,68 +255,6 @@
             </div>
         </div>
     </div>
-    <!-- End Page-content -->
-    <div class="modal fade" id="editBirthdayList" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Edit Greenmouse Contact List
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="Edit-level">
-                            <form  method="post">
-                                <div class="form">
-                                    <div class="col-lg-12">
-                                        <label>Name</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Contact List Name..." name="name" class="input"
-                                                    required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label>Status</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <select name="status" id="">
-                                                    <option value="Active" selected>Active</option>
-                                                    <option value="Suspend">Suspend</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-between">
-                                        <div class="col-6">
-                                            <a href="#" class="text-decoration-none">
-                                                <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                    Cancel
-                                                </button></a>
-                                        </div>
-                                        <div class="col-6 text-end">
-                                            <a href="#" class="text-decoration-none">
-                                                <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                    >
-                                                    Save
-                                                </button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- delete contacts modal -->
-
 </div>
 <!-- END layout-wrapper -->
 @endsection

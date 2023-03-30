@@ -86,7 +86,7 @@
                                                 <option selected disabled class='p-5'>Select Automation Type</option>
                                                 <option value="birthday">Birthday</option>
                                                 <option value="anniversary">Aniversary</option>
-                                                <option value="other">Other</option>
+                                                <!-- <option value="other">Other</option> -->
                                             </select>
                                         </div>
                                     </div>
@@ -108,7 +108,7 @@
                                                 <label class='w-auto '>Email Automation</label>
                                             </div>
                                             {{-- <div class="email_automation mt-2" style="display: none">
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-12">
                                                     <label>Select Email Sending Server</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
@@ -131,11 +131,11 @@
                                                 <label class='w-auto'>SMS Automation</label>
                                             </div>
                                             <div class="sms_automation mt-2" style="display: none">
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-12">
                                                     <label>Select SMS Server</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
-                                                            <select name="integration" id="" class='py-3 fs-6'>
+                                                            <select name="integration" class='py-3 fs-6'>
                                                                 <option selected disabled class='p-5'>Choose from sms sending server</option>
                                                                 @if($smsServer->count() > 0)
                                                                     @foreach ($smsServer as $item)
@@ -154,7 +154,7 @@
                                                 <label class='w-auto'>Whatsapp Automation</label>
                                             </div>
                                             <div class="whatsapp_automation mt-2" style="display: none">
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-12">
                                                     <label>Sending Account</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">

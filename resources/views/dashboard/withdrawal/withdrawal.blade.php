@@ -90,7 +90,7 @@
                                     <div class="flex-shrink-0 align-self-center">
                                         <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                             <span class="avatar-title rounded-circle bg-primary">
-                                            <i class="bx bx-archive-in font-size-24"></i>
+                                                <i class="bx bx-archive-in font-size-24"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -134,15 +134,15 @@
                                             </td>
                                             <td>
                                                 @if ($withdraw->status == 'created')
-                                                    <span class="badge badge-pill badge-soft-primary font-size-11">{{$withdraw->status}}</span>
+                                                <span class="badge badge-pill badge-soft-primary font-size-11">{{$withdraw->status}}</span>
                                                 @endif
 
                                                 @if ($withdraw->status == 'refunded')
-                                                    <span class="badge badge-pill badge-soft-secondary font-size-11">{{$withdraw->status}}</span>
+                                                <span class="badge badge-pill badge-soft-secondary font-size-11">{{$withdraw->status}}</span>
                                                 @endif
 
                                                 @if ($withdraw->status == 'finalized')
-                                                    <span class="badge badge-pill badge-soft-success font-size-11">{{$withdraw->status}}</span>
+                                                <span class="badge badge-pill badge-soft-success font-size-11">{{$withdraw->status}}</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -206,42 +206,42 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form method="post" action="{{route('user.withdraw')}}">
-             @csrf
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="Editt">
-                            <div class="form">
-                                <h4 class="card-title">Withdrawal Information</h4>
-                                <p class="card-title-desc">Fill all information below to complete your Withdrawal</p>
-                                <div class="row">
-                                    <div class="col-lg-12 mb-4">
-                                        <label for="Name">Amount</label>
-                                        <input type="text" name="amount" placeholder="Enter amount" required />
-                                    </div>
-                                    <div class="col-lg-12 mb-4">
-                                        <label for="Name">Payment Method</label>
-                                        <select name="payment_method" id="name">
-                                            <option value="">-- Select Payment Method --</option>
-                                            @foreach(App\Models\BankDetail::latest()->where('user_id', Auth::user()->id)->get() as $bank)
-                                            <option value="{{$bank->id}}">{{$bank->type}} - {{$bank->account_name}} {{$bank->account_number}}</option>
-                                            @endforeach
-                                        </select>
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="Editt">
+                                <div class="form">
+                                    <h4 class="card-title">Withdrawal Information</h4>
+                                    <p class="card-title-desc">Fill all information below to complete your Withdrawal</p>
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-4">
+                                            <label for="Name">Amount</label>
+                                            <input type="text" name="amount" placeholder="Enter amount" required />
+                                        </div>
+                                        <div class="col-lg-12 mb-4">
+                                            <label for="Name">Payment Method</label>
+                                            <select name="payment_method" id="name">
+                                                <option value="">-- Select Payment Method --</option>
+                                                @foreach(App\Models\BankDetail::latest()->where('user_id', Auth::user()->id)->get() as $bank)
+                                                <option value="{{$bank->id}}">{{$bank->type}} - {{$bank->account_name}} {{$bank->account_number}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
-                </button>
-                <button type="submit" class="btn" style="color: #714091; border: 1px solid #714091">
-                    Submit
-                </button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn" style="color: #714091; border: 1px solid #714091">
+                        Submit
+                    </button>
+                </div>
             </form>
         </div>
     </div>

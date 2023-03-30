@@ -159,7 +159,7 @@
                                         {{ $campaign->readCache('FailedDeliveredCount') }}
                                     </td>
                                     <td>
-                                        {!!$campaign->getCampaignType()!!}
+                                        <sapn class="Type">{!!$campaign->getCampaignType()!!}</sapn>
                                     </td>
                                     <td>
                                         {!!$campaign->getStatus()!!}
@@ -167,29 +167,174 @@
                                     <td>
                                         <div class="dropdown dropstart">
                                             <button class="btn-list dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
+                                            Options
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li>
+                                                <!-- <li>
                                                     <a class="dropdown-item" href="#">
                                                         Overview
                                                     </a>
-                                                </li>
+                                                </li> -->
                                                 <li>
-                                                    <a class="dropdown-item" type="button" >
+                                                    <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#edit-{{$campaign->id}}">
                                                         Edit
                                                     </a>
                                                 </li>
-                                                <li>
+                                                <!-- <li>
                                                     <a class="dropdown-item" type="button" >
                                                         Pause
                                                     </a>
-                                                </li>
+                                                </li> -->
                                                 <li>
-                                                    <a class="dropdown-item" type="button">
+                                                    <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#delete-{{$campaign->id}}">
                                                         Delete
                                                     </a>
                                                 </li>
                                             </ul>
+                                            <!-- Modal Edit -->
+                                            <div class="modal fade" id="edit-{{$campaign->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content pb-3">
+                                                        <div class="modal-header border-bottom-0">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">
+                                                                Provide Us Your Amount Below
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body ">
+                                                            <div class="row">
+                                                                <div class="Editt">
+                                                                    <form method="POST" action="{{ route('user.update.sms.campaign', Crypt::encrypt($campaign->id))}}">
+                                                                        @csrf
+                                                                        <div class="form">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <label>Campaign Name</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input type="text" placeholder="Enter Campaign Name" name="campaign_name" value="{{$campaign->title}}" class="input">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <label>Sender Name</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input type="text" placeholder="Enter Sender Name" name="sender_name" value="{{$campaign->sender_name}}" class="input">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <label>SMS Message</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <textarea name="message" id="message" cols="30" rows="5" placeholder="Enter the message you would like to send to the reciepient(s) details below" value="{{$campaign->message}}" maxlength="160">{{$campaign->message}}</textarea>
+                                                                                            <div class="messageCounter"><span id="chars">160</span> characters</div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- <div class="row mt-3 mb-4 justify-content-between">
+                                                                                    <div class="col-4">
+                                                                                        <p class="font-500 fs-6">Recipients:</p>
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        <select name="mailinglist_id" class="bg-light w-100 py-2 rounded px-2 fs-6">
+                                                                                            <option value="">Choose from mailing list</option>
+                                                                                            @if(\App\Models\ContactList::where('user_id', Auth::user()->id)->get()->isEmpty())
+                                                                                            <option value="">No Mailing List</option>
+                                                                                            @else
+                                                                                            @foreach(\App\Models\ContactList::where('user_id', Auth::user()->id)->get() as $contact_list)
+                                                                                            <option value="{{$contact_list->id}}">{{$contact_list->name}}</option>
+                                                                                            @endforeach
+                                                                                            @endif
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div> -->
+                                                                                <div class="col-lg-12">
+                                                                                    <div class="row">
+                                                                                        @if(\App\Models\Integration::where('user_id', Auth::user()->id)->get()->isEmpty())
+                                                                                        <div class="col-12">
+                                                                                            <div class="circle" style="padding: 20px 20px 20px 2px; text-align: center;">
+                                                                                                <span class="text-dark">No SMS Integration Gateway Added</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        @else
+                                                                                        @foreach(\App\Models\Integration::where('user_id', Auth::user()->id)->get() as $integration)
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="circle" style="padding: 20px 20px 20px 20px;">
+                                                                                                <span class="text-dark">{{$integration->type}}</span>
+                                                                                            </div>
+                                                                                            <div class="zazu">
+                                                                                                <input type="radio" name="integration" value="{{$integration->type}}" {{ ($campaign->integration == $integration->type)? "checked" : "" }} style="margin-top: -70px !important;">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        @endforeach
+                                                                                        @endif
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <label>Opt Out Message </label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input type="text" placeholder="Enter opt out message eg text stop to 12344" name="optout_message" class="input">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-6"></div>
+                                                                                <div class="col-6">
+                                                                                    <div class="row">
+                                                                                        <div class="boding">
+                                                                                            <button type="submit">
+                                                                                                Update
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end modal -->
+                                            <!-- Modal Delete -->
+                                            <div class="modal fade" id="delete-{{$campaign->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content pb-3">
+                                                        <div class="modal-header border-bottom-0">
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body ">
+                                                            <div class="row">
+                                                                <div class="Editt">
+                                                                    <form method="POST" action="{{ route('user.delete.sms.campaign', Crypt::encrypt($campaign->id))}}">
+                                                                        @csrf
+                                                                        <div class="form">
+                                                                            <p><b>Delete Sms Campaign</b></p>
+                                                                            <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <p>This action cannot be undone. <br>This will permanently delete this sms campaign.</p>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <div class="boding">
+                                                                                        <button type="submit" class="form-btn">
+                                                                                            I understand this consquences, Delete Sms Campaign
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end modal -->
                                         </div>
                                     </td>
                                     {{-- <td>{{$smsAutomation->created_at->toDayDateTimeString()}}</td>
@@ -225,6 +370,9 @@
     }
     .dropdown{
         display: inline;
+    }
+    .Type span {
+        color: #000 !important;
     }
 </style>
 <!-- end modal -->

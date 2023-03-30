@@ -23,94 +23,199 @@ class IntegrationController extends Controller
     
     public function integration_create(Request $request)
     {
-        if($request->type == 'Twilio')
+        $integrations = Integration::where('user_id', Auth::user()->id)->get();
+
+        if($integrations->isEmpty())
         {
-            //Validate Request
-            $this->validate($request, [
-                'sid' => ['required', 'string', 'max:255'],
-                'token' => ['required', 'string', 'max:255'],
-                'from' => ['required', 'string', 'max:255'],
-            ]);
+            if($request->type == 'Twilio')
+            {
+                //Validate Request
+                $this->validate($request, [
+                    'sid' => ['required', 'string', 'max:255'],
+                    'token' => ['required', 'string', 'max:255'],
+                    'from' => ['required', 'string', 'max:255'],
+                ]);
 
-            Integration::create([
-                'user_id' => Auth::user()->id,
-                'sid' => $request->sid,
-                'token' => $request->token,
-                'from' => $request->from,
-                'type' => $request->type
-            ]);
+                Integration::create([
+                    'user_id' => Auth::user()->id,
+                    'sid' => $request->sid,
+                    'token' => $request->token,
+                    'from' => $request->from,
+                    'type' => $request->type
+                ]);
 
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'Twilio Integration Created Successfully!'
+                ]); 
+            }
+            if($request->type == 'InfoBip')
+            {
+                //Validate Request
+                $this->validate($request, [
+                    'api_key' => ['required', 'string', 'max:255'],
+                    'api_base_url' => ['required', 'string', 'max:255']
+                ]);
+
+                Integration::create([
+                    'user_id' => Auth::user()->id,
+                    'api_key' => $request->api_key,
+                    'api_base_url' => $request->api_base_url,
+                    'type' => $request->type
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'InfoBip Integration Created Successfully!'
+                ]); 
+            }
+            if($request->type == 'NigeriaBulkSms')
+            {
+                //Validate Request
+                $this->validate($request, [
+                    'username' => ['required', 'string', 'max:255'],
+                    'password' => ['required', 'string', 'max:255'],
+                ]);
+
+                Integration::create([
+                    'user_id' => Auth::user()->id,
+                    'username' => $request->username,
+                    'password' => $request->password,
+                    'type' => $request->type
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'NigeriaBulkSms Integration Created Successfully!'
+                ]); 
+            }
+            if($request->type == 'Multitexter')
+            {
+                //Validate Request
+                $this->validate($request, [
+                    'email' => ['required', 'string', 'max:255'],
+                    'password' => ['required', 'string', 'max:255'],
+                    'api_key' => ['required', 'string', 'max:255']
+                ]);
+
+                Integration::create([
+                    'user_id' => Auth::user()->id,
+                    'email' => $request->email,
+                    'password' => $request->password,
+                    'api_key' => $request->api_key,
+                    'type' => $request->type
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'Multitexter Integration Created Successfully!'
+                ]); 
+            }
             return back()->with([
-                'type' => 'success',
-                'message' => 'Twilio Integration Created Successfully!'
+                'type' => 'danger',
+                'message' => 'Integration Not Found.'
             ]); 
+        } else {
+            foreach ($integrations as $integration) {
+                $type[] = $integration->type;
+            }
+            if (in_array('Twilio', $type) || in_array('InfoBip', $type) || in_array('NigeriaBulkSms', $type) || in_array('Multitexter', $type)) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Integration added before.',
+                ]);
+            } else {
+                if($request->type == 'Twilio')
+                {
+                    //Validate Request
+                    $this->validate($request, [
+                        'sid' => ['required', 'string', 'max:255'],
+                        'token' => ['required', 'string', 'max:255'],
+                        'from' => ['required', 'string', 'max:255'],
+                    ]);
+
+                    Integration::create([
+                        'user_id' => Auth::user()->id,
+                        'sid' => $request->sid,
+                        'token' => $request->token,
+                        'from' => $request->from,
+                        'type' => $request->type
+                    ]);
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => 'Twilio Integration Created Successfully!'
+                    ]); 
+                }
+                if($request->type == 'InfoBip')
+                {
+                    //Validate Request
+                    $this->validate($request, [
+                        'api_key' => ['required', 'string', 'max:255'],
+                        'api_base_url' => ['required', 'string', 'max:255']
+                    ]);
+
+                    Integration::create([
+                        'user_id' => Auth::user()->id,
+                        'api_key' => $request->api_key,
+                        'api_base_url' => $request->api_base_url,
+                        'type' => $request->type
+                    ]);
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => 'InfoBip Integration Created Successfully!'
+                    ]); 
+                }
+                if($request->type == 'NigeriaBulkSms')
+                {
+                    //Validate Request
+                    $this->validate($request, [
+                        'username' => ['required', 'string', 'max:255'],
+                        'password' => ['required', 'string', 'max:255'],
+                    ]);
+
+                    Integration::create([
+                        'user_id' => Auth::user()->id,
+                        'username' => $request->username,
+                        'password' => $request->password,
+                        'type' => $request->type
+                    ]);
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => 'NigeriaBulkSms Integration Created Successfully!'
+                    ]); 
+                }
+                if($request->type == 'Multitexter')
+                {
+                    //Validate Request
+                    $this->validate($request, [
+                        'email' => ['required', 'string', 'max:255'],
+                        'password' => ['required', 'string', 'max:255'],
+                        'api_key' => ['required', 'string', 'max:255']
+                    ]);
+
+                    Integration::create([
+                        'user_id' => Auth::user()->id,
+                        'email' => $request->email,
+                        'password' => $request->password,
+                        'api_key' => $request->api_key,
+                        'type' => $request->type
+                    ]);
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => 'Multitexter Integration Created Successfully!'
+                    ]); 
+                }
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Integration Not Found.'
+                ]); 
+            }
         }
-        if($request->type == 'InfoBip')
-        {
-            //Validate Request
-            $this->validate($request, [
-                'api_key' => ['required', 'string', 'max:255'],
-                'api_base_url' => ['required', 'string', 'max:255']
-            ]);
-
-            Integration::create([
-                'user_id' => Auth::user()->id,
-                'api_key' => $request->api_key,
-                'api_base_url' => $request->api_base_url,
-                'type' => $request->type
-            ]);
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'InfoBip Integration Created Successfully!'
-            ]); 
-        }
-        if($request->type == 'NigeriaBulkSms')
-        {
-            //Validate Request
-            $this->validate($request, [
-                'username' => ['required', 'string', 'max:255'],
-                'password' => ['required', 'string', 'max:255'],
-            ]);
-
-            Integration::create([
-                'user_id' => Auth::user()->id,
-                'username' => $request->username,
-                'password' => $request->password,
-                'type' => $request->type
-            ]);
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'NigeriaBulkSms Integration Created Successfully!'
-            ]); 
-        }
-        if($request->type == 'Multitexter')
-        {
-            //Validate Request
-            $this->validate($request, [
-                'email' => ['required', 'string', 'max:255'],
-                'password' => ['required', 'string', 'max:255'],
-                'api_key' => ['required', 'string', 'max:255']
-            ]);
-
-            Integration::create([
-                'user_id' => Auth::user()->id,
-                'email' => $request->email,
-                'password' => $request->password,
-                'api_key' => $request->api_key,
-                'type' => $request->type
-            ]);
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Multitexter Integration Created Successfully!'
-            ]); 
-        }
-        return back()->with([
-            'type' => 'danger',
-            'message' => 'Integration Not Found.'
-        ]); 
+        
     }
 
     public function integration_update($id, Request $request)

@@ -52,23 +52,23 @@
             <div class='row mt-5 justify-content-around'>
                 <div class='border col-lg-6 col-xl-5 birthday-module-link row'>
                     <div class='col-5 birthday-div'>
-                        <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1676473304/OjaFunnel-Images/customers-removebg-preview_l9m5w0.png' alt='users' width="95%"  height="110px" style="border-radius: 10px;" />
+                        <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1676473304/OjaFunnel-Images/customers-removebg-preview_l9m5w0.png' alt='users' width="95%" height="110px" style="border-radius: 10px;" />
                     </div>
                     <div class='col-7'>
                         <p>Create and manage customer listing</p>
                         <div>
-                            <a href="{{route('user.manage.list', Auth::user()->username)}}" key="t-tui-calendar">Proceed  <i class="bi bi-arrow-right-circle-fill"></i></a>
+                            <a href="{{route('user.manage.list', Auth::user()->username)}}" key="t-tui-calendar">Proceed <i class="bi bi-arrow-right-circle-fill"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class='border my-4 my-lg-0 col-lg-6 col-xl-5  birthday-module-link row'>
                     <div class='col-5 birthday-div'>
-                        <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1676473293/OjaFunnel-Images/cake_ajgb28.webp' alt='users' width="95%"  />
+                        <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1676473293/OjaFunnel-Images/cake_ajgb28.webp' alt='users' width="95%" />
                     </div>
                     <div class='col-7'>
                         <p>Create and manage birthday modules</p>
                         <div>
-                            <a href="{{route('user.manage.birthday', Auth::user()->username)}}" key="t-tui-calendar">Proceed  <i class="bi bi-arrow-right-circle-fill"></i></a>
+                            <a href="{{route('user.manage.birthday', Auth::user()->username)}}" key="t-tui-calendar">Proceed <i class="bi bi-arrow-right-circle-fill"></i></a>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
     <!-- End Page-content -->
 </div>
 <script>
-    let monthNames = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];
+    let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     let dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 

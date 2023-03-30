@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('smsCampaign:run')->everyFiveMinutes();
+        $schedule->command('smsBirthday:cron')->everyFiveMinutes();
 
         // run command every minute
         $schedule->command('sendwabulk:run')->everyMinute()->withoutOverlapping();
