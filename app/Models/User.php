@@ -31,6 +31,8 @@ class User extends Authenticatable
         'plan',
         'wallet',
         'ref_bonus',
+        'promotion_link',
+        'promotion_bonus',
         'password',
         'status',
         'fcm_token'
@@ -105,9 +107,8 @@ class User extends Authenticatable
         return $rules;
     }
 
-    public function chats ()
+    public function chats()
     {
         return $this->hasMany(Chat::class);
     }
-
 }

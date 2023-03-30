@@ -216,17 +216,18 @@
                                         <div class="row">
                                             <div class="col-md-6 mt-4">
                                                 <label for="Time">Start Date</label>
-                                                <input type="date" name="schedule_date" />
+                                                <input type="date" name="start_date" />
                                             </div>
                                             <div class="col-md-6 mt-4">
                                                 <label for="Time">Start Time</label>
-                                                <input type="Time" name="schedule_time" />
+                                                <input type="Time" name="start_time" />
                                             </div>
                                             <div class="col-md-12 mt-5">
                                                 <label for="">Frequency</label>
                                                 <select name="frequency_cycle" id="selectFrenquncy" onchange="frequencyChange()">
                                                     <option value="onetime">One time</option>
                                                     <option value="daily">Daily</option>
+                                                    <option value="weekly">Weekly</option>
                                                     <option value="monthly">Monthly</option>
                                                     <option value="yearly">Yearly</option>
                                                     <option value="custom">Custom</option>
@@ -251,14 +252,14 @@
                                             </div>
                                             <div id="end_period" class="col-md-12" style="display: none;">
                                                 <div class="row">
-                                                    <div class="col-md-6 mt-5" >
+                                                    <div class="col-md-12 mt-5" >
                                                         <label for="Time">End Date</label>
-                                                        <input type="date" name="recurring_date" />
+                                                        <input type="date" name="end_date" />
                                                     </div>
-                                                    <div class="col-md-6 mt-5">
+                                                    {{-- <div class="col-md-6 mt-5">
                                                         <label for="Time">End Time</label>
-                                                        <input type="Time" name="recurring_time" />
-                                                    </div>
+                                                        <input type="Time" name="end_time" />
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </div>

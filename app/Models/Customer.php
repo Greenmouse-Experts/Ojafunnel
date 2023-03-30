@@ -715,8 +715,6 @@ class Customer extends Model
     {
         $user = new User();
 
-
-
         DB::transaction(function () use ($request, &$user) {
 
             $plan = OjaPlan::where('name', 'Free')->first();
@@ -740,6 +738,7 @@ class Customer extends Model
                 $user->affiliate_link = $this->referrer_id_generate(9);
                 $user->plan = $plan->id;
                 $user->referral_link = $referrer_id->id;
+                $user->promotion_link = $this->generateAndValidateIfPromotionLinkNotExist();
                 $user->customer()->associate($this);
                 $user->save();
 
@@ -760,6 +759,7 @@ class Customer extends Model
                 $user->password = bcrypt($request->password);
                 $user->user_type = 'User';
                 $user->affiliate_link = $this->referrer_id_generate(9);
+                $user->promotion_link = $this->generateAndValidateIfPromotionLinkNotExist();
                 $user->plan = $plan->id;
                 $user->customer()->associate($this);
                 $user->save();
@@ -773,6 +773,17 @@ class Customer extends Model
     public function sendingServers()
     {
         return $this->hasMany('App\Models\SendingServer');
+    }
+
+    public function generateAndValidateIfPromotionLinkNotExist()
+    {
+        $referral = substr(sha1(mt_rand()), 17, 20);
+
+        $user = User::where('ref_number', $referral);
+
+        if ($user->exists()) $this->generateAndValidateIfPromotionLinkNotExist();
+
+        return $referral;
     }
 
     function referrer_id_generate($input, $strength = 9)
@@ -867,7 +878,6 @@ class Customer extends Model
 
                 //$referedMembers .= '- ' . $entry->name . '- Level: '. $level. '- Commission: '.$earnings.'<br/>';
                 $referedMembers .= $this->getAncestors($array, $deposit_amount, $entry->id, $level + 1);
-
             }
         }
 
@@ -1284,8 +1294,7 @@ class Customer extends Model
     {
         return is_object($this->activeSubscription()) ?
             $this->activeSubscription()->plan->name :
-            ''
-        ;
+            '';
     }
 
     /**

@@ -17,8 +17,11 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    // queue setting
+    public $timeout = 7200;
+    public $tries = 5;
+
     public $contacts;
-    public $whatsapp_account;
     public $data;
 
     /**
@@ -26,11 +29,9 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Collection $contacts, $whatsapp_account, $data)
+    public function __construct(Collection $contacts, $data)
     {
-        //
         $this->contacts = $contacts;
-        $this->whatsapp_account = $whatsapp_account;
         $this->data = $data;
     }
 
@@ -41,89 +42,141 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
      */
     public function handle()
     {
-        $whatsapp_account = explode('-', $this->whatsapp_account);
-        $full_jwt_session = explode(':', $whatsapp_account[3]);
-        $data = $this->data;
-        $wa_campaign_id = $this->data['wa_campaign_id'];
+        try {
+            $whatsapp_account = $this->data['whatsapp_account'];
+            $full_jwt_session = explode(':', $this->data['full_jwt_session']);
+            $data = $this->data;
+            $wa_campaign_id = $this->data['wa_campaign_id'];
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $full_jwt_session[1]
-        ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account[1] . '/check-connection-session');
-        $res = $response->json();
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $full_jwt_session[1]
+            ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account . '/check-connection-session');
+            $res = $response->json();
 
-        // check connection
-        if (array_key_exists('status', $res) && array_key_exists('message', $res)) {
-            if ($res['status'] == false && $res['message'] == 'Disconnected') {
-                // update the wa queues to disconnected
-                WaQueues::where(['wa_campaign_id' => $wa_campaign_id])->update([
-                    'status' => 'Disconnected'
-                ]);
+            // check connection
+            if (array_key_exists('status', $res) && array_key_exists('message', $res)) {
+                if ($res['status'] == false && $res['message'] == 'Disconnected') {
+                    // update the wa queues to disconnected
+                    WaQueues::where(['wa_campaign_id' => $wa_campaign_id])->update([
+                        'status' => 'Disconnected'
+                    ]);
 
-                // send mail to inform that their whatsapp account is not connected
-            } else {
-                // start sending
-                $this->contacts->map(function ($_contact) use ($whatsapp_account, $full_jwt_session, $data, $wa_campaign_id) {
-                    $contact = strpos($_contact->phone_number, '+') === 0
-                        ? substr($_contact->phone_number, 1) . "@c.us"
-                        : $_contact->phone_number  . "@c.us";
+                    // send mail to inform that their whatsapp account is not connected
+                } else {
+                    // start sending
+                    $this->contacts->map(function ($_contact) use ($whatsapp_account, $full_jwt_session, $data, $wa_campaign_id) {
+                        $contact = strpos($_contact->phone_number, '+') === 0
+                            ? substr($_contact->phone_number, 1) . "@c.us"
+                            : $_contact->phone_number  . "@c.us";
 
-                    $response = Http::withHeaders([
-                        'Authorization' => 'Bearer ' . $full_jwt_session[1]
-                    ])->post(
-                        env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account[1] . '/send-message',
-                        [
-                            "phone" => $contact,
-                            "message" => $data['template3_message'],
-                            "options" => [
-                                "useTemplateButtons" => true,
-                                "title" =>  $data['template3_header'],
-                                "footer" =>  $data['template3_footer'],
-                                "buttons" => [
-                                    [
-                                        "url" =>  $data['template3_link_url'],
-                                        "text" =>  $data['template3_link_cta']
+                        $response = Http::withHeaders([
+                            'Authorization' => 'Bearer ' . $full_jwt_session[1]
+                        ])->post(
+                            env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account . '/send-message',
+                            [
+                                "phone" => $contact,
+                                "message" => $data['template3_message'],
+                                "options" => [
+                                    "useTemplateButtons" => true,
+                                    "title" =>  $data['template3_header'],
+                                    "footer" =>  $data['template3_footer'],
+                                    "buttons" => [
+                                        [
+                                            "url" =>  $data['template3_link_url'],
+                                            "text" =>  $data['template3_link_cta']
+                                        ],
+                                        [
+                                            "phoneNumber" =>  $data['template3_phone_number'],
+                                            "text" => $data['template3_phone_cta']
+                                        ]
                                     ],
-                                    [
-                                        "phoneNumber" =>  $data['template3_phone_number'],
-                                        "text" => $data['template3_phone_cta']
-                                    ]
-                                ],
+                                ]
                             ]
-                        ]
-                    );
+                        );
 
-                    $data = $response->json();
+                        $data = $response->json();
 
-                    if (array_key_exists('message', $data)) {
-                        // invalid 
-                        if (str_ends_with($data['message'], 'não existe.')) {
-                            // invalid
-                            WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number])->update([
-                                'status' => 'Invalid'
-                            ]);
-                        }
+                        if (array_key_exists('message', $data)) {
+                            // invalid 
+                            if (str_ends_with($data['message'], 'não existe.')) {
+                                // invalid  
+                                $queue = WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number]);
 
-                        // disconnect
-                        if (str_ends_with($data['message'], 'não está ativa.')) {
-                            // send mail for schedule if disconnected
+                                if ($queue) {
+                                    $queue->update([
+                                        'status' => 'Invalid'
+                                    ]);
+                                } else {
+                                    // when user adds new contact while launch schedule/immediate campaign
+                                    $queue = new WaQueues();
+                                    $queue->wa_campaign_id = $wa_campaign_id;
+                                    $queue->phone_number =  $_contact->phone_number;
+                                    $queue->status =  'Invalid';
+
+                                    $queue->save();
+                                }
+                            }
 
                             // disconnect
-                            WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number])->update([
-                                'status' => 'Disconnected'
-                            ]);
+                            if (str_ends_with($data['message'], 'não está ativa.')) {
+                                // send mail for schedule if disconnected
+
+                                // disconnect
+                                $queue = WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number]);
+
+                                if ($queue) {
+                                    $queue->update([
+                                        'status' => 'Disconnected'
+                                    ]);
+                                } else {
+                                    // when user adds new contact while launch schedule/immediate campaign
+                                    $queue = new WaQueues();
+                                    $queue->wa_campaign_id = $wa_campaign_id;
+                                    $queue->phone_number =  $_contact->phone_number;
+                                    $queue->status =  'Disconnected';
+
+                                    $queue->save();
+                                }
+                            }
                         }
-                    }
 
-                    // sent
-                    if (array_key_exists('response', $data)) {
-                        if ($data['response'] != null) WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number])->update([
-                            'status' => 'Sent'
-                        ]);
-                    }
+                        // sent
+                        if (array_key_exists('response', $data)) {
+                            if ($data['response'] != null) {
+                                $queue = WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number]);
 
-                    Log::info($data);
-                });
+                                if ($queue) {
+                                    $queue->update([
+                                        'status' => 'Sent'
+                                    ]);
+                                } else {
+                                    // when user adds new contact while launch schedule/immediate campaign
+                                    $queue = new WaQueues();
+                                    $queue->wa_campaign_id = $wa_campaign_id;
+                                    $queue->phone_number =  $_contact->phone_number;
+                                    $queue->status =  'Sent';
+
+                                    $queue->save();
+                                }
+                            }
+                        }
+
+                        Log::info($data);
+                    });
+                }
             }
+        } catch (\Throwable $th) {
+            //throw $th;
+            if ($this->attempts() > 5) {
+                // hard fail after 5 attempts
+                throw $th;
+            }
+
+            // re-queue this job to be executes
+            // in 3 minutes (180 seconds) from now
+            $this->release(180);
+
+            return;
         }
     }
 }

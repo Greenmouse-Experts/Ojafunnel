@@ -90,9 +90,21 @@
                             </div>
                         @endforeach
                     @endif
-                    <div class="row">
-                        <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
-                            <a href="{{ route('cart', $store->name) }}" class="btn btn-primary btn-block">View all</a>
+                    <div class="row"> 
+                        <div class="col-lg-12 col-sm-12 col-12 text-center checkout"> 
+                            <a href="
+                              @if($isvalid) 
+                                {{ 
+                                  route('cart', [
+                                    'storename' => $store->name, 
+                                    'promotion_id' => Request::get('promotion_id'), 
+                                    'product_id' => Request::get('product_id')
+                                  ]) 
+                                }} 
+                              @else 
+                                {{ route('cart', ['storename' => $store->name]) }} 
+                              @endif
+                              " class="btn btn-primary btn-block">View all</a>
                         </div>
                     </div>
                 </div>
@@ -128,20 +140,30 @@
           <div class="row">
             @if ($products->count() > 0)
                 @foreach ($products as $item)
-                    <div class="col-md-4">
+                    <div class="col-md-4" id="item-{{ $item->id }}">
                         <div class="founds">
-                        <div class="found-top">
-                            <img src="{{Storage::url($item->image)}}" alt="">
-                        </div>
-                        <div class="p-2">
-                            <p class="font-500">{{$item->name}}</p>
-                            <p>{{number_format($item->price, 2)}} NGN</p>
-                            @if ($item->price >= 1)
-                                <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
-                            @else
-                                <button disabled>Out of Stock</button>
-                            @endif
-                        </div>
+                          <div class="found-top">
+                              <img src="{{Storage::url($item->image)}}" alt="">
+                          </div>
+                          <div class="p-2">
+                              <p class="font-500">{{$item->name}}</p>
+                              <p>{{number_format($item->price, 2)}} NGN</p>
+                              @if ($item->price >= 1)
+                                  <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
+                              @else
+                                  <button disabled>Out of Stock</button>
+                              @endif
+
+                              @if ($isvalid)
+                                @if(Request::has('promotion_id') && Request::has('product_id')) 
+                                  @if (Request::get('product_id') == $item->id)
+                                    <div class="mt-2">
+                                      Promotional code (<b>{{ Request::get('promotion_id') }}</b>) attached.
+                                    </div> 
+                                  @endif 
+                                @endif
+                              @endif 
+                          </div>
                         </div>
                     </div>
                 @endforeach

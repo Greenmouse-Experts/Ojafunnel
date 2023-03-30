@@ -95,9 +95,10 @@
                                             <th>Product Name</th>
                                             <th>Image</th>
                                             <th>Price</th>
-                                            <th>Qty</th>
+                                            <th>Qty</th> 
                                             <th>Subtotal</th>
                                             <th>Tax Amount</th>
+                                            <th>Promoted</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -107,9 +108,16 @@
                                             <td>{{$item->product->name}}</td>
                                             <td><img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset=""></td>
                                             <td class="text-wrap" style="width: 330px;">{{$item->product->description}}</td>
-                                            <td>{{$item->quantity}}</td>
+                                            <td>{{$item->quantity}}</td> 
                                             <td>₦{{$item->amount}}</td>
                                             <td>₦{{number_format($item->quantity*$item->amount, 2)}}</td>
+                                            <td>
+                                                @if ($item->type == 'Promotion')
+                                                    {{ 'Yes' }}
+                                                @else
+                                                    {{ 'No' }}
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                         {{-- <tr>
