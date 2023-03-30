@@ -166,12 +166,18 @@
                                                     {{ 'Template 3 (Header, Text, Footer, Link, & Call) '}}  
                                                 @endif 
                                             </td>
-                                            <td>  
-                                                @if (count($whatsapp_campaign->wa_queues->where('status', 'Waiting')) > 0)
-                                                    <span class="badge bg-info font-size-10">{{ 'Ongoing' }}</span>
+                                            <td>   
+                                                @if ($whatsapp_campaign->message_timing == 'Immediately')
+                                                    @if (count($whatsapp_campaign->wa_queues->where('status', 'Waiting')) > 0)
+                                                        <span class="badge bg-info font-size-10">{{ 'Ongoing' }}</span>
+                                                    @else
+                                                        <span class="badge bg-success font-size-10">{{ 'Completed' }}</span>
+                                                    @endif 
                                                 @else
-                                                    <span class="badge bg-success font-size-10">{{ 'Completed' }}</span>
-                                                @endif 
+                                                    <span class="badge bg-success font-size-10">{{ 'Scheduled' }}</span>
+                                                @endif
+
+                                               
                                             </td>
                                             <td>
                                                 <div class="dropdown dropstart"> 

@@ -53,7 +53,7 @@ class SendSms extends Command
         $recurring = SmsCampaign::where('schedule_type', 'recurring')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
         $onetime = SmsCampaign::where('schedule_type', 'onetime')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
         //\Log::info(['hi', $onetime , $fromDate, $toDate]);
-        if($onetime->count() > 0){
+        if ($onetime->count() > 0) {
             foreach ($onetime as $sms) {
                 if ($sms->schedule_time < Carbon::now()->toDateTimeString()) {
                     //\Log::info(['hi', $fromDate , $toDate]);
@@ -67,12 +67,11 @@ class SendSms extends Command
                     $sms->delivery_at = Carbon::now()->toDateTimeString();
                     $sms->cache = json_encode([
                         'ContactCount' => $contact->count(),
-                        'DeliveredCount' => $sms->readCache('DeliveredCount')+1,
+                        'DeliveredCount' => $sms->readCache('DeliveredCount') + 1,
                         'FailedDeliveredCount' => 0,
                         'NotDeliveredCount' => 0,
                     ]);
                     $data = $sms->update();
-
                 }
             }
         }
