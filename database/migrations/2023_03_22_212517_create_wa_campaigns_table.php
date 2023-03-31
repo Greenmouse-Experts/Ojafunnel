@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('whatsapp_account');
             $table->string('user_id');
-            $table->longText('receivers');
+            $table->string('contact_list_id');
             $table->string('template');
+
             // template 1
             $table->string('template1_message')->nullable();
             // template 2
@@ -33,7 +34,19 @@ return new class extends Migration
             $table->string('template3_link_cta')->nullable();
             $table->string('template3_phone_number')->nullable();
             $table->string('template3_phone_cta')->nullable();
+
+            // 
             $table->string('message_timing');
+
+            // schedule 
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->time('start_time')->nullable();
+            $table->date('next_due_date')->nullable();
+            $table->string('frequency_cycle')->nullable();
+            $table->string('frequency_amount')->nullable();
+            $table->string('frequency_unit')->nullable();
+
             $table->timestamps();
         });
     }

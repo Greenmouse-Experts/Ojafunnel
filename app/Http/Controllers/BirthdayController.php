@@ -9,6 +9,8 @@ use App\Models\Integration;
 use App\Models\SendingServer;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Crypt;
 
 class BirthdayController extends Controller
 {
@@ -85,9 +87,16 @@ class BirthdayController extends Controller
     public function manage_birthday($username)
     {
         $bm = BirthdayAutomation::latest()->where('user_id', Auth::user()->id)->get();
+        $birthlist = BirthdayContactList::where('user_id', Auth::user()->id)->get();
+        $sendingServer = SendingServer::where('customer_id', Auth::user()->id)->get();
+        $smsServer = Integration::where('user_id', Auth::user()->id)->where('status', 'Active')->get();
+
         return view('dashboard.birthday.birthdayManage', [
             'username' => $username,
             'bm' => $bm,
+            'birthlist' => $birthlist,
+            'sendingServer' => $sendingServer,
+            'smsServer' => $smsServer
         ]);
     }
 
@@ -96,6 +105,7 @@ class BirthdayController extends Controller
         $birthlist = BirthdayContactList::where('user_id', Auth::user()->id)->get();
         $sendingServer = SendingServer::where('customer_id', Auth::user()->id)->get();
         $smsServer = Integration::where('user_id', Auth::user()->id)->where('status', 'Active')->get();
+
         return view('dashboard.birthday.birthdayCreate', [
             'username' => $username,
             'birthlist' => $birthlist,
@@ -148,10 +158,10 @@ class BirthdayController extends Controller
 
     public function create_birthday_automation(Request $request)
     {
-        //dd($request->automation);
+        // dd($request->integration);
         $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
         $bm = new BirthdayAutomation();
-        $bm->user_id = Auth::user()->id;
+        $bm->user_id = FacadesAuth::user()->id;
         $bm->birthday_contact_list_id = $request->birthday_list_id;
         $bm->title = $request->title;
         $bm->sms_type = $request->sms_type;
@@ -164,9 +174,9 @@ class BirthdayController extends Controller
             'NotDeliveredCount' => 0,
         ]);
         $bm->sender_name = $request->sender_name;
-        $bm->sending_server = $request->sending_server || '';
-        $bm->sender_id = $request->sender_id || '';
-        $bm->integration = $request->integration || '';
+        $bm->sending_server = $request->sending_server ?? '';
+        $bm->sender_id = $request->sender_id ?? '';
+        $bm->integration = $request->integration ?? '';
         $bm->start_date = $request->start_date;
         $bm->end_date = $request->end_date;
         $bm->save();
@@ -180,9 +190,32 @@ class BirthdayController extends Controller
     public function delete_birthday(Request $request)
     {
         $bd = BirthdayAutomation::findOrFail($request->id)->delete();
+        
         return back()->with([
             'type' => 'success',
             'message' => 'Birthday Automation deleted.'
         ]);
+    }
+
+    public function update_birthday($id, Request $request)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $bd = BirthdayAutomation::findOrFail($finder);
+        $bd->birthday_contact_list_id = $request->birthday_list_id;
+        $bd->title = $request->title;
+        $bd->sms_type = $request->sms_type;
+        $bd->message = $request->message;
+        $bd->sender_name = $request->sender_name;
+        $bd->start_date = $request->start_date;
+        $bd->end_date = $request->end_date;
+        $bd->action = $request->action;
+        $bd->save();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Birthday Automation updated.'
+        ]);
+
     }
 }

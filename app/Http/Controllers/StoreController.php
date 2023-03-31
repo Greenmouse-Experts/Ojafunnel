@@ -136,6 +136,7 @@ class StoreController extends Controller
         $order = StoreOrder::latest()->where('id', $request->id)->first();
         //dd($order->store_id);
         $store = Store::where('id', $order->store_id)->first();
+
         return view('dashboard.OrderDetails', [
             'username' => $username,
             'order' => $order,
@@ -171,9 +172,6 @@ class StoreController extends Controller
         $sp->level2_comm = $request->level2_comm;
         $sp->image = $image;
         $sp->store_id = $request->store_id;
-
-        // check if referral code not exist
-        $sp->ref_number = $this->generateAndValidateIfReferralNotExist();
 
         // check if level1_comm <= level2_comm... then fail
         if ($request->level1_comm <= $request->level2_comm) return back()->with([
@@ -231,16 +229,5 @@ class StoreController extends Controller
             'type' => 'success',
             'message' => 'Product deleted successfully'
         ]);
-    }
-
-    public function generateAndValidateIfReferralNotExist()
-    {
-        $referral = StoreProduct::generateReferral();
-
-        $product = StoreProduct::where('ref_number', $referral);
-
-        if ($product->exists()) $this->generateAndValidateIfReferralNotExist();
-
-        return $referral;
     }
 }

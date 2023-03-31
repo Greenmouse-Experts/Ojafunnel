@@ -177,12 +177,37 @@
                             </div>
                             <div class="row mt-4">
                                 <div class="col-sm-6">
-                                    <a href="{{route('user.stores.link', $store->name)}}" class="btn text-muted d-none d-sm-inline-block btn-link">
-                                        <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
+                                    <a href="
+                                    @if(Request::has('product_id')) 
+                                        {{ 
+                                            route('user.stores.link', [
+                                                'storename' => $store->name, 
+                                                'promotion_id' => Request::get('promotion_id'), 
+                                                'product_id' => Request::get('product_id')
+                                            ]) . '#item-' . Request::get('product_id') 
+                                        }} 
+                                    @else
+                                      {{
+                                        route('user.stores.link', [
+                                            'storename' => $store->name, 
+                                            'promotion_id' => Request::get('promotion_id'), 
+                                            'product_id' => Request::get('product_id')
+                                        ])
+                                      }}
+                                    @endif
+                                    " class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Continue Shopping</a>
                                 </div> <!-- end col -->
                                 <div class="col-sm-6">
                                     <div class="text-end">
-                                        <a href="{{route('checkout', $store->name)}}" class="btn btn-success">
+                                        <a href="
+                                            {{
+                                                route('checkout', [
+                                                    'storename' => $store->name, 
+                                                    'promotion_id' => Request::get('promotion_id'), 
+                                                    'product_id' => Request::get('product_id')
+                                                ]) 
+                                            }} 
+                                            " class="btn btn-success">
                                             <i class="mdi mdi-truck-fast me-1"></i> Proceed to Checkout </a>
                                     </div>
                                 </div> <!-- end col -->

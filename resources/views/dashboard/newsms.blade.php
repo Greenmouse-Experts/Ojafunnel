@@ -113,7 +113,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-12" id="schedule" style="display: none;">
                                         <div class="row">
                                             <div class="col-md-6 mt-4">
@@ -239,7 +238,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <botton class="open" onclick="myFunction()">
+                    <botton class="open" onclick="openPreview()">
                         Open Preview
                     </botton>
                     <div class="row" id="preview" style="display: none;">
@@ -301,4 +300,18 @@
     </div>
 </div>
 <!-- end modal -->
+
+<script>
+    function openPreview() {
+        // Get the text field
+        var copyText = document.getElementById("message").value;
+        var preview = document.getElementById("preview");
+        if (preview.style.display === "none") {
+            preview.style.display = "block";
+            document.getElementById("showMessage").value = copyText;
+        } else {
+            preview.style.display = "none";
+        }
+    }
+</script>
 @endsection

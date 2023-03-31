@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\SendSms;
+use App\Console\Commands\SendWABulk;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +16,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         SendSms::class,
+        SendWABulk::class,
     ];
+
     /**
      * Define the application's command schedule.
      *
@@ -26,7 +29,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('smsCampaign:run')->everyFiveMinutes();
+        $schedule->command('smsBirthday:cron')->everyFiveMinutes();
 
+        // run command every minute
+        $schedule->command('sendwabulk:run')->everyMinute()->withoutOverlapping();
     }
 
     /**

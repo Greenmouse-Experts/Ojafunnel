@@ -288,8 +288,6 @@ class SmsAutomationController extends Controller
                         'type' => 'success',
                         'message' => 'SMS Campaign Automation Created.'
                     ]);
-
-
                 } else {
                     return back()->with([
                         'type' => 'danger',
@@ -414,9 +412,6 @@ class SmsAutomationController extends Controller
             //dd($receivers);
             //$receivers = implode(';', $request->receivers);
 
-            // Create a campaign
-
-
             // Now add the phone numbers with messages to queue that will be handled further
             foreach ($contact as $receiver) {
                 \App\Models\SmsQueue::create([
@@ -449,7 +444,7 @@ class SmsAutomationController extends Controller
     {
         $contacts = ContactNumber::where('contact_list_id', $request->mailinglist_id)->get('phone_number');
 
-        $integration = Integration::where('type', $request->integration)->first();
+        $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
 
         $d = $contacts->toArray();
 
@@ -499,7 +494,7 @@ class SmsAutomationController extends Controller
     {
         $contacts = ContactNumber::where('contact_list_id', $request->mailinglist_id)->get('phone_number');
 
-        $integration = Integration::where('type', $request->integration)->first();
+        $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
 
         $d = $contacts->toArray();
 

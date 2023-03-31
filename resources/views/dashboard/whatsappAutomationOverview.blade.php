@@ -33,7 +33,7 @@
                                     <h4 class="font-500">WhatsApp Automation Overview</h4>
                                     <p>
                                         View your campaign overview
-                                    </p>
+                                    </p> 
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -45,9 +45,35 @@
                         <div class="d-flex account-nav"> 
                             <p class="ps-0 active">
                                 <a href="#" class="text-decoration-none text-dark">Campaign Overview</a>
-                            </p> 
+                            </p>  
                         </div>
                         <div class="acc-border"></div>
+                        <div class="mt-2">
+                            @if ($wa_campaign->message_timing == 'Immediately') 
+                                <p><b>Message Timing:</b> Immediate Campaign</p>
+                            @else
+                                <p><b>Message Timing:</b> Scheduled Campaign</p>
+                                @if ($wa_campaign->frequency_cycle == 'onetime')
+                                    <p><b>Schedule Cycle:</b> {{ $wa_campaign->frequency_cycle }}</p>
+                                    <p><b>Start Date:</b> {{ $wa_campaign->start_date }}</p>
+                                    <p><b>Start Time:</b> {{ $wa_campaign->start_time }}</p>
+                                @elseif ($wa_campaign->frequency_cycle == 'daily' || $wa_campaign->frequency_cycle == 'weekly' || $wa_campaign->frequency_cycle == 'monthly' || $wa_campaign->frequency_cycle == 'yearly')
+                                    <p><b>Schedule Cycle:</b> {{ $wa_campaign->frequency_cycle }}</p>
+                                    <p><b>Start Date:</b> {{ $wa_campaign->start_date }}</p>
+                                    <p><b>Start Time:</b> {{ $wa_campaign->start_time }}</p>
+                                    <p><b>Next Campaign Date & Time:</b> {{ $wa_campaign->start_date . 'at' . $wa_campaign->start_time }}</p>
+                                    <p><b>End Date:</b> {{ $wa_campaign->end_date }}</p>
+                                @else
+                                    <p><b>Schedule Cycle:</b> {{ $wa_campaign->frequency_cycle }}</p>
+                                    <p><b>Frequency amount:</b> {{ $wa_campaign->frequency_amount }}</p>
+                                    <p><b>Frequency unit:</b> {{ $wa_campaign->frequency_unit }}</p>
+                                    <p><b>Start Date:</b> {{ $wa_campaign->start_date }}</p>
+                                    <p><b>Start Time:</b> {{ $wa_campaign->start_time }}</p>
+                                    <p><b>Next Campaign Date & Time:</b> {{ $wa_campaign->start_date . 'at' . $wa_campaign->start_time }}</p>
+                                    <p><b>End Date:</b> {{ $wa_campaign->end_date }}</p>
+                                @endif 
+                            @endif 
+                        </div> 
                     </div>
                 </div>
                 <div class="col-lg-2"></div>
@@ -100,6 +126,10 @@
                                                 @endif
                                                 
                                                 @if ($wa_queue->status == 'Waiting')
+                                                    <span class="badge bg-info font-size-10">{{ $wa_queue->status }}</span>
+                                                @endif 
+
+                                                @if ($wa_queue->status == 'Scheduled')
                                                     <span class="badge bg-info font-size-10">{{ $wa_queue->status }}</span>
                                                 @endif 
 

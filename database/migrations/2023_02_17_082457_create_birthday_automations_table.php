@@ -29,7 +29,8 @@ return new class extends Migration {
             $table->string('sender_id')->nullable();
             $table->string('integration')->nullable();
             $table->date('start_date');
-            $table->json('end_date');
+            $table->date('end_date');
+            $table->string('action')->default('Play');
             $table->timestamps();
         });
     }

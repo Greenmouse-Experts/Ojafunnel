@@ -59,7 +59,7 @@
                                             <th scope="col">Price</th>
                                             <th scope="col">Commission(s)</th>
                                             <th scope="col">Multi Level</th>
-                                            <th scope="col">Visit</th>
+                                            {{-- <th scope="col">Visit</th> --}}
                                             <th scope="col">Created</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -82,9 +82,9 @@
                                                 <td>
                                                     Yes
                                                 </td>
-                                                <td>
+                                                {{-- <td>
                                                     0
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     {{ $product->created_at }}
                                                 </td>
@@ -162,7 +162,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content pb-3">
             <div class="modal-header border-bottom-0">
-                <h4 class="card-title mb-4">View Product: 0</h4>
+                <h4 class="card-title mb-4">View Product</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -177,7 +177,7 @@
                             <b>Vendor</b>
                         </div>
                         <div class="col-md-8 mt-4">
-                            {{ 'vendor name here' }}
+                            {{ $product->store->user->first_name . ' ' . $product->store->user->last_name }}
                         </div>
                         <div class="col-md-4 mt-3">
                             <b>Name</b>
@@ -209,14 +209,14 @@
                         <div class="col-md-8 mt-3">
                             Level 1: <b>{{ $product->level1_comm }}%</b>, Level 2: <b>{{ $product->level2_comm }}%</b> (Super Affiliates only)
                         </div>
-                        <div class="col-md-4 mt-3">
+                        {{-- <div class="col-md-4 mt-3">
                             <b>Promotion Material(s)</b>
                         </div>
                         <div class="col-md-8 mt-3">
                             <a href="#">
                                 https://drive.google.com/drive/folders <br> /1X7DPkhjvK4WnaaxrVv2BBxzptLW08S2x
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="col-md-4 mt-3">
                             <b>Created At</b>
                         </div>
@@ -230,7 +230,7 @@
                             <div class="form">
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <input type="text" value="http" name="name" id="myInput" class="input mov" readonly required>
+                                        <input type="text" value="{{ route('user.stores.link', ['storename' => $product->store->name])}}?promotion_id={{ $product->store->user->promotion_link}}&product_id={{$product->id}}#item-{{ $product->id }}" name="name" id="myInput" class="input mov" readonly required>
                                     </div>
                                     <div class="col-md-2">
                                         <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>

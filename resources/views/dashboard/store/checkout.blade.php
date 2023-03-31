@@ -141,7 +141,15 @@
                         <div class="col-xl-10 col-sm-9">
                             <div class="card">
                                 <div class="card-body">
-                                    <form action="{{route('payment.checkout', $store->name)}}" id="checkoutForm" method="post">
+                                    <form action="
+                                        {{
+                                            route('payment.checkout', [
+                                                'storename' => $store->name, 
+                                                'promotion_id' => Request::get('promotion_id'), 
+                                                'product_id' => Request::get('product_id')
+                                            ]) 
+                                        }}
+                                    " id="checkoutForm" method="post">
                                         @csrf
                                         <div class="tab-content" id="v-pills-tabContent">
                                             <div class="tab-pane fade show active" id="v-pills-shipping" role="tabpanel" aria-labelledby="v-pills-shipping-tab">
@@ -194,13 +202,13 @@
                                                     <p class="card-title-desc">Select payment  below</p>
                                                     <div>
                                                         <div class="form-check form-check-inline font-size-16">
-                                                            <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" checked>
+                                                            <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" value="paystack" checked>
                                                             <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Paystack</label>
                                                         </div>
                                                     </div>
                                                     <div class="mt-3">
                                                         <div class="form-check form-check-inline font-size-16">
-                                                            <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" checked>
+                                                            <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" value="flutterwave" checked>
                                                             <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Flutterwave</label>
                                                         </div>
                                                     </div>
@@ -348,9 +356,6 @@
 
   <script>
 
-
-
-
   $("#activePayment").click(function() {
     if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
         $('#error').html('Please fill the asterisks field to continue');
@@ -374,36 +379,27 @@
     }
   })
 
-
-
-  $("#makePayment").click(function() {
+  $("#makePayment").click(function() {   
         var handler = PaystackPop.setup({
-        key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
-        email: $('#email').val(),
-        amount: document.getElementById("totalAmount").value * 100,
-        ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-        callback: function(response){
-            // alert(JSON.stringify(response))
-            // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
-            // url = url.replace(':response', response.reference);
-            // url = url.replace(':amount', document.getElementById("amount").value);
-            // document.location.href=url;
-            $( "#checkoutForm" ).submit();
-        },
-        onClose: function(){
-            alert('window closed');
-        }
+            key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
+            email: $('#email').val(),
+            amount: document.getElementById("totalAmount").value * 100,
+            ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+            callback: function(response){ 
+                // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
+                // url = url.replace(':response', response.reference);
+                // url = url.replace(':amount', document.getElementById("amount").value);
+                // document.location.href=url;
+                $( "#checkoutForm" ).submit();
+            },
+            onClose: function(){
+                alert('window closed');
+            }
         });
+
         handler.openIframe();
   })
-
-
-
-
-
-
-  </script>
-  <!-- Code injected by live-server -->
+</script> 
 </body>
 <style>
 .thumbnail {
