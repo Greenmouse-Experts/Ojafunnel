@@ -777,13 +777,13 @@ class Customer extends Model
 
     public function generateAndValidateIfPromotionLinkNotExist()
     {
-        $referral = substr(sha1(mt_rand()), 17, 20);
+        $promotionLink = substr(sha1(mt_rand()), 17, 20);
 
-        $user = User::where('ref_number', $referral);
+        $user = User::where('promotion_link', $promotionLink);
 
         if ($user->exists()) $this->generateAndValidateIfPromotionLinkNotExist();
 
-        return $referral;
+        return $promotionLink;
     }
 
     function referrer_id_generate($input, $strength = 9)
