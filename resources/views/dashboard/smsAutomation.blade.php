@@ -180,11 +180,11 @@
                                                         Edit
                                                     </a>
                                                 </li>
-                                                <!-- <li>
+                                                <li>
                                                     <a class="dropdown-item" type="button" >
                                                         Pause
                                                     </a>
-                                                </li> -->
+                                                </li>
                                                 <li>
                                                     <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#delete-{{$campaign->id}}">
                                                         Delete

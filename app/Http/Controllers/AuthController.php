@@ -78,7 +78,11 @@ class AuthController extends Controller
                     ]);
 
                 } catch (\Exception $e) {
-                    return view('somethingWentWrong', ['message' => trans('messages.something_went_wrong_with_email_service') . ": " . $e->getMessage()]);
+                    // return view('somethingWentWrong', ['message' => trans('messages.something_went_wrong_with_email_service') . ": " . $e->getMessage()]);
+                    return redirect()->route('verify.account', Crypt::encrypt($user->email))->with([
+                        'type' => 'success',
+                        'message' => 'Registration Successful, Please verify your account!'
+                    ]);
                 }
 
                 //return view('users.register_confirmation_notice');

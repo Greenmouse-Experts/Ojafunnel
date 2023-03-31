@@ -17,6 +17,7 @@ return new class extends Migration
             $table->dropColumn(['comm_type', 'comm_level', 'commission']);
             $table->string('level1_comm');
             $table->string('level2_comm');
+            $table->dropColumn(['ref_number']);
         });
     }
 
