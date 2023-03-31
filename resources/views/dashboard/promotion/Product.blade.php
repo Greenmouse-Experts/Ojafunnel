@@ -230,7 +230,7 @@
                             <div class="form">
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <input type="text" value="{{ route('user.stores.link', ['storename' => $product->store->name])}}?promotion_id={{ $product->store->user->promotion_link}}&product_id={{$product->id}}#item-{{ $product->id }}" name="name" id="myInput" class="input mov" readonly required>
+                                        <input type="text" value="{{ route('user.stores.link', ['storename' => $product->store->name])}}?promotion_id={{ Auth::user()->promotion_link }}&product_id={{$product->id}}#item-{{ $product->id }}" name="name" id="myInput" class="input mov" readonly required>
                                     </div>
                                     <div class="col-md-2">
                                         <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
