@@ -38,7 +38,7 @@
                     <div class="card account-head" style="padding-top: 25px;">
                         <div class="all-create py-2">
                             <a href="{{route('user.view.list', Auth::user()->username)}}">
-                                <button>+ Mail List  </button>
+                                <button>+ Mail List </button>
                             </a>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="Edit">
-                        <form action="{{route('user.create_list', Auth::user()->username)}}"" method="post">
+                        <form action="{{route('user.create_list', Auth::user()->username)}}"" method=" post">
                             {{ csrf_field() }}
                             <div class="form">
                                 <div class="row">
@@ -56,7 +56,7 @@
                                         <b class="mb-sm-0 font-size-15">Edit Your Mail List</b>
                                     </p>
                                     <p>
-                                     <b> Identity  </b>
+                                        <b> Identity </b>
                                     </p>
                                     <div class="col-lg-6">
                                         <label>Name <span>*</span> </label>
@@ -91,7 +91,7 @@
                                         </div>
                                     </div>
                                     <p>
-                                     <b> Contact Information  </b>
+                                        <b> Contact Information </b>
                                     </p>
                                     <div class="col-lg-6 mb-4">
                                         @include('helpers.form_control', ['type' => 'text', 'name' => 'contact[company]', 'placeholder' => 'Enter company name', 'label' => "Company / organization", 'value' => $list->contact->company, 'help_class' => 'list', 'rules' => App\Models\MailList::$rules])
@@ -137,7 +137,7 @@
                                     </div>
 
                                     <style>
-                                        .hide{
+                                        .hide {
                                             display: none;
                                         }
                                     </style>
@@ -145,18 +145,18 @@
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <p class="send">
-                                                 @if ($allowedSingleOptin)
-                                                    @include('helpers.form_control', [
-                                                        'type' => 'checkbox',
-                                                        'name' => 'subscribe_confirmation',
-                                                        'value' => $list->subscribe_confirmation,
-                                                        'options' => [false,true],
-                                                        'help_class' => 'list',
-                                                        'rules' => App\Models\MailList::$rules
-                                                    ])
-                                                    {{-- <input type="checkbox" name="subscribe_confirmation" value="{{$list->subscribe_confirmation}}"> --}}
+                                                @if ($allowedSingleOptin)
+                                                @include('helpers.form_control', [
+                                                'type' => 'checkbox',
+                                                'name' => 'subscribe_confirmation',
+                                                'value' => $list->subscribe_confirmation,
+                                                'options' => [false,true],
+                                                'help_class' => 'list',
+                                                'rules' => App\Models\MailList::$rules
+                                                ])
+                                                {{-- <input type="checkbox" name="subscribe_confirmation" value="{{$list->subscribe_confirmation}}"> --}}
                                                 @else
-                                                    <input type="hidden" name="subscribe_confirmation" value="1" />
+                                                <input type="hidden" name="subscribe_confirmation" value="1" />
                                                 @endif
                                             </p>
                                             <p class="send">
@@ -180,7 +180,7 @@
                                         <div class="row mb-20 form-groups-bottom-0">
                                             <div class="col-md-12">
                                                 <p class="sending">
-                                                @include('helpers.form_control', ['type' => 'checkbox2',
+                                                    @include('helpers.form_control', ['type' => 'checkbox2',
                                                     'class' => '',
                                                     'name' => 'all_sending_servers',
                                                     'value' => $list->all_sending_servers,
@@ -188,52 +188,52 @@
                                                     'options' => [false,true],
                                                     'help_class' => 'list',
                                                     'rules' => App\Models\MailList::$rules
-                                                ])
+                                                    ])
                                                 </p>
                                             </div>
                                         </div>
                                         @if(!\Auth::user()->customer->activeSendingServers()->count())
-                                            <div class="alert alert-danger mt-3">
-                                                {!! trans('messages.list.there_no_subaccount_sending_server') !!}
-                                            </div>
+                                        <div class="alert alert-danger mt-3">
+                                            {!! trans('messages.list.there_no_subaccount_sending_server') !!}
+                                        </div>
                                         @else
-                                            <div class="sending-servers">
-                                                <hr>
-                                                <div class="row text-muted text-semibold">
-                                                    <div class="col-md-3">
-                                                        <label>Select sending server</label>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>SMTP</label>
-                                                    </div>
+                                        <div class="sending-servers">
+                                            <hr>
+                                            <div class="row text-muted text-semibold">
+                                                <div class="col-md-3">
+                                                    <label>Select sending server</label>
                                                 </div>
-                                                @foreach (\Auth::user()->customer->activeSendingServers()->orderBy("name")->get() as $server)
-                                                    <div class="row mb-5 form-groups-bottom-0">
-                                                        <div class="col-md-3">
-                                                            @include('helpers.form_control', [
-                                                                'type' => 'checkbox2',
-                                                                'name' => 'sending_servers[' . $server->uid . '][check]',
-                                                                'value' => $list->mailListsSendingServers->contains('sending_server_id', $server->id),
-                                                                'label' => $server->name,
-                                                                'options' => [false, true],
-                                                                'help_class' => 'list',
-                                                                'rules' => App\Models\MailList::$rules
-                                                            ])
-                                                        </div>
-                                                        <div class="col-md-3" show-with-control="input[name='{{ 'sending_servers[' . $server->uid . '][check]' }}']">
-                                                            @include('helpers.form_control', [
-                                                                'type' => 'text',
-                                                                'class' => 'numeric',
-                                                                'name' => 'sending_servers[' . $server->uid . '][fitness]',
-                                                                'label' => '',
-                                                                'value' => (is_object($list->mailListsSendingServers()->where('sending_server_id', $server->id)->first()) ? $list->mailListsSendingServers()->where('sending_server_id', $server->id)->first()->fitness : "100"),
-                                                                'help_class' => 'list',
-                                                                'rules' => App\Models\MailList::$rules
-                                                            ])
-                                                        </div>
-                                                    </div>
-                                                @endforeach
+                                                <div class="col-md-3">
+                                                    <label>SMTP</label>
+                                                </div>
                                             </div>
+                                            @foreach (\Auth::user()->customer->activeSendingServers()->orderBy("name")->get() as $server)
+                                            <div class="row mb-5 form-groups-bottom-0">
+                                                <div class="col-md-3">
+                                                    @include('helpers.form_control', [
+                                                    'type' => 'checkbox2',
+                                                    'name' => 'sending_servers[' . $server->uid . '][check]',
+                                                    'value' => $list->mailListsSendingServers->contains('sending_server_id', $server->id),
+                                                    'label' => $server->name,
+                                                    'options' => [false, true],
+                                                    'help_class' => 'list',
+                                                    'rules' => App\Models\MailList::$rules
+                                                    ])
+                                                </div>
+                                                <div class="col-md-3" show-with-control="input[name='{{ 'sending_servers[' . $server->uid . '][check]' }}']">
+                                                    @include('helpers.form_control', [
+                                                    'type' => 'text',
+                                                    'class' => 'numeric',
+                                                    'name' => 'sending_servers[' . $server->uid . '][fitness]',
+                                                    'label' => '',
+                                                    'value' => (is_object($list->mailListsSendingServers()->where('sending_server_id', $server->id)->first()) ? $list->mailListsSendingServers()->where('sending_server_id', $server->id)->first()->fitness : "100"),
+                                                    'help_class' => 'list',
+                                                    'rules' => App\Models\MailList::$rules
+                                                    ])
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
                                         @endif
                                     </div>
 
@@ -241,9 +241,9 @@
                                         $(document).ready(function() {
                                             // all sending servers checking
                                             $(document).on("change", "input[name='all_sending_servers']", function(e) {
-                                                if($("input[name='all_sending_servers']:checked").length) {
+                                                if ($("input[name='all_sending_servers']:checked").length) {
                                                     $(".sending-servers").find("input[type=checkbox]").each(function() {
-                                                        if($(this).is(":checked")) {
+                                                        if ($(this).is(":checked")) {
                                                             $(this).parents(".form-group").find(".switchery").eq(1).click();
                                                         }
                                                     });
@@ -255,23 +255,23 @@
                                             $("input[name='all_sending_servers']").trigger("change");
                                         });
                                     </script>
-                                @endif
+                                    @endif
 
-                                <script>
-                                    $(document).ready(function() {
-                                        // auto fill
-                                        // var box = $('#sender_from_input').autofill({
-                                        //     messages: {
-                                        //         header_found: '{{ trans('messages.sending_identity') }}',
-                                        //         header_not_found: '{{ trans('messages.sending_identity.not_found.header') }}'
-                                        //     }
-                                        // });
-                                        // box.loadDropbox(function() {
-                                        //     $('#sender_from_input').focusout();
-                                        //     box.updateErrorMessage();
-                                        // });
-                                    });
-                                </script>
+                                    <script>
+                                        $(document).ready(function() {
+                                            // auto fill
+                                            // var box = $('#sender_from_input').autofill({
+                                            //     messages: {
+                                            //         header_found: '{{ trans('messages.sending_identity') }}',
+                                            //         header_not_found: '{{ trans('messages.sending_identity.not_found.header') }}'
+                                            //     }
+                                            // });
+                                            // box.loadDropbox(function() {
+                                            //     $('#sender_from_input').focusout();
+                                            //     box.updateErrorMessage();
+                                            // });
+                                        });
+                                    </script>
 
                                     <div class="row">
                                         <div class="col-lg-1">

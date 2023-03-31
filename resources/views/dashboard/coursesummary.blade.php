@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head mb-4">
                         <div class="row">
-                        <div class="col-md-2">
+                            <div class="col-md-2">
                                 <ul class="list-unstyled mt-3">
                                     <li>
                                         <a href="{{route('user.get.quiz', Auth::user()->username)}}">
@@ -190,20 +190,20 @@
                             </div>
                         </div>
                         <div class="row course mt-3 mb-3">
-                        <div class="col-6">
-                            <a href="#" class="text-decoration-none">
-                                <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                    Cancel
-                                </button></a>
+                            <div class="col-6">
+                                <a href="#" class="text-decoration-none">
+                                    <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        Cancel
+                                    </button></a>
+                            </div>
+                            <div class="col-6 text-end">
+                                <a href="{{route('user.enroll.now', Auth::user()->username)}}" class="text-decoration-none">
+                                    <button class="btn px-4" style="color: #ffffff; background-color: #714091">
+                                        Publish
+                                    </button>
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-6 text-end">
-                            <a href="{{route('user.enroll.now', Auth::user()->username)}}" class="text-decoration-none">
-                                <button class="btn px-4" style="color: #ffffff; background-color: #714091">
-                                    Publish
-                                </button>
-                            </a>
-                        </div>
-                    </div>
                     </div>
                 </div>
                 <div class="col-lg-2">

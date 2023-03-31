@@ -41,7 +41,7 @@
                     <div class="card account-head">
                         <div class="all-create py-2">
                             <a class="btn" href="{{route('user.add.contact', [Auth::user()->username, Crypt::encrypt($mailinglist->id)])}}">
-                            + Add Contact 
+                                + Add Contact
                             </a>
                         </div>
                     </div>
