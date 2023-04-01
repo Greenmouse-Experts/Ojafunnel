@@ -429,8 +429,7 @@ class DashboardController extends Controller
 
         $smsQueue = SmsQueue::where('sms_campaign_id', $smsAutomations->id)->get();
 
-        foreach($smsQueue as $sms)
-        {
+        foreach ($smsQueue as $sms) {
             $sms->delete();
         }
 
@@ -447,7 +446,7 @@ class DashboardController extends Controller
         $Finder = Crypt::decrypt($id);
 
         $smsAutomations = SmsCampaign::find($Finder);
-        
+
         $smsAutomations->update([
             'title' => $request->campaign_name,
             'message' => $request->message,
