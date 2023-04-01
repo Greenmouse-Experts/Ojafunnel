@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -72,7 +71,7 @@
 
 			<div class="btn-group me-3 float-end" role="group">
                 <input id="id" name="id" value="{{$currentpage->id}}" hidden>
-				<button class="btn btn-primary btn-icon" title="Export (Ctrl + E)" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="{{ route('user.funnel.builder.save.page') }}" type="submit" data-v-vvveb-shortcut="ctrl+e">
+				<button class="btn btn-primary btn-icon" title="Export (Ctrl + E)" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="{{ route('user.funnel.builder.save.page', ['page' => request()->page ]) }}" type="submit" data-v-vvveb-shortcut="ctrl+e">
 					<i class="la la-save"></i> <span data-v-gettext>Save page</span>
 				</button>
 			</div>
