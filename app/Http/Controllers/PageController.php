@@ -518,6 +518,8 @@ class PageController extends Controller
 
     public function funnel_builder_save_page(Request $request)
     {
+        return var_dump($request->page);
+
         $id = Crypt::decrypt($request->page);
         $page = FunnelPage::find($id);
 

@@ -692,7 +692,6 @@ Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [ChatCon
 Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');
 Route::post('/funnel/builder/save/page/{page}', [App\Http\Controllers\PageController::class, 'funnel_builder_save_page'])->name('user.funnel.builder.save.page');
 
-
 // Paypal Testing
 use App\Http\Controllers\PayPalController;
 
