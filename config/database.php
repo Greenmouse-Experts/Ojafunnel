@@ -59,7 +59,7 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::MYSQL_ATTR_SSL_CA => resource_path('certificates/linode_ojafunnel_ca.crt'),
                 PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true
             ]) : [],
         ],
