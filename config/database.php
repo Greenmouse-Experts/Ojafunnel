@@ -59,10 +59,10 @@ return [
             'strict' => true,
             'engine' => null,
             'sslmode' => env('DB_SSLMODE', 'prefer'),
-            'options' => env('APP_ENV') == 'local' ? [] : [
+            'options' => env('APP_ENV') == 'local' ? [] : array(
                 PDO::MYSQL_ATTR_SSL_CA => resource_path('certificates/linode_ojafunnel_ca.crt'),
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true
-            ],
+                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false
+            ),
         ],
 
         'pgsql' => [
