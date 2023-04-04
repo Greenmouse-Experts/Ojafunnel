@@ -23,8 +23,7 @@ use Illuminate\Support\Facades\Session;
 class AuthController extends Controller
 {
     public function register(Request $request)
-    {
-        
+    {  
         $customer = Customer::newCustomer();
 
         $user = new User();
