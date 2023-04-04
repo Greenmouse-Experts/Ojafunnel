@@ -52,27 +52,30 @@
                                     <p class="mt-1 mb-4">
                                     </p>
                                     <div class="row">
-                                    <div class="col-sm-3"></div>
+                                        <div class="col-sm-3"></div>
                                         <div class="col-sm-3">
                                             <div class="emmet">
-                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png"
+                                                    draggable="false" alt="">
                                                 <p>
-                                               Classic
+                                                    Classic
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="emmet">
                                                 <a href="{{route('user.final.step', Auth::user()->username)}}">
-                                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png" draggable="false" alt="">
+                                                    <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1665483192/OjaFunnel-Images/Rectangle_19232_fw5jtg.png"
+                                                        draggable="false" alt="">
                                                     <p>
-                                                     Unique
+                                                        Unique
                                                     </p>
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="col-sm-3"></div>
-                                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1666280388/OjaFunnel-Images/image_790_e93cen.png" alt="">
+                                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1666280388/OjaFunnel-Images/image_790_e93cen.png"
+                                            alt="">
                                     </div>
                                 </div>
                             </div>
