@@ -66,135 +66,134 @@
                                     </thead>
                                     <tbody>
                                         @if ($product->count() > 0)
-                                            @foreach($product as $item)
-                                                <tr>
-                                                    <td>
-                                                        {{$item->name}}
-                                                    </td>
-                                                    <td>
-                                                        <img src="{{Storage::url($item->image) ?? URL::asset('dash/assets/images/product/img-1.png')}}" alt="product-img" title="product-img" class="avatar-md" />
-                                                    </td>
-                                                    <td>
-                                                        <div class="font-size-14 text-wrap" style="width: 500px;">{{$item->description}}</div>
-                                                    </td>
-                                                    <td>
-                                                        ₦ {{$item->price}}
-                                                    </td>
-                                                    <td>
-                                                        {{$item->quantity}}
-                                                    </td>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            </button>
-                                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editProduct-{{$item->id}}" type="button">Edit</a></li>
+                                        @foreach($product as $item)
+                                        <tr>
+                                            <td>
+                                                {{$item->name}}
+                                            </td>
+                                            <td>
+                                                <img src="{{Storage::url($item->image) ?? URL::asset('dash/assets/images/product/img-1.png')}}" alt="product-img" title="product-img" class="avatar-md" />
+                                            </td>
+                                            <td>
+                                                <div class="font-size-14 text-wrap" style="width: 500px;">{{$item->description}}</div>
+                                            </td>
+                                            <td>
+                                                ₦ {{$item->price}}
+                                            </td>
+                                            <td>
+                                                {{$item->quantity}}
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editProduct-{{$item->id}}" type="button">Edit</a></li>
 
-                                                              <li><a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteProduct-{{$item->id}}">Delete</a></li>
-                                                            </ul>
+                                                        <li><a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#deleteProduct-{{$item->id}}">Delete</a></li>
+                                                    </ul>
 
-                                                            {{-- modal --}}
-                                                            <div class="modal fade" id="editProduct-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered">
-                                                                    <div class="modal-content pb-3">
+                                                    {{-- modal --}}
+                                                    <div class="modal fade" id="editProduct-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content pb-3">
 
-                                                                        <div class="modal-header border-bottom-0">
-                                                                            <h4 class="card-title mb-4">Add Product</h4>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="Editt">
-                                                                                <form action="{{route('user.store.product.update', ['username' => Auth::user()->username, 'store_id' => $store_id, 'id' => $item->id])}}" method="POST" enctype="multipart/form-data">
-                                                                                    @csrf
-                                                                                    <div class="form">
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-12 mb-4">
-                                                                                                <label for="Name">Product Name</label>
-                                                                                                <input type="text" name="name" value="{{$item->name}}" placeholder="Enter product name" required />
-                                                                                            </div>
-                                                                                            <div class="col-lg-12 mb-4">
-                                                                                                <label for="Name">Image</label>
-                                                                                                <input type="file" name="image" />
-                                                                                            </div>
-                                                                                            <div class="col-lg-12 mb-4">
-                                                                                                <label for="Name">Product Description</label>
-                                                                                                <textarea name="description" id="" cols="30" rows="10" placeholder="Enter your product description" required>
-                                                                                                    {{$item->description}}
-                                                                                                </textarea>
-                                                                                            </div>
-                                                                                            <div class="col-lg-12 mb-4">
-                                                                                                <label for="Name">Price</label>
-                                                                                                <input type="text" name="price" value="{{$item->price}}" placeholder="Enter price" required />
-                                                                                            </div>
-                                                                                            <div class="col-lg-12 mb-4">
-                                                                                                <label for="Name">Quantity</label>
-                                                                                                <input type="text" name="quantity" value="{{$item->quantity}}" required />
-                                                                                            </div>
-                                                                                            <div class="col-lg-12 mb-4">
-                                                                                                <label for="Name">Level 1 Commission (%)</label>
-                                                                                                <input type="text" name="level1_comm" value="{{$item->level1_comm}}" required />
-                                                                                            </div>
-                                                                                            <div class="col-lg-12 mb-4">
-                                                                                                <label for="Name">Level 2 Commission (%)</label>
-                                                                                                <input type="text" name="level2_comm" value="{{$item->level2_comm}}" required />
-                                                                                            </div>
-                                                                                            <div class="text-end mt-2">
-                                                                                                <a href="#" class="text-decoration-none">
-                                                                                                    <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
-                                                                                                        Submit
-                                                                                                    </button>
-                                                                                                </a>
-                                                                                            </div>
-                                                                                        </div>
+                                                                <div class="modal-header border-bottom-0">
+                                                                    <h4 class="card-title mb-4">Add Product</h4>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="Editt">
+                                                                        <form action="{{route('user.store.product.update', ['username' => Auth::user()->username, 'store_id' => $store_id, 'id' => $item->id])}}" method="POST" enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Product Name</label>
+                                                                                        <input type="text" name="name" value="{{$item->name}}" placeholder="Enter product name" required />
                                                                                     </div>
-                                                                                </form>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Image</label>
+                                                                                        <input type="file" name="image" />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Product Description</label>
+                                                                                        <textarea name="description" id="" cols="30" rows="10" placeholder="Enter your product description" required>
+                                                                                        {{$item->description}}
+                                                                                        </textarea>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Price</label>
+                                                                                        <input type="text" name="price" value="{{$item->price}}" placeholder="Enter price" required />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Quantity</label>
+                                                                                        <input type="text" name="quantity" value="{{$item->quantity}}" required />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Level 1 Commission (%)</label>
+                                                                                        <input type="text" name="level1_comm" value="{{$item->level1_comm}}" required />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Level 2 Commission (%)</label>
+                                                                                        <input type="text" name="level2_comm" value="{{$item->level2_comm}}" required />
+                                                                                    </div>
+                                                                                    <div class="text-end mt-2">
+                                                                                        <a href="#" class="text-decoration-none">
+                                                                                            <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                                                                                Submit
+                                                                                            </button>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="modal fade" id="deleteProduct-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered" style="max-width: 35%">
-                                                                    <div class="modal-content pb-3">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="deleteProduct-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" style="max-width: 35%">
+                                                            <div class="modal-content pb-3">
 
-                                                                        <div class="modal-header border-bottom-0">
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="Editt">
-                                                                                <form action="{{route('user.store.product.delete', ['username' => Auth::user()->username, 'id' => $item->id])}}" method="POST" enctype="multipart/form-data">
-                                                                                    @csrf
-                                                                                    <div class="form">
-                                                                                        <div class="row">
-                                                                                            <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to delete this product <br> ({{$item->name}})</h3>
-                                                                                            <div class="row justify-content-between">
-                                                                                                <div class="col-6">
-                                                                                                    <a href="#" class="text-decoration-none">
-                                                                                                        <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                                                                            Cancel
-                                                                                                        </button></a>
-                                                                                                </div>
-                                                                                                <div class="col-6 text-end">
-                                                                                                    <a href="#" class="text-decoration-none">
-                                                                                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #BA0028"
-                                                                                                            >
-                                                                                                            Delete
-                                                                                                        </button>
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                            </div>
+                                                                <div class="modal-header border-bottom-0">
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="Editt">
+                                                                        <form action="{{route('user.store.product.delete', ['username' => Auth::user()->username, 'id' => $item->id])}}" method="POST" enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <div class="row">
+                                                                                    <h3 style="text-align: center; margin-bottom: 15%;">Are you sure you want to delete this product <br> ({{$item->name}})</h3>
+                                                                                    <div class="row justify-content-between">
+                                                                                        <div class="col-6">
+                                                                                            <a href="#" class="text-decoration-none">
+                                                                                                <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                                    Cancel
+                                                                                                </button></a>
+                                                                                        </div>
+                                                                                        <div class="col-6 text-end">
+                                                                                            <a href="#" class="text-decoration-none">
+                                                                                                <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #BA0028">
+                                                                                                    Delete
+                                                                                                </button>
+                                                                                            </a>
                                                                                         </div>
                                                                                     </div>
-                                                                                </form>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                          </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                         @endif
                                     </tbody>
                                 </table>
@@ -238,7 +237,7 @@
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Quantity</label>
-                                    <input type="text" name="quantity"  placeholder="Enter quantity" required />
+                                    <input type="text" name="quantity" placeholder="Enter quantity" required />
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Level 1 Commision (%)</label>

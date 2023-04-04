@@ -5,9 +5,9 @@
 <!-- Start right Content here -->
 <!-- ============================================================== -->
 <div class="main-content">
-        <div class="page-content">
-          <!-- container-fluid -->
-          <div class="container-fluid">
+    <div class="page-content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
             <!-- start page title -->
             <div class="row begin">
                 <div class="col-lg-12 move">
@@ -135,7 +135,7 @@
                                 </li>
                             </ul>
                         </div>
-                       <div class="row">
+                        <div class="row">
                             <div class="col-md-4"></div>
                             <div class="col-md-4"></div>
                             <div class="col-md-4">
@@ -149,7 +149,7 @@
                                     </div>
                                 </div>
                             </div>
-                       </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -157,44 +157,44 @@
                         Description
                     </h5>
                     <div class="form">
-                    <div class="row">
-                     <div class="col-md-12">
-                       <label>Message</label>
-                       <div class="row">
-                           <div class="col-md-12 mb-4">
-                               <textarea name="" id="" cols="20" rows="6"></textarea>
-                           </div>
-                       </div>
-                     </div>
-                     <div class="col-md-8"></div>
-                     <div class="col-md-4">
-                        <div class="end">
-                            <Button>Set</Button>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Message</label>
+                                <div class="row">
+                                    <div class="col-md-12 mb-4">
+                                        <textarea name="" id="" cols="20" rows="6"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <div class="end">
+                                    <Button>Set</Button>
+                                </div>
+                            </div>
                         </div>
-                     </div>
                     </div>
-                </div>
                 </div>
             </div>
             <!-- account container form -->
             <!-- end page title -->
-          </div>
         </div>
-        <!-- End Page-content -->
+    </div>
+    <!-- End Page-content -->
 
-        <footer class="footer border-0 bg-transparent mt-5">
-          <div class="container-fluid mt-5">
+    <footer class="footer border-0 bg-transparent mt-5">
+        <div class="container-fluid mt-5">
             <div class="row text-center bg-white mt-5">
-              <div class="text-center py-4">
-                Copyright ©
-                <script>
-                  document.write(new Date().getFullYear());
-                </script>
-                Ojafunnel | All Right Reserved
-              </div>
+                <div class="text-center py-4">
+                    Copyright ©
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script>
+                    Ojafunnel | All Right Reserved
+                </div>
             </div>
-          </div>
-        </footer>
-      </div>
+        </div>
+    </footer>
+</div>
 <!-- END layout-wrapper -->
 @endsection
