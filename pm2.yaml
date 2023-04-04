@@ -1,0 +1,35 @@
+apps:
+  - name: waTemplate1
+    script: artisan
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args:
+      - queue:work
+      - --queue=waTemplate1
+
+  - name: waTemplate2
+    script: artisan
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args:
+      - queue:work
+      - --queue=waTemplate2
+
+  - name: waTemplate3
+    script: artisan
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args:
+      - queue:work
+      - --queue=waTemplate3
+
+  - name: schedule
+    script: artisan
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args:
+      - schedule:work
