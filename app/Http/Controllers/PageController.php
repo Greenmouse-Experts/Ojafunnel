@@ -521,7 +521,6 @@ class PageController extends Controller
         $id = Crypt::decrypt($request->page);
         $page = FunnelPage::find($id);
 
-        // $page = FunnelPage::find($_POST['id']);
         $funnel = Funnel::findorfail($page->folder_id);
 
         define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
