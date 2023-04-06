@@ -26,9 +26,9 @@ class CMSController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth', 'verified']);
     }
-    
+
     public function start_course_creation(Request $request)
     {
         //Validate Request
@@ -54,26 +54,23 @@ class CMSController extends Controller
 
         $category = Category::find($request->category);
 
-        if($request->courseUpdate)
-        {
-            if($request->price == null)
-            {
+        if ($request->courseUpdate) {
+            if ($request->price == null) {
                 $price = 0;
             } else {
                 $price = $request->price;
             }
 
-            if (request()->hasFile('image')) 
-            {
+            if (request()->hasFile('image')) {
                 $this->validate($request, [
                     'image' => 'required|mimes:jpeg,png,jpg',
                 ]);
                 $filename = request()->image->getClientOriginalName();
-                if($course->image) {
+                if ($course->image) {
                     Storage::delete(str_replace("storage", "public", $course->image));
                 }
                 request()->image->storeAs('course_photo', $filename, 'public');
-                
+
                 $course->update([
                     'category_id' => $category->id,
                     'title' => $request->title,
@@ -83,7 +80,7 @@ class CMSController extends Controller
                     'level' => $request->level,
                     'currency' => $request->currency,
                     'price' => $price,
-                    'image' => '/storage/course_photo/'.$filename,
+                    'image' => '/storage/course_photo/' . $filename,
                 ]);
 
                 return back()->with([
@@ -110,8 +107,8 @@ class CMSController extends Controller
             ]);
         }
 
-         //Validate Request
-         $this->validate($request, [
+        //Validate Request
+        $this->validate($request, [
             'title' => ['required'],
             'subtitle' => ['required'],
             'course_description' => ['required'],
@@ -129,7 +126,6 @@ class CMSController extends Controller
             'type' => 'success',
             'message' => 'Published successfully.'
         ]);
-        
     }
 
     public function save_curriculum($id, Request $request)
@@ -157,9 +153,9 @@ class CMSController extends Controller
 
     public function action_curriculum($id, Request $request)
     {
-        switch($request->submitbutton) {
+        switch ($request->submitbutton) {
 
-            case 'Delete': 
+            case 'Delete':
                 //action save here
                 $finder = Crypt::decrypt($id);
 
@@ -167,24 +163,20 @@ class CMSController extends Controller
 
                 $lessons = Lesson::where('section_id', $section->id)->get();
 
-                if($lessons)
-                {
-                    foreach($lessons as $lesson)
-                    {
+                if ($lessons) {
+                    foreach ($lessons as $lesson) {
                         $video = Video::where('lesson_id', $lesson->id)->first();
                         $token = explode('/', $video->original_filename);
-                        $token2 = explode('.', $token[sizeof($token)-1]);
-                
-                        if($video->original_filename)
-                        {
-                            cloudinary()->destroy(config('app.name').'/'.$token2[0]);
+                        $token2 = explode('.', $token[sizeof($token) - 1]);
+
+                        if ($video->original_filename) {
+                            cloudinary()->destroy(config('app.name') . '/' . $token2[0]);
                         }
 
                         $video->delete();
-                
+
                         $lesson->delete();
                     }
-
                 }
 
                 $section->delete();
@@ -193,9 +185,9 @@ class CMSController extends Controller
                     'type' => 'success',
                     'message' => 'Section deleted successfully.'
                 ]);
-            break;
-        
-            case 'Update': 
+                break;
+
+            case 'Update':
                 //action for save-draft here
 
                 //Validate Request
@@ -216,7 +208,7 @@ class CMSController extends Controller
                     'type' => 'success',
                     'message' => 'Section updated successfully.'
                 ]);
-            break;
+                break;
         }
     }
 
@@ -231,23 +223,24 @@ class CMSController extends Controller
 
         $section = Section::find($request->section_id);
 
-        if($request->content_type == 'Video')
-        {
+        if ($request->content_type == 'Video') {
             $this->validate($request, [
-                'lesson_video' => 'required|mimes:mp4,mov,ogg,qt,wmv,avi,m3u8|max:20000',
+                'lesson_video' => 'required|mimes:mp4,mov,ogg,qt,wmv,avi,m3u8',
             ]);
 
             $file = request()->lesson_video->getClientOriginalName();
-                
+
             $filename = pathinfo($file, PATHINFO_FILENAME);
 
-            $response = cloudinary()->uploadFile($request->file('lesson_video')->getRealPath(),
-                            [
-                                'folder' => config('app.name'),
-                                "public_id" => $filename,
-                                "use_filename" => TRUE
-                            ])->getSecurePath();
-            
+            $response = cloudinary()->uploadFile(
+                $request->file('lesson_video')->getRealPath(),
+                [
+                    'folder' => config('app.name'),
+                    "public_id" => $filename,
+                    "use_filename" => TRUE
+                ]
+            )->getSecurePath();
+
             $lesson = Lesson::create([
                 'section_id' => $section->id,
                 'course_id' => $section->course_id,
@@ -266,9 +259,7 @@ class CMSController extends Controller
                 'type' => 'success',
                 'message' => 'Lesson save successfully.'
             ]);
-
-        } elseif($request->content_type == 'Youtube') 
-        {
+        } elseif ($request->content_type == 'Youtube') {
             $this->validate($request, [
                 'lesson_youtube' => ['required', 'string', 'max:255'],
             ]);
@@ -329,16 +320,15 @@ class CMSController extends Controller
     public function delete_lesson($id)
     {
         $finder = Crypt::decrypt($id);
-        
+
         $lesson = Lesson::findorfail($finder);
 
         $video = Video::where('lesson_id', $lesson->id)->first();
         $token = explode('/', $video->original_filename);
-        $token2 = explode('.', $token[sizeof($token)-1]);
+        $token2 = explode('.', $token[sizeof($token) - 1]);
 
-        if($video->original_filename)
-        {
-            cloudinary()->destroy(config('app.name').'/'.$token2[0]);
+        if ($video->original_filename) {
+            cloudinary()->destroy(config('app.name') . '/' . $token2[0]);
         }
 
         $video->delete();
@@ -418,7 +408,7 @@ class CMSController extends Controller
             'message' => 'Outline deleted successfully.'
         ]);
     }
-    
+
 
     public function save_coupon($id, Request $request)
     {
@@ -482,8 +472,7 @@ class CMSController extends Controller
             'delete_field' => ['required', 'string', 'max:255']
         ]);
 
-        if($request->delete_field == "DELETE")
-        {
+        if ($request->delete_field == "DELETE") {
             $finder = Crypt::decrypt($id);
 
             Coupon::find($finder)->delete();
@@ -497,7 +486,7 @@ class CMSController extends Controller
         return back()->with([
             'type' => 'danger',
             'message' => "Field doesn't match, Try Again!"
-        ]); 
+        ]);
     }
 
     public function create_shop(Request $request)
@@ -526,7 +515,7 @@ class CMSController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'link' => $request->link,
-                'logo' => '/storage/courseShopLogo/'.$filename,
+                'logo' => '/storage/courseShopLogo/' . $filename,
                 'theme' => $request->theme,
                 'color' => '#fff',
                 'user_id' => Auth::user()->id,
@@ -536,18 +525,16 @@ class CMSController extends Controller
                 'type' => 'success',
                 'message' => $request->name . ' shop created successfully'
             ]);
-
         } else {
             foreach ($shops as $shop) {
                 $user_id[] = $shop->user_id;
             }
             if (in_array(Auth::user()->id, $user_id)) {
-                
+
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'You already have a shop.'
                 ]);
-
             } else {
 
                 $filename = request()->logo->getClientOriginalName();
@@ -557,7 +544,7 @@ class CMSController extends Controller
                     'name' => $request->name,
                     'description' => $request->description,
                     'link' => $request->link,
-                    'logo' => '/storage/courseShopLogo/'.$filename,
+                    'logo' => '/storage/courseShopLogo/' . $filename,
                     'theme' => $request->theme,
                     'color' => '#fff',
                     'user_id' => Auth::user()->id,
@@ -567,17 +554,15 @@ class CMSController extends Controller
                     'type' => 'success',
                     'message' => $request->name . ' shop created successfully'
                 ]);
-
             }
         }
     }
 
     public function update_shop(Request $request)
-    {   
+    {
         $shop = Shop::findOrFail($request->id);
 
-        if($request->name == $shop->name)
-        {
+        if ($request->name == $shop->name) {
             $request->validate(
                 [
                     'description' => 'required',
@@ -590,14 +575,14 @@ class CMSController extends Controller
                 ]);
 
                 $filename = request()->logo->getClientOriginalName();
-                if($shop->logo) {
+                if ($shop->logo) {
                     Storage::delete(str_replace("storage", "public", $shop->logo));
                 }
                 request()->logo->storeAs('courseShopLogo', $filename, 'public');
 
                 $shop->update([
                     'description' => $request->description,
-                    'logo' => '/storage/courseShopLogo/'.$filename,
+                    'logo' => '/storage/courseShopLogo/' . $filename,
                     'theme' => $request->theme,
                     'color' => '#fff',
                 ]);
@@ -637,7 +622,7 @@ class CMSController extends Controller
                 ]);
 
                 $filename = request()->logo->getClientOriginalName();
-                if($shop->logo) {
+                if ($shop->logo) {
                     Storage::delete(str_replace("storage", "public", $shop->logo));
                 }
                 request()->logo->storeAs('courseShopLogo', $filename, 'public');
@@ -646,7 +631,7 @@ class CMSController extends Controller
                     'name' => $request->name,
                     'description' => $request->description,
                     'link' => $request->link,
-                    'logo' => '/storage/courseShopLogo/'.$filename,
+                    'logo' => '/storage/courseShopLogo/' . $filename,
                     'theme' => $request->theme,
                     'color' => '#fff',
                 ]);
@@ -670,15 +655,13 @@ class CMSController extends Controller
                 'message' => $request->name . ' shop updated successfully.'
             ]);
         }
-
-        
     }
 
     public function delete_shop(Request $request)
     {
         $shop = Shop::findOrFail($request->id);
 
-        if($shop->logo) {
+        if ($shop->logo) {
             Storage::delete(str_replace("storage", "public", $shop->logo));
         }
 
