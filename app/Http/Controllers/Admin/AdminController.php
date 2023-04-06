@@ -34,6 +34,7 @@ use App\Models\OjafunnelMailSupport;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use App\Models\OjafunnelNotification;
+use App\Models\WhatsappSupport;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -1021,7 +1022,7 @@ class AdminController extends Controller
             'phone_number' => ['required', 'numeric'],
         ]);
 
-        WhatsappNumber::create([
+        WhatsappSupport::create([
             'phone_number' => $request->phone_number
         ]);
 
@@ -1034,7 +1035,7 @@ class AdminController extends Controller
     public function delete_support_whatsapp($id)
     {
         $Finder = Crypt::decrypt($id);
-        WhatsappNumber::find($Finder)->delete();
+        WhatsappSupport::find($Finder)->delete();
 
         return back()->with([
             'type' => 'success',

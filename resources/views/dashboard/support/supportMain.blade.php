@@ -78,7 +78,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(App\Models\WhatsappNumber::latest()->get() as $whatsapp)
+                            @foreach(App\Models\WhatsappSupport::latest()->get() as $whatsapp)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>
