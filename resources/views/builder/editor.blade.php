@@ -1519,8 +1519,9 @@
 
 	<!-- media gallery -->
 	<link href="{{URL::asset('builder/libs/media/media.css')}}" rel="stylesheet">
-	<script>
-		window.mediaPath = 'media';
+	<script> 
+		window.mediaPath = '';
+		window.currentPath = "{{ env('APP_URL') . '/builder/media' }}"
 		//Vvveb.themeBaseUrl = 'demo/landing/';
 	</script>
 	<script src="{{URL::asset('builder/libs/media/media.js')}}"></script>
