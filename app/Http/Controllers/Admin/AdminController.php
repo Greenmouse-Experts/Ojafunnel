@@ -47,7 +47,7 @@ class AdminController extends Controller
             "registration_ids" => $firebaseToken,
             "notification" => [
                 "title" => config('app.name'),
-                "body" => $body, 
+                "body" => $body,
                 'image' => URL::asset('assets/images/Logo-fav.png'),
             ],
             'vibrate' => 1,
@@ -68,8 +68,8 @@ class AdminController extends Controller
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString); 
-        $result = curl_exec ( $ch );
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $result = curl_exec($ch);
 
         return $result;
     }
@@ -216,13 +216,13 @@ class AdminController extends Controller
         return view('Admin.lms.courses');
     }
 
-    
+
     public function view_shop()
     {
         return view('Admin.lms.viewShop');
     }
 
-    
+
     public function view_category()
     {
         return view('Admin.lms.category');
@@ -285,15 +285,15 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Message replied successfully.',
-        ]); 
+        ]);
     }
 
-    public function send_email_to_user(Request $request) 
+    public function send_email_to_user(Request $request)
     {
         //Validate Request
         $this->validate($request, [
-            'name' => ['required','string', 'max:255'],
-            'subject' => ['required','string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'subject' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string'],
         ]);
 
@@ -310,7 +310,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Message sent successfully.',
-        ]); 
+        ]);
     }
 
     public function chat_support()
@@ -325,17 +325,18 @@ class AdminController extends Controller
         //     $id1 = MessageUser::where('sender_id', $user->id)->where('reciever_id', Auth::guard('admin')->user()->id)->pluck('id');
         //     $id2 = MessageUser::where('reciever_id', Auth::guard('admin')->user()->id)->where('sender_id', $user->id)->pluck('id');
 
-            // $data['unread'] = $id1;
+        // $data['unread'] = $id1;
         // }
 
         // $allMessages[] = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
-        
+
         // return $id2;
 
         return view('Admin.support.chatSupport');
     }
 
-    public function check($recieverId){
+    public function check($recieverId)
+    {
         $senderId = Auth::guard('admin')->user()->id;
 
         $data = [
@@ -349,11 +350,11 @@ class AdminController extends Controller
 
         $checkExist = MessageUser::where('sender_id', $senderId)->where('reciever_id', $recieverId)->first();
 
-        if(!$checkExist){
+        if (!$checkExist) {
             $createConvo = MessageUser::create($data);
             $createConvo2 = MessageUser::create($data2);
             return $createConvo->id;
-        }else{
+        } else {
             return $checkExist->id;
         }
     }
@@ -362,8 +363,7 @@ class AdminController extends Controller
     {
         $messageUser = MessageUser::find($request->convo_id);
 
-        if($messageUser->sender_id == Auth::guard('admin')->user()->id)
-        {
+        if ($messageUser->sender_id == Auth::guard('admin')->user()->id) {
             $user = User::where('id', $messageUser->reciever_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
             $data = [
@@ -373,11 +373,11 @@ class AdminController extends Controller
 
             $sendMessage = Message::create($data);
 
-            $this->fcm('Message from '.Auth::guard('admin')->user()->name.': '.$request->message, $user);
+            $this->fcm('Message from ' . Auth::guard('admin')->user()->name . ': ' . $request->message, $user);
 
-            if($sendMessage){
+            if ($sendMessage) {
                 return "Message Sent";
-            }else{
+            } else {
                 return "Error sending message.";
             }
         } else {
@@ -390,25 +390,25 @@ class AdminController extends Controller
 
             $sendMessage = Message::create($data);
 
-            $this->fcm('Message from '.Auth::guard('admin')->user()->name.': '.$request->message, $user);
+            $this->fcm('Message from ' . Auth::guard('admin')->user()->name . ': ' . $request->message, $user);
 
-            if($sendMessage){
+            if ($sendMessage) {
                 return "Message Sent";
-            }else{
+            } else {
                 return "Error sending message.";
             }
-
         }
     }
 
-    public function load($reciever, $sender){
+    public function load($reciever, $sender)
+    {
         $boxType = "";
 
-        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id',$reciever)->pluck('id');
-        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id',$reciever)->pluck('id');
+        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id', $reciever)->pluck('id');
+        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id', $reciever)->pluck('id');
 
         $allMessages = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
-        
+
         // foreach($allMessages as $row){
         //     if($id1[0]==$row['message_users_id']){$boxType = "p-2 recieverBox ml-auto";}else{$boxType = "float-left p-2 mb-2 senderBox";}
         //     echo "<div class='p-2 d-flex'>";
@@ -421,11 +421,12 @@ class AdminController extends Controller
         return $tobePassed;
     }
 
-    public function retrieveNew($reciever, $sender, $lastId){
-        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id',$reciever)->pluck('id');
-        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id',$reciever)->pluck('id');
+    public function retrieveNew($reciever, $sender, $lastId)
+    {
+        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id', $reciever)->pluck('id');
+        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id', $reciever)->pluck('id');
 
-        $allMessages = Message::where('id','>=',$lastId)->where('message_users_id', $id2)->orderBy('id', 'asc')->get();
+        $allMessages = Message::where('id', '>=', $lastId)->where('message_users_id', $id2)->orderBy('id', 'asc')->get();
 
         return $allMessages;
     }
@@ -512,92 +513,92 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('Admin.emailmarketing.SendingServer');
+        return view('Admin.email.SendingServer');
     }
 
     public function new_server()
     {
-        return view('Admin.emailmarketing.NewServer');
+        return view('Admin.email.NewServer');
     }
 
     public function choose_server()
     {
-        return view('Admin.emailmarketing.ChooseServer');
+        return view('Admin.email.ChooseServer');
     }
 
     public function main_bounce()
     {
-        return view('Admin.emailmarketing.BounceHandler');
+        return view('Admin.email.BounceHandler');
     }
 
     public function new_bounce()
     {
-        return view('Admin.emailmarketing.NewBounce');
+        return view('Admin.email.NewBounce');
     }
 
     public function main_email()
     {
-        return view('Admin.emailmarketing.EmailVerification');
+        return view('Admin.email.EmailVerification');
     }
 
     public function create_new()
     {
-        return view('Admin.emailmarketing.CreateNew');
+        return view('Admin.email.CreateNew');
     }
 
     public function backlist()
     {
-        return view('Admin.emailmarketing.Backlist');
+        return view('Admin.email.Backlist');
     }
 
     public function import_backlist()
     {
-        return view('Admin.emailmarketing.ImportBacklist');
+        return view('Admin.email.ImportBacklist');
     }
 
     public function delivery_log()
     {
-        return view('Admin.emailmarketing.DeliveryLog');
+        return view('Admin.email.DeliveryLog');
     }
 
     public function bounce_log()
     {
-        return view('Admin.emailmarketing.BounceLog');
+        return view('Admin.email.BounceLog');
     }
 
     public function open_log()
     {
-        return view('Admin.emailmarketing.OpenLog');
+        return view('Admin.email.OpenLog');
     }
 
     public function click_log()
     {
-        return view('Admin.emailmarketing.ClickLog');
+        return view('Admin.email.ClickLog');
     }
 
     public function unsubscribe_log()
     {
-        return view('Admin.emailmarketing.Unsubscribe');
+        return view('Admin.email.Unsubscribe');
     }
 
     public function generall()
     {
-        return view('Admin.emailmarketing.General');
+        return view('Admin.email.General');
     }
 
     public function payment_gateway()
     {
-        return view('Admin.emailmarketing.Payment');
+        return view('Admin.email.Payment');
     }
 
     public function plugin()
     {
-        return view('Admin.emailmarketing.Plugin');
+        return view('Admin.email.Plugin');
     }
 
     public function install_plugin()
     {
-        return view('Admin.emailmarketing.AddPlugin');
+        return view('Admin.email.AddPlugin');
     }
 
     public function add_category(Request $request)
@@ -614,7 +615,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Category added successfully.',
-        ]); 
+        ]);
     }
 
     public function update_category(Request $request, $id)
@@ -634,8 +635,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Category updated successfully.',
-        ]); 
-
+        ]);
     }
 
     public function delete_category($id)
@@ -646,7 +646,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Category deleted successfully.',
-        ]); 
+        ]);
     }
 
     public function course_activate($id)
@@ -660,7 +660,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Course activated successfully.',
-        ]); 
+        ]);
     }
 
     public function course_deactivate($id)
@@ -674,7 +674,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Course suspended successfully.',
-        ]); 
+        ]);
     }
 
     public function read_notification($id)
@@ -709,7 +709,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Faq added successfully.',
-        ]); 
+        ]);
     }
 
     public function update_faq(Request $request, $id)
@@ -731,7 +731,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Faq updated successfully.',
-        ]); 
+        ]);
     }
 
     public function delete_faq($id)
@@ -742,7 +742,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Faq deleted successfully.',
-        ]); 
+        ]);
     }
 
     public function view_contact_us()
@@ -758,7 +758,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Contact Us Form deleted successfully.',
-        ]); 
+        ]);
     }
 
     public function saveToken(Request $request)
@@ -773,7 +773,7 @@ class AdminController extends Controller
     }
 
     public function page_builder_create(Request $request)
-    {   
+    {
         //Validate Request
         $this->validate($request, [
             'title' => ['required', 'string', 'max:255'],
@@ -788,10 +788,10 @@ class AdminController extends Controller
             ]);
         }
 
-        $file = $request->file_name.'.html';
-        
-        define('MAX_FILE_LIMIT', 1024 * 1024 * 2);//2 Megabytes max html file size
-        
+        $file = $request->file_name . '.html';
+
+        define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
+
         $data = file_get_contents(resource_path('views/builder/new-page-blank-template.blade.php'));
 
         $html = substr($data, 0, MAX_FILE_LIMIT);
@@ -802,7 +802,7 @@ class AdminController extends Controller
 
         $disk = Storage::build([
             'driver' => 'local',
-            'root'   => public_path('pageBuilder') . '/'.$request->file_folder,
+            'root'   => public_path('pageBuilder') . '/' . $request->file_folder,
             'permissions' => [
                 'file' => [
                     'public' => 0777,
@@ -816,12 +816,12 @@ class AdminController extends Controller
                 ],
             ],
         ]);
-        
-        if(!$disk->put($file, $html)){
+
+        if (!$disk->put($file, $html)) {
             header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Error saving file  '.$file.'\nPossible causes are missing write permission or incorrect file path!'
+                'message' => 'Error saving file  ' . $file . '\nPossible causes are missing write permission or incorrect file path!'
             ]);
         } else {
             $page = Page::create([
@@ -829,12 +829,12 @@ class AdminController extends Controller
                 'title' => $request->title,
                 'name' => $file,
                 'folder' => $request->file_folder,
-                'file_location' => config('app.url').'/pageBuilder/'.$request->file_folder.'/'.$file
+                'file_location' => config('app.url') . '/pageBuilder/' . $request->file_folder . '/' . $file
             ]);
 
             return back()->with([
                 'type' => 'success',
-                'message' => $page->name.' created.'
+                'message' => $page->name . ' created.'
             ]);
         };
     }
@@ -842,7 +842,7 @@ class AdminController extends Controller
     function sanitizeFileName($file)
     {
         //sanitize, remove double dot .. and remove get parameters if any
-        $file = preg_replace('@\?.*$@' , '', preg_replace('@\.{2,}@' , '', preg_replace('@[^\/\\a-zA-Z0-9\-\._]@', '', $file)));
+        $file = preg_replace('@\?.*$@', '', preg_replace('@\.{2,}@', '', preg_replace('@[^\/\\a-zA-Z0-9\-\._]@', '', $file)));
         return $file;
     }
 
@@ -866,27 +866,26 @@ class AdminController extends Controller
     {
         $page = Page::find($_POST['id']);
 
-        define('MAX_FILE_LIMIT', 1024 * 1024 * 2);//2 Megabytes max html file size
+        define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
 
         $html = "";
 
-        if (isset($_POST['html']))
-        {
+        if (isset($_POST['html'])) {
             $html = substr($_POST['html'], 0, MAX_FILE_LIMIT);
         }
 
-        $disk = public_path('pageBuilder/'.$page->folder.'/'.$page->name);
+        $disk = public_path('pageBuilder/' . $page->folder . '/' . $page->name);
 
         if (file_put_contents($disk, $html)) {
-        	echo "File saved.";
+            echo "File saved.";
         } else {
-        	header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
-        	echo "Error saving file. \nPossible causes are missing write permission or incorrect file path!";
-        }	
+            header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+            echo "Error saving file. \nPossible causes are missing write permission or incorrect file path!";
+        }
     }
 
     public function page_builder_update($id, Request $request)
-    {   
+    {
         //Validate Request
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
@@ -899,15 +898,15 @@ class AdminController extends Controller
                 'message' => 'file name invalid.'
             ]);
         }
-         
+
         $idFinder = Crypt::decrypt($id);
         $page = Page::find($idFinder);
 
-        $file = $request->name.'.html';
-        
-        $disk = public_path('pageBuilder/'.$page->folder.'/'.$page->name);
+        $file = $request->name . '.html';
 
-        rename ($disk, public_path('pageBuilder/'.$page->folder.'/'.$file));
+        $disk = public_path('pageBuilder/' . $page->folder . '/' . $page->name);
+
+        rename($disk, public_path('pageBuilder/' . $page->folder . '/' . $file));
 
         //Validate User
         if (request()->hasFile('thumbnail')) {
@@ -915,16 +914,16 @@ class AdminController extends Controller
                 'thumbnail' => 'required|mimes:jpeg,png,jpg',
             ]);
             $filename = request()->thumbnail->getClientOriginalName();
-            if($page->thumbnail) {
+            if ($page->thumbnail) {
                 Storage::delete(str_replace("storage", "public", $page->thumbnail));
             }
             request()->thumbnail->storeAs('pages', $filename, 'public');
 
             $page->update([
-                'thumbnail' => '/storage/pages/'.$filename,
+                'thumbnail' => '/storage/pages/' . $filename,
                 'name' => $file,
                 'title' => $request->title,
-                'file_location' => config('app.url').'/pageBuilder/'.$page->folder.'/'.$file
+                'file_location' => config('app.url') . '/pageBuilder/' . $page->folder . '/' . $file
             ]);
 
             return back()->with([
@@ -936,7 +935,7 @@ class AdminController extends Controller
         $page->update([
             'name' => $file,
             'title' => $request->title,
-            'file_location' => config('app.url').'/pageBuilder/'.$page->folder.'/'.$file
+            'file_location' => config('app.url') . '/pageBuilder/' . $page->folder . '/' . $file
         ]);
 
         return back()->with([
@@ -952,18 +951,17 @@ class AdminController extends Controller
             'delete_field' => ['required', 'string', 'max:255']
         ]);
 
-        if($request->delete_field == "DELETE")
-        {
+        if ($request->delete_field == "DELETE") {
             $idFinder = Crypt::decrypt($id);
 
             $page = Page::findorfail($idFinder);
 
-            if($page->thumbnail) {
+            if ($page->thumbnail) {
                 Storage::delete(str_replace("storage", "public", $page->thumbnail));
             }
 
-            if($page->file_location) {
-                File::deleteDirectory(public_path('pageBuilder/'.$page->folder));
+            if ($page->file_location) {
+                File::deleteDirectory(public_path('pageBuilder/' . $page->folder));
             }
 
             $page->delete();
@@ -971,20 +969,18 @@ class AdminController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Page deleted successfully!'
-            ]); 
-        } 
+            ]);
+        }
 
         return back()->with([
             'type' => 'danger',
             'message' => "Field doesn't match, Try Again!"
-        ]); 
-        
+        ]);
     }
 
     public function page_publish(Request $request)
     {
-        if($request->action == 'Publish')
-        {
+        if ($request->action == 'Publish') {
             $page = Page::findorfail($request->id);
 
             $page->update([
@@ -994,7 +990,7 @@ class AdminController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => "Page Published"
-            ]); 
+            ]);
         } else {
             $page = Page::findorfail($request->id);
 
@@ -1005,7 +1001,7 @@ class AdminController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => "Page Unpublish"
-            ]); 
+            ]);
         }
     }
 
@@ -1028,7 +1024,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Whatapp number added successfully.',
-        ]); 
+        ]);
     }
 
     public function delete_support_whatsapp($id)
@@ -1039,7 +1035,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Whatsapp number deleted successfully.',
-        ]); 
+        ]);
     }
 
     public function pending_payouts()
@@ -1053,8 +1049,7 @@ class AdminController extends Controller
 
         $payout = Withdrawal::find($Finder);
 
-        if($request->status == 'finalized')
-        {
+        if ($request->status == 'finalized') {
             $payout->description = $request->description;
             $payout->status = $request->status;
 
@@ -1070,7 +1065,7 @@ class AdminController extends Controller
 
             OjafunnelNotification::create([
                 'to' => $payout->user_id,
-                'title' => config('app.name').' Withdrawal Alert',
+                'title' => config('app.name') . ' Withdrawal Alert',
                 'body' => $request->description,
             ]);
 
@@ -1080,10 +1075,9 @@ class AdminController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Request processed successfully.',
-            ]); 
+            ]);
         }
-        if($request->status == 'refunded')
-        {
+        if ($request->status == 'refunded') {
             $payout->description = $request->description;
             $payout->status = $request->status;
             $payout->save();
@@ -1096,13 +1090,13 @@ class AdminController extends Controller
             Transaction::create([
                 'user_id' => $payout->user_id,
                 'amount' => $payout->amount,
-                'reference' => 'Withdrawal request of '.$payout->amount.' has been refunded',
+                'reference' => 'Withdrawal request of ' . $payout->amount . ' has been refunded',
                 'status' => 'Withdraw Refunded'
             ]);
 
             OjafunnelNotification::create([
                 'to' => $payout->user_id,
-                'title' => config('app.name').' Withdrawal Alert',
+                'title' => config('app.name') . ' Withdrawal Alert',
                 'body' => $request->description,
             ]);
 
@@ -1112,21 +1106,20 @@ class AdminController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Request processed successfully.',
-            ]); 
+            ]);
         }
 
         return back()->with([
             'type' => 'danger',
             'message' => 'Action failed.',
-        ]); 
+        ]);
     }
 
     public function transaction_confirm($id, $response, $status, $description)
     {
         $payout = Withdrawal::find($id);
 
-        if($status == 'finalized')
-        {
+        if ($status == 'finalized') {
             $payout->description = $description;
             $payout->status = 'finalized';
 
@@ -1142,7 +1135,7 @@ class AdminController extends Controller
 
             OjafunnelNotification::create([
                 'to' => $payout->user_id,
-                'title' => config('app.name').' Withdrawal Alert',
+                'title' => config('app.name') . ' Withdrawal Alert',
                 'body' => $description,
             ]);
 
@@ -1152,10 +1145,9 @@ class AdminController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Request processed successfully.',
-            ]); 
+            ]);
         }
-        if($status == 'refunded')
-        {
+        if ($status == 'refunded') {
             $payout->description = $description;
             $payout->status = 'refunded';
             $payout->save();
@@ -1168,13 +1160,13 @@ class AdminController extends Controller
             Transaction::create([
                 'user_id' => $payout->user_id,
                 'amount' => $payout->amount,
-                'reference' => 'Withdrawal request of '.$payout->amount.' has been refunded',
+                'reference' => 'Withdrawal request of ' . $payout->amount . ' has been refunded',
                 'status' => 'Withdraw Refunded'
             ]);
 
             OjafunnelNotification::create([
                 'to' => $payout->user_id,
-                'title' => config('app.name').' Withdrawal Alert',
+                'title' => config('app.name') . ' Withdrawal Alert',
                 'body' => $description,
             ]);
 
@@ -1184,18 +1176,17 @@ class AdminController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Request processed successfully.',
-            ]); 
+            ]);
         }
-        
+
         return back()->with([
             'type' => 'danger',
             'message' => 'Action failed.',
-        ]); 
+        ]);
     }
 
     public function finalized_payouts()
     {
         return view('Admin.payouts.finalized_payouts');
     }
-
 }
