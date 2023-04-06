@@ -37,50 +37,76 @@
             <!-- table content of courses -->
             <div class="col-md-12">
                 <div class="card-body card">
-                    <h4 class="card-title mb-4">Automation Listing</h4>
+                    <h4 class="card-title mb-4">Automations</h4>
                     <div class="tab-content">
                         <div class="tab-pane active" id="transactions-all-tab" role="tabpanel">
                             <div class="table-responsive" data-simplebar style="max-height: 330px;">
                                 <table class="table align-middle table-nowrap" id="datatable-buttons">
                                     <thead class="tread">
                                         <tr>
-                                            <th>S/N</th>
-                                            <th>Owner's</th>
+                                            <th scope="col">S/N</th>
                                             <th scope="col">Campaign Name</th>
+                                            <th scope="col">Whatsapp Account</th>
                                             <th scope="col">Contact</th>
                                             <th scope="col">Sent</th>
                                             <th scope="col">Failed</th>
-                                            <th scope="col">Campaign Type</th>
+                                            <th scope="col">Campaign Template</th>
                                             <th scope="col">Status</th>
+                                            {{-- <th scope="col">Action</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($whatsappAutomations as $key => $campaign)
+                                        @forelse ($whatsapp_campaigns as $whatsapp_campaign)
                                             <tr>
-                                                <th scope="row">{{$loop->iteration}}</th>
-                                                <th scope="row">
-                                                    <p>{{$campaign->user->username}}</p>
-                                                    <p>{{$campaign->user->email}}</p>
-                                                </th>
+                                                <th scope="row">{{$whatsapp_campaign->id}}</th>
+                                                <th scope="row" class="text-capitalize">{{$whatsapp_campaign->name}}</th>
                                                 <td>
-                                                    <p class='text-bold-600'> {{$campaign->title}} </p>
-                                                    <p class='text-muted'>Created at: {{$campaign->created_at->toDayDateTimeString()}}</p>
+                                                    <p class='text-bold-600'> {{$whatsapp_campaign->whatsapp_account}} </p> 
                                                 </td>
                                                 <td>
-                                                    {{ $campaign->readCache('ContactCount') }}
+                                                    {{ count($whatsapp_campaign->wa_queues) }}
                                                 </td>
                                                 <td>
-                                                    {{ $campaign->readCache('DeliveredCount') }}
+                                                    {{ count($whatsapp_campaign->wa_queues->where('status', 'Sent')) }}
                                                 </td>
                                                 <td>
-                                                    {{ $campaign->readCache('FailedDeliveredCount') }}
+                                                    {{ count($whatsapp_campaign->wa_queues->where('status', 'Invalid')) }}
                                                 </td>
                                                 <td>
-                                                    {!!$campaign->getCampaignType()!!}
+                                                    @if ($whatsapp_campaign->template == 'template1')
+                                                        {{ 'Template 1 (Text) '}}  
+                                                    @endif 
+
+                                                    @if ($whatsapp_campaign->template == 'template2')
+                                                        {{ 'Template 2 (Text & File) '}}  
+                                                    @endif 
+
+                                                    @if ($whatsapp_campaign->template == 'template3')
+                                                        {{ 'Template 3 (Header, Text, Footer, Link, & Call) '}}  
+                                                    @endif 
                                                 </td>
-                                                <td>
-                                                    {!!$campaign->getStatus()!!}
+                                                <td>   
+                                                    @if ($whatsapp_campaign->message_timing == 'Immediately')
+                                                        @if (count($whatsapp_campaign->wa_queues->where('status', 'Waiting')) > 0)
+                                                            <span class="badge bg-info font-size-10">{{ 'Ongoing' }}</span>
+                                                        @else
+                                                            <span class="badge bg-success font-size-10">{{ 'Completed' }}</span>
+                                                        @endif 
+                                                    @else
+                                                        <span class="badge bg-success font-size-10">{{ 'Scheduled' }}</span>
+                                                    @endif
+
+                                                
                                                 </td>
+                                                {{-- <td>
+                                                    <div class="dropdown dropstart"> 
+                                                        <ul class="list-unstyled hstack gap-1 mb-0"> 
+                                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Overview">
+                                                                <a href="{{ '' }}" class="btn btn-sm btn-soft-info"><i class="mdi mdi-eye-outline"></i></a>
+                                                            </li> 
+                                                        </ul>
+                                                    </div>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>

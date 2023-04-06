@@ -2,40 +2,41 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\BirthdayAutomation;
-use App\Models\OjafunnelMailSupport;
-use App\Models\ReplyMailSupport;
-use App\Models\SmsCampaign;
-use App\Models\StoreOrder;
-use App\Models\StoreProduct;
-use App\Models\User;
-use App\Models\Faq;
-use App\Models\ContactUs;
-use App\Models\Category;
-use App\Models\Course;
-use App\Models\Message;
-use App\Models\MessageUser;
-use App\Models\OjafunnelNotification;
-use App\Models\OrderItem;
-use App\Models\Page;
-use App\Models\Shop;
-use App\Models\ShopOrder;
-use App\Models\Transaction;
-use App\Models\WhatsappNumber;
-use App\Models\Withdrawal;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Auth;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
-use Illuminate\Support\Facades\Crypt;
+use App\Models\Faq;
+use App\Models\Page;
+use App\Models\Shop;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\Course;
+use App\Models\Message;
+use App\Models\Category;
+use App\Models\ContactUs;
+use App\Models\OrderItem;
+use App\Models\ShopOrder;
+use App\Models\StoreOrder;
+use App\Models\Withdrawal;
+use App\Models\MessageUser;
+use App\Models\SmsCampaign;
+use App\Models\Transaction;
+use App\Models\WaCampaigns;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use App\Models\StoreProduct;
+use Illuminate\Http\Request;
+use App\Models\WhatsappNumber;
+use App\Models\ReplyMailSupport;
+use App\Models\BirthdayAutomation;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use App\Models\OjafunnelMailSupport;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use App\Models\OjafunnelNotification;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class AdminController extends Controller
 {
@@ -439,8 +440,11 @@ class AdminController extends Controller
 
     public function whatsapp_automation()
     {
-        $whatsappAutomations = SmsCampaign::latest()->where('sms_type', 'whatsapp')->get();
-        return view('Admin.automation.whatsappAutomation', compact('whatsappAutomations'));
+        $whatsapp_campaigns = WaCampaigns::orderBy('id', 'DESC')->get();
+
+        return view('Admin.automation.whatsappAutomation', [
+            'whatsapp_campaigns' => $whatsapp_campaigns
+        ]);
     }
 
     public function integration()
