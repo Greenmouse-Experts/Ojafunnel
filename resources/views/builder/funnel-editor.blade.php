@@ -1478,7 +1478,6 @@
 	<!-- inputs-->
 	<script src="{{URL::asset('builder/libs/builder/inputs.js')}}"></script>
 
-
 	<!-- media gallery -->
 	<link href="{{URL::asset('builder/libs/media/media.css')}}" rel="stylesheet">
 	<script>
