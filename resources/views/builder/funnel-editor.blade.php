@@ -1482,7 +1482,9 @@
 	<!-- media gallery -->
 	<link href="{{URL::asset('builder/libs/media/media.css')}}" rel="stylesheet">
 	<script>
-		window.mediaPath = 'media';
+		window.mediaPath = '';
+		window.currentPath = "{{ env('APP_URL') . '/builder/media' }}"
+
 		//Vvveb.themeBaseUrl = 'demo/landing/';
 	</script>
 	<script src="{{URL::asset('builder/libs/media/media.js')}}"></script>
@@ -1546,7 +1548,6 @@
 	<script src="{{URL::asset('builder/libs/jszip/jszip.min.js')}}"></script>
 	<script src="{{URL::asset('builder/libs/jszip/filesaver.min.js')}}"></script>
 	<script src="{{URL::asset('builder/libs/builder/plugin-jszip.js')}}"></script>
-
 
 	<!-- autocomplete plugin used by autocomplete input-->
 	<script src="{{URL::asset('builder/libs/autocomplete/jquery.autocomplete.js')}}"></script>
