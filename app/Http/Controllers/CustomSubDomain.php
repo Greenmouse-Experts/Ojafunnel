@@ -10,8 +10,8 @@ class CustomSubDomain extends Controller
     public function handle(Request $request, $subdomain)
     {
         // treat
-        if ($subdomain == 'www') return redirect(env('APP_URL'));
+        if ($subdomain == 'www') return redirect(env('APP_URL') . '/' . $request->content);
 
-        return $subdomain . $$request->content;
+        return $subdomain . $request->content;
     }
 }
