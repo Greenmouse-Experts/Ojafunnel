@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CustomSubDomain;
 
+// sub domain for page and funnel builder - production
+if (env('APP_ENV') == 'production') Route::domain('{subdomain}.ojafunnel.com', [CustomSubDomain::class, 'handle']);
+
 Route::get('/broadcast', function (Request $request) {
     // Fire the SendMessage event
     $message = "Welcome to Ojafunnel";
@@ -703,6 +706,3 @@ Route::prefix('paypal')->group(function () {
     Route::any('paymentSuccess', [PayPalController::class, 'paymentSuccess'])->name('paymentSuccess');
     Route::any('paymentFail', [PayPalController::class, 'paymentFail'])->name('paymentFail');
 });
-
-// sub domain for page and funnel builder - production
-if (env('APP_ENV') == 'production') Route::domain('{subdomain}.ojafunnel.com', [CustomSubDomain::class, 'handle']);
