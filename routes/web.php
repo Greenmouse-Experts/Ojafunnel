@@ -8,7 +8,7 @@ use App\Http\Controllers\CustomSubDomain;
 
 // sub domain for page and funnel builder - production  
 Route::group(['domain' => '{subdomain}.ojafunnel.com'], function () {
-    Route::get('/', [CustomSubDomain::class, 'handle']);
+    Route::get('/{content}', [CustomSubDomain::class, 'handle']);
 });
 
 Route::get('/broadcast', function (Request $request) {

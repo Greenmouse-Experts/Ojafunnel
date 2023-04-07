@@ -9,6 +9,9 @@ class CustomSubDomain extends Controller
     // handle for both page and funnel builder
     public function handle(Request $request, $subdomain)
     {
-        return $subdomain;
+        // treat
+        if ($subdomain == 'www') return redirect(env('APP_URL'));
+
+        return $subdomain . $$request->content;
     }
 }
