@@ -258,7 +258,6 @@ class StoreFrontController extends Controller
         $order->payment_method = 'Paystack';
         $order->quantity = $qty;
         $order->amount = $totalAmount;
-        $order->type = 'Normal';
         $order->save();
 
         $data = [];
