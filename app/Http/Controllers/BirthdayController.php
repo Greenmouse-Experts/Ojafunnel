@@ -155,37 +155,35 @@ class BirthdayController extends Controller
         ]);
     }
 
-
     public function create_birthday_automation(Request $request)
     {
-        return $request->post();
         // // dd($request->integration);
-        // $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
-        // $bm = new BirthdayAutomation();
-        // $bm->user_id = FacadesAuth::user()->id;
-        // $bm->birthday_contact_list_id = $request->birthday_list_id;
-        // $bm->title = $request->title;
-        // $bm->sms_type = $request->sms_type;
-        // $bm->message = $request->message;
-        // $bm->automation = json_encode($request->automation);
-        // $bm->cache = json_encode([
-        //     'ContactCount' => $contact->count(),
-        //     'DeliveredCount' => 0,
-        //     'FailedDeliveredCount' => 0,
-        //     'NotDeliveredCount' => 0,
-        // ]);
-        // $bm->sender_name = $request->sender_name;
-        // $bm->sending_server = $request->sending_server ?? '';
-        // $bm->sender_id = $request->sender_id ?? '';
-        // $bm->integration = $request->integration ?? '';
-        // $bm->start_date = $request->start_date;
-        // $bm->end_date = $request->end_date;
-        // $bm->save();
+        $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
+        $bm = new BirthdayAutomation();
+        $bm->user_id = FacadesAuth::user()->id;
+        $bm->birthday_contact_list_id = $request->birthday_list_id;
+        $bm->title = $request->title;
+        $bm->sms_type = $request->sms_type;
+        $bm->message = $request->message;
+        $bm->automation = json_encode($request->automation);
+        $bm->cache = json_encode([
+            'ContactCount' => $contact->count(),
+            'DeliveredCount' => 0,
+            'FailedDeliveredCount' => 0,
+            'NotDeliveredCount' => 0,
+        ]);
+        $bm->sender_name = $request->sender_name;
+        $bm->sending_server = $request->sending_server ?? '';
+        $bm->sender_id = $request->sender_id ?? '';
+        $bm->integration = $request->integration ?? '';
+        $bm->start_date = $request->start_date;
+        $bm->end_date = $request->end_date;
+        $bm->save();
 
-        // return back()->with([
-        //     'type' => 'success',
-        //     'message' => 'Birthday Automation Created.'
-        // ]);
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Birthday Automation Created.'
+        ]);
     }
 
     public function delete_birthday(Request $request)
