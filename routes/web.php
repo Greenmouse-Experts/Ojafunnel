@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CustomSubDomain;
 
-// sub domain for page and funnel builder - production 
-Route::domain('{subdomain}.ojafunnel.com', [CustomSubDomain::class, 'handle']);
+// sub domain for page and funnel builder - production  
+Route::group(['domain' => '{subdomain}.ojafunnel.com'], function () {
+    Route::get('/', [CustomSubDomain::class, 'handle']);
+});
 
 Route::get('/broadcast', function (Request $request) {
     // Fire the SendMessage event
