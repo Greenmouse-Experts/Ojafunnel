@@ -149,7 +149,7 @@ class StoreController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'price' => 'required',
+            'price' => 'required|numeric',
             'image' => 'required|image',
             'quantity' => 'required',
             'level1_comm' => 'required',

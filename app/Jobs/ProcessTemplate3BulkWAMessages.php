@@ -2,10 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Models\User;
 use App\Models\WaQueues;
+use App\Models\WaCampaigns;
+use App\Mail\WADisconnected;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,8 +21,7 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    // queue setting
-    public $timeout = 7200;
+    // queue setting 
     public $tries = 5;
 
     public $contacts;
@@ -61,7 +64,12 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
                         'status' => 'Disconnected'
                     ]);
 
+                    // get campaign and user data
+                    $campaign = WaCampaigns::find($wa_campaign_id)->first();
+                    $user = User::find($campaign->user_id)->first();
+
                     // send mail to inform that their whatsapp account is not connected
+                    Mail::to($user->email)->send(new WADisconnected($campaign));
                 } else {
                     // start sending
                     $this->contacts->map(function ($_contact) use ($whatsapp_account, $full_jwt_session, $data, $wa_campaign_id) {
