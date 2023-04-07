@@ -131,6 +131,7 @@
                                         <th scope="col">Failed</th>
                                         <th scope="col">Campaign Template</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">Created At</th>
                                         <th scope="col">Action</th>
                                         <!-- <th scope="col">Opens</th> -->
                                         {{-- <th scope="col">Unsubscribed</th> --}}
@@ -175,10 +176,9 @@
                                                     @endif 
                                                 @else
                                                     <span class="badge bg-success font-size-10">{{ 'Scheduled' }}</span>
-                                                @endif
-
-                                               
+                                                @endif  
                                             </td>
+                                            <td> {{$whatsapp_campaign->created_at->toDayDateTimeString()}} </td>
                                             <td>
                                                 <div class="dropdown dropstart"> 
                                                     <ul class="list-unstyled hstack gap-1 mb-0"> 
