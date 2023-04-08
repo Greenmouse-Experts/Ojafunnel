@@ -26,7 +26,7 @@ class CustomSubDomain extends Controller
 
             $_page = Page::where(['file' => $page . '.html', 'slug' => $slug]);
 
-            if ($_page->exits()) {
+            if ($_page->exists()) {
                 $content = file_get_contents(public_path('pageBuilder/' . $slug . '/' . $page . '.html'));
 
                 return $content;
