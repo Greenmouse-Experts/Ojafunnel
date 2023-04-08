@@ -57,38 +57,35 @@
                                 <table id="datatable-buttons" class="table table-hover datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Date</th>
+                                            <th scope="col">S/N</th>
+                                            <th scope="col">Start Date</th>
+                                            <th scope="col">End Date</th>
                                             <th scope="col">Type</th>
-                                            <th scope="col">Trade No</th>
                                             <th scope="col">Amount</th>
-                                            <th scope="col">Balance</th>
+                                            <th scope="col">Interval</th>
                                             <th scope="col">Status</th>
                                         </tr>
 
                                     </thead>
 
                                     <tbody>
+                                        @foreach(App\Models\OjaSubscription::where('user_id', Auth::user()->id)->get() as $sub)
                                         <tr>
-                                            <td>06 Dec, 2022</td>
-                                            <td>Paid</td>
-                                            <td>Bitcoin</td>
-                                            <td>1.00952 BTC</td>
-                                            <td>$ 9067.62</td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{date('D/M/Y', strtotime($sub->started_at))}}</td>
+                                            <td>{{date('D/M/Y', strtotime($sub->ends_at))}}</td>
+                                            <td>{{App\Models\OjaPlan::find($sub->plan_id)->name}} Plan</td>
+                                            <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->currency_sign}}{{number_format($sub->amount,2)}}</td>
+                                            <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->type}}</td>
                                             <td>
-                                                <span class="badge bg-success font-size-10">Completed</span>
+                                                @if($sub->status == 'Active')
+                                                <span class="badge bg-success font-size-10">{{$sub->status}}</span>
+                                                @else
+                                                <span class="badge bg-danger font-size-10">{{$sub->status}}</span>
+                                                @endif
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td>06 Dec, 2022</td>
-                                            <td>Paid</td>
-                                            <td>Ethereum</td>
-                                            <td>0.00413 ETH</td>
-                                            <td>$ 2123.01</td>
-                                            <td>
-                                                <span class="badge bg-success font-size-10">Completed</span>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

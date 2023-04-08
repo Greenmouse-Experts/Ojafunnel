@@ -4,11 +4,11 @@
   function paySubscriptionWithPaystack(){
     var handler = PaystackPop.setup({
       key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
-      email: '{{$user->email}}',
-      amount: {{$amount}} * 100,
+      email: '{{Auth::user()->email}}',
+      amount: '{{$price}}' * 100,
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
       callback: function(response){
-        let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ':response', Crypt::encrypt($amount)]) }}';
+        let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ":response", Crypt::encrypt($price), Crypt::encrypt($currency)]) }}';
         url = url.replace(':response', response.reference);
         window.location.href=url;
       },
@@ -33,7 +33,7 @@
                 <div class="col-12 account-head">
                     <div class="row py-3 justify-content-between align-items-center">
                         <div class="col-md-12">
-                            <h4 class="font-60">Launch your online business with {{config('app.name')}}!</h4>
+                            <h4 class="font-60">{{$plan->name}} Plan</h4>
                             <p>
                                 Our service plans grow with your workforce!
                             </p>
@@ -45,36 +45,13 @@
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8">
                     <div class="annoyed">
-                        <h1>
-                            <i class="bi bi-check2"></i> <b>SMS:</b> *
-                        </h1>
-                        <h1>
-                            <i class="bi bi-check2"></i> <b>WhatsApp:</b> 2 WhatsApp
-                        </h1>
-                        <h1>
-                            <i class="bi bi-check2"></i> <b>Email:</b> 1000 daily
-                        </h1>
-                        <h1>
-                            <i class="bi bi-check2"></i> <b>Page builder: </b> 10
-                        </h1>
-                        <h1>
-                            <i class="bi bi-check2"></i> <B>Custom domain:</B> No
-                        </h1>
-                        <h1>
-                            <i class="bi bi-check2"></i> <b>Funnel builder:</b> No
-                        </h1>
-                        <h1>
-                            <i class="bi bi-check2"></i> <b>LMS:</b> No
-                        </h1>
-                        <h1>
-                            <i class="bi bi-check2"></i> <b>Ecommerce Products:</b> No
-                        </h1>
-                        <h1>
-                            <i class="bi bi-check2"></i> <b> Upload list:</b> Can upload list but wont work for email
-                        </h1>
-                        <h1>
-                            <i class="bi bi-check2"></i> <b>Use your own email server (AWS, etc):</b> No
-                        </h1>
+                        @if ($plan->description != "")
+                            @foreach(explode(',', $plan->description) as $info) 
+                            <h1>
+                                <i class="bi bi-check2">{{$info}}</i>
+                            </h1>
+                            @endforeach
+                        @endif
                         <button type="button" onclick="paySubscriptionWithPaystack()">
                             PAY
                         </button>

@@ -159,6 +159,17 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::post('/process/payouts/{id}', [App\Http\Controllers\Admin\AdminController::class, 'process_payouts'])->name('process.payouts');
             Route::get('/transaction/confirm/{id}/{response}/{status}/{description}', [App\Http\Controllers\Admin\AdminController::class, 'transaction_confirm'])->name('transaction.confirm');
             Route::get('/finalized/payouts', [App\Http\Controllers\Admin\AdminController::class, 'finalized_payouts'])->name('finalized.payouts');
+
+            // 
+            Route::post('/add-plan', [App\Http\Controllers\Admin\AdminController::class, 'add_plan'])->name('admin.addPlan');
+            Route::post('/update-plan/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_plan'])->name('admin.updatePlan');
+            Route::post('/delete-plan/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_plan'])->name('admin.deletePlan');
+            Route::get('/enable-plan/{id}', [App\Http\Controllers\Admin\AdminController::class, 'enable_plan'])->name('admin.enablePlan');
+            Route::get('/disable-plan/{id}', [App\Http\Controllers\Admin\AdminController::class, 'disable_plan'])->name('admin.disablePlan');
+            Route::get('/add-plan/intervals/{id}', [App\Http\Controllers\Admin\AdminController::class, 'plan_interval'])->name('admin.planinterval');
+            Route::post('/add-interval/{id}', [App\Http\Controllers\Admin\AdminController::class, 'add_plan_interval'])->name('admin.addPlan.interval');
+            Route::post('/update-interval/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_plan_interval'])->name('admin.updatePlan.interval');
+            Route::post('/delete-interval/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_plan_interval'])->name('admin.deletePlan.interval');
         }
     );
 });

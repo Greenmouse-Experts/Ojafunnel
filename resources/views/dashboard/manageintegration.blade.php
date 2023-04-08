@@ -431,7 +431,7 @@
                                                                                 <p><b>Delete Contact</b></p>
                                                                                 <div class="row">
                                                                                     <div class="col-lg-12">
-                                                                                        <p>This action cannot be undone. This will permanently delete {{$integration->type}} integration.</p>
+                                                                                        <p>This action cannot be undone. </p> <p>This will permanently delete {{$integration->type}} integration.</p>
                                                                                         <label>Please type DELETE to confirm.</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">

@@ -119,7 +119,10 @@ class IntegrationController extends Controller
             foreach ($integrations as $integration) {
                 $type[] = $integration->type;
             }
-            if (in_array('Twilio', $type) || in_array('InfoBip', $type) || in_array('NigeriaBulkSms', $type) || in_array('Multitexter', $type)) {
+
+            // return $type;
+            
+            if (in_array($request->type, $type) || in_array($request->type, $type) || in_array($request->type, $type) || in_array($request->type, $type)) {
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Integration added before.',
@@ -215,7 +218,6 @@ class IntegrationController extends Controller
                 ]); 
             }
         }
-        
     }
 
     public function integration_update($id, Request $request)

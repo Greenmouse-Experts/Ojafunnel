@@ -30,9 +30,9 @@ class DatabaseSeeder extends Seeder
         //     $this->call(LanguageSeeder::class);
         // } 
 
-        $this->call(CategorySeeder::class);
-        $this->call(PlanSeeder::class);
-        $this->call(LanguageSeeder::class);
-        // $this->call(AdminSeeder::class);
+        // $this->call(CategorySeeder::class);
+        // $this->call(PlanSeeder::class);
+        // $this->call(LanguageSeeder::class);
+        $this->call(AdminSeeder::class);
     }
 }

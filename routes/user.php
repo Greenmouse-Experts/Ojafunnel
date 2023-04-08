@@ -52,7 +52,7 @@ Route::prefix('user')->group(function () {
     Route::any('/funnel/builder/save/page', [App\Http\Controllers\PageController::class, 'funnel_builder_save_page'])->name('user.funnel.builder.save.page');
 
     // Account Upgrade
-    Route::get('/upgrade/account/confirm/{plan_id}/{response}/{amount}', [App\Http\Controllers\AccountUpgradeController::class, 'upgrade_account_confirm'])->name('user.upgrade.account.confirm');
+    Route::get('/upgrade/account/confirm/{plan_id}/{response}/{price}/{currency}', [App\Http\Controllers\AccountUpgradeController::class, 'upgrade_account_confirm'])->name('user.upgrade.account.confirm');
 
     // Funding Account
     Route::get('/transaction/confirm/{response}/{amount}', [App\Http\Controllers\TransactionController::class, 'transaction_confirm'])->name('user.transaction.confirm');

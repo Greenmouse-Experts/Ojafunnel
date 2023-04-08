@@ -2,42 +2,44 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
-use Carbon\Carbon;
-use App\Models\Faq;
-use App\Models\Page;
-use App\Models\Shop;
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\BirthdayAutomation;
+use App\Models\OjafunnelMailSupport;
+use App\Models\ReplyMailSupport;
+use App\Models\SmsCampaign;
+use App\Models\StoreOrder;
+use App\Models\StoreProduct;
+use App\Models\User;
+use App\Models\Faq;
+use App\Models\ContactUs;
+use App\Models\Category;
 use App\Models\Course;
 use App\Models\Message;
-use App\Models\Category;
-use App\Models\ContactUs;
-use App\Models\OrderItem;
-use App\Models\ShopOrder;
-use App\Models\StoreOrder;
-use App\Models\Withdrawal;
 use App\Models\MessageUser;
-use App\Models\SmsCampaign;
+use App\Models\OjafunnelNotification;
+use App\Models\OjaPlan;
+use App\Models\OjaPlanInterval;
+use App\Models\OrderItem;
+use App\Models\Page;
+use App\Models\Shop;
+use App\Models\ShopOrder;
 use App\Models\Transaction;
-use App\Models\WaCampaigns;
+use App\Models\WhatsappNumber;
+use App\Models\Withdrawal;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use App\Models\StoreProduct;
-use Illuminate\Http\Request;
-use App\Models\WhatsappNumber;
-use App\Models\ReplyMailSupport;
-use App\Models\BirthdayAutomation;
-use Illuminate\Support\Facades\URL;
-use App\Http\Controllers\Controller;
-use App\Models\OjafunnelMailSupport;
+use Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use App\Models\OjafunnelNotification;
-use App\Models\WhatsappSupport;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\URL;
+use App\Models\WaCampaigns;
+use App\Models\WhatsappSupport;
 
 class AdminController extends Controller
 {
@@ -441,11 +443,8 @@ class AdminController extends Controller
 
     public function whatsapp_automation()
     {
-        $whatsapp_campaigns = WaCampaigns::orderBy('id', 'DESC')->get();
-
-        return view('Admin.automation.whatsappAutomation', [
-            'whatsapp_campaigns' => $whatsapp_campaigns
-        ]);
+        $whatsappAutomations = SmsCampaign::latest()->where('sms_type', 'whatsapp')->get();
+        return view('Admin.automation.whatsappAutomation', compact('whatsappAutomations'));
     }
 
     public function integration()
@@ -1194,4 +1193,361 @@ class AdminController extends Controller
     {
         return view('Admin.payouts.finalized_payouts');
     }
+
+    public function add_plan(Request $request)
+    {
+         //Validate Request
+         $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required'],
+        ]);
+
+        OjaPlan::create([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Plan added successfully.',
+        ]); 
+    }
+
+    public function update_plan($id, Request $request)
+    {
+         //Validate Request
+         $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required'],
+        ]);
+
+        $finder = Crypt::decrypt($id);
+
+        $plan = OjaPlan::find($finder);
+
+        $plan->update([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Plan updated successfully.',
+        ]); 
+    }
+
+    public function delete_plan($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $plan = OjaPlan::find($finder);
+
+        $interval = OjaPlanInterval::where('plan_id', $plan->id)->get();
+
+        if($interval->count() > 0)
+        {
+            foreach($interval as $inter)
+            {
+                $inter->delete();
+            }
+        }
+
+        $plan->delete();
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Plan deleted successfully.',
+        ]); 
+    }
+
+    public function enable_plan($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $plan = OjaPlan::find($finder);
+
+        $plan->update([
+            'is_enabled' => true
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Plan enabled successfully.',
+        ]); 
+    }
+
+    public function disable_plan($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $plan = OjaPlan::find($finder);
+
+        $plan->update([
+            'is_enabled' => false
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Plan disabled successfully.',
+        ]); 
+    }
+
+    public function plan_interval($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $plan = OjaPlan::find($finder);
+
+        return view('Admin.plan.plan_interval', [
+            'plan' => $plan
+        ]);
+    }
+
+    public function add_plan_interval($id, Request $request)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $plan = OjaPlan::find($finder);
+
+        if($request->currency == 'NGN')
+        {
+            OjaPlanInterval::create([
+                'plan_id' => $plan->id,
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => '₦'
+            ]);
+        }
+
+        if($request->currency == 'USD')
+        {
+            OjaPlanInterval::create([
+                'plan_id' => $plan->id,
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => '$'
+            ]);
+        }
+
+        if($request->currency == 'EUR')
+        {
+            OjaPlanInterval::create([
+                'plan_id' => $plan->id,
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => '€'
+            ]);
+        }
+
+        if($request->currency == 'INR')
+        {
+            OjaPlanInterval::create([
+                'plan_id' => $plan->id,
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => '₹'
+            ]);
+        }
+
+        if($request->currency == 'PKR')
+        {
+            OjaPlanInterval::create([
+                'plan_id' => $plan->id,
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => 'PKR'
+            ]);
+        }
+
+        if($request->currency == 'AED')
+        {
+            OjaPlanInterval::create([
+                'plan_id' => $plan->id,
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => 'د.إ'
+            ]);
+        }
+
+        if($request->currency == 'BRL')
+        {
+            OjaPlanInterval::create([
+                'plan_id' => $plan->id,
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => 'R$'
+            ]);
+        }
+
+        if($request->currency == 'MYR')
+        {
+            OjaPlanInterval::create([
+                'plan_id' => $plan->id,
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => 'RM'
+            ]);
+        }
+
+        if($request->currency == 'SGD')
+        {
+            OjaPlanInterval::create([
+                'plan_id' => $plan->id,
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => 'S$'
+            ]);
+        }
+
+        if($request->currency == 'EUR')
+        {
+            OjaPlanInterval::create([
+                'plan_id' => $plan->id,
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => '£'
+            ]);
+        }
+
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Plan interval added successfully.',
+        ]); 
+    }
+
+    public function update_plan_interval($id, Request $request)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $interval = OjaPlanInterval::find($finder);
+
+        if($request->currency == 'NGN')
+        {
+            $interval->update([
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => '₦'
+            ]);
+        }
+
+        if($request->currency == 'USD')
+        {
+            $interval->update([
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => '$'
+            ]);
+        }
+
+        if($request->currency == 'EUR')
+        {
+            $interval->update([
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => '€'
+            ]);
+        }
+
+        if($request->currency == 'INR')
+        {
+            $interval->update([
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => '₹'
+            ]);
+        }
+
+        if($request->currency == 'PKR')
+        {
+            $interval->update([
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => 'PKR'
+            ]);
+        }
+
+        if($request->currency == 'AED')
+        {
+            $interval->update([
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => 'د.إ'
+            ]);
+        }
+
+        if($request->currency == 'BRL')
+        {
+            $interval->update([
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => 'R$'
+            ]);
+        }
+
+        if($request->currency == 'MYR')
+        {
+            $interval->update([
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => 'RM'
+            ]);
+        }
+
+        if($request->currency == 'SGD')
+        {
+            $interval->update([
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => 'S$'
+            ]);
+        }
+
+        if($request->currency == 'EUR')
+        {
+            $interval->update([
+                'price' => $request->price,
+                'type' => $request->type,
+                'currency' => $request->currency,
+                'currency_sign' => '£'
+            ]);
+        }
+
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Plan interval updated successfully.',
+        ]); 
+    }
+
+    public function delete_plan_interval($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        OjaPlanInterval::find($finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Plan interval deleted successfully.',
+        ]); 
+    }
+
 }
