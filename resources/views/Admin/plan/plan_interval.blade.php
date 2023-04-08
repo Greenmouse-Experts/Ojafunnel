@@ -59,7 +59,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach(App\Models\ojaPlanInterval::where('plan_id', $plan->id)->get() as $interval)
+                                        @foreach(App\Models\OjaPlanInterval::where('plan_id', $plan->id)->get() as $interval)
                                         <tr>
                                             <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
                                             <td>
