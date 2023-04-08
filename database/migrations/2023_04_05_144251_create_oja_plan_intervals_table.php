@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('price');
             $table->enum('type', ['monthly', 'yearly'])->nullable();
             $table->integer('currency')->nullable();
-            $table->integer('currency_sign')->nullable();
+            $table->string('currency_sign')->nullable();
             $table->timestamps();
         });
     }
