@@ -176,7 +176,7 @@ class PageController extends Controller
             $html = substr($_POST['html'], 0, MAX_FILE_LIMIT);
         }
 
-        $disk = public_path('pageBuilder/' . $page->folder . '/' . $page->name);
+        $disk = public_path('pageBuilder/' . $page->slug . '/' . $page->name);
 
         if (file_put_contents($disk, $html)) {
             echo "File saved.";
