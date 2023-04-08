@@ -54,6 +54,7 @@
                                             <th>Type</th>
                                             <th>Currency</th>
                                             <th>Currency Sign</th>
+                                            <th>Date Created</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -73,6 +74,7 @@
                                             <td>
                                                 {{$interval->currency_sign}}
                                             </td>
+                                            <td>{{$interval->created_at->toDayDateTimeString()}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -227,6 +229,7 @@
                                             <label for="currency">Currency</label>
                                             <select name="currency" id="currency">
                                                 <option value="" disabled="">-- Select Currency --</option>
+                                                <option value="NGN">NGN - Naira</option>
                                                 <option value="USD">USD - US Dollar</option>
                                                 <option value="INR" >INR - Indian Rupee</option>
                                                 <option value="EUR">EUR - Euro</option>

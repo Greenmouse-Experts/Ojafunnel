@@ -1,17 +1,10 @@
 <?php
 
 use App\Events\SendMessage;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ChatController;
-use App\Http\Controllers\CustomSubDomain;
-
-// sub domain for page and funnel builder - production  
-Route::group(['domain' => '{subdomain}.ojafunnel.com'], function () {
-    Route::get('/', [CustomSubDomain::class, 'www']);
-
-    Route::get('/{content}', [CustomSubDomain::class, 'custom']);
-});
 
 Route::get('/broadcast', function (Request $request) {
     // Fire the SendMessage event
@@ -136,7 +129,7 @@ Route::prefix('{username}')->group(function () {
         function () {
             Route::get('/', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('user.dashboard');
             Route::get('/upgrade', [App\Http\Controllers\DashboardController::class, 'upgrade'])->name('user.upgrade');
-            Route::get('/upgrade/account/{id}/{amount}', [App\Http\Controllers\DashboardController::class, 'upgrade_account'])->name('user.upgrade.account');
+            Route::get('/upgrade/account/{plan_id}/{currency}/{price}', [App\Http\Controllers\DashboardController::class, 'upgrade_account'])->name('user.upgrade.account');
             Route::get('/transaction', [App\Http\Controllers\DashboardController::class, 'transaction'])->name('user.transaction');
             Route::get('/subscription', [App\Http\Controllers\DashboardController::class, 'subscription'])->name('user.subscription');
             Route::prefix('/email-marketing')->group(
@@ -701,7 +694,6 @@ Route::post('/funnel/builder/save/page/{page}', [App\Http\Controllers\PageContro
 
 // Paypal Testing
 use App\Http\Controllers\PayPalController;
-use App\Http\Controllers\DashboardController;
 
 Route::get('payment', [PayPalController::class, 'okpay'])->name('ok.pay');
 // Paypal Payment

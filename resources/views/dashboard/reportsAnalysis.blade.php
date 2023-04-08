@@ -92,8 +92,11 @@
                           <p><span class="ms-2 px-2 py-1 bg-success text-white fw-bold">Active</span></p>
                         </div>
                         <div>
+                          @if(App\Models\OjaSubscription::where('user_id', Auth::user()->id)->where('status', 'active')->get()->isEmpty())
+                          @else
                           <p class="mb-1">Duration:</p>
-                          <p class="d-flex align-items-center">02-Feb-2023 <span><i class="bi bi-arrow-left-right px-1 text-danger"></i></span> 02-Mar-2023</p>
+                          <p class="d-flex align-items-center">{{date('D/M/Y', strtotime(App\Models\OjaSubscription::latest()->where('user_id', Auth::user()->id)->where('status', 'Active')->first()->started_at))}}<span><i class="bi bi-arrow-left-right px-1 text-danger"></i></span> {{date('D/M/Y', strtotime(App\Models\OjaSubscription::latest()->where('user_id', Auth::user()->id)->where('status', 'Active')->first()->ends_at))}}</p>
+                          @endif
                         </div>
                       </div>
                       <div class='col-md-6 affiliate-analysis' style="margin-top: 0px;">

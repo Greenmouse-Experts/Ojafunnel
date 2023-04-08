@@ -41,6 +41,9 @@
                                             <th>S/N</th>
                                             <th>Name</th>
                                             <th>Description</th>
+                                            <th>Intervals</th>
+                                            <th>Status</th>
+                                            <th>Date Added</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -55,6 +58,19 @@
                                                 {{$ojaplan->description}}
                                             </td>
                                             <td>
+                                                {{App\Models\OjaPlanInterval::where('plan_id', $ojaplan->id)->get()->count()}}
+                                            </td>
+                                            <td>
+                                                @if ($ojaplan->is_enabled == true)
+                                                    <span class="badge badge-pill badge-soft-success font-size-11">Active</span>
+                                                @endif
+
+                                                @if ($ojaplan->is_enabled == false)
+                                                    <span class="badge badge-pill badge-soft-danger font-size-11">In-active</span>
+                                                @endif
+                                            </td>
+                                            <td>{{$ojaplan->created_at->toDayDateTimeString()}}</td>
+                                            <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Options
@@ -62,9 +78,9 @@
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li><a class="dropdown-item" href="{{route('admin.planinterval', Crypt::encrypt($ojaplan->id))}}" style="cursor: pointer;">Add Intervals</a></li>
                                                         @if($ojaplan->is_enabled == true)
-                                                        <li><a class="dropdown-item" href="{{route('user.integration.disable', Crypt::encrypt($ojaplan->id))}}">Disable</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('admin.disablePlan', Crypt::encrypt($ojaplan->id))}}">Disable</a></li>
                                                         @else
-                                                        <li><a class="dropdown-item" href="{{route('user.integration.enable', Crypt::encrypt($ojaplan->id))}}">Enable</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('admin.enablePlan', Crypt::encrypt($ojaplan->id))}}">Enable</a></li>
                                                         @endif
                                                         <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#Edit-Update-{{$ojaplan->id}}">Edit/Update</a></li>
                                                         <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$ojaplan->id}}">Delete</a></li>
@@ -82,7 +98,7 @@
                                                                     <div class="Editt">
                                                                         <div class="form">
                                                                             <div class="row">
-                                                                                <form method="POST" action="{{ route('admin.updatePlan.interval', Crypt::encrypt($ojaplan->id))}}">
+                                                                                <form method="POST" action="{{ route('admin.updatePlan', Crypt::encrypt($ojaplan->id))}}">
                                                                                     @csrf
                                                                                     <div class="modal-body">
                                                                                         <div class="col-lg-12">
@@ -130,7 +146,7 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        <form method="POST" action="{{ route('admin.deletePlan.interval', Crypt::encrypt($ojaplan->id))}}">
+                                                                        <form method="POST" action="{{ route('admin.deletePlan', Crypt::encrypt($ojaplan->id))}}">
                                                                             @csrf
                                                                             <div class="form">
                                                                                 <p><b>Delete Contact</b></p>

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('plan_id')->unsigned();
             $table->decimal('price');
             $table->enum('type', ['monthly', 'yearly'])->nullable();
-            $table->string('currency')->nullable();
-            $table->string('currency_sign')->nullable();
+            $table->integer('currency')->nullable();
+            $table->integer('currency_sign')->nullable();
             $table->timestamps();
         });
     }

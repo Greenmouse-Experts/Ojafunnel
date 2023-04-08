@@ -225,7 +225,7 @@ class CMSController extends Controller
 
         if ($request->content_type == 'Video') {
             $this->validate($request, [
-                'lesson_video' => 'required|mimes:mp4,mov,ogg,qt,wmv,avi,m3u8',
+                'lesson_video' => 'required|mimes:mp4,mov,ogg,qt,wmv,avi,m3u8|max:512000',
             ]);
 
             $file = request()->lesson_video->getClientOriginalName();

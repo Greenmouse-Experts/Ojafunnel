@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('plan_id')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
+            $table->string('amount')->nullable();
+            $table->string('currency')->nullable();
             $table->dateTime('current_period_ends_at')->nullable();
             $table->boolean('canceled_immediately')->nullable();
-            $table->timestamp('trial_ends_at')->nullable();
+            $table->date('expiry_notify_at')->nullable();
             $table->dateTime('ends_at')->nullable();
             $table->dateTime('started_at')->nullable();
-            $table->dateTime('last_period_ends_at')->nullable();
             $table->timestamps();
         });
     }

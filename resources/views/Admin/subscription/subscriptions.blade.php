@@ -1,4 +1,3 @@
-Skip to content
 @extends('layouts.admin-frontend')
 @section('page-content')
 <!-- ============================================================== -->
@@ -40,15 +39,39 @@ Skip to content
                                     <thead class="tread">
                                         <tr>
                                             <th scope="col">S/N</th>
-                                            <th scope="col">Name</th>
+                                            <th scope="col">User</th>
+                                            <th scope="col">Start Date</th>
+                                            <th scope="col">End Date</th>
+                                            <th scope="col">Type</th>
                                             <th scope="col">Amount</th>
-                                            <th scope="col">Plan Type</th>
+                                            <th scope="col">Interval</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Date created</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        @Foreach(App\Models\OjaSubscription::latest()->get() as $sub)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>
+                                                {{App\Models\User::find($sub->user_id)->first_name}} {{App\Models\User::find($sub->user_id)->last_name}}
+                                                <p class="font-italic">{{App\Models\User::find($sub->user_id)->email}}</p>
+                                            </td>
+                                            <td>{{date('D/M/Y', strtotime($sub->started_at))}}</td>
+                                            <td>{{date('D/M/Y', strtotime($sub->ends_at))}}</td>
+                                            <td>{{App\Models\OjaPlan::find($sub->plan_id)->name}} Plan</td>
+                                            <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->currency_sign}}{{number_format($sub->amount,2)}}</td>
+                                            <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->type}}</td>
+                                            <td>
+                                                @if($sub->status == 'Active')
+                                                <span class="badge bg-success font-size-10">{{$sub->status}}</span>
+                                                @else
+                                                <span class="badge bg-danger font-size-10">{{$sub->status}}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{$sub->created_at->toDayDateTimeString()}}</td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

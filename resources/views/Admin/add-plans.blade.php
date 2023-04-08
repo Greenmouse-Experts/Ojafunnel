@@ -57,6 +57,7 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <textarea type="text" placeholder="Enter Dscription" name="description" class="input" required></textarea>
+                                                <p class="text-danger">Please seperate the descriptions using a comma (,).</p>
                                             </div>
                                         </div>
                                     </div>

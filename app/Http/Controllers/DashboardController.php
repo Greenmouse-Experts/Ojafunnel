@@ -42,6 +42,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
+use App\Models\OjaSubscription;
 use App\Models\SmsQueue;
 
 class DashboardController extends Controller
@@ -275,7 +276,7 @@ class DashboardController extends Controller
         $user = User::findorfail(Auth::user()->id);
 
         $plan = OjaPlan::where('id', $user->plan)->first();
-        $plans = OjaPlan::latest()->get();
+        $plans = OjaPlan::latest()->where('is_enabled', true)->get();
 
         return view('dashboard.upgrade', [
             'username' => $username,
@@ -284,17 +285,33 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function upgrade_account($username, $id, $amount)
+    public function upgrade_account($username, $plan_id, $currency, $price)
     {
-        $id = Crypt::decrypt($id);
-        $amount = Crypt::decrypt($amount);
+        $subscription = OjaSubscription::where('user_id', Auth::user()->id)->where('status', 'Active')->first();
+        
+        if($subscription !== null)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'You have an active plan.'
+            ]);
+        }
 
-        $user = User::findorfail(Auth::user()->id);
-        $plan = Plan::where('id', $id)->first();
+        $plan_id = Crypt::decrypt($plan_id);
+        $currency = Crypt::decrypt($currency);
+        $price = Crypt::decrypt($price);
+
+        // dd($plan_id, $currency, $price);
+
+        $plan = OjaPlan::where('id', $plan_id)->first();
+
+        // $data = explode(',',  $plan->description);
+
+        // dd($data);
 
         return view('dashboard.makePayment', [
-            'amount' => $amount,
-            'user' => $user,
+            'price' => $price,
+            'currency' => $currency,
             'plan' => $plan
         ]);
     }
