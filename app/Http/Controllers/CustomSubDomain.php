@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Page;
+use App\Models\Page;
 use App\Models\Funnel;
 use Illuminate\Http\Request;
 
