@@ -6,6 +6,14 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// sub domain for page and funnel builder - production  
+Route::group(['domain' => '{subdomain}.ojafunnel.com'], function () {
+    Route::get('/{content}', [CustomSubDomain::class, 'handle']);
+    Route::get('/', [CustomSubDomain::class, 'www']);
+
+    Route::get('/{content}', [CustomSubDomain::class, 'custom']);
+});
+
 Route::get('/broadcast', function (Request $request) {
     // Fire the SendMessage event
     $message = "Welcome to Ojafunnel";

@@ -17,6 +17,7 @@ class CustomSubDomain extends Controller
     // custom - handle for both page and funnel builder
     public function custom(Request $request, $subdomain)
     {
+        // vee-varieties-page.ojafunnel.com/home
         return $subdomain . $request->content;
     }
 }
