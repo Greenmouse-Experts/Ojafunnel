@@ -14,13 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('oja_plan_intervals', function (Blueprint $table) {
-            $table->id();
-            $table->integer('plan_id')->unsigned();
-            $table->decimal('price');
-            $table->enum('type', ['monthly', 'yearly'])->nullable();
-            $table->integer('currency')->nullable();
-            $table->string('currency_sign')->nullable();
-            $table->timestamps();
+            $table->string('currency_sign')->nullable()->change();
         });
     }
 
@@ -31,6 +25,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('oja_plan_intervals');
+        //
     }
 };
