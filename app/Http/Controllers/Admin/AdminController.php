@@ -1253,7 +1253,6 @@ class AdminController extends Controller
         }
 
         $plan->delete();
-
         return back()->with([
             'type' => 'success',
             'message' => 'Plan deleted successfully.',
