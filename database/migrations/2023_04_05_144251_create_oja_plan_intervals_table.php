@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('oja_plans', function (Blueprint $table) {
+        Schema::create('oja_plan_intervals', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('group', 100)->nullable();
-            $table->integer('free_days')->default(0);
-            $table->boolean('is_enabled')->default(1);
-            $table->boolean('is_default')->default(1);
+            $table->integer('plan_id')->unsigned();
+            $table->decimal('price');
+            $table->enum('type', ['monthly', 'yearly'])->nullable();
+            $table->string('currency')->nullable();
+            $table->string('currency_sign')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('oja_plans');
+        Schema::dropIfExists('oja_plan_intervals');
     }
 };
