@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         // } 
 
         $this->call(CategorySeeder::class);
-        $this->call(PlanSeeder::class);
+        // $this->call(PlanSeeder::class);
         $this->call(LanguageSeeder::class);
         $this->call(AdminSeeder::class);
     }
