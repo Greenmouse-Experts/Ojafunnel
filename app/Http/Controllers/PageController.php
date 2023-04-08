@@ -194,23 +194,25 @@ class PageController extends Controller
             'title' => ['required', 'string', 'max:255']
         ]);
 
-        if (str_contains($request->name, '.')) {
+        $page_name = strtolower(implode('-', explode(' ', $request->name)));
+
+        if (str_contains($page_name, '.')) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'file name invalid.'
+                'message' => 'Page name is invalid. Can\'t contain dot(s)'
             ]);
         }
 
         $idFinder = Crypt::decrypt($id);
         $page = Page::find($idFinder);
 
-        $file = $request->name . '.html';
+        $file = $page_name . '.html';
 
-        $disk = public_path('pageBuilder/' . $page->folder . '/' . $page->name);
+        $disk = public_path('pageBuilder/' . $page->slug . '/' . $page->name);
 
-        rename($disk, public_path('pageBuilder/' . $page->folder . '/' . $file));
+        rename($disk, public_path('pageBuilder/' . $page->slug . '/' . $file));
 
-        //Validate User
+        // validate User
         if (request()->hasFile('thumbnail')) {
             $this->validate($request, [
                 'thumbnail' => 'required|mimes:jpeg,png,jpg',
@@ -225,7 +227,7 @@ class PageController extends Controller
                 'thumbnail' => '/storage/pages/' . $filename,
                 'name' => $file,
                 'title' => $request->title,
-                'file_location' => config('app.url') . '/pageBuilder/' . $page->folder . '/' . $file
+                'file_location' => config('app.url') . '/pageBuilder/' . $page->slug . '/' . $file
             ]);
 
             return back()->with([
@@ -237,7 +239,7 @@ class PageController extends Controller
         $page->update([
             'name' => $file,
             'title' => $request->title,
-            'file_location' => config('app.url') . '/pageBuilder/' . $page->folder . '/' . $file
+            'file_location' => config('app.url') . '/pageBuilder/' . $page->slug . '/' . $file
         ]);
 
         return back()->with([
@@ -248,7 +250,7 @@ class PageController extends Controller
 
     public function page_builder_delete($id, Request $request)
     {
-        //Validate Request
+        // validate Request
         $this->validate($request, [
             'delete_field' => ['required', 'string', 'max:255']
         ]);
@@ -263,7 +265,7 @@ class PageController extends Controller
             }
 
             if ($page->file_location) {
-                File::deleteDirectory(public_path('pageBuilder/' . $page->folder));
+                File::deleteDirectory(public_path('pageBuilder/' . $page->slug));
             }
 
             $page->delete();
