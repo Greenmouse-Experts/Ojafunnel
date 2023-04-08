@@ -92,7 +92,7 @@
 				</div>
 			@endif
 			<div class="btn-group float-end me-3 responsive-btns" role="group">
-				<a href="{{ env('APP_ENV') == 'local' ? $page->file_location : 'https://' . $page->slug . '.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
+				<a href="{{ env('APP_ENV') == 'local' ? $page->file_location : 'https://' . $page->slug . '-page.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
 
 				<button id="mobile-view" data-view="mobile" class="btn btn-light" title="Mobile view" data-vvveb-action="viewport">
 					<i class="la la-mobile"></i>
