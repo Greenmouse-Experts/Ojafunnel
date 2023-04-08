@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('oja_plan_intervals', function (Blueprint $table) {
+        Schema::table('oja_plan_intervals', function (Blueprint $table) {
             $table->string('currency')->nullable()->change();
             $table->string('currency_sign')->nullable()->change();
         });
@@ -26,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('oja_plan_intervals', function (Blueprint $table) {
+
+        });
     }
 };
