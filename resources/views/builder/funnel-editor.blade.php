@@ -77,7 +77,7 @@
 			</div>
 
 			<div class="btn-group float-end me-3 responsive-btns" role="group">
-                <a href="{{$currentpage->file_location}}" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
+                <a href="{{ $currentpage->file_location }}" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
 
 				<button id="mobile-view" data-view="mobile" class="btn btn-light" title="Mobile view" data-vvveb-action="viewport">
 					<i class="la la-mobile"></i>
@@ -1571,15 +1571,23 @@
 			Vvveb.SectionList.init();
 
 			var pages = [
-                @foreach($pages as $page)
-                {
-					name: "{{$page->name}}",
-					title: "{{$page->title}}",
-					url: "{{$page->file_location}}",
-					file: "{{$page->file_location}}",
+                // @foreach($pages as $page)
+                // {
+				// 	name: "{{$page->name}}",
+				// 	title: "{{$page->title}}",
+				// 	url: "{{$page->file_location}}",
+				// 	file: "{{$page->file_location}}",
+				// 	// assets: ["{{config('app.url')}}/builder/demo/narrow-jumbotron/narrow-jumbotron.css"]
+                // },
+                // @endforeach
+				{},
+				{
+					name: "{{$currentpage->name}}",
+					title: "{{$currentpage->title}}",
+					url: "{{$currentpage->file_location}}",
+					file: "{{$currentpage->file_location}}",
 					// assets: ["{{config('app.url')}}/builder/demo/narrow-jumbotron/narrow-jumbotron.css"]
                 },
-                @endforeach
 				// {
 				// 	name: "narrow-jumbotron",
 				// 	title: "Jumbotron",
@@ -1588,12 +1596,14 @@
 				// 	assets: ["{{config('app.url')}}/builder/demo/narrow-jumbotron/narrow-jumbotron.css"]
 				// },
 				//uncomment php code below and rename file to .php extension to load saved html files in the editor or use editor.php
-                ];
+            ];
 
 			Vvveb.FileManager.addPages(pages);
 			//Vvveb.FileManager.loadPage("landing-page");
-			Vvveb.Breadcrumb.init();
+			Vvveb.Breadcrumb.init(); 
 		});
+ 
+		
 	</script>
 </body>
 
