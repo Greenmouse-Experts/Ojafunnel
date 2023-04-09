@@ -70,7 +70,7 @@
 					<i class="la la-expand-arrows-alt"></i>
 				</button>
 
-				<button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download" data-v-download="{{$page->file_location}}">
+				<button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download" data-v-download="{{ env('APP_ENV') == 'local' ? $page->file_location : 'https://' . $page->slug . '-page.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}">
 					<i class="la la-download"></i>
 				</button>
 

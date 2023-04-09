@@ -157,15 +157,16 @@
                                                                             <div class="form">
                                                                                 <p>
                                                                                     <b>
-                                                                                        Funnel Folder
+                                                                                        Funnel Sub Domain
                                                                                     </b>
                                                                                 </p>
                                                                                 <div class="row">
                                                                                     <div class="col-lg-12">
-                                                                                        <label>File Folder</label>
+                                                                                        <label>Sub Domain</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" placeholder="File Folder" name="file_folder" class="input" value="{{$funnel->folder}}" required>
+                                                                                                <input type="text" placeholder="File Folder" name="file_folder" id="subdomain1" class="input" value="{{$funnel->folder}}" required>
+                                                                                                <small id="generateSubDomain1"></small>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -259,15 +260,16 @@
                             <div class="form">
                                 <p>
                                     <b>
-                                        Funnel Folder
+                                        Funnel Sub Domain
                                     </b>
                                 </p>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <label>File Folder</label>
+                                        <label>Sub Domain</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="File Folder" name="file_folder" class="input" required>
+                                                <input type="text" id="subdomain" placeholder="e.g Tola Cake And Pasteries" name="file_folder" class="input" required>
+                                                <small id="generateSubDomain"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -333,5 +335,26 @@
         </div>
     </div>
 </div>
+<script>
+    let subdomain = document.getElementById('subdomain'); 
+    let subdomaintext = document.getElementById('generateSubDomain'); 
+
+    subdomain.addEventListener('input', (event) => {
+        if('{{ env('APP_URL') }}'.startsWith('https')) 
+            subdomaintext.innerText = `https://${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-funnel'}.ojafunnel.com`
+
+        subdomain.value = event.target.value.replace(/\s+/g, ' ')
+    })
+
+    let subdomain1 = document.getElementById('subdomain1'); 
+    let subdomain1text = document.getElementById('generateSubDomain1'); 
+
+    subdomain1.addEventListener('input', (event) => {
+        if('{{ env('APP_URL') }}'.startsWith('https')) 
+            subdomain1text.innerText = `https://${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-funnel'}.ojafunnel.com`
+
+        subdomain1.value = event.target.value.replace(/\s+/g, ' ')
+    })
+</script>
 <!-- Modal Ends -->
 @endsection

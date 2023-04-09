@@ -285,7 +285,7 @@
                                         <label> Title </label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Title" name="title" class="input" required>
+                                                <input type="text" placeholder="e.g Homepage" name="title" class="input" required>
                                             </div>
                                         </div>
                                     </div>
@@ -293,7 +293,7 @@
                                         <label>Sub Domain</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="File Folder" id="subdomain" name="file_folder" class="input" required> 
+                                                <input type="text" placeholder="e.g Tola Cake And Pasteries" id="subdomain" name="file_folder" class="input" required> 
                                                 <small id="generateSubDomain"></small>
                                             </div> 
                                         </div> 
@@ -302,7 +302,7 @@
                                         <label>Page Name</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="File Name" id="pagename" name="file_name" class="input" required>
+                                                <input type="text" placeholder="e.g Home" id="pagename" name="file_name" class="input" required>
                                                 <small id="generatePage"></small>
                                             </div>
                                         </div>
@@ -341,7 +341,7 @@
 
     subdomain.addEventListener('input', (event) => {
         if('{{ env('APP_URL') }}'.startsWith('https')) 
-            subdomaintext.innerText = `https://${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase()}.ojafunnel.com`
+            subdomaintext.innerText = `https://${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-page'}.ojafunnel.com`
 
         subdomain.value = event.target.value.replace(/\s+/g, ' ')
     })

@@ -288,9 +288,8 @@ class DashboardController extends Controller
     public function upgrade_account($username, $plan_id, $currency, $price)
     {
         $subscription = OjaSubscription::where('user_id', Auth::user()->id)->where('status', 'Active')->first();
-        
-        if($subscription !== null)
-        {
+
+        if ($subscription !== null) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'You have an active plan.'
@@ -348,7 +347,8 @@ class DashboardController extends Controller
         $id = Crypt::decrypt($id);
 
         $funnel = Funnel::findorfail($id);
-        $pages = FunnelPage::latest()->where('user_id', Auth::user()->id)->get();
+
+        $pages = FunnelPage::latest()->where(['user_id' => Auth::user()->id, 'folder_id' => $funnel->id])->get();
 
         return view('dashboard.viewFunnelPage', [
             'username' => $username,
