@@ -4,7 +4,10 @@ use App\Events\SendMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomSubDomain;
+// Paypal Testing
+use App\Http\Controllers\PayPalController;
 
 // sub domain for page and funnel builder - production  
 Route::group(['domain' => '{subdomain}.ojafunnel.com'], function () {
@@ -698,10 +701,6 @@ Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [ChatCon
 // Builder
 Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');
 Route::post('/funnel/builder/save/page/{page}', [App\Http\Controllers\PageController::class, 'funnel_builder_save_page'])->name('user.funnel.builder.save.page');
-
-// Paypal Testing
-use App\Http\Controllers\PayPalController;
-use App\Http\Controllers\DashboardController;
 
 Route::get('payment', [PayPalController::class, 'okpay'])->name('ok.pay');
 // Paypal Payment
