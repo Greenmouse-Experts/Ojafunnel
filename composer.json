@@ -11,7 +11,7 @@
         "php": "^8.0.2",
         "anhskohbo/no-captcha": "^3.5",
         "aws/aws-php-sns-message-validator": "^1.8",
-        "aws/aws-sdk-php": "^3.261",
+        "aws/aws-sdk-php": "^3.263",
         "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^6.2",
         "cloudinary-labs/cloudinary-laravel": "^2.0",
