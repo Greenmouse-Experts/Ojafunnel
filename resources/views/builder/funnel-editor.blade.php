@@ -62,12 +62,10 @@
 					<i class="la la-expand-arrows-alt"></i>
 				</button>
 
-				<button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download" data-v-download="{{$currentpage->file_location}}">
+				<button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download" data-v-download="{{ env('APP_ENV') == 'local' ? $currentpage->file_location : 'https://' . $currentpage->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $currentpage->name)[0] }}">
 					<i class="la la-download"></i>
 				</button>
-
 			</div>
-
 
 			<div class="btn-group me-3 float-end" role="group">
                 <input id="id" name="id" value="{{$currentpage->id}}" hidden>
@@ -77,7 +75,7 @@
 			</div>
 
 			<div class="btn-group float-end me-3 responsive-btns" role="group">
-                <a href="{{ $currentpage->file_location }}" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
+                <a href="{{ env('APP_ENV') == 'local' ? $currentpage->file_location : 'https://' . $currentpage->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $currentpage->name)[0] }}" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
 
 				<button id="mobile-view" data-view="mobile" class="btn btn-light" title="Mobile view" data-vvveb-action="viewport">
 					<i class="la la-mobile"></i>

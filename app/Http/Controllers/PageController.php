@@ -30,8 +30,6 @@ class PageController extends Controller
     public function generatePageSlug($folder)
     {
         $slug = strtolower(implode('-', explode(' ', $folder)));
-        // $random = substr(sha1(mt_rand()), 5, 6);
-        // $unique = $slug . '-' . $random;
 
         $page = Page::where(['slug' => $slug]);
 
@@ -246,6 +244,25 @@ class PageController extends Controller
             'type' => 'success',
             'message' => 'Page Updated Successfully!'
         ]);
+
+        // $idFinder = Crypt::decrypt($id);
+        // $page = Page::find($idFinder);
+
+        // $file = $page_name . '.html';
+
+        // if ($page->name != $file) {
+        //     $page = Page::where(['slug' => $page->slug, 'name' => $file]);
+
+        //     if ($page->exists()) {
+        //         return back()->with([
+        //             'type' => 'danger',
+        //             'message' => 'Page name already exists on the sub domain.'
+        //         ]);
+        //     }
+        // }
+
+        // $disk = public_path('pageBuilder/' . $page->slug . '/' . $page->name);
+        // rename($disk, public_path('pageBuilder/' . $page->slug . '/' . $file));
     }
 
     public function page_builder_delete($id, Request $request)
@@ -282,6 +299,17 @@ class PageController extends Controller
         ]);
     }
 
+    public function generateFunnelSlug($folder)
+    {
+        $slug = strtolower(implode('-', explode(' ', $folder)));
+
+        $funnel = Funnel::where(['slug' => $slug]);
+
+        if ($funnel->exists()) return [false, $slug];
+
+        return [true, $slug];
+    }
+
     public function funnel_builder_create_folder(Request $request)
     {
         //Validate Request
@@ -289,9 +317,27 @@ class PageController extends Controller
             'file_folder' => ['required', 'string', 'max:255'],
         ]);
 
+        $res = $this->generateFunnelSlug($request->file_folder);
+
+        // check if sub domain name taken
+        if (!$res[0]) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Sub domain already taken.'
+            ]);
+        }
+
+        // check if subdomain contains .
+        if (str_contains($res[1], '.')) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Sub domain is invalid. Can\'t contain dot(s)'
+            ]);
+        }
+
         $disk = Storage::build([
             'driver' => 'local',
-            'root'   => public_path('funnelBuilder') . '/' . $request->file_folder,
+            'root'   => public_path('funnelBuilder') . '/' . $res[1],
             'permissions' => [
                 'file' => [
                     'public' => 0777,
@@ -310,16 +356,17 @@ class PageController extends Controller
             Funnel::create([
                 'user_id' => Auth::user()->id,
                 'folder' => $request->file_folder,
+                'slug' => $res[1],
             ]);
 
             return back()->with([
                 'type' => 'success',
-                'message' => 'Folder created.'
+                'message' => 'Funnel subdomain and folder created.'
             ]);
         } else {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Failed to create folder.'
+                'message' => 'Failed to create funnel subdomain and folder.'
             ]);
         }
     }
@@ -335,19 +382,38 @@ class PageController extends Controller
 
         $funnel = Funnel::findorfail($idFinder);
 
-        $disk = public_path('funnelBuilder/' . $funnel->folder . '/');
+        $disk = public_path('funnelBuilder/' . $funnel->slug . '/');
 
-        rename($disk, public_path('funnelBuilder/' . $request->file_folder . '/'));
+        $res = $this->generateFunnelSlug($request->file_folder);
+
+        // check if sub domain name taken
+        if (!$res[0]) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Sub domain already taken.'
+            ]);
+        }
+
+        // check if subdomain contains .
+        if (str_contains($res[1], '.')) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Sub domain is invalid. Can\'t contain dot(s)'
+            ]);
+        }
+
+        rename($disk, public_path('funnelBuilder/' . $res[1] . '/'));
 
         $pages = FunnelPage::where('folder_id', $funnel->id)->get();
 
         if ($pages) {
             foreach ($pages as $page) {
                 $page->update([
-                    'file_location' => config('app.url') . '/funnelBuilder/' . $request->file_folder . '/' . $page->name
+                    'file_location' => config('app.url') . '/funnelBuilder/' . $res[1] . '/' . $page->name
                 ]);
             }
         }
+
         $funnel->update([
             'folder' => $request->file_folder,
         ]);
@@ -370,7 +436,7 @@ class PageController extends Controller
 
             $funnel = Funnel::findorfail($idFinder);
 
-            $disk = public_path('funnelBuilder/' . $funnel->folder . '/');
+            $disk = public_path('funnelBuilder/' . $funnel->slug . '/');
 
             File::deleteDirectory($disk);
 
@@ -398,23 +464,34 @@ class PageController extends Controller
 
     public function funnel_builder_create_page(Request $request)
     {
-        //Validate Request
+        // Validate Request
         $this->validate($request, [
             'title' => ['required', 'string', 'max:255'],
             'file_folder' => ['required', 'string', 'max:255'],
             'file_name' => ['required', 'string', 'max:255'],
         ]);
 
-        $funnel = Funnel::findorfail($request->file_folder);
+        $page_name = strtolower(implode('-', explode(' ', $request->file_name)));
 
-        if (str_contains($request->file_name, '.')) {
+        if (str_contains($page_name, '.')) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'file name invalid.'
+                'message' => 'Page name is invalid. Can\'t contain dot(s)'
             ]);
         }
 
-        $file = $request->file_name . '.html';
+        $funnel = Funnel::where(['id' => $request->file_folder])->first();
+
+        $file = $page_name . '.html';
+
+        $funnel_page = FunnelPage::where(['name' => $file, 'folder_id' => $funnel->id]);
+
+        if ($funnel_page->exists()) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Page name exists in the funnel'
+            ]);
+        }
 
         define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
 
@@ -424,7 +501,7 @@ class PageController extends Controller
 
         $file = $this->sanitizeFileName($file);
 
-        $disk = public_path('funnelBuilder/' . $funnel->folder . '/');
+        $disk = public_path('funnelBuilder/' . $funnel->slug . '/');
 
         if (!file_put_contents($disk . $file, $html)) {
             header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
@@ -438,7 +515,7 @@ class PageController extends Controller
                 'folder_id' => $funnel->id,
                 'name' => $file,
                 'title' => ucfirst($request->title),
-                'file_location' => config('app.url') . '/funnelBuilder/' . $funnel->folder . '/' . $file
+                'file_location' => config('app.url') . '/funnelBuilder/' . $funnel->slug . '/' . $file
             ]);
 
             return back()->with([
@@ -485,11 +562,22 @@ class PageController extends Controller
             ]);
         }
 
-        $file = $request->file_name . '.html';
+        $page_name = strtolower(implode('-', explode(' ', $request->file_name)));
+        $file = $page_name . '.html';
 
-        $disk = public_path('funnelBuilder/' . $funnel->folder . '/' . $page->name);
+        if ($page->name != $file) {
+            $funnel_page = FunnelPage::where(['folder_id' => $funnel->id, 'name' => $file]);
 
-        rename($disk, public_path('funnelBuilder/' . $funnel->folder . '/' . $file));
+            if ($funnel_page->exists()) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Page name already exists in this funnel.'
+                ]);
+            }
+        }
+
+        $disk = public_path('funnelBuilder/' . $funnel->slug . '/' . $page->name);
+        rename($disk, public_path('funnelBuilder/' . $funnel->slug . '/' . $file));
 
         //Validate User
         if (request()->hasFile('thumbnail')) {
@@ -508,7 +596,7 @@ class PageController extends Controller
                 'name' => $file,
                 'title' => ucfirst($request->title),
                 'thumbnail' => '/storage/funnel_page_thumbnails/' . $filename,
-                'file_location' => config('app.url') . '/funnelBuilder/' . $funnel->folder . '/' . $file
+                'file_location' => config('app.url') . '/funnelBuilder/' . $funnel->slug . '/' . $file
             ]);
 
             return back()->with([
@@ -521,7 +609,7 @@ class PageController extends Controller
             'folder_id' => $funnel->id,
             'name' => $file,
             'title' => ucfirst($request->title),
-            'file_location' => config('app.url') . '/funnelBuilder/' . $funnel->folder . '/' . $file
+            'file_location' => config('app.url') . '/funnelBuilder/' . $funnel->slug . '/' . $file
         ]);
 
         return back()->with([
@@ -543,7 +631,7 @@ class PageController extends Controller
             $page = FunnelPage::findorfail($idFinder);
             $funnel = Funnel::findorfail($page->folder_id);
 
-            $disk = public_path('funnelBuilder/' . $funnel->folder . '/' . $page->name);
+            $disk = public_path('funnelBuilder/' . $funnel->slug . '/' . $page->name);
 
             File::delete($disk);
 

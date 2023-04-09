@@ -109,7 +109,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-lg-12">
-                                                                                <label>File Folder</label>
+                                                                                <label>Sub Domain</label>
                                                                                 <div class="row">
                                                                                     <div class="col-md-12 mb-4">
                                                                                         <input value="{{$funnel->folder}}" class="input" readonly>
@@ -118,7 +118,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-lg-12">
-                                                                                <label>File Name </label>
+                                                                                <label>Page Name </label>
                                                                                 <div class="row">
                                                                                     <div class="col-md-12 mb-4">
                                                                                         <input type="text" placeholder="File Name" name="file_name"  value="{{preg_replace('/\\.[^.\\s]{3,4}$/', '', $page->name)}}" class="input" required>
@@ -228,24 +228,27 @@
                                         <label>Title </label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Title" name="title" class="input" required>
+                                                <input type="text" placeholder="e.g Homepage" name="title" class="input" required>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <label>File Folder</label>
+                                        <label>Sub Domain</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input value="{{$funnel->folder}}" class="input" readonly>
                                                 <input value="{{$funnel->id}}" name="file_folder" hidden>
+
+                                                <input id="subdomain" value="{{$funnel->folder}}" class="input" readonly> 
+                                                <small id="generateSubDomain"></small>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <label>File Name </label>
+                                        <label>Page Name </label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="File Name" name="file_name" class="input" required>
+                                                <input type="text" placeholder="e.g Home" id="pagename" name="file_name" class="input" required>
+                                                <small id="generatePage"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -265,6 +268,25 @@
         </div>
     </div>
 </div>
+<script>
+    let subdomain = document.getElementById('subdomain');
+    let pagename = document.getElementById('pagename');
+
+    let subdomaintext = document.getElementById('generateSubDomain');
+    let pagetext = document.getElementById('generatePage');
+
+    if('{{ env('APP_URL') }}'.startsWith('https')) 
+        subdomaintext.innerText = `https://${subdomain.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-funnel'}.ojafunnel.com`
+
+    subdomain.value = subdomain.value.replace(/\s+/g, ' ')
+
+    pagename.addEventListener('input', (event) => {
+        if('{{ env('APP_URL') }}'.startsWith('https')) 
+            pagetext.innerText = `${subdomaintext.innerText}/${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase()}`
+
+        pagename.value = event.target.value.replace(/\s+/g, ' ')
+    })
+</script>
 <!-- end modal -->
 
 <style>

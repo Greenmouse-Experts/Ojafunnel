@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Models\Funnel;
+use App\Models\FunnelPage;
 use Illuminate\Http\Request;
 
 class CustomSubDomain extends Controller
@@ -35,7 +36,17 @@ class CustomSubDomain extends Controller
 
         // funnel handler
         if (str_ends_with($subdomain, '-funnel')) {
-            Funnel::where();
+            $slug = str_replace('-page', '', $subdomain);
+            $page = $request->page;
+
+            $funnel = Funnel::where(['slug' => $slug]);
+            $_page = FunnelPage::where(['name' => $page . '.html', 'folder_id' => $funnel->id]);
+
+            if ($_page->exists()) {
+                $content = file_get_contents(public_path('funnelBuilder/' . $slug . '/' . $page . '.html'));
+
+                return $content;
+            } else return 'The funnel you\'re looking for doesn\'t exist.';
         }
     }
 }
