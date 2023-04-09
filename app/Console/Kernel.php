@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('smsCampaign:run')->everyFiveMinutes()->withoutOverlapping();
+        $schedule->command('smsCampaign:run')->everyMinute()->withoutOverlapping();
         $schedule->command('smsBirthday:cron')->dailyAt('00:30')->withoutOverlapping();
         $schedule->command('subscription:cron')->dailyAt('00:30')->withoutOverlapping();
         $schedule->command('subscriptionReminder:cron')->dailyAt('05:30')->withoutOverlapping();
