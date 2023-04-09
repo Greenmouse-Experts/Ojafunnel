@@ -40,7 +40,7 @@ class CustomSubDomain extends Controller
             $page = $request->page;
 
             $funnel = Funnel::where(['slug' => $slug]);
-            $_page = FunnelPage::where(['name' => $page . '.html', 'folder_id' => $funnel->id]);
+            $_page = FunnelPage::where(['name' => $page . '.html', 'folder_id' => $funnel->first()->id]);
 
             if ($_page->exists()) {
                 $content = file_get_contents(public_path('funnelBuilder/' . $slug . '/' . $page . '.html'));
