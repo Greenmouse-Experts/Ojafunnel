@@ -36,19 +36,17 @@ class CustomSubDomain extends Controller
 
         // funnel handler
         if (str_ends_with($subdomain, '-funnel')) {
-            $slug = str_replace('-page', '', $subdomain);
+            $slug = str_replace('-funnel', '', $subdomain);
             $page = $request->page;
 
-            $funnel = Funnel::where('slug', $slug)->first();
+            $funnel = Funnel::where(['slug' => $slug]);
+            $_page = FunnelPage::where(['name' => $page . '.html', 'folder_id' => $funnel->id]);
 
-            return $funnel;
-            // $_page = FunnelPage::where(['name' => $page . '.html', 'folder_id' => $funnel->first()->id]);
+            if ($_page->exists()) {
+                $content = file_get_contents(public_path('funnelBuilder/' . $slug . '/' . $page . '.html'));
 
-            // if ($_page->exists()) {
-            //     $content = file_get_contents(public_path('funnelBuilder/' . $slug . '/' . $page . '.html'));
-
-            //     return $content;
-            // } else return 'The funnel you\'re looking for doesn\'t exist.';
+                return $content;
+            } else return 'The funnel you\'re looking for doesn\'t exist.';
         }
     }
 }
