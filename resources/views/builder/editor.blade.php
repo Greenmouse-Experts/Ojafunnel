@@ -71,8 +71,15 @@
 				</button>
 
 				<button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download" data-v-download="
-					{{ env('APP_ENV') == 'local' ? $page->file_location : 'https://' . $page->slug . '-page.ojafunnel.com' . '/' }}
-					{{ $page->name == 'index.html' ? '' : explode('.', $page->name)[0] }}
+					@if (env('APP_ENV') == 'local')
+						{{ $page->file_location	}}
+					@else
+						@if ($page->name == 'index.html')
+							{{ 'https://' . $page->slug . '-page.ojafunnel.com' . '/' }}
+						@else
+							{{ 'https://' . $page->slug . '-page.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
+						@endif 
+					@endif 
 				">
 					<i class="la la-download"></i>
 				</button>
@@ -96,8 +103,15 @@
 			@endif
 			<div class="btn-group float-end me-3 responsive-btns" role="group">
 				<a href="
-					{{ env('APP_ENV') == 'local' ? $page->file_location : 'https://' . $page->slug . '-page.ojafunnel.com' . '/' }}
-					{{ $page->name == 'index.html' ? '' : explode('.', $page->name)[0] }}
+					@if (env('APP_ENV') == 'local')
+						{{ $page->file_location	}}
+					@else
+						@if ($page->name == 'index.html')
+							{{ 'https://' . $page->slug . '-page.ojafunnel.com' . '/' }}
+						@else
+							{{ 'https://' . $page->slug . '-page.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
+						@endif 
+					@endif 
 				" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
 
 				<button id="mobile-view" data-view="mobile" class="btn btn-light" title="Mobile view" data-vvveb-action="viewport">
@@ -1550,13 +1564,27 @@
 	<script src="{{URL::asset('builder/libs/builder/components-bootstrap5.js')}}"></script>
 	<script src="{{URL::asset('builder/libs/builder/components-widgets.js')}}"></script>
 	<script src="{{URL::asset('builder/libs/builder/components-html.js')}}"></script>
-
+ 
 	<!-- sections-->
-	<!-- <script src="demo/landing/sections/sections.js"></script>	-->
-	<script src="{{URL::asset('builder/libs/builder/sections-bootstrap4.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/section-navbars.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/section-heroes.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/section-features.js')}}"></script> 
+	<script src="{{URL::asset('builder/libs/builder/custom/section-jumbotrons.js')}}"></script> 
+	<script src="{{URL::asset('builder/libs/builder/custom/section-forms.js')}}"></script> 
+	<script src="{{URL::asset('builder/libs/builder/custom/section-breadcrumbs.js')}}"></script> 
+	<script src="{{URL::asset('builder/libs/builder/custom/section-lists.js')}}"></script> 
+	<script src="{{URL::asset('builder/libs/builder/custom/section-footers.js')}}"></script>
 
+	<script src="{{URL::asset('builder/libs/builder/sections-bootstrap4.js')}}"></script>
+	
+	<!-- blocks -->
+	<script src="{{URL::asset('builder/libs/builder/custom/block-heroes.js')}}"></script>  
+	<script src="{{URL::asset('builder/libs/builder/custom/block-features.js')}}"></script>  
+	<script src="{{URL::asset('builder/libs/builder/custom/block-jumbotrons.js')}}"></script>  
+	<script src="{{URL::asset('builder/libs/builder/custom/block-forms.js')}}"></script>  
+	<script src="{{URL::asset('builder/libs/builder/custom/block-lists.js')}}"></script>  
 	<!-- blocks-->
-	<script src="{{URL::asset('builder/libs/builder/blocks-bootstrap4.js')}}"></script>
+	{{-- <script src="{{URL::asset('builder/libs/builder/blocks-bootstrap4.js')}}"></script> --}}
 
 	<!-- plugins -->
 
