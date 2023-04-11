@@ -30,7 +30,7 @@
                 <div class='row align-items-center birthday-contact'>
                     <div class='col-lg-9 main-text'>
                         <p class='topic'>Birthday Modules</p>
-                        <p class='mt-2 p-0'> create and manage birthday messages fowarded to customers.</p>
+                        <p class='mt-2 p-0'> Create and manage birthday messages fowarded to customers.</p>
                     </div>
                     <div class='col-lg-3 text-end'>
                         <div class="">
@@ -72,12 +72,13 @@
                                             <td>{{\App\Models\BirthdayContactList::where('id', $b->birthday_contact_list_id)->first()->name}}</td>
                                             <td>{{$b->title}}</td>
                                             <td>
-                                                @php
+                                                {{-- @php
                                                 $bb = json_decode($b->automation, true);
                                                 @endphp
                                                 @foreach ($bb as $key => $value)
                                                 <p style="text-transform:capitalize">{{$value}}</p>
-                                                @endforeach
+                                                @endforeach --}}
+                                                <p style="text-transform:capitalize">{{ $b->automation }}</p>
                                             </td>
                                             <td><span class="bg-success p-2" style="color: #fff;">{{$b->status}}</span></td>
                                             <td>{{$b->start_date}}</td>

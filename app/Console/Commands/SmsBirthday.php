@@ -35,34 +35,28 @@ class SmsBirthday extends Command
     public function handle()
     {
         $birthday = BirthdayAutomation::where('action', 'Play')->where('start_date', '<=', Carbon::today()->toDateString())
-                                    ->where('end_date', '>=', Carbon::today()->toDateString())
-                                    ->get();
-        
-        if($birthday->isEmpty())
-        {
+            ->where('end_date', '>=', Carbon::today()->toDateString())
+            ->get();
+
+        if ($birthday->isEmpty()) {
             return Command::SUCCESS;
         }
-        foreach($birthday as $key => $ba)
-        {
-            if($ba->sms_type == 'birthday')
-            {
+
+        foreach ($birthday as $key => $ba) {
+            if ($ba->sms_type == 'birthday') {
                 $birthdayContactList = BirthdayContact::where('birthday_contact_list_id', $ba->birthday_contact_list_id)->whereMonth('date_of_birth', '=', date('m'))->whereDay('date_of_birth', '=', date('d'))->select('phone_number')->get();
                 // \Log::info($birthdayContactList);
 
-                if($birthdayContactList->isEmpty())
-                {
+                if ($birthdayContactList->isEmpty()) {
                     return;
                 }
 
-                foreach (json_decode($ba->automation) as $automation)
-                {
-                }
-                if($automation == 'sms automation')
-                {
+                // foreach (json_decode($ba->automation) as $automation) {
+                // }
+                if ($ba->automation == 'sms automation') {
                     $integration = Integration::find($ba->integration);
                     // \Log::info($integration->type);
-                    if ($integration->type == "Multitexter") 
-                    {
+                    if ($integration->type == "Multitexter") {
                         $d = $birthdayContactList->toArray();
                         //  \Log::info($d);
 
@@ -110,8 +104,7 @@ class SmsBirthday extends Command
                         // return $responseBody;
                     }
 
-                    if ($integration->type == "NigeriaBulkSms") 
-                    {
+                    if ($integration->type == "NigeriaBulkSms") {
                         $d = $birthdayContactList->toArray();
 
                         foreach ($d as $val) {
@@ -155,7 +148,6 @@ class SmsBirthday extends Command
                             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
                             $result = curl_exec($ch);
-
                         } catch (Exception $e) {
                             $responseBody = $e;
                         }
@@ -163,25 +155,20 @@ class SmsBirthday extends Command
                 }
             }
 
-            if($ba->sms_type == 'anniversary')
-            {
+            if ($ba->sms_type == 'anniversary') {
                 $birthdayContactList = BirthdayContact::where('birthday_contact_list_id', $ba->birthday_contact_list_id)->whereMonth('anniversary', '=', date('m'))->whereDay('anniversary', '=', date('d'))->select('phone_number')->get();
                 // \Log::info($birthdayContactList);
 
-                if($birthdayContactList->isEmpty())
-                {
+                if ($birthdayContactList->isEmpty()) {
                     return;
                 }
 
-                foreach (json_decode($ba->automation) as $automation)
-                {
-                }
-                if($automation == 'sms automation')
-                {
+                // foreach (json_decode($ba->automation) as $automation) {
+                // }
+                if ($ba->automation == 'sms automation') {
                     $integration = Integration::find($ba->integration);
                     // \Log::info($integration->type);
-                    if ($integration->type == "Multitexter") 
-                    {
+                    if ($integration->type == "Multitexter") {
                         $d = $birthdayContactList->toArray();
                         //  \Log::info($d);
 
@@ -229,8 +216,7 @@ class SmsBirthday extends Command
                         // return $responseBody;
                     }
 
-                    if ($integration->type == "NigeriaBulkSms") 
-                    {
+                    if ($integration->type == "NigeriaBulkSms") {
                         $d = $birthdayContactList->toArray();
 
                         foreach ($d as $val) {
@@ -274,7 +260,6 @@ class SmsBirthday extends Command
                             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
                             $result = curl_exec($ch);
-
                         } catch (Exception $e) {
                             $responseBody = $e;
                         }
@@ -282,7 +267,7 @@ class SmsBirthday extends Command
                 }
             }
         }
-        
+
         return Command::SUCCESS;
     }
 }

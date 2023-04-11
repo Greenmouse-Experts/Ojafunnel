@@ -158,8 +158,16 @@
                                                     <label>Sending Account</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
-                                                            <input type="phone" placeholder="Enter the Whatsapp Number e.g +2234666455454" name="sender_id" class="input"
-                                                                >
+                                                            <select name="sender_id" id="" class="input">
+                                                                <option value="">Choose from conneted WA Account list</option>
+                                                                @forelse ($whatsapp_numbers as $whatsapp_number)
+                                                                    <option value="{{ $whatsapp_number['id'] }}-{{ $whatsapp_number['phone_number'] }}-{{ $whatsapp_number['status'] }}-{{ $whatsapp_number['full_jwt_session'] }}">
+                                                                        {{ $whatsapp_number['phone_number'] }} ({{ $whatsapp_number['status'] }})
+                                                                    </option>
+                                                                @empty
+                                                                    <option value="">No WA account found</option>
+                                                                @endforelse
+                                                            </select> 
                                                         </div>
                                                     </div>
                                                 </div>
