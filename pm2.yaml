@@ -26,6 +26,15 @@ apps:
       - queue:work
       - --queue=waTemplate3
 
+  - name: waBirthday
+    script: artisan
+    exec_mode: fork
+    interpreter: php
+    instances: 1
+    args:
+      - queue:work
+      - --queue=waBirthday
+
   - name: schedule
     script: artisan
     exec_mode: fork

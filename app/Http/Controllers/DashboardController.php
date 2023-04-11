@@ -841,10 +841,10 @@ class DashboardController extends Controller
 
         $whatsapp_account = explode('-', $request->whatsapp_account);
 
-        // if ($whatsapp_account[2] != "Connected") return back()->with([
-        //     'type' => 'danger',
-        //     'message' => 'The WA account is not connected. Connect and try again'
-        // ]);
+        if ($whatsapp_account[2] != "Connected") return back()->with([
+            'type' => 'danger',
+            'message' => 'The WA account is not connected. Connect and try again'
+        ]);
 
         // get contact list
         $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();

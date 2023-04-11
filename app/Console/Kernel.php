@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\SendSms;
 use App\Console\Commands\SendWABulk;
+use App\Console\Commands\WABirthday;
 use App\Console\Commands\SmsBirthday;
 use App\Console\Commands\Subscription;
 use App\Console\Commands\SubscriptionReminder;
@@ -23,6 +24,7 @@ class Kernel extends ConsoleKernel
         SmsBirthday::class,
         Subscription::class,
         SubscriptionReminder::class,
+        WABirthday::class
     ];
 
     /**
@@ -39,8 +41,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('subscription:cron')->dailyAt('00:30')->withoutOverlapping();
         $schedule->command('subscriptionReminder:cron')->dailyAt('05:30')->withoutOverlapping();
 
-        // run command every minute
+        // run command every minute 
         $schedule->command('sendwabulk:run')->everyMinute()->withoutOverlapping();
+        // run command every 12:00
+        // birthday or anniversary
+        $schedule->command('wabirthday:run')->dailyAt('00:00')->withoutOverlapping();
     }
 
     /**
