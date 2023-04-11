@@ -56,12 +56,10 @@ class SendSms extends Command
         $recurring = SmsCampaign::where('schedule_type', 'recurring')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
         $onetime = SmsCampaign::where('schedule_type', 'onetime')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
         $message = SmsCampaign::where('schedule_type', 'onetime')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
-        // \Log::info(['hi', $onetime, $fromDate, $toDate]);
+
         if ($onetime->count() > 0) {
             foreach ($onetime as $sms) {
                 if ($sms->schedule_time < Carbon::now()->toDateTimeString()) {
-                    // \Log::info([$sms->user_id, $fromDate , $toDate]);
-                    //\Log::info([$sms->recurring_end, Carbon::now()->toDateTimeString()]);
                     // recurring running
                     dispatch(new StoreCampaignJob($sms->id));
 

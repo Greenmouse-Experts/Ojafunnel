@@ -21,16 +21,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // if (config('app.env') === 'local') {
-        //     // $this->call(TestPageSeeder::class);
-        //     // $this->call(ContactListSeeder::class);
-        //     // $this->call(ContactNumberSeeder::class);
-        //     // $this->call(CategorySeeder::class);
-        //     $this->call(PlanSeeder::class);
-        //     $this->call(LanguageSeeder::class);
-        // } 
-
-        // $this->call(PlanSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(LanguageSeeder::class);
         $this->call(AdminSeeder::class);
