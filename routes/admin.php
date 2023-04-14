@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 | Admin Routes
 |--------------------------------------------------------------------------
 */
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('/login', [App\Http\Controllers\Admin\Auth\AdminAuthController::class, 'getLogin'])->name('adminLogin');
     Route::post('/login', [App\Http\Controllers\Admin\Auth\AdminAuthController::class, 'postLogin'])->name('adminLoginPost');
@@ -35,6 +36,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/vendorlist', [App\Http\Controllers\Admin\AdminController::class, 'vendorlist'])->name('vendorlist');
             Route::get('/trans_details', [App\Http\Controllers\Admin\AdminController::class, 'trans_details'])->name('trans.details');
             Route::get('/affiliateList', [App\Http\Controllers\Admin\AdminController::class, 'affiliateList'])->name('affiliateList');
+
+            // Marketing
+            Route::get('/email-marketing/email-kits', [App\Http\Controllers\Admin\AdminController::class, 'view_email_kits'])->name('admin.email-marketing.email-kits');
+            Route::get('/email-marketing/email-campaigns', [App\Http\Controllers\Admin\AdminController::class, 'view_email_campaigns'])->name('admin.email-marketing.email-campaigns');
 
             // LMS
             Route::get('/viewCart', [App\Http\Controllers\Admin\AdminController::class, 'viewCart'])->name('viewCart');
@@ -78,25 +83,25 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             Route::prefix('/sending-server')->group(
                 function () {
-                        Route::get('/sort', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'sort'])->name('sending.server.sort');
-                        Route::get('/listing', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'listing'])->name('sending.server.listing');
-                        Route::get('/enable', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'enable'])->name('sending.server.enable');
-                        Route::get('/disable', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'disable'])->name('sending.server.disable');
-                        Route::get('/delete', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'delete'])->name('sending.server.delete');
-                        Route::get('/select', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'select'])->name('sending.server.select');
-                        Route::get('/create', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'create'])->name('sending.server.create');
-                        Route::get('/edit/{id}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'edit'])->name('sending.server.edit');
-                        Route::match(['get', 'post'], '/sendingLimit', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'sendingLimit'])->name('sending.server.sendingLimit');
-                        Route::post('/store', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'store'])->name('sending.server.store');
-                        Route::patch('/update', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'update'])->name('sending.server.update');
-                        Route::match(['get', 'post'], '/testConnection/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'testConnection'])->name('sending.server.testConnection');
-                        Route::match(['get', 'post'], '/test/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'test'])->name('sending.server.test');
-                        Route::match(['get', 'post'], '/awsRegionHost', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'awsRegionHost'])->name('sending.server.awsRegionHost');
-                        Route::match(['get', 'post'], '/addDomain', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'addDomain'])->name('sending.server.addDomain');
-                        Route::match(['get', 'post'], '/removeDomain', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'removeDomain'])->name('sending.server.removeDomain');
-                        Route::match(['get', 'post'], '/fromDropbox/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'fromDropbox'])->name('sending.server.fromDropbox');
-                        Route::post('/config/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'config'])->name('sending.server.config');
-                    }
+                    Route::get('/sort', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'sort'])->name('sending.server.sort');
+                    Route::get('/listing', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'listing'])->name('sending.server.listing');
+                    Route::get('/enable', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'enable'])->name('sending.server.enable');
+                    Route::get('/disable', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'disable'])->name('sending.server.disable');
+                    Route::get('/delete', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'delete'])->name('sending.server.delete');
+                    Route::get('/select', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'select'])->name('sending.server.select');
+                    Route::get('/create', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'create'])->name('sending.server.create');
+                    Route::get('/edit/{id}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'edit'])->name('sending.server.edit');
+                    Route::match(['get', 'post'], '/sendingLimit', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'sendingLimit'])->name('sending.server.sendingLimit');
+                    Route::post('/store', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'store'])->name('sending.server.store');
+                    Route::patch('/update', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'update'])->name('sending.server.update');
+                    Route::match(['get', 'post'], '/testConnection/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'testConnection'])->name('sending.server.testConnection');
+                    Route::match(['get', 'post'], '/test/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'test'])->name('sending.server.test');
+                    Route::match(['get', 'post'], '/awsRegionHost', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'awsRegionHost'])->name('sending.server.awsRegionHost');
+                    Route::match(['get', 'post'], '/addDomain', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'addDomain'])->name('sending.server.addDomain');
+                    Route::match(['get', 'post'], '/removeDomain', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'removeDomain'])->name('sending.server.removeDomain');
+                    Route::match(['get', 'post'], '/fromDropbox/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'fromDropbox'])->name('sending.server.fromDropbox');
+                    Route::post('/config/{uid}', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'config'])->name('sending.server.config');
+                }
             );
             Route::get('sending/index', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'index'])->name('sending.server');
             Route::get('sending-server/index', [App\Http\Controllers\Mail\Admin\SendingServerController::class, 'index'])->name('sending.server.index');

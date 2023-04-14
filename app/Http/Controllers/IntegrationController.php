@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\c;
+use App\Models\EmailKit;
 use App\Models\Integration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,17 +19,57 @@ class IntegrationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth', 'verified']);
     }
-    
+
+    public function integration_email_create(Request $request)
+    {
+        $request->validate([
+            'host' => 'required',
+            'port' => 'required|numeric',
+            'username' => 'required|string',
+            'password' => 'required',
+            'encryption' => 'required|string',
+            'from_email' => 'required|email',
+            'from_name' => 'required|string',
+            'type' => 'required',
+        ]);
+
+        $kit = new EmailKit();
+        $kit->account_id = Auth::user()->id;
+        $kit->is_admin = false;
+        $kit->host = $request->host;
+        $kit->port = $request->port;
+        $kit->username = $request->username;
+        $kit->password = $request->password;
+        $kit->encryption = $request->encryption;
+        $kit->from_email = $request->from_email;
+        $kit->from_name = $request->from_name;
+        $kit->type = $request->type;
+        $kit->sent = 0;
+        $kit->bounced = 0;
+        $kit->save();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => $kit->type . ' Integration Created Successfully!'
+        ]);
+    }
+
+    public function integration_email_update(Request $request)
+    {
+    }
+
+    public function integration_email_delete(Request $request)
+    {
+    }
+
     public function integration_create(Request $request)
     {
         $integrations = Integration::where('user_id', Auth::user()->id)->get();
 
-        if($integrations->isEmpty())
-        {
-            if($request->type == 'Twilio')
-            {
+        if ($integrations->isEmpty()) {
+            if ($request->type == 'Twilio') {
                 //Validate Request
                 $this->validate($request, [
                     'sid' => ['required', 'string', 'max:255'],
@@ -47,10 +88,9 @@ class IntegrationController extends Controller
                 return back()->with([
                     'type' => 'success',
                     'message' => 'Twilio Integration Created Successfully!'
-                ]); 
+                ]);
             }
-            if($request->type == 'InfoBip')
-            {
+            if ($request->type == 'InfoBip') {
                 //Validate Request
                 $this->validate($request, [
                     'api_key' => ['required', 'string', 'max:255'],
@@ -67,10 +107,9 @@ class IntegrationController extends Controller
                 return back()->with([
                     'type' => 'success',
                     'message' => 'InfoBip Integration Created Successfully!'
-                ]); 
+                ]);
             }
-            if($request->type == 'NigeriaBulkSms')
-            {
+            if ($request->type == 'NigeriaBulkSms') {
                 //Validate Request
                 $this->validate($request, [
                     'username' => ['required', 'string', 'max:255'],
@@ -87,10 +126,9 @@ class IntegrationController extends Controller
                 return back()->with([
                     'type' => 'success',
                     'message' => 'NigeriaBulkSms Integration Created Successfully!'
-                ]); 
+                ]);
             }
-            if($request->type == 'Multitexter')
-            {
+            if ($request->type == 'Multitexter') {
                 //Validate Request
                 $this->validate($request, [
                     'email' => ['required', 'string', 'max:255'],
@@ -109,27 +147,26 @@ class IntegrationController extends Controller
                 return back()->with([
                     'type' => 'success',
                     'message' => 'Multitexter Integration Created Successfully!'
-                ]); 
+                ]);
             }
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Integration Not Found.'
-            ]); 
+            ]);
         } else {
             foreach ($integrations as $integration) {
                 $type[] = $integration->type;
             }
 
             // return $type;
-            
+
             if (in_array($request->type, $type) || in_array($request->type, $type) || in_array($request->type, $type) || in_array($request->type, $type)) {
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Integration added before.',
                 ]);
             } else {
-                if($request->type == 'Twilio')
-                {
+                if ($request->type == 'Twilio') {
                     //Validate Request
                     $this->validate($request, [
                         'sid' => ['required', 'string', 'max:255'],
@@ -148,10 +185,9 @@ class IntegrationController extends Controller
                     return back()->with([
                         'type' => 'success',
                         'message' => 'Twilio Integration Created Successfully!'
-                    ]); 
+                    ]);
                 }
-                if($request->type == 'InfoBip')
-                {
+                if ($request->type == 'InfoBip') {
                     //Validate Request
                     $this->validate($request, [
                         'api_key' => ['required', 'string', 'max:255'],
@@ -168,10 +204,9 @@ class IntegrationController extends Controller
                     return back()->with([
                         'type' => 'success',
                         'message' => 'InfoBip Integration Created Successfully!'
-                    ]); 
+                    ]);
                 }
-                if($request->type == 'NigeriaBulkSms')
-                {
+                if ($request->type == 'NigeriaBulkSms') {
                     //Validate Request
                     $this->validate($request, [
                         'username' => ['required', 'string', 'max:255'],
@@ -188,10 +223,9 @@ class IntegrationController extends Controller
                     return back()->with([
                         'type' => 'success',
                         'message' => 'NigeriaBulkSms Integration Created Successfully!'
-                    ]); 
+                    ]);
                 }
-                if($request->type == 'Multitexter')
-                {
+                if ($request->type == 'Multitexter') {
                     //Validate Request
                     $this->validate($request, [
                         'email' => ['required', 'string', 'max:255'],
@@ -210,12 +244,12 @@ class IntegrationController extends Controller
                     return back()->with([
                         'type' => 'success',
                         'message' => 'Multitexter Integration Created Successfully!'
-                    ]); 
+                    ]);
                 }
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Integration Not Found.'
-                ]); 
+                ]);
             }
         }
     }
@@ -226,8 +260,7 @@ class IntegrationController extends Controller
 
         $integration = Integration::findorfail($idFinder);
 
-        if($integration->type == 'Twilio')
-        {
+        if ($integration->type == 'Twilio') {
             //Validate Request
             $this->validate($request, [
                 'sid' => ['required', 'string', 'max:255'],
@@ -244,10 +277,9 @@ class IntegrationController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Twilio Integration Updated Successfully!'
-            ]); 
+            ]);
         }
-        if($integration->type == 'InfoBip')
-        {
+        if ($integration->type == 'InfoBip') {
             //Validate Request
             $this->validate($request, [
                 'api_key' => ['required', 'string', 'max:255'],
@@ -262,10 +294,9 @@ class IntegrationController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'InfoBip Integration Updated Successfully!'
-            ]); 
+            ]);
         }
-        if($integration->type == 'NigeriaBulkSms')
-        {
+        if ($integration->type == 'NigeriaBulkSms') {
             //Validate Request
             $this->validate($request, [
                 'username' => ['required', 'string', 'max:255'],
@@ -280,10 +311,9 @@ class IntegrationController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'NigeriaBulkSms Integration Updated Successfully!'
-            ]); 
+            ]);
         }
-        if($integration->type == 'Multitexter')
-        {
+        if ($integration->type == 'Multitexter') {
             //Validate Request
             $this->validate($request, [
                 'email' => ['required', 'email', 'max:255'],
@@ -300,12 +330,12 @@ class IntegrationController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Multitexter Integration Updated Successfully!'
-            ]); 
+            ]);
         }
         return back()->with([
             'type' => 'danger',
             'message' => "Integration doesn't exit."
-        ]); 
+        ]);
     }
 
     public function integration_enable($id)
@@ -320,8 +350,8 @@ class IntegrationController extends Controller
 
         return back()->with([
             'type' => 'success',
-            'message' => $integration->type.' Integration Enabled Successfully!'
-        ]); 
+            'message' => $integration->type . ' Integration Enabled Successfully!'
+        ]);
     }
 
     public function integration_disable($id)
@@ -336,8 +366,8 @@ class IntegrationController extends Controller
 
         return back()->with([
             'type' => 'success',
-            'message' => $integration->type.' Integration Disabled Successfully!'
-        ]); 
+            'message' => $integration->type . ' Integration Disabled Successfully!'
+        ]);
     }
 
     public function integration_delete($id, Request $request)
@@ -347,8 +377,7 @@ class IntegrationController extends Controller
             'delete_field' => ['required', 'string', 'max:255']
         ]);
 
-        if($request->delete_field == "DELETE")
-        {
+        if ($request->delete_field == "DELETE") {
             $idFinder = Crypt::decrypt($id);
 
             Integration::findorfail($idFinder)->delete();
@@ -356,12 +385,12 @@ class IntegrationController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Integration Deleted Successfully!'
-            ]); 
-        } 
+            ]);
+        }
 
         return back()->with([
             'type' => 'danger',
             'message' => "Field doesn't match, Try Again!"
-        ]); 
+        ]);
     }
 }

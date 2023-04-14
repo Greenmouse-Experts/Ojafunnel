@@ -66,37 +66,37 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    @foreach($integrations as $key => $integration)
+                                    @foreach($sms_integrations as $key => $sms_integration)
                                     <tbody>
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
-                                            <td>{{$integration->type}}</td>
+                                            <td>{{$sms_integration->type}}</td>
                                             <td>
-                                                @if($integration->status == 'Active')
-                                                <span class="text-success">{{$integration->status}}</span>
+                                                @if($sms_integration->status == 'Active')
+                                                <span class="text-success">{{$sms_integration->status}}</span>
                                                 @else
-                                                <span class="text-danger">{{$integration->status}}</span>
+                                                <span class="text-danger">{{$sms_integration->status}}</span>
                                                 @endif
                                             </td>
-                                            <td>{{$integration->created_at->toDayDateTimeString()}}</td>
+                                            <td>{{$sms_integration->created_at->toDayDateTimeString()}}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#View-{{$integration->id}}">View</a></li>
-                                                        @if($integration->status == 'Active')
-                                                        <li><a class="dropdown-item" href="{{route('user.integration.disable', Crypt::encrypt($integration->id))}}">Disable</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#View-{{$sms_integration->id}}">View</a></li>
+                                                        @if($sms_integration->status == 'Active')
+                                                        <li><a class="dropdown-item" href="{{route('user.integration.disable', Crypt::encrypt($sms_integration->id))}}">Disable</a></li>
                                                         @else
-                                                        <li><a class="dropdown-item" href="{{route('user.integration.enable', Crypt::encrypt($integration->id))}}">Enable</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('user.integration.enable', Crypt::encrypt($sms_integration->id))}}">Enable</a></li>
                                                         @endif
-                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#Edit-Update-{{$integration->id}}">Edit/Update</a></li>
-                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$integration->id}}">Delete</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#Edit-Update-{{$sms_integration->id}}">Edit/Update</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$sms_integration->id}}">Delete</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- Modal VIEW START -->
-                                                <div class="modal fade" id="View-{{$integration->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="View-{{$sms_integration->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content pb-3">
                                                             <div class="modal-header border-bottom-0">
@@ -106,14 +106,14 @@
                                                                 <div class="row">
                                                                     <div class="Editt">
                                                                         <div class="form">
-                                                                            @if($integration->type == 'Twilio')
+                                                                            @if($sms_integration->type == 'Twilio')
                                                                             <p><b>View Twilio Integrations</b></p>
                                                                             <div class="row">
                                                                                 <div class="col-lg-12">
                                                                                     <label>SID</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input readonly value="{{$integration->sid}}" class="input" readonly>
+                                                                                            <input readonly value="{{$sms_integration->sid}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -121,7 +121,7 @@
                                                                                     <label>Token</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input readonly value="{{$integration->token}}" class="input" readonly>
+                                                                                            <input readonly value="{{$sms_integration->token}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -129,7 +129,7 @@
                                                                                     <label>From</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input readonly value="{{$integration->from}}" class="input" readonly>
+                                                                                            <input readonly value="{{$sms_integration->from}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -141,14 +141,14 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            @elseif($integration->type == 'InfoBip')
+                                                                            @elseif($sms_integration->type == 'InfoBip')
                                                                             <p><b>View InfoBip Integrations</b></p>
                                                                             <div class="row">
                                                                                 <div class="col-lg-12">
                                                                                     <label>API KEY</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input value="{{$integration->api_key}}" class="input" readonly>
+                                                                                            <input value="{{$sms_integration->api_key}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -156,7 +156,7 @@
                                                                                     <label>API BASE URL</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input type="text" value="{{$integration->api_base_url}}" class="input" readonly>
+                                                                                            <input type="text" value="{{$sms_integration->api_base_url}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -168,14 +168,14 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            @elseif($integration->type == 'NigeriaBulkSms')
+                                                                            @elseif($sms_integration->type == 'NigeriaBulkSms')
                                                                             <p><b>View NigeriaBulkSms Integrations</b></p>
                                                                             <div class="row">
                                                                                 <div class="col-lg-12">
                                                                                     <label>Username</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input value="{{$integration->username}}" class="input" readonly>
+                                                                                            <input value="{{$sms_integration->username}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -183,7 +183,7 @@
                                                                                     <label>Password</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input value="{{$integration->password}}" class="input" readonly>
+                                                                                            <input value="{{$sms_integration->password}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -195,14 +195,14 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            @elseif($integration->type == 'Multitexter')
+                                                                            @elseif($sms_integration->type == 'Multitexter')
                                                                             <p><b>View Multitexter Integrations</b></p>
                                                                             <div class="row">
                                                                                 <div class="col-lg-12">
                                                                                     <label>Username</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input value="{{$integration->email}}" class="input" readonly>
+                                                                                            <input value="{{$sms_integration->email}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -210,7 +210,7 @@
                                                                                     <label>Password</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input value="{{$integration->password}}" class="input" readonly>
+                                                                                            <input value="{{$sms_integration->password}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -218,7 +218,7 @@
                                                                                     <label>API-KEY</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input value="{{$integration->api_key}}" class="input" readonly>
+                                                                                            <input value="{{$sms_integration->api_key}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -240,7 +240,7 @@
                                                 </div>
                                                 <!-- end VIEW modal -->
                                                 <!-- Modal VIEW START -->
-                                                <div class="modal fade" id="Edit-Update-{{$integration->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="Edit-Update-{{$sms_integration->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content pb-3">
                                                             <div class="modal-header border-bottom-0">
@@ -250,16 +250,16 @@
                                                                 <div class="row">
                                                                     <div class="Editt">
                                                                         <div class="form">
-                                                                            @if($integration->type == 'Twilio')
+                                                                            @if($sms_integration->type == 'Twilio')
                                                                             <p><b>Update Your Twilio Integrations</b></p>
                                                                             <div class="row">
-                                                                                <form method="POST" action="{{ route('user.integration.update', Crypt::encrypt($integration->id))}}">
+                                                                                <form method="POST" action="{{ route('user.integration.update', Crypt::encrypt($sms_integration->id))}}">
                                                                                     @csrf
                                                                                     <div class="col-lg-12">
                                                                                         <label>SID</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" value="{{$integration->sid}}" name="sid" class="input" required>
+                                                                                                <input type="text" value="{{$sms_integration->sid}}" name="sid" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -267,7 +267,7 @@
                                                                                         <label>Token</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" value="{{$integration->token}}" name="token" class="input" required>
+                                                                                                <input type="text" value="{{$sms_integration->token}}" name="token" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -275,7 +275,7 @@
                                                                                         <label>From</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" value="{{$integration->from}}" name="from" class="input" required>
+                                                                                                <input type="text" value="{{$sms_integration->from}}" name="from" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -293,16 +293,16 @@
                                                                                     </div>
                                                                                 </form>
                                                                             </div>
-                                                                            @elseif($integration->type == 'InfoBip')
+                                                                            @elseif($sms_integration->type == 'InfoBip')
                                                                             <p><b>Update Your InfoBip Integrations</b></p>
                                                                             <div class="row">
-                                                                                <form method="POST" action="{{ route('user.integration.update', Crypt::encrypt($integration->id))}}">
+                                                                                <form method="POST" action="{{ route('user.integration.update', Crypt::encrypt($sms_integration->id))}}">
                                                                                     @csrf
                                                                                     <div class="col-lg-12">
                                                                                         <label>API KEY</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" value="{{$integration->api_key}}" name="api_key" class="input" required>
+                                                                                                <input type="text" value="{{$sms_integration->api_key}}" name="api_key" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -310,7 +310,7 @@
                                                                                         <label>API BASE URL</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" value="{{$integration->api_base_url}}" name="api_base_url" class="input" required>
+                                                                                                <input type="text" value="{{$sms_integration->api_base_url}}" name="api_base_url" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -328,16 +328,16 @@
                                                                                     </div>
                                                                                 </form>
                                                                             </div>
-                                                                            @elseif($integration->type == 'NigeriaBulkSms')
+                                                                            @elseif($sms_integration->type == 'NigeriaBulkSms')
                                                                             <p><b>Update Your NigeriaBulkSms Integrations</b></p>
                                                                             <div class="row">
-                                                                                <form method="POST" action="{{ route('user.integration.update', Crypt::encrypt($integration->id))}}">
+                                                                                <form method="POST" action="{{ route('user.integration.update', Crypt::encrypt($sms_integration->id))}}">
                                                                                     @csrf
                                                                                     <div class="col-lg-12">
                                                                                         <label>Username</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" value="{{$integration->username}}" name="username" class="input" required>
+                                                                                                <input type="text" value="{{$sms_integration->username}}" name="username" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -345,7 +345,7 @@
                                                                                         <label>Password</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" value="{{$integration->password}}" name="password" class="input" required>
+                                                                                                <input type="text" value="{{$sms_integration->password}}" name="password" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -363,16 +363,16 @@
                                                                                     </div>
                                                                                 </form>
                                                                             </div>
-                                                                            @elseif($integration->type == 'Multitexter')
+                                                                            @elseif($sms_integration->type == 'Multitexter')
                                                                             <p><b>Update Your Multitexter Integrations</b></p>
                                                                             <div class="row">
-                                                                                <form method="POST" action="{{ route('user.integration.update', Crypt::encrypt($integration->id))}}">
+                                                                                <form method="POST" action="{{ route('user.integration.update', Crypt::encrypt($sms_integration->id))}}">
                                                                                     @csrf
                                                                                     <div class="col-lg-12">
                                                                                         <label>Email</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="email" value="{{$integration->email}}" name="email" class="input" required>
+                                                                                                <input type="email" value="{{$sms_integration->email}}" name="email" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -380,7 +380,7 @@
                                                                                         <label>Password</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" value="{{$integration->password}}" name="password" class="input" required>
+                                                                                                <input type="text" value="{{$sms_integration->password}}" name="password" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -388,7 +388,7 @@
                                                                                         <label>API KEY</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
-                                                                                                <input type="text" value="{{$integration->api_key}}" name="api_key" class="input" required>
+                                                                                                <input type="text" value="{{$sms_integration->api_key}}" name="api_key" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -416,7 +416,7 @@
                                                 </div>
                                                 <!-- end VIEW modal -->
                                                 <!-- Modal START -->
-                                                <div class="modal fade" id="delete-{{$integration->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="delete-{{$sms_integration->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content pb-3">
                                                             <div class="modal-header border-bottom-0">
@@ -425,13 +425,13 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        <form method="POST" action="{{ route('user.integration.delete', Crypt::encrypt($integration->id))}}">
+                                                                        <form method="POST" action="{{ route('user.integration.delete', Crypt::encrypt($sms_integration->id))}}">
                                                                             @csrf
                                                                             <div class="form">
                                                                                 <p><b>Delete Contact</b></p>
                                                                                 <div class="row">
                                                                                     <div class="col-lg-12">
-                                                                                        <p>This action cannot be undone. </p> <p>This will permanently delete {{$integration->type}} integration.</p>
+                                                                                        <p>This action cannot be undone. </p> <p>This will permanently delete {{$sms_integration->type}} integration.</p>
                                                                                         <label>Please type DELETE to confirm.</label>
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
@@ -466,6 +466,60 @@
                     </div>
                 </div>
                 <!--end col-->
+            </div> 
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">All Email Gateways Created</h4>
+                            <div class="table-responsive">
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                    <thead class="tread">
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Name</th>
+                                            <th>Host</th>
+                                            <th>Port</th>
+                                            <th>Userrname</th>
+                                            <th>Password</th>
+                                            <th>Encryption</th>
+                                            <th>From-Email</th>
+                                            <th>From-Name</th>
+                                            <th>Sent</th>
+                                            <th>Bounced</th>
+                                            <th>Date Created</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead> 
+                                    <tbody>
+                                        @forelse ($email_integrations as $email_integration)
+                                            <tr>
+                                                <td>{{ $loop->index + 1 }}</td>
+                                                <td>{{ $email_integration->type }}</td>
+                                                <td>{{ $email_integration->host }}</td>
+                                                <td>{{ $email_integration->port }}</td>
+                                                <td>{{ $email_integration->username }}</td>
+                                                <td>{{ '**********************' }}</td>
+                                                <td>{{ $email_integration->encryption }}</td>
+                                                <td>{{ $email_integration->from_email }}</td>
+                                                <td>{{ $email_integration->from_name }}</td>
+                                                <td>{{ $email_integration->sent }}</td>
+                                                <td>{{ $email_integration->bounced }}</td>
+                                                <td>{{ $email_integration->created_at->toDayDateTimeString() }}</td>
+                                                <td>
+                                                    ...
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            {{ 'No email gateway at the moment' }}
+                                        @endforelse 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

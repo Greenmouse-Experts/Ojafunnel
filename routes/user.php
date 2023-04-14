@@ -10,19 +10,24 @@ Route::prefix('user')->group(function () {
     // Profile
     Route::post('/profile/update', [App\Http\Controllers\ProfileController::class, 'profile_update'])->name('user.profile.update');
     Route::post('/password/update', [App\Http\Controllers\ProfileController::class, 'password_update'])->name('user.password.update');
-    
+
     // Email Campaign
     Route::post('/email/campaign/checker', [App\Http\Controllers\EmailCampaignController::class, 'email_campaign_checker'])->name('user.email.campaign.checker');
 
     // SMS Automation
     Route::post('/sms/sendmessage/campaign', [App\Http\Controllers\SmsAutomationController::class, 'sms_sendmessage_campaign'])->name('user.sms.sendmessage.campaign');
 
-    // Intgration
+    // Intgration - sms
     Route::post('/integration/create', [App\Http\Controllers\IntegrationController::class, 'integration_create'])->name('user.integration.create');
     Route::post('/integration/update/{id}', [App\Http\Controllers\IntegrationController::class, 'integration_update'])->name('user.integration.update');
     Route::get('/integration/enable/{id}', [App\Http\Controllers\IntegrationController::class, 'integration_enable'])->name('user.integration.enable');
     Route::get('/integration/disable/{id}', [App\Http\Controllers\IntegrationController::class, 'integration_disable'])->name('user.integration.disable');
     Route::post('/integration/delete/{id}', [App\Http\Controllers\IntegrationController::class, 'integration_delete'])->name('user.integration.delete');
+
+    // Intgration - email
+    Route::post('/integration/email/create', [App\Http\Controllers\IntegrationController::class, 'integration_email_create'])->name('user.integration.email.create');
+    Route::post('/integration/email/update/{id}', [App\Http\Controllers\IntegrationController::class, 'integration_email_update'])->name('user.integration.email.update');
+    Route::post('/integration/email/delete/{id}', [App\Http\Controllers\IntegrationController::class, 'integration_email_delete'])->name('user.integration.email.delete');
 
     // Subscribers
     Route::post('/subscriber/mailing/create', [App\Http\Controllers\SubscriberController::class, 'subscriber_mailing_create'])->name('user.subscriber.mailing.create');
@@ -109,4 +114,4 @@ Route::prefix('user')->group(function () {
 
     // Birthday Automation
     Route::post('/update-birthday/{id}', [App\Http\Controllers\BirthdayController::class, 'update_birthday'])->name('user.update.birthday');
-}); 
+});

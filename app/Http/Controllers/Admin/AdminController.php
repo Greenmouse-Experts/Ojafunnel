@@ -2,44 +2,45 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\BirthdayAutomation;
-use App\Models\OjafunnelMailSupport;
-use App\Models\ReplyMailSupport;
-use App\Models\SmsCampaign;
-use App\Models\StoreOrder;
-use App\Models\StoreProduct;
-use App\Models\User;
+use Carbon\Carbon;
 use App\Models\Faq;
-use App\Models\ContactUs;
-use App\Models\Category;
-use App\Models\Course;
-use App\Models\Message;
-use App\Models\MessageUser;
-use App\Models\OjafunnelNotification;
-use App\Models\OjaPlan;
-use App\Models\OjaPlanInterval;
-use App\Models\OrderItem;
 use App\Models\Page;
 use App\Models\Shop;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\Course;
+use App\Models\Message;
+use App\Models\OjaPlan;
+use App\Models\Category;
+use App\Models\EmailKit;
+use App\Models\ContactUs;
+use App\Models\OrderItem;
 use App\Models\ShopOrder;
-use App\Models\Transaction;
-use App\Models\WhatsappNumber;
+use App\Models\StoreOrder;
 use App\Models\Withdrawal;
-use Illuminate\Http\Request;
+use App\Models\MessageUser;
+use App\Models\SmsCampaign;
+use App\Models\Transaction;
+use App\Models\WaCampaigns;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Auth;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
-use Illuminate\Support\Facades\Crypt;
+use App\Models\StoreProduct;
+use Illuminate\Http\Request;
+use App\Models\WhatsappNumber;
+use App\Models\OjaPlanInterval;
+use App\Models\WhatsappSupport;
+use App\Models\ReplyMailSupport;
+use App\Models\BirthdayAutomation;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use App\Models\OjafunnelMailSupport;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use App\Models\OjafunnelNotification;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
-use App\Models\WaCampaigns;
-use App\Models\WhatsappSupport;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class AdminController extends Controller
 {
@@ -435,6 +436,20 @@ class AdminController extends Controller
         return $allMessages;
     }
 
+    public function view_email_kits()
+    {
+        $admin_email_integrations = EmailKit::latest()->where(['account_id' => Auth::guard('admin')->user()->id, 'is_admin' => true])->get();
+
+        return view('Admin.email-marketing.email-kits.index', [
+            'admin_email_integrations' => $admin_email_integrations
+        ]);
+    }
+
+    public function view_email_campaigns()
+    {
+        return view('Admin.email-marketing.email-campaigns.index');
+    }
+
     public function sms_automation()
     {
         $smsAutomations = SmsCampaign::latest()->where('sms_type', 'plain')->get();
@@ -443,8 +458,8 @@ class AdminController extends Controller
 
     public function whatsapp_automation()
     {
-        $whatsappAutomations = SmsCampaign::latest()->where('sms_type', 'whatsapp')->get();
-        return view('Admin.automation.whatsappAutomation', compact('whatsappAutomations'));
+        $whatsapp_campaigns = WaCampaigns::latest()->get();
+        return view('Admin.automation.whatsappAutomation', compact('whatsapp_campaigns'));
     }
 
     public function integration()
@@ -1196,8 +1211,8 @@ class AdminController extends Controller
 
     public function add_plan(Request $request)
     {
-         //Validate Request
-         $this->validate($request, [
+        //Validate Request
+        $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required'],
         ]);
@@ -1210,13 +1225,13 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Plan added successfully.',
-        ]); 
+        ]);
     }
 
     public function update_plan($id, Request $request)
     {
-         //Validate Request
-         $this->validate($request, [
+        //Validate Request
+        $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required'],
         ]);
@@ -1233,7 +1248,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Plan updated successfully.',
-        ]); 
+        ]);
     }
 
     public function delete_plan($id)
@@ -1244,10 +1259,8 @@ class AdminController extends Controller
 
         $interval = OjaPlanInterval::where('plan_id', $plan->id)->get();
 
-        if($interval->count() > 0)
-        {
-            foreach($interval as $inter)
-            {
+        if ($interval->count() > 0) {
+            foreach ($interval as $inter) {
                 $inter->delete();
             }
         }
@@ -1256,7 +1269,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Plan deleted successfully.',
-        ]); 
+        ]);
     }
 
     public function enable_plan($id)
@@ -1272,7 +1285,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Plan enabled successfully.',
-        ]); 
+        ]);
     }
 
     public function disable_plan($id)
@@ -1288,7 +1301,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Plan disabled successfully.',
-        ]); 
+        ]);
     }
 
     public function plan_interval($id)
@@ -1308,8 +1321,7 @@ class AdminController extends Controller
 
         $plan = OjaPlan::find($finder);
 
-        if($request->currency == 'NGN')
-        {
+        if ($request->currency == 'NGN') {
             OjaPlanInterval::create([
                 'plan_id' => $plan->id,
                 'price' => $request->price,
@@ -1319,8 +1331,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'USD')
-        {
+        if ($request->currency == 'USD') {
             OjaPlanInterval::create([
                 'plan_id' => $plan->id,
                 'price' => $request->price,
@@ -1330,8 +1341,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'EUR')
-        {
+        if ($request->currency == 'EUR') {
             OjaPlanInterval::create([
                 'plan_id' => $plan->id,
                 'price' => $request->price,
@@ -1341,8 +1351,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'INR')
-        {
+        if ($request->currency == 'INR') {
             OjaPlanInterval::create([
                 'plan_id' => $plan->id,
                 'price' => $request->price,
@@ -1352,8 +1361,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'PKR')
-        {
+        if ($request->currency == 'PKR') {
             OjaPlanInterval::create([
                 'plan_id' => $plan->id,
                 'price' => $request->price,
@@ -1363,8 +1371,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'AED')
-        {
+        if ($request->currency == 'AED') {
             OjaPlanInterval::create([
                 'plan_id' => $plan->id,
                 'price' => $request->price,
@@ -1374,8 +1381,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'BRL')
-        {
+        if ($request->currency == 'BRL') {
             OjaPlanInterval::create([
                 'plan_id' => $plan->id,
                 'price' => $request->price,
@@ -1385,8 +1391,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'MYR')
-        {
+        if ($request->currency == 'MYR') {
             OjaPlanInterval::create([
                 'plan_id' => $plan->id,
                 'price' => $request->price,
@@ -1396,8 +1401,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'SGD')
-        {
+        if ($request->currency == 'SGD') {
             OjaPlanInterval::create([
                 'plan_id' => $plan->id,
                 'price' => $request->price,
@@ -1407,8 +1411,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'EUR')
-        {
+        if ($request->currency == 'EUR') {
             OjaPlanInterval::create([
                 'plan_id' => $plan->id,
                 'price' => $request->price,
@@ -1422,7 +1425,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Plan interval added successfully.',
-        ]); 
+        ]);
     }
 
     public function update_plan_interval($id, Request $request)
@@ -1431,8 +1434,7 @@ class AdminController extends Controller
 
         $interval = OjaPlanInterval::find($finder);
 
-        if($request->currency == 'NGN')
-        {
+        if ($request->currency == 'NGN') {
             $interval->update([
                 'price' => $request->price,
                 'type' => $request->type,
@@ -1441,8 +1443,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'USD')
-        {
+        if ($request->currency == 'USD') {
             $interval->update([
                 'price' => $request->price,
                 'type' => $request->type,
@@ -1451,8 +1452,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'EUR')
-        {
+        if ($request->currency == 'EUR') {
             $interval->update([
                 'price' => $request->price,
                 'type' => $request->type,
@@ -1461,8 +1461,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'INR')
-        {
+        if ($request->currency == 'INR') {
             $interval->update([
                 'price' => $request->price,
                 'type' => $request->type,
@@ -1471,8 +1470,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'PKR')
-        {
+        if ($request->currency == 'PKR') {
             $interval->update([
                 'price' => $request->price,
                 'type' => $request->type,
@@ -1481,8 +1479,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'AED')
-        {
+        if ($request->currency == 'AED') {
             $interval->update([
                 'price' => $request->price,
                 'type' => $request->type,
@@ -1491,8 +1488,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'BRL')
-        {
+        if ($request->currency == 'BRL') {
             $interval->update([
                 'price' => $request->price,
                 'type' => $request->type,
@@ -1501,8 +1497,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'MYR')
-        {
+        if ($request->currency == 'MYR') {
             $interval->update([
                 'price' => $request->price,
                 'type' => $request->type,
@@ -1511,8 +1506,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'SGD')
-        {
+        if ($request->currency == 'SGD') {
             $interval->update([
                 'price' => $request->price,
                 'type' => $request->type,
@@ -1521,8 +1515,7 @@ class AdminController extends Controller
             ]);
         }
 
-        if($request->currency == 'EUR')
-        {
+        if ($request->currency == 'EUR') {
             $interval->update([
                 'price' => $request->price,
                 'type' => $request->type,
@@ -1535,7 +1528,7 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Plan interval updated successfully.',
-        ]); 
+        ]);
     }
 
     public function delete_plan_interval($id)
@@ -1547,7 +1540,6 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Plan interval deleted successfully.',
-        ]); 
+        ]);
     }
-
 }

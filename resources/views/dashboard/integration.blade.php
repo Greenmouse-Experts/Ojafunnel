@@ -124,6 +124,76 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="Edit" id="email">
+                        <div class="form">
+                            <div class="row">
+                                <p class="tell mb-4">
+                                    <b>
+                                        Email Gateways - Your integration starter kit
+                                    </b>
+                                </p>
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="circle">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668076174/OjaFunnel-Images/download_2_ynzs6z.jpg" draggable="false" alt="">
+                                                <span class="text-dark">AWS SES</span>
+                                            </div>
+                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#EmailAWS">
+                                                <input type="radio" name="sms_gateways" value="EmailAWS">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="circle">
+                                                <img src="{{URL::asset('assets/images/sendgrid.png')}}" style="height: 50px; width: 100px" draggable="false" alt="">
+                                                <span class="text-dark">SendGrid</span>
+                                            </div>
+                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#EmailSendgrid">
+                                                <input type="radio"  name="sms_gateways" value="EmailSendgrid">
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-md-4">
+                                            <div class="circle">
+                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1668075784/OjaFunnel-Images/images_fwr3hr.jpg" draggable="false" alt="">
+                                                <span class="text-dark">Mandrill</span>
+                                            </div>
+                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#InfoBip">
+                                                <input type="radio" name="sms_gateways" value="InfoBip">
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-md-4">
+                                            <div class="circle">
+                                                <img src="{{URL::asset('assets/images/sendinblue.png')}}" style="height: 50px; width: 100px" draggable="false" alt="">
+                                                <span class="text-dark">Sendinblue</span>
+                                            </div>
+                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#EmailSendinblue">
+                                                <input type="radio" name="sms_gateways" value="EmailSendinblue">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="circle">
+                                                <img src="{{URL::asset('assets/images/sendpulse.png')}}" style="height: 50px; width: 100px" draggable="false" alt="">
+                                                <span class="text-dark">SendPulse</span>
+                                            </div>
+                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#EmailSendPulse">
+                                                <input type="radio" name="sms_gateways" value="EmailSendPulse">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="circle"> 
+                                                <img src="{{URL::asset('assets/images/mailjet.png')}}" style="height: 50px; width: 100px" draggable="false" alt="">
+                                                <span class="text-dark">Mailjet</span>
+                                            </div>
+                                            <div class="zazu" data-bs-toggle="modal" data-bs-target="#EmailMailjet">
+                                                <input type="radio" name="sms_gateways" value="EmailMailjet">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- <div class="col-lg-2">
                 </div> -->
@@ -429,7 +499,7 @@
                                     <label>Email</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="email" placeholder="Your multitexter username" name="email" class="input" required>
+                                            <input type="text" placeholder="Your multitexter username" name="email" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -471,6 +541,482 @@
     </div>
 </div>
 <!--Multitexter end modal -->
+
+<!-- Emails modal -->
+<div class="modal fade" id="EmailAWS" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Provide Us Your AWS SES integration Starter Kit
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="POST" action="{{ route('user.integration.email.create')}}">
+                            @csrf
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label>Host</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your AWS SES SMTP Host" name="host" class="input" required>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-12">
+                                    <label>Username</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your AWS SES SMTP Username" name="username" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Password</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your AWS SES SMTP Password" name="password" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Port</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your AWS SES SMTP Port" name="port" class="input" readonly value="587"> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Encryption</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your AWS SES SMTP Encryption" name="encryption" class="input" readonly value="tls">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mail FROM</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your AWS SES SMTP MAIL FROM" name="from_email" class="input" required>
+                                            <span style="color: green">Must be the verified domain on AWS SES</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mail FROM-NAME</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Brand Name" name="from_name" class="input" required>
+                                        </div>
+                                    </div> 
+                                </div> 
+                                <input type="hidden" name="type" value="AWS SES" required>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div class="modal fade" id="EmailSendgrid" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Provide Us Your SendGrid integration Starter Kit
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="POST" action="{{ route('user.integration.email.create')}}">
+                            @csrf
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label>Host</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendGrid SMTP Host" name="host" class="input" required>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-12">
+                                    <label>Username</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendGrid SMTP Username" name="username" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Password</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendGrid SMTP Password" name="password" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Port</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendGrid SMTP Port" name="port" class="input" readonly value="587"> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Encryption</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendGrid SMTP Encryption" name="encryption" class="input" readonly value="tls">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mail FROM</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendGrid SMTP MAIL FROM" name="from_email" class="input" required>
+                                            <span style="color: green">Must be the verified domain on SendGrid</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mail FROM-NAME</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Brand Name" name="from_name" class="input" required>
+                                        </div>
+                                    </div> 
+                                </div> 
+                                <input type="hidden" name="type" value="Sendgrid" required>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="EmailSendinblue" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Provide Us Your Sendinblue integration Starter Kit
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="POST" action="{{ route('user.integration.email.create')}}">
+                            @csrf
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label>Host</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Sendinblue SMTP Host" name="host" class="input" required>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-12">
+                                    <label>Username</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Sendinblue SMTP Username" name="username" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Password</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Sendinblue SMTP Password" name="password" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Port</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Sendinblue SMTP Port" name="port" class="input" readonly value="587"> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Encryption</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Sendinblue SMTP Encryption" name="encryption" class="input" readonly value="tls">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mail FROM</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Sendinblue SMTP MAIL FROM" name="from_email" class="input" required>
+                                            <span style="color: green">Must be the verified domain on Sendinblue</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mail FROM-NAME</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Brand Name" name="from_name" class="input" required>
+                                        </div>
+                                    </div> 
+                                </div> 
+                                <input type="hidden" name="type" value="Sendinblue" required>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="EmailSendPulse" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Provide Us Your SendPulse integration Starter Kit
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="POST" action="{{ route('user.integration.email.create')}}">
+                            @csrf
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label>Host</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendPulse SMTP Host" name="host" class="input" required>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-12">
+                                    <label>Username</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendPulse SMTP Username" name="username" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Password</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendPulse SMTP Password" name="password" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Port</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendPulse SMTP Port" name="port" class="input" readonly value="587"> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Encryption</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendPulse SMTP Encryption" name="encryption" class="input" readonly value="tls">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mail FROM</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your SendPulse SMTP MAIL FROM" name="from_email" class="input" required>
+                                            <span style="color: green">Must be the verified domain on SendPulse</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mail FROM-NAME</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Brand Name" name="from_name" class="input" required>
+                                        </div>
+                                    </div> 
+                                </div> 
+                                <input type="hidden" name="type" value="SendPulse" required>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="EmailMailjet" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Provide Us Your Mailjet integration Starter Kit
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="POST" action="{{ route('user.integration.email.create')}}">
+                            @csrf
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label>Host</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Mailjet SMTP Host" name="host" class="input" required>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-12">
+                                    <label>Username</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Mailjet SMTP Username" name="username" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Password</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Mailjet SMTP Password" name="password" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Port</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Mailjet SMTP Port" name="port" class="input" readonly value="587"> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Encryption</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Mailjet SMTP Encryption" name="encryption" class="input" readonly value="tls">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mail FROM</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Mailjet SMTP MAIL FROM" name="from_email" class="input" required>
+                                            <span style="color: green">Must be the verified domain on Mailjet</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mail FROM-NAME</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Your Brand Name" name="from_name" class="input" required>
+                                        </div>
+                                    </div> 
+                                </div> 
+                                <input type="hidden" name="type" value="Mailjet" required>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- END layout-wrapper -->
 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
