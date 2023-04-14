@@ -42,6 +42,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
+use App\Models\EmailKit;
 use App\Models\OjaSubscription;
 use App\Models\SmsQueue;
 
@@ -1874,11 +1875,13 @@ class DashboardController extends Controller
 
     public function manage_integration($username)
     {
-        $integrations = Integration::latest()->where('user_id', Auth::user()->id)->get();
+        $sms_integrations = Integration::latest()->where('user_id', Auth::user()->id)->get();
+        $email_integrations = EmailKit::latest()->where(['account_id' => Auth::user()->id, 'is_admin' => false])->get();
 
         return view('dashboard.manageintegration', [
             'username' => $username,
-            'integrations' => $integrations
+            'sms_integrations' => $sms_integrations,
+            'email_integrations' => $email_integrations,
         ]);
     }
 

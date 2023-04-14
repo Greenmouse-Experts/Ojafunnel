@@ -41,32 +41,25 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Sending</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{route('sending.server')}}" key="t-full-calendar">Sending Server</a></li>
-                                <li><a href="{{route('main.bounce')}}" key="t-full-calendar">Bounce Handlers</a></li>
-                                <li><a href="{{route('main.email')}}" key="t-full-calendar">Email verification servers</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Report</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{route('backlist.log')}}" key="t-full-calendar">Backlist</a></li>
-                                <li><a href="{{route('delivery.log')}}" key="t-full-calendar">Delivery log</a></li>
-                                <li><a href="{{route('bounce.log')}}" key="t-full-calendar">Bounce Log</a></li>
-                                <li><a href="{{route('open.log')}}" key="t-full-calendar">Open Log</a></li>
-                                <li><a href="{{route('click.log')}}" key="t-full-calendar">Click Log</a></li>
-                                <li><a href="{{route('unsubscribe.log')}}" key="t-full-calendar">Unsubcribe Log</a></li>
-                            </ul>
+                            <a href="{{ route('admin.email-marketing.email-kits') }}" key="t-tui-calendar">
+                            Email Kits
+                            </a>
                         </li>
                         {{-- <li>
-                            <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Setting</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{route('setting.general')}}" key="t-full-calendar">All Setting</a></li>
-                                <li><a href="{{route('payment.gateway')}}" key="t-full-calendar">Payment Gateway</a></li>
-                                <li><a href="{{route('plugin')}}" key="t-full-calendar">Plugins</a></li>
-                            </ul>
+                            <a href="/test-2" key="t-tui-calendar">
+                                Email Templates
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/test-3" key="t-tui-calendar">
+                                Email Lists
+                            </a>
                         </li> --}}
+                        <li>
+                            <a href="{{ route('admin.email-marketing.email-campaigns') }}" key="t-tui-calendar">
+                                Email Campaigns
+                            </a>
+                        </li> 
                     </ul>
                 </li>
                 <li>
