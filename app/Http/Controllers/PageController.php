@@ -244,25 +244,6 @@ class PageController extends Controller
             'type' => 'success',
             'message' => 'Page Updated Successfully!'
         ]);
-
-        // $idFinder = Crypt::decrypt($id);
-        // $page = Page::find($idFinder);
-
-        // $file = $page_name . '.html';
-
-        // if ($page->name != $file) {
-        //     $page = Page::where(['slug' => $page->slug, 'name' => $file]);
-
-        //     if ($page->exists()) {
-        //         return back()->with([
-        //             'type' => 'danger',
-        //             'message' => 'Page name already exists on the sub domain.'
-        //         ]);
-        //     }
-        // }
-
-        // $disk = public_path('pageBuilder/' . $page->slug . '/' . $page->name);
-        // rename($disk, public_path('pageBuilder/' . $page->slug . '/' . $file));
     }
 
     public function page_builder_delete($id, Request $request)

@@ -618,15 +618,23 @@ Route::prefix('{username}')->group(function () {
                     // Route::get('/create-course/enroll-cur', [App\Http\Controllers\DashboardController::class, 'enroll_cur'])->name('user.enroll.cur');
                 }
             );
+
             // email marketing
             Route::prefix('/email-marketing')->group(
                 function () {
                     Route::get('/email-kits', [App\Http\Controllers\EmailMarketingController::class, 'email_kits'])->name('user.email-marketing.email.kits');
                     Route::get('/email-templates', [App\Http\Controllers\EmailMarketingController::class, 'email_templates'])->name('user.email-marketing.email.templates');
+                    Route::get('/email-templates/choose-temp', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_choose_temp'])->name('user.email-marketing.email.templates.choose-temp');
+                    Route::get('/email-templates/view-temp', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_view_temp'])->name('user.email-marketing.email.templates.view-temp');
+                    Route::post('/email-templates/create', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_create'])->name('user.email-marketing.email.templates.create');
+                    Route::post('/email-templates/delete', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_delete'])->name('user.email-marketing.email.templates.delete');
+                    Route::get('/email-templates/editor/{id}', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_editor'])->name('user.email-marketing.email.templates.editor');
+                    Route::post('/email-templates/editor/save', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_editor_save'])->name('user.email-marketing.email.templates.editor.save');
                     Route::get('/email-lists', [App\Http\Controllers\EmailMarketingController::class, 'email_lists'])->name('user.email-marketing.email.lists');
                     Route::get('/email-campaigns', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns'])->name('user.email-marketing.email.campaigns');
                 }
             );
+
             Route::get('/affiliate-marketing', [App\Http\Controllers\DashboardController::class, 'affiliate_marketing'])->name('user.affiliate.marketing');
             Route::get('/integration', [App\Http\Controllers\DashboardController::class, 'integration'])->name('user.integration');
             Route::get('/manage-integration', [App\Http\Controllers\DashboardController::class, 'manage_integration'])->name('user.manage_integration');
