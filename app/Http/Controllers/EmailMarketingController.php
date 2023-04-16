@@ -218,6 +218,7 @@ class EmailMarketingController extends Controller
         ]);
     }
 
+
     public function create_email_list(Request $request)
     {
         return view('dashboard.email-marketing.email-lists.create', []);
@@ -395,5 +396,11 @@ class EmailMarketingController extends Controller
             //     'from_name'    => $email_kit->from_name,
             // ], 'obafunsoridwanadebayo17@gmail.com', new TestMail());
         }
+    }
+
+    // sanitize, remove double dot .. and remove get parameters if any
+    function sanitizeName($name)
+    {
+        return preg_replace('@\?.*$@', '', preg_replace('@\.{2,}@', '', preg_replace('@[^\/\\a-zA-Z0-9\-\._]@', '', $name)));
     }
 }

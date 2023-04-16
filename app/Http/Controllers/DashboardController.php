@@ -63,58 +63,7 @@ class DashboardController extends Controller
     {
         return view('dashboard.dashboard');
     }
-
-    public function email_checker($username)
-    {
-        return view('dashboard.emailChecker', [
-            'username' => $username
-        ]);
-    }
-
-    public function email_campaign($username)
-    {
-        return view('dashboard.emailCampaign', [
-            'username' => $username
-        ]);
-    }
-    public function email_list_index($username)
-    {
-        return view('dashboard.email.lists.index', [
-            'username' => $username
-        ]);
-    }
-    public function create_email_list($username)
-    {
-        return view('dashboard.email.lists.create', [
-            'username' => $username
-        ]);
-    }
-    public function email_code($username)
-    {
-        return view('dashboard.emailcode', [
-            'username' => $username
-        ]);
-    }
-    public function email_design($username)
-    {
-        return view('dashboard.emailDesign', [
-            'username' => $username
-        ]);
-    }
-    public function email_preview($username)
-    {
-        return view('dashboard.emailpreview', [
-            'username' => $username
-        ]);
-    }
-
-    public function list_performance($username)
-    {
-        return view('dashboard.listPerformance', [
-            'username' => $username
-        ]);
-    }
-
+    
     public function list_setting($username)
     {
         return view('dashboard.listSetting', [

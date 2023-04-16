@@ -153,13 +153,6 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/view-message', [App\Http\Controllers\DashboardController::class, 'view_message'])->name('user.view.message');
                 }
             );
-            // Email Marketing
-            Route::prefix('/email-marketing')->group(
-                function () {
-                    Route::get('/list', [App\Http\Controllers\DashboardController::class, 'email_list_index'])->name('user.email.marketing.list');
-                    Route::get('/create-list', [App\Http\Controllers\DashboardController::class, 'create_email_list'])->name('user.email.marketing.create.list');
-                }
-            );
             Route::prefix('/funnel-builder')->group(
                 function () {
                     Route::get('/choose-temp', [App\Http\Controllers\DashboardController::class, 'choose_temp'])->name('user.choose.temp');
