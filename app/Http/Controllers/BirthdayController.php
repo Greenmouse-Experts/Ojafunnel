@@ -13,6 +13,7 @@ use App\Models\BirthdayWAQueue;
 use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\DB;
 use App\Models\BirthdayContactList;
+use App\Models\OjaPlanParameter;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -179,6 +180,13 @@ class BirthdayController extends Controller
 
     public function create_list(Request $request)
     {
+        if(\App\Models\BirthdayContactList::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->birthday_contact_list)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
         $bl = new BirthdayContactList();
         $bl->name = $request->name;
         $bl->status = $request->status;
@@ -220,6 +228,14 @@ class BirthdayController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
         ]);
+
+        if(\App\Models\BirthdayAutomation::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->birthday_automation)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
 
         if ($request->automation == 'whatsapp automation') {
             $request->validate([

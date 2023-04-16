@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\EmailMarketingController;
 use App\Http\Controllers\OjafunnelNotificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,9 +11,6 @@ Route::prefix('user')->group(function () {
     // Profile
     Route::post('/profile/update', [App\Http\Controllers\ProfileController::class, 'profile_update'])->name('user.profile.update');
     Route::post('/password/update', [App\Http\Controllers\ProfileController::class, 'password_update'])->name('user.password.update');
-
-    // Email Campaign
-    Route::post('/email/campaign/checker', [App\Http\Controllers\EmailCampaignController::class, 'email_campaign_checker'])->name('user.email.campaign.checker');
 
     // SMS Automation
     Route::post('/sms/sendmessage/campaign', [App\Http\Controllers\SmsAutomationController::class, 'sms_sendmessage_campaign'])->name('user.sms.sendmessage.campaign');
@@ -114,4 +112,16 @@ Route::prefix('user')->group(function () {
 
     // Birthday Automation
     Route::post('/update-birthday/{id}', [App\Http\Controllers\BirthdayController::class, 'update_birthday'])->name('user.update.birthday');
-});
+
+
+    // Email Marketing
+    Route::post('/email/create/list', [EmailMarketingController::class, 'email_create_list'])->name('user.email.create.list');
+    Route::get('/email/list/view/{id}', [EmailMarketingController::class, 'view_list'])->name('user.email.view.list');
+    Route::get('/email/list/edit/{id}', [EmailMarketingController::class, 'edit_list'])->name('user.email.edit.list');
+    Route::post('/email/list/update/{id}', [EmailMarketingController::class, 'update_list'])->name('user.email.update.list');
+    Route::get('/email/list/enable/{id}', [EmailMarketingController::class, 'email_enable_list'])->name('user.email.enable.list');
+    Route::get('/email/list/disabled/{id}', [EmailMarketingController::class, 'email_disable_list'])->name('user.email.disable.list');
+    Route::post('/email/create/contact', [EmailMarketingController::class, 'email_create_contact'])->name('user.email.create.contact');
+    Route::get('/email/contact/edit/{id}', [EmailMarketingController::class, 'edit_contact'])->name('user.email.edit.contact');
+    Route::post('/email/contact/update/{id}', [EmailMarketingController::class, 'update_contact'])->name('user.email.update.contact');
+}); 

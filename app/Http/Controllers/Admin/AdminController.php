@@ -4,21 +4,24 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\Faq;
+use App\Models\ContactUs;
+use App\Models\Category;
+use App\Models\Course;
+use App\Models\Message;
+use App\Models\MessageUser;
+use App\Models\OjafunnelNotification;
+use App\Models\OjaPlan;
+use App\Models\OjaPlanInterval;
+use App\Models\OjaPlanParameter;
+use App\Models\OrderItem;
 use App\Models\Page;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\Admin;
-use App\Models\Course;
-use App\Models\Message;
-use App\Models\OjaPlan;
-use App\Models\Category;
 use App\Models\EmailKit;
-use App\Models\ContactUs;
-use App\Models\OrderItem;
 use App\Models\ShopOrder;
 use App\Models\StoreOrder;
 use App\Models\Withdrawal;
-use App\Models\MessageUser;
 use App\Models\SmsCampaign;
 use App\Models\Transaction;
 use App\Models\WaCampaigns;
@@ -27,7 +30,6 @@ use Illuminate\Support\Str;
 use App\Models\StoreProduct;
 use Illuminate\Http\Request;
 use App\Models\WhatsappNumber;
-use App\Models\OjaPlanInterval;
 use App\Models\WhatsappSupport;
 use App\Models\ReplyMailSupport;
 use App\Models\BirthdayAutomation;
@@ -37,7 +39,6 @@ use App\Models\OjafunnelMailSupport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use App\Models\OjafunnelNotification;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -529,96 +530,6 @@ class AdminController extends Controller
     }
 
     // EMAIL-MARKETING
-
-    public function index()
-    {
-        return view('Admin.email.SendingServer');
-    }
-
-    public function new_server()
-    {
-        return view('Admin.email.NewServer');
-    }
-
-    public function choose_server()
-    {
-        return view('Admin.email.ChooseServer');
-    }
-
-    public function main_bounce()
-    {
-        return view('Admin.email.BounceHandler');
-    }
-
-    public function new_bounce()
-    {
-        return view('Admin.email.NewBounce');
-    }
-
-    public function main_email()
-    {
-        return view('Admin.email.EmailVerification');
-    }
-
-    public function create_new()
-    {
-        return view('Admin.email.CreateNew');
-    }
-
-    public function backlist()
-    {
-        return view('Admin.email.Backlist');
-    }
-
-    public function import_backlist()
-    {
-        return view('Admin.email.ImportBacklist');
-    }
-
-    public function delivery_log()
-    {
-        return view('Admin.email.DeliveryLog');
-    }
-
-    public function bounce_log()
-    {
-        return view('Admin.email.BounceLog');
-    }
-
-    public function open_log()
-    {
-        return view('Admin.email.OpenLog');
-    }
-
-    public function click_log()
-    {
-        return view('Admin.email.ClickLog');
-    }
-
-    public function unsubscribe_log()
-    {
-        return view('Admin.email.Unsubscribe');
-    }
-
-    public function generall()
-    {
-        return view('Admin.email.General');
-    }
-
-    public function payment_gateway()
-    {
-        return view('Admin.email.Payment');
-    }
-
-    public function plugin()
-    {
-        return view('Admin.email.Plugin');
-    }
-
-    public function install_plugin()
-    {
-        return view('Admin.email.AddPlugin');
-    }
 
     public function add_category(Request $request)
     {
@@ -1304,6 +1215,62 @@ class AdminController extends Controller
         ]);
     }
 
+    public function plan_parameters($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $plan = OjaPlan::find($finder);
+
+        // return $plan;
+        $parameters = OjaPlanParameter::where('plan_id', $plan->id)->first();
+
+        if($parameters == null)
+        {
+            $parameters = OjaPlanParameter::create([
+                'plan_id' => $plan->id
+            ]);
+
+            return view('Admin.plan.plan_parameter', [
+                'plan' => $plan,
+                'parameters' => $parameters
+            ]);
+        } else {
+            return view('Admin.plan.plan_parameter', [
+                'plan' => $plan,
+                'parameters' => $parameters
+            ]);
+        }
+    }
+    
+    public function add_plan_parameter($id, Request $request)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $parameters = OjaPlanParameter::find($finder);
+
+        // return $parameters;
+
+        $parameters->update([
+            'page_builder' => $request->page_builder,
+            'funnel_builder' => $request->funnel_builder,
+            'wa_number' =>  $request->whatsapp_number,
+            'sms_contact_list' => $request->sms_contact_list,
+            'sms_automation' => $request->sms_automation,
+            'whatsapp_automation' => $request->whatsapp_automation,
+            'store' => $request->store,
+            'shop' => $request->shop,
+            'products' => $request->product,
+            'courses' => $request->course,
+            'birthday_contact_list' => $request->birthday_contact_list,
+            'birthday_automation' => $request->birthday_automation
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Plan parameters updated successfully.',
+        ]);
+    }
+    
     public function plan_interval($id)
     {
         $finder = Crypt::decrypt($id);

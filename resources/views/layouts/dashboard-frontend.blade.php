@@ -68,6 +68,8 @@
     <script type="text/javascript" src="{{ URL::asset('core/datetime/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('core/datetime/pickadate/picker.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('core/datetime/pickadate/picker.date.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/css/intlTelInput.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/js/intlTelInput-jquery.min.js"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script>
         window.setTimeout(function() {
@@ -145,7 +147,6 @@
         }
     </script>
 </head>
-@include('layouts.core._script_vars')
 <body data-sidebar="dark" data-layout-mode="light">
     <!-- Alerts  Start-->
     <div style="position: fixed; top: 20px; right: 20px; z-index: 100000; width: auto;">

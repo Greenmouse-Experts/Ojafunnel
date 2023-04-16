@@ -8,6 +8,7 @@ use App\Models\Coupon;
 use App\Models\Course;
 use App\Models\Learn;
 use App\Models\Lesson;
+use App\Models\OjaPlanParameter;
 use App\Models\Requirement;
 use App\Models\Section;
 use App\Models\Shop;
@@ -36,6 +37,14 @@ class CMSController extends Controller
             'title' => ['required', 'string'],
             'category' => ['required', 'string', 'max:255'],
         ]);
+
+        if(Course::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->courses)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
 
         $course = Course::create([
             'user_id' => Auth::user()->id,
@@ -503,6 +512,14 @@ class CMSController extends Controller
                 'name.unique' => 'Shop name has already been taken, please use another one!',
             ]
         );
+
+        if(Shop::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->shop)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
 
         $shops = Shop::latest()->where('user_id', Auth::user()->id)->get();
 
