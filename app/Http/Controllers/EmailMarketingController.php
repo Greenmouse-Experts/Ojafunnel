@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class EmailMarketingController extends Controller
@@ -53,6 +55,15 @@ class EmailMarketingController extends Controller
         $weeklydigest = file_get_contents(resource_path('views/emails/email-marketing-templates/default/template-3.blade.php'));
         $warning = file_get_contents(resource_path('views/emails/email-marketing-templates/default/template-4.blade.php'));
         $billing = file_get_contents(resource_path('views/emails/email-marketing-templates/default/template-5.blade.php'));
+
+        $from = ["{{ \$name }}", "{{ \$email }}"];
+        $to = ["\$name", "\$email"];
+
+        $calltoaction1 = str_replace($from, $to, $calltoaction1);
+        $calltoaction2 = str_replace($from, $to, $calltoaction2);
+        $weeklydigest = str_replace($from, $to, $weeklydigest);
+        $warning = str_replace($from, $to, $warning);
+        $billing = str_replace($from, $to, $billing);
 
         return view('dashboard.email-marketing.email-templates.view-temp', [
             'templates' => [$calltoaction1, $calltoaction2, $weeklydigest, $warning, $billing],
@@ -184,6 +195,10 @@ class EmailMarketingController extends Controller
 
         $template = file_get_contents(resource_path($template->first()->location));
 
+        $from = ["{{ \$name }}", "{{ \$email }}"];
+        $to = ["\$name", "\$email"];
+        $template = str_replace($from, $to, $template);
+
         return view('dashboard.email-marketing.email-templates.editor', [
             'template' => $template,
             'id' => $request->id
@@ -206,7 +221,11 @@ class EmailMarketingController extends Controller
 
         $disk = resource_path("views/emails/email-marketing-templates/$username/$slug.blade.php");
 
-        if (!file_put_contents($disk, $request->content)) {
+        $from = ["{{", "}}", "\$name", "\$email"];
+        $to = ["", "", "{{ \$name }}", "{{ \$email }}"];
+        $template = str_replace($from, $to, $request->content);
+
+        if (!file_put_contents($disk, $template)) {
             return response()->json([
                 'status' => false,
                 'message' => 'Error occured while saving template. Try again'
@@ -433,6 +452,19 @@ class EmailMarketingController extends Controller
             //     'from_name'    => $email_kit->from_name,
             // ], 'obafunsoridwanadebayo17@gmail.com', new TestMail());
         }
+    }
+
+    function calculateSpamScore(Request $request)
+    {
+        $template = file_get_contents(resource_path("views/emails/email-marketing-templates/default/template-$request->id.blade.php"));
+
+        $response = Http::post('https://spamcheck.postmarkapp.com/filter', [
+            "email" => $template,
+            "options" => 'long'
+        ]);
+
+        print_r($response['score']);
+        print_r($response['rules']);
     }
 
     // sanitize, remove double dot .. and remove get parameters if any

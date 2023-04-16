@@ -4,10 +4,13 @@ use App\Events\SendMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomSubDomain;
-// Paypal Testing
 use App\Http\Controllers\PayPalController;
+// Paypal Testing
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmailMarketingController;
+
+Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamScore']);
 
 // sub domain for page and funnel builder - production  
 Route::group(['domain' => '{subdomain}.ojafunnel.com'], function () {
