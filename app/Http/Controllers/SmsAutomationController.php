@@ -241,16 +241,27 @@ class SmsAutomationController extends Controller
         //     ]);
         // }
 
+        $messages = [
+            'mailinglist_id.required' => 'The Mailing list field is required.',
+        ];
 
         $this->validate($request, [
             'campaign_name' => ['required', 'string', 'max:255'],
             'sender_name' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string'],
-            //'mailinglist_id' => ['required', 'array',],
+            'mailinglist_id' => ['required'],
             //'optout_message' => ['required', 'string', 'max:255'],
             // 'message_timimg' => ['required', 'string', 'max:255'],
             'integration' => ['required', 'string', 'max:255'],
-        ]);
+        ], $messages);
+
+        if(SmsCampaign::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->sms_automation)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
 
         $sms_type = $request->sms_type;
 

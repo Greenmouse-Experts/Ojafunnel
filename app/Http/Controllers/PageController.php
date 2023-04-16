@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Funnel;
 use App\Models\FunnelPage;
+use App\Models\OjaPlanParameter;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use Dotlogics\Grapesjs\App\Traits\EditorTrait;
@@ -50,6 +51,14 @@ class PageController extends Controller
             'file_folder' => ['required', 'string', 'max:255'],
             'file_name' => ['required', 'string', 'max:255'],
         ]);
+
+        if(Page::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->page_builder)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
 
         $page_name = strtolower(implode('-', explode(' ', $request->file_name)));
 
@@ -297,6 +306,14 @@ class PageController extends Controller
         $this->validate($request, [
             'file_folder' => ['required', 'string', 'max:255'],
         ]);
+
+        if(Funnel::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->funnel_builder)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
 
         $res = $this->generateFunnelSlug($request->file_folder);
 

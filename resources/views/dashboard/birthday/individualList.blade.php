@@ -103,7 +103,7 @@
                                                                                     <label>Phone Number</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input type="text" placeholder="Enter Phone Number..." value="{{$i->phone_number}}" name="phone" class="input"
+                                                                                            <input type="text" placeholder="Enter Phone Number..." value="{{$i->phone_number}}" name="phone" class="input me" id="phone_number"
                                                                                                 required>
                                                                                         </div>
                                                                                     </div>
@@ -220,7 +220,7 @@
                                         <label>Name</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Full Name..." name="name" class="input"
+                                                <input type="text" placeholder="Full Name..." name="name" class="input" value="{{ old('name') }}"
                                                     required>
                                             </div>
                                         </div>
@@ -229,7 +229,7 @@
                                         <label>Phone Number</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter Phone Number..." name="phone" class="input"
+                                                <input type="text" placeholder="Enter Phone Number..." name="phone" class="input me" id="phone_number" value="{{ old('phone') }}"
                                                     required>
                                             </div>
                                         </div>
@@ -238,7 +238,7 @@
                                         <label>Email</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Email..." name="email" class="input"
+                                                <input type="text" placeholder="Email..." name="email" class="input" value="{{ old('email') }}"
                                                     required>
                                             </div>
                                         </div>
@@ -247,7 +247,7 @@
                                         <label>Date of Birth</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="date" name="dob" class="input"
+                                                <input type="date" name="dob" class="input" value="{{ old('date') }}"
                                                     required>
                                             </div>
                                         </div>
@@ -256,7 +256,7 @@
                                         <label>Anniversary (optional)</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="date" name="aniDate" class="input">
+                                                <input type="date" name="aniDate" value="{{ old('aniDate') }}" class="input">
                                             </div>
                                         </div>
                                     </div>
@@ -290,4 +290,28 @@
 
 </div>
 <!-- END layout-wrapper -->
+
+<style>
+    .iti {
+        display: block !important;
+    }
+    .iti__country-list {
+        z-index: 2000 !important;
+    }
+
+    .me {
+        padding-left: 100px !important;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("#phone_number").intlTelInput({
+            // preferredCountries: ["us", "ca"],
+            separateDialCode: true,
+            initialCountry: ""
+        }).on('countrychange', function (e, countryData) {
+            $("#phone_number").val('+'+($("#phone_number").intlTelInput("getSelectedCountryData").dialCode));
+        });
+    });
+</script>
 @endsection

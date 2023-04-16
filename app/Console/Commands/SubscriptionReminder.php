@@ -36,7 +36,6 @@ class SubscriptionReminder extends Command
         $subscribers = OjaSubscription::where('status', 'Active')->get();
 
         // \Log::info(now()->subDays(3)->toDateString());
-
         foreach($subscribers as $subscribe)
         {
             if(date('Y-m-d', strtotime($subscribe->expiry_notify_at)) == Carbon::today()->toDateString())

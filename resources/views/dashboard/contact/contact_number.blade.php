@@ -133,7 +133,7 @@
                                                                     <label>Phone Number</label>
                                                                     <div class="row">
                                                                         <div class="col-md-12 mb-4">
-                                                                            <input type="tel" placeholder="+234 800 000 0000" value="{{$item->phone_number}}" name="phone_no" class="input" required>
+                                                                            <input type="tel" placeholder="+234 800 000 0000" value="{{$item->phone_number}}" name="phone_no" class="input" id="phone_number" required>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -247,7 +247,7 @@
                                     <label>Phone Number</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="tel" placeholder="+234 800 000 0000" name="phone_no" class="input" required>
+                                            <input type="tel" placeholder="+234 800 000 0000" name="phone_no" class="input" id="phone_number" required>
                                         </div>
                                     </div>
                                 </div>
@@ -294,5 +294,27 @@
     .dropdown {
         display: inline;
     }
+
+    .iti {
+        display: block !important;
+    }
+    .iti__country-list {
+        z-index: 2000 !important;
+    }
+
+    .input {
+        padding-left: 100px !important;
+    }
 </style>
+<script>
+    $(document).ready(function () {
+        $("#phone_number").intlTelInput({
+            // preferredCountries: ["us", "ca"],
+            separateDialCode: true,
+            initialCountry: ""
+        }).on('countrychange', function (e, countryData) {
+            $("#phone_number").val('+'+($("#phone_number").intlTelInput("getSelectedCountryData").dialCode));
+        });
+    });
+</script>
 @endsection

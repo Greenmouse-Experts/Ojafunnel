@@ -77,6 +77,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li><a class="dropdown-item" href="{{route('admin.planinterval', Crypt::encrypt($ojaplan->id))}}" style="cursor: pointer;">Add Intervals</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('admin.planParameters', Crypt::encrypt($ojaplan->id))}}" style="cursor: pointer;">Add Parameters</a></li>
                                                         @if($ojaplan->is_enabled == true)
                                                         <li><a class="dropdown-item" href="{{route('admin.disablePlan', Crypt::encrypt($ojaplan->id))}}">Disable</a></li>
                                                         @else

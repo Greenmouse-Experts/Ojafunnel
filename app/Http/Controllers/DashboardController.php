@@ -43,6 +43,7 @@ use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
 use App\Models\EmailKit;
+use App\Models\OjaPlanParameter;
 use App\Models\OjaSubscription;
 use App\Models\SmsQueue;
 
@@ -62,58 +63,7 @@ class DashboardController extends Controller
     {
         return view('dashboard.dashboard');
     }
-
-    public function email_checker($username)
-    {
-        return view('dashboard.emailChecker', [
-            'username' => $username
-        ]);
-    }
-
-    public function email_campaign($username)
-    {
-        return view('dashboard.emailCampaign', [
-            'username' => $username
-        ]);
-    }
-    public function email_Ecampaign($username)
-    {
-        return view('dashboard.EemailCampaign', [
-            'username' => $username
-        ]);
-    }
-    public function email_layout($username)
-    {
-        return view('dashboard.emaillayout', [
-            'username' => $username
-        ]);
-    }
-    public function email_code($username)
-    {
-        return view('dashboard.emailcode', [
-            'username' => $username
-        ]);
-    }
-    public function email_design($username)
-    {
-        return view('dashboard.emailDesign', [
-            'username' => $username
-        ]);
-    }
-    public function email_preview($username)
-    {
-        return view('dashboard.emailpreview', [
-            'username' => $username
-        ]);
-    }
-
-    public function list_performance($username)
-    {
-        return view('dashboard.listPerformance', [
-            'username' => $username
-        ]);
-    }
-
+    
     public function list_setting($username)
     {
         return view('dashboard.listSetting', [
@@ -483,6 +433,15 @@ class DashboardController extends Controller
         $contact_lists = \App\Models\ContactList::latest()->where('user_id', Auth::user()->id)->cursor();
 
         if ($request->isMethod('post')) {
+
+            if(\App\Models\ContactList::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->sms_contact_list)
+            {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Subscribe to enjoy more access.'
+                ]);
+            }
+
             $c = new \App\Models\ContactList();
             $c->name = $request->name;
             $c->user_id = Auth::user()->id;
@@ -685,6 +644,14 @@ class DashboardController extends Controller
             'phone_number' => 'required|unique:whatsapp_numbers'
         ]);
 
+        if(WhatsappNumber::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->wa_number)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
+
         $wa_number = new WhatsappNumber();
         $wa_number->phone_number = $request->phone_number;
 
@@ -837,6 +804,15 @@ class DashboardController extends Controller
             'contact_list' => 'required',
             'template' => 'required',
         ]);
+
+        if(WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
+
         $this->template_validate($request);
         $request->validate(['message_timing' => 'required']);
 

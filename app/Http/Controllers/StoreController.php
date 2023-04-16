@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OjaPlanParameter;
 use App\Models\OrderItem;
 use App\Models\OrderUser;
 use App\Models\StoreOrder;
@@ -41,6 +42,14 @@ class StoreController extends Controller
                 'name.unique' => 'Store name has already been taken, please use another one!',
             ]
         );
+
+        if(Store::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->store)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
 
         if ($request->file('logo')) {
             $image = $request->file('logo')->store(
@@ -156,6 +165,14 @@ class StoreController extends Controller
             'level2_comm' => 'required',
         ]);
 
+        if(StoreProduct::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->products)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
+
         if ($request->file('image')) {
             $image = $request->file('image')->store(
                 'uploads/storeProduct/' . Auth::user()->username,
@@ -172,6 +189,7 @@ class StoreController extends Controller
         $sp->level2_comm = $request->level2_comm;
         $sp->image = $image;
         $sp->store_id = $request->store_id;
+        $sp->user_id = Auth::user()->id;
 
         // check if level1_comm <= level2_comm... then fail
         if ($request->level1_comm <= $request->level2_comm) return back()->with([

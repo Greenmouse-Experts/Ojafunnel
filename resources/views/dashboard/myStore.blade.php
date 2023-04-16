@@ -138,7 +138,7 @@
                                 <div class="col-6 text-end">
                                     <a href="ecommerce2.html" class="text-decoration-none">
                                         <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
-                                            Create Shop
+                                            Create Store
                                         </button>
                                     </a>
                                 </div>

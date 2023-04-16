@@ -9,10 +9,12 @@ use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
 use App\Jobs\ProcessEmailCampaign;
 use App\Models\EmailTemplate;
+use App\Models\MailList;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class EmailMarketingController extends Controller
 {
@@ -216,9 +218,142 @@ class EmailMarketingController extends Controller
         ]);
     }
 
+
+    public function create_email_list(Request $request)
+    {
+        return view('dashboard.email-marketing.email-lists.create', []);
+    }
+
     public function email_lists(Request $request)
     {
         return view('dashboard.email-marketing.email-lists.index', []);
+    }
+
+    public function email_contacts()
+    {
+        return view('dashboard.email-marketing.email-lists.contacts.index');
+    }
+
+    public function create_email__contact_list()
+    {
+        return view('dashboard.email-marketing.email-lists.contacts.create');
+    }
+
+    public function email_create_list(Request $request)
+    {
+        $this->validate($request, [
+            'name'         => 'required|max:250',
+            'display_name' => 'required|max:250',
+            'description' => 'required|max:250',
+            'slug'         => 'max:250|alpha_dash|unique:mail_lists,slug',
+        ]);
+
+        $list = MailList::create([
+            'uid' => Str::slug($request->display_name),
+            'user_id' => Auth::user()->id,
+            'name' => $request->name,
+            'display_name' => $request->display_name,
+            'slug' => $request->slug,
+            'description' => $request->description
+        ]);
+
+        if (empty($list->slug)) {
+            $list->slug = Str::slug($list->display_name);
+        }
+
+        $list->save();
+
+        return redirect()->route('user.email-marketing.email.lists', Auth::user()->username)->with([
+            'type' => 'success',
+            'message' => 'List created!'
+        ]);
+    }
+
+    public function view_list($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $mail_list = MailList::find($finder);
+
+        return view('dashboard.email-marketing.email-lists.view')->with([
+            'mail_list' => $mail_list
+        ]);
+    }
+
+    public function edit_list($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $mail_list = MailList::find($finder);
+
+        return view('dashboard.email-marketing.email-lists.edit')->with([
+            'mail_list' => $mail_list
+        ]);
+    }
+
+    public function update_list($id, Request $request)
+    {
+        $this->validate($request, [
+            'name'         => 'required|max:250',
+            'display_name' => 'required|max:250',
+            'description' => 'required|max:250',
+            'slug'         => 'max:250|alpha_dash|unique:mail_lists,slug',
+        ]);
+
+        $finder = Crypt::decrypt($id);
+
+        $list = MailList::find($finder);
+
+        $list->update([
+            'uid' => Str::slug($request->display_name),
+            'name' => $request->name,
+            'display_name' => $request->display_name,
+            'slug' => $request->slug,
+            'description' => $request->description
+        ]);
+
+        if (empty($list->slug)) {
+            $list->slug = Str::slug($list->display_name);
+        }
+
+        $list->save();
+
+        return redirect()->route('user.email-marketing.email.lists', Auth::user()->username)->with([
+            'type' => 'success',
+            'message' => 'List updated!'
+        ]);
+    }
+
+    public function email_enable_list($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $mail_list = MailList::find($finder);
+
+        $mail_list->update([
+            'status' => true
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'List activate successfully.',
+        ]);
+    }
+
+    public function email_disable_list($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $mail_list = MailList::find($finder);
+
+        $mail_list->update([
+            'status' => false
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'List disactive successfully.',
+        ]);
     }
 
     public function email_campaigns(Request $request)
