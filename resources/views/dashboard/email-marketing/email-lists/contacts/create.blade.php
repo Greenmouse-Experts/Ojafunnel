@@ -90,15 +90,25 @@
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <label for="">Phone Number</label>
-                                <input type="text" name="state" class="form-control"  value="{{old('state')}}" placeholder="Enter State" required />
+                                <input type="text" name="phone" class="form-control"  value="{{old('phone')}}" placeholder="Enter Phone Number" required />
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <label for="">Subscribe</label>
                                 <p class="text-xs text-gray-500">
-                                    Will not be sent any emails at all
+                                    Will be sent emails
                                 </p>
-                                <input type="checkbox" name="subscribe" value="1" required /> Yes &nbsp;
-                                <input type="checkbox" name="subscribe" value="0" required /> No
+                                <input type="radio" id="subscribe" name="subscribe" value="1"/> Yes &nbsp;
+                                <input type="radio" id="subscribe" name="subscribe" value="0"/> No
+                            </div>
+                            <div class="text-end mt-2">
+                                <a href="{{route('user.email-marketing.email.contacts', Auth::user()->username)}}">
+                                    <button type="button" class="btn px-4 py-1 btn-danger">
+                                        Cancel
+                                    </button>
+                                </a>
+                                <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                    Save
+                                </button>
                             </div>
                         </form>
                     </div>

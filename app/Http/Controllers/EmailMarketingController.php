@@ -9,6 +9,7 @@ use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
 use App\Jobs\ProcessEmailCampaign;
 use App\Models\EmailTemplate;
+use App\Models\MailContact;
 use App\Models\MailList;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Auth;
@@ -353,6 +354,42 @@ class EmailMarketingController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'List disactive successfully.',
+        ]);
+    }
+
+
+    public function email_create_contact(Request $request)
+    {
+        $this->validate($request, [
+            'first_name'  => 'required|max:250',
+            'last_name'         => 'required|max:250',
+            'email'         => 'required|email|max:250',
+            'address_1' => 'required|max:250',
+            'country' => 'required|max:250',
+            'state' => 'required|max:250',
+            'zip' => 'required|max:250',
+            'phone' => 'required|numeric',
+            'subscribe' => 'required|boolean'
+        ]);
+
+        MailContact::create([
+           'uid' => Str::uuid(),
+           'user_id' => Auth::user()->id,
+           'first_name' => $request->first_name,
+           'last_name' => $request->last_name,
+           'email' => $request->email,
+           'address_1' => $request->address_1,
+           'address_2' => $request->address_2,
+           'country' => $request->country,
+           'state' => $request->state,
+           'zip' => $request->zip,
+           'phone' => $request->phone,
+           'subscribe' => $request->subscribe
+        ]);
+
+        return redirect()->route('user.email-marketing.email.contacts', Auth::user()->username)->with([
+            'type' => 'success',
+            'message' => 'Contact created!'
         ]);
     }
 

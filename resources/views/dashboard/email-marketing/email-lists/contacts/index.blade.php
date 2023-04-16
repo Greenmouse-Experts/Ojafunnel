@@ -58,15 +58,14 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
-                                            <th>Display Name</th> 
-                                            <th>Slug</th>
-                                            <th>Description</th>
-                                            <th>Status</th>
+                                            <th>Email</th> 
+                                            <th>Address</th>
+                                            <th>List</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead> 
                                     <tbody> 
-                                        @foreach(App\Models\MailList::latest()->where('user_id', Auth::user()->id)->get() as $key => $list)
+                                        @foreach(App\Models\MailContact::latest()->where('user_id', Auth::user()->id)->get() as $key => $list)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>
