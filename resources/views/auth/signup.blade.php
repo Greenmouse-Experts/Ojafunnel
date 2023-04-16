@@ -59,7 +59,7 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <i class="bi bi-person"></i>
-                                            <input type="text" placeholder="Enter First Name" name="first_name" class="input" required>
+                                            <input type="text" placeholder="Enter First Name" name="first_name" class="input" value="{{ old('first_name') }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <i class="bi bi-person"></i>
-                                            <input type="text" placeholder="Enter Last Name" name="last_name" class="input" required>
+                                            <input type="text" placeholder="Enter Last Name" name="last_name" class="input" value="{{ old('last_name') }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <i class="bi bi-person"></i>
-                                            <input type="text" id="username" placeholder="Enter User Name" name="username" class="input" required>
+                                            <input type="text" id="username" placeholder="Enter User Name" name="username" value="{{ old('username') }}" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <i class="bi bi-envelope"></i>
-                                            <input type="email" value="{{old('email')}}" placeholder="Enter your email address" name="email" class="input" required>
+                                            <input type="email" value="{{old('email')}}" placeholder="Enter your email address" name="email" value="{{ old('email') }}" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <i class="bi bi-phone"></i>
-                                            <input type="tel" placeholder="Enter your Phone Number" name="phone_number" id="phone_number" class="input" required>
+                                            <input type="tel" placeholder="Enter your Phone Number" name="phone_number" id="phone_number" value="{{ old('phone_number') }}" class="input" required>
                                         </div>
                                     </div>
                                 </div>

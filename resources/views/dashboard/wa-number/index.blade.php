@@ -243,7 +243,7 @@
                             <div class="row">
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Phone number</label>
-                                    <input type="text" name="phone_number" value="" placeholder="Enter your phone number" required />
+                                    <input type="text" name="phone_number" value="" class="input me" placeholder="Enter your phone number" id="phone_number" required />
                                 </div>   
                                 <div class="text-end mt-2">
                                     <a href="#" class="text-decoration-none">
@@ -329,6 +329,22 @@
             }, 10000)
         }) 
     }
+
+    $(document).ready(function () {
+        $("#phone_number").intlTelInput({
+            // preferredCountries: ["us", "ca"],
+            separateDialCode: true,
+            initialCountry: ""
+        }).on('countrychange', function (e, countryData) {
+            $("#phone_number").val('+'+($("#phone_number").intlTelInput("getSelectedCountryData").dialCode));
+        });
+    });
 </script>
+
+<style>
+    .input {
+        padding-left: 100px !important;
+    }
+</style>
 <!-- end modal -->
 @endsection

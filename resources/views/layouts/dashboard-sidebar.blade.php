@@ -28,9 +28,21 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('user.email-marketing.email.lists', Auth::user()->username)}}" key="t-tui-calendar">
+                            <a hhref="javascript: void(0);" class="has-arrow">
                                 Email Lists
                             </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li>
+                                    <a href="{{route('user.email-marketing.email.lists', Auth::user()->username)}}" key="t-tui-calendar">
+                                        Lists
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('user.email-marketing.email.contacts', Auth::user()->username)}}" key="t-tui-calendar">
+                                        Contacts
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="{{route('user.email-marketing.email.campaigns', Auth::user()->username)}}" key="t-tui-calendar">
@@ -38,7 +50,7 @@
                             </a>
                         </li> 
                     </ul>
-                </li> 
+                </li>
                 <li>
                     <a href="{{route('user.choose.temp', Auth::user()->username)}}">
                         <i class="bi bi-building"></i>
@@ -63,7 +75,7 @@
                         <span key="t-chat">Withdrawal</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                    <li><a href="{{route('user.withdrawal', Auth::user()->username)}}" key="t-tui-calendar">Withdraw</a></li>
+                        <li><a href="{{route('user.withdrawal', Auth::user()->username)}}" key="t-tui-calendar">Withdraw</a></li>
                         <li><a href="{{route('user.bank.details', Auth::user()->username)}}" key="t-tui-calendar">Bank Details</a></li>
                         <li><a href="{{route('user.other.payment.method', Auth::user()->username)}}" key="t-tui-calendar">Payment Method</a></li>
                     </ul>
@@ -83,7 +95,7 @@
                         <li><a href="{{route('user.automation.contact_list', Auth::user()->username)}}" key="t-tui-calendar">Contact List</a></li>
                         <li><a href="{{route('user.whatsapp.wa-number', Auth::user()->username)}}" key="t-tui-calendar">WA Number</a></li>
                         <li><a href="{{route('user.sms.automation', Auth::user()->username)}}" key="t-tui-calendar">SMS Automation</a></li>
-                        <li><a href="{{route('user.whatsapp.automation', Auth::user()->username)}}" key="t-tui-calendar">Whatsapp Automation</a></li>     
+                        <li><a href="{{route('user.whatsapp.automation', Auth::user()->username)}}" key="t-tui-calendar">Whatsapp Automation</a></li>
                     </ul>
                 </li>
                 <li>
@@ -103,101 +115,101 @@
                         <li><a href="{{route('user.order.details', Auth::user()->username)}}" key="t-overview">Order Details</a></li> --}}
                     </ul>
                 </li>
+            </ul>
+            </li>
+            <li>
+                <a href="{{route('user.main.promotion', Auth::user()->username)}}">
+                    <i class="bi bi-people"></i>
+                    <span key="t-chat">Promotion</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('user.affiliate.marketing', Auth::user()->username)}}">
+                    <i class="bi bi-bookmark"></i>
+                    <span key="t-chat">Affiliate Marketing </span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript: void(0);" class="has-arrow">
+                    <i class="bi bi-tag"></i>
+                    <span key="t-chat">Integration</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="{{route('user.integration', Auth::user()->username)}}" key="t-tui-calendar">Create Integrations</a></li>
+                    <li><a href="{{route('user.manage_integration', Auth::user()->username)}}" key="t-tui-calendar">Manage Integrations</a></li>
                 </ul>
-                </li>
-                <li>
-                    <a href="{{route('user.main.promotion', Auth::user()->username)}}">
-                        <i class="bi bi-people"></i>
-                        <span key="t-chat">Promotion</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('user.affiliate.marketing', Auth::user()->username)}}">
-                        <i class="bi bi-bookmark"></i>
-                        <span key="t-chat">Affiliate Marketing </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bi bi-tag"></i>
-                        <span key="t-chat">Integration</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('user.integration', Auth::user()->username)}}" key="t-tui-calendar">Create Integrations</a></li>
-                        <li><a href="{{route('user.manage_integration', Auth::user()->username)}}" key="t-tui-calendar">Manage Integrations</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bi bi-book"></i>
-                        <span key="t-chat">Learning Management</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('user.create.course', Auth::user()->username)}}" key="t-tui-calendar">Create Course</a></li>
-                        <!-- <li><a href="{{route('user.details', Auth::user()->username)}}" key="t-tui-calendar">Course Details</a></li> -->
-                        <!-- <li><a href="{{route('user.shop.course', Auth::user()->username)}}" key="t-chat">Shop Course</a></li> -->
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Shop</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{route('user.create.shop.course', Auth::user()->username)}}" key="t-tui-calendar">Create Shop</a></li>
-                                <li><a href="{{route('user.view.course.shops', Auth::user()->username)}}" key="t-tui-calendar">View Shop</a></li>
-                                <!-- <li><a href="{{route('user.my.shops.course', Auth::user()->username)}}" key="t-tui-calendar">My Shop</a></li> -->
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="{{route('user.main.list', Auth::user()->username)}}">
-                        <i class="bi bi-balloon"></i>
-                        <span key="t-chat">Birthday Modules</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('user.main.sales', Auth::user()->username)}}">
-                        <i class="bi bi-receipt"></i>
-                        <span key="t-chat">Sales Analytics</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('user.reports.analysis', Auth::user()->username)}}">
-                        <i class="bi bi-bar-chart"></i>
-                        <span key="t-chat">Reports & Analysis</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('user.main.notification', Auth::user()->username)}}">
-                        <i class="bi bi-bell"></i>
-                        <span key="t-chat">Notifications</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('user.upgrade', Auth::user()->username)}}">
-                        <i class="bi bi-send-check"></i>
-                        <span key="t-chat">Upgrade</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('user.main.support', Auth::user()->username)}}">
-                        <i class="bi bi-chat"></i>
-                        <span key="t-chat">Support</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bi bi-sliders2"></i>
-                        <span key="t-chat">Settings</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('user.general', Auth::user()->username)}}" key="t-tui-calendar">General</a></li>
-                        <li><a href="{{route('user.security', Auth::user()->username)}}" key="t-full-calendar">Security</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="/logout">
-                        <i class="bi bi-box-arrow-right"></i>
-                        <span key="t-chat">Log Out</span>
-                    </a>
-                </li>
+            </li>
+            <li>
+                <a href="javascript: void(0);" class="has-arrow">
+                    <i class="bi bi-book"></i>
+                    <span key="t-chat">Learning Management</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="{{route('user.create.course', Auth::user()->username)}}" key="t-tui-calendar">Create Course</a></li>
+                    <!-- <li><a href="{{route('user.details', Auth::user()->username)}}" key="t-tui-calendar">Course Details</a></li> -->
+                    <!-- <li><a href="{{route('user.shop.course', Auth::user()->username)}}" key="t-chat">Shop Course</a></li> -->
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow" key="t-candidate">Shop</a>
+                        <ul class="sub-menu" aria-expanded="true">
+                            <li><a href="{{route('user.create.shop.course', Auth::user()->username)}}" key="t-tui-calendar">Create Shop</a></li>
+                            <li><a href="{{route('user.view.course.shops', Auth::user()->username)}}" key="t-tui-calendar">View Shop</a></li>
+                            <!-- <li><a href="{{route('user.my.shops.course', Auth::user()->username)}}" key="t-tui-calendar">My Shop</a></li> -->
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="{{route('user.main.list', Auth::user()->username)}}">
+                    <i class="bi bi-balloon"></i>
+                    <span key="t-chat">Birthday Modules</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('user.main.sales', Auth::user()->username)}}">
+                    <i class="bi bi-receipt"></i>
+                    <span key="t-chat">Sales Analytics</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('user.reports.analysis', Auth::user()->username)}}">
+                    <i class="bi bi-bar-chart"></i>
+                    <span key="t-chat">Reports & Analysis</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('user.main.notification', Auth::user()->username)}}">
+                    <i class="bi bi-bell"></i>
+                    <span key="t-chat">Notifications</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('user.upgrade', Auth::user()->username)}}">
+                    <i class="bi bi-send-check"></i>
+                    <span key="t-chat">Upgrade</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('user.main.support', Auth::user()->username)}}">
+                    <i class="bi bi-chat"></i>
+                    <span key="t-chat">Support</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript: void(0);" class="has-arrow">
+                    <i class="bi bi-sliders2"></i>
+                    <span key="t-chat">Settings</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="{{route('user.general', Auth::user()->username)}}" key="t-tui-calendar">General</a></li>
+                    <li><a href="{{route('user.security', Auth::user()->username)}}" key="t-full-calendar">Security</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span key="t-chat">Log Out</span>
+                </a>
+            </li>
             </ul>
         </div>
     </div>
