@@ -40,7 +40,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             // Email Marketing
             Route::get('/email-marketing/email-kits', [App\Http\Controllers\Admin\AdminController::class, 'view_email_kits'])->name('admin.email-marketing.email-kits');
             Route::get('/email-marketing/email-campaigns', [App\Http\Controllers\Admin\AdminController::class, 'view_email_campaigns'])->name('admin.email-marketing.email-campaigns');
-            Route::get('/email-marketing/email-lists', [App\Http\Controllers\Admin\AdminController::class, 'view_email_lists'])->name('admin.email-marketing.email-lists');
+            Route::get('/email-marketing/email-lists', [App\Http\Controllers\Admin\AdminController::class, 'email_lists'])->name('admin.email-marketing.email-lists');
+            Route::get('/email-marketing/view/email-lists/{id}', [App\Http\Controllers\Admin\AdminController::class, 'view_email_lists'])->name('admin.email-marketing.email-lists.view');
+            Route::get('/email-marketing/disactivate/email-lists/{id}', [App\Http\Controllers\Admin\AdminController::class, 'disactivate_email_lists'])->name('admin.email-marketing.email-lists.disactivate');
+            Route::get('/email-marketing/activate/email-lists/{id}', [App\Http\Controllers\Admin\AdminController::class, 'activate_email_lists'])->name('admin.email-marketing.email-lists.activate');
+            Route::post('/email-marketing/delete/email-lists/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_email_lists'])->name('admin.email-marketing.email-lists.delete');
 
             // LMS
             Route::get('/viewCart', [App\Http\Controllers\Admin\AdminController::class, 'viewCart'])->name('viewCart');

@@ -35,6 +35,7 @@ use App\Models\ReplyMailSupport;
 use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use App\Models\MailContact;
 use App\Models\MailList;
 use App\Models\OjafunnelMailSupport;
 use Illuminate\Support\Facades\Auth;
@@ -452,15 +453,77 @@ class AdminController extends Controller
         return view('Admin.email-marketing.email-campaigns.index');
     }
 
-    public function view_email_lists()
+    public function email_lists()
     {
         $lists = MailList::latest()->get();
 
-        return view('Admin.email-marketing.email-campaigns.index', [
+        return view('Admin.email-marketing.email-lists.index', [
             'lists' => $lists
         ]);
     }
 
+    public function view_email_lists($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $mail_list = MailList::find($finder);
+
+        return view('Admin.email-marketing.email-lists.view')->with([
+            'mail_list' => $mail_list
+        ]);
+    }
+
+    public function activate_email_lists($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $mail_list = MailList::find($finder);
+
+        $mail_list->update([
+            'status' => true
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'List activated successfully.',
+        ]);
+    }
+
+    public function disactivate_email_lists($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $mail_list = MailList::find($finder);
+
+        $mail_list->update([
+            'status' => false
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'List disactivated successfully.',
+        ]);
+    }
+
+    public function delete_email_lists($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $list = MailList::find($finder);
+        $contact = MailContact::where('mail_list_id', $list->id)->get()->count();
+
+        if($contact > 0)
+        {
+            $contact->delete();
+        }
+
+        $list->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'List deleted!'
+        ]);
+    }
 
     public function sms_automation()
     {

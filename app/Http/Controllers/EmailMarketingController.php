@@ -361,7 +361,7 @@ class EmailMarketingController extends Controller
 
         return back()->with([
             'type' => 'success',
-            'message' => 'List activate successfully.',
+            'message' => 'List activated successfully.',
         ]);
     }
 
@@ -377,7 +377,7 @@ class EmailMarketingController extends Controller
 
         return back()->with([
             'type' => 'success',
-            'message' => 'List disactive successfully.',
+            'message' => 'List disactivated successfully.',
         ]);
     }
 
@@ -386,7 +386,7 @@ class EmailMarketingController extends Controller
         $finder = Crypt::decrypt($id);
 
         $list = MailList::find($finder);
-        $contact = MailContact::where('mail_list_id', $list->id)->get();
+        $contact = MailContact::where('mail_list_id', $list->id)->get()->count();
 
         if($contact > 0)
         {

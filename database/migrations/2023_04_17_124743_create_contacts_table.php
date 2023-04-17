@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('company')->nullable();
             $table->string('address_1')->nullable();
             $table->string('address_2')->nullable();
-            $table->unsignedInteger('country_id')->nullable();
+            $table->unsignedInteger('country_id')->nullable()->index('mailcontacts_country_id_foreign');
             $table->string('state')->nullable();
             $table->string('zip')->nullable();
             $table->string('phone')->nullable();

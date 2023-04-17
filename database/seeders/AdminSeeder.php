@@ -33,7 +33,7 @@ class AdminSeeder extends Seeder
          ('63b7c87daf83f', 'SwpLpt1sp6Sztrv46mJ55EkOKHDxUgTBwpTWfMcNytsnYYAy92mTBDtfyNyv', NULL, 'lotushub@gmail.com', '$2y$10\$nXMvKLchL2H4hsuee06mJ.rZ2zsK7qmPbwSat/ROVxnyJJ0Yp3nBi', 'Bp4fDKs6LAy3Qf97mXkP4HJ8OVvQIbcAaheKqhCtwu8MhVHeIfK1u3AhKB6F', 'active', '2016-12-31 23:00:00', '2023-01-06 07:06:37', NULL, 1, NULL, 1, 'Lotus', 'Hub');");
 
         // insert into admins
-        DB::insert("INSERT INTO `admins` (`uid`, `user_id`, `creator_id`, `admin_group_id`, `language_id`, `timezone`, `status`, `color_scheme`, `created_at`, `updated_at`, `text_direction`, `menu_layout`, `theme_mode`, `email`, `name`, `password`, `fcm_token`) VALUES 
-        ('63b7c87dbfdad', 1, NULL, NULL, 1, 'Africa/Lagos', 'active', NULL, '2016-12-31 22:00:00', '2023-03-10 11:02:53', 'ltr', 'left', 'light', 'admins@ojafunnel.com', 'Administrator', '$2y$10\$BOXNf2KHfv60NAKqSt/xrex.KfUBOTwWUby0gh5.0Wd.UvDbpzWMO', 'fksZDJWcpMyLCKRfwVHSL0:APA91bHlVU-Gp7zDID4gApFQfY15UH22-XmwEHS3F_bXhXpK76ARiC3Ja_bDEgDCAQlcZ4I_XjaEKC3H6NAnq-QtxZYF-s6L4yt-RK-cayuO0LPUzi2JuyBU-Erg02I3N44F2x9sTmCl');");
+        DB::insert("INSERT INTO `admins` (`uid`, `user_id`, `creator_id`, `contact_id`, `admin_group_id`, `language_id`, `timezone`, `status`, `color_scheme`, `created_at`, `updated_at`, `text_direction`, `menu_layout`, `theme_mode`, `email`, `name`, `password`, `fcm_token`) VALUES 
+        ('63b7c87dbfdad', 1, NULL, NULL, 1, 1, 'Africa/Lagos', 'active', NULL, '2016-12-31 22:00:00', '2023-03-10 11:02:53', 'ltr', 'left', 'light', 'admins@ojafunnel.com', 'Administrator', '$2y$10\$BOXNf2KHfv60NAKqSt/xrex.KfUBOTwWUby0gh5.0Wd.UvDbpzWMO', 'fksZDJWcpMyLCKRfwVHSL0:APA91bHlVU-Gp7zDID4gApFQfY15UH22-XmwEHS3F_bXhXpK76ARiC3Ja_bDEgDCAQlcZ4I_XjaEKC3H6NAnq-QtxZYF-s6L4yt-RK-cayuO0LPUzi2JuyBU-Erg02I3N44F2x9sTmCl');");
     }
 }
