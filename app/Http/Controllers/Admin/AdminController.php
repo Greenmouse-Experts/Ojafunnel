@@ -1128,9 +1128,13 @@ class AdminController extends Controller
             'description' => ['required'],
         ]);
 
-        OjaPlan::create([
+        $plan = OjaPlan::create([
             'name' => $request->name,
             'description' => $request->description
+        ]);
+
+        OjaPlanParameter::create([
+            'plan_id' => $plan->id
         ]);
 
         return back()->with([
