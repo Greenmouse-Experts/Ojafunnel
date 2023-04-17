@@ -1254,6 +1254,14 @@ class AdminController extends Controller
             }
         }
 
+        $parameters = OjaPlanParameter::where('plan_id', $plan->id)->get();
+
+        if ($parameters->count() > 0) {
+            foreach ($parameters as $para) {
+                $para->delete();
+            }
+        }
+
         $plan->delete();
         return back()->with([
             'type' => 'success',
