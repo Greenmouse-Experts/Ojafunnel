@@ -392,18 +392,18 @@ class EmailMarketingController extends Controller
         ]);
 
         MailContact::create([
-           'uid' => Str::uuid(),
-           'user_id' => Auth::user()->id,
-           'first_name' => $request->first_name,
-           'last_name' => $request->last_name,
-           'email' => $request->email,
-           'address_1' => $request->address_1,
-           'address_2' => $request->address_2,
-           'country' => $request->country,
-           'state' => $request->state,
-           'zip' => $request->zip,
-           'phone' => $request->phone,
-           'subscribe' => $request->subscribe
+            'uid' => Str::uuid(),
+            'user_id' => Auth::user()->id,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'address_1' => $request->address_1,
+            'address_2' => $request->address_2,
+            'country' => $request->country,
+            'state' => $request->state,
+            'zip' => $request->zip,
+            'phone' => $request->phone,
+            'subscribe' => $request->subscribe
         ]);
 
         return redirect()->route('user.email-marketing.email.contacts', Auth::user()->username)->with([
