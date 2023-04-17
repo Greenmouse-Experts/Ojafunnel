@@ -58,7 +58,7 @@
                         </div>
                         <div class="js-price-big-wrapper">
                             <h1 class="-yearly -hide">
-                            {{App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->currency_sign}}{{number_format(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->price, 2)}}/<span>yearly</span>
+                            {{App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->currency_sign}}{{number_format(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->price, 2)}}/<span>yearly</span>
                             </h1>
                             @if($singleplan->name == $plan->name)
                             <a class="-yearly -hide upgrade-btn" href="#" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
