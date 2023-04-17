@@ -11,6 +11,7 @@ use App\Jobs\ProcessEmailCampaign;
 use App\Models\EmailTemplate;
 use App\Models\MailContact;
 use App\Models\MailList;
+use App\Models\ContactMailList;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -238,7 +239,6 @@ class EmailMarketingController extends Controller
         ]);
     }
 
-
     public function create_email_list(Request $request)
     {
         return view('dashboard.email-marketing.email-lists.create', []);
@@ -254,9 +254,14 @@ class EmailMarketingController extends Controller
         return view('dashboard.email-marketing.email-lists.contacts.index');
     }
 
-    public function create_email__contact_list()
+    public function create_email_contact_list($id)
     {
-        return view('dashboard.email-marketing.email-lists.contacts.create');
+        $finder = Crypt::decrypt($id);
+        $mailList = MailList::find($finder);
+
+        return view('dashboard.email-marketing.email-lists.contacts.create', [
+            'mailList' => $mailList
+        ]);
     }
 
     public function email_create_list(Request $request)
@@ -376,13 +381,31 @@ class EmailMarketingController extends Controller
         ]);
     }
 
+    public function email_delete_list($id)
+    {
+        $finder = Crypt::decrypt($id);
 
-    public function email_create_contact(Request $request)
+        $list = MailList::find($finder);
+        $contact = MailContact::where('mail_list_id', $list->id)->get();
+
+        if($contact > 0)
+        {
+            $contact->delete();
+        }
+
+        $list->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'List deleted!'
+        ]);
+    }
+
+    public function email_create_contact($id, Request $request)
     {
         $this->validate($request, [
-            'first_name'  => 'required|max:250',
-            'last_name'         => 'required|max:250',
-            'email'         => 'required|email|max:250',
+            'name'  => 'required|max:250',
+            'email'         => 'required|email|unique:mail_contacts|max:250',
             'address_1' => 'required|max:250',
             'country' => 'required|max:250',
             'state' => 'required|max:250',
@@ -391,11 +414,14 @@ class EmailMarketingController extends Controller
             'subscribe' => 'required|boolean'
         ]);
 
+        $finder = Crypt::decrypt($id);
+
+        $mailList = MailList::find($finder);
+
         MailContact::create([
            'uid' => Str::uuid(),
-           'user_id' => Auth::user()->id,
-           'first_name' => $request->first_name,
-           'last_name' => $request->last_name,
+           'mail_list_id' => $mailList->id,
+           'name' => $request->name,
            'email' => $request->email,
            'address_1' => $request->address_1,
            'address_2' => $request->address_2,
@@ -406,9 +432,89 @@ class EmailMarketingController extends Controller
            'subscribe' => $request->subscribe
         ]);
 
-        return redirect()->route('user.email-marketing.email.contacts', Auth::user()->username)->with([
+        return redirect()->route('user.email.view.list', Crypt::encrypt($mailList->id))->with([
             'type' => 'success',
             'message' => 'Contact created!'
+        ]);
+    }
+
+    public function edit_contact($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $contact = MailContact::find($finder);
+
+        return view('dashboard.email-marketing.email-lists.contacts.edit')->with([
+            'contact' => $contact
+        ]);
+    }
+
+    public function update_contact($id, Request $request)
+    {
+        $this->validate($request, [
+            'name'  => 'required|max:250',
+            'address_1' => 'required|max:250',
+            'country' => 'required|max:250',
+            'state' => 'required|max:250',
+            'zip' => 'required|max:250',
+            'phone' => 'required|numeric',
+            'subscribe' => 'required|boolean'
+        ]);
+
+        $finder = Crypt::decrypt($id);
+
+        $contact = MailContact::find($finder);
+
+        if($contact->email == $request->email)
+        {
+            $contact->update([
+                'name' => $request->name,
+                'address_1' => $request->address_1,
+                'address_2' => $request->address_2,
+                'country' => $request->country,
+                'state' => $request->state,
+                'zip' => $request->zip,
+                'phone' => $request->phone,
+                'subscribe' => $request->subscribe
+            ]);
+    
+            return redirect()->route('user.email.view.list', Crypt::encrypt($contact->mail_list_id))->with([
+                'type' => 'success',
+                'message' => 'Contact updated!'
+            ]);
+        }
+
+        $this->validate($request, [
+            'email' => 'required|email|unique:mail_contacts|max:250',
+        ]);
+
+        $contact->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'address_1' => $request->address_1,
+            'address_2' => $request->address_2,
+            'country' => $request->country,
+            'state' => $request->state,
+            'zip' => $request->zip,
+            'phone' => $request->phone,
+            'subscribe' => $request->subscribe
+        ]);
+
+        return redirect()->route('user.email.view.list', Crypt::encrypt($contact->mail_list_id))->with([
+            'type' => 'success',
+            'message' => 'Contact updated!'
+        ]);
+    }
+
+    public function delete_contact($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $contact = MailContact::find($finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Contact deleted!'
         ]);
     }
 

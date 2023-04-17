@@ -25,9 +25,9 @@ class MailContact extends Model
     /**
      * Unsubscribe a contact in the system.
      */
-    public function markUnsubscribed(): void
+    public function markSubscribed(): void
     {
-        $this->update(['unsubscribed' => true]);
+        $this->update(['subscribe' => false]);
         $this->lists()->detach();
     }
 

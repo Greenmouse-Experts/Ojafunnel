@@ -61,6 +61,7 @@
                                             <th>Display Name</th>
                                             <th>Slug</th>
                                             <th>Description</th>
+                                            <th>Contact</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -81,6 +82,7 @@
                                             <td>
                                                 <p class='text-bold-600'>{{ $list->description }}</p>
                                             </td>
+                                            <td>{{App\Models\MailContact::where('mail_list_id', $list->id)->get()->count()}} Contact</td>
                                             <td>
                                                 @if($list->status == true)
                                                 <span class="badge badge-pill badge-soft-success font-size-11">Active</span>
@@ -104,6 +106,42 @@
                                                         <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$list->id}}">Delete</a></li>
                                                     </ul>
                                                 </div>
+
+                                                 <!-- Modal START -->
+                                                 <div class="modal fade" id="delete-{{$list->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content pb-3">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body ">
+                                                                <div class="row">
+                                                                    <div class="Editt">
+                                                                        <form method="POST" action="{{ route('user.email.delete.list', Crypt::encrypt($list->id))}}">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <p><b>Delete List</b></p>
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12">
+                                                                                        <p>This action cannot be undone. </p> <p>This will permanently delete this list and all contact attached to it.</p>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <div class="boding">
+                                                                                            <button type="submit" class="form-btn">
+                                                                                                I understand this consquences, Delete List
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end modal -->
                                             </td>
                                         </tr>
                                         @endforeach
@@ -117,3 +155,4 @@
         </div>
     </div>
 </div>
+@endsection
