@@ -121,7 +121,10 @@ Route::prefix('user')->group(function () {
     Route::post('/email/list/update/{id}', [EmailMarketingController::class, 'update_list'])->name('user.email.update.list');
     Route::get('/email/list/enable/{id}', [EmailMarketingController::class, 'email_enable_list'])->name('user.email.enable.list');
     Route::get('/email/list/disabled/{id}', [EmailMarketingController::class, 'email_disable_list'])->name('user.email.disable.list');
-    Route::post('/email/create/contact', [EmailMarketingController::class, 'email_create_contact'])->name('user.email.create.contact');
+    Route::get('/email/list/delete/{id}', [EmailMarketingController::class, 'email_delete_list'])->name('user.email.delete.list');
+    Route::get('/create/contact/list/{id}', [EmailMarketingController::class, 'create_email_contact_list'])->name('user.email.marketing.create.contact.list');
+    Route::post('/email/create/contact/{id}', [EmailMarketingController::class, 'email_create_contact'])->name('user.email.create.contact');
     Route::get('/email/contact/edit/{id}', [EmailMarketingController::class, 'edit_contact'])->name('user.email.edit.contact');
     Route::post('/email/contact/update/{id}', [EmailMarketingController::class, 'update_contact'])->name('user.email.update.contact');
+    Route::post('/email/contact/delete/{id}', [EmailMarketingController::class, 'delete_contact'])->name('user.email.delete.contact');
 }); 

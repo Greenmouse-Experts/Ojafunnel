@@ -39,9 +39,9 @@
                             <div class="col-md-3">
                                 <div class="">
                                     <div class="all-create">
-                                        <a href="{{ route('user.email.marketing.create.list', ['username' => Auth::user()->username]) }}">
+                                        <a href="{{ route('user.email.marketing.create.contact.list', Crypt::encrypt($mail_list->id)) }}">
                                             <button>
-                                                + Import Contact To List
+                                                + Add Contact
                                             </button>
                                         </a>
                                     </div>
@@ -109,52 +109,79 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
-                                            <th>Display Name</th> 
-                                            <th>Slug</th>
-                                            <th>Description</th>
+                                            <th>Email</th> 
+                                            <th>Address</th>
                                             <th>Status</th>
+                                            <!-- <th>List</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead> 
                                     <tbody> 
-                                        @foreach(App\Models\MailList::latest()->where('user_id', Auth::user()->id)->get() as $key => $list)
+                                        @foreach(App\Models\MailContact::latest()->where('mail_list_id', $mail_list->id)->get() as $key => $contact)
                                         <tr>
-                                            <th scope="row">{{$loop->iteration}}</th>
+                                            <td scope="row">{{$loop->iteration}}</td>
                                             <td>
-                                                <p class='text-bold-600'> {{$list->name}} </p>
+                                                <p class='text-bold-600'> {{$contact->name}}</p>
                                             </td>
                                             <td>
-                                                {{$list->display_name}}
+                                                {{$contact->email}}
                                             </td>
                                             <td>
-                                                {{ $list->slug }}
+                                                {{ $contact->address_1 }}, {{ $contact->state }}, {{ $contact->country }}
                                             </td>
                                             <td>
-                                                <p class='text-bold-600'>{{ $list->description }}</p>
-                                            </td>
-                                            <td>
-                                                @if($list->status == true)
-                                                <span class="badge badge-pill badge-soft-success font-size-11">Active</span>
+                                                @if($contact->subscribe == true)
+                                                <span class="badge badge-pill badge-soft-success font-size-11">Subscribed</span>
                                                 @else
-                                                <span class="badge badge-pill badge-soft-danger font-size-11">In-active</span>
+                                                <span class="badge badge-pill badge-soft-danger font-size-11">Unsubscribed</span>
                                                 @endif
                                             </td>
+                                            <!-- <td></td> -->
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('user.email.view.list', Crypt::encrypt($list->id))}}" style="cursor: pointer;">View</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('user.email.edit.list', Crypt::encrypt($list->id))}}" style="cursor: pointer;">Edit</a></li>
-                                                        @if($list->status == true)
-                                                        <li><a class="dropdown-item" href="{{route('user.email.disable.list', Crypt::encrypt($list->id))}}">Disactivate</a></li>
-                                                        @else
-                                                        <li><a class="dropdown-item" href="{{route('user.email.enable.list', Crypt::encrypt($list->id))}}">Activate</a></li>
-                                                        @endif
-                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$list->id}}">Delete</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('user.email.edit.contact', Crypt::encrypt($contact->id))}}" style="cursor: pointer;">View/Edit</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$contact->id}}">Delete</a></li>
                                                     </ul>
                                                 </div>
+                                                <!-- Modal START -->
+                                                <div class="modal fade" id="delete-{{$contact->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content pb-3">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body ">
+                                                                <div class="row">
+                                                                    <div class="Editt">
+                                                                        <form method="POST" action="{{ route('user.email.delete.contact', Crypt::encrypt($contact->id))}}">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <p><b>Delete Contact</b></p>
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12">
+                                                                                        <p>This action cannot be undone. </p> <p>This will permanently delete this contact.</p>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <div class="boding">
+                                                                                            <button type="submit" class="form-btn">
+                                                                                                I understand this consquences, Delete Contact
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end modal -->
                                             </td>
                                         </tr>
                                         @endforeach

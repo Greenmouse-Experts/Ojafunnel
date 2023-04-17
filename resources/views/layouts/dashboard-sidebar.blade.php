@@ -28,21 +28,9 @@
                             </a>
                         </li>
                         <li>
-                            <a hhref="javascript: void(0);" class="has-arrow">
+                            <a href="{{route('user.email-marketing.email.lists', Auth::user()->username)}}" key="t-tui-calendar">
                                 Email Lists
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li>
-                                    <a href="{{route('user.email-marketing.email.lists', Auth::user()->username)}}" key="t-tui-calendar">
-                                        Lists
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{route('user.email-marketing.email.contacts', Auth::user()->username)}}" key="t-tui-calendar">
-                                        Contacts
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href="{{route('user.email-marketing.email.campaigns', Auth::user()->username)}}" key="t-tui-calendar">

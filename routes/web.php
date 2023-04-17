@@ -259,9 +259,7 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/email-templates/editor/{id}', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_editor'])->name('user.email-marketing.email.templates.editor');
                     Route::post('/email-templates/editor/save', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_editor_save'])->name('user.email-marketing.email.templates.editor.save');
                     Route::get('/email-lists', [App\Http\Controllers\EmailMarketingController::class, 'email_lists'])->name('user.email-marketing.email.lists');
-                    Route::get('/email-contacts', [App\Http\Controllers\EmailMarketingController::class, 'email_contacts'])->name('user.email-marketing.email.contacts');
                     Route::get('/create-list', [App\Http\Controllers\EmailMarketingController::class, 'create_email_list'])->name('user.email.marketing.create.list');
-                    Route::get('/create-contact-list', [App\Http\Controllers\EmailMarketingController::class, 'create_email__contact_list'])->name('user.email.marketing.create.contact.list');
                     Route::get('/email-campaigns', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns'])->name('user.email-marketing.email.campaigns');
                 }
             );

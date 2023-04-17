@@ -19,7 +19,7 @@ class MailList extends Model
      */
     public function contacts(): BelongsToMany
     {
-        return $this->belongsToMany(Contact::class)->withTimestamps();
+        return $this->belongsToMany(MailContact::class)->withTimestamps();
     }
 
 }

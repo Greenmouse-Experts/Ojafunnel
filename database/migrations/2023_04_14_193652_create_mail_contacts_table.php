@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('mail_contacts', function (Blueprint $table) {
             $table->id();
             $table->uuid('uid');
-            $table->integer('user_id')->unsigned();
-            $table->string('first_name')->nullable();
+            $table->integer('mail_list_id')->unsigned();
+            $table->string('name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email', 250)->unique();
             $table->string('address_1');
