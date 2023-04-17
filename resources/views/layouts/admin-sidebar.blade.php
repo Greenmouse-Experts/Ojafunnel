@@ -49,12 +49,12 @@
                             <a href="/test-2" key="t-tui-calendar">
                                 Email Templates
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
-                            <a href="/test-3" key="t-tui-calendar">
+                            <a href="{{ route('admin.email-marketing.email-lists') }}" key="t-tui-calendar">
                                 Email Lists
                             </a>
-                        </li> --}}
+                        </li> 
                         <li>
                             <a href="{{ route('admin.email-marketing.email-campaigns') }}" key="t-tui-calendar">
                                 Email Campaigns

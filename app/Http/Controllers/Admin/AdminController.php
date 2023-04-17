@@ -35,6 +35,7 @@ use App\Models\ReplyMailSupport;
 use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use App\Models\MailList;
 use App\Models\OjafunnelMailSupport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -450,6 +451,16 @@ class AdminController extends Controller
     {
         return view('Admin.email-marketing.email-campaigns.index');
     }
+
+    public function view_email_lists()
+    {
+        $lists = MailList::latest()->get();
+
+        return view('Admin.email-marketing.email-campaigns.index', [
+            'lists' => $lists
+        ]);
+    }
+
 
     public function sms_automation()
     {
