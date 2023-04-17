@@ -121,6 +121,7 @@
                                                                                                 <select name="currency" id="currency">
                                                                                                     <option value="{{$interval->currency}}">{{$interval->currency}}</option>
                                                                                                     <option value="" disabled="">-- Select Currency --</option>
+                                                                                                    <option value="NGN">NGN - Naira</option>
                                                                                                     <option value="USD">USD - US Dollar</option>
                                                                                                     <option value="INR" >INR - Indian Rupee</option>
                                                                                                     <option value="EUR">EUR - Euro</option>
