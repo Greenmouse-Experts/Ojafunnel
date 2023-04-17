@@ -18,8 +18,8 @@ return new class extends Migration
             $table->increments('id');
             $table->char('uid', 36);
             $table->unsignedInteger('user_id')->index('mailadmins_user_id_foreign');
-            // $table->unsignedInteger('creator_id')->nullable()->index('mailadmins_creator_id_foreign');
-            // $table->unsignedInteger('contact_id')->nullable()->index('mailadmins_contact_id_foreign');
+            $table->unsignedInteger('creator_id')->nullable()->index('mailadmins_creator_id_foreign');
+            $table->unsignedInteger('contact_id')->nullable()->index('mailadmins_contact_id_foreign');
             $table->unsignedInteger('admin_group_id')->index('mailadmins_admin_group_id_foreign');
             $table->unsignedInteger('language_id')->nullable()->index('mailadmins_language_id_foreign');
             $table->string('timezone');
