@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::table('admins', function (Blueprint $table) {
             $table->foreign(['admin_group_id'], 'mailadmins_admin_group_id_foreign')->references(['id'])->on('admin_groups')->onUpdate('NO ACTION')->onDelete('CASCADE');
-            $table->foreign(['contact_id'], 'mailadmins_contact_id_foreign')->references(['id'])->on('contacts')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign(['creator_id'], 'mailadmins_creator_id_foreign')->references(['id'])->on('mailusers')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign(['language_id'], 'mailadmins_language_id_foreign')->references(['id'])->on('languages')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            // $table->foreign(['contact_id'], 'mailadmins_contact_id_foreign')->references(['id'])->on('contacts')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            // $table->foreign(['creator_id'], 'mailadmins_creator_id_foreign')->references(['id'])->on('mailusers')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            // $table->foreign(['language_id'], 'mailadmins_language_id_foreign')->references(['id'])->on('languages')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign(['user_id'], 'mailadmins_user_id_foreign')->references(['id'])->on('mailusers')->onUpdate('NO ACTION')->onDelete('CASCADE');
         });
     }
