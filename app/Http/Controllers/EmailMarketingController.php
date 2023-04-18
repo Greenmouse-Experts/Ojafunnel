@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Throwable;
-use App\Mail\TestMail;
 use App\Models\EmailKit;
-use Illuminate\Bus\Batch;
-use Illuminate\Http\Request;
-use App\Jobs\ProcessEmailCampaign;
-use App\Models\EmailTemplate;
-use App\Models\MailContact;
 use App\Models\MailList;
+use Illuminate\Bus\Batch;
+use App\Models\MailContact;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\EmailCampaign;
+use App\Models\EmailTemplate;
+use Illuminate\Support\Carbon;
+use App\Mail\EmailCampaignMail;
 use App\Models\ContactMailList;
+use App\Jobs\ProcessEmailCampaign;
+use App\Models\EmailCampaignQueue;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class EmailMarketingController extends Controller
 {
@@ -388,8 +391,7 @@ class EmailMarketingController extends Controller
         $list = MailList::find($finder);
         $contact = MailContact::where('mail_list_id', $list->id)->get()->count();
 
-        if($contact > 0)
-        {
+        if ($contact > 0) {
             $contact->delete();
         }
 
@@ -419,17 +421,17 @@ class EmailMarketingController extends Controller
         $mailList = MailList::find($finder);
 
         MailContact::create([
-           'uid' => Str::uuid(),
-           'mail_list_id' => $mailList->id,
-           'name' => $request->name,
-           'email' => $request->email,
-           'address_1' => $request->address_1,
-           'address_2' => $request->address_2,
-           'country' => $request->country,
-           'state' => $request->state,
-           'zip' => $request->zip,
-           'phone' => $request->phone,
-           'subscribe' => $request->subscribe
+            'uid' => Str::uuid(),
+            'mail_list_id' => $mailList->id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'address_1' => $request->address_1,
+            'address_2' => $request->address_2,
+            'country' => $request->country,
+            'state' => $request->state,
+            'zip' => $request->zip,
+            'phone' => $request->phone,
+            'subscribe' => $request->subscribe
         ]);
 
         return redirect()->route('user.email.view.list', Crypt::encrypt($mailList->id))->with([
@@ -465,8 +467,7 @@ class EmailMarketingController extends Controller
 
         $contact = MailContact::find($finder);
 
-        if($contact->email == $request->email)
-        {
+        if ($contact->email == $request->email) {
             $contact->update([
                 'name' => $request->name,
                 'address_1' => $request->address_1,
@@ -477,7 +478,7 @@ class EmailMarketingController extends Controller
                 'phone' => $request->phone,
                 'subscribe' => $request->subscribe
             ]);
-    
+
             return redirect()->route('user.email.view.list', Crypt::encrypt($contact->mail_list_id))->with([
                 'type' => 'success',
                 'message' => 'Contact updated!'
@@ -523,41 +524,129 @@ class EmailMarketingController extends Controller
         return view('dashboard.email-marketing.email-campaigns.index', []);
     }
 
-    public function create_campign(Request $request)
+    public function email_campaigns_create()
     {
-        $email_kit = EmailKit::where(['id' => '2', 'user_id', Auth::user()->id]);
+        $user_email_integrations = EmailKit::latest()->where(['account_id' => Auth::user()->id, 'is_admin' => false])->get();
+        $admin_email_integrations = EmailKit::latest()->where(['is_admin' => true])->get();
+        $email_integrations = $user_email_integrations->merge($admin_email_integrations);
 
-        if ($email_kit->exists()) {
-            $email_kit = $email_kit->get();
+        $email_templates = EmailTemplate::where(['user_id' => Auth::user()->id])->get();
+        $mail_lists = MailList::where('user_id', Auth::user()->id)->get();
 
-            $batch = Bus::batch([
-                new ProcessEmailCampaign([
-                    'smtp_host'    => $email_kit->host,
-                    'smtp_port'    => $email_kit->port,
-                    'smtp_username'  => $email_kit->username,
-                    'smtp_password'  => $email_kit->password,
-                    'from_email'    => $email_kit->from_email,
-                    'from_name'    => $email_kit->from_name,
-                ], 'obafunsoridwanadebayo17@gmail.com', new TestMail()),
-            ])->then(function (Batch $batch) {
-            })->catch(function (Batch $batch, Throwable $e) {
-            })->finally(function (Batch $batch) {
-                // done here
-            })->name('ProcessEmailCampaign')
-                ->allowFailures(false)
-                ->onQueue('emailcampaign')
-                ->dispatch();
+        return view('dashboard.email-marketing.email-campaigns.create', [
+            'email_integrations' => $email_integrations,
+            'email_templates' => $email_templates,
+            'mail_lists' => $mail_lists
+        ]);
+    }
 
-            // process email campaign
-            // ProcessEmailCampaign::dispatch([
-            //     'smtp_host'    => $email_kit->host,
-            //     'smtp_port'    => $email_kit->port,
-            //     'smtp_username'  => $email_kit->username,
-            //     'smtp_password'  => $email_kit->password,
-            //     'from_email'    => $email_kit->from_email,
-            //     'from_name'    => $email_kit->from_name,
-            // ], 'obafunsoridwanadebayo17@gmail.com', new TestMail());
+    public function email_campaigns_save(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'subject' => 'required',
+            'replyto_email' => 'required',
+            'replyto_name' => 'required',
+            'email_kit' => 'required',
+            'email_template' => 'required',
+            'email_list' => 'required',
+            'message_timing' => 'required'
+        ]);
+
+        $email_kit = EmailKit::find($request->email_kit)->first();
+        $email_template = EmailTemplate::find($request->email_template)->first();
+        $mail_list = MailList::find($request->email_list)->first();
+
+        if ($request->message_timing == 'Immediately') {
+            DB::transaction(function () use ($request, $email_kit, $email_template, $mail_list) {
+                $email_campaign = new EmailCampaign();
+                $email_campaign->user_id = Auth::user()->id;
+                $email_campaign->name = $request->name;
+                $email_campaign->subject = $request->subject;
+                $email_campaign->replyto_email = $request->replyto_email;
+                $email_campaign->replyto_name = $request->replyto_name;
+                $email_campaign->email_kit_id = $email_kit->id;
+                $email_campaign->list_id = $mail_list->id;
+                $email_campaign->email_template_id = $email_template->id;
+                $email_campaign->sent = 0;
+                $email_campaign->bounced = 0;
+                $email_campaign->spam_score = 0;
+                $email_campaign->message_timing = $request->message_timing;
+                $email_campaign->save();
+
+                // if ($request->hasFile('attachments')) {
+                //     foreach ($request->attachments as $key => $attachment) {
+                //         var_dump($attachment->getClientOriginalName());
+                //         var_dump('nddj');
+
+                //         // store here
+                //         $name = $attachment->getClientOriginalName();
+                //         $ext = $attachment->getClientOriginalExtension();
+
+                //         // na this path i wan use
+                //         // $path = 'email-marketing/' . Auth::user()->username . "/attachment/campaign-" . 1 . "/" . $name . "." . $ext;
+
+                //         // $path = $attachment->storeAs(
+                //         //     'public/email-marketing/',
+                //         //     substr(md5(mt_rand()), 0, 7) . '-' . $name . "." . $ext
+                //         // );
+
+                //         // Storage::disk('local')->put($path, $attachment);
+                //     }
+                // }
+
+                $contacts = MailContact::latest()->where('mail_list_id', $mail_list->id)->get();
+
+                // build each wa queue data based on contacts
+                $email_campaign_queue = $contacts->map(function ($_contact) use ($email_campaign) {
+                    $timestamp = Carbon::now();
+
+                    return [
+                        'email_campaign_id' => $email_campaign->id,
+                        'recepient' => $_contact->email,
+                        'status' => 'Waiting',
+                        'created_at' => $timestamp,
+                        'updated_at' => $timestamp,
+                    ];
+                })->toArray();
+
+                // bulk insert
+                EmailCampaignQueue::insert($email_campaign_queue);
+
+                // divide into 500 chunks and 
+                // delay each job between 10  - 20 sec in the queue
+                $chunks = $contacts->chunk(500);
+                $delay = mt_rand(10, 20);
+
+                // dispatch job and delay
+                foreach ($chunks as $key => $_chunk) {
+                    // dispatch job 
+                    ProcessEmailCampaign::dispatch([
+                        'smtp_host'    => $email_kit->host,
+                        'smtp_port'    => $email_kit->port,
+                        'smtp_username'  => $email_kit->username,
+                        'smtp_password'  => $email_kit->password,
+                        'from_email'    => $email_kit->from_email,
+                        'from_name'    => $email_kit->from_name,
+                    ],  $_chunk, [
+                        'email_campaign' => $email_campaign,
+                        'email_kit' => $email_kit,
+                        'email_template' => $email_template,
+                        'user' => Auth::user()
+                    ])->afterCommit()->onQueue('emailCampaign')->delay($delay);
+
+                    $delay += mt_rand(10, 20);
+                }
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'The Email campaign has been created and execution will begin soon.'
+                ]);
+            });
         }
+
+        // if ($request->message_timing == 'Schedule') {
+        // }
     }
 
     function calculateSpamScore(Request $request)

@@ -261,6 +261,8 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/email-lists', [App\Http\Controllers\EmailMarketingController::class, 'email_lists'])->name('user.email-marketing.email.lists');
                     Route::get('/create-list', [App\Http\Controllers\EmailMarketingController::class, 'create_email_list'])->name('user.email.marketing.create.list');
                     Route::get('/email-campaigns', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns'])->name('user.email-marketing.email.campaigns');
+                    Route::get('/email-campaigns/create', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns_create'])->name('user.email-marketing.email.campaigns.create');
+                    Route::post('/email-campaigns/save', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns_save'])->name('user.email-marketing.email.campaigns.save');
                 }
             );
 

@@ -586,7 +586,7 @@
                                     <label>Port</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Your AWS SES SMTP Port" name="port" class="input" readonly value="587"> 
+                                            <input typnumberext" placeholder="Your AWS SES SMTP Port" name="port" class="input" value=""> 
                                         </div>
                                     </div>
                                 </div>
@@ -681,7 +681,7 @@
                                     <label>Port</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Your SendGrid SMTP Port" name="port" class="input" readonly value="587"> 
+                                            <input typenumberxt" placeholder="Your SendGrid SMTP Port" name="port" class="input" value=""> 
                                         </div>
                                     </div>
                                 </div>
@@ -776,7 +776,7 @@
                                     <label>Port</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Your Sendinblue SMTP Port" name="port" class="input" readonly value="587"> 
+                                            <input type="number" placeholder="Your Sendinblue SMTP Port" name="port" class="input" value=""> 
                                         </div>
                                     </div>
                                 </div>
@@ -871,7 +871,7 @@
                                     <label>Port</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Your SendPulse SMTP Port" name="port" class="input" readonly value="587"> 
+                                            <input type=numbert" placeholder="Your SendPulse SMTP Port" name="port" class="input" value=""> 
                                         </div>
                                     </div>
                                 </div>
@@ -966,7 +966,7 @@
                                     <label>Port</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Your Mailjet SMTP Port" name="port" class="input" readonly value="587"> 
+                                            <input typnumberext" placeholder="Your Mailjet SMTP Port" name="port" class="input" value=""> 
                                         </div>
                                     </div>
                                 </div>
