@@ -403,6 +403,42 @@ class EmailMarketingController extends Controller
         ]);
     }
 
+    function email_veriication($email)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.apilayer.com/email_verification/check?email=$email",
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: text/plain",
+            "apikey: hh1kBNxCPLAwYaePOR55kuyy3mT7zxow"
+        ),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET"
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $json = json_decode($response, true);
+
+        // dd($json);
+
+        if($json == null){
+            return 'invalid';
+        } elseif ($json['success'] == false) {
+            return 'false';
+        } elseif ($json['format_valid'] == true) {
+            return 'true';
+        }
+    }
+
     public function email_create_contact($id, Request $request)
     {
         $this->validate($request, [
@@ -419,6 +455,16 @@ class EmailMarketingController extends Controller
         $finder = Crypt::decrypt($id);
 
         $mailList = MailList::find($finder);
+
+        $emailVerification = $this->email_veriication($request->email);
+
+        if($emailVerification !== 'true')
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'The email address is not valid.'
+            ]);
+        }
 
         MailContact::create([
             'uid' => Str::uuid(),

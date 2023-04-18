@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -555,11 +556,6 @@ class AuthController extends Controller
         }
     }
 
-    // public function admin_login()
-    // {
-    //     return view('auth.admin_login');
-    // }
-
     public function adminlogin()
     {
         return view('auth.admin');
@@ -604,11 +600,43 @@ class AuthController extends Controller
         Auth::logout();
 
         return redirect('/');
-        // return Redirect::to('http://localhost:8000');
     }
 
-    public function general_builder_scan()
+    public function text()
     {
-        dd('yes');
+        $email = 'promiseezema11@gmail@gmail.com';
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.apilayer.com/email_verification/check?email=$email",
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: text/plain",
+            "apikey: hh1kBNxCPLAwYaePOR55kuyy3mT7zxow"
+        ),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET"
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $json = json_decode($response, true);
+
+        // dd($json);
+
+        if($json == null){
+            return 'invalid';
+        } elseif ($json['success'] == false) {
+            return 'false';
+        } elseif ($json['format_valid'] == true) {
+            return 'true';
+        }
     }
 }

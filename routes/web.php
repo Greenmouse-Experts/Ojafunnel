@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\SendMessage;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
@@ -19,14 +20,7 @@ Route::group(['domain' => '{subdomain}.ojafunnel.com'], function () {
     Route::get('/{page}', [CustomSubDomain::class, 'custom']);
 });
 
-Route::get('/broadcast', function (Request $request) {
-    // Fire the SendMessage event
-    $message = "Welcome to Ojafunnel";
-
-    event(new SendMessage($message));
-
-    return 'Successfully';
-})->name('broadcast');
+Route::get('/text', [AuthController::class, 'text']);
 
 // FrontEnd
 Route::get('/page-builder/create', [App\Http\Controllers\PageController::class, 'page_builder_create'])->name('user.page.builder.create');
