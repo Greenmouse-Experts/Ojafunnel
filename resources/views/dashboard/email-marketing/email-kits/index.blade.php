@@ -35,7 +35,7 @@
                             <div class="col-md-3">
                                 <div class="">
                                     <div class="all-create">
-                                        <a href="{{ route('user.integration', ['username' => Auth::user()->id]) }}#email">
+                                        <a href="{{ route('user.integration', ['username' => Auth::user()->username]) }}#email">
                                             <button>
                                                 + Add Email Kits
                                             </button>

@@ -63,7 +63,7 @@ class DashboardController extends Controller
     {
         return view('dashboard.dashboard');
     }
-    
+
     public function list_setting($username)
     {
         return view('dashboard.listSetting', [
@@ -434,8 +434,7 @@ class DashboardController extends Controller
 
         if ($request->isMethod('post')) {
 
-            if(\App\Models\ContactList::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->sms_contact_list)
-            {
+            if (\App\Models\ContactList::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->sms_contact_list) {
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Subscribe to enjoy more access.'
@@ -644,8 +643,7 @@ class DashboardController extends Controller
             'phone_number' => 'required|unique:whatsapp_numbers'
         ]);
 
-        if(WhatsappNumber::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->wa_number)
-        {
+        if (WhatsappNumber::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->wa_number) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Subscribe to enjoy more access.'
@@ -805,8 +803,7 @@ class DashboardController extends Controller
             'template' => 'required',
         ]);
 
-        if(WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation)
-        {
+        if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Subscribe to enjoy more access.'
