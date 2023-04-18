@@ -430,13 +430,19 @@ class EmailMarketingController extends Controller
 
         // dd($json);
 
-        if($json == null){
-            return 'invalid';
-        } elseif ($json['success'] == false) {
-            return 'false';
-        } elseif ($json['format_valid'] == true) {
-            return 'true';
+        if($json !== null)
+        {    
+            if ($json['format_valid'] == true) 
+            {
+                return 'true';
+            }
+            if($json['success'] == false)
+            {
+                return 'invalid';
+            }
         }
+
+        return 'invalid';
     }
 
     public function email_create_contact($id, Request $request)
@@ -640,6 +646,17 @@ class EmailMarketingController extends Controller
                 //         // Storage::disk('local')->put($path, $attachment);
                 //     }
                 // }
+
+                if($request->hasFile('attachments'))
+                {
+                    foreach($request->file('attachments') as $key => $attachment)
+                    {
+                        $fileName[] = $attachment->getClientOriginalName();  
+                        $attachment->storeAs('email-marketing/'.Auth::user()->username.'/attachment/'.$email_campaign->name, $fileName, 'public');
+                    }
+
+                    return $fileName;
+                }
 
                 $contacts = MailContact::latest()->where('mail_list_id', $mail_list->id)->get();
 

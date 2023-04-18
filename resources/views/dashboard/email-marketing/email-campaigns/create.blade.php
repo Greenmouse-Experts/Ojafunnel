@@ -142,7 +142,7 @@
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664984753/OjaFunnel-Images/Vectoor_rbkrfl.png" alt="">
                                             </div>
                                             <div class="logo-file">
-                                                <input type="file" name="attachments" id="" multiple/>
+                                                <input type="file" name="attachments[]" id="" multiple/>
                                             </div>
                                         </div>
                                     </div>   
