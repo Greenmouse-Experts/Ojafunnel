@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class EmailCampaign extends Model
 {
     use HasFactory;
+
+    public function email_campaign_queues()
+    {
+        return $this->hasMany(EmailCampaignQueue::class, 'email_campaign_id');
+    }
 }

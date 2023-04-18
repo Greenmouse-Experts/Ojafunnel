@@ -408,18 +408,18 @@ class EmailMarketingController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.apilayer.com/email_verification/check?email=$email",
-        CURLOPT_HTTPHEADER => array(
-            "Content-Type: text/plain",
-            "apikey: hh1kBNxCPLAwYaePOR55kuyy3mT7zxow"
-        ),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET"
+            CURLOPT_URL => "https://api.apilayer.com/email_verification/check?email=$email",
+            CURLOPT_HTTPHEADER => array(
+                "Content-Type: text/plain",
+                "apikey: hh1kBNxCPLAwYaePOR55kuyy3mT7zxow"
+            ),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET"
         ));
 
         $response = curl_exec($curl);
@@ -430,14 +430,11 @@ class EmailMarketingController extends Controller
 
         // dd($json);
 
-        if($json !== null)
-        {    
-            if ($json['format_valid'] == true) 
-            {
+        if ($json !== null) {
+            if ($json['format_valid'] == true) {
                 return 'true';
             }
-            if($json['success'] == false)
-            {
+            if ($json['success'] == false) {
                 return 'invalid';
             }
         }
@@ -464,8 +461,7 @@ class EmailMarketingController extends Controller
 
         $emailVerification = $this->email_veriication($request->email);
 
-        if($emailVerification !== 'true')
-        {
+        if ($emailVerification !== 'true') {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'The email address is not valid.'
@@ -573,7 +569,45 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns(Request $request)
     {
-        return view('dashboard.email-marketing.email-campaigns.index', []);
+        $email_campaigns = EmailCampaign::latest()->where('user_id', Auth::user()->id)->get();
+
+        return view('dashboard.email-marketing.email-campaigns.index', [
+            'email_campaigns' => $email_campaigns
+        ]);
+    }
+
+    public function email_campaigns_delete(Request $request)
+    {
+        $email_campaign = EmailCampaign::find($request->id);
+
+        if (count($email_campaign->email_campaign_queues->where('status', 'Waiting')) > 0) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'The email campaign can\'t be deleted during execution.'
+            ]);
+        }
+
+        // delete all related wa_queues
+        $email_campaign->email_campaign_queues()->delete();
+
+        // delete campaign
+        $email_campaign->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The email campaign has been deleted successfully.'
+        ]);
+    }
+
+    public function email_campaigns_overview(Request $request)
+    {
+        $email_campaign = EmailCampaign::latest()->where(['user_id' => Auth::user()->id, 'id' => $request->id])->first();
+        $email_campaign_queues = EmailCampaignQueue::where('email_campaign_id', $email_campaign->id)->get();
+
+        return view('dashboard.email-marketing.email-campaigns.overview', [
+            'email_campaign' => $email_campaign,
+            'email_campaign_queues' => $email_campaign_queues
+        ]);
     }
 
     public function email_campaigns_create()
@@ -624,38 +658,25 @@ class EmailMarketingController extends Controller
                 $email_campaign->bounced = 0;
                 $email_campaign->spam_score = 0;
                 $email_campaign->message_timing = $request->message_timing;
+                $email_campaign->attachment_paths = json_encode([]);
                 $email_campaign->save();
 
-                // if ($request->hasFile('attachments')) {
-                //     foreach ($request->attachments as $key => $attachment) {
-                //         var_dump($attachment->getClientOriginalName());
-                //         var_dump('nddj');
+                if ($request->hasFile('attachments')) {
+                    $attachment_paths = [];
 
-                //         // store here
-                //         $name = $attachment->getClientOriginalName();
-                //         $ext = $attachment->getClientOriginalExtension();
+                    foreach ($request->file('attachments') as $key => $attachment) {
+                        $filename = $attachment->getClientOriginalName();
+                        $path = 'email-marketing/' . Auth::user()->username . '/attachment/campaign-' . $email_campaign->id;
+                        $fullpath = $path . '/' . $filename;
 
-                //         // na this path i wan use
-                //         // $path = 'email-marketing/' . Auth::user()->username . "/attachment/campaign-" . 1 . "/" . $name . "." . $ext;
+                        // store here
+                        $attachment->storeAs($path, $filename, 'public');
 
-                //         // $path = $attachment->storeAs(
-                //         //     'public/email-marketing/',
-                //         //     substr(md5(mt_rand()), 0, 7) . '-' . $name . "." . $ext
-                //         // );
-
-                //         // Storage::disk('local')->put($path, $attachment);
-                //     }
-                // }
-
-                if($request->hasFile('attachments'))
-                {
-                    foreach($request->file('attachments') as $key => $attachment)
-                    {
-                        $fileName[] = $attachment->getClientOriginalName();  
-                        $attachment->storeAs('email-marketing/'.Auth::user()->username.'/attachment/'.$email_campaign->name, $fileName, 'public');
+                        array_push($attachment_paths, $fullpath);
                     }
 
-                    return $fileName;
+                    $email_campaign->attachment_paths = json_encode($attachment_paths);
+                    $email_campaign->save();
                 }
 
                 $contacts = MailContact::latest()->where('mail_list_id', $mail_list->id)->get();
@@ -700,12 +721,12 @@ class EmailMarketingController extends Controller
 
                     $delay += mt_rand(10, 20);
                 }
-
-                return back()->with([
-                    'type' => 'success',
-                    'message' => 'The Email campaign has been created and execution will begin soon.'
-                ]);
             });
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'The Email campaign has been created and execution will begin soon.'
+            ]);
         }
 
         // if ($request->message_timing == 'Schedule') {

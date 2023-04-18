@@ -58,10 +58,104 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
-                                            <th>Host</th> 
+                                            <th>Subject</th> 
+                                            <th>Kit</th>  
+                                            <th>Template</th> 
+                                            <th>List</th> 
+                                            <th>Replyto Email</th>
+                                            <th>Replyto Name</th>
+                                            <th>Attachment(s)</th>
+                                            <th>Sent</th>
+                                            <th>Bounced</th> 
+                                            <th>Created At</th> 
+                                            <th>Action</th> 
                                         </tr>
                                     </thead> 
                                     <tbody> 
+                                        @forelse ($email_campaigns as $email_campaign)
+                                            <tr>
+                                                <td>{{ $loop->index + 1}}</td>
+                                                <td>{{ $email_campaign->name }}</td>
+                                                <td>{{ $email_campaign->subject }}</td> 
+                                                <td> 
+                                                    {{ App\Models\EmailKit::latest()->where('id', $email_campaign->email_kit_id)->first()->host }}
+                                                </td> 
+                                                <td> 
+                                                    {{ 
+                                                        App\Models\EmailTemplate::latest()
+                                                        ->where('id', $email_campaign->email_template_id)->first()->name 
+                                                    }}
+                                                </td> 
+                                                <td>
+                                                    {{ 
+                                                        App\Models\MailList::latest()->where('id', $email_campaign->list_id)
+                                                        ->first()->name 
+                                                    }}
+                                                </td> 
+                                                <td>{{ $email_campaign->replyto_email }}</td>
+                                                <td>{{ $email_campaign->replyto_name }}</td>
+                                                <td>{{ count(json_decode($email_campaign->attachment_paths)) }}</td>
+                                                <td>{{ $email_campaign->sent }}</td>
+                                                <td>{{ $email_campaign->bounced }}</td> 
+                                                <td>{{ $email_campaign->created_at->toDayDateTimeString() }}</td>  
+                                                <td>
+                                                    <div class="dropdown"> 
+                                                        <ul class="list-unstyled hstack gap-1 mb-0"> 
+                                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                                <a href="{{ route('user.email-marketing.email.campaigns.overview', ['username' => Auth::user()->username, 'id' => $email_campaign->id])}}" class="btn btn-sm btn-soft-info">
+                                                                    <i class="mdi mdi-eye-outline"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                                <a href="#delete-{{ $email_campaign->id }}" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
+                                                            </li>
+                                                        </ul>
+
+                                                        <div class="modal fade" id="delete-{{ $email_campaign->id }}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" style="max-width: 35%">
+                                                                <div class="modal-content pb-3">
+
+                                                                    <div class="modal-header border-bottom-0">
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="Editt">
+                                                                            <form action="{{ route('user.email-marketing.email.campaigns.delete', ['username' => Auth::user()->username ])}}" method="POST">
+                                                                                @csrf
+                                                                                <div class="form">
+                                                                                    <div class="row">
+                                                                                        <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to <br> delete this email campaign</h3>
+                                                                                        <div class="row justify-content-between">
+                                                                                            <div class="col-6">
+                                                                                                <a href="#" class="text-decoration-none">
+                                                                                                    <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                                        Cancel
+                                                                                                    </button></a>
+                                                                                            </div>
+                                                                                            <div class="col-6 text-end">
+                                                                                                <input type="hidden" name="id" value="{{ $email_campaign->id }}">
+                                                                                                <a href="#" class="text-decoration-none">
+                                                                                                    <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #BA0028"
+                                                                                                        >
+                                                                                                        Delete
+                                                                                                    </button>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td> 
+                                            </tr>
+                                        @empty
+                                            {{ 'No email campaign at the moment '}}
+                                        @endforelse 
                                     </tbody>
                                 </table>
                             </div>
