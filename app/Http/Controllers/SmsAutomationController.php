@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Twilio\Rest\Client as twilio;
 use GuzzleHttp\Client;
 use App\Library\Tool;
+use App\Models\OjaPlanParameter;
 
 class SmsAutomationController extends Controller
 {
