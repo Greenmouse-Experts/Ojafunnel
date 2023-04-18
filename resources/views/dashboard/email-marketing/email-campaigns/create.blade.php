@@ -154,9 +154,9 @@
                                             <div class="col-md-4 col-6">
                                                 <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
                                             </div>
-                                            <div class="col-md-4 col-6">
+                                            {{-- <div class="col-md-4 col-6">
                                                 <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div> 
                                     <div class="col-12" id="schedule" style="display: none;">

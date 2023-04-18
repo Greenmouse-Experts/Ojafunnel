@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
 use App\Mail\EmailCampaignMail;
+use App\Models\EmailCampaign;
 use App\Models\EmailCampaignQueue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +52,7 @@ class ProcessEmailCampaign implements ShouldQueue
             $user = $this->data['user'];
 
             $this->contacts->map(function ($_contact) use ($mailer, $email_campaign, $email_kit, $email_template, $user) {
+                // mailable
                 $mailable = new EmailCampaignMail($email_campaign, $email_kit, $email_template, $_contact, $user);
 
                 // update status to Sending
@@ -63,6 +65,12 @@ class ProcessEmailCampaign implements ShouldQueue
                 // update status to Sent
                 EmailCampaignQueue::where(['email_campaign_id' => $email_campaign->id, 'recepient' => $_contact->email])
                     ->update(['status' => 'Sent']);
+
+                // update email campaign
+                $_email_campaign = EmailCampaign::where('id', $email_campaign->id);
+                $_email_campaign->update([
+                    'sent' => $_email_campaign->first()->sent + 1
+                ]);
             });
         } catch (\Throwable $th) {
             Log::info($th);

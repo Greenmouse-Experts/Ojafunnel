@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 
 class EmailCampaignMail extends Mailable
 {
@@ -75,12 +76,13 @@ class EmailCampaignMail extends Mailable
      */
     public function attachments()
     {
-        // $attachs = [];
-        // $this->attachments->map(function () {
-        //     array_push($attachs, Attachment::fromPath(''));
-        // })
-        // return $attachs;
+        $paths = json_decode($this->email_campaign->attachment_paths);
+        $_attachments = [];
 
-        return [];
+        for ($i = 0; $i < count($paths); $i++) {
+            array_push($_attachments, Attachment::fromStorage('public/' . $paths[$i]));
+        }
+
+        return $_attachments;
     }
 }
