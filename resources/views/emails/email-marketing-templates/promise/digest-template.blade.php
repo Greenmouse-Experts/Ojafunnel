@@ -166,7 +166,7 @@
 								<tr>
 									<td align="left" bgcolor="#ffffff" valign="top"><img src="http://via.placeholder.com/100x100" style="display: block; border-radius: 50%;" /></td>
 									<td align="left" bgcolor="#ffffff" style="padding-left: 12px;" valign="top">
-									<p style="margin: 0;">Youth; save the world co-creation sustainable the. Problem-solvers save the world empower communities parse collaborative consumption storytelling.</p>
+									<p style="margin: 0;">Youth; save the world co-creation sustainable the. Problem-solvers save the world and empower communities to parse collaborative consumption storytelling.</p>
 									</td>
 								</tr>
 							</tbody>
@@ -235,7 +235,7 @@
 				<tbody>
 					<tr>
 						<td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
-						<p style="margin: 0;">You received this email because we received a request for [type_of_action] for your account. If you didn&#39;t request [type_of_action] you can safely delete this email.</p>
+						<p style="margin: 0;">You received this email because we received a request for [type_of_action] for your account. You can safely delete this email if you didn&#39;t request [type_of_action].</p>
 						</td>
 					</tr>
 					<!-- end permission --><!-- start unsubscribe -->
@@ -254,5 +254,5 @@
 		<!-- end footer -->
 	</tbody>
 </table>
-<!-- end body --></body>
-<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
+<!-- end body --><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></body>
+</html>

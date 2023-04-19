@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class CMSController extends Controller
 {
@@ -234,7 +235,7 @@ class CMSController extends Controller
 
         if ($request->content_type == 'Video') {
             $this->validate($request, [
-                'lesson_video' => 'required|mimes:mp4,mov,ogg,qt,wmv,avi,m3u8|max:512000',
+                'lesson_video' => 'mimetypes:video/avi,video/mpeg,video/quicktime|max:10240000',
             ]);
 
             $file = request()->lesson_video->getClientOriginalName();
