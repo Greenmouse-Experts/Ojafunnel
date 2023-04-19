@@ -4,24 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\Faq;
-use App\Models\ContactUs;
-use App\Models\Category;
-use App\Models\Course;
-use App\Models\Message;
-use App\Models\MessageUser;
-use App\Models\OjafunnelNotification;
-use App\Models\OjaPlan;
-use App\Models\OjaPlanInterval;
-use App\Models\OjaPlanParameter;
-use App\Models\OrderItem;
 use App\Models\Page;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Course;
+use App\Models\Message;
+use App\Models\OjaPlan;
+use App\Models\Category;
 use App\Models\EmailKit;
+use App\Models\MailList;
+use App\Models\ContactUs;
+use App\Models\OrderItem;
 use App\Models\ShopOrder;
 use App\Models\StoreOrder;
 use App\Models\Withdrawal;
+use App\Models\MailContact;
+use App\Models\MessageUser;
 use App\Models\SmsCampaign;
 use App\Models\Transaction;
 use App\Models\WaCampaigns;
@@ -29,18 +28,20 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Models\StoreProduct;
 use Illuminate\Http\Request;
+use App\Models\EmailCampaign;
 use App\Models\WhatsappNumber;
+use App\Models\OjaPlanInterval;
 use App\Models\WhatsappSupport;
+use App\Models\OjaPlanParameter;
 use App\Models\ReplyMailSupport;
 use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
-use App\Models\MailContact;
-use App\Models\MailList;
 use App\Models\OjafunnelMailSupport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use App\Models\OjafunnelNotification;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -450,7 +451,11 @@ class AdminController extends Controller
 
     public function view_email_campaigns()
     {
-        return view('Admin.email-marketing.email-campaigns.index');
+        $email_campaigns = EmailCampaign::latest()->get();
+
+        return view('Admin.email-marketing.email-campaigns.index', [
+            'email_campaigns' => $email_campaigns
+        ]);
     }
 
     public function email_lists()
@@ -512,8 +517,7 @@ class AdminController extends Controller
         $list = MailList::find($finder);
         $contact = MailContact::where('mail_list_id', $list->id)->get()->count();
 
-        if($contact > 0)
-        {
+        if ($contact > 0) {
             $contact->delete();
         }
 
@@ -1310,8 +1314,7 @@ class AdminController extends Controller
         // return $plan;
         $parameters = OjaPlanParameter::where('plan_id', $plan->id)->first();
 
-        if($parameters == null)
-        {
+        if ($parameters == null) {
             $parameters = OjaPlanParameter::create([
                 'plan_id' => $plan->id
             ]);
@@ -1327,7 +1330,7 @@ class AdminController extends Controller
             ]);
         }
     }
-    
+
     public function add_plan_parameter($id, Request $request)
     {
         $finder = Crypt::decrypt($id);
@@ -1356,7 +1359,7 @@ class AdminController extends Controller
             'message' => 'Plan parameters updated successfully.',
         ]);
     }
-    
+
     public function plan_interval($id)
     {
         $finder = Crypt::decrypt($id);
