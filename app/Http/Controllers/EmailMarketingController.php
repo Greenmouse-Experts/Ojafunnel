@@ -181,7 +181,7 @@ class EmailMarketingController extends Controller
 
     public function email_templates_editor(Request $request)
     {
-        $template = EmailTemplate::find($request->id);
+        $template = EmailTemplate::where('id', $request->id);
 
         if (!$template->exists()) {
             return back()->with([
@@ -211,7 +211,7 @@ class EmailMarketingController extends Controller
 
     public function email_templates_editor_save(Request $request)
     {
-        $template = EmailTemplate::find($request->id);
+        $template = EmailTemplate::where('id', $request->id);
 
         if (!$template->exists()) {
             return response()->json([
@@ -432,7 +432,7 @@ class EmailMarketingController extends Controller
 
         if ($json !== null) {
             if (in_array('format_valid', $json)) {
-               if ($json['format_valid'] == true) {
+                if ($json['format_valid'] == true) {
                     return 'true';
                 }
             }
@@ -440,7 +440,7 @@ class EmailMarketingController extends Controller
                 if ($json['success'] == false) {
                     return 'invalid';
                 }
-             }
+            }
         }
 
         return 'invalid';
