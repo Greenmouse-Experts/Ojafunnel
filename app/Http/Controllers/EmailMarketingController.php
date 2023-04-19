@@ -639,9 +639,9 @@ class EmailMarketingController extends Controller
             'message_timing' => 'required'
         ]);
 
-        $email_kit = EmailKit::find($request->email_kit)->first();
-        $email_template = EmailTemplate::find($request->email_template)->first();
-        $mail_list = MailList::find($request->email_list)->first();
+        $email_kit = EmailKit::where('id', $request->email_kit)->first();
+        $email_template = EmailTemplate::where('id', $request->email_template)->first();
+        $mail_list = MailList::where('id', $request->email_list)->first();
 
         if ($request->message_timing == 'Immediately') {
             DB::transaction(function () use ($request, $email_kit, $email_template, $mail_list) {
