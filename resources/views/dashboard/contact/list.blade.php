@@ -31,7 +31,7 @@
                                 <div class="py-2">
                                     <h4 class="font-500">Contact List</h4>
                                     <p>
-                                        Sms and Whatsapp Contact List
+                                        Sms Contact List
                                     </p>
                                 </div>
                             </div>
@@ -66,8 +66,6 @@
                                         <th scope="col">Status</th>
                                         <th scope="col">Created At</th>
                                         <th scope="col">Action</th>
-                                        <!-- <th scope="col">Opens</th> -->
-                                        {{-- <th scope="col">Unsubscribed</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -120,15 +118,13 @@
                                                                             </div>
                                                                             <div class="row justify-content-between">
                                                                                 <div class="col-6">
-                                                                                    <a href="#" class="text-decoration-none">
-                                                                                        <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                                                            Cancel
-                                                                                        </button></a>
+                                                                                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                        Cancel
+                                                                                    </button>
                                                                                 </div>
                                                                                 <div class="col-6 text-end">
                                                                                     <a href="#" class="text-decoration-none">
-                                                                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                                                            >
+                                                                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
                                                                                             Save Number
                                                                                         </button>
                                                                                     </a>
@@ -180,10 +176,9 @@
                                                                             </div>
                                                                             <div class="row justify-content-between">
                                                                                 <div class="col-6">
-                                                                                    <a href="#" class="text-decoration-none">
-                                                                                        <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                                                            Cancel
-                                                                                        </button></a>
+                                                                                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                        Cancel
+                                                                                    </button>
                                                                                 </div>
                                                                                 <div class="col-6 text-end">
                                                                                     <a href="#" class="text-decoration-none">
@@ -219,15 +214,13 @@
                                                                             <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to delete this list <br> ({{$item->name}})</h3>
                                                                             <div class="row justify-content-between">
                                                                                 <div class="col-6">
-                                                                                    <a href="#" class="text-decoration-none">
-                                                                                        <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                                                            Cancel
-                                                                                        </button></a>
+                                                                                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                        Cancel
+                                                                                    </button>
                                                                                 </div>
                                                                                 <div class="col-6 text-end">
                                                                                     <a href="#" class="text-decoration-none">
-                                                                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #BA0028"
-                                                                                            >
+                                                                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #BA0028">
                                                                                             Delete
                                                                                         </button>
                                                                                     </a>
@@ -298,7 +291,7 @@
                                     <label>Name</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Contact List Name..." name="name" class="input"
+                                            <input type="text" placeholder="Contact List Name..." id="" name="name" class="input"
                                                 required>
                                         </div>
                                     </div>
@@ -316,15 +309,13 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <a href="#" class="text-decoration-none">
-                                            <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                Cancel
-                                            </button></a>
+                                        <button class="btn px-3" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
                                     </div>
                                     <div class="col-6 text-end">
                                         <a href="#" class="text-decoration-none">
-                                            <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                >
+                                            <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
                                                 Save
                                             </button>
                                         </a>

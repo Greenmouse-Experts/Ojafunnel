@@ -83,6 +83,7 @@
                             </td>
                             <td>
                               <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
+                              <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push" style="margin-left: 10px; padding: 0.2rem 0.5rem;"><i class="mdi mdi-content-copy"></i></button>
                             </td>
                             <td>
                                 <button class="btn-list" data-bs-toggle="modal" data-bs-target="#editshop-{{$item->id}}">
@@ -253,32 +254,21 @@
     </div>
   </div>
   <script>
-    $(document).ready(function(){
+      function myCopyFunction() {
+          // Get the text field
+          var copyText = document.getElementById("myInput");
 
-      $("#shopName").keyup(function(){
-        if(document.getElementById('shopName').value.match(/\s/g)){
-            document.getElementById('shopName').value=document.getElementById('shopName').value.replace(/\s/g,'');
-        }
-        $("#myInput").val('http://shop.ojafunnel.test/'+$("#shopName").val());
-      });
-    });
-</script>
-<script>
-    function myCopyFunction() {
-        // Get the text field
-        var copyText = document.getElementById("myInput");
+          // Select the text field
+          copyText.select();
+          copyText.setSelectionRange(0, 99999); // For mobile devices
 
-        // Select the text field
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); // For mobile devices
+          // Copy the text inside the text field
+          navigator.clipboard.writeText(copyText.value);
 
-        // Copy the text inside the text field
-        navigator.clipboard.writeText(copyText.value);
-
-        // Alert the copied text
-        //alert("Copied the text: " + copyText.value);
-    }
-</script>
+          // Alert the copied text
+          //alert("Copied the text: " + copyText.value);
+      }
+  </script>
   <!-- End Page-content -->
 </div>
 
