@@ -48,7 +48,7 @@
                                 @auth
                                     <a href="{{route('user.create.shop.course', Auth::user()->username)}}">Set up your own shop</a>
                                 @else
-                                    <a href="{{route('/')}}">Set up your own shop</a>
+                                    <a href="{{route('signup')}}">Set up your own shop</a>
                                 @endauth
                             </div>
                             <div class="dropdown">
@@ -165,9 +165,9 @@
                     </div>
                 @endif
                 <div class="col-lg-12">
-                    <h2 class="course-carousel-title mb-4">All Courses Found {{\App\Models\Course::where('user_id', Auth::user()->id)->where('approved', true)->get()->count()}}</h2>
+                    <h2 class="course-carousel-title mb-4">All Courses Found {{\App\Models\Course::where('user_id', $shop->id)->where('approved', true)->get()->count()}}</h2>
                 </div>
-                @forelse(\App\Models\Course::where('user_id', Auth::user()->id)->where('approved', true)->get() as $course)
+                @forelse(\App\Models\Course::where('user_id', $shop->id)->where('approved', true)->get() as $course)
                 <div class="col-lg-4">
                     <div class="course-box-wrap">
                         <a href="{{route('view.course.details', [$shop->name, Crypt::encrypt($course->id)])}}" class="has-popover">

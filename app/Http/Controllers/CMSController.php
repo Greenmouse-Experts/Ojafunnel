@@ -242,7 +242,7 @@ class CMSController extends Controller
                         'required',
                         File::types(['mp3', 'mp4'])
                             ->min(1024)
-                            ->max(120 * 1024),
+                            ->max(100 * 1024),
                     ],
                 ]);
 
@@ -282,7 +282,7 @@ class CMSController extends Controller
             } catch (Exception $e) {
                 return back()->with([
                     'type' => 'danger',
-                    'message' => 'File size should not be greater than 2MB.'
+                    'message' => 'File size should not be greater than 100MB.'
                 ]);
             }
         } elseif ($request->content_type == 'Youtube') {
