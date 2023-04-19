@@ -154,9 +154,9 @@
                                             <div class="col-md-4 col-6">
                                                 <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
                                             </div>
-                                            {{-- <div class="col-md-4 col-6">
+                                            <div class="col-md-4 col-6">
                                                 <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
-                                            </div> --}}
+                                            </div>
                                         </div>
                                     </div> 
                                     <div class="col-12" id="schedule" style="display: none;">
@@ -169,7 +169,7 @@
                                                 <label for="Time">Start Time</label>
                                                 <input type="Time" name="start_time" />
                                             </div>
-                                            <div class="col-md-12 mt-5">
+                                            {{-- <div class="col-md-12 mt-5">
                                                 <label for="">Frequency</label>
                                                 <select name="frequency_cycle" id="selectFrenquncy" onchange="frequencyChange()">
                                                     <option value="onetime">One time</option>
@@ -203,12 +203,12 @@
                                                         <label for="Time">End Date</label>
                                                         <input type="date" name="end_date" />
                                                     </div>
-                                                    {{-- <div class="col-md-6 mt-5">
+                                                    <div class="col-md-6 mt-5">
                                                         <label for="Time">End Time</label>
                                                         <input type="Time" name="end_time" />
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
