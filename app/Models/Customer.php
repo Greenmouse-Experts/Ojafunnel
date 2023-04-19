@@ -749,9 +749,11 @@ class Customer extends Model
                 $this->getAncestors($array, $subscribe_amount, $parent);
             } else {
                 // Customer
-                $this->fill($request->all());
-                $this->status = self::STATUS_ACTIVE;
-                $this->save();
+                $customer = new Customer();
+                $customer->fill($request->all());
+                $customer->language_id = 1;
+                $customer->status = self::STATUS_ACTIVE;
+                $customer->save();
 
                 // User
                 $user = new User();

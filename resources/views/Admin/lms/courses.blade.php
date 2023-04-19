@@ -95,7 +95,7 @@
                                             <td>
                                                 <ul class="list-unstyled hstack gap-1 mb-0">
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="View Details">
-                                                        <a href="{{route('courseDetail')}}"  class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                        <a href="{{route('courseDetail', Crypt::encrypt($course->id))}}"  class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                     </li>
                                                     @if($course->approved == true)
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top" title="Suspend Course">

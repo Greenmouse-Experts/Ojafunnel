@@ -134,7 +134,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                <!-- <div class="col-lg-12">
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             @include('helpers.form_control', [
@@ -148,7 +148,7 @@
                                             ])
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!--Password-->
                                 <div class="col-lg-12">
                                     <label>Password</label>

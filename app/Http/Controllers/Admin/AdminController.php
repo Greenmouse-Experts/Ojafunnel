@@ -237,9 +237,14 @@ class AdminController extends Controller
         return view('Admin.lms.category');
     }
 
-    public function course_detail()
+    public function course_detail($id)
     {
-        return view('Admin.lms.viewCourse');
+        $finder = Crypt::decrypt($id);
+        $course = Course::find($finder);
+
+        return view('Admin.lms.viewCourse', [
+            'course' => $course
+        ]);
     }
 
     public function store_list()

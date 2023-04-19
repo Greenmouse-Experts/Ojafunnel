@@ -54,7 +54,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::post('/add-course-category', [App\Http\Controllers\Admin\AdminController::class, 'add_category'])->name('addCategory');
             Route::post('/update-course-category/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_category'])->name('updateCategory');
             Route::post('/delete-course-category/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_category'])->name('deleteCategory');
-            Route::get('/view-course/course-detail', [App\Http\Controllers\Admin\AdminController::class, 'course_detail'])->name('courseDetail');
+            Route::get('/view-course/course-detail/{id}', [App\Http\Controllers\Admin\AdminController::class, 'course_detail'])->name('courseDetail');
             Route::get('/view-course/course-activate/{id}', [App\Http\Controllers\Admin\AdminController::class, 'course_activate'])->name('course.activate');
             Route::get('/view-course/course-deactivate/{id}', [App\Http\Controllers\Admin\AdminController::class, 'course_deactivate'])->name('course.deactivate');
             Route::get('/ecommerce/store-list', [App\Http\Controllers\Admin\AdminController::class, 'store_list'])->name('storeList');

@@ -670,7 +670,6 @@
     </div>
 </div>
 <!-- end modal -->
-
 <!-- email confirm modal -->
 <div class="modal fade" id="createCoupon" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
