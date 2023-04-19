@@ -431,12 +431,16 @@ class EmailMarketingController extends Controller
         // dd($json);
 
         if ($json !== null) {
-            if ($json['format_valid'] == true) {
-                return 'true';
+            if (in_array('format_valid', $json)) {
+               if ($json['format_valid'] == true) {
+                    return 'true';
+                }
             }
-            if ($json['success'] == false) {
-                return 'invalid';
-            }
+            if (in_array('success', $json)) {
+                if ($json['success'] == false) {
+                    return 'invalid';
+                }
+             }
         }
 
         return 'invalid';
