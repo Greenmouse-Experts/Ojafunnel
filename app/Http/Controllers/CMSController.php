@@ -13,11 +13,13 @@ use App\Models\Requirement;
 use App\Models\Section;
 use App\Models\Shop;
 use App\Models\Video;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
 
 class CMSController extends Controller
 {
@@ -232,43 +234,57 @@ class CMSController extends Controller
         ]);
 
         $section = Section::find($request->section_id);
-
+        
         if ($request->content_type == 'Video') {
-            $this->validate($request, [
-                'lesson_video' => 'mimetypes:video/avi,video/mpeg,video/quicktime|max:10240000',
-            ]);
+            try {
+                $this->validate($request, [
+                    'lesson_video' => [
+                        'required',
+                        File::types(['mp3', 'mp4'])
+                            ->min(1024)
+                            ->max(120 * 1024),
+                    ],
+                ]);
 
-            $file = request()->lesson_video->getClientOriginalName();
+                // return $request->lesson_video;
 
-            $filename = pathinfo($file, PATHINFO_FILENAME);
+                $file = request()->lesson_video->getClientOriginalName();
 
-            $response = cloudinary()->uploadFile(
-                $request->file('lesson_video')->getRealPath(),
-                [
-                    'folder' => config('app.name'),
-                    "public_id" => $filename,
-                    "use_filename" => TRUE
-                ]
-            )->getSecurePath();
+                $filename = pathinfo($file, PATHINFO_FILENAME);
 
-            $lesson = Lesson::create([
-                'section_id' => $section->id,
-                'course_id' => $section->course_id,
-                'title' => $request->lesson_title,
-                'description' => $request->course_id,
-                'content_type' => $request->content_type,
-                'duration' => $request->lesson_duration,
-            ]);
+                $response = cloudinary()->uploadFile(
+                    $request->file('lesson_video')->getRealPath(),
+                    [
+                        'folder' => config('app.name'),
+                        "public_id" => $filename,
+                        "use_filename" => TRUE
+                    ]
+                )->getSecurePath();
 
-            Video::create([
-                'lesson_id' => $lesson->id,
-                'original_filename' => $response
-            ]);
+                $lesson = Lesson::create([
+                    'section_id' => $section->id,
+                    'course_id' => $section->course_id,
+                    'title' => $request->lesson_title,
+                    'description' => $request->course_id,
+                    'content_type' => $request->content_type,
+                    'duration' => $request->lesson_duration,
+                ]);
 
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Lesson save successfully.'
-            ]);
+                Video::create([
+                    'lesson_id' => $lesson->id,
+                    'original_filename' => $response
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'Lesson save successfully.'
+                ]);
+            } catch (Exception $e) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'File size should not be greater than 2MB.'
+                ]);
+            }
         } elseif ($request->content_type == 'Youtube') {
             $this->validate($request, [
                 'lesson_youtube' => ['required', 'string', 'max:255'],

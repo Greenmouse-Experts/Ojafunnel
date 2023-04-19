@@ -210,15 +210,13 @@
                                     </div>
                                     <div class="row justify-content-between">
                                         <div class="col-6">
-                                            <a href="#" class="text-decoration-none">
-                                                <button type="reset" class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                    Cancel
-                                                </button></a>
+                                            <button type="reset" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                Cancel
+                                            </button>
                                         </div>
                                         <div class="col-6 text-end">
                                             <a href="#" class="text-decoration-none">
-                                                <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                    >
+                                                <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
                                                     Save
                                                 </button>
                                             </a>
@@ -226,7 +224,6 @@
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -270,15 +267,13 @@
                                     </div>
                                     <div class="row justify-content-between">
                                         <div class="col-6">
-                                            <a href="#" class="text-decoration-none">
-                                                <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                    Cancel
-                                                </button></a>
+                                            <button class="btn px-3" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
+                                                Cancel
+                                            </button>
                                         </div>
                                         <div class="col-6 text-end">
                                             <a href="#" class="text-decoration-none">
-                                                <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                                    >
+                                                <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
                                                     Save
                                                 </button>
                                             </a>

@@ -69,6 +69,7 @@
                                             </td>
                                             <td>
                                                 <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
+                                                <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push" style="margin-left: 10px; padding: 0.2rem 0.5rem;"><i class="mdi mdi-content-copy"></i></button>
                                             </td>
                                             <td>
                                                 {{$item->created_at->toDayDateTimeString()}}
@@ -85,4 +86,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    function myCopyFunction() {
+        // Get the text field
+        var copyText = document.getElementById("myInput");
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.value);
+
+        // Alert the copied text
+        //alert("Copied the text: " + copyText.value);
+    }
+</script>
 @endsection

@@ -66,7 +66,6 @@
                                                 <a href="{{route('user.shops.link', $item->name)}}" class="text-decoration-underline text-reset">Visit Shop <i class="mdi mdi-arrow-right"></i></a>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

@@ -315,7 +315,7 @@
         border-radius: 50%;
         background: white;
     }
-    </style>
+ </style>
 
 @endsection
 
