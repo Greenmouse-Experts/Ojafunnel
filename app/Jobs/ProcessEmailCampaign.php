@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use App\Mail\EmailCampaignMail;
 use App\Models\EmailCampaign;
 use App\Models\EmailCampaignQueue;
+use App\Models\EmailKit;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Queue\SerializesModels;
@@ -66,10 +67,16 @@ class ProcessEmailCampaign implements ShouldQueue
                 EmailCampaignQueue::where(['email_campaign_id' => $email_campaign->id, 'recepient' => $_contact->email])
                     ->update(['status' => 'Sent']);
 
-                // update email campaign
+                // update email campaign - `sent`
                 $_email_campaign = EmailCampaign::where('id', $email_campaign->id);
                 $_email_campaign->update([
                     'sent' => $_email_campaign->first()->sent + 1
+                ]);
+
+                // update email kit - `sent`
+                $_email_kit  = EmailKit::where('id', $email_kit->id);
+                $_email_kit->update([
+                    'sent' => $_email_kit->first()->sent + 1
                 ]);
             });
         } catch (\Throwable $th) {

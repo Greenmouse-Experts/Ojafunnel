@@ -729,8 +729,85 @@ class EmailMarketingController extends Controller
             ]);
         }
 
-        // if ($request->message_timing == 'Schedule') {
-        // }
+        if ($request->message_timing == 'Schedule') {
+            $request->validate([
+                'start_date' => 'required',
+                'start_time' => 'required',
+            ]);
+
+            if ($request->start_date < Carbon::now()->format('Y-m-d')) return back()->with([
+                'type' => 'danger',
+                'message' => 'The email campaign schedule start date is invalid'
+            ]);
+
+            if ($request->start_date == Carbon::now()->format('Y-m-d')) {
+                if ($request->start_time <= Carbon::now()->format('H:i'))  return back()->with([
+                    'type' => 'danger',
+                    'message' => 'The email campaign schedule start time is invalid'
+                ]);
+            }
+
+            DB::transaction(function () use ($request, $email_kit, $email_template, $mail_list) {
+                $email_campaign = new EmailCampaign();
+                $email_campaign->user_id = Auth::user()->id;
+                $email_campaign->name = $request->name;
+                $email_campaign->subject = $request->subject;
+                $email_campaign->replyto_email = $request->replyto_email;
+                $email_campaign->replyto_name = $request->replyto_name;
+                $email_campaign->email_kit_id = $email_kit->id;
+                $email_campaign->list_id = $mail_list->id;
+                $email_campaign->email_template_id = $email_template->id;
+                $email_campaign->sent = 0;
+                $email_campaign->bounced = 0;
+                $email_campaign->spam_score = 0;
+                $email_campaign->message_timing = $request->message_timing;
+                $email_campaign->start_date = $request->start_date;
+                $email_campaign->start_time = $request->start_time;
+                $email_campaign->attachment_paths = json_encode([]);
+                $email_campaign->save();
+
+                if ($request->hasFile('attachments')) {
+                    $attachment_paths = [];
+
+                    foreach ($request->file('attachments') as $key => $attachment) {
+                        $filename = $attachment->getClientOriginalName();
+                        $path = 'email-marketing/' . Auth::user()->username . '/attachment/campaign-' . $email_campaign->id;
+                        $fullpath = $path . '/' . $filename;
+
+                        // store here
+                        $attachment->storeAs($path, $filename, 'public');
+
+                        array_push($attachment_paths, $fullpath);
+                    }
+
+                    $email_campaign->attachment_paths = json_encode($attachment_paths);
+                    $email_campaign->save();
+                }
+
+                $contacts = MailContact::latest()->where('mail_list_id', $mail_list->id)->get();
+
+                // build each wa queue data based on contacts
+                $email_campaign_queue = $contacts->map(function ($_contact) use ($email_campaign) {
+                    $timestamp = Carbon::now();
+
+                    return [
+                        'email_campaign_id' => $email_campaign->id,
+                        'recepient' => $_contact->email,
+                        'status' => 'Waiting',
+                        'created_at' => $timestamp,
+                        'updated_at' => $timestamp,
+                    ];
+                })->toArray();
+
+                // bulk insert
+                EmailCampaignQueue::insert($email_campaign_queue);
+            });
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'The email campaign has been scheduled successfully'
+            ]);
+        }
     }
 
     function calculateSpamScore(Request $request)
