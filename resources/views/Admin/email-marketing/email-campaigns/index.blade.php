@@ -35,11 +35,11 @@
                             <div class="col-md-3">
                                 <div class="">
                                     <div class="all-create">
-                                        <a href="">
+                                        {{-- <a href="">
                                             <button>
                                                 + Add Email Campaigns
                                             </button>
-                                        </a>
+                                        </a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -58,10 +58,49 @@
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
-                                            <th>Host</th> 
+                                            <th>Subject</th> 
+                                            <th>Kit</th>  
+                                            <th>Template</th> 
+                                            <th>List</th> 
+                                            <th>Replyto Email</th>
+                                            <th>Replyto Name</th>
+                                            <th>Attachment(s)</th>
+                                            <th>Sent</th>
+                                            <th>Bounced</th> 
+                                            <th>Created At</th> 
                                         </tr>
                                     </thead> 
                                     <tbody> 
+                                        @forelse ($email_campaigns as $email_campaign)
+                                            <tr>
+                                                <td>{{ $loop->index + 1}}</td>
+                                                <td>{{ $email_campaign->name }}</td>
+                                                <td>{{ $email_campaign->subject }}</td> 
+                                                <td> 
+                                                    {{ App\Models\EmailKit::latest()->where('id', $email_campaign->email_kit_id)->first()->host }}
+                                                </td> 
+                                                <td> 
+                                                    {{ 
+                                                        App\Models\EmailTemplate::latest()
+                                                        ->where('id', $email_campaign->email_template_id)->first()->name 
+                                                    }}
+                                                </td> 
+                                                <td>
+                                                    {{ 
+                                                        App\Models\MailList::latest()->where('id', $email_campaign->list_id)
+                                                        ->first()->name 
+                                                    }}
+                                                </td> 
+                                                <td>{{ $email_campaign->replyto_email }}</td>
+                                                <td>{{ $email_campaign->replyto_name }}</td>
+                                                <td>{{ count(json_decode($email_campaign->attachment_paths)) }}</td>
+                                                <td>{{ $email_campaign->sent }}</td>
+                                                <td>{{ $email_campaign->bounced }}</td> 
+                                                <td>{{ $email_campaign->created_at->toDayDateTimeString() }}</td>   
+                                            </tr>
+                                        @empty
+                                            {{ 'No email campaign at the moment '}}
+                                        @endforelse 
                                     </tbody>
                                 </table>
                             </div>
