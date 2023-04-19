@@ -48,7 +48,13 @@
                         </p>
                         <div class="js-price-big-wrapper-month">
                             <h1 class="">
+                            @php
+                            $allplan = App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->currency_sign;
+                            @endphp
+                            @if($allplan != null)
                             {{App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->currency_sign}}{{number_format(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->price, 2)}}/<span>monthly</span>
+                            @else
+                            @endif
                             </h1>
                             @if($singleplan->name == $plan->name)
                             <a href="#" class="upgrade-btn" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
@@ -58,7 +64,13 @@
                         </div>
                         <div class="js-price-big-wrapper">
                             <h1 class="-yearly -hide">
-                            {{number_format(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->price, 2)}}/<span>yearly</span>
+                            @php
+                            $allplan = App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->currency_sign;
+                            @endphp
+                            @if($allplan != null)
+                            {{App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->currency_sign}}{{number_format(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->price, 2)}}/<span>yearly</span>
+                            @else
+                            @endif
                             </h1>
                             @if($singleplan->name == $plan->name)
                             <a class="-yearly -hide upgrade-btn" href="#" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
