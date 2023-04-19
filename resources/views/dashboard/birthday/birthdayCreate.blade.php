@@ -112,16 +112,6 @@
                                                     <label>Select Email Sending Server</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
-                                                            <select name="sending_server" id="" required class='py-3 fs-6'>
-                                                                <option selected disabled class='p-5'>Choose from mail sending server</option>
-                                                                @if($sendingServer->isEmpty())
-                                                                    <option disabled value="">No Mail Sending Server</option>
-                                                                @else
-                                                                    @foreach ($sendingServer as $item)
-                                                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                                                    @endforeach
-                                                                @endif
-                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>

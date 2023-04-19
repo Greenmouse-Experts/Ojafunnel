@@ -107,7 +107,6 @@ class BirthdayController extends Controller
     public function create_birthday($username)
     {
         $birthlist = BirthdayContactList::where('user_id', Auth::user()->id)->get();
-        $sendingServer = SendingServer::where('customer_id', Auth::user()->id)->get();
         $smsServer = Integration::where('user_id', Auth::user()->id)->where('status', 'Active')->get();
 
         $whatsapp_numbers = WhatsappNumber::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
@@ -163,7 +162,6 @@ class BirthdayController extends Controller
         return view('dashboard.birthday.birthdayCreate', [
             'username' => $username,
             'birthlist' => $birthlist,
-            'sendingServer' => $sendingServer,
             'smsServer' => $smsServer,
             'whatsapp_numbers' => $_whatsapp_numbers,
         ]);
