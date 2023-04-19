@@ -63,7 +63,7 @@
                                             <td>
                                                 {{$item->name}}
                                             </td>
-                                            <td>{{\App\Models\Course::where('user_id', $item->user_id)->get()->count()}}</td>
+                                            <td>{{\App\Models\Course::where('user_id', $item->user_id)->where('approved', true)->get()->count()}}</td>
                                             <td>
                                                 {{\App\Models\Enrollment::where('shop_id', $item->id)->get()->count()}}
                                             </td>

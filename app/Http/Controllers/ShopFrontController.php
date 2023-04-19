@@ -48,14 +48,14 @@ class ShopFrontController extends Controller
     public function course_cart(Request $request)
     {
         $shop = Shop::latest()->where('name', $request->shopname)->first();
-        $courses = Course::latest()->where('user_id', $shop->id)->get();
+        $courses = Course::latest()->where('user_id', $shop->user_id)->get();
         return view('dashboard.lms.cart', compact('shop', 'courses'));
     }
 
     public function course_checkout(Request $request)
     {
         $shop = Shop::latest()->where('name', $request->shopname)->first();
-        $courses = Course::latest()->where('user_id', $shop->id)->get();
+        $courses = Course::latest()->where('user_id', $shop->user_id)->get();
         return view('dashboard.lms.checkout', compact('shop', 'courses'));
     }
 
