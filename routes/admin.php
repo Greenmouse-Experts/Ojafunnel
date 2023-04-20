@@ -96,6 +96,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             // Admin page builder
             Route::get('page-builder', [App\Http\Controllers\Admin\AdminController::class, 'page_builder'])->name('pageBuilder');
+            Route::get('funnel-builder', [App\Http\Controllers\Admin\AdminController::class, 'funnel_builder'])->name('funnelBuilder');
+            Route::get('/funnel-builder/pages/{id}', [App\Http\Controllers\Admin\AdminController::class, 'view_funnel_pages'])->name('funnelBuilderView');
 
             // Admin Page Builder
             Route::post('/page/builder/create', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_create'])->name('admin.page.builder.create');

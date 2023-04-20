@@ -9,6 +9,7 @@ use App\Models\Shop;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Course;
+use App\Models\Funnel;
 use App\Models\Message;
 use App\Models\OjaPlan;
 use App\Models\Category;
@@ -17,6 +18,7 @@ use App\Models\MailList;
 use App\Models\ContactUs;
 use App\Models\OrderItem;
 use App\Models\ShopOrder;
+use App\Models\FunnelPage;
 use App\Models\StoreOrder;
 use App\Models\Withdrawal;
 use App\Models\MailContact;
@@ -271,6 +273,29 @@ class AdminController extends Controller
     public function page_builder()
     {
         return view('Admin.pageBuilder');
+    }
+
+    public function funnel_builder()
+    {
+        $funnels = Funnel::latest()->get();
+
+        return view('Admin.funnelBuilder', [
+            'funnels' => $funnels
+        ]);
+    }
+
+    public function view_funnel_pages($id)
+    {
+        $id = Crypt::decrypt($id);
+
+        $funnel = Funnel::findorfail($id);
+
+        $pages = FunnelPage::latest()->where(['folder_id' => $funnel->id])->get();
+
+        return view('Admin.funnelBuilder-view', [
+            'funnel' => $funnel,
+            'pages' => $pages
+        ]);
     }
 
     public function email_support()
