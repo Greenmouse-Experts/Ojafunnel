@@ -213,18 +213,20 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <label>File Folder</label>
+                                        <label>Sub Domain</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="File Folder" name="file_folder" class="input" required>
-                                            </div>
-                                        </div>
+                                                <input type="text" placeholder="e.g Tola Cake And Pasteries" id="subdomain" name="file_folder" class="input" required> 
+                                                <small id="generateSubDomain"></small>
+                                            </div> 
+                                        </div> 
                                     </div>
                                     <div class="col-lg-12">
-                                        <label>File Name </label>
+                                        <label>Page Name</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="File Name" name="file_name" class="input" required>
+                                                <input type="text" placeholder="e.g Home" id="pagename" name="file_name" class="input" required>
+                                                <small id="generatePage"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -252,4 +254,25 @@
         color: #fff;
     } 
 </style>
+<script>
+    let subdomain = document.getElementById('subdomain');
+    let pagename = document.getElementById('pagename');
+
+    let subdomaintext = document.getElementById('generateSubDomain');
+    let pagetext = document.getElementById('generatePage');
+
+    subdomain.addEventListener('input', (event) => {
+        if('{{ env('APP_URL') }}'.startsWith('https')) 
+            subdomaintext.innerText = `https://${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-page'}.ojafunnel.com`
+
+        subdomain.value = event.target.value.replace(/\s+/g, ' ')
+    })
+
+    pagename.addEventListener('input', (event) => {
+        if('{{ env('APP_URL') }}'.startsWith('https')) 
+            pagetext.innerText = `${subdomaintext.innerText}/${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase()}`
+
+        pagename.value = event.target.value.replace(/\s+/g, ' ')
+    })
+</script>
 @endsection
