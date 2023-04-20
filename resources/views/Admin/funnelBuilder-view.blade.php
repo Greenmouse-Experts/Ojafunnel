@@ -60,7 +60,7 @@
                                                                 @if ($page->name == 'index.html')
                                                                     {{ "https://$funnel->slug-funnel.ojafunnel.com"}}
                                                                 @else
-                                                                    {{ "https://$funnel->slug-funnel.ojafunnel.com/$page->name"}}
+                                                                    {{ "https://$funnel->slug-funnel.ojafunnel.com/" . explode('.', $page->name)[0] }}
                                                                 @endif 
                                                             @endif
                                                         " class="btn btn-primary d-block mt-2">
