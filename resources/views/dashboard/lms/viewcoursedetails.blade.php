@@ -29,19 +29,11 @@
                     <div class="video">
                         <div class="card">
                             <div class="card-body">
-                                <div id="carouselExample" class="carousel slide">
-                                    <div class="carousel-inner">
-                                    @foreach(App\Models\Section::where('course_id', $course->id)->get() as $section)
-                                        @foreach(App\Models\Lesson::where('section_id', $section->id)->get() as $lesson)
-                                            <div class="carousel-item active">
-                                                @foreach(App\Models\Video::where('lesson_id', $lesson->id)->get() as $video)
-                                                <iframe src="{{$video->original_filename}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                                @endforeach
-                                            </div>
-                                        @endforeach
-                                    @endforeach
-                                    </div>
-                                </div>
+                                @if($course->image)
+                                <img src="{{$course->image}}" alt="{{$course->title}}" style="    max-width: 100%; width: 600px;">
+                                @else
+                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%">
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -63,7 +55,39 @@
                                             <div class="card border-0 shadow-none ps-2 mb-0">
                                                 <ul class="list-unstyled mb-0">
                                                     @foreach(App\Models\Lesson::where('section_id', $section->id)->get() as $lesson)
-                                                        <li><a href="javascript: void(0);" class="d-flex align-items-center"><span class="me-auto">{{$lesson->title}}</span> <i class="mdi mdi-pin ms-auto"></i></a></li>
+                                                        <li><a href="javascript: void(0);" class="d-flex align-items-center"  data-bs-toggle="modal" data-bs-target="#show-{{$lesson->id}}"><span class="me-auto">{{$lesson->title}}</span> <i class="mdi mdi-pin ms-auto"></i></a></li>
+                                                        <div class="modal fade" id="show-{{$lesson->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content pb-3">
+                                                                    <div class="modal-header border-bottom-0">
+                                                                        <h5 class="modal-title">{{$lesson->title}}</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="video">
+                                                                            <div class="card">
+                                                                                <div class="card-body">
+                                                                                    @if($lesson->content_type == 'video')
+                                                                                    <div id="carouselExample" class="carousel slide">
+                                                                                        <div class="carousel-inner">
+                                                                                            <iframe src="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->original_filename}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    @else
+                                                                                    <div id="carouselExample" class="carousel slide">
+                                                                                        <div class="carousel-inner">
+                                                                                            <object width="425" height="350" data="" type="application/x-shockwave-flash"><param name="src" value="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->youtube_link}}" /></object>
+                                                                                            
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     @endforeach
                                                 </ul>
                                             </div>

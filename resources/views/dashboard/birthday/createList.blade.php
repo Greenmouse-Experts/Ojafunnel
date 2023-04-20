@@ -114,7 +114,7 @@
                                                                                 <div class="row justify-content-between">
                                                                                     <div class="col-6">
                                                                                         <a href="#" class="text-decoration-none">
-                                                                                            <button type="reset" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                            <button type="reset" class="btn px-3" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
                                                                                                 Cancel
                                                                                             </button></a>
                                                                                     </div>
