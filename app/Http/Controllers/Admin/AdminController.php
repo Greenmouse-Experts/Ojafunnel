@@ -810,6 +810,22 @@ class AdminController extends Controller
         return response()->json(['Token successfully stored.']);
     }
 
+    public function generatePageSlug($folder)
+    {
+        $slug = strtolower(implode('-', explode(' ', $folder)));
+
+        $page = Page::where(['slug' => $slug]);
+
+        if ($page->exists()) {
+            if ($page->first()->admin_id == Auth::guard('admin')->user()->id) {
+                return [true, $slug];
+            } else return [false, $slug];
+        }
+
+        return [true, $slug];
+    }
+
+
     public function page_builder_create(Request $request)
     {
         //Validate Request
@@ -819,14 +835,34 @@ class AdminController extends Controller
             'file_name' => ['required', 'string', 'max:255'],
         ]);
 
-        if (str_contains($request->file_name, '.')) {
+        $page_name = strtolower(implode('-', explode(' ', $request->file_name)));
+
+        $res =  $this->generatePageSlug($request->file_folder);
+
+        // check if sub domain name taken
+        if (!$res[0]) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'file name invalid.'
+                'message' => 'Sub domain already taken.'
             ]);
         }
 
-        $file = $request->file_name . '.html';
+        // check if subdomain contains .
+        if (str_contains($res[1], '.')) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Sub domain is invalid. Can\'t contain dot(s)'
+            ]);
+        }
+
+        if (str_contains($page_name, '.')) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Page name is invalid. Can\'t contain dot(s)'
+            ]);
+        }
+
+        $file = $page_name . '.html';
 
         define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
 
@@ -838,9 +874,18 @@ class AdminController extends Controller
 
         // $datum = strval($request->file_folder);
 
+        $_page = Page::where(['name' => $file, 'slug' => $res[1], 'admin_id' => Auth::guard('admin')->user()->id]);
+
+        if ($_page->exists()) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'This page already exist on your subdomain.'
+            ]);
+        }
+
         $disk = Storage::build([
             'driver' => 'local',
-            'root'   => public_path('pageBuilder') . '/' . $request->file_folder,
+            'root'   => public_path('pageBuilder') . '/' . $res[1],
             'permissions' => [
                 'file' => [
                     'public' => 0777,
@@ -867,7 +912,8 @@ class AdminController extends Controller
                 'title' => $request->title,
                 'name' => $file,
                 'folder' => $request->file_folder,
-                'file_location' => config('app.url') . '/pageBuilder/' . $request->file_folder . '/' . $file
+                'file_location' => config('app.url') . '/pageBuilder/' . $res[1] . '/' . $file,
+                'slug' => $res[1]
             ]);
 
             return back()->with([
