@@ -140,8 +140,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::post('/delete-interval/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_plan_interval'])->name('admin.deletePlan.interval');
 
             // Birthday Module
-            Route::post('/admin/update-birthday/{id}', [App\Http\Controllers\AdminController::class, 'update_birthday'])->name('admin.update.birthday');
-            Route::post('/admin/delete-birthday/{id}', [App\Http\Controllers\AdminController::class, 'delete_birthday'])->name('admin.delete.birthday');
+            Route::post('/admin/update-birthday/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_birthday'])->name('admin.update.birthday');
+            Route::post('/admin/delete-birthday/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_birthday'])->name('admin.delete.birthday');
         }
     );
 });
