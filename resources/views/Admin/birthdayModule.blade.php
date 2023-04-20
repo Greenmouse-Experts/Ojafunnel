@@ -221,7 +221,7 @@
                                                                 Are you sure you want to delete this module ?
                                                             </h5>
                                                         </div>
-                                                        <form action="{{route('admin.delete.birthday, ['id' => $b->id])}}" method="post">
+                                                        <form action="{{route('admin.delete.birthday, $b->id)}}" method="post">
                                                             @csrf
                                                             <div class='row justify-content-between p-3'>
                                                                 <div class='col'>
