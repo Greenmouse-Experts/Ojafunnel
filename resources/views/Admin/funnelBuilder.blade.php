@@ -21,7 +21,7 @@
             </div>
             <!-- start page title -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="font-60">View All Funnel</h4>
@@ -30,31 +30,7 @@
                             </p>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-1">
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- <p class="cash">Explainer Video Here</p> -->
-                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                                <i class="bi bi-play-btn"></i>
-                            </div>
-                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-                                <i class="bi bi-card-text"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="all-create">
-                                {{-- <button data-bs-toggle="modal" data-bs-target="#template">
-                                    + Create Funnel
-                                </button> --}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div> 
             </div>
             <!-- store data information-->
             <div class="row">
