@@ -1609,7 +1609,6 @@ class AdminController extends Controller
         $finder = Crypt::decrypt($id);
 
         $bd = BirthdayAutomation::findOrFail($finder);
-        $bd->birthday_contact_list_id = $request->birthday_list_id;
         $bd->title = $request->title;
         $bd->sms_type = $request->sms_type;
         $bd->message = $request->message;
