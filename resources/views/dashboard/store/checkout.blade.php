@@ -45,8 +45,12 @@
           </form>
         </div>
         <div class="col-3 d-flex align-items-center justify-content-between">
-          <div>
-            <a href="{{route('user.my.store', Auth::user()->username)}}">set up your own store</a>
+          <div> 
+            @auth
+                <a href="{{route('user.my.store', Auth::user()->username)}}">Go to store</a>
+            @else
+                <a href="{{route('index')}}">Set up your own store</a>
+            @endauth
           </div>
 
             {{-- <a href="{{route('user.cart', Auth::user()->username)}}">
@@ -266,7 +270,7 @@
                                                                                 <td>
                                                                                     <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ $details['name'] }} </a></h5>
                                                                                 </td>
-                                                                                <td>₦ ${{ $details['price'] }}</td>
+                                                                                <td>₦ {{ $details['price'] }}</td>
                                                                                 <td>{{ $details['quantity'] }}</td>
                                                                             </tr>
                                                                         @endforeach

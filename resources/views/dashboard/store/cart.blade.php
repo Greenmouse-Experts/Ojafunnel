@@ -46,7 +46,11 @@
         </div>
         <div class="col-3 d-flex align-items-center justify-content-between">
           <div>
-            <a href="{{route('user.my.store', Auth::user()->username)}}">set up your own store</a>
+            @auth
+                <a href="{{route('user.my.store', Auth::user()->username)}}">Go to store</a>
+            @else
+                <a href="{{route('index')}}">Set up your own store</a>
+            @endauth
           </div>
 
             {{-- <a href="{{route('user.cart', Auth::user()->username)}}">
