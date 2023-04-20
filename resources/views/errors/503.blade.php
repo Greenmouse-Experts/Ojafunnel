@@ -1,27 +1,7 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8" />
-    <title> {{config('app.name')}} | 503</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="{{config('app.name')}}" name="description" />
-    <meta content="{{config('app.name')}}" name="author" />
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
-
-    <!-- Bootstrap Css -->
-    <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-    <!-- Icons Css -->
+@extends('layouts.frontend')
+@section('page-content')
     <link href="{{URL::asset('dash/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-    <!-- App Css-->
-    <link href="{{URL::asset('dash/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
-
-</head>
-
-<body>
-
-    <div class="account-pages my-5 pt-5">
+    <div class="account-pages mb-5 pt-5" style="margin-top: 100px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -43,16 +23,4 @@
             </div>
         </div>
     </div>
-
-    <!-- JAVASCRIPT -->
-    <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
-    <script src="{{URL::asset('dash/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{URL::asset('dash/assets/libs/metismenu/metisMenu.min.js')}}"></script>
-    <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
-    <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
-
-    <script src="{{URL::asset('dash/assets/js/app.js')}}"></script>
-
-</body>
-
-</html>
+@endsection 
