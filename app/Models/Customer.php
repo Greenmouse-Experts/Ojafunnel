@@ -68,7 +68,7 @@ class Customer extends Model
     protected $fillable = [
         'name',
         'timezone',
-        'language_id',
+        // 'language_id',
         'color_scheme',
         'text_direction',
         'menu_layout',
@@ -80,13 +80,6 @@ class Customer extends Model
      *
      * @var object | collect
      */
-    public function subscription()
-    {
-        return $this->hasOne('App\Models\Subscription')
-            ->where('status', '!=', Subscription::STATUS_ENDED)
-            ->orderBy('created_at', 'desc');
-    }
-
     public function contact()
     {
         return $this->belongsTo('App\Models\Contact');
@@ -115,11 +108,6 @@ class Customer extends Model
     public function lists()
     {
         return $this->hasMany('App\Models\MailList')->orderBy('created_at', 'desc');
-    }
-
-    public function templates()
-    {
-        return $this->hasMany('App\Models\Template')->orderBy('created_at', 'desc');
     }
 
     public function language()
@@ -749,11 +737,14 @@ class Customer extends Model
                 $this->getAncestors($array, $subscribe_amount, $parent);
             } else {
                 // Customer
-                $customer = new Customer();
-                $customer->fill($request->all());
-                $customer->language_id = 1;
-                $customer->status = self::STATUS_ACTIVE;
-                $customer->save();
+                // $customer = new Customer();
+                // $customer->fill($request->all());
+                // $customer->language_id = 1;
+                // $customer->status = self::STATUS_ACTIVE;
+                // $customer->save();
+                $this->fill($request->all());
+                $this->status = self::STATUS_ACTIVE;
+                $this->save();
 
                 // User
                 $user = new User();
@@ -1003,20 +994,6 @@ class Customer extends Model
         } else {
             return $default;
         }
-    }
-
-    public function getBounceFeedbackRate()
-    {
-        $delivery = $this->trackingLogs()->count();
-
-        if ($delivery == 0) {
-            return 0;
-        }
-
-        $bounce = DB::table('bounce_logs')->leftJoin('tracking_logs', 'tracking_logs.message_id', '=', 'bounce_logs.message_id')->count();
-        $feedback = DB::table('feedback_logs')->leftJoin('tracking_logs', 'tracking_logs.message_id', '=', 'feedback_logs.message_id')->count();
-
-        $percentage = ($feedback + $bounce) / $delivery;
     }
 
     /**

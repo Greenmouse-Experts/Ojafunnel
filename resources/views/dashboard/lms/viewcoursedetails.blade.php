@@ -35,20 +35,12 @@
                                         @foreach(App\Models\Lesson::where('section_id', $section->id)->get() as $lesson)
                                             <div class="carousel-item active">
                                                 @foreach(App\Models\Video::where('lesson_id', $lesson->id)->get() as $video)
-                                                    <iframe src="{{$video->original_filename}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                                <iframe src="{{$video->original_filename}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                                 @endforeach
                                             </div>
                                         @endforeach
                                     @endforeach
                                     </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
                                 </div>
                             </div>
                         </div>

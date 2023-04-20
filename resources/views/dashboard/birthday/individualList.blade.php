@@ -103,7 +103,7 @@
                                                                                     <label>Phone Number</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input type="text" placeholder="Enter Phone Number..." value="{{$i->phone_number}}" name="phone" class="input me" id="phone_number"
+                                                                                            <input type="tel" placeholder="Enter Phone Number..." value="{{$i->phone_number}}" name="phone" class="input" id=""
                                                                                                 required>
                                                                                         </div>
                                                                                     </div>

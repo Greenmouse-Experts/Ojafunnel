@@ -50,7 +50,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @Foreach(App\Models\OjaSubscription::latest()->get() as $sub)
+                                        @Foreach(App\Models\OjaSubscription::latest()->where('status', 'Active')->get() as $sub)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>

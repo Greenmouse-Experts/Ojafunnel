@@ -1628,4 +1628,34 @@ class AdminController extends Controller
             'message' => 'Plan interval deleted successfully.',
         ]);
     }
+
+    public function update_birthday($id, Request $request)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $bd = BirthdayAutomation::findOrFail($finder);
+        $bd->title = $request->title;
+        $bd->sms_type = $request->sms_type;
+        $bd->message = $request->message;
+        $bd->sender_name = $request->sender_name;
+        $bd->start_date = $request->start_date;
+        $bd->end_date = $request->end_date;
+        $bd->action = $request->action;
+        $bd->save();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Birthday Automation updated.'
+        ]);
+    }
+
+    public function delete_birthday(Request $request)
+    {
+        $bd = BirthdayAutomation::findOrFail($request->id)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Birthday Automation deleted.'
+        ]);
+    }
 }

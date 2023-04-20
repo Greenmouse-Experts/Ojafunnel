@@ -40,6 +40,7 @@ class BirthdayController extends Controller
     {
         $bd = BirthdayContactList::where('id', $request->id)->first();
         $bdc = BirthdayContact::latest()->where('birthday_contact_list_id', $request->id)->get();
+        
         return view('dashboard.birthday.individualList', [
             'username' => $username,
             'bd' => $bd,
@@ -49,6 +50,13 @@ class BirthdayController extends Controller
 
     public function birthday_create_contact_list(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'dob' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+        ]);
+        
         $bdc = new BirthdayContact();
         $bdc->name = $request->name;
         $bdc->date_of_birth = $request->dob;
@@ -66,7 +74,15 @@ class BirthdayController extends Controller
 
     public function birthday_update_contact_list(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'dob' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+        ]);
+        
         $bdc = BirthdayContact::findOrFail($request->id);
+
         $bdc->name = $request->name;
         $bdc->date_of_birth = $request->dob;
         $bdc->anniv_date = $request->aniDate;
