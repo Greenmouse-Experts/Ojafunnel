@@ -207,10 +207,10 @@
                                                             @csrf
                                                             <div class='row justify-content-between p-3'>
                                                                 <div class='col'>
-                                                                    <button type="button" class="mybtnprimary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                                                                 </div>
                                                                 <div class='col text-end'>
-                                                                    <button type="submit" class="mybtncancel" data-bs-dismiss="modal" aria-label="Close">Delete</button>
+                                                                    <button type="submit" class="form-btn" data-bs-dismiss="modal" aria-label="Close">Delete</button>
                                                                 </div>
                                                             </div>
                                                         </form>
