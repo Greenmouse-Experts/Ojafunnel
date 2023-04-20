@@ -100,7 +100,7 @@ class AccountUpgradeController extends Controller
         OjaSubscription::create([
             'user_id' => Auth::user()->id,
             'plan_id' => $plan->id,
-            'plan_interval' => 
+            // 'plan_interval' => 
             'status' => 'Active',
             'ends_at' => $date,
             'started_at' => now(),
