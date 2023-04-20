@@ -45,6 +45,7 @@
                                     <thead class="tread">
                                         <tr>
                                             <th scope="col">S/N</th>
+                                            <th scope="col">User</th>
                                             <th scope="col">List Name</th>
                                             <th scope="col">Title</th>
                                             <th scope="col">Automation</th>
@@ -59,6 +60,9 @@
                                         @foreach (App\Models\BirthdayAutomation::latest()->get() as $b)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
+                                            <td>{{App\Models\User::find($b->user_id)->first_name}}{{App\Models\User::find($b->user_id)->last_name}}
+                                                <p>{{App\Models\User::find($b->user_id)->email}}</p>
+                                            </td>
                                             <td>{{\App\Models\BirthdayContactList::where('id', $b->birthday_contact_list_id)->first()->name}}</td>
                                             <td>{{$b->title}}</td>
                                             <td>
