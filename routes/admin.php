@@ -27,7 +27,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/add_plans', [App\Http\Controllers\Admin\AdminController::class, 'add_plans'])->name('add_plans');
             Route::get('/manage_plans', [App\Http\Controllers\Admin\AdminController::class, 'manage_plans'])->name('manage_plans');
             Route::get('/viewmessage', [App\Http\Controllers\Admin\AdminController::class, 'viewmessage'])->name('viewmessage');
-            Route::get('/transactions', [App\Http\Controllers\Admin\AdminController::class, 'transactions'])->name('transactions');
+            Route::get('/all/transactions', [App\Http\Controllers\Admin\AdminController::class, 'all_transactions'])->name('all_transactions');
+            Route::get('/recent/transactions', [App\Http\Controllers\Admin\AdminController::class, 'recent_transactions'])->name('recent_transactions');
             Route::get('/subscriptions', [App\Http\Controllers\Admin\AdminController::class, 'subscriptions'])->name('subscriptions');
             Route::get('/security', [App\Http\Controllers\Admin\AdminController::class, 'security'])->name('security');
             Route::get('/general', [App\Http\Controllers\Admin\AdminController::class, 'general'])->name('general');

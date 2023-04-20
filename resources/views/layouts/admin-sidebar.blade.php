@@ -79,10 +79,14 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="{{route('transactions')}}">
+                    <a href="#" class="has-arrow">
                         <i class="bi bi-bank"></i>
                         <span key="t-chat">Transactions</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('all_transactions')}}"  key="t-tui-calendar">All Transactions</a></li>
+                        <li><a href="{{route('recent_transactions')}}"  key="t-tui-calendar">Recent Transactions</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#" class="has-arrow">

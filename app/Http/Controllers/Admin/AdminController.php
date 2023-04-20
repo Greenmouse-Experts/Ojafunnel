@@ -156,9 +156,14 @@ class AdminController extends Controller
         return view('Admin.viewmessages');
     }
 
-    public function transactions()
+    public function all_transactions()
     {
-        return view('Admin.transaction');
+        return view('Admin.all_transactions');
+    }
+
+    public function recent_transactions()
+    {
+        return view('Admin.recent_transactions');
     }
 
     public function subscriptions()
