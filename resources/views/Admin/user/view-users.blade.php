@@ -56,12 +56,6 @@
                                     </thead>
                                     <tbody>
 
-                                    @php
-                                        foreach ($admin->getAllCustomerLists() as $key => $item) 
-                                        {
-                                            dd($item->user);
-                                        }
-                                    @endphp
                                         @foreach ($admin->getAllCustomerLists() as $item)
                                             <tr>
                                                 <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
