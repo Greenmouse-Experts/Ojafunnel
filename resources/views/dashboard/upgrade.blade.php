@@ -47,36 +47,37 @@
                             {{strtoupper($singleplan->name)}}
                         </p>
                         <div class="js-price-big-wrapper-month">
-                            <h1 class="">
                             @php
-                            $allplan = App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->currency_sign;
+                                $allmonthlyplan = App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first();
                             @endphp
-                            @if($allplan != null)
-                            {{App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->currency_sign}}{{number_format(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->price, 2)}}/<span>monthly</span>
-                            @else
-                            @endif
-                            </h1>
-                            @if($singleplan->name == $plan->name)
-                            <a href="#" class="upgrade-btn" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
-                            @else
-                            <a class='upgrade-btn' href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->currency), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->price)])}}">CHANGE</a>
+                            @if($allmonthlyplan != null)
+                                <h1 class="">
+                                {{App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->currency_sign}}{{number_format(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->price, 2)}}/<span>monthly</span>
+                                </h1>
+                                @if($singleplan->name == $plan->name)
+                                <a href="#" class="upgrade-btn" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
+                                @else
+                                <a class='upgrade-btn' href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->currency), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->price)])}}">CHANGE</a>
+                                @endif
+                                @else
                             @endif
                         </div>
                         <div class="js-price-big-wrapper">
-                            <h1 class="-yearly -hide">
                             @php
-                            $allplan = App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->currency_sign;
+                            $allyearlyplan = App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first();
                             @endphp
-                            @if($allplan != null)
-                            {{App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->currency_sign}}{{number_format(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->price, 2)}}/<span>yearly</span>
+                            @if($allyearlyplan != null)
+                                <h1 class="-yearly -hide">
+                                {{App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->currency_sign}}{{number_format(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->price, 2)}}/<span>yearly</span>
+                                </h1>
+                                @if($singleplan->name == $plan->name)
+                                <a class="-yearly -hide upgrade-btn" href="#" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
+                                @else
+                                <a class="-yearly -hide upgrade-btn" href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->currency), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->price)])}}">CHANGE</a>
+                                @endif
                             @else
                             @endif
-                            </h1>
-                            @if($singleplan->name == $plan->name)
-                            <a class="-yearly -hide upgrade-btn" href="#" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
-                            @else
-                            <a class="-yearly -hide upgrade-btn" href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->currency), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->price)])}}">CHANGE</a>
-                            @endif
+                            
                         </div>
                     </div>
                 </div>
