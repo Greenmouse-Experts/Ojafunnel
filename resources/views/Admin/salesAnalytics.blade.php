@@ -34,7 +34,7 @@
                     <div class="subscription-money">
                             <p class="number">{{App\Models\OjaSubscription::where('status', 'Active')->get()->count()}} <i class=" ps-2 text-danger bi bi-graph-up-arrow"></i></p>
                             <p class="word">Subscribers</p>
-                            <p class="money">{{App\Models\OjaSubscription::sum('amount')}}<span class="fs-5 text-warning"> earned</span></p>
+                            <p class="money">{{number_format(App\Models\OjaSubscription::sum('amount'), 2)}}<span class="fs-5 text-warning"> earned</span></p>
                     </div>
                 </div>
             </div>
