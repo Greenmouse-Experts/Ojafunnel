@@ -122,24 +122,6 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-lg-12">
-                                                                                <label>Select Recipient List</label>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12 mb-4">
-                                                                                        <select name="birthday_list_id" id="" class='py-3 fs-6' required>
-                                                                                            <option selected value="{{$b->birthday_contact_list_id}}">{{App\Models\BirthdayContactList::find($b->birthday_contact_list_id)->name}}</option>
-                                                                                            <option disabled class='p-5'>Choose from birthday listing</option>
-                                                                                            @if($birthlist->isEmpty())
-                                                                                                <option disabled value="">No Birthday List</option>
-                                                                                            @else
-                                                                                                @foreach ($birthlist as $item)
-                                                                                                    <option value="{{$item->id}}">{{$item->name}}</option>
-                                                                                                @endforeach
-                                                                                            @endif
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-12">
                                                                                 <label>Select Automation Type</label>
                                                                                 <div class="row">
                                                                                     <div class="col-md-12 mb-4">
