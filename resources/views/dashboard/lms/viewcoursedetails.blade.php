@@ -28,7 +28,7 @@
                 <div class="col-lg-8">
                     <div class="video">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body text-center">
                                 @if($course->image)
                                 <img src="{{$course->image}}" alt="{{$course->title}}" style="    max-width: 100%; width: 600px;">
                                 @else
