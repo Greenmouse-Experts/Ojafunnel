@@ -83,7 +83,7 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
                             env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account . '/send-message',
                             [
                                 "phone" => $contact,
-                                "message" => $data['template3_message'],
+                                "message" => str_replace("\$name", $_contact->name, $data['template3_message']),
                                 "options" => [
                                     "useTemplateButtons" => true,
                                     "title" =>  $data['template3_header'],

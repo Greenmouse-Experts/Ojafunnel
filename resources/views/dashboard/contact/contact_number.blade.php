@@ -80,6 +80,7 @@
                     <thead class="fw-bold bg-light rounded-pill ">
                         <tr>
                             <th scope="col">S/N</th>
+                            <th scope="col">Full name</th>
                             <th scope="col">Phone Number</th>
                             <th scope="col">Status</th>
                             <th scope="col">Created At</th>
@@ -93,6 +94,9 @@
                         @foreach($contact as $key => $item)
                         <tr>
                             <th scope="row">{{$loop->iteration}}</th>
+                            <td>
+                                <p class='text-bold-600'> {{$item->name}} </p>
+                            </td>
                             <td>
                                 <p class='text-bold-600'> {{$item->phone_number}} </p>
                             </td>
@@ -129,6 +133,14 @@
                                                         <form action="{{route('user.automation.contact_num_update', ['username' => Auth::user()->username, 'contact_id' => $item->id])}}" method="post">
                                                             @csrf
                                                             <div class="form">
+                                                                <div class="col-lg-12">
+                                                                    <label>Full name</label>
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 mb-4">
+                                                                            <input type="text" placeholder="" value="{{$item->name}}" name="name" class="input" required>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="col-lg-12">
                                                                     <label>Phone Number</label>
                                                                     <div class="row">
@@ -243,6 +255,14 @@
                         <form action="{{route('user.automation.contact_add', ['username' => Auth::user()->username, 'list_id' => $list_id])}}" method="post">
                             @csrf
                             <div class="form">
+                                <div class="col-lg-12">
+                                    <label>Full name</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="John Doe" name="name" class="input"  required>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-lg-12">
                                     <label>Phone Number</label>
                                     <div class="row">

@@ -89,7 +89,7 @@ class ProcessTemplate2BulkWAMessages implements ShouldQueue
                             env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account . '/send-file',
                             [
                                 "phone" => $contact,
-                                "message" => $data['template2_message'],
+                                "message" => str_replace("\$name", $_contact->name, $data['template2_message']),
                                 "filename" => $filename,
                             ]
                         );
