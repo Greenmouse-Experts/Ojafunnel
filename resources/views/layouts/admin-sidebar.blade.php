@@ -173,6 +173,7 @@
                         <span key="t-chat">Frontend</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('newsletter')}}" key="t-tui-calendar">Newsletter</a></li>
                         <li><a href="{{route('viewFaq')}}" key="t-tui-calendar">FAQ</a></li>
                         <li><a href="{{route('viewContactUs')}}" key="t-tui-calendar">Contact Us</a></li>
                     </ul>

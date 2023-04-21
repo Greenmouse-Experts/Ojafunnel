@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\ContactUs;
 use App\Models\Customer;
+use App\Models\Newsletter;
 use App\Models\OjafunnelNotification;
 use App\Models\OjaPlan;
 use App\Models\Page;
@@ -24,6 +25,24 @@ class HomePageController extends Controller
     public function index()
     {
         return view('frontend.index');
+    }
+    public function subscribe_newsletter(Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'email' => 'required|email|unique:newsletters',
+        ],[
+            'email.unique' => 'Sorry! You have already subscribed.',
+        ]);
+
+        Newsletter::create([
+            'email' => $request->email
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Thanks For Subscribe.'
+        ]);
     }
     //  Faqs
     public function faqs()

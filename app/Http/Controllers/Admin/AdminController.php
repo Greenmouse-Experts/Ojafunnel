@@ -39,6 +39,7 @@ use App\Models\ReplyMailSupport;
 use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use App\Models\Newsletter;
 use App\Models\OjafunnelMailSupport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -729,6 +730,22 @@ class AdminController extends Controller
         $notification->save();
 
         return back();
+    }
+
+    public function newsletter()
+    {
+        return view('Admin.frontend.newsletter');
+    }
+
+    public function delete_newsletter($id)
+    {
+        $Finder = Crypt::decrypt($id);
+        Newsletter::find($Finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Deleted successfully.',
+        ]);
     }
 
     public function view_faq()
