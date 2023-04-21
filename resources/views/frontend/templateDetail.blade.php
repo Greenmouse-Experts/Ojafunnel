@@ -309,9 +309,9 @@
                                 {{ $page->file_location }}
                             @else
                                 @if ($page->name == 'index.html')
-                                    {{ "https://$funnel->slug-page.ojafunnel.com"}}
+                                    {{ "https://$page->slug-page.ojafunnel.com"}}
                                 @else
-                                    {{ "https://$funnel->slug-page.ojafunnel.com/" . explode('.', $page->name)[0] }}
+                                    {{ "https://$page->slug-page.ojafunnel.com/" . explode('.', $page->name)[0] }}
                                 @endif 
                             @endif
                         " class="btn btn-primary mt-4">View Template</a><br>
