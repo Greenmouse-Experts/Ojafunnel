@@ -67,11 +67,10 @@
                                                     <th scope="col">Transaction Reference No</th>
                                                     <th scope="col">Status</th>
                                                 </tr>
-
                                             </thead>
 
-                                            @foreach($transactions as $transaction)
                                             <tbody>
+                                                @foreach($transactions as $transaction)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{$transaction->created_at->toDayDateTimeString()}}</td>
@@ -81,8 +80,8 @@
                                                         <span class="badge bg-success font-size-10">{{$transaction->status}} <i class="mdi mdi-arrow-up me-1"></i></span>
                                                     </td>
                                                 </tr>
+                                                @endforeach
                                             </tbody>
-                                            @endforeach
                                         </table>
                                     </div>
                                 </div>
