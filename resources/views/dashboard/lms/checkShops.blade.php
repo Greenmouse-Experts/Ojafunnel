@@ -197,12 +197,12 @@
                                                                         <span class="rdio indigo"></span>
                                                                       </label>
                                                                 </div>
-                                                                {{-- <div class="col-lg-6 text-end">
+                                                                <div class="col-lg-6 text-end">
                                                                     <div class="baseColor">
                                                                         <label for="baseColor" style="color: #714091;">Choose another color: </label>
-                                                                        <input class="baseColorInput" id="baseColor" type="color" name="primaryColor" value="#09091B">
+                                                                        <input class="baseColorInput" id="baseColor" type="color" name="primaryColor">
                                                                     </div>
-                                                                </div> --}}
+                                                                </div>
                                                             </div>
                                                             <!-- shop logo -->
                                                             <div class="mt-5 hihj">

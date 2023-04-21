@@ -187,12 +187,12 @@
                                                                                         <span class="rdio indigo"></span>
                                                                                     </label>
                                                                                 </div>
-                                                                                {{-- <div class="col-lg-6 text-end">
-                                                                    <div class="baseColor">
-                                                                        <label for="baseColor" style="color: #714091;">Choose another color: </label>
-                                                                        <input class="baseColorInput" id="baseColor" type="color" name="primaryColor" value="#09091B">
-                                                                    </div>
-                                                                </div> --}}
+                                                                                <div class="col-lg-6 text-end">
+                                                                                    <div class="baseColor">
+                                                                                        <label for="baseColor" style="color: #714091;">Choose another color: </label>
+                                                                                        <input class="baseColorInput" id="baseColor" type="color" name="primaryColor">
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                             <!-- store logo -->
                                                                             <div class="mt-5 hihj">
@@ -218,7 +218,7 @@
                                                                                 <div class="col-6 text-end">
                                                                                     <a href="ecommerce2.html" class="text-decoration-none">
                                                                                         <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
-                                                                                            Update Shop
+                                                                                            Update Store
                                                                                         </button>
                                                                                     </a>
                                                                                 </div>
