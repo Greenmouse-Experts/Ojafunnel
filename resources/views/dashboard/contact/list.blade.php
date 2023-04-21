@@ -107,6 +107,14 @@
                                                                     <form action="{{route('user.automation.contact_add', ['username' => Auth::user()->username, 'list_id' => $item->id])}}" method="post">
                                                                         @csrf
                                                                         <div class="form">
+                                                                            <div class="col-lg-12">
+                                                                                <label>Full Name</label>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12 mb-4">
+                                                                                        <input type="text" placeholder="John Doe" name="name" class="input" required>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="cfContactsol-lg-12">
                                                                                 <label>Phone Number</label>
                                                                                 <div class="row">

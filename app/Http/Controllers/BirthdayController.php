@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Carbon\Carbon;
 use App\Models\Integration;
 use Illuminate\Http\Request;
@@ -10,10 +9,11 @@ use App\Models\SendingServer;
 use App\Models\WhatsappNumber;
 use App\Models\BirthdayContact;
 use App\Models\BirthdayWAQueue;
+use App\Models\OjaPlanParameter;
 use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\DB;
 use App\Models\BirthdayContactList;
-use App\Models\OjaPlanParameter;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -40,7 +40,7 @@ class BirthdayController extends Controller
     {
         $bd = BirthdayContactList::where('id', $request->id)->first();
         $bdc = BirthdayContact::latest()->where('birthday_contact_list_id', $request->id)->get();
-        
+
         return view('dashboard.birthday.individualList', [
             'username' => $username,
             'bd' => $bd,
@@ -56,7 +56,7 @@ class BirthdayController extends Controller
             'phone' => 'required',
             'email' => 'required|email',
         ]);
-        
+
         $bdc = new BirthdayContact();
         $bdc->name = $request->name;
         $bdc->date_of_birth = $request->dob;
@@ -80,7 +80,7 @@ class BirthdayController extends Controller
             'phone' => 'required',
             'email' => 'required|email',
         ]);
-        
+
         $bdc = BirthdayContact::findOrFail($request->id);
 
         $bdc->name = $request->name;
@@ -192,8 +192,7 @@ class BirthdayController extends Controller
 
     public function create_list(Request $request)
     {
-        if(\App\Models\BirthdayContactList::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->birthday_contact_list)
-        {
+        if (\App\Models\BirthdayContactList::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->birthday_contact_list) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Subscribe to enjoy more access.'
@@ -241,137 +240,129 @@ class BirthdayController extends Controller
             'end_date' => 'required|date',
         ]);
 
-        if(\App\Models\BirthdayAutomation::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->birthday_automation)
-        {
+        if (\App\Models\BirthdayAutomation::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->birthday_automation) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Subscribe to enjoy more access.'
             ]);
         }
 
-        if ($request->automation == 'whatsapp automation') {
-            $request->validate([
-                'birthday_list_id' => 'required',
-                'sms_type' => 'required',
-                'message' => 'required',
-                'sender_id' => 'required',
-            ]);
+        // 
+        foreach ($request->automation as $key => $automation) {
+            if ($automation == 'whatsapp automation') {
+                $request->validate([
+                    'birthday_list_id' => 'required',
+                    'sms_type' => 'required',
+                    'message' => 'required',
+                    'sender_id' => 'required',
+                ]);
 
-            $whatsapp_account = explode('-', $request->sender_id);
+                $whatsapp_account = explode('-', $request->sender_id);
 
-            if ($whatsapp_account[2] != "Connected") return back()->with([
-                'type' => 'danger',
-                'message' => 'The WA account is not connected. Connect and try again'
-            ]);
+                if ($whatsapp_account[2] != "Connected") return back()->with([
+                    'type' => 'danger',
+                    'message' => 'The WA account is not connected. Connect and try again'
+                ]);
 
-            $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
+                $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
 
-            // for data integrity and consistency
-            DB::transaction(function () use ($request, $contact, $whatsapp_account) {
-                $waAutomation = new BirthdayAutomation();
+                // for data integrity and consistency
+                DB::transaction(function () use ($request, $contact, $whatsapp_account, $automation) {
+                    $waAutomation = new BirthdayAutomation();
 
-                $waAutomation->user_id = FacadesAuth::user()->id;
-                $waAutomation->birthday_contact_list_id = $request->birthday_list_id;
-                $waAutomation->title = $request->title;
-                $waAutomation->sms_type = $request->sms_type;
-                $waAutomation->message = $request->message;
-                $waAutomation->automation = $request->automation;
-                $waAutomation->cache = json_encode([
+                    $waAutomation->user_id = FacadesAuth::user()->id;
+                    $waAutomation->birthday_contact_list_id = $request->birthday_list_id;
+                    $waAutomation->title = $request->title;
+                    $waAutomation->sms_type = $request->sms_type;
+                    $waAutomation->message = $request->message;
+                    $waAutomation->automation = $automation;
+                    $waAutomation->cache = json_encode([
+                        'ContactCount' => $contact->count(),
+                        'DeliveredCount' => 0,
+                        'FailedDeliveredCount' => 0,
+                        'NotDeliveredCount' => 0,
+                    ]);
+                    $waAutomation->sender_name = $request->sender_name;
+                    $waAutomation->sending_server = $request->sending_server ?? '';
+                    $waAutomation->sender_id = $whatsapp_account[1];
+                    $waAutomation->integration = $request->integration ?? '';
+                    $waAutomation->start_date = $request->start_date;
+                    $waAutomation->end_date = $request->end_date;
+                    $waAutomation->save();
+
+                    $contacts = BirthdayContact::latest()->where(['birthday_contact_list_id' => $contact->first()->id])->get();
+
+                    // build each wa queue data based on contacts
+                    $queue = $contacts->map(function ($_contact) use ($waAutomation) {
+                        $timestamp = Carbon::now();
+
+                        return [
+                            'birthday_automation_id' => $waAutomation->id,
+                            'phone_number' => $_contact->phone_number,
+                            'status' => 'Scheduled',
+                            'created_at' => $timestamp,
+                            'updated_at' => $timestamp,
+                        ];
+                    })->toArray();
+
+                    // bulk insert
+                    BirthdayWAQueue::insert($queue);
+                });
+            }
+
+            if ($automation == 'sms automation') {
+                $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
+                $bm = new BirthdayAutomation();
+                $bm->user_id = FacadesAuth::user()->id;
+                $bm->birthday_contact_list_id = $request->birthday_list_id;
+                $bm->title = $request->title;
+                $bm->sms_type = $request->sms_type;
+                $bm->message = $request->message;
+                $bm->automation = $automation;
+                $bm->cache = json_encode([
                     'ContactCount' => $contact->count(),
                     'DeliveredCount' => 0,
                     'FailedDeliveredCount' => 0,
                     'NotDeliveredCount' => 0,
                 ]);
-                $waAutomation->sender_name = $request->sender_name;
-                $waAutomation->sending_server = $request->sending_server ?? '';
-                $waAutomation->sender_id = $whatsapp_account[1];
-                $waAutomation->integration = $request->integration ?? '';
-                $waAutomation->start_date = $request->start_date;
-                $waAutomation->end_date = $request->end_date;
-                $waAutomation->save();
+                $bm->sender_name = $request->sender_name;
+                $bm->sending_server = $request->sending_server ?? '';
+                $bm->sender_id = $request->sender_id ?? '';
+                $bm->integration = $request->integration ?? '';
+                $bm->start_date = $request->start_date;
+                $bm->end_date = $request->end_date;
+                $bm->save();
+            }
 
-                $contacts = BirthdayContact::latest()->where(['birthday_contact_list_id' => $contact->first()->id])->get();
-
-                // build each wa queue data based on contacts
-                $queue = $contacts->map(function ($_contact) use ($waAutomation) {
-                    $timestamp = Carbon::now();
-
-                    return [
-                        'birthday_automation_id' => $waAutomation->id,
-                        'phone_number' => $_contact->phone_number,
-                        'status' => 'Scheduled',
-                        'created_at' => $timestamp,
-                        'updated_at' => $timestamp,
-                    ];
-                })->toArray();
-
-                // bulk insert
-                BirthdayWAQueue::insert($queue);
-            });
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Birthday Automation Created.'
-            ]);
+            if ($automation == 'email automation') {
+                $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
+                $bm = new BirthdayAutomation();
+                $bm->user_id = FacadesAuth::user()->id;
+                $bm->birthday_contact_list_id = $request->birthday_list_id;
+                $bm->title = $request->title;
+                $bm->sms_type = $request->sms_type;
+                $bm->message = $request->message;
+                $bm->automation = $automation;
+                $bm->cache = json_encode([
+                    'ContactCount' => $contact->count(),
+                    'DeliveredCount' => 0,
+                    'FailedDeliveredCount' => 0,
+                    'NotDeliveredCount' => 0,
+                ]);
+                $bm->sender_name = $request->sender_name;
+                $bm->sending_server = $request->sending_server ?? '';
+                $bm->sender_id = $request->sender_id ?? '';
+                $bm->integration = $request->integration ?? '';
+                $bm->start_date = $request->start_date;
+                $bm->end_date = $request->end_date;
+                $bm->save();
+            }
         }
 
-        if ($request->automation == 'sms automation') {
-            $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
-            $bm = new BirthdayAutomation();
-            $bm->user_id = FacadesAuth::user()->id;
-            $bm->birthday_contact_list_id = $request->birthday_list_id;
-            $bm->title = $request->title;
-            $bm->sms_type = $request->sms_type;
-            $bm->message = $request->message;
-            $bm->automation = json_encode($request->automation);
-            $bm->cache = json_encode([
-                'ContactCount' => $contact->count(),
-                'DeliveredCount' => 0,
-                'FailedDeliveredCount' => 0,
-                'NotDeliveredCount' => 0,
-            ]);
-            $bm->sender_name = $request->sender_name;
-            $bm->sending_server = $request->sending_server ?? '';
-            $bm->sender_id = $request->sender_id ?? '';
-            $bm->integration = $request->integration ?? '';
-            $bm->start_date = $request->start_date;
-            $bm->end_date = $request->end_date;
-            $bm->save();
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Birthday Automation Created.'
-            ]);
-        }
-
-        if ($request->automation == 'email automation') {
-            $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
-            $bm = new BirthdayAutomation();
-            $bm->user_id = FacadesAuth::user()->id;
-            $bm->birthday_contact_list_id = $request->birthday_list_id;
-            $bm->title = $request->title;
-            $bm->sms_type = $request->sms_type;
-            $bm->message = $request->message;
-            $bm->automation = json_encode($request->automation);
-            $bm->cache = json_encode([
-                'ContactCount' => $contact->count(),
-                'DeliveredCount' => 0,
-                'FailedDeliveredCount' => 0,
-                'NotDeliveredCount' => 0,
-            ]);
-            $bm->sender_name = $request->sender_name;
-            $bm->sending_server = $request->sending_server ?? '';
-            $bm->sender_id = $request->sender_id ?? '';
-            $bm->integration = $request->integration ?? '';
-            $bm->start_date = $request->start_date;
-            $bm->end_date = $request->end_date;
-            $bm->save();
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Birthday Automation Created.'
-            ]);
-        }
+        return redirect(route('user.manage.birthday', ['username' => Auth::user()->username]))->with([
+            'type' => 'success',
+            'message' => 'Birthday Automation Created.'
+        ]);
     }
 
     public function delete_birthday(Request $request)

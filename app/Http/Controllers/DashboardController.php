@@ -499,6 +499,7 @@ class DashboardController extends Controller
         if ($request->isMethod('post')) {
             $c = new \App\Models\ContactNumber();
             $c->phone_number = $request->phone_no;
+            $c->name = $request->name;
             $c->contact_list_id = $request->list_id;
             $c->status = 'subscribed';
             $c->save();
@@ -518,6 +519,7 @@ class DashboardController extends Controller
         if ($request->isMethod('post')) {
             $c = \App\Models\ContactNumber::findOrFail($request->contact_id);
             $c->phone_number = $request->phone_no;
+            $c->name = $request->name;
             $c->status = $request->status;
             $c->update();
 
