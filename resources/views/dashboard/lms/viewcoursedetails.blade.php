@@ -55,7 +55,16 @@
                                             <div class="card border-0 shadow-none ps-2 mb-0">
                                                 <ul class="list-unstyled mb-0">
                                                     @foreach(App\Models\Lesson::where('section_id', $section->id)->get() as $lesson)
-                                                        <li><a href="javascript: void(0);" class="d-flex align-items-center"  data-bs-toggle="modal" data-bs-target="#show-{{$lesson->id}}"><span class="me-auto">{{$lesson->title}}</span> <i class="mdi mdi-pin ms-auto"></i></a></li>
+                                                        <li>
+                                                            <a href="javascript: void(0);" class="d-flex align-items-center"  data-bs-toggle="modal" data-bs-target="#show-{{$lesson->id}}">
+                                                            @if($lesson->content_type == 'video')
+                                                            <i class="mdi mdi-video-high-definition"></i>
+                                                            @else
+                                                            <i class="mdi mdi-youtube"></i>
+                                                            @endif    
+                                                            <span class="me-auto">{{$lesson->title}}</span> 
+                                                            <i class="mdi mdi-pin ms-auto"></i></a>
+                                                        </li>
                                                         <div class="modal fade" id="show-{{$lesson->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered">
                                                                 <div class="modal-content pb-3">
@@ -70,19 +79,17 @@
                                                                                     @if($lesson->content_type == 'video')
                                                                                     <div id="carouselExample" class="carousel slide">
                                                                                         <div class="carousel-inner">
-                                                                                            <iframe src="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->original_filename}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe> 
+                                                                                            <iframe src="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->original_filename}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
                                                                                         </div>
                                                                                     </div>
                                                                                     @else
                                                                                     <div id="carouselExample" class="carousel slide">
+                                                                                        @php
+                                                                                            $youTubeURL = App\Models\Video::where('lesson_id', $lesson->id)->first()->youtube_link;
+                                                                                            $convertedURL = str_replace("watch?v=", "embed/", $youTubeURL);
+                                                                                        @endphp
                                                                                         <div class="carousel-inner">
-                                                                                            {{App\Models\Video::where('lesson_id', $lesson->id)->first()}}
-                                                                                            <object width="425" height="350" data="" type="application/x-shockwave-flash"><param name="src" value="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->youtube_link}}" /></object>
-                                                                                            {{-- https://www.youtube.com/watch?v=FcjOlcWaaU8 --}}
-                                                                                            {{-- <iframe width="420" height="315"
-                                                                                            src="https://www.youtube.com/embed/tgbNymZ7vqY">
-                                                                                            </iframe>
-                                                                                            <iframe width="727" height="409" src="https://www.youtube.com/embed/FcjOlcWaaU8" title="Olamide, CKay - Trumpet (Official Video)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> --}}
+                                                                                        <iframe src="{{$convertedURL}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
                                                                                         </div>
                                                                                     </div>
                                                                                     @endif
@@ -179,9 +186,6 @@
                                                         </div>
                                                     </div>
                                                     <div class="description-box view-more-parent">
-                                                        <div class="view-more" onclick="viewMore(this,'hide')">
-                                                            + View More
-                                                        </div>
                                                         <div class="description-title">Description</div>
                                                         <div class="description-content-wrap">
                                                             <div class="description-content">

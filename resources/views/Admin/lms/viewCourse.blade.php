@@ -29,27 +29,11 @@
                     <div class="video">
                         <div class="card">
                             <div class="card-body">
-                                <div id="carouselExample" class="carousel slide">
-                                    <div class="carousel-inner">
-                                    @foreach(App\Models\Section::where('course_id', $course->id)->get() as $section)
-                                        @foreach(App\Models\Lesson::where('section_id', $section->id)->get() as $lesson)
-                                            <div class="carousel-item active">
-                                                @foreach(App\Models\Video::where('lesson_id', $lesson->id)->get() as $video)
-                                                    <iframe src="{{$video->original_filename}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                                @endforeach
-                                            </div>
-                                        @endforeach
-                                    @endforeach
-                                    </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                </div>
+                                @if($course->image)
+                                <img src="{{$course->image}}" alt="{{$course->title}}" style="    max-width: 100%; width: 600px;">
+                                @else
+                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%">
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -71,7 +55,51 @@
                                             <div class="card border-0 shadow-none ps-2 mb-0">
                                                 <ul class="list-unstyled mb-0">
                                                     @foreach(App\Models\Lesson::where('section_id', $section->id)->get() as $lesson)
-                                                        <li><a href="javascript: void(0);" class="d-flex align-items-center"><span class="me-auto">{{$lesson->title}}</span> <i class="mdi mdi-pin ms-auto"></i></a></li>
+                                                        <li>
+                                                            <a href="javascript: void(0);" class="d-flex align-items-center"  data-bs-toggle="modal" data-bs-target="#show-{{$lesson->id}}">
+                                                            @if($lesson->content_type == 'video')
+                                                            <i class="mdi mdi-video-high-definition"></i>
+                                                            @else
+                                                            <i class="mdi mdi-youtube"></i>
+                                                            @endif    
+                                                            <span class="me-auto">{{$lesson->title}}</span> 
+                                                            <i class="mdi mdi-pin ms-auto"></i></a>
+                                                        </li>
+                                                        <div class="modal fade" id="show-{{$lesson->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content pb-3">
+                                                                    <div class="modal-header border-bottom-0">
+                                                                        <h5 class="modal-title">{{$lesson->title}}</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="video">
+                                                                            <div class="card">
+                                                                                <div class="card-body">
+                                                                                    @if($lesson->content_type == 'video')
+                                                                                    <div id="carouselExample" class="carousel slide">
+                                                                                        <div class="carousel-inner">
+                                                                                            <iframe src="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->original_filename}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    @else
+                                                                                    <div id="carouselExample" class="carousel slide">
+                                                                                        @php
+                                                                                            $youTubeURL = App\Models\Video::where('lesson_id', $lesson->id)->first()->youtube_link;
+                                                                                            $convertedURL = str_replace("watch?v=", "embed/", $youTubeURL);
+                                                                                        @endphp
+                                                                                        <div class="carousel-inner">
+                                                                                        <iframe src="{{$convertedURL}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     @endforeach
                                                 </ul>
                                             </div>
@@ -118,7 +146,7 @@
                                                             <div class="title float-left">Lessons for this course</div>
                                                         </div>
                                                         @foreach(App\Models\Section::where('course_id', $course->id)->get() as $section)
-                                                        <div class="course-curriculum-accordion">
+                                                        <!-- <div class="course-curriculum-accordion">
                                                             <div class="lecture-group-wrapper">
                                                                 <div class="lecture-group-title clearfix" data-toggle="collapse" data-target="#collapse-{{$section->id}}" aria-expanded="false">
                                                                     <div class="title float-left">
@@ -144,7 +172,85 @@
                                                                     </ul>
                                                                 </div>
                                                             </div>
+                                                        </div> -->
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <ul class="list-unstyled categories-list">
+                                                                    <li class="border-bottom">
+                                                                        <div class="custom-accordion mt-2">
+                                                                            <a class="text-body fw-medium py-1 d-flex align-items-center" data-bs-toggle="collapse" href="#categories-collapse-{{$section->id}}" role="button" aria-expanded="false" aria-controls="categories-collapse">
+                                                                                
+                                                                                Section {{$loop->iteration}}: {{$section->title}} 
+                                                                                <i class="accor-down-icon ms-auto">
+                                                                                    <div class="float-right">
+                                                                                        <span class="total-time">
+                                                                                            {{App\Models\Lesson::where('section_id', $section->id)->get()->count()}} lessons - 
+                                                                                        </span>
+                                                                                        <span class="total-time">
+                                                                                            {{App\Models\Lesson::where('section_id', $section->id)->sum('duration')}} minutes
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </i>
+                                                                            </a>
+                                                                            <div class="collapse" id="categories-collapse-{{$section->id}}">
+                                                                                <div class="card border-0 shadow-none ps-2 mb-0">
+                                                                                    <ul class="list-unstyled mb-0">
+                                                                                        @foreach(App\Models\Lesson::where('section_id', $section->id)->get() as $lesson)
+                                                                                            <li>
+                                                                                                <a href="javascript: void(0);" class="d-flex align-items-center" style="font-weight: 600;" data-bs-toggle="modal" data-bs-target="#show-{{$lesson->id}}">
+                                                                                                @if($lesson->content_type == 'video')
+                                                                                                <i class="mdi mdi-video-high-definition"></i>
+                                                                                                @else
+                                                                                                <i class="mdi mdi-youtube"></i>
+                                                                                                @endif
+                                                                                                <span class="me-auto" style="margin-left: .1rem;">{{$lesson->title}} - {{$lesson->duration}} minutes</span>
+                                                                                                <i class="mdi mdi-pin ms-auto"></i></a>
+                                                                                            </li>
+                                                                                            <div class="modal fade" id="show-{{$lesson->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                                                    <div class="modal-content pb-3">
+                                                                                                        <div class="modal-header border-bottom-0">
+                                                                                                            <h5 class="modal-title">{{$lesson->title}}</h5>
+                                                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                        </div>
+                                                                                                        <div class="modal-body">
+                                                                                                            <div class="video">
+                                                                                                                <div class="card">
+                                                                                                                    <div class="card-body">
+                                                                                                                        @if($lesson->content_type == 'video')
+                                                                                                                        <div id="carouselExample" class="carousel slide">
+                                                                                                                            <div class="carousel-inner">
+                                                                                                                                <iframe src="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->original_filename}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen style="width: 100%;"></iframe>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        @else
+                                                                                                                        <div id="carouselExample" class="carousel slide">
+                                                                                                                            @php
+                                                                                                                                $youTubeURL = App\Models\Video::where('lesson_id', $lesson->id)->first()->youtube_link;
+                                                                                                                                $convertedURL = str_replace("watch?v=", "embed/", $youTubeURL);
+                                                                                                                            @endphp
+                                                                                                                            <div class="carousel-inner">
+                                                                                                                                <iframe src="{{$convertedURL}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen style="width: 100%;"></iframe>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        @endif
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        @endforeach
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
+
                                                         @endforeach
                                                     </div>
                                                     <div class="requirements-box">
@@ -158,13 +264,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="description-box view-more-parent">
-                                                        <div class="view-more" onclick="viewMore(this,'hide')">
-                                                            + View More
-                                                        </div>
-                                                        <div class="description-title">Description</div>
-                                                        <div class="description-content-wrap">
-                                                            <div class="description-content">
-                                                                {{$course->description}}
+                                                        <div class="description-box view-more-parent">
+                                                            <div class="description-title">Description</div>
+                                                            <div class="description-content-wrap">
+                                                                <div class="description-content">
+                                                                    {{$course->description}}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
