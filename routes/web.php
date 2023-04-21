@@ -63,8 +63,9 @@ Route::get('p/{message_id}/open', [\App\Controller\Mail\CampaignController::clas
 Route::get('p/{url}/click/{message_id?}', [\App\Controller\Mail\CampaignController::class, 'click'])->name('clickTrackingUrl');
 Route::get('c/{subscriber}/unsubscribe/{message_id?}', [\App\Controller\Mail\CampaignController::class, 'unsubscribe'])->name('unsubscribeUrl');
 Route::get('campaigns/{message_id}/web-view', [\App\Controller\Mail\CampaignController::class, 'webView'])->name('webViewerUrl');
-// Route::domain(config('app.domain_url'))->group(function() {
+
 Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
+Route::post('/newsletter/subscribe', [App\Http\Controllers\HomePageController::class, 'subscribe_newsletter'])->name('subscribe.newsletter');
 // Faqs
 Route::get('/faqs', [App\Http\Controllers\HomePageController::class, 'faqs'])->name('faqs');
 // pricing

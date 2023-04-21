@@ -102,10 +102,11 @@
                     <h1>
                         Newsletter
                     </h1>
-                    <form class="search-bar mb-4">
+                    <form class="search-bar mb-4" method="post" action="{{route('subscribe.newsletter')}}">
+                        @csrf
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Your email Address">
-                            <span class="input-group-text" id="basic-addon2">Subscribe</span>
+                            <input type="text" class="form-control" name="email" placeholder="Your email Address" required>
+                            <input type="submit" class="input-group-text" value="Subscribe" id="basic-addon2">
                         </div>
                     </form>
                     <h1>

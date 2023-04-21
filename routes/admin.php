@@ -112,6 +112,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/admin/read/notification/{id}', [App\Http\Controllers\Admin\AdminController::class, 'read_notification'])->name('admin.read.notification');
 
             // Frontend
+            Route::get('/newsletter', [App\Http\Controllers\Admin\AdminController::class, 'newsletter'])->name('newsletter');
+            Route::post('/delete-newsletter/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_newsletter'])->name('deleteNewsletter');
+
             Route::get('/faq', [App\Http\Controllers\Admin\AdminController::class, 'view_faq'])->name('viewFaq');
             Route::post('/add-faq', [App\Http\Controllers\Admin\AdminController::class, 'add_faq'])->name('addFaq');
             Route::post('/update-faq/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_faq'])->name('updateFaq');

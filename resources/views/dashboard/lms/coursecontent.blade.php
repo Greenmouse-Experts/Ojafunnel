@@ -57,35 +57,19 @@
                                             <div id="appera">
                                                 <div class="card-body" style="box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);  line-height: 1.8;">
                                                     <p class="card-title-desc text-dark font-500">
-                                                        <i class="bi bi-info-circle" style="padding-right: 15px;"></i>Start putting together your course by creating sections, lectures and practice activities (quizzes, and assignments). Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
+                                                        <i class="bi bi-info-circle" style="padding-right: 15px;"></i>Use your course outline to structure your content and label your sections and lessons clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
                                                         <a style="float: right;" onclick="myFunct()" class="btn btn-danger mt-3">Dismiss</a>
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div class="font-500 mt-5">
-                                                <p>
-                                                    Start putting together your course by creating sections, lectures and practice <a href="#">
-                                                        (quizzes, and assignments)
-                                                    </a>.
-                                                </p>
-                                                <p>
-                                                    Start putting together your course by creating sections, lectures and practice activities <a href="#">
-                                                        (quizzes, and assignments)
-                                                    </a>. Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
-                                                </p>
-                                            </div>
                                         </div>
                                         <div class="font-500 mt-5">
                                             <p>
-                                                Start putting together your course by creating sections, lectures and practice <a href="#">
+                                                Start putting together your course by creating sections, lessons and practice 
+                                                <!-- <a href="#">
                                                     (quizzes, and assignments)
-                                                </a>.
-                                            </p>
-                                            <p>
-                                                Start putting together your course by creating sections, lectures and practice activities <a href="#">
-                                                    (quizzes, and assignments)
-                                                </a>. Use your course outline to structure your content and label your sections and lectures clearly. If you’re intending to offer your course for free, the total length of video content must be less than 2 hours.
-                                            <div class="lamet float-end"><a href="" data-bs-toggle="modal" data-bs-target="#createCurriculum"><strong><u>Create Curriculum</u></strong></a></div>
+                                                </a> -->
+                                                <div class="lamet float-end"><a href="" data-bs-toggle="modal" data-bs-target="#createCurriculum"><strong><u>Create Curriculum</u></strong></a></div>
                                             </p>
                                         </div>
                                         @foreach(\App\Models\Section::where('course_id', $course->id)->get() as $section)

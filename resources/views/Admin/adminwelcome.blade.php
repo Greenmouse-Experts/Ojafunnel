@@ -53,7 +53,7 @@
                                     <div class="d-flex">
                                         <div class="flex-grow-1">
                                             <p class="text-muted fw-medium">Subscriptions</p>
-                                            <h4 class="mb-0">1</h4>
+                                            <h4 class="mb-0">{{App\Models\OjaSubscription::latest()->where('status', 'Active')->get()->count()}}</h4>
                                         </div>
 
                                         <div class="flex-shrink-0 align-self-center ">
@@ -92,8 +92,8 @@
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <div class="flex-grow-1">
-                                            <p class="text-muted fw-medium">Vendor List</p>
-                                            <h4 class="mb-0">50</h4>
+                                            <p class="text-muted fw-medium">Whatsapp Automation</p>
+                                            <h4 class="mb-0">{{App\Models\WaCampaigns::latest()->get()->count()}}</h4>
                                         </div>
                                         <div class="flex-shrink-0 align-self-center">
                                             <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
@@ -111,8 +111,8 @@
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <div class="flex-grow-1">
-                                            <p class="text-muted fw-medium">Affiliate List</p>
-                                            <h4 class="mb-0">80</h4>
+                                            <p class="text-muted fw-medium">Eamil Campaigns</p>
+                                            <h4 class="mb-0">{{App\Models\EmailCampaign::latest()->get()->count()}}</h4>
                                         </div>
 
                                         <div class="flex-shrink-0 align-self-center">
@@ -131,8 +131,8 @@
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <div class="flex-grow-1">
-                                            <p class="text-muted fw-medium">Sales Analytics</p>
-                                            <h4 class="mb-0">10</h4>
+                                            <p class="text-muted fw-medium">Sms Automations</p>
+                                            <h4 class="mb-0">{{App\Models\SmsAutomation::latest()->get()->count()}}</h4>
                                         </div>
 
                                         <div class="flex-shrink-0 align-self-center">
