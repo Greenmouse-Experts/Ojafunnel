@@ -36,7 +36,7 @@ class StoreController extends Controller
                 'name' => 'required|unique:stores|max:255',
                 'description' => 'required',
                 'link' => 'required',
-                'theme' => 'required'
+                // 'theme' => 'required'
             ],
             [
                 'name.unique' => 'Store name has already been taken, please use another one!',
@@ -51,21 +51,46 @@ class StoreController extends Controller
             ]);
         }
 
-        if ($request->file('logo')) {
-            $image = $request->file('logo')->store(
-                'uploads/storeLogo/' . \Auth::user()->username,
-                'public'
+        if($request->primaryColor == '#000000')
+        {   
+            $request->validate(
+                [
+                    'theme' => 'required'
+                ]
             );
+
+            if ($request->file('logo')) {
+                $image = $request->file('logo')->store(
+                    'uploads/storeLogo/' . \Auth::user()->username,
+                    'public'
+                );
+            }
+            $store = new Store();
+            $store->name = $request->name;
+            $store->description = $request->description;
+            $store->link = $request->link;
+            $store->logo = $image;
+            $store->theme = $request->theme;
+            $store->color = '#fff';
+            $store->user_id = \Auth::user()->id;
+            $store->save();
+        } else {
+            if ($request->file('logo')) {
+                $image = $request->file('logo')->store(
+                    'uploads/storeLogo/' . \Auth::user()->username,
+                    'public'
+                );
+            }
+            $store = new Store();
+            $store->name = $request->name;
+            $store->description = $request->description;
+            $store->link = $request->link;
+            $store->logo = $image;
+            $store->theme = $request->primaryColor;
+            $store->color = '#fff';
+            $store->user_id = \Auth::user()->id;
+            $store->save();
         }
-        $store = new Store();
-        $store->name = $request->name;
-        $store->description = $request->description;
-        $store->link = $request->link;
-        $store->logo = $image;
-        $store->theme = $request->theme;
-        $store->color = '#fff';
-        $store->user_id = \Auth::user()->id;
-        $store->save();
 
         return back()->with([
             'type' => 'success',
@@ -75,21 +100,42 @@ class StoreController extends Controller
 
     public function updateStore(Request $request)
     {
-        $store = Store::findOrFail($request->id);
-        $store->name = $request->name;
-        $store->description = $request->description;
-        $store->link = $request->link;
-        if ($request->file('logo')) {
-            $image = $request->file('logo')->store(
-                'uploads/storeLogo/' . Auth::user()->username,
-                'public'
-            );
-            $store->logo = $image;
+        if($request->primaryColor == '#000000')
+        {   
+            $store = Store::findOrFail($request->id);
+            $store->name = $request->name;
+            $store->description = $request->description;
+            $store->link = $request->link;
+            if ($request->file('logo')) {
+                $image = $request->file('logo')->store(
+                    'uploads/storeLogo/' . Auth::user()->username,
+                    'public'
+                );
+                $store->logo = $image;
+            }
+            $store->theme = $request->theme;
+            $store->color = '#fff';
+            $store->user_id = Auth::user()->id;
+            $store->update();
+
+        } else {
+            $store = Store::findOrFail($request->id);
+            $store->name = $request->name;
+            $store->description = $request->description;
+            $store->link = $request->link;
+            if ($request->file('logo')) {
+                $image = $request->file('logo')->store(
+                    'uploads/storeLogo/' . Auth::user()->username,
+                    'public'
+                );
+                $store->logo = $image;
+            }
+            $store->theme = $request->primaryColor;
+            $store->color = '#fff';
+            $store->user_id = Auth::user()->id;
+            $store->update();
+
         }
-        $store->theme = $request->theme;
-        $store->color = '#fff';
-        $store->user_id = Auth::user()->id;
-        $store->update();
 
         return back()->with([
             'type' => 'success',

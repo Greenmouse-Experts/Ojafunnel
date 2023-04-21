@@ -90,7 +90,7 @@
                                 <div class="col-lg-6 text-end">
                                     <div class="baseColor">
                                         <label for="baseColor" style="color: #714091;">Choose another color: </label>
-                                        <input class="baseColorInput" id="baseColor" type="color" name="primaryColor" value="#09091B">
+                                        <input class="baseColorInput" id="baseColor" type="color" name="primaryColor">
                                     </div>
                                     <!-- <button id="color-picker-6" class="btn btn-primary btn-sm">Color Picker</button>
                                         <a type="color" style="color: #714091">Choose another color</a>

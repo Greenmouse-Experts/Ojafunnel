@@ -522,7 +522,6 @@ class CMSController extends Controller
                 'name' => 'required|unique:shops|max:255',
                 'description' => 'required',
                 'link' => 'required',
-                'theme' => 'required',
                 'logo' => 'required|mimes:jpeg,png,jpg',
             ],
             [
@@ -542,35 +541,13 @@ class CMSController extends Controller
 
         if ($shops->isEmpty()) {
 
-            $filename = request()->logo->getClientOriginalName();
-            request()->logo->storeAs('courseShopLogo', $filename, 'public');
-
-            Shop::create([
-                'name' => $request->name,
-                'description' => $request->description,
-                'link' => $request->link,
-                'logo' => '/storage/courseShopLogo/' . $filename,
-                'theme' => $request->theme,
-                'color' => '#fff',
-                'user_id' => Auth::user()->id,
-            ]);
-
-            return back()->with([
-                'type' => 'success',
-                'message' => $request->name . ' shop created successfully'
-            ]);
-        } else {
-            foreach ($shops as $shop) {
-                $user_id[] = $shop->user_id;
-            }
-            if (in_array(Auth::user()->id, $user_id)) {
-
-                return back()->with([
-                    'type' => 'danger',
-                    'message' => 'You already have a shop.'
-                ]);
-            } else {
-
+            if($request->primaryColor == '#000000')
+            {   
+                $request->validate(
+                    [
+                        'theme' => 'required'
+                    ]
+                );
                 $filename = request()->logo->getClientOriginalName();
                 request()->logo->storeAs('courseShopLogo', $filename, 'public');
 
@@ -588,6 +565,79 @@ class CMSController extends Controller
                     'type' => 'success',
                     'message' => $request->name . ' shop created successfully'
                 ]);
+            } else {
+                $filename = request()->logo->getClientOriginalName();
+                request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+                Shop::create([
+                    'name' => $request->name,
+                    'description' => $request->description,
+                    'link' => $request->link,
+                    'logo' => '/storage/courseShopLogo/' . $filename,
+                    'theme' => $request->primaryColor,
+                    'color' => '#fff',
+                    'user_id' => Auth::user()->id,
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => $request->name . ' shop created successfully'
+                ]);
+            }
+        } else {
+            foreach ($shops as $shop) {
+                $user_id[] = $shop->user_id;
+            }
+            if (in_array(Auth::user()->id, $user_id)) {
+
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'You already have a shop.'
+                ]);
+            } else {
+                if($request->primaryColor == '#000000')
+                {   
+                    $request->validate(
+                        [
+                            'theme' => 'required'
+                        ]
+                    );
+                    $filename = request()->logo->getClientOriginalName();
+                    request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+                    Shop::create([
+                        'name' => $request->name,
+                        'description' => $request->description,
+                        'link' => $request->link,
+                        'logo' => '/storage/courseShopLogo/' . $filename,
+                        'theme' => $request->theme,
+                        'color' => '#fff',
+                        'user_id' => Auth::user()->id,
+                    ]);
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => $request->name . ' shop created successfully'
+                    ]);
+                } else {
+                    $filename = request()->logo->getClientOriginalName();
+                    request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+                    Shop::create([
+                        'name' => $request->name,
+                        'description' => $request->description,
+                        'link' => $request->link,
+                        'logo' => '/storage/courseShopLogo/' . $filename,
+                        'theme' => $request->primaryColor,
+                        'color' => '#fff',
+                        'user_id' => Auth::user()->id,
+                    ]);
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => $request->name . ' shop created successfully'
+                    ]);
+                }
             }
         }
     }
@@ -603,35 +653,68 @@ class CMSController extends Controller
                 ]
             );
 
-            if (request()->hasFile('logo')) {
-                $this->validate($request, [
-                    'logo' => 'required|mimes:jpeg,png,jpg',
-                ]);
+            if($request->primaryColor == '#000000')
+            {  
+                if (request()->hasFile('logo')) {
+                    $this->validate($request, [
+                        'logo' => 'required|mimes:jpeg,png,jpg',
+                    ]);
 
-                $filename = request()->logo->getClientOriginalName();
-                if ($shop->logo) {
-                    Storage::delete(str_replace("storage", "public", $shop->logo));
+                    $filename = request()->logo->getClientOriginalName();
+                    if ($shop->logo) {
+                        Storage::delete(str_replace("storage", "public", $shop->logo));
+                    }
+                    request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+                    $shop->update([
+                        'description' => $request->description,
+                        'logo' => '/storage/courseShopLogo/' . $filename,
+                        'theme' => $request->theme,
+                        'color' => '#fff',
+                    ]);
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => $request->name . ' shop updated successfully.'
+                    ]);
                 }
-                request()->logo->storeAs('courseShopLogo', $filename, 'public');
 
                 $shop->update([
                     'description' => $request->description,
-                    'logo' => '/storage/courseShopLogo/' . $filename,
                     'theme' => $request->theme,
                     'color' => '#fff',
                 ]);
+            } else {
+                if (request()->hasFile('logo')) {
+                    $this->validate($request, [
+                        'logo' => 'required|mimes:jpeg,png,jpg',
+                    ]);
 
-                return back()->with([
-                    'type' => 'success',
-                    'message' => $request->name . ' shop updated successfully.'
+                    $filename = request()->logo->getClientOriginalName();
+                    if ($shop->logo) {
+                        Storage::delete(str_replace("storage", "public", $shop->logo));
+                    }
+                    request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+                    $shop->update([
+                        'description' => $request->description,
+                        'logo' => '/storage/courseShopLogo/' . $filename,
+                        'theme' => $request->primaryColor,
+                        'color' => '#fff',
+                    ]);
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => $request->name . ' shop updated successfully.'
+                    ]);
+                }
+
+                $shop->update([
+                    'description' => $request->description,
+                    'theme' => $request->primaryColor,
+                    'color' => '#fff',
                 ]);
             }
-
-            $shop->update([
-                'description' => $request->description,
-                'theme' => $request->theme,
-                'color' => '#fff',
-            ]);
 
             return back()->with([
                 'type' => 'success',
@@ -643,46 +726,82 @@ class CMSController extends Controller
                     'name' => 'required|unique:shops|max:255',
                     'description' => 'required',
                     'link' => 'required',
-                    'theme' => 'required',
                 ],
                 [
                     'name.unique' => 'Shop name has already been taken, please use another one!',
                 ]
             );
 
-            if (request()->hasFile('logo')) {
-                $this->validate($request, [
-                    'logo' => 'required|mimes:jpeg,png,jpg',
-                ]);
+            if($request->primaryColor == '#000000')
+            {  
+                if (request()->hasFile('logo')) {
+                    $this->validate($request, [
+                        'logo' => 'required|mimes:jpeg,png,jpg',
+                    ]);
 
-                $filename = request()->logo->getClientOriginalName();
-                if ($shop->logo) {
-                    Storage::delete(str_replace("storage", "public", $shop->logo));
+                    $filename = request()->logo->getClientOriginalName();
+                    if ($shop->logo) {
+                        Storage::delete(str_replace("storage", "public", $shop->logo));
+                    }
+                    request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+                    $shop->update([
+                        'name' => $request->name,
+                        'description' => $request->description,
+                        'link' => $request->link,
+                        'logo' => '/storage/courseShopLogo/' . $filename,
+                        'theme' => $request->theme,
+                        'color' => '#fff',
+                    ]);
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => $request->name . ' shop updated successfully.'
+                    ]);
                 }
-                request()->logo->storeAs('courseShopLogo', $filename, 'public');
 
                 $shop->update([
                     'name' => $request->name,
                     'description' => $request->description,
                     'link' => $request->link,
-                    'logo' => '/storage/courseShopLogo/' . $filename,
                     'theme' => $request->theme,
                     'color' => '#fff',
                 ]);
+            } else {
+                if (request()->hasFile('logo')) {
+                    $this->validate($request, [
+                        'logo' => 'required|mimes:jpeg,png,jpg',
+                    ]);
 
-                return back()->with([
-                    'type' => 'success',
-                    'message' => $request->name . ' shop updated successfully.'
+                    $filename = request()->logo->getClientOriginalName();
+                    if ($shop->logo) {
+                        Storage::delete(str_replace("storage", "public", $shop->logo));
+                    }
+                    request()->logo->storeAs('courseShopLogo', $filename, 'public');
+
+                    $shop->update([
+                        'name' => $request->name,
+                        'description' => $request->description,
+                        'link' => $request->link,
+                        'logo' => '/storage/courseShopLogo/' . $filename,
+                        'theme' => $request->primaryColor,
+                        'color' => '#fff',
+                    ]);
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => $request->name . ' shop updated successfully.'
+                    ]);
+                }
+
+                $shop->update([
+                    'name' => $request->name,
+                    'description' => $request->description,
+                    'link' => $request->link,
+                    'theme' => $request->primaryColor,
+                    'color' => '#fff',
                 ]);
             }
-
-            $shop->update([
-                'name' => $request->name,
-                'description' => $request->description,
-                'link' => $request->link,
-                'theme' => $request->theme,
-                'color' => '#fff',
-            ]);
 
             return back()->with([
                 'type' => 'success',
