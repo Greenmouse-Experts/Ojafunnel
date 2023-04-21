@@ -120,6 +120,7 @@
         <div class="text-center">
           <img src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="60" />
           <h3 class="mt-3 px-2">{{$store->name}}</h3>
+          <h3 class="mt-3 px-2">{{$store->description}}</h3>
         </div>
       </div>
     </div>
