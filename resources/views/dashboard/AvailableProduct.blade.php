@@ -125,19 +125,19 @@
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <label for="Name">Price</label>
-                                                                                        <input type="text" name="price" value="{{$item->price}}" placeholder="Enter price" required />
+                                                                                        <input type="number" name="price" value="{{$item->price}}" placeholder="Enter price" required />
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <label for="Name">Quantity</label>
-                                                                                        <input type="text" name="quantity" value="{{$item->quantity}}" required />
+                                                                                        <input type="number" name="quantity" value="{{$item->quantity}}" required />
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <label for="Name">Level 1 Commission (%)</label>
-                                                                                        <input type="text" name="level1_comm" value="{{$item->level1_comm}}" required />
+                                                                                        <input type="number" name="level1_comm" value="{{$item->level1_comm}}" required />
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <label for="Name">Level 2 Commission (%)</label>
-                                                                                        <input type="text" name="level2_comm" value="{{$item->level2_comm}}" required />
+                                                                                        <input type="number" name="level2_comm" value="{{$item->level2_comm}}" required />
                                                                                     </div>
                                                                                     <div class="text-end mt-2">
                                                                                         <a href="#" class="text-decoration-none">
