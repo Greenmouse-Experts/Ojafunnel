@@ -234,19 +234,20 @@
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Price</label>
-                                    <input type="text" name="price" placeholder="Enter price" required />
+                                    <input type="number" name="price" placeholder="Enter price" required />
+                                    <span style="color:red;">Please enter numbers</span>
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Quantity</label>
-                                    <input type="text" name="quantity" placeholder="Enter quantity" required />
+                                    <input type="number" name="quantity" placeholder="Enter quantity" required />
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Level 1 Commision (%)</label>
-                                    <input type="text" name="level1_comm" placeholder="Enter level 1 commission" required />
+                                    <input type="number" name="level1_comm" placeholder="Enter level 1 commission" required />
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Level 2 Commision (%)</label>
-                                    <input type="text" name="level2_comm" placeholder="Enter level 2 commission" required />
+                                    <input type="number" name="level2_comm" placeholder="Enter level 2 commission" required />
                                 </div>
                                 <div class="text-end mt-2">
                                     <a href="#" class="text-decoration-none">
