@@ -77,7 +77,11 @@
                                                                                     <div id="carouselExample" class="carousel slide">
                                                                                         <div class="carousel-inner">
                                                                                             <object width="425" height="350" data="" type="application/x-shockwave-flash"><param name="src" value="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->youtube_link}}" /></object>
-                                                                                            
+                                                                                            {{-- https://www.youtube.com/watch?v=FcjOlcWaaU8 --}}
+                                                                                            {{-- <iframe width="420" height="315"
+                                                                                            src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                                                                                            </iframe>
+                                                                                            <iframe width="727" height="409" src="https://www.youtube.com/embed/FcjOlcWaaU8" title="Olamide, CKay - Trumpet (Official Video)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> --}}
                                                                                         </div>
                                                                                     </div>
                                                                                     @endif
