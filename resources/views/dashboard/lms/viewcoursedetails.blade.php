@@ -70,12 +70,13 @@
                                                                                     @if($lesson->content_type == 'video')
                                                                                     <div id="carouselExample" class="carousel slide">
                                                                                         <div class="carousel-inner">
-                                                                                            <iframe src="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->original_filename}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
+                                                                                            <iframe src="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->original_filename}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe> 
                                                                                         </div>
                                                                                     </div>
                                                                                     @else
                                                                                     <div id="carouselExample" class="carousel slide">
                                                                                         <div class="carousel-inner">
+                                                                                            {{App\Models\Video::where('lesson_id', $lesson->id)->first()}}
                                                                                             <object width="425" height="350" data="" type="application/x-shockwave-flash"><param name="src" value="{{App\Models\Video::where('lesson_id', $lesson->id)->first()->youtube_link}}" /></object>
                                                                                             {{-- https://www.youtube.com/watch?v=FcjOlcWaaU8 --}}
                                                                                             {{-- <iframe width="420" height="315"

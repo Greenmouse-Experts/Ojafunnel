@@ -302,8 +302,20 @@
                 </div>
                 <div class="col-lg-5 ps-lg-5 template-text-col">
                     <div class="details-text">
-                        <p class="text-header">Do you like this template</p>
-                        <a href="{{route('signup')}}" class="btn btn-primary mt-4">Use Template</a>
+                        <p class="text-header">Do you like this template?</p>
+
+                        <a href="
+                            @if (env('APP_ENV') == 'local')
+                                {{ $page->file_location }}
+                            @else
+                                @if ($page->name == 'index.html')
+                                    {{ "https://$funnel->slug-page.ojafunnel.com"}}
+                                @else
+                                    {{ "https://$funnel->slug-page.ojafunnel.com/" . explode('.', $page->name)[0] }}
+                                @endif 
+                            @endif
+                        " class="btn btn-primary mt-4">View Template</a><br>
+                        <a href="{{ route('signup') }}" class="btn btn-primary mt-4">Use Template</a>
                     </div>
                 </div>
             </div>
