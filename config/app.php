@@ -193,6 +193,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+        Jorenvh\Share\Providers\ShareServiceProvider::class,
             /*
              * Package Service Providers...
              */
@@ -223,6 +224,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
         'Pusher' => Pusher\Pusher::class,
+        'Share' => Jorenvh\Share\ShareFacade::class,
     ])->toArray(),
 
     'import_batch_size' => env('IMPORT_BATCH_SIZE', 9993),

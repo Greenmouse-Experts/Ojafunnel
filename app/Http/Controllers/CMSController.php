@@ -301,7 +301,7 @@ class CMSController extends Controller
 
             Video::create([
                 'lesson_id' => $lesson->id,
-                'youtube_link' => $lesson->lesson_youtube
+                'youtube_link' => $request->lesson_youtube
             ]);
 
             return back()->with([

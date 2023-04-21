@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{URL::asset('admin/assets/images/Logo-fav.png')}}" />
+    @stack('css')
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -120,13 +121,13 @@
     <script src="{{URL::asset('admin/assets/js/pages/product-filter-range.init.js')}}"></script>
 
     <!-- select 2 plugin -->
-    <script src="{{URL::asset('admin/assets/libs/select2/js/select2.min.js')}}"></script>
+    <!-- <script src="{{URL::asset('admin/assets/libs/select2/js/select2.min.js')}}"></script> -->
 
     <!-- dropzone plugin -->
-    <script src="{{URL::asset('admin/assets/libs/dropzone/min/dropzone.min.js')}}"></script>
+    <!-- <script src="{{URL::asset('admin/assets/libs/dropzone/min/dropzone.min.js')}}"></script> -->
 
     <!-- init js -->
-    <script src="{{URL::asset('admin/assets/js/pages/ecommerce-select2.init.js')}}"></script>
+    <!-- <script src="{{URL::asset('admin/assets/js/pages/ecommerce-select2.init.js')}}"></script> -->
 
     <!-- Required datatable js -->
     <script src="{{URL::asset('admin/assets/libs/datatables.net/js/jquery.dataTables.min.js')}}"></script>
