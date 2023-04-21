@@ -1,6 +1,23 @@
 @extends('layouts.dashboard-frontend')
 
 @section('page-content')
+<style>
+    div#social-links {
+        margin: 0 auto;
+        max-width: 500px;
+    }
+    div#social-links ul li {
+        display: inline-block;
+    }          
+    div#social-links ul li a {
+        padding: 10px;
+        /* border: 1px solid #ccc; */
+        margin: 1px;
+        font-size: 30px;
+        color: #70418F;
+        /* background-color: #ccc; */
+    }
+</style>
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -222,6 +239,24 @@
                         </div>
                         <div class="col-md-8 mt-3">
                             {{ $product->created_at }}
+                        </div>
+                        <div class="col-md-4 mt-3">
+                            <b>Share</b>
+                        </div>
+                        <div class="col-md-8 mt-3">
+                            @php
+                            $shareComponent = \Share::page(
+                                route('user.stores.link', ['storename' => $product->store->name]).'?promotion_id='.Auth::user()->promotion_link.'&product_id='.$product->id.'#item-'.$product->id,
+                                $product->name,
+                            )
+                            ->facebook()
+                            ->twitter()
+                            ->linkedin()
+                            ->telegram()
+                            ->whatsapp()        
+                            ->reddit();
+                            @endphp
+                            {!! $shareComponent !!}
                         </div>
                         <div class="col-md-12 mt-4 mb-4 text-center">
                             <b>Affiliate Links</b>
