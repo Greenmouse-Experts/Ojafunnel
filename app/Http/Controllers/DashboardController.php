@@ -86,7 +86,7 @@ class DashboardController extends Controller
         $sent_mails = [];
 
         foreach ($days as $index => $date) {
-            $result = Transaction::where('status', 'Product Purchase')
+            $result = Transaction::where(['user_id' => Auth::user()->id, 'status' => 'Product Purchase'])
                 ->whereDate('created_at', '<=', $date)
                 ->whereDate('created_at', '>=', $date)->get();
 
