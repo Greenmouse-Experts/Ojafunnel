@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\EmailBirthday;
 use App\Console\Commands\SendEmailCampaign;
 use App\Console\Commands\SendSms;
 use App\Console\Commands\SendWABulk;
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
         Subscription::class,
         SubscriptionReminder::class,
         WABirthday::class,
+        EmailBirthday::class,
         SendEmailCampaign::class
     ];
 
@@ -50,6 +52,7 @@ class Kernel extends ConsoleKernel
         // run command every 12:00
         // birthday or anniversary
         $schedule->command('wabirthday:run')->dailyAt('00:00')->withoutOverlapping();
+        $schedule->command('emailbirthday:run')->dailyAt('00:00')->withoutOverlapping();
     }
 
     /**
