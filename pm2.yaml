@@ -35,7 +35,7 @@ apps:
       - queue:work
       - --queue=waBirthday
 
-   - name: emailBirthday
+  - name: emailBirthday
     script: artisan
     exec_mode: fork
     interpreter: php
