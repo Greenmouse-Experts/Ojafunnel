@@ -242,7 +242,7 @@ class CMSController extends Controller
                         'required',
                         File::types(['mp3', 'mp4'])
                             ->min(1024)
-                            ->max(100 * 1024),
+                            ->max(1000 * 1024),
                     ],
                 ]);
 
