@@ -151,9 +151,9 @@
                             <h4>Sales Analysis</h4>
                         </div>
                         <div class="col-6 text-end">
-                            <select name="duration" id="" disabled="disabled" class="px-2">
+                            <select name="duration" id="" class="px-2">
                                 <option value="">weekly</option>
-                                <option value="">yearly</option>
+                                {{-- <option value="">yearly</option> --}}
                             </select>
                         </div>
                     </div>
@@ -165,9 +165,9 @@
                             <h4>Email Campaign</h4>
                         </div>
                         <div class="col-6 text-end">
-                            <select name="duration" id="" disabled="disabled" class="px-2">
+                            <select name="duration" id="" class="px-2">
                                 <option value="">weekly</option>
-                                <option value="">yearly</option>
+                                {{-- <option value="">yearly</option> --}}
                             </select>
                         </div>
                     </div>
@@ -421,5 +421,89 @@
         let url = "{{ route('user.page.use_template', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', useTemplate.page_id); 
         window.location.assign(url);
     }
+</script>
+
+<!-- email automation chart -->
+<script>
+    var options = {
+        series: [{
+                name: "sent",
+                data: JSON.parse("{{ $sent_mails }}"),
+            },
+            // {
+            //     name: "delivered",
+            //     data: [35, 41, 36, 26, 45, 48, 52],
+            // },
+        ],
+        chart: {
+            type: "bar",
+            height: 380,
+        },
+        colors: ["#5FBF4F", "#F1972E"],
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: "65%",
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ["transparent"],
+        },
+        xaxis: {
+            categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        },
+        yaxis: {
+            title: {},
+        },
+        fill: {
+            opacity: 1,
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#emailAuto"), options);
+    chart.render();
+</script>
+
+<!-- sales analysis chart -->
+<script> 
+    var options = {
+        series: [{
+            name: "sales",
+            data: JSON.parse("{{ $sales }}")
+        }],
+        chart: {
+            height: 300,
+            type: "area",
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: "straight"
+        },
+        colors: ["#DD0EFF"],
+        fill: {
+            type: "gradient",
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.7,
+                opacityTo: 0.9,
+                stops: [0, 90, 100],
+            },
+        },
+        xaxis: {
+            categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        },
+    };
+    var chart = new ApexCharts(document.getElementById("sales"), options);
+    chart.render();
 </script>
 @endsection
