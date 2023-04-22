@@ -112,6 +112,9 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <textarea placeholder="Type in your message" name="template1_message" id="" cols="30" rows="4"></textarea>
+                                                    <p>
+                                                        <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div> 
@@ -123,6 +126,9 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <textarea placeholder="Type in your message" name="template2_message" id="" cols="30" rows="4"></textarea>
+                                                    <p>
+                                                        <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,6 +170,9 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <textarea placeholder="Type in your message" name="template3_message" id="" cols="30" rows="4"></textarea>
+                                                    <p>
+                                                        <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
