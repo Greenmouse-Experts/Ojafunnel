@@ -107,15 +107,29 @@
                                                 <input type='checkbox' id="email_select" onchange="emailAuto()" value="email automation" name="automation[0]" class='w-auto mt-1 checkboxs' />
                                                 <label class='w-auto '>Email Automation</label>
                                             </div>
-                                            {{-- <div class="email_automation mt-2" style="display: none">
+                                            <div class="email_automation mt-2" style="display: none">
                                                 <div class="col-lg-12">
-                                                    <label>Select Email Sending Server</label>
+                                                    <label>Email kit</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
+                                                            <select name="email_kit" id="" class="input">
+                                                                <option value="">
+                                                                    Select email kit
+                                                                </option>
+                                                                @forelse ($email_integrations as $email_integration)
+                                                                    <option value="{{ $email_integration->id }}">
+                                                                        {{ $email_integration->host }} ({{  $email_integration->type }})
+                                                                    </option> 
+                                                                @empty
+                                                                    <option value="" disabled>
+                                                                        No email kit yet
+                                                                    </option>
+                                                                @endforelse
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div> --}}
+                                            </div>
                                             <div class='d-flex mt-3 align-items-center'>
                                                 <input type='checkbox' id="sms_select" onchange="smsAuto()" value="sms automation" name="automation[1]" class='w-auto mt-1' />
                                                 <label class='w-auto'>SMS Automation</label>

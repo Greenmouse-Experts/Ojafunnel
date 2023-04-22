@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\EmailKit;
 use App\Models\Integration;
 use Illuminate\Http\Request;
 use App\Models\SendingServer;
@@ -13,10 +14,10 @@ use App\Models\OjaPlanParameter;
 use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\DB;
 use App\Models\BirthdayContactList;
+use App\Models\BirthdayEmailQueue;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class BirthdayController extends Controller
 {
@@ -124,6 +125,7 @@ class BirthdayController extends Controller
     {
         $birthlist = BirthdayContactList::where('user_id', Auth::user()->id)->get();
         $smsServer = Integration::where('user_id', Auth::user()->id)->where('status', 'Active')->get();
+        $email_integrations = EmailKit::latest()->where(['account_id' => Auth::user()->id, 'is_admin' => false])->get();
 
         $whatsapp_numbers = WhatsappNumber::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
 
@@ -179,6 +181,7 @@ class BirthdayController extends Controller
             'username' => $username,
             'birthlist' => $birthlist,
             'smsServer' => $smsServer,
+            'email_integrations' => $email_integrations,
             'whatsapp_numbers' => $_whatsapp_numbers,
         ]);
     }
@@ -270,7 +273,7 @@ class BirthdayController extends Controller
                 DB::transaction(function () use ($request, $contact, $whatsapp_account, $automation) {
                     $waAutomation = new BirthdayAutomation();
 
-                    $waAutomation->user_id = FacadesAuth::user()->id;
+                    $waAutomation->user_id = Auth::user()->id;
                     $waAutomation->birthday_contact_list_id = $request->birthday_list_id;
                     $waAutomation->title = $request->title;
                     $waAutomation->sms_type = $request->sms_type;
@@ -313,7 +316,7 @@ class BirthdayController extends Controller
             if ($automation == 'sms automation') {
                 $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
                 $bm = new BirthdayAutomation();
-                $bm->user_id = FacadesAuth::user()->id;
+                $bm->user_id = Auth::user()->id;
                 $bm->birthday_contact_list_id = $request->birthday_list_id;
                 $bm->title = $request->title;
                 $bm->sms_type = $request->sms_type;
@@ -335,27 +338,57 @@ class BirthdayController extends Controller
             }
 
             if ($automation == 'email automation') {
-                $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
-                $bm = new BirthdayAutomation();
-                $bm->user_id = FacadesAuth::user()->id;
-                $bm->birthday_contact_list_id = $request->birthday_list_id;
-                $bm->title = $request->title;
-                $bm->sms_type = $request->sms_type;
-                $bm->message = $request->message;
-                $bm->automation = $automation;
-                $bm->cache = json_encode([
-                    'ContactCount' => $contact->count(),
-                    'DeliveredCount' => 0,
-                    'FailedDeliveredCount' => 0,
-                    'NotDeliveredCount' => 0,
+                $request->validate([
+                    'birthday_list_id' => 'required',
+                    'sms_type' => 'required',
+                    'message' => 'required',
+                    'email_kit' => 'required'
                 ]);
-                $bm->sender_name = $request->sender_name;
-                $bm->sending_server = $request->sending_server ?? '';
-                $bm->sender_id = $request->sender_id ?? '';
-                $bm->integration = $request->integration ?? '';
-                $bm->start_date = $request->start_date;
-                $bm->end_date = $request->end_date;
-                $bm->save();
+
+                $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
+
+                // for data integrity and consistency
+                DB::transaction(function () use ($request, $contact, $automation) {
+                    $emAutomation = new BirthdayAutomation();
+                    $emAutomation->user_id = Auth::user()->id;
+                    $emAutomation->birthday_contact_list_id = $request->birthday_list_id;
+                    $emAutomation->title = $request->title;
+                    $emAutomation->sms_type = $request->sms_type;
+                    $emAutomation->message = $request->message;
+                    $emAutomation->automation = $automation;
+                    $emAutomation->cache = json_encode([
+                        'ContactCount' => $contact->count(),
+                        'DeliveredCount' => 0,
+                        'FailedDeliveredCount' => 0,
+                        'NotDeliveredCount' => 0,
+                    ]);
+                    $emAutomation->sender_name = $request->sender_name;
+                    $emAutomation->sending_server = $request->sending_server ?? '';
+                    $emAutomation->sender_id = $request->sender_id ?? '';
+                    $emAutomation->integration = $request->integration ?? '';
+                    $emAutomation->email_kit_id = $request->email_kit;
+                    $emAutomation->start_date = $request->start_date;
+                    $emAutomation->end_date = $request->end_date;
+                    $emAutomation->save();
+
+                    $contacts = BirthdayContact::latest()->where(['birthday_contact_list_id' => $contact->first()->id])->get();
+
+                    // build each wa queue data based on contacts
+                    $queue = $contacts->map(function ($_contact) use ($emAutomation) {
+                        $timestamp = Carbon::now();
+
+                        return [
+                            'birthday_automation_id' => $emAutomation->id,
+                            'email' => $_contact->email,
+                            'status' => 'Scheduled',
+                            'created_at' => $timestamp,
+                            'updated_at' => $timestamp,
+                        ];
+                    })->toArray();
+
+                    // bulk insert
+                    BirthdayEmailQueue::insert($queue);
+                });
             }
         }
 
