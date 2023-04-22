@@ -96,6 +96,9 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <textarea placeholder="Enter the message here" name="message"></textarea>
+                                            <p>
+                                                <b>$name</b> can be used for Email and WhatsApp automation in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

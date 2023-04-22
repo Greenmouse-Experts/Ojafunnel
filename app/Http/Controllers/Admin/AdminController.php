@@ -980,7 +980,7 @@ class AdminController extends Controller
             $html = substr($_POST['html'], 0, MAX_FILE_LIMIT);
         }
 
-        $disk = public_path('pageBuilder/' . $page->folder . '/' . $page->name);
+        $disk = public_path('pageBuilder/' . $page->slug . '/' . $page->name);
 
         if (file_put_contents($disk, $html)) {
             echo "File saved.";
@@ -1001,7 +1001,7 @@ class AdminController extends Controller
         if (str_contains($request->name, '.')) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'file name invalid.'
+                'message' => 'Page name can\'t contain dot(s).'
             ]);
         }
 
@@ -1010,9 +1010,9 @@ class AdminController extends Controller
 
         $file = $request->name . '.html';
 
-        $disk = public_path('pageBuilder/' . $page->folder . '/' . $page->name);
+        $disk = public_path('pageBuilder/' . $page->slug . '/' . $page->name);
 
-        rename($disk, public_path('pageBuilder/' . $page->folder . '/' . $file));
+        rename($disk, public_path('pageBuilder/' . $page->slug . '/' . $file));
 
         //Validate User
         if (request()->hasFile('thumbnail')) {
@@ -1029,7 +1029,7 @@ class AdminController extends Controller
                 'thumbnail' => '/storage/pages/' . $filename,
                 'name' => $file,
                 'title' => $request->title,
-                'file_location' => config('app.url') . '/pageBuilder/' . $page->folder . '/' . $file
+                'file_location' => config('app.url') . '/pageBuilder/' . $page->slug . '/' . $file
             ]);
 
             return back()->with([
@@ -1041,7 +1041,7 @@ class AdminController extends Controller
         $page->update([
             'name' => $file,
             'title' => $request->title,
-            'file_location' => config('app.url') . '/pageBuilder/' . $page->folder . '/' . $file
+            'file_location' => config('app.url') . '/pageBuilder/' . $page->slug . '/' . $file
         ]);
 
         return back()->with([
@@ -1067,7 +1067,7 @@ class AdminController extends Controller
             }
 
             if ($page->file_location) {
-                File::deleteDirectory(public_path('pageBuilder/' . $page->folder));
+                File::deleteDirectory(public_path('pageBuilder/' . $page->slug));
             }
 
             $page->delete();
