@@ -368,6 +368,151 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function view_use_page_builder_template(Request $request)
+    {
+        $page = Page::where('id', $request->id);
+
+        if (!$page->exists()) {
+            return redirect(route('user.page.builder', ['username' => Auth::user()->username]))->with([
+                'type' => 'danger',
+                'message' => 'The page you are trying to use it template doesn\'t exists. Thank you.'
+            ]);
+        }
+
+        return view('dashboard.pageBuilder-viewUseTemplate', [
+            'page' => $page->first()
+        ]);
+    }
+
+    public function generatePageSlug($folder)
+    {
+        $slug = strtolower(implode('-', explode(' ', $folder)));
+
+        $page = Page::where(['slug' => $slug]);
+
+        if ($page->exists()) {
+            if ($page->first()->user_id == Auth::user()->id) {
+                return [true, $slug];
+            } else return [false, $slug];
+        }
+
+        return [true, $slug];
+    }
+
+    public function create_use_page_builder_template(Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'title' => ['required', 'string', 'max:255'],
+            'file_folder' => ['required', 'string', 'max:255'],
+            'file_name' => ['required', 'string', 'max:255'],
+            'selected_page' => ['required']
+        ]);
+
+        if (Page::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->page_builder) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
+
+        $selected_page = Page::where('id', $request->selected_page)->first();
+
+        $page_name = strtolower(implode('-', explode(' ', $request->file_name)));
+
+        $res =  $this->generatePageSlug($request->file_folder);
+
+        // check if sub domain name taken
+        if (!$res[0]) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Sub domain already taken.'
+            ]);
+        }
+
+        // check if subdomain contains .
+        if (str_contains($res[1], '.')) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Sub domain is invalid. Can\'t contain dot(s)'
+            ]);
+        }
+
+        if (str_contains($page_name, '.')) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Page name is invalid. Can\'t contain dot(s)'
+            ]);
+        }
+
+        $file = $page_name . '.html';
+
+        define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
+
+        $data = file_get_contents(public_path("pageBuilder/$selected_page->slug/$selected_page->name"));
+
+        $html = substr($data, 0, MAX_FILE_LIMIT);
+
+        $file = $this->sanitizeFileName($file);
+
+        // $datum = strval($request->file_folder);
+
+        $_page = Page::where(['name' => $file, 'slug' => $res[1], 'user_id' => Auth::user()->id]);
+
+        if ($_page->exists()) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'This page already exist on your subdomain.'
+            ]);
+        }
+
+        $disk = Storage::build([
+            'driver' => 'local',
+            'root'   => public_path('pageBuilder') . '/' . $res[1],
+            'permissions' => [
+                'file' => [
+                    'public' => 0777,
+                    'private' => 0777,
+                    'custom' => 0777
+                ],
+                'dir' => [
+                    'public' => 0777,
+                    'private' => 0777,
+                    'custom' => 0777
+                ],
+            ],
+        ]);
+
+        if (!$disk->put($file, $html)) {
+            header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Error saving file  ' . $file . '\nPossible causes are missing write permission or incorrect file path!'
+            ]);
+        } else {
+            $page = Page::create([
+                'user_id' => Auth::user()->id,
+                'title' => $request->title,
+                'name' => $file,
+                'folder' => $request->file_folder,
+                'file_location' => config('app.url') . '/pageBuilder/' . $res[1] . '/' . $file,
+                'slug' => $res[1]
+            ]);
+
+            return redirect(route('user.page.builder', ['username' => Auth::user()->username]))->with([
+                'type' => 'success',
+                'message' => $page->name . ' created.'
+            ]);
+        };
+    }
+
+    function sanitizeFileName($file)
+    {
+        //sanitize, remove double dot .. and remove get parameters if any
+        $file = preg_replace('@\?.*$@', '', preg_replace('@\.{2,}@', '', preg_replace('@[^\/\\a-zA-Z0-9\-\._]@', '', $file)));
+        return $file;
+    }
+
     public function sms_automation($username)
     {
         $smsAutomations = SmsCampaign::latest()->where('user_id', Auth::user()->id)->where('sms_type', 'plain')->cursor();

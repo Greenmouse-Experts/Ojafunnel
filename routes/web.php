@@ -165,6 +165,8 @@ Route::prefix('{username}')->group(function () {
                 }
             );
             Route::get('/page-builder', [App\Http\Controllers\DashboardController::class, 'page_builder'])->name('user.page.builder');
+            Route::get('/page-builder/use-template/{id}', [App\Http\Controllers\DashboardController::class, 'view_use_page_builder_template'])->name('user.page.use_template');
+            Route::post('/page-builder/use-template-create', [App\Http\Controllers\DashboardController::class, 'create_use_page_builder_template'])->name('user.page.create_use_template');
             Route::get('page-builder/{page}/editor', [App\Http\Controllers\PageController::class, 'viewEditor'])->name('user.page.builder.view.editor');
             Route::get('page-builder/{page}', [App\Http\Controllers\PageController::class, 'viewPage'])->name('user.page.builder.view.page');
             Route::prefix('/chat-automation')->group(
