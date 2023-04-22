@@ -289,6 +289,7 @@ class BirthdayController extends Controller
                     $waAutomation->sending_server = $request->sending_server ?? '';
                     $waAutomation->sender_id = $whatsapp_account[1];
                     $waAutomation->integration = $request->integration ?? '';
+                    $waAutomation->email_kit_id = $request->email_kit ?? '';
                     $waAutomation->start_date = $request->start_date;
                     $waAutomation->end_date = $request->end_date;
                     $waAutomation->save();
@@ -332,6 +333,7 @@ class BirthdayController extends Controller
                 $bm->sending_server = $request->sending_server ?? '';
                 $bm->sender_id = $request->sender_id ?? '';
                 $bm->integration = $request->integration ?? '';
+                $bm->email_kit_id = $request->email_kit ?? '';
                 $bm->start_date = $request->start_date;
                 $bm->end_date = $request->end_date;
                 $bm->save();
