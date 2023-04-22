@@ -412,6 +412,14 @@
         };
         new Notification(noteTitle, noteOptions);
     });
+</script>
 
+<script>
+    let useTemplate = JSON.parse(localStorage.getItem('use_template')); 
+
+    if(useTemplate.view == false){   
+        let url = "{{ route('user.page.use_template', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', useTemplate.page_id); 
+        window.location.assign(url);
+    }
 </script>
 @endsection

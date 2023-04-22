@@ -15,7 +15,7 @@
 <div class="template-content mb-5">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-5 template-img-col">
+            <div class="col-lg-5 template-img-col mt-3">
                 <div class="w-100">
                      @if($page->thumbnail)
                     <img src="{{$page->thumbnail}}" alt="{{$page->name}}" width="100%" height="100%" />
@@ -24,7 +24,7 @@
                     @endif
                 </div>
             </div>
-            <div class="col-lg-5 ps-lg-5 template-text-col">
+            <div class="col-lg-5 ps-lg-5 template-text-col mt-3">
                 <div class="details-text">
                     <p class="text-header">Do you like this template?</p>
 
@@ -39,7 +39,7 @@
                             @endif 
                         @endif
                     " class="btn btn-primary mt-4">View Template</a><br>
-                    <a href="{{ route('signup') }}" class="btn btn-primary mt-4">Use Template</a>
+                    <button onclick="useTemplate('@auth {{ route('user.dashboard', ['username' => Auth::user()->username]) }} @else {{ route('signup')}} @endauth','{{ $page->id }}')" class="btn btn-primary mt-4">Use Template</button>
                 </div>
             </div>
         </div>
@@ -153,5 +153,14 @@
         </div>
     </div>
 </section>
+<script>
+    function useTemplate (url, template_id) {  
+        localStorage.setItem('use_template', JSON.stringify({
+            page_id: template_id,
+            view: false
+        }));
+        window.location.assign(url); 
+    }
+</script>
 <!-- page contents ends -->
 @endsection 
