@@ -42,6 +42,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
+use App\Models\EmailCampaign;
+use App\Models\EmailCampaignQueue;
 use App\Models\EmailKit;
 use App\Models\OjaPlanParameter;
 use App\Models\OjaSubscription;
@@ -61,7 +63,54 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        return view('dashboard.dashboard');
+        $sunday = Carbon::now()->startOfWeek(Carbon::SUNDAY);
+        $monday = $sunday->copy()->addDays(1);
+        $tuesday = $monday->copy()->addDays(1);
+        $wednesday = $tuesday->copy()->addDays(1);
+        $thursday = $wednesday->copy()->addDays(1);
+        $friday = $thursday->copy()->addDays(1);
+        $saturday = $friday->copy()->addDays(1);
+
+        // $weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        $days = [
+            $sunday->toDateTimeString(),
+            $monday->toDateTimeString(),
+            $tuesday->toDateTimeString(),
+            $wednesday->toDateTimeString(),
+            $thursday->toDateTimeString(),
+            $friday->toDateTimeString(),
+            $saturday->toDateTimeString()
+        ];
+
+        $sales = [];
+        $sent_mails = [];
+
+        foreach ($days as $index => $date) {
+            $result = Transaction::where('status', 'Product Purchase')
+                ->whereDate('created_at', '<=', $date)
+                ->whereDate('created_at', '>=', $date)->get();
+
+            $sales[$index] = count($result);
+        }
+
+        foreach ($days as $index => $date) {
+            $campaigns = EmailCampaign::where('user_id', Auth::user()->id)->get();
+
+            $result = $campaigns->map(function ($_campaign) use ($date) {
+                $_result = EmailCampaignQueue::where(['email_campaign_id' => $_campaign->id, 'status' => 'Sent'])
+                    ->whereDate('updated_at', '<=', $date)
+                    ->whereDate('updated_at', '>=', $date)->get();
+
+                return count($_result);
+            })->sum();
+
+            $sent_mails[$index] = $result;
+        }
+
+        return view('dashboard.dashboard', [
+            'sales' => json_encode($sales),
+            'sent_mails' => json_encode($sent_mails)
+        ]);
     }
 
     public function list_setting($username)
