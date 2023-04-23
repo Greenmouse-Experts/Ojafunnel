@@ -2,7 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Mail\BirthdayEmail;
+use App\Mail\BirthdayEmail1;
+use App\Mail\BirthdayEmail2;
 use Illuminate\Bus\Queueable;
 use App\Models\BirthdayEmailQueue;
 use App\Models\EmailKit;
@@ -52,14 +53,15 @@ class ProcessEmailBirthday implements ShouldQueue
                 $birthday_message = str_replace("\$name", $_contact->name, $birthday_automation->message);
 
                 // mailable
-                $mailable = new BirthdayEmail($birthday_message, $birthday_automation);
+                $mailable1 = new BirthdayEmail1($birthday_message, $birthday_automation, $email_kit);
+                $mailable2 = new BirthdayEmail2($birthday_message, $birthday_automation, $email_kit);
 
                 // update status to Sending
                 BirthdayEmailQueue::where(['birthday_automation_id' => $birthday_automation->id, 'email' => $_contact->email])
                     ->update(['status' => 'Sending']);
 
                 // // send email
-                $mailer->to($_contact->email)->send($mailable);
+                $mailer->to($_contact->email)->send($birthday_automation->sms_type == 'birthday' ? $mailable1 : $mailable2);
 
                 // update status to Sent
                 BirthdayEmailQueue::where(['birthday_automation_id' => $birthday_automation->id, 'email' => $_contact->email])

@@ -1,8 +1,8 @@
 <x-mail::message>
 # Happy Anniversary
 
-<p>{{ $message }}</p> 
+<p>{{ $msg }}</p> 
 
 Thanks,<br>
-{{ config('app.name') }}
+{{ $sender }}
 </x-mail::message>
