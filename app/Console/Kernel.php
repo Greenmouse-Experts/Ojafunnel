@@ -52,7 +52,7 @@ class Kernel extends ConsoleKernel
         // run command every 12:00
         // birthday or anniversary 
         $schedule->command('wabirthday:run')->dailyAt('00:00')->withoutOverlapping();
-        $schedule->command('emailbirthday:run')->dailyAt('17:06')->withoutOverlapping();
+        $schedule->command('emailbirthday:run')->dailyAt('00:00')->withoutOverlapping();
     }
 
     /**
