@@ -82,6 +82,18 @@ class ProcessEmailCampaign implements ShouldQueue
         } catch (\Throwable $th) {
             Log::info($th);
 
+            if (str_starts_with($th->getMessage(), 'Failed to authenticate on SMTP server')) {
+                $email_campaign = $this->data['email_campaign'];
+
+                $this->contacts->map(function ($_contact) use ($email_campaign) {
+                    // update status to failed due to invalid smtp
+                    EmailCampaignQueue::where(['email_campaign_id' => $email_campaign->id, 'recepient' => $_contact->email])
+                        ->update(['status' => 'Failed to authenticate on SMTP server']);
+                });
+
+                return;
+            }
+
             if ($this->attempts() > 5) {
                 // hard fail after 5 attempts
                 throw $th;
