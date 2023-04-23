@@ -28,12 +28,11 @@ class AppServiceProvider extends ServiceProvider
             $from_name = Arr::get($parameters, 'from_name');
 
             $transport = Transport::fromDsn(
-                'smtp://' . urlencode($smtp_username) . ':' . urlencode($smtp_password) . '@' . urlencode($smtp_host)  . ':' . $smtp_port
+                'smtp://' . urlencode($smtp_username) . ':' . urlencode($smtp_password) . '@' . urlencode($smtp_host)  . ':' . $smtp_port . '?ping_threshold=10'
             );
 
             $mailer = new Mailer('user.mailer', $app->get('view'), $transport, $app->get('events'));
             $mailer->alwaysFrom($from_email, $from_name);
-            // $mailer->alwaysReplyTo($from_email, $from_name);
 
             return $mailer;
         });

@@ -4,29 +4,32 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class BirthdayEmail extends Mailable
+class BirthdayEmail1 extends Mailable
 {
     use Queueable, SerializesModels;
 
     // message
     public $birthday_message;
     public $birthday_automation;
+    public $email_kit;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($birthday_message, $birthday_automation)
+    public function __construct($birthday_message, $birthday_automation, $email_kit)
     {
         $this->birthday_message = $birthday_message;
-        $this->birthday_automation = $birthday_automation; 
+        $this->birthday_automation = $birthday_automation;
+        $this->email_kit = $email_kit;
     }
 
     /**
@@ -37,7 +40,11 @@ class BirthdayEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: $this->birthday_automation->sms_type == 'birthday' ? 'Happy Birthday' : 'Happy Anniversary',
+            from: new Address($this->email_kit->from_email, $this->email_kit->from_name),
+            replyTo: [
+                new Address($this->email_kit->from_email, $this->email_kit->from_name),
+            ],
+            subject: 'Happy Birthday',
         );
     }
 
@@ -49,9 +56,10 @@ class BirthdayEmail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: $this->birthday_automation->sms_type == 'birthday' ? 'emails.birthday.message' : 'emails.birthday.message-2',
+            markdown: 'emails.birthday.message',
             with: [
-                'message' => $this->birthday_message,
+                'msg' => $this->birthday_message,
+                'sender' => $this->birthday_automation->sender_name
             ]
         );
     }
