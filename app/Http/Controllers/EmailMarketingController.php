@@ -36,6 +36,70 @@ class EmailMarketingController extends Controller
         ]);
     }
 
+    public function email_kits_update(Request $request)
+    {
+        $request->validate([
+            'host' => 'required',
+            'port' => 'required|numeric',
+            'username' => 'required|string',
+            'password' => 'required',
+            'encryption' => 'required|string',
+            'from_email' => 'required|email',
+            'from_name' => 'required|string',
+        ]);
+
+        $email_kit = EmailKit::where(['id' => $request->id, 'account_id' => Auth::user()->id, 'is_admin' => false]);
+
+        if (!$email_kit->exists()) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Error occured'
+            ]);
+        }
+
+        $email_kit->update([
+            'host' =>  $request->host,
+            'port' => $request->port,
+            'username' => $request->username,
+            'password' => $request->password,
+            'encryption' => $request->encryption,
+            'from_email' => $request->from_email,
+            'from_name' => $request->from_name,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Email kit updated successfully'
+        ]);
+    }
+
+    public function email_kits_delete(Request $request)
+    {
+        $email_kit = EmailKit::where(['id' => $request->id, 'account_id' => Auth::user()->id, 'is_admin' => false]);
+
+        if ($request->delete != 'DELETE') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Please type DELETE to confirm.'
+            ]);
+        }
+
+        if (!$email_kit->exists()) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Error occured'
+            ]);
+        }
+
+        // delete model
+        $email_kit->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Email kit deleted successfully'
+        ]);
+    }
+
     public function email_templates(Request $request)
     {
         $email_templates = EmailTemplate::where(['user_id' => Auth::user()->id])->get();

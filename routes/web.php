@@ -248,6 +248,8 @@ Route::prefix('{username}')->group(function () {
             Route::prefix('/email-marketing')->group(
                 function () {
                     Route::get('/email-kits', [App\Http\Controllers\EmailMarketingController::class, 'email_kits'])->name('user.email-marketing.email.kits');
+                    Route::post('/email-kits/update', [App\Http\Controllers\EmailMarketingController::class, 'email_kits_update'])->name('user.email-marketing.email.kits.update');
+                    Route::post('/email-kits/delete', [App\Http\Controllers\EmailMarketingController::class, 'email_kits_delete'])->name('user.email-marketing.email.kits.delete');
                     Route::get('/email-templates', [App\Http\Controllers\EmailMarketingController::class, 'email_templates'])->name('user.email-marketing.email.templates');
                     Route::get('/email-templates/choose-temp', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_choose_temp'])->name('user.email-marketing.email.templates.choose-temp');
                     Route::get('/email-templates/view-temp', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_view_temp'])->name('user.email-marketing.email.templates.view-temp');
