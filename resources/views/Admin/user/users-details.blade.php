@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12">     
                     <div class="card account-head">
                         <div class="py-2">
                             <h4 class="font-600">{{$user->username}} Details</h4>
@@ -49,7 +49,7 @@
                                     <span class="d-none d-sm-block">User Details</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#profile1" role="tab">
                                     <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
                                     <span class="d-none d-sm-block">LMS</span>
@@ -66,7 +66,7 @@
                                     <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
                                     <span class="d-none d-sm-block">Affiliate Marketing</span>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content p-3 text-muted">
@@ -125,7 +125,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Subscribers:</th>
-                                                                <td>{{$user->planName($user->plan)}}</td>
+                                                                <td>{{App\Models\OjaPlan::find($user->plan)->name}}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="profile1" role="tabpanel">
+                            <!-- <div class="tab-pane" id="profile1" role="tabpanel">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="card">
@@ -223,7 +223,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
