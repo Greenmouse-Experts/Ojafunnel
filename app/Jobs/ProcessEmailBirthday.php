@@ -76,6 +76,18 @@ class ProcessEmailBirthday implements ShouldQueue
         } catch (\Throwable $th) {
             Log::info($th);
 
+            if (str_starts_with($th->getMessage(), 'Failed to authenticate on SMTP server')) {
+                $birthday_automation = $this->data['birthday_automation'];
+
+                $this->contacts->map(function ($_contact) use ($birthday_automation) {
+                    // update status to failed due to invalid smtp
+                    BirthdayEmailQueue::where(['birthday_automation_id' => $birthday_automation->id, 'email' => $_contact->email])
+                        ->update(['status' => 'Failed to authenticate on SMTP server']);
+                });
+
+                return;
+            }
+
             if ($this->attempts() > 5) {
                 // hard fail after 5 attempts
                 throw $th;
