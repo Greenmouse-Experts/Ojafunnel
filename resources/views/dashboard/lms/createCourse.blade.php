@@ -71,7 +71,7 @@
                                     <div class="course-box-2">
                                         <div class="course-image">
                                             <a href="{{route('user.course.content', [Auth::user()->username, Crypt::encrypt($course->id)])}}">
-                                                @if($course->image)
+                                                @if($course->image) 
                                                 <img src="{{$course->image}}" alt="{{$course->title}}" style="    max-width: 100%; width: 600px;">
                                                 <!-- <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%"> -->
                                                 @else

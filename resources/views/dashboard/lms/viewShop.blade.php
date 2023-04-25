@@ -83,7 +83,19 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
-                                            <a href="{{ route('course.cart', $shop->name) }}" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" class="btn btn-primary btn-block">View all</a>
+                                            <a href=" 
+                                            @if($isvalid) 
+                                                {{ 
+                                                    route('course.cart', [
+                                                        'shopname' => $shop->name, 
+                                                        'promotion_id' => Request::get('promotion_id'), 
+                                                        'course_id' => Request::get('course_id')
+                                                    ]) 
+                                                }} 
+                                            @else 
+                                                {{ route('course.cart', ['shopname' => $shop->name]) }} 
+                                            @endif
+                                            " style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" class="btn btn-primary btn-block">View all</a>
                                         </div>
                                     </div>
                                 </ul>
@@ -168,9 +180,22 @@
                     <h2 class="course-carousel-title mb-4">All Courses Found {{\App\Models\Course::where('user_id', $shop->user_id)->where('approved', true)->get()->count()}}</h2>
                 </div>
                 @forelse(\App\Models\Course::where('user_id', $shop->user_id)->where('approved', true)->get() as $course)
-                <div class="col-lg-4">
+                <div class="col-lg-4" id="item-{{ $course->id }}">
                     <div class="course-box-wrap">
-                        <a href="{{route('view.course.details', [$shop->name, Crypt::encrypt($course->id)])}}" class="has-popover">
+                        <a href="
+                            @if($isvalid && Request::get('course_id') == $course->id) 
+                                {{ 
+                                    route('view.course.details', [
+                                        'shopname' => $shop->name, 
+                                        'id' => Crypt::encrypt($course->id),
+                                        'promotion_id' => Request::get('promotion_id'), 
+                                        'course_id' => Request::get('course_id')
+                                    ]) 
+                                }} 
+                            @else 
+                                {{ route('view.course.details', ['shopname' => $shop->name, 'id' => Crypt::encrypt($course->id)]) }} 
+                            @endif
+                        " class="has-popover">
                             <div class="course-box">
                                 <!-- <div class="course-badge position best-seller">Best seller</div> -->
                                 <div class="course-image">
@@ -179,6 +204,15 @@
                                 <div class="course-details">
                                     <h5 class="title">{{$course->title}}</h5>
                                     <p class="instructors">{{$course->description}}</p>
+                                    @if ($isvalid)
+                                        @if(Request::has('promotion_id') && Request::has('course_id')) 
+                                            @if (Request::get('course_id') == $course->id)
+                                                <p class="text-dark">
+                                                Promotional code (<b>{{ Request::get('promotion_id') }}</b>) attached.
+                                                </p> 
+                                            @endif 
+                                        @endif
+                                    @endif 
                                     <!-- <div class="rating">
                                         <i class="fas fa-star filled"></i>
                                         <i class="fas fa-star filled"></i>
@@ -188,7 +222,7 @@
                                     </div> -->
                                     <p class="price text-right">
                                         {{$course->currency}}{{number_format($course->price, 2)}}
-                                    </p>
+                                    </p> 
                                 </div>
                             </div>
                         </a>
