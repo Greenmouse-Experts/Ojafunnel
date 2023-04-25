@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->double('wallet')->default('0.00')->change();
+            $table->double('promotion_bonus')->default('0.00')->change();
+            $table->double('ref_bonus')->default('0.00')->change();
         });
     }
 
