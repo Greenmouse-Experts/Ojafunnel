@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
 use App\Mail\EmailCampaignMail;
 use App\Models\ContactMailList;
 use App\Jobs\ProcessEmailCampaign;
+use App\Models\BirthdayAutomation;
 use App\Models\EmailCampaignQueue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Bus;
@@ -88,6 +89,23 @@ class EmailMarketingController extends Controller
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Error occured'
+            ]);
+        }
+
+        $email_kit_in_use_emailcampaign = EmailCampaign::where('email_kit_id', $email_kit->first()->id)->get();
+        $email_kit_in_use_birthdayauto = BirthdayAutomation::where('email_kit_id', $email_kit->first()->id)->get();
+
+        if (count($email_kit_in_use_emailcampaign) > 0) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Email kit is in use in email campaign section. Please delete all the email campaign using this kit to continue.'
+            ]);
+        }
+
+        if (count($email_kit_in_use_birthdayauto) > 0) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Email kit is in use in birthday module. Please delete all the birthday using this kit to continue.'
             ]);
         }
 
@@ -219,6 +237,15 @@ class EmailMarketingController extends Controller
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Error occured'
+            ]);
+        }
+
+        $template_in_use_emailcampaign = EmailCampaign::where('email_template_id', $template->first()->id)->get();
+
+        if (count($template_in_use_emailcampaign) > 0) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Email template is in use in email campaign section. Please delete all the email campaign using this template to continue.'
             ]);
         }
 

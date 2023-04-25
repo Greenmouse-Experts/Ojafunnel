@@ -78,19 +78,13 @@
                                                 <td>{{ $email_campaign->name }}</td>
                                                 <td>{{ $email_campaign->subject }}</td> 
                                                 <td> 
-                                                    {{ App\Models\EmailKit::latest()->where('id', $email_campaign->email_kit_id)->first()->host }}
-                                                </td> 
+                                                    {{ App\Models\EmailKit::where('id', $email_campaign->email_kit_id)->first()->host }}
+                                                </td>
                                                 <td> 
-                                                    {{ 
-                                                        App\Models\EmailTemplate::latest()
-                                                        ->where('id', $email_campaign->email_template_id)->first()->name 
-                                                    }}
+                                                    {{ App\Models\EmailTemplate::where('id', $email_campaign->email_template_id)->first()->name }}
                                                 </td> 
                                                 <td>
-                                                    {{ 
-                                                        App\Models\MailList::latest()->where('id', $email_campaign->list_id)
-                                                        ->first()->name 
-                                                    }}
+                                                    {{ App\Models\MailList::where('id', $email_campaign->list_id)->first()->name }}
                                                 </td> 
                                                 <td>{{ $email_campaign->replyto_email }}</td>
                                                 <td>{{ $email_campaign->replyto_name }}</td>

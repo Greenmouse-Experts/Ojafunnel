@@ -264,7 +264,6 @@
                                             <th>Sent</th>
                                             <th>Bounced</th>
                                             <th>Date Created</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead> 
                                     <tbody>
@@ -281,10 +280,7 @@
                                                 <td>{{ $admin_email_integration->from_name }}</td>
                                                 <td>{{ $admin_email_integration->sent }}</td>
                                                 <td>{{ $admin_email_integration->bounced }}</td>
-                                                <td>{{ $admin_email_integration->created_at->toDayDateTimeString() }}</td>
-                                                <td>
-                                                    ...
-                                                </td>
+                                                <td>{{ $admin_email_integration->created_at->toDayDateTimeString() }}</td> 
                                             </tr>
                                         @empty
                                             {{ 'No email kit / gateway at the moment' }}
