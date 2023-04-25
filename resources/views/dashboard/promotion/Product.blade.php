@@ -265,10 +265,10 @@
                             <div class="form">
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <input type="text" value="{{ route('user.stores.link', ['storename' => $product->store->name])}}?promotion_id={{ Auth::user()->promotion_link }}&product_id={{$product->id}}#item-{{ $product->id }}" name="name" id="myInput" class="input mov" readonly required>
+                                        <input type="text" value="{{ route('user.stores.link', ['storename' => $product->store->name])}}?promotion_id={{ Auth::user()->promotion_link }}&product_id={{$product->id}}#item-{{ $product->id }}" name="name" id="myInput{{$product->id}}" class="input mov" readonly required>
                                     </div>
                                     <div class="col-md-2">
-                                        <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
+                                        <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="copy('{{$product->id}}')" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -279,6 +279,22 @@
         </div>
     </div>
 </div>
+<script>
+    function copy(id) {
+        // Get the text field
+        var copyText = document.getElementById(`myInput${id}`);
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.value);
+
+        // Alert the copied text
+        alert("Copied the text: " + copyText.value);
+    }
+</script>
 <!-- end modal -->
 @endforeach
 

@@ -75,8 +75,7 @@
                                         <tr>
                                             <th scope="col">Product Name</th>
                                             <th scope="col">Product Image</th>
-                                            <th scope="col" style="width: 20%;">Product Description</th>
-                                            <th scope="col" style="width: 20%;">Share Link</th>
+                                            <th scope="col" style="width: 20%;">Product Description</th> 
                                             <th scope="col">Price</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Action</th>
@@ -94,22 +93,7 @@
                                             </td>
                                             <td>
                                                 <div class="font-size-14 text-wrap" style="width: 500px;">{{$item->description}}</div>
-                                            </td>
-                                            <td>
-                                                @php
-                                                $shareComponent = \Share::page(
-                                                    route('user.stores.link', ['storename' => $item->store->name]).'?promotion_id='.Auth::user()->promotion_link.'&product_id='.$item->id.'#item-'.$item->id,
-                                                    $item->name,
-                                                )
-                                                ->facebook()
-                                                ->twitter()
-                                                ->linkedin()
-                                                ->telegram()
-                                                ->whatsapp()        
-                                                ->reddit();
-                                                @endphp
-                                                {!! $shareComponent !!}
-                                            </td>
+                                            </td> 
                                             <td>
                                                 ₦ {{$item->price}}
                                             </td>
