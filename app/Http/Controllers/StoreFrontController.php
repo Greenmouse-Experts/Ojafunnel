@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OjafunnelNotification;
 use App\Models\OrderItem;
 use App\Models\OrderUser;
 use App\Models\Store;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 
 class StoreFrontController extends Controller
 {
@@ -225,7 +227,28 @@ class StoreFrontController extends Controller
         $trans->status = 'Product Purchase';
         $trans->save();
 
+        OjafunnelNotification::create([
+            'to' => $store->user_id,
+            'title' => config('app.name'),
+            'body' => $request->name.' purchase product in your shop.'
+        ]);
+
         session()->forget('cart');
+
+        /** Store information to include in mail in $data as an array */
+        $data = array(
+            'store' => $store,
+            'order' => $order,
+            'email' => $user->email
+        );
+        
+        /** Send message to the user */
+        Mail::send('emails.receiptEM', $data, function ($m) use ($data) {
+            $m->to($data['email'])->subject(config('app.name'));
+        });
+
+        // Send email to user
+        // $user->notify(new SendCodeResetPassword($codeData->code)
 
         $data = [
             'store' => $store,

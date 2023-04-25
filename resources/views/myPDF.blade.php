@@ -419,7 +419,7 @@ hr {
                                             <td><img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset=""></td>
                                             <td class="text-wrap" style="width: 330px;">{{$item->product->description}}</td>
                                             <td>{{$item->quantity}}</td>
-                                            <td>₦{{$item->amount}}</td>
+                                            <td>₦{{number_format($item->amount, 2)}}</td>
                                             <td>₦{{number_format($item->quantity*$item->amount, 2)}}</td>
                                         </tr>
                                         @endforeach
@@ -440,7 +440,7 @@ hr {
                                                 <strong>Total:</strong>
                                             </td>
                                             <td class="border-0">
-                                               <b>₦{{number_format($order->amount, )}}</b>
+                                               <b>₦{{number_format($order->amount, 2)}}</b>
                                             </td>
                                         </tr>
                                     </tbody>
