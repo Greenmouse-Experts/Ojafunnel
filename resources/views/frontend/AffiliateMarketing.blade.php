@@ -432,30 +432,14 @@
                 </div>
                 <div class="col-lg-10">
                     <div class="faq-box">
-                        <details>
-                            <summary>What is an affiliate marketing program ?</summary>
-                            <div class="faq-content">
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores magnam totam illo perspiciatis nemo asperiores similique voluptatem maiores qui voluptas?</p>
-                            </div>
-                        </details>
-                        <details>
-                            <summary>How much can I earn? </summary>
-                            <div class="faq-content">
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores magnam totam illo perspiciatis nemo asperiores similique voluptatem maiores qui voluptas?</p>
-                            </div>
-                        </details>
-                        <details>
-                            <summary>How to get commissions with your affiliate link? </summary>
-                            <div class="faq-content">
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores magnam totam illo perspiciatis nemo asperiores similique voluptatem maiores qui voluptas?</p>
-                            </div>
-                        </details>
-                        <details>
-                            <summary>Can anyone join the affiliate program ? </summary>
-                            <div class="faq-content">
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores magnam totam illo perspiciatis nemo asperiores similique voluptatem maiores qui voluptas?</p>
-                            </div>
-                        </details>
+                        @foreach (\App\Models\Faq::all() as $faq) 
+                            <details>
+                                <summary>{{ $faq->question }} ?</summary>
+                                <div class="faq-content">
+                                    <p>{{ $faq->answer }}</p>
+                                </div>
+                            </details> 
+                        @endforeach 
                     </div>
                 </div>
             </div>
