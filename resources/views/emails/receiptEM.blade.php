@@ -396,8 +396,8 @@
                       <span class="total-space" style="font-weight: bold; color: #4d4d4d">Total</span>
                     </td>
                     <td class="item-col price" style="text-align: left; border-top: 1px solid #cccccc;">
-                      <span class="total-space">₦{{number_format($item->quantity*$item->sum('amount'), 2)}}</span> <br />
-                      <span class="total-space" style="font-weight:bold; color: #4d4d4d">₦{{number_format($item->sum('amount'), 2)}}</span>
+                      <span class="total-space">₦{{number_format($order->amount, 2)}}</span> <br />
+                      <span class="total-space" style="font-weight:bold; color: #4d4d4d">₦{{number_format($order->amount, 2)}}</span>
                     </td>
                   </tr>  
                 </table>

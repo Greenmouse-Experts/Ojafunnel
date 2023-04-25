@@ -41,7 +41,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-6">
                                 <div class="py-2">
                                     <h4 class="font-500">Available Product</h4>
                                     <p>
@@ -53,8 +53,19 @@
                                 <div class="">
                                     <div class="all-create">
                                         <a href="#">
-                                            <button type="submit" data-bs-toggle="modal" data-bs-target="#onlineStore">
+                                            <button type="submit" data-bs-toggle="modal" data-bs-target="#addProduct">
                                                 + Add Product
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="">
+                                    <div class="all-create">
+                                        <a href="#">
+                                            <button type="submit" data-bs-toggle="modal" data-bs-target="#addDigitalProduct">
+                                                + Add Digital Product
                                             </button>
                                         </a>
                                     </div>
@@ -74,6 +85,7 @@
                                     <thead class="tread">
                                         <tr>
                                             <th scope="col">Product Name</th>
+                                            <th scope="col">Product Type</th>
                                             <th scope="col">Product Image</th>
                                             <th scope="col" style="width: 20%;">Product Description</th> 
                                             <th scope="col">Price</th>
@@ -89,13 +101,21 @@
                                                 {{$item->name}}
                                             </td>
                                             <td>
+                                                @if($item->link == null)
+                                                Physical
+                                                @else
+                                                Digital <br>
+                                                <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
+                                                @endif
+                                            </td>
+                                            <td>
                                                 <img src="{{Storage::url($item->image) ?? URL::asset('dash/assets/images/product/img-1.png')}}" alt="product-img" title="product-img" class="avatar-md" />
                                             </td>
                                             <td>
                                                 <div class="font-size-14 text-wrap" style="width: 500px;">{{$item->description}}</div>
                                             </td> 
                                             <td>
-                                                ₦ {{$item->price}}
+                                                ₦ {{number_format($item->price, 2)}}
                                             </td>
                                             <td>
                                                 {{$item->quantity}}
@@ -112,6 +132,7 @@
                                                     </ul>
 
                                                     {{-- modal --}}
+                                                    @if($item->link == null )
                                                     <div class="modal fade" id="editProduct-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
                                                             <div class="modal-content pb-3">
@@ -171,6 +192,81 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @else
+                                                    <div class="modal fade" id="editProduct-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content pb-3">
+
+                                                                <div class="modal-header border-bottom-0">
+                                                                    <h4 class="card-title mb-4">Add Product</h4>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="Editt">
+                                                                        <form action="{{route('user.store.digital.product.update', ['username' => Auth::user()->username, 'store_id' => $store_id, 'id' => $item->id])}}" method="POST" enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Product Name</label>
+                                                                                        <input type="text" name="name" value="{{$item->name}}" placeholder="Enter product name" required />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Product Type</label>
+                                                                                        <select name="content_type">
+                                                                                            <option value="{{$item->content_type}}">{{$item->content_type}}</option>
+                                                                                            <option value="">-- Select Product Type --</option>
+                                                                                            <option value="video">Video</option>
+                                                                                            <option value="audio">Audio</option>
+                                                                                            <option value="ebook">Ebook</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Product File</label>
+                                                                                        <input type="file" name="file" required />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Image</label>
+                                                                                        <input type="file" name="image" />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Product Description</label>
+                                                                                        <textarea name="description" id="" cols="30" rows="10" placeholder="Enter your product description" required>
+                                                                                        {{$item->description}}
+                                                                                        </textarea>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Price</label>
+                                                                                        <input type="number" name="price" value="{{$item->price}}" placeholder="Enter price" required />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Quantity</label>
+                                                                                        <input type="number" name="quantity" value="{{$item->quantity}}" required />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Level 1 Commission (%)</label>
+                                                                                        <input type="number" name="level1_comm" value="{{$item->level1_comm}}" required />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Level 2 Commission (%)</label>
+                                                                                        <input type="number" name="level2_comm" value="{{$item->level2_comm}}" required />
+                                                                                    </div>
+                                                                                    <div class="text-end mt-2">
+                                                                                        <a href="#" class="text-decoration-none">
+                                                                                            <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                                                                                Submit
+                                                                                            </button>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @endif
                                                     <div class="modal fade" id="deleteProduct-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" style="max-width: 35%">
                                                             <div class="modal-content pb-3">
@@ -224,7 +320,7 @@
     </div>
 </div>
 <!-- SuccessModal -->
-<div class="modal fade" id="onlineStore" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+<div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content pb-3">
             <div class="modal-header border-bottom-0">
@@ -240,6 +336,78 @@
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Product Name</label>
                                     <input type="text" name="name" placeholder="Enter product name" required />
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Image</label>
+                                    <input type="file" name="image" required />
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Product Description</label>
+                                    <textarea name="description" id="" cols="30" rows="10" placeholder="Enter your product description" required></textarea>
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Price</label>
+                                    <input type="number" name="price" placeholder="Enter price" required />
+                                    <span style="color:red;">Please enter numbers</span>
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Quantity</label>
+                                    <input type="number" name="quantity" placeholder="Enter quantity" required />
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Level 1 Commision (%)</label>
+                                    <input type="number" name="level1_comm" placeholder="Enter level 1 commission" required />
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Level 2 Commision (%)</label>
+                                    <input type="number" name="level2_comm" placeholder="Enter level 2 commission" required />
+                                </div>
+                                <div class="text-end mt-2">
+                                    <a href="#" class="text-decoration-none">
+                                        <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                            Submit
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+<!-- SuccessModal -->
+<div class="modal fade" id="addDigitalProduct" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content pb-3">
+            <div class="modal-header border-bottom-0">
+                <h4 class="card-title mb-4">Add Digital Product</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="Editt">
+                    <form action="{{route('user.store.digital.product.add', ['username' => Auth::user()->username, 'store_id' => $store_id])}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form">
+                            <div class="row">
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Product Name</label>
+                                    <input type="text" name="name" placeholder="Enter product name" required />
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Product Type</label>
+                                    <select name="content_type" required>
+                                        <option value="">-- Select Product Type --</option>
+                                        <option value="video">Video</option>
+                                        <option value="audio">Audio</option>
+                                        <option value="ebook">Ebook</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="Name">Product File</label>
+                                    <input type="file" name="file" required />
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Image</label>
