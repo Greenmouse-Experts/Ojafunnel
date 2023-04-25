@@ -219,6 +219,8 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/stores', [App\Http\Controllers\DashboardController::class, 'stores'])->name('user.stores');
                     Route::get('/checkout', [App\Http\Controllers\DashboardController::class, 'checkout'])->name('user.checkout');
                     Route::get('/cart', [App\Http\Controllers\DashboardController::class, 'cart'])->name('user.cart');
+                    Route::post('/my-store/digital/product/add/{store_id}', [App\Http\Controllers\StoreController::class, 'addDigitalProduct'])->name('user.store.digital.product.add');
+                    Route::post('/my-store/digital/product/update/{store_id}', [App\Http\Controllers\StoreController::class, 'updateDigitalProduct'])->name('user.store.digital.product.update');
                 }
             );
             Route::prefix('/Learning')->group(

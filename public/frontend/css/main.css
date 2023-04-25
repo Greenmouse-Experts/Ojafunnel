@@ -2577,7 +2577,7 @@ section.course-header-area {
     font-weight: 500;
 }
 
-.course-curriculum-accordion .lecture-list .lecture:before {
+/* .course-curriculum-accordion .lecture-list .lecture:before {
     font-family: Font Awesome\ 5 Free;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -2594,7 +2594,7 @@ section.course-header-area {
     font-size: 13px;
     top: 17px;
     color: #000;
-}
+} */
 
 .course-curriculum-accordion .lecture-list .lecture.has-preview {
     color: #000;

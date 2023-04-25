@@ -41,7 +41,7 @@ class HomePageController extends Controller
 
         return back()->with([
             'type' => 'success',
-            'message' => 'Thanks For Subscribe.'
+            'message' => 'Thanks For Subscribing.'
         ]);
     }
     //  Faqs

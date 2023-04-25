@@ -14,6 +14,8 @@ use App\Models\Store;
 use Auth;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Exception;
+use Illuminate\Validation\Rules\File as FacadeFile;
 
 
 
@@ -295,4 +297,144 @@ class StoreController extends Controller
             'message' => 'Product deleted successfully'
         ]);
     }
+
+    public function addDigitalProduct(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'image' => 'required|image',
+            'quantity' => 'required',
+            'level1_comm' => 'required',
+            'level2_comm' => 'required',
+            'content_type' => 'required',
+            'file' => [
+                'required',
+                FacadeFile::types(['mp3','pdf','mp4'])
+                    ->max(100 * 1024),
+            ],
+        ]);
+
+        if (StoreProduct::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->products) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Subscribe to enjoy more access.'
+            ]);
+        }
+
+        if ($request->file('image')) {
+            $image = $request->file('image')->store(
+                'uploads/storeProduct/' . Auth::user()->username,
+                'public'
+            );
+        }
+
+        try {
+
+            $productFile = request()->file->getClientOriginalName();
+
+            $filename = pathinfo($productFile, PATHINFO_FILENAME);
+
+            $response = cloudinary()->uploadFile(
+                $request->file('file')->getRealPath(),
+                [
+                    'folder' => config('app.name'),
+                    "public_id" => $filename,
+                    "use_filename" => TRUE
+                ]
+            )->getSecurePath();
+
+            $sp = new StoreProduct();
+            $sp->name = $request->name;
+            $sp->content_type = $request->content_type;
+            $sp->link = $response;
+            $sp->description = $request->description;
+            $sp->price = $request->price;
+            $sp->quantity = $request->quantity;
+            $sp->level1_comm = $request->level1_comm;
+            $sp->level2_comm = $request->level2_comm;
+            $sp->image = $image;
+            $sp->store_id = $request->store_id;
+            $sp->user_id = Auth::user()->id;
+
+            // check if level1_comm <= level2_comm... then fail
+            if ($request->level1_comm <= $request->level2_comm) return back()->with([
+                'type' => 'danger',
+                'message' => 'Level 1 commission must be greater than level 2 commision'
+            ]);
+
+            $sp->save();
+
+            return back()->with([
+                'type' => 'success',
+                'message' => $request->name . ' added to store product successfully'
+            ]);
+        } catch(Exception $e) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Failed to add product, please try again.'
+            ]);
+        }
+    }
+
+    public function updateDigitalProduct(Request $request)
+    {
+        $sp = StoreProduct::findOrFail($request->id);
+        $sp->name = $request->name;
+        $sp->content_type = $request->content_type;
+        $sp->description = $request->description;
+        $sp->price = $request->price;
+        $sp->quantity = $request->quantity;
+        $sp->level1_comm = $request->level1_comm;
+        $sp->level2_comm = $request->level2_comm;
+        if ($request->file('image')) {
+            $image = $request->file('image')->store(
+                'uploads/storeProduct/' . Auth::user()->username,
+                'public'
+            );
+            $sp->image = $image;
+        }
+
+
+        $token = explode('/', $sp->link);
+        $token2 = explode('.', $token[sizeof($token)-1]);
+
+        if($sp->link)
+        {
+            cloudinary()->destroy(config('app.name').'/'.$token2[0]);
+        }
+
+        if ($request->file('file')) 
+        {
+            $productFile = request()->file->getClientOriginalName();
+
+            $filename = pathinfo($productFile, PATHINFO_FILENAME);
+
+            $response = cloudinary()->uploadFile($request->file('file')->getRealPath(),
+                        [
+                            'folder' => config('app.name'),
+                            "public_id" => $filename,
+                            "use_filename" => TRUE
+                        ])->getSecurePath();
+
+            $sp->link = $response;
+        }
+
+        
+
+        // check if level1_comm <= level2_comm... then fail
+        if ($request->level1_comm <= $request->level2_comm) return back()->with([
+            'type' => 'danger',
+            'message' => 'Level 1 commission must be greater than level 2 commision'
+        ]);
+
+        $sp->update();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => $sp->name . ' update successfully'
+        ]);
+    }
+
 }
