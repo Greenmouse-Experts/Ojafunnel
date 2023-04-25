@@ -431,14 +431,18 @@
                                                 <h4 class="card-title mb-4"><strong>Promotion</strong></h4>
                                                 <div class="visual">
                                                     <p>
-                                                        We have updated the coupon system, and there is more to come. Announcing new free coupon limits.
-                                                    <div class="lamet float-end"><a href="" data-bs-toggle="modal" data-bs-target="#createCoupon"><strong><u>Create Coupon</u></strong></a></div>
+                                                        We offered you a 2 level commission for your course promoter. 
+                                                    <div class="lamet float-end">
+                                                        {{-- <a href="" data-bs-toggle="modal" data-bs-target="#createCoupon"><strong><u>Create Coupon</u></strong></a> --}}
+
+                                                        <a href="" data-bs-toggle="modal" data-bs-target="#addCommission"><strong><u>Update Commission</u></strong></a>
+                                                    </div>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <div class="row">
+                                            {{-- <div class="row">
                                                 <h4 class="card-title mb-3">Page</h4>
                                                 <div class="table-responsive mt-2">
                                                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
@@ -587,7 +591,7 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -654,6 +658,61 @@
     </div>
 </div>
 <!-- end modal -->
+<!-- add commission -->
+<div class="modal fade" id="addCommission" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Commission
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="post" action="{{route('user.course.content.update_course_commission', ['username' => Auth::user()->username, 'id' => Crypt::encrypt($course->id)])}}">
+                            @csrf
+                            <div class="form"> 
+                                <div class="col-lg-12">
+                                    <label>Level 1 Commission</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Enter level 1 commission" name="level1_comm" value="{{ $course->level1_comm }}" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Level 2 Commission</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Enter level 1 commission" name="level2_comm" value="{{ $course->level2_comm }}" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                            Update
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- email confirm modal -->
 <div class="modal fade" id="createCoupon" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

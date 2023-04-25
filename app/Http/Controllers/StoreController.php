@@ -52,8 +52,7 @@ class StoreController extends Controller
             ]);
         }
 
-        if($request->primaryColor == '#000000')
-        {   
+        if ($request->primaryColor == '#000000') {
             $request->validate(
                 [
                     'theme' => 'required'
@@ -101,8 +100,7 @@ class StoreController extends Controller
 
     public function updateStore(Request $request)
     {
-        if($request->primaryColor == '#000000')
-        {   
+        if ($request->primaryColor == '#000000') {
             $store = Store::findOrFail($request->id);
             $store->name = $request->name;
             $store->description = $request->description;
@@ -118,7 +116,6 @@ class StoreController extends Controller
             $store->color = '#fff';
             $store->user_id = Auth::user()->id;
             $store->update();
-
         } else {
             $store = Store::findOrFail($request->id);
             $store->name = $request->name;
@@ -135,7 +132,6 @@ class StoreController extends Controller
             $store->color = '#fff';
             $store->user_id = Auth::user()->id;
             $store->update();
-
         }
 
         return back()->with([
@@ -237,11 +233,18 @@ class StoreController extends Controller
         $sp->store_id = $request->store_id;
         $sp->user_id = Auth::user()->id;
 
-        // check if level1_comm <= level2_comm... then fail
-        if ($request->level1_comm <= $request->level2_comm) return back()->with([
+        if ($request->level1_comm < 0 || $request->level2_comm < 0) return back()->with([
             'type' => 'danger',
-            'message' => 'Level 1 commission must be greater than level 2 commision'
+            'message' => 'Negative value are not allowed for commission fields'
         ]);
+
+        if ($request->level1_comm != 0 && $request->level2_comm != 0) {
+            // check if level1_comm <= level2_comm... then fail
+            if ($request->level1_comm <= $request->level2_comm) return back()->with([
+                'type' => 'danger',
+                'message' => 'Level 1 commission must be greater than level 2 commision'
+            ]);
+        }
 
         $sp->save();
 

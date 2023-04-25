@@ -103,7 +103,15 @@
                             <div class="col-xl-10 col-sm-9">
                                 <div class="card">
                                     <div class="card-body">
-                                        <form action="{{route('course.payment.checkout', $shop->name)}}" id="checkoutForm" method="post">
+                                        <form action="
+                                            {{
+                                                route('course.payment.checkout', [
+                                                    'shopname' => $shop->name, 
+                                                    'promotion_id' => Request::get('promotion_id'), 
+                                                    'course_id' => Request::get('course_id')
+                                                ])
+                                            }}
+                                        " id="checkoutForm" method="post">
                                             @csrf
                                             <div class="tab-content" id="v-pills-tabContent">
                                                 <div class="tab-pane fade show active" id="v-pills-shipping" role="tabpanel" aria-labelledby="v-pills-shipping-tab">

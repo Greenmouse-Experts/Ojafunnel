@@ -1937,6 +1937,40 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function update_course_commission(Request $request)
+    {
+        $request->validate([
+            'level1_comm' => 'required|numeric',
+            'level2_comm' => 'required|numeric',
+        ]);
+
+        $idFinder = Crypt::decrypt($request->id);
+        $course = Course::find($idFinder);
+
+        if ($request->level1_comm < 0 || $request->level2_comm < 0) return back()->with([
+            'type' => 'danger',
+            'message' => 'Negative value are not allowed for commission fields'
+        ]);
+
+        if ($request->level1_comm != 0 && $request->level2_comm != 0) {
+            // check if level1_comm <= level2_comm... then fail
+            if ($request->level1_comm <= $request->level2_comm) return back()->with([
+                'type' => 'danger',
+                'message' => 'Level 1 commission must be greater than level 2 commision'
+            ]);
+        }
+
+        $course->update([
+            'level1_comm' => $request->level1_comm,
+            'level2_comm' => $request->level2_comm,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The commission has been updated successfully.'
+        ]);
+    }
+
     public function create_shop($username)
     {
         return view('dashboard.lms.createshop', [
@@ -1970,10 +2004,12 @@ class DashboardController extends Controller
 
     public function main_promo($username)
     {
-        $products = StoreProduct::where('quantity', '>', 0)->orderBy('id', 'DESC')->get();
+        $products = StoreProduct::latest()->where('quantity', '>', 0)->where('level1_comm', '>', 0)->orderBy('id', 'DESC')->get();
+        $lms = Course::latest()->where('level1_comm', '>', 0)->where('approved', true)->get();
 
         return view('dashboard.promotion.Product', [
             'products' => $products,
+            'lms' => $lms
         ]);
     }
 

@@ -132,7 +132,15 @@
                                     <i class="fas fa-arrow-left me-1"></i> Continue Shopping </a>
                             </div>
                             <div>
-                                    <a href="{{route('course.checkout', $shop->name)}}" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}}; color: #fff !important;"  class="btn d-none d-sm-inline-block btn-link" style="display: flex; justify-content: flex-end;">
+                                    <a href="
+                                    {{
+                                        route('course.checkout', [
+                                            'shopname' => $shop->name, 
+                                            'promotion_id' => Request::get('promotion_id'), 
+                                            'course_id' => Request::get('course_id')
+                                        ])
+                                    }}
+                                    " style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}}; color: #fff !important;"  class="btn d-none d-sm-inline-block btn-link" style="display: flex; justify-content: flex-end;">
                                     <i class="fas fa-truck-fast me-1"></i> Proceed to Checkout </a>
                             </div>
                         </div>
