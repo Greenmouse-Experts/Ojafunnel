@@ -127,4 +127,4 @@ Route::prefix('user')->group(function () {
     Route::get('/email/contact/edit/{id}', [EmailMarketingController::class, 'edit_contact'])->name('user.email.edit.contact');
     Route::post('/email/contact/update/{id}', [EmailMarketingController::class, 'update_contact'])->name('user.email.update.contact');
     Route::post('/email/contact/delete/{id}', [EmailMarketingController::class, 'delete_contact'])->name('user.email.delete.contact');
-}); 
+});

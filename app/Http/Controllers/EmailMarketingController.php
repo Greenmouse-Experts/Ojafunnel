@@ -47,6 +47,8 @@ class EmailMarketingController extends Controller
             'encryption' => 'required|string',
             'from_email' => 'required|email',
             'from_name' => 'required|string',
+            'replyto_name' => 'required|string',
+            'replyto_email' => 'required|string',
         ]);
 
         $email_kit = EmailKit::where(['id' => $request->id, 'account_id' => Auth::user()->id, 'is_admin' => false]);
@@ -66,11 +68,34 @@ class EmailMarketingController extends Controller
             'encryption' => $request->encryption,
             'from_email' => $request->from_email,
             'from_name' => $request->from_name,
+            'replyto_name' => $request->replyto_name,
+            'replyto_email' => $request->replyto_email,
         ]);
 
         return back()->with([
             'type' => 'success',
             'message' => 'Email kit updated successfully'
+        ]);
+    }
+
+    public function email_kits_master(Request $request)
+    {
+        $email_kit = EmailKit::where(['account_id' => Auth::user()->id, 'is_admin' => false]);
+        $_email_kit = EmailKit::where(['id' => $request->id, 'account_id' => Auth::user()->id, 'is_admin' => false]);
+
+        if (!$email_kit->exists() || !$_email_kit->exists()) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Error occured'
+            ]);
+        }
+
+        $email_kit->update(['master' => false]);
+        $_email_kit->update(['master' => true]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Email kit has been assigned master successfully'
         ]);
     }
 
@@ -726,17 +751,31 @@ class EmailMarketingController extends Controller
         $request->validate([
             'name' => 'required',
             'subject' => 'required',
-            'replyto_email' => 'required',
-            'replyto_name' => 'required',
-            'email_kit' => 'required',
+            // 'replyto_email' => 'required',
+            // 'replyto_name' => 'required',
+            // 'email_kit' => 'required',
             'email_template' => 'required',
             'email_list' => 'required',
             'message_timing' => 'required'
         ]);
 
-        $email_kit = EmailKit::where('id', $request->email_kit)->first();
+        // $email_kit = EmailKit::where('id', $request->email_kit)->first();
+        $email_kit = EmailKit::where(['account_id' => Auth::user()->id, 'is_admin' => false, 'master' => true]);
         $email_template = EmailTemplate::where('id', $request->email_template)->first();
         $mail_list = MailList::where('id', $request->email_list)->first();
+
+        if (!$email_kit->exists()) {
+            $email_kit = EmailKit::where(['is_admin' => true, 'master' => true]);
+
+            if (!$email_kit->exists()) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'You currently have no master email kit. Likewise Ojafunnel team have no master email kit. Please set up email kit and it make master. Thanks.'
+                ])->withInput();
+            }
+
+            $email_kit = $email_kit->first();
+        } else $email_kit = $email_kit->first();
 
         if ($request->message_timing == 'Immediately') {
             DB::transaction(function () use ($request, $email_kit, $email_template, $mail_list) {
@@ -744,8 +783,11 @@ class EmailMarketingController extends Controller
                 $email_campaign->user_id = Auth::user()->id;
                 $email_campaign->name = $request->name;
                 $email_campaign->subject = $request->subject;
-                $email_campaign->replyto_email = $request->replyto_email;
-                $email_campaign->replyto_name = $request->replyto_name;
+                // $email_campaign->replyto_email = $request->replyto_email;
+                // $email_campaign->replyto_name = $request->replyto_name;
+                // $email_campaign->email_kit_id = $email_kit->id;
+                $email_campaign->replyto_email = $email_kit->replyto_email;
+                $email_campaign->replyto_name = $email_kit->replyto_name;
                 $email_campaign->email_kit_id = $email_kit->id;
                 $email_campaign->list_id = $mail_list->id;
                 $email_campaign->email_template_id = $email_template->id;
@@ -833,13 +875,13 @@ class EmailMarketingController extends Controller
             if ($request->start_date < Carbon::now()->format('Y-m-d')) return back()->with([
                 'type' => 'danger',
                 'message' => 'The email campaign schedule start date is invalid'
-            ]);
+            ])->withInput();
 
             if ($request->start_date == Carbon::now()->format('Y-m-d')) {
                 if ($request->start_time <= Carbon::now()->format('H:i'))  return back()->with([
                     'type' => 'danger',
                     'message' => 'The email campaign schedule start time is invalid'
-                ]);
+                ])->withInput();
             }
 
             DB::transaction(function () use ($request, $email_kit, $email_template, $mail_list) {
@@ -847,8 +889,11 @@ class EmailMarketingController extends Controller
                 $email_campaign->user_id = Auth::user()->id;
                 $email_campaign->name = $request->name;
                 $email_campaign->subject = $request->subject;
-                $email_campaign->replyto_email = $request->replyto_email;
-                $email_campaign->replyto_name = $request->replyto_name;
+                // $email_campaign->replyto_email = $request->replyto_email;
+                // $email_campaign->replyto_name = $request->replyto_name;
+                // $email_campaign->email_kit_id = $email_kit->id;
+                $email_campaign->replyto_email = $email_kit->replyto_email;
+                $email_campaign->replyto_name = $email_kit->replyto_name;
                 $email_campaign->email_kit_id = $email_kit->id;
                 $email_campaign->list_id = $mail_list->id;
                 $email_campaign->email_template_id = $email_template->id;

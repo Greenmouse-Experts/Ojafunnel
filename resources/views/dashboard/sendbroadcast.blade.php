@@ -55,7 +55,7 @@
                                         <label>Campaign Name</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter Campaign Name" name="campaign_name" class="input">
+                                                <input type="text" placeholder="Enter Campaign Name" name="campaign_name" value="{{ old('campaign_name') }}" class="input">
                                             </div>
                                         </div>
                                     </div>
@@ -65,13 +65,22 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <select name="whatsapp_account" class="bg-light w-100 py-2 rounded px-2 fs-6">
-                                                        <option value="">Choose from conneted WA Account list</option>
+                                                        <option value="">Choose from conneted WA Account list</option> 
                                                         @forelse ($whatsapp_numbers as $whatsapp_number)
-                                                            <option value="{{ $whatsapp_number['id'] }}-{{ $whatsapp_number['phone_number'] }}-{{ $whatsapp_number['status'] }}-{{ $whatsapp_number['full_jwt_session'] }}">
-                                                                {{ $whatsapp_number['phone_number'] }} ({{ $whatsapp_number['status'] }})
-                                                            </option>
+                                                            @php
+                                                                $wa_account_val = $whatsapp_number['id'] . '-' . $whatsapp_number['phone_number'] . '-' . $whatsapp_number['status'] . '-' . $whatsapp_number['full_jwt_session'];
+                                                            @endphp
+                                                            @if (old('whatsapp_account') == $wa_account_val)
+                                                                <option value="{{ $whatsapp_number['id'] }}-{{ $whatsapp_number['phone_number'] }}-{{ $whatsapp_number['status'] }}-{{ $whatsapp_number['full_jwt_session'] }}" selected>
+                                                                    {{ $whatsapp_number['phone_number'] }} ({{ $whatsapp_number['status'] }})
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $whatsapp_number['id'] }}-{{ $whatsapp_number['phone_number'] }}-{{ $whatsapp_number['status'] }}-{{ $whatsapp_number['full_jwt_session'] }}">
+                                                                    {{ $whatsapp_number['phone_number'] }} ({{ $whatsapp_number['status'] }})
+                                                                </option>
+                                                            @endif 
                                                         @empty
-                                                            <option value="">No WA account found</option>
+                                                            <option value="" disabled>No WA account found</option>
                                                         @endforelse
                                                     </select>
                                                 </div>
@@ -84,10 +93,13 @@
                                             <select name="contact_list" class="bg-light w-100 py-2 rounded px-2 fs-6">
                                                 <option value="">Choose from contact list</option>
                                                 @if($contact_lists->isEmpty())
-                                                <option value="">No Contact List</option>
+                                                    <option value="">No Contact List</option>
                                                 @else
-                                                @foreach($contact_lists as $contact_list)
-                                                <option value="{{$contact_list->id}}">{{$contact_list->name}}</option>
+                                                @foreach($contact_lists as $contact_list)   
+                                                    <option value="{{$contact_list->id}}" 
+                                                        {{ old('contact_list') == $contact_list->id ? "selected" : "" }}>
+                                                        {{$contact_list->name}}
+                                                    </option> 
                                                 @endforeach
                                                 @endif
                                             </select>
@@ -98,9 +110,15 @@
                                         <div class="col-md-12 mb-4">
                                             <select class="bg-light w-100 py-2 rounded px-2 fs-6" id="template" name="template">
                                                 <option value="">Choose from template</option> 
-                                                <option value="template1">Template 1 (Text)</option>
-                                                <option value="template2">Template 2 (Text & File)</option>
-                                                <option value="template3">Template 3 (Header, Text, Footer, Link & Call)</option>
+                                                <option value="template1" {{ old('template') == 'template1' ? "selected" : "" }}>
+                                                    Template 1 (Text)
+                                                </option>
+                                                <option value="template2" {{ old('template') == 'template2' ? "selected" : "" }}>
+                                                    Template 2 (Text & File)
+                                                </option>
+                                                <option value="template3" {{ old('template') == 'template3' ? "selected" : "" }}>
+                                                    Template 3 (Header, Text, Footer, Link & Call)
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -111,7 +129,7 @@
                                             <label>Message</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <textarea placeholder="Type in your message" name="template1_message" id="" cols="30" rows="4"></textarea>
+                                                    <textarea placeholder="Type in your message" name="template1_message" id="" cols="30" rows="4">{{ old('template1_message') }}</textarea>
                                                     <p>
                                                         <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
                                                     </p>
@@ -125,7 +143,7 @@
                                             <label>Message</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <textarea placeholder="Type in your message" name="template2_message" id="" cols="30" rows="4"></textarea>
+                                                    <textarea placeholder="Type in your message" name="template2_message" id="" cols="30" rows="4">{{ old('template2_message') }}</textarea>
                                                     <p>
                                                         <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
                                                     </p>
@@ -161,7 +179,7 @@
                                             <label>Header</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <input type="text" placeholder="Enter message header" name="template3_header" class="input">
+                                                    <input type="text" placeholder="Enter message header" name="template3_header" class="input" value="{{ old('template3_header') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -169,7 +187,7 @@
                                             <label>Message</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <textarea placeholder="Type in your message" name="template3_message" id="" cols="30" rows="4"></textarea>
+                                                    <textarea placeholder="Type in your message" name="template3_message" id="" cols="30" rows="4">{{ old('template3_message') }}</textarea>
                                                     <p>
                                                         <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
                                                     </p>
@@ -180,7 +198,7 @@
                                             <label>Footer</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <input type="text" placeholder="Enter message footer" name="template3_footer" class="input">
+                                                    <input type="text" placeholder="Enter message footer" name="template3_footer" class="input" value="{{ old('template3_footer') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -188,10 +206,10 @@
                                             <label>Link</label>
                                             <div class="row">
                                                 <div class="col-md-6 mb-4">
-                                                    <input type="text" placeholder="Enter link url" name="template3_link_url" class="input">
+                                                    <input type="text" placeholder="Enter link url" name="template3_link_url" class="input" value="{{ old('template3_link_url') }}">
                                                 </div>
                                                 <div class="col-md-6 mb-4">
-                                                    <input type="text" placeholder="Enter link CTA" name="template3_link_cta" class="input">
+                                                    <input type="text" placeholder="Enter link CTA" name="template3_link_cta" class="input" value="{{ old('template3_link_cta') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -199,10 +217,10 @@
                                             <label>Phone</label>
                                             <div class="row">
                                                 <div class="col-md-6 mb-4">
-                                                    <input type="text" placeholder="Enter phone number" name="template3_phone_number" class="input">
+                                                    <input type="text" placeholder="Enter phone number" name="template3_phone_number" class="input" value="{{ old('template3_phone_number') }}">
                                                 </div>
                                                 <div class="col-md-6 mb-4">
-                                                    <input type="text" placeholder="Enter phone CTA" name="template3_phone_cta" class="input">
+                                                    <input type="text" placeholder="Enter phone CTA" name="template3_phone_cta" class="input" value="{{ old('template3_phone_cta') }}">
                                                 </div>
                                             </div>
                                         </div> 
@@ -214,10 +232,10 @@
                                                 Send WhatsApp:
                                             </div>
                                             <div class="col-md-4 col-6">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" id="message_timing_immediately" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" {{ old('message_timing') == 'Immediately' ? "checked" : "" }} /> Immediately</label>
                                             </div>
                                             <div class="col-md-4 col-6">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" id="message_timing_schedule" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" {{ old('message_timing') == 'Schedule' ? "checked" : "" }} /> Schedule</label>
                                             </div>
                                         </div>
                                     </div>
@@ -225,36 +243,44 @@
                                         <div class="row">
                                             <div class="col-md-6 mt-4">
                                                 <label for="Time">Start Date</label>
-                                                <input type="date" name="start_date" />
+                                                <input type="date" name="start_date" value="{{ old('start_date') }}" />
                                             </div>
                                             <div class="col-md-6 mt-4">
                                                 <label for="Time">Start Time</label>
-                                                <input type="Time" name="start_time" />
+                                                <input type="Time" name="start_time" value="{{ old('start_time') }}" />
                                             </div>
                                             <div class="col-md-12 mt-5">
                                                 <label for="">Frequency</label>
                                                 <select name="frequency_cycle" id="selectFrenquncy" onchange="frequencyChange()">
-                                                    <option value="onetime">One time</option>
-                                                    <option value="daily">Daily</option>
-                                                    <option value="weekly">Weekly</option>
-                                                    <option value="monthly">Monthly</option>
-                                                    <option value="yearly">Yearly</option>
-                                                    <option value="custom">Custom</option>
+                                                    <option value="onetime" {{ old('frequency_cycle') == 'onetime' ? "selected" : "" }}>
+                                                        One time
+                                                    </option>
+                                                    <option value="daily" {{ old('frequency_cycle') == 'daily' ? "selected" : "" }}>Daily</option>
+                                                    <option value="weekly" {{ old('frequency_cycle') == 'weekly' ? "selected" : "" }}>Weekly</option>
+                                                    <option value="monthly" {{ old('frequency_cycle') == 'monthly' ? "selected" : "" }}>
+                                                        Monthly
+                                                    </option>
+                                                    <option value="yearly" {{ old('frequency_cycle') == 'yearly' ? "selected" : "" }}>Yearly</option>
+                                                    <option value="custom" {{ old('frequency_cycle') == 'custom' ? "selected" : "" }}>Custom</option>
                                                 </select>
                                             </div>
                                             <div id="frq_custom" class="col-md-12" style="display: none;">
                                                 <div class="row">
                                                     <div class="col-md-6 mt-5" >
                                                         <label for="Frq_amount">Frequency Amount</label>
-                                                        <input type="text" name="frequency_amount" />
+                                                        <input type="text" name="frequency_amount" value="{{ old('frequency_amount') }}"/>
                                                     </div>
                                                     <div class="col-md-6 mt-5">
                                                         <label for="Time">Frequency Unit</label>
                                                         <select name="frequency_unit" >
-                                                            <option value="day">Day</option>
-                                                            <option value="week">Week</option>
-                                                            <option value="month">Month</option>
-                                                            <option value="year">Year</option>
+                                                            <option value="day" {{ old('frequency_unit') == 'day' ? "selected" : "" }}>Day</option>
+                                                            <option value="week" {{ old('frequency_unit') == 'week' ? "selected" : "" }}>Week</option>
+                                                            <option value="month" {{ old('frequency_unit') == 'month' ? "selected" : "" }}>
+                                                                Month
+                                                            </option>
+                                                            <option value="year" {{ old('frequency_unit') == 'year' ? "selected" : "" }}>
+                                                                Year
+                                                            </option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -263,7 +289,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12 mt-5" >
                                                         <label for="Time">End Date</label>
-                                                        <input type="date" name="end_date" />
+                                                        <input type="date" name="end_date" value="{{ old('end_date') }}" />
                                                     </div>
                                                     {{-- <div class="col-md-6 mt-5">
                                                         <label for="Time">End Time</label>
@@ -277,9 +303,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="boding">
-                                                    <button class="btn px-3" style="color: #714091; border:1px solid #714091; background:#fff;">
-                                                        Cancel
-                                                    </button>
+                                                    <a href="#">
+                                                        <button class="btn px-3" style="color: #714091; border:1px solid #714091; background:#fff;">
+                                                            Cancel
+                                                        </button>
+                                                    </a> 
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -490,5 +518,51 @@
             template3.style.display = 'none'; 
         }
     });
+
+    function templateToggle() {
+        const template = document.getElementById('template')  
+
+        if (template.value === 'template1') {
+            template1.style.display = 'block';
+            template2.style.display = 'none';
+            template3.style.display = 'none'; 
+        } else if (template.value === 'template2') {
+            template1.style.display = 'none';
+            template2.style.display = 'block';
+            template3.style.display = 'none'; 
+        } else if (template.value === 'template3') {
+            template1.style.display = 'none';
+            template2.style.display = 'none';
+            template3.style.display = 'block'; 
+        } else {
+            template1.style.display = 'none';
+            template2.style.display = 'none';
+            template3.style.display = 'none'; 
+        }
+    } 
+
+    function scheduleToggle() {
+        let schedule = document.getElementById('message_timing_schedule');
+
+        if (schedule.checked == true){
+            document.getElementById('schedule').style.display = 'block';
+        }
+    }
+
+    function frquencyToggle() { 
+       let selectFrenquncy = document.getElementById('selectFrenquncy')
+
+       if(selectFrenquncy.value == 'daily' || selectFrenquncy.value == 'weekly' || selectFrenquncy.value == 'monthly' || selectFrenquncy.value == 'yearly' || selectFrenquncy.value == 'custom') {
+        document.getElementById('end_period').style.display = 'block'
+       } 
+
+       if(selectFrenquncy.value == 'custom'){
+            document.getElementById('frq_custom').style.display = 'block'; 
+       }
+    }
+    
+    frquencyToggle()
+    scheduleToggle()
+    templateToggle()
 </script>
 @endsection

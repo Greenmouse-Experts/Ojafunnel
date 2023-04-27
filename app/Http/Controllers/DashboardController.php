@@ -13,6 +13,8 @@ use App\Models\Course;
 use App\Models\Funnel;
 use App\Models\OjaPlan;
 use App\Models\Category;
+use App\Models\EmailKit;
+use App\Models\SmsQueue;
 use App\Models\WaQueues;
 use App\Models\ShopOrder;
 use Tzsk\Sms\Facades\Sms;
@@ -29,25 +31,24 @@ use App\Models\WaCampaigns;
 use App\Models\StoreProduct;
 use Illuminate\Http\Request;
 use App\Models\ContactNumber;
+use App\Models\EmailCampaign;
 use App\Models\SmsAutomation;
 use App\Models\WhatsappNumber;
 use Illuminate\Support\Carbon;
+use App\Models\OjaSubscription;
+use App\Models\OjaPlanParameter;
 use App\Models\PersonalChatroom;
+use App\Models\EmailCampaignQueue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Console\Input\Input;
 use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
-use App\Models\EmailCampaign;
-use App\Models\EmailCampaignQueue;
-use App\Models\EmailKit;
-use App\Models\OjaPlanParameter;
-use App\Models\OjaSubscription;
-use App\Models\SmsQueue;
 
 class DashboardController extends Controller
 {
@@ -462,7 +463,7 @@ class DashboardController extends Controller
         if (Page::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->page_builder) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access'
             ]);
         }
 
@@ -632,7 +633,7 @@ class DashboardController extends Controller
             if (\App\Models\ContactList::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->sms_contact_list) {
                 return back()->with([
                     'type' => 'danger',
-                    'message' => 'Subscribe to enjoy more access.'
+                    'message' => 'Upgrade to enjoy more access'
                 ]);
             }
 
@@ -843,7 +844,7 @@ class DashboardController extends Controller
         if (WhatsappNumber::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->wa_number) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access'
             ]);
         }
 
@@ -1003,8 +1004,8 @@ class DashboardController extends Controller
         if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
-            ]);
+                'message' => 'Upgrade to enjoy more access'
+            ])->withInput();
         }
 
         $this->template_validate($request);
@@ -1015,7 +1016,7 @@ class DashboardController extends Controller
         if ($whatsapp_account[2] != "Connected") return back()->with([
             'type' => 'danger',
             'message' => 'The WA account is not connected. Connect and try again'
-        ]);
+        ])->withInput();
 
         // get contact list
         $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
@@ -1219,13 +1220,13 @@ class DashboardController extends Controller
             if ($request->start_date < Carbon::now()->format('Y-m-d')) return back()->with([
                 'type' => 'danger',
                 'message' => 'The WA campaign schedule start date is invalid'
-            ]);
+            ])->withInput();
 
             if ($request->start_date == Carbon::now()->format('Y-m-d')) {
                 if ($request->start_time <= Carbon::now()->format('H:i'))  return back()->with([
                     'type' => 'danger',
                     'message' => 'The WA campaign schedule start time is invalid'
-                ]);
+                ])->withInput();
             }
 
             if ($request->frequency_cycle == 'onetime') {
@@ -1385,7 +1386,7 @@ class DashboardController extends Controller
                 if ($request->end_date <= $request->start_date) return back()->with([
                     'type' => 'danger',
                     'message' => 'The WA campaign schedule end date is invalid'
-                ]);
+                ])->withInput();
 
                 if ($request->template == 'template1') {
                     // for data integrity and consistency
@@ -1549,7 +1550,7 @@ class DashboardController extends Controller
                 if ($request->end_date <= $request->start_date) return back()->with([
                     'type' => 'danger',
                     'message' => 'The WA campaign schedule end date is invalid'
-                ]);
+                ])->withInput();
 
 
                 if ($request->template == 'template1') {

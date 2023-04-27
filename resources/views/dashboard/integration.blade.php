@@ -615,6 +615,22 @@
                                         </div>
                                     </div> 
                                 </div> 
+                                 <div class="col-lg-12">
+                                    <label>Reply-TO Email</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="" required>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Reply-TO Name</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="" required>
+                                        </div>
+                                    </div> 
+                                </div>
                                 <input type="hidden" name="type" value="AWS SES" required>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
@@ -710,6 +726,22 @@
                                         </div>
                                     </div> 
                                 </div> 
+                                 <div class="col-lg-12">
+                                    <label>Reply-TO Email</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="" required>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Reply-TO Name</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="" required>
+                                        </div>
+                                    </div> 
+                                </div>
                                 <input type="hidden" name="type" value="Sendgrid" required>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
@@ -805,6 +837,22 @@
                                         </div>
                                     </div> 
                                 </div> 
+                                 <div class="col-lg-12">
+                                    <label>Reply-TO Email</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="" required>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Reply-TO Name</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="" required>
+                                        </div>
+                                    </div> 
+                                </div>
                                 <input type="hidden" name="type" value="Sendinblue" required>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
@@ -900,6 +948,22 @@
                                         </div>
                                     </div> 
                                 </div> 
+                                 <div class="col-lg-12">
+                                    <label>Reply-TO Email</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="" required>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Reply-TO Name</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="" required>
+                                        </div>
+                                    </div> 
+                                </div>
                                 <input type="hidden" name="type" value="SendPulse" required>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
@@ -995,6 +1059,22 @@
                                         </div>
                                     </div> 
                                 </div> 
+                                 <div class="col-lg-12">
+                                    <label>Reply-TO Email</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="" required>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Reply-TO Name</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="" required>
+                                        </div>
+                                    </div> 
+                                </div>
                                 <input type="hidden" name="type" value="Mailjet" required>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
