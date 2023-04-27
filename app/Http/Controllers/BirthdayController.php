@@ -344,13 +344,28 @@ class BirthdayController extends Controller
                     'birthday_list_id' => 'required',
                     'sms_type' => 'required',
                     'message' => 'required',
-                    'email_kit' => 'required'
+                    // 'email_kit' => 'required'
                 ]);
 
+                $email_kit = EmailKit::where(['account_id' => Auth::user()->id, 'is_admin' => false, 'master' => true]);
+                if (!$email_kit->exists()) {
+                    $email_kit = EmailKit::where(['is_admin' => true, 'master' => true]);
+
+                    if (!$email_kit->exists()) {
+                        return back()->with([
+                            'type' => 'danger',
+                            'message' => 'You currently have no master email kit. Likewise Ojafunnel team have no master email kit. Please set up email kit and it make master. Thanks.'
+                        ])->withInput();
+                    }
+
+                    $email_kit = $email_kit->first();
+                } else $email_kit = $email_kit->first();
+
+                //
                 $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
 
                 // for data integrity and consistency
-                DB::transaction(function () use ($request, $contact, $automation) {
+                DB::transaction(function () use ($request, $email_kit, $contact, $automation) {
                     $emAutomation = new BirthdayAutomation();
                     $emAutomation->user_id = Auth::user()->id;
                     $emAutomation->birthday_contact_list_id = $request->birthday_list_id;
@@ -368,7 +383,7 @@ class BirthdayController extends Controller
                     $emAutomation->sending_server = $request->sending_server ?? '';
                     $emAutomation->sender_id = $request->sender_id ?? '';
                     $emAutomation->integration = $request->integration ?? '';
-                    $emAutomation->email_kit_id = $request->email_kit;
+                    $emAutomation->email_kit_id = $email_kit->id;
                     $emAutomation->start_date = $request->start_date;
                     $emAutomation->end_date = $request->end_date;
                     $emAutomation->save();
