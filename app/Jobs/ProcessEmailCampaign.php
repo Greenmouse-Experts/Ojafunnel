@@ -49,12 +49,11 @@ class ProcessEmailCampaign implements ShouldQueue
             $mailer = app()->makeWith('user.mailer', $this->configuration);
             $email_campaign = $this->data['email_campaign'];
             $email_kit = $this->data['email_kit'];
-            $email_template = $this->data['email_template'];
             $user = $this->data['user'];
 
-            $this->contacts->map(function ($_contact) use ($mailer, $email_campaign, $email_kit, $email_template, $user) {
+            $this->contacts->map(function ($_contact) use ($mailer, $email_campaign, $email_kit, $user) {
                 // mailable
-                $mailable = new EmailCampaignMail($email_campaign, $email_kit, $email_template, $_contact, $user);
+                $mailable = new EmailCampaignMail($email_campaign, $email_kit, $_contact, $user);
 
                 // update status to Sending
                 EmailCampaignQueue::where(['email_campaign_id' => $email_campaign->id, 'recepient' => $_contact->email])
@@ -86,9 +85,9 @@ class ProcessEmailCampaign implements ShouldQueue
                 $email_campaign = $this->data['email_campaign'];
 
                 $this->contacts->map(function ($_contact) use ($email_campaign) {
-                    // update status
+                    // update status - Connection could not be established with host
                     EmailCampaignQueue::where(['email_campaign_id' => $email_campaign->id, 'recepient' => $_contact->email])
-                        ->update(['status' => 'Connection could not be established with host']);
+                        ->update(['status' => 'FAILED: Connection could not be established with host']);
                 });
 
                 return;
@@ -98,9 +97,9 @@ class ProcessEmailCampaign implements ShouldQueue
                 $email_campaign = $this->data['email_campaign'];
 
                 $this->contacts->map(function ($_contact) use ($email_campaign) {
-                    // update status to failed due to invalid smtp
+                    // update status - Failed to authenticate on SMTP server
                     EmailCampaignQueue::where(['email_campaign_id' => $email_campaign->id, 'recepient' => $_contact->email])
-                        ->update(['status' => 'Failed to authenticate on SMTP server']);
+                        ->update(['status' => 'FAILED: Failed to authenticate on SMTP server']);
                 });
 
                 return;

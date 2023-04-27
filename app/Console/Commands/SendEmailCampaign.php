@@ -49,7 +49,6 @@ class SendEmailCampaign extends Command
 
         $email_campaigns->map(function ($_campaign) {
             $email_kit = EmailKit::where('id', $_campaign->email_kit_id)->first();
-            $email_template = EmailTemplate::where('id', $_campaign->email_template_id)->first();
             $user = User::where('id', $_campaign->user_id)->first();
 
             $contacts = MailContact::latest()->where('mail_list_id', $_campaign->list_id)->get();
@@ -72,7 +71,6 @@ class SendEmailCampaign extends Command
                 ],  $_chunk, [
                     'email_campaign' => $_campaign,
                     'email_kit' => $email_kit,
-                    'email_template' => $email_template,
                     'user' => $user
                 ])->afterCommit()->onQueue('emailCampaign')->delay($delay);
 
