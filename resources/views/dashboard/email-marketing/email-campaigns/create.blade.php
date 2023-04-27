@@ -19,7 +19,7 @@
                             </p>
                         </div>
                         <div class="d-flex account-nav">
-                            <p class="ps-0 active">New Campaign</p> 
+                            <p class="ps-0 active">New Campaign</p>
                         </div>
                     </div>
                 </div>
@@ -51,61 +51,24 @@
                                                 <input type="text" placeholder="Enter campaign subject" name="subject" class="input">
                                             </div>
                                         </div>
-                                    </div>
-                                    {{-- <div class="col-lg-12">
-                                        <label>ReplyTo Email:</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter campaign replyto email" name="replyto_email" class="input">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label>ReplyTo Name:</label>
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter campaign replyto name" name="replyto_name" class="input">
-                                            </div>
-                                        </div>
                                     </div> 
-                                    <div class="col-lg-12">
-                                        <label>Email kit:</label>
-                                        <div class="row">
-                                            <div class="row">
-                                                <div class="col-md-12 mb-4">
-                                                    <select name="email_kit" class="bg-light w-100 py-2 rounded px-2 fs-6">
-                                                        <option value="">Choose from email kit</option> 
-                                                        @forelse ($email_integrations as $email_integration) 
-                                                            <option value="{{ $email_integration->id }}">
-                                                                {{  $email_integration->host }} ({{  $email_integration->type }}) {{ $email_integration->is_admin ? '[ADMIN KIT]': '' }}
-                                                            </option> 
-                                                        @empty
-                                                            {{ 'No email kit at the moment. Please add new kit' }}
-                                                        @endforelse
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>  --}}
                                     <div class="col-lg-12">
                                         <label>Email template:</label>
                                         <div class="row">
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <select name="email_template" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadTemplate()" id="email_template">
-                                                        <option value="">Choose from email template</option> 
-                                                        @forelse ($email_templates as $email_template) 
+                                                    <select name="email_template_id" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadTemplate()" id="email_template_id">
+                                                        <option value="">Choose from email template</option>
+                                                        @forelse ($email_templates as $email_template)
                                                             <option value="{{ $email_template->id }}">
-                                                             {{  $email_template->name }} 
-                                                            </option> 
+                                                             {{  $email_template->name }}
+                                                            </option>
                                                         @empty
                                                             {{ 'No email template at the moment. Please add new template' }}
                                                         @endforelse
                                                     </select>
-
-                                                    {{-- <textarea class="mt-2" cols="80" id="editor" name="editor">
-                                                        jdjejej
-                                                    </textarea> --}}
+                                                    <div id="email_template_editor"></div>
+                                                    <div id="email_template_data"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,18 +81,18 @@
                                                     <select name="email_list" class="bg-light w-100 py-2 rounded px-2 fs-6">
                                                         {{-- mail_lists --}}
                                                         <option value="">Choose from email list</option>
-                                                        @forelse ($mail_lists as $mail_list) 
+                                                        @forelse ($mail_lists as $mail_list)
                                                             <option value="{{ $mail_list->id }}">
-                                                                {{  $mail_list->name }} 
-                                                            </option> 
+                                                                {{  $mail_list->name }}
+                                                            </option>
                                                         @empty
                                                             {{ 'No email list at the moment. Please add new mail list' }}
-                                                        @endforelse 
+                                                        @endforelse
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-lg-12">
                                         <p>
                                             Upload Attachments:
@@ -149,7 +112,7 @@
                                                 <input type="file" name="attachments[]" id="" multiple/>
                                             </div>
                                         </div>
-                                    </div>   
+                                    </div>
                                     <div class="col-12 mb-4">
                                         <div class="row">
                                             <div class="col-md-4 col-12">
@@ -162,7 +125,7 @@
                                                 <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="col-12" id="schedule" style="display: none;">
                                         <div class="row">
                                             <div class="col-md-6 mt-4">
@@ -232,7 +195,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -242,10 +205,29 @@
             </div>
         </div>
     </div>
-</div>  
-<script>
-   function loadTemplate() {
-    let email_template = document.getElmemntById('email_template'); 
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+<script src="http://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js"></script> 
+<script> 
+   async function loadTemplate() { 
+    document.getElementById('email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="editor" name="email_template"></textarea>` 
+ 
+    let id = document.getElementById('email_template_id').value
+    let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id)
+    let { data } = await axios.get(endpoint)  
+
+    if(data.success) {
+        document.getElementById('editor').innerHTML = data.data; 
+
+        CKEDITOR.replace('editor', {
+            fullPage: true,
+            extraPlugins: 'docprops',
+            allowedContent: true,
+            height: 320,
+            removeButtons: 'PasteFromWord', 
+            removePlugins: 'sourcearea'
+        });
+    } else document.getElementById('editor').style.display = 'none'; 
    }
 </script>
 @endsection

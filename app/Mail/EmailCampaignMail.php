@@ -19,7 +19,6 @@ class EmailCampaignMail extends Mailable
     //
     public $email_campaign;
     public $email_kit;
-    public $email_template;
     public $contact;
     public $user;
 
@@ -28,11 +27,10 @@ class EmailCampaignMail extends Mailable
      *
      * @return void
      */
-    public function __construct($email_campaign, $email_kit, $email_template, $contact, $user)
+    public function __construct($email_campaign, $email_kit, $contact, $user)
     {
         $this->email_campaign = $email_campaign;
         $this->email_kit = $email_kit;
-        $this->email_template = $email_template;
         $this->contact = $contact;
         $this->user = $user;
     }
@@ -47,7 +45,7 @@ class EmailCampaignMail extends Mailable
         return new Envelope(
             from: new Address($this->email_kit->from_email, $this->email_kit->from_name),
             replyTo: [
-                new Address($this->email_campaign->replyto_email, $this->email_campaign->replyto_name),
+                new Address($this->email_kit->replyto_email, $this->email_kit->replyto_name),
             ],
             subject: $this->email_campaign->subject,
         );
@@ -61,7 +59,7 @@ class EmailCampaignMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.email-marketing-templates.' . $this->user->username . '.' . $this->email_template->slug,
+            view: 'emails.email-marketing-templates.' . $this->user->username . '.' . $this->email_campaign->slug,
             with: [
                 'name' => $this->contact->name,
                 'email' => $this->contact->email,

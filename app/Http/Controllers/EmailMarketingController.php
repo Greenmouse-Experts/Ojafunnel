@@ -706,17 +706,34 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns_create()
     {
-        $user_email_integrations = EmailKit::latest()->where(['account_id' => Auth::user()->id, 'is_admin' => false])->get();
-        $admin_email_integrations = EmailKit::latest()->where(['is_admin' => true])->get();
-        $email_integrations = $user_email_integrations->merge($admin_email_integrations);
-
         $email_templates = EmailTemplate::where(['user_id' => Auth::user()->id])->get();
         $mail_lists = MailList::where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.email-marketing.email-campaigns.create', [
-            'email_integrations' => $email_integrations,
             'email_templates' => $email_templates,
             'mail_lists' => $mail_lists
+        ]);
+    }
+
+    public function email_campaigns_template_content(Request $request)
+    {
+        $email_template = EmailTemplate::where(['id' => $request->id, 'user_id' => Auth::user()->id]);
+
+        if (!$email_template->exists()) {
+            return response()->json([
+                'success' => false,
+                'data' => 'email template not exist',
+            ]);
+        }
+
+        $template = file_get_contents(resource_path($email_template->first()->location));
+        $from = ["{{ \$name }}", "{{ \$email }}"];
+        $to = ["\$name", "\$email"];
+        $template = str_replace($from, $to, $template);
+
+        return response()->json([
+            'success' => true,
+            'data' => $template,
         ]);
     }
 
@@ -725,17 +742,14 @@ class EmailMarketingController extends Controller
         $request->validate([
             'name' => 'required',
             'subject' => 'required',
-            // 'replyto_email' => 'required',
-            // 'replyto_name' => 'required',
-            // 'email_kit' => 'required',
+            'email_template_id' => 'required',
             'email_template' => 'required',
             'email_list' => 'required',
             'message_timing' => 'required'
         ]);
 
-        // $email_kit = EmailKit::where('id', $request->email_kit)->first();
         $email_kit = EmailKit::where(['account_id' => Auth::user()->id, 'is_admin' => false, 'master' => true]);
-        $email_template = EmailTemplate::where('id', $request->email_template)->first();
+        $email_template = EmailTemplate::where('id', $request->email_template_id)->first();
         $mail_list = MailList::where('id', $request->email_list)->first();
 
         if (!$email_kit->exists()) {
@@ -753,13 +767,35 @@ class EmailMarketingController extends Controller
 
         if ($request->message_timing == 'Immediately') {
             DB::transaction(function () use ($request, $email_kit, $email_template, $mail_list) {
+                $slug = $email_template->slug . '-' . substr(sha1(mt_rand()), 10, 15);
+                $username = Auth::user()->username;
+                $template = $request->email_template;
+
+                // replace all variables with correct laravel syntax
+                $from = ["{{", "}}", "\$name", "\$email"];
+                $to = ["", "", "{{ \$name }}", "{{ \$email }}"];
+                $template = str_replace($from, $to, $template);
+
+                // add Powered by Ojafunnel
+                $template = str_replace("</body>", $this->getPoweredBy(), $template);
+
+                // check if folder exist, if not create new
+                File::ensureDirectoryExists(resource_path("views/emails/email-marketing-templates/$username"));
+
+                // put template into disk
+                $disk = resource_path("views/emails/email-marketing-templates/$username/$slug.blade.php");
+
+                if (!file_put_contents($disk, $template)) {
+                    return back()->with([
+                        'type' => 'danger',
+                        'message' => 'Error occured while creating template. Try again'
+                    ]);
+                }
+
                 $email_campaign = new EmailCampaign();
                 $email_campaign->user_id = Auth::user()->id;
                 $email_campaign->name = $request->name;
                 $email_campaign->subject = $request->subject;
-                // $email_campaign->replyto_email = $request->replyto_email;
-                // $email_campaign->replyto_name = $request->replyto_name;
-                // $email_campaign->email_kit_id = $email_kit->id;
                 $email_campaign->replyto_email = $email_kit->replyto_email;
                 $email_campaign->replyto_name = $email_kit->replyto_name;
                 $email_campaign->email_kit_id = $email_kit->id;
@@ -770,6 +806,7 @@ class EmailMarketingController extends Controller
                 $email_campaign->spam_score = 0;
                 $email_campaign->message_timing = $request->message_timing;
                 $email_campaign->attachment_paths = json_encode([]);
+                $email_campaign->slug = $slug;
                 $email_campaign->save();
 
                 if ($request->hasFile('attachments')) {
@@ -826,7 +863,6 @@ class EmailMarketingController extends Controller
                     ],  $_chunk, [
                         'email_campaign' => $email_campaign,
                         'email_kit' => $email_kit,
-                        'email_template' => $email_template,
                         'user' => Auth::user()
                     ])->afterCommit()->onQueue('emailCampaign')->delay($delay);
 
@@ -859,13 +895,35 @@ class EmailMarketingController extends Controller
             }
 
             DB::transaction(function () use ($request, $email_kit, $email_template, $mail_list) {
+                $slug = $email_template->slug . '-' . substr(sha1(mt_rand()), 10, 15);
+                $username = Auth::user()->username;
+                $template = $request->email_template;
+
+                // replace all variables with correct laravel syntax
+                $from = ["{{", "}}", "\$name", "\$email"];
+                $to = ["", "", "{{ \$name }}", "{{ \$email }}"];
+                $template = str_replace($from, $to, $template);
+
+                // add Powered by Ojafunnel
+                $template = str_replace("</body>", $this->getPoweredBy(), $template);
+
+                // check if folder exist, if not create new
+                File::ensureDirectoryExists(resource_path("views/emails/email-marketing-templates/$username"));
+
+                // put template into disk
+                $disk = resource_path("views/emails/email-marketing-templates/$username/$slug.blade.php");
+
+                if (!file_put_contents($disk, $template)) {
+                    return back()->with([
+                        'type' => 'danger',
+                        'message' => 'Error occured while creating template. Try again'
+                    ]);
+                }
+
                 $email_campaign = new EmailCampaign();
                 $email_campaign->user_id = Auth::user()->id;
                 $email_campaign->name = $request->name;
                 $email_campaign->subject = $request->subject;
-                // $email_campaign->replyto_email = $request->replyto_email;
-                // $email_campaign->replyto_name = $request->replyto_name;
-                // $email_campaign->email_kit_id = $email_kit->id;
                 $email_campaign->replyto_email = $email_kit->replyto_email;
                 $email_campaign->replyto_name = $email_kit->replyto_name;
                 $email_campaign->email_kit_id = $email_kit->id;
@@ -877,6 +935,7 @@ class EmailMarketingController extends Controller
                 $email_campaign->message_timing = $request->message_timing;
                 $email_campaign->start_date = $request->start_date;
                 $email_campaign->start_time = $request->start_time;
+                $email_campaign->slug = $slug;
                 $email_campaign->attachment_paths = json_encode([]);
                 $email_campaign->save();
 
@@ -941,5 +1000,21 @@ class EmailMarketingController extends Controller
     function sanitizeName($name)
     {
         return preg_replace('@\?.*$@', '', preg_replace('@\.{2,}@', '', preg_replace('@[^\/\\a-zA-Z0-9\-\._]@', '', $name)));
+    }
+
+    function getPoweredBy()
+    {
+        return '
+<div class="footer" style="clear: both; margin-top: 10px; text-align: center; width: 100%; font-weight: bold; font-size: 16px;">
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%"> 
+    <tr>
+        <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;" valign="top" align="center">
+        Powered by <a href="https://ojafunnel.com" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">Ojafunnel</a>.
+        </td>
+    </tr>
+    </table>
+</div>
+</body>
+        ';
     }
 }
