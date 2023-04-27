@@ -92,7 +92,7 @@
                                         <div class="row">
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <select name="email_template" class="bg-light w-100 py-2 rounded px-2 fs-6">
+                                                    <select name="email_template" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadTemplate()" id="email_template">
                                                         <option value="">Choose from email template</option> 
                                                         @forelse ($email_templates as $email_template) 
                                                             <option value="{{ $email_template->id }}">
@@ -102,6 +102,10 @@
                                                             {{ 'No email template at the moment. Please add new template' }}
                                                         @endforelse
                                                     </select>
+
+                                                    {{-- <textarea class="mt-2" cols="80" id="editor" name="editor">
+                                                        jdjejej
+                                                    </textarea> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -238,5 +242,10 @@
             </div>
         </div>
     </div>
-</div> 
+</div>  
+<script>
+   function loadTemplate() {
+    let email_template = document.getElmemntById('email_template'); 
+   }
+</script>
 @endsection

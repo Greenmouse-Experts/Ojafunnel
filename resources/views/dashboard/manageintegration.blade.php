@@ -481,13 +481,16 @@
                                             <th>Name</th>
                                             <th>Host</th>
                                             <th>Port</th>
-                                            <th>Userrname</th>
+                                            <th>Username</th>
                                             <th>Password</th>
                                             <th>Encryption</th>
                                             <th>From-Email</th>
                                             <th>From-Name</th>
+                                            <th>Replyto-Email</th>
+                                            <th>Replyto-Name</th>
                                             <th>Sent</th>
                                             <th>Bounced</th>
+                                            <th>Master</th>
                                             <th>Date Created</th>
                                             <th>Action</th>
                                         </tr>
@@ -504,15 +507,225 @@
                                                 <td>{{ $email_integration->encryption }}</td>
                                                 <td>{{ $email_integration->from_email }}</td>
                                                 <td>{{ $email_integration->from_name }}</td>
+                                                <td>{{ $email_integration->replyto_email }}</td>
+                                                <td>{{ $email_integration->replyto_name }}</td>
                                                 <td>{{ $email_integration->sent }}</td>
                                                 <td>{{ $email_integration->bounced }}</td>
+                                                <td>
+                                                    @if ($email_integration->master)
+                                                        {{ 'Yes' }}
+                                                    @else
+                                                        {{ 'No' }}
+                                                    @endif
+                                                </td>
                                                 <td>{{ $email_integration->created_at->toDayDateTimeString() }}</td>
                                                 <td>
-                                                    ...
+                                                    <div class="dropdown-center">
+                                                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Options
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                            <li>
+                                                                <a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit-{{$email_integration->id}}">Edit</a>
+                                                            </li> 
+                                                            <li>
+                                                                <a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#master-{{$email_integration->id}}">Make Master</a>
+                                                            </li> 
+                                                            <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$email_integration->id}}">Delete</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="modal fade" id="master-{{$email_integration->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content pb-3">
+                                                                <div class="modal-header border-bottom-0">
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="Editt">
+                                                                            <form method="POST" action="{{ route('user.email-marketing.email.kits.master', ['username' => Auth::user()->username]) }}">
+                                                                                @csrf
+                                                                                <div class="form">
+                                                                                    <p><b>Email Kit Master</b></p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-12">
+                                                                                            <p>You are about to make this kit <b>({{$email_integration->host}})</b><br>your master kit. Are you sure to continue?.</p> 
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4"> 
+                                                                                                    <input type="hidden" name="id" value="{{ $email_integration->id }}" class="input">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12 mb-4">
+                                                                                            <div class="boding">
+                                                                                                <button type="submit" class="form-btn">
+                                                                                                    Yes, Make Master
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end modal -->
+
+                                                    <div class="modal fade" id="edit-{{$email_integration->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content pb-3">
+                                                                <div class="modal-header border-bottom-0">
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body ">
+                                                                    <div class="row">
+                                                                        <div class="Editt">
+                                                                            <form method="POST" action="{{ route('user.email-marketing.email.kits.update', ['username' => Auth::user()->username]) }}">
+                                                                                @csrf
+                                                                                <div class="form">
+                                                                                    <p><b>Update Email Kit</b></p>
+                                                                                    <div class="row">
+                                                                                        <input type="hidden" name="id" value="{{ $email_integration->id }}" class="input">
+                                                                                        <div class="col-lg-12">
+                                                                                            <label>Host</label>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4">
+                                                                                                    <input type="text" placeholder="Your {{$email_integration->type}} SMTP Host" name="host" class="input" value="{{$email_integration->host}}" required>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div> 
+                                                                                        <div class="col-lg-12">
+                                                                                            <label>Username</label>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4">
+                                                                                                    <input type="text" placeholder="Your {{$email_integration->type}} SMTP Username" name="username" class="input" value="{{$email_integration->username}}" required>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <label>Password</label>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4">
+                                                                                                    <input type="text" placeholder="Your {{$email_integration->type}} SMTP Password" name="password" class="input" value="{{$email_integration->password}}" required>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <label>Port</label>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4">
+                                                                                                    <input type=numbert" placeholder="Your {{$email_integration->type}} SMTP Port" name="port" class="input" value="{{$email_integration->port}}"> 
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <label>Encryption</label>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4">
+                                                                                                    <input type="text" placeholder="Your {{$email_integration->type}} SMTP Encryption" name="encryption" class="input" readonly value="tls">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <label>Mail FROM</label>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4">
+                                                                                                    <input type="text" placeholder="Your {{$email_integration->type}} SMTP MAIL FROM" name="from_email" class="input" value="{{$email_integration->from_email}}" required>
+                                                                                                    <span style="color: green">Must be the verified domain on {{$email_integration->type}}</span>
+                                                                                                </div>
+                                                                                            </div> 
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <label>Mail FROM-NAME</label>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4">
+                                                                                                    <input type="text" placeholder="Your Brand Name" name="from_name" class="input" value="{{$email_integration->from_name}}" required>
+                                                                                                </div>
+                                                                                            </div> 
+                                                                                        </div> 
+                                                                                        <div class="col-lg-12">
+                                                                                            <label>Reply-TO Email</label>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4">
+                                                                                                    <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="{{$email_integration->replyto_email}}" required>
+                                                                                                </div>
+                                                                                            </div> 
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                            <label>Reply-TO Name</label>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4">
+                                                                                                    <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="{{$email_integration->replyto_name}}" required>
+                                                                                                </div>
+                                                                                            </div> 
+                                                                                        </div> 
+                                                                                        <div class="col-lg-12 mb-4">
+                                                                                            <div class="boding">
+                                                                                                <button type="submit" class="form-btn">
+                                                                                                    Update
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end modal -->
+
+                                                    <div class="modal fade" id="delete-{{$email_integration->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content pb-3">
+                                                                <div class="modal-header border-bottom-0">
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body ">
+                                                                    <div class="row">
+                                                                        <div class="Editt">
+                                                                            <form method="POST" action="{{ route('user.email-marketing.email.kits.delete', ['username' => Auth::user()->username]) }}">
+                                                                                @csrf
+                                                                                <div class="form">
+                                                                                    <p><b>Delete Email Kit</b></p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-12">
+                                                                                            <p>This action cannot be undone. This will permanently delete <br> <b>{{$email_integration->host}} ({{$email_integration->type}})</b>.</p>
+                                                                                            <label>Please type DELETE to confirm.</label>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12 mb-4">
+                                                                                                    <input type="text" name="delete" class="input" required>
+                                                                                                    <input type="hidden" name="id" value="{{ $email_integration->id }}" class="input">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12 mb-4">
+                                                                                            <div class="boding">
+                                                                                                <button type="submit" class="form-btn">
+                                                                                                    I understand this consquences, Delete
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end modal -->
                                                 </td>
                                             </tr>
                                         @empty
-                                            {{ 'No email gateway at the moment' }}
+                                            {{ 'No email kit / gateway at the moment' }}
                                         @endforelse 
                                     </tbody>
                                 </table>
