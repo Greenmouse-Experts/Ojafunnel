@@ -1005,7 +1005,7 @@ class DashboardController extends Controller
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access'
-            ]);
+            ])->withInput();
         }
 
         $this->template_validate($request);
@@ -1220,13 +1220,13 @@ class DashboardController extends Controller
             if ($request->start_date < Carbon::now()->format('Y-m-d')) return back()->with([
                 'type' => 'danger',
                 'message' => 'The WA campaign schedule start date is invalid'
-            ]);
+            ])->withInput();
 
             if ($request->start_date == Carbon::now()->format('Y-m-d')) {
                 if ($request->start_time <= Carbon::now()->format('H:i'))  return back()->with([
                     'type' => 'danger',
                     'message' => 'The WA campaign schedule start time is invalid'
-                ]);
+                ])->withInput();
             }
 
             if ($request->frequency_cycle == 'onetime') {
@@ -1386,7 +1386,7 @@ class DashboardController extends Controller
                 if ($request->end_date <= $request->start_date) return back()->with([
                     'type' => 'danger',
                     'message' => 'The WA campaign schedule end date is invalid'
-                ]);
+                ])->withInput();
 
                 if ($request->template == 'template1') {
                     // for data integrity and consistency
@@ -1550,7 +1550,7 @@ class DashboardController extends Controller
                 if ($request->end_date <= $request->start_date) return back()->with([
                     'type' => 'danger',
                     'message' => 'The WA campaign schedule end date is invalid'
-                ]);
+                ])->withInput();
 
 
                 if ($request->template == 'template1') {

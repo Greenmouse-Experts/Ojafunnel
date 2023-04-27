@@ -148,6 +148,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             // Birthday Module
             Route::post('/admin/update-birthday/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_birthday'])->name('admin.update.birthday');
             Route::post('/admin/delete-birthday/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_birthday'])->name('admin.delete.birthday');
+
+            // Email kit
+            Route::post('/integration/email/admin_create', [App\Http\Controllers\Admin\AdminController::class, 'integration_email_admin_create'])->name('user.integration.email.admin_create');
+            Route::post('/integration/email/admin_update', [App\Http\Controllers\Admin\AdminController::class, 'integration_email_admin_update'])->name('user.integration.email.admin_update');
+            Route::post('/integration/email/admin_delete', [App\Http\Controllers\Admin\AdminController::class, 'integration_email_admin_delete'])->name('user.integration.email.admin_delete');
+            Route::post('/integration/email/admin_master', [App\Http\Controllers\Admin\AdminController::class, 'integration_email_admin_master'])->name('user.integration.email.admin_master');
         }
     );
 });

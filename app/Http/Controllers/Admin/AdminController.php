@@ -1726,4 +1726,148 @@ class AdminController extends Controller
             'message' => 'Birthday Automation deleted.'
         ]);
     }
+
+    public function integration_email_admin_create(Request $request)
+    {
+        $request->validate([
+            'host' => 'required',
+            'port' => 'required|numeric',
+            'username' => 'required|string',
+            'password' => 'required',
+            'encryption' => 'required|string',
+            'from_email' => 'required|email',
+            'from_name' => 'required|string',
+            'replyto_email' => 'required|string',
+            'replyto_name' => 'required|string',
+            'type' => 'required',
+        ]);
+
+        $kit = new EmailKit();
+        $kit->account_id = Auth::guard('admin')->user()->id;
+        $kit->is_admin = true;
+        $kit->host = $request->host;
+        $kit->port = $request->port;
+        $kit->username = $request->username;
+        $kit->password = $request->password;
+        $kit->encryption = $request->encryption;
+        $kit->from_email = $request->from_email;
+        $kit->from_name = $request->from_name;
+        $kit->replyto_email = $request->replyto_email;
+        $kit->replyto_name = $request->replyto_name;
+        $kit->type = $request->type;
+        $kit->sent = 0;
+        $kit->bounced = 0;
+        $kit->save();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => $kit->type . ' Integration Created Successfully!'
+        ]);
+    }
+
+    public function integration_email_admin_update(Request $request)
+    {
+        $request->validate([
+            'host' => 'required',
+            'port' => 'required|numeric',
+            'username' => 'required|string',
+            'password' => 'required',
+            'encryption' => 'required|string',
+            'from_email' => 'required|email',
+            'from_name' => 'required|string',
+            'replyto_name' => 'required|string',
+            'replyto_email' => 'required|string',
+        ]);
+
+        $email_kit = EmailKit::where(['id' => $request->id, 'account_id' => Auth::guard('admin')->user()->id, 'is_admin' => true]);
+
+        if (!$email_kit->exists()) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Error occured'
+            ]);
+        }
+
+        $email_kit->update([
+            'host' =>  $request->host,
+            'port' => $request->port,
+            'username' => $request->username,
+            'password' => $request->password,
+            'encryption' => $request->encryption,
+            'from_email' => $request->from_email,
+            'from_name' => $request->from_name,
+            'replyto_name' => $request->replyto_name,
+            'replyto_email' => $request->replyto_email,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Email kit updated successfully'
+        ]);
+    }
+
+    public function integration_email_admin_delete(Request $request)
+    {
+        $email_kit = EmailKit::where(['id' => $request->id, 'account_id' => Auth::guard('admin')->user()->id, 'is_admin' => true]);
+
+        if ($request->delete != 'DELETE') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Please type DELETE to confirm.'
+            ]);
+        }
+
+        if (!$email_kit->exists()) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Error occured'
+            ]);
+        }
+
+        $email_kit_in_use_emailcampaign = EmailCampaign::where('email_kit_id', $email_kit->first()->id)->get();
+        $email_kit_in_use_birthdayauto = BirthdayAutomation::where('email_kit_id', $email_kit->first()->id)->get();
+
+        if (count($email_kit_in_use_emailcampaign) > 0) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Email kit is in use in email campaign section. Please delete all the email campaign using this kit to continue.'
+            ]);
+        }
+
+        if (count($email_kit_in_use_birthdayauto) > 0) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Email kit is in use in birthday module. Please delete all the birthday using this kit to continue.'
+            ]);
+        }
+
+        // delete model
+        $email_kit->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Email kit deleted successfully'
+        ]);
+    }
+
+    public function integration_email_admin_master(Request $request)
+    {
+        $email_kit = EmailKit::where(['account_id' => Auth::guard('admin')->user()->id, 'is_admin' => true]);
+        $_email_kit = EmailKit::where(['id' => $request->id, 'account_id' => Auth::guard('admin')->user()->id, 'is_admin' => true]);
+
+        if (!$email_kit->exists() || !$_email_kit->exists()) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Error occured'
+            ]);
+        }
+
+        $email_kit->update(['master' => false]);
+        $_email_kit->update(['master' => true]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Email kit has been assigned master successfully'
+        ]);
+    }
 }

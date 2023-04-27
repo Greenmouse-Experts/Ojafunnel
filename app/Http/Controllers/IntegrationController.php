@@ -32,6 +32,8 @@ class IntegrationController extends Controller
             'encryption' => 'required|string',
             'from_email' => 'required|email',
             'from_name' => 'required|string',
+            'replyto_email' => 'required|string',
+            'replyto_name' => 'required|string',
             'type' => 'required',
         ]);
 
@@ -45,6 +47,8 @@ class IntegrationController extends Controller
         $kit->encryption = $request->encryption;
         $kit->from_email = $request->from_email;
         $kit->from_name = $request->from_name;
+        $kit->replyto_email = $request->replyto_email;
+        $kit->replyto_name = $request->replyto_name;
         $kit->type = $request->type;
         $kit->sent = 0;
         $kit->bounced = 0;

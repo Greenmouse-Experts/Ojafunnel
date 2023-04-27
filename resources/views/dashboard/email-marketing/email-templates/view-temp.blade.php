@@ -31,6 +31,7 @@
             height: 320,
             removeButtons: 'PasteFromWord',
             maximize: true,
+            removePlugins: 'sourcearea'
         });  
 
         editor.on('instanceReady', function(event){   

@@ -232,10 +232,10 @@
                                                 Send WhatsApp:
                                             </div>
                                             <div class="col-md-4 col-6">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" id="message_timing" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" {{ old('message_timing') == 'Immediately' ? "checked" : "" }} /> Immediately</label>
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" id="message_timing_immediately" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" {{ old('message_timing') == 'Immediately' ? "checked" : "" }} /> Immediately</label>
                                             </div>
                                             <div class="col-md-4 col-6">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" id="message_timing" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" {{ old('message_timing') == 'Schedule' ? "checked" : "" }} /> Schedule</label>
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" id="message_timing_schedule" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" {{ old('message_timing') == 'Schedule' ? "checked" : "" }} /> Schedule</label>
                                             </div>
                                         </div>
                                     </div>
@@ -540,7 +540,29 @@
             template3.style.display = 'none'; 
         }
     } 
+
+    function scheduleToggle() {
+        let schedule = document.getElementById('message_timing_schedule');
+
+        if (schedule.checked == true){
+            document.getElementById('schedule').style.display = 'block';
+        }
+    }
+
+    function frquencyToggle() { 
+       let selectFrenquncy = document.getElementById('selectFrenquncy')
+
+       if(selectFrenquncy.value == 'daily' || selectFrenquncy.value == 'weekly' || selectFrenquncy.value == 'monthly' || selectFrenquncy.value == 'yearly' || selectFrenquncy.value == 'custom') {
+        document.getElementById('end_period').style.display = 'block'
+       } 
+
+       if(selectFrenquncy.value == 'custom'){
+            document.getElementById('frq_custom').style.display = 'block'; 
+       }
+    }
     
+    frquencyToggle()
+    scheduleToggle()
     templateToggle()
 </script>
 @endsection

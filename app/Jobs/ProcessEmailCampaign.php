@@ -82,6 +82,18 @@ class ProcessEmailCampaign implements ShouldQueue
         } catch (\Throwable $th) {
             Log::info($th);
 
+            if (str_starts_with($th->getMessage(), 'Connection could not be established with host')) {
+                $email_campaign = $this->data['email_campaign'];
+
+                $this->contacts->map(function ($_contact) use ($email_campaign) {
+                    // update status
+                    EmailCampaignQueue::where(['email_campaign_id' => $email_campaign->id, 'recepient' => $_contact->email])
+                        ->update(['status' => 'Connection could not be established with host']);
+                });
+
+                return;
+            }
+
             if (str_starts_with($th->getMessage(), 'Failed to authenticate on SMTP server')) {
                 $email_campaign = $this->data['email_campaign'];
 

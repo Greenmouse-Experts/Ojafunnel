@@ -52,7 +52,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    {{-- <div class="col-lg-12">
                                         <label>ReplyTo Email:</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
@@ -86,7 +86,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>  --}}
                                     <div class="col-lg-12">
                                         <label>Email template:</label>
                                         <div class="row">
