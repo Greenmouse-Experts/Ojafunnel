@@ -3,24 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmailKit;
-use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
 use App\Models\EmailCampaign;
 use App\Models\EmailTemplate;
 use Illuminate\Support\Carbon;
-use App\Mail\EmailCampaignMail;
 use App\Jobs\ProcessEmailCampaign;
-use App\Models\BirthdayAutomation;
 use App\Models\EmailCampaignQueue;
 use App\Models\ListManagement;
 use App\Models\ListManagementContact;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Storage;
 
 class EmailMarketingController extends Controller
 {

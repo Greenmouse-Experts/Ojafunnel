@@ -7,10 +7,10 @@ use App\Models\User;
 use App\Models\EmailKit;
 use App\Models\MailContact;
 use App\Models\EmailCampaign;
-use App\Models\EmailTemplate;
 use Illuminate\Console\Command;
 use App\Jobs\ProcessEmailCampaign;
 use Illuminate\Support\Facades\Log;
+use App\Models\ListManagementContact;
 
 class SendEmailCampaign extends Command
 {
@@ -51,7 +51,7 @@ class SendEmailCampaign extends Command
             $email_kit = EmailKit::where('id', $_campaign->email_kit_id)->first();
             $user = User::where('id', $_campaign->user_id)->first();
 
-            $contacts = MailContact::latest()->where('mail_list_id', $_campaign->list_id)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->list_id)->get();
 
             // divide into 500 chunks and 
             // delay each job between 10  - 20 sec in the queue
