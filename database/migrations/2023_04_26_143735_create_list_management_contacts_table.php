@@ -13,18 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mail_contacts', function (Blueprint $table) {
+        Schema::create('list_management_contacts', function (Blueprint $table) {
             $table->id();
             $table->uuid('uid');
-            $table->integer('mail_list_id')->unsigned();
+            $table->integer('list_management_id')->unsigned();
             $table->string('name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('email', 250)->unique();
-            $table->string('address_1');
+            $table->string('email', 250)->nullable();
+            $table->string('address_1')->nullable();
             $table->string('address_2')->nullable();
             $table->string('country')->nullable();
-            $table->string('state');
-            $table->string('zip');
+            $table->string('state')->nullable();
+            $table->string('zip')->nullable();
             $table->string('phone')->nullable();
             $table->boolean('subscribe')->index();
             $table->timestamps();
@@ -38,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mail_contacts');
+        Schema::dropIfExists('list_management_contacts');
     }
 };

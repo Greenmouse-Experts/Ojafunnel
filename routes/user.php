@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\EmailMarketingController;
+use App\Http\Controllers\ListManagementController;
 use App\Http\Controllers\OjafunnelNotificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -115,16 +115,18 @@ Route::prefix('user')->group(function () {
 
 
     // Email Marketing
-    Route::post('/email/create/list', [EmailMarketingController::class, 'email_create_list'])->name('user.email.create.list');
-    Route::get('/email/list/view/{id}', [EmailMarketingController::class, 'view_list'])->name('user.email.view.list');
-    Route::get('/email/list/edit/{id}', [EmailMarketingController::class, 'edit_list'])->name('user.email.edit.list');
-    Route::post('/email/list/update/{id}', [EmailMarketingController::class, 'update_list'])->name('user.email.update.list');
-    Route::get('/email/list/enable/{id}', [EmailMarketingController::class, 'email_enable_list'])->name('user.email.enable.list');
-    Route::get('/email/list/disabled/{id}', [EmailMarketingController::class, 'email_disable_list'])->name('user.email.disable.list');
-    Route::get('/email/list/delete/{id}', [EmailMarketingController::class, 'email_delete_list'])->name('user.email.delete.list');
-    Route::get('/create/contact/list/{id}', [EmailMarketingController::class, 'create_email_contact_list'])->name('user.email.marketing.create.contact.list');
-    Route::post('/email/create/contact/{id}', [EmailMarketingController::class, 'email_create_contact'])->name('user.email.create.contact');
-    Route::get('/email/contact/edit/{id}', [EmailMarketingController::class, 'edit_contact'])->name('user.email.edit.contact');
-    Route::post('/email/contact/update/{id}', [EmailMarketingController::class, 'update_contact'])->name('user.email.update.contact');
-    Route::post('/email/contact/delete/{id}', [EmailMarketingController::class, 'delete_contact'])->name('user.email.delete.contact');
-});
+    Route::post('/list/management/create/list', [ListManagementController::class, 'store_list'])->name('user.store.list');
+    Route::get('/list/management/list/view/{id}', [ListManagementController::class, 'view_list'])->name('user.view.list');
+    Route::get('/list/management/list/edit/{id}', [ListManagementController::class, 'edit_list'])->name('user.edit.list');
+    Route::post('/list/management/list/update/{id}', [ListManagementController::class, 'update_list'])->name('user.update.list');
+    Route::get('/list/management/list/enable/{id}', [ListManagementController::class, 'enable_list'])->name('user.enable.list');
+    Route::get('/list/management/list/disabled/{id}', [ListManagementController::class, 'disable_list'])->name('user.disable.list');
+    Route::post('/list/management/list/delete/{id}', [ListManagementController::class, 'delete_list'])->name('user.delete.list');
+    Route::get('/list/management/create/contact/list/{id}', [ListManagementController::class, 'create_contact_list'])->name('user.create.contact.list');
+    Route::post('/list/management/create/contact/{id}', [ListManagementController::class, 'create_contact'])->name('user.create.contact');
+    Route::get('/list/management/contact/edit/{id}', [ListManagementController::class, 'edit_contact'])->name('user.edit.contact');
+    Route::post('/list/management/contact/update/{id}', [ListManagementController::class, 'update_contact'])->name('user.update.contact');
+    Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('user.delete.contact');
+    Route::get('/list/management/upload/contact/list/{id}', [ListManagementController::class, 'upload_contact_list'])->name('user.upload.contact.list');
+    Route::post('/list/management/upload/contact/{id}', [ListManagementController::class, 'upload_contact'])->name('user.upload.contact');
+}); 

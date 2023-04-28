@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mail_lists', function (Blueprint $table) {
+        Schema::create('list_management', function (Blueprint $table) {
             $table->id();
             $table->uuid('uid');
             $table->integer('user_id')->unsigned();
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('display_name', 250);
             $table->string('slug', 250)->unique();
             $table->text('description')->nullable();
-            $table->boolean('unsubscribe_notification')->default(false);
+            $table->boolean('notification')->default(false);
             $table->string('status')->default(true);
             $table->timestamps();
         });
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mail_lists');
+        Schema::dropIfExists('list_management');
     }
 };

@@ -28,16 +28,17 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('user.email-marketing.email.lists', Auth::user()->username)}}" key="t-tui-calendar">
-                                Email Lists
-                            </a>
-                        </li>
-                        <li>
                             <a href="{{route('user.email-marketing.email.campaigns', Auth::user()->username)}}" key="t-tui-calendar">
                                 Email Campaign
                             </a>
                         </li> 
                     </ul>
+                </li>
+                <li>
+                    <a href="{{route('user.list.management', Auth::user()->username)}}">
+                        <i class="bi bi-building"></i>
+                        <span key="t-chat">List Management</span>
+                    </a>
                 </li>
                 <li>
                     <a href="{{route('user.choose.temp', Auth::user()->username)}}">

@@ -3,19 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmailKit;
-use App\Models\MailList;
 use Illuminate\Bus\Batch;
-use App\Models\MailContact;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\EmailCampaign;
 use App\Models\EmailTemplate;
 use Illuminate\Support\Carbon;
 use App\Mail\EmailCampaignMail;
-use App\Models\ContactMailList;
 use App\Jobs\ProcessEmailCampaign;
 use App\Models\BirthdayAutomation;
 use App\Models\EmailCampaignQueue;
+use App\Models\ListManagement;
+use App\Models\ListManagementContact;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Auth;
@@ -217,7 +215,7 @@ class EmailMarketingController extends Controller
             ]);
         }
 
-        $email_template = new EmailTemplate();
+        $email_template = new EmailebTemplate();
         $email_template->user_id = Auth::user()->id;
         $email_template->name = $request->name;
         $email_template->location = "views/emails/email-marketing-templates/$username/$slug.blade.php";
@@ -332,335 +330,6 @@ class EmailMarketingController extends Controller
         ]);
     }
 
-    public function create_email_list(Request $request)
-    {
-        return view('dashboard.email-marketing.email-lists.create', []);
-    }
-
-    public function email_lists(Request $request)
-    {
-        return view('dashboard.email-marketing.email-lists.index', []);
-    }
-
-    public function email_contacts()
-    {
-        return view('dashboard.email-marketing.email-lists.contacts.index');
-    }
-
-    public function create_email_contact_list($id)
-    {
-        $finder = Crypt::decrypt($id);
-        $mailList = MailList::find($finder);
-
-        return view('dashboard.email-marketing.email-lists.contacts.create', [
-            'mailList' => $mailList
-        ]);
-    }
-
-    public function email_create_list(Request $request)
-    {
-        $this->validate($request, [
-            'name'         => 'required|max:250',
-            'display_name' => 'required|max:250',
-            'description' => 'required|max:250',
-            'slug'         => 'max:250|alpha_dash|unique:mail_lists,slug',
-        ]);
-
-        $list = MailList::create([
-            'uid' => Str::slug($request->display_name),
-            'user_id' => Auth::user()->id,
-            'name' => $request->name,
-            'display_name' => $request->display_name,
-            'slug' => $request->slug,
-            'description' => $request->description
-        ]);
-
-        if (empty($list->slug)) {
-            $list->slug = Str::slug($list->display_name);
-        }
-
-        $list->save();
-
-        return redirect()->route('user.email-marketing.email.lists', Auth::user()->username)->with([
-            'type' => 'success',
-            'message' => 'List created!'
-        ]);
-    }
-
-    public function view_list($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $mail_list = MailList::find($finder);
-
-        return view('dashboard.email-marketing.email-lists.view')->with([
-            'mail_list' => $mail_list
-        ]);
-    }
-
-    public function edit_list($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $mail_list = MailList::find($finder);
-
-        return view('dashboard.email-marketing.email-lists.edit')->with([
-            'mail_list' => $mail_list
-        ]);
-    }
-
-    public function update_list($id, Request $request)
-    {
-        $this->validate($request, [
-            'name'         => 'required|max:250',
-            'display_name' => 'required|max:250',
-            'description' => 'required|max:250',
-            'slug'         => 'max:250|alpha_dash|unique:mail_lists,slug',
-        ]);
-
-        $finder = Crypt::decrypt($id);
-
-        $list = MailList::find($finder);
-
-        $list->update([
-            'uid' => Str::slug($request->display_name),
-            'name' => $request->name,
-            'display_name' => $request->display_name,
-            'slug' => $request->slug,
-            'description' => $request->description
-        ]);
-
-        if (empty($list->slug)) {
-            $list->slug = Str::slug($list->display_name);
-        }
-
-        $list->save();
-
-        return redirect()->route('user.email-marketing.email.lists', Auth::user()->username)->with([
-            'type' => 'success',
-            'message' => 'List updated!'
-        ]);
-    }
-
-    public function email_enable_list($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $mail_list = MailList::find($finder);
-
-        $mail_list->update([
-            'status' => true
-        ]);
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'List activated successfully.',
-        ]);
-    }
-
-    public function email_disable_list($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $mail_list = MailList::find($finder);
-
-        $mail_list->update([
-            'status' => false
-        ]);
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'List disactivated successfully.',
-        ]);
-    }
-
-    public function email_delete_list($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $list = MailList::find($finder);
-        $contact = MailContact::where('mail_list_id', $list->id)->get()->count();
-
-        if ($contact > 0) {
-            $contact->delete();
-        }
-
-        $list->delete();
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'List deleted!'
-        ]);
-    }
-
-    function email_veriication($email)
-    {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.apilayer.com/email_verification/check?email=$email",
-            CURLOPT_HTTPHEADER => array(
-                "Content-Type: text/plain",
-                "apikey: hh1kBNxCPLAwYaePOR55kuyy3mT7zxow"
-            ),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET"
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        $json = json_decode($response, true);
-
-        // dd($json);
-
-        if ($json !== null) {
-            if (in_array('format_valid', $json)) {
-                if ($json['format_valid'] == true) {
-                    return 'true';
-                }
-            }
-            if (in_array('success', $json)) {
-                if ($json['success'] == false) {
-                    return 'invalid';
-                }
-            }
-        }
-
-        return 'invalid';
-    }
-
-    public function email_create_contact($id, Request $request)
-    {
-        $this->validate($request, [
-            'name'  => 'required|max:250',
-            'email'         => 'required|email|unique:mail_contacts|max:250',
-            'address_1' => 'required|max:250',
-            'country' => 'required|max:250',
-            'state' => 'required|max:250',
-            'zip' => 'required|max:250',
-            'phone' => 'required|numeric',
-            'subscribe' => 'required|boolean'
-        ]);
-
-        $finder = Crypt::decrypt($id);
-
-        $mailList = MailList::find($finder);
-
-        $emailVerification = $this->email_veriication($request->email);
-
-        if ($emailVerification !== 'true') {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'The email address is not valid.'
-            ]);
-        }
-
-        MailContact::create([
-            'uid' => Str::uuid(),
-            'mail_list_id' => $mailList->id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'address_1' => $request->address_1,
-            'address_2' => $request->address_2,
-            'country' => $request->country,
-            'state' => $request->state,
-            'zip' => $request->zip,
-            'phone' => $request->phone,
-            'subscribe' => $request->subscribe
-        ]);
-
-        return redirect()->route('user.email.view.list', Crypt::encrypt($mailList->id))->with([
-            'type' => 'success',
-            'message' => 'Contact created!'
-        ]);
-    }
-
-    public function edit_contact($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $contact = MailContact::find($finder);
-
-        return view('dashboard.email-marketing.email-lists.contacts.edit')->with([
-            'contact' => $contact
-        ]);
-    }
-
-    public function update_contact($id, Request $request)
-    {
-        $this->validate($request, [
-            'name'  => 'required|max:250',
-            'address_1' => 'required|max:250',
-            'country' => 'required|max:250',
-            'state' => 'required|max:250',
-            'zip' => 'required|max:250',
-            'phone' => 'required|numeric',
-            'subscribe' => 'required|boolean'
-        ]);
-
-        $finder = Crypt::decrypt($id);
-
-        $contact = MailContact::find($finder);
-
-        if ($contact->email == $request->email) {
-            $contact->update([
-                'name' => $request->name,
-                'address_1' => $request->address_1,
-                'address_2' => $request->address_2,
-                'country' => $request->country,
-                'state' => $request->state,
-                'zip' => $request->zip,
-                'phone' => $request->phone,
-                'subscribe' => $request->subscribe
-            ]);
-
-            return redirect()->route('user.email.view.list', Crypt::encrypt($contact->mail_list_id))->with([
-                'type' => 'success',
-                'message' => 'Contact updated!'
-            ]);
-        }
-
-        $this->validate($request, [
-            'email' => 'required|email|unique:mail_contacts|max:250',
-        ]);
-
-        $contact->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'address_1' => $request->address_1,
-            'address_2' => $request->address_2,
-            'country' => $request->country,
-            'state' => $request->state,
-            'zip' => $request->zip,
-            'phone' => $request->phone,
-            'subscribe' => $request->subscribe
-        ]);
-
-        return redirect()->route('user.email.view.list', Crypt::encrypt($contact->mail_list_id))->with([
-            'type' => 'success',
-            'message' => 'Contact updated!'
-        ]);
-    }
-
-    public function delete_contact($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $contact = MailContact::find($finder)->delete();
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Contact deleted!'
-        ]);
-    }
-
     public function email_campaigns(Request $request)
     {
         $email_campaigns = EmailCampaign::latest()->where('user_id', Auth::user()->id)->get();
@@ -707,7 +376,7 @@ class EmailMarketingController extends Controller
     public function email_campaigns_create()
     {
         $email_templates = EmailTemplate::where(['user_id' => Auth::user()->id])->get();
-        $mail_lists = MailList::where('user_id', Auth::user()->id)->get();
+        $mail_lists = ListManagement::where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.email-marketing.email-campaigns.create', [
             'email_templates' => $email_templates,
@@ -748,9 +417,9 @@ class EmailMarketingController extends Controller
             'message_timing' => 'required'
         ]);
 
-        $email_kit = EmailKit::where(['account_id' => Auth::user()->id, 'is_admin' => false, 'master' => true]);
-        $email_template = EmailTemplate::where('id', $request->email_template_id)->first();
-        $mail_list = MailList::where('id', $request->email_list)->first();
+        $email_kit = EmailKit::where('id', $request->email_kit)->first();
+        $email_template = EmailTemplate::where('id', $request->email_template)->first();
+        $mail_list = ListManagement::where('id', $request->email_list)->first();
 
         if (!$email_kit->exists()) {
             $email_kit = EmailKit::where(['is_admin' => true, 'master' => true]);
@@ -827,7 +496,7 @@ class EmailMarketingController extends Controller
                     $email_campaign->save();
                 }
 
-                $contacts = MailContact::latest()->where('mail_list_id', $mail_list->id)->get();
+                $contacts = ListManagementContact::latest()->where('list_management_id', $mail_list->id)->get();
 
                 // build each wa queue data based on contacts
                 $email_campaign_queue = $contacts->map(function ($_contact) use ($email_campaign) {
@@ -957,7 +626,7 @@ class EmailMarketingController extends Controller
                     $email_campaign->save();
                 }
 
-                $contacts = MailContact::latest()->where('mail_list_id', $mail_list->id)->get();
+                $contacts = ListManagementContact::latest()->where('list_management_id', $mail_list->id)->get();
 
                 // build each wa queue data based on contacts
                 $email_campaign_queue = $contacts->map(function ($_contact) use ($email_campaign) {
@@ -1005,16 +674,16 @@ class EmailMarketingController extends Controller
     function getPoweredBy()
     {
         return '
-<div class="footer" style="clear: both; margin-top: 10px; text-align: center; width: 100%; font-weight: bold; font-size: 16px;">
-    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%"> 
-    <tr>
-        <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;" valign="top" align="center">
-        Powered by <a href="https://ojafunnel.com" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">Ojafunnel</a>.
-        </td>
-    </tr>
-    </table>
-</div>
-</body>
-        ';
+                <div class="footer" style="clear: both; margin-top: 10px; text-align: center; width: 100%; font-weight: bold; font-size: 16px;">
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%"> 
+                    <tr>
+                        <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;" valign="top" align="center">
+                        Powered by <a href="https://ojafunnel.com" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">Ojafunnel</a>.
+                        </td>
+                    </tr>
+                    </table>
+                </div>
+                </body>
+            ';
     }
 }
