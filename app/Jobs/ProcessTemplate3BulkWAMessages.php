@@ -73,9 +73,9 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
                 } else {
                     // start sending
                     $this->contacts->map(function ($_contact) use ($whatsapp_account, $full_jwt_session, $data, $wa_campaign_id) {
-                        $contact = strpos($_contact->phone_number, '+') === 0
-                            ? substr($_contact->phone_number, 1) . "@c.us"
-                            : $_contact->phone_number  . "@c.us";
+                        $contact = strpos($_contact->phone, '+') === 0
+                            ? substr($_contact->phone, 1) . "@c.us"
+                            : $_contact->phone  . "@c.us";
 
                         $response = Http::withHeaders([
                             'Authorization' => 'Bearer ' . $full_jwt_session[1]
@@ -108,7 +108,7 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
                             // invalid 
                             if (str_ends_with($data['message'], 'não existe.')) {
                                 // invalid  
-                                $queue = WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number]);
+                                $queue = WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone]);
 
                                 if ($queue) {
                                     $queue->update([
@@ -118,7 +118,7 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
                                     // when user adds new contact while launch schedule/immediate campaign
                                     $queue = new WaQueues();
                                     $queue->wa_campaign_id = $wa_campaign_id;
-                                    $queue->phone_number =  $_contact->phone_number;
+                                    $queue->phone_number =  $_contact->phone;
                                     $queue->status =  'Invalid';
 
                                     $queue->save();
@@ -130,7 +130,7 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
                                 // send mail for schedule if disconnected
 
                                 // disconnect
-                                $queue = WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number]);
+                                $queue = WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone]);
 
                                 if ($queue) {
                                     $queue->update([
@@ -140,7 +140,7 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
                                     // when user adds new contact while launch schedule/immediate campaign
                                     $queue = new WaQueues();
                                     $queue->wa_campaign_id = $wa_campaign_id;
-                                    $queue->phone_number =  $_contact->phone_number;
+                                    $queue->phone_number =  $_contact->phone;
                                     $queue->status =  'Disconnected';
 
                                     $queue->save();
@@ -151,7 +151,7 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
                         // sent
                         if (array_key_exists('response', $data)) {
                             if ($data['response'] != null) {
-                                $queue = WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone_number]);
+                                $queue = WaQueues::where(['wa_campaign_id' => $wa_campaign_id, 'phone_number' => $_contact->phone]);
 
                                 if ($queue) {
                                     $queue->update([
@@ -161,7 +161,7 @@ class ProcessTemplate3BulkWAMessages implements ShouldQueue
                                     // when user adds new contact while launch schedule/immediate campaign
                                     $queue = new WaQueues();
                                     $queue->wa_campaign_id = $wa_campaign_id;
-                                    $queue->phone_number =  $_contact->phone_number;
+                                    $queue->phone_number =  $_contact->phone;
                                     $queue->status =  'Sent';
 
                                     $queue->save();
