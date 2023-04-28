@@ -15,6 +15,8 @@ use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\DB;
 use App\Models\BirthdayContactList;
 use App\Models\BirthdayEmailQueue;
+use App\Models\ListManagement;
+use App\Models\ListManagementContact;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
@@ -28,89 +30,10 @@ class BirthdayController extends Controller
         ]);
     }
 
-    public function manage_list($username)
-    {
-        $bl = BirthdayContactList::latest()->where('user_id', Auth::user()->id)->get();
-        return view('dashboard.birthday.createList', [
-            'username' => $username,
-            'bl' => $bl
-        ]);
-    }
-
-    public function individual_list(Request $request, $username)
-    {
-        $bd = BirthdayContactList::where('id', $request->id)->first();
-        $bdc = BirthdayContact::latest()->where('birthday_contact_list_id', $request->id)->get();
-
-        return view('dashboard.birthday.individualList', [
-            'username' => $username,
-            'bd' => $bd,
-            'bdc' => $bdc,
-        ]);
-    }
-
-    public function birthday_create_contact_list(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'dob' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
-        ]);
-
-        $bdc = new BirthdayContact();
-        $bdc->name = $request->name;
-        $bdc->date_of_birth = $request->dob;
-        $bdc->anniv_date = $request->aniDate;
-        $bdc->phone_number = $request->phone;
-        $bdc->email = $request->email;
-        $bdc->birthday_contact_list_id = $request->birthday_id;
-        $bdc->save();
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Birthday Contact List Added.'
-        ]);
-    }
-
-    public function birthday_update_contact_list(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'dob' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
-        ]);
-
-        $bdc = BirthdayContact::findOrFail($request->id);
-
-        $bdc->name = $request->name;
-        $bdc->date_of_birth = $request->dob;
-        $bdc->anniv_date = $request->aniDate;
-        $bdc->phone_number = $request->phone;
-        $bdc->email = $request->email;
-        $bdc->update();
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Birthday Contact List Updated.'
-        ]);
-    }
-
-    public function birthday_delete_contact_list(Request $request)
-    {
-        $bdc = BirthdayContact::findOrFail($request->id)->delete();
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Birthday Contact List Deleted.'
-        ]);
-    }
-
     public function manage_birthday($username)
     {
         $bm = BirthdayAutomation::latest()->where('user_id', Auth::user()->id)->get();
-        $birthlist = BirthdayContactList::where('user_id', Auth::user()->id)->get();
+        $birthlist = ListManagement::where('user_id', Auth::user()->id)->where('status', true)->get();
         $smsServer = Integration::where('user_id', Auth::user()->id)->where('status', 'Active')->get();
 
         return view('dashboard.birthday.birthdayManage', [
@@ -123,7 +46,7 @@ class BirthdayController extends Controller
 
     public function create_birthday($username)
     {
-        $birthlist = BirthdayContactList::where('user_id', Auth::user()->id)->get();
+        $birthlist = ListManagement::where('user_id', Auth::user()->id)->where('status', true)->get();
         $smsServer = Integration::where('user_id', Auth::user()->id)->where('status', 'Active')->get();
         $email_integrations = EmailKit::latest()->where(['account_id' => Auth::user()->id, 'is_admin' => false])->get();
 
@@ -193,46 +116,6 @@ class BirthdayController extends Controller
         ]);
     }
 
-    public function create_list(Request $request)
-    {
-        if (\App\Models\BirthdayContactList::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->birthday_contact_list) {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
-            ]);
-        }
-        $bl = new BirthdayContactList();
-        $bl->name = $request->name;
-        $bl->status = $request->status;
-        $bl->user_id = Auth::user()->id;
-        $bl->save();
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Birthday List Created.'
-        ]);
-    }
-
-    public function update_list(Request $request)
-    {
-        $bl = BirthdayContactList::findOrFail($request->id);
-        $bl->name = $request->name;
-        $bl->status = $request->status;
-        $bl->update();
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Birthday List Updated.'
-        ]);
-    }
-
-    public function delete_list(Request $request)
-    {
-        $bl = BirthdayContactList::findOrFail($request->id)->delete();
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Birthday List Deleted.'
-        ]);
-    }
-
     public function create_birthday_automation(Request $request)
     {
         $request->validate([
@@ -267,7 +150,7 @@ class BirthdayController extends Controller
                     'message' => 'The WA account is not connected. Connect and try again'
                 ]);
 
-                $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
+                $contact = ListManagement::findOrFail($request->birthday_list_id)->get();
 
                 // for data integrity and consistency
                 DB::transaction(function () use ($request, $contact, $whatsapp_account, $automation) {
@@ -294,7 +177,7 @@ class BirthdayController extends Controller
                     $waAutomation->end_date = $request->end_date;
                     $waAutomation->save();
 
-                    $contacts = BirthdayContact::latest()->where(['birthday_contact_list_id' => $contact->first()->id])->get();
+                    $contacts = ListManagementContact::latest()->where(['list_management_id' => $contact->first()->id])->get();
 
                     // build each wa queue data based on contacts
                     $queue = $contacts->map(function ($_contact) use ($waAutomation) {
@@ -302,7 +185,7 @@ class BirthdayController extends Controller
 
                         return [
                             'birthday_automation_id' => $waAutomation->id,
-                            'phone_number' => $_contact->phone_number,
+                            'phone_number' => $_contact->phone,
                             'status' => 'Scheduled',
                             'created_at' => $timestamp,
                             'updated_at' => $timestamp,
@@ -315,7 +198,7 @@ class BirthdayController extends Controller
             }
 
             if ($automation == 'sms automation') {
-                $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
+                $contact = ListManagement::findOrFail($request->birthday_list_id)->get();
                 $bm = new BirthdayAutomation();
                 $bm->user_id = Auth::user()->id;
                 $bm->birthday_contact_list_id = $request->birthday_list_id;
@@ -362,7 +245,7 @@ class BirthdayController extends Controller
                 } else $email_kit = $email_kit->first();
 
                 //
-                $contact = BirthdayContactList::findOrFail($request->birthday_list_id)->get();
+                $contact = ListManagement::findOrFail($request->birthday_list_id)->get();
 
                 // for data integrity and consistency
                 DB::transaction(function () use ($request, $email_kit, $contact, $automation) {
@@ -388,7 +271,7 @@ class BirthdayController extends Controller
                     $emAutomation->end_date = $request->end_date;
                     $emAutomation->save();
 
-                    $contacts = BirthdayContact::latest()->where(['birthday_contact_list_id' => $contact->first()->id])->get();
+                    $contacts = ListManagementContact::latest()->where(['list_management_id' => $contact->first()->id])->get();
 
                     // build each wa queue data based on contacts
                     $queue = $contacts->map(function ($_contact) use ($emAutomation) {
