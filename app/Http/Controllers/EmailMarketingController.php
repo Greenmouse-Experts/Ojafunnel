@@ -411,7 +411,7 @@ class EmailMarketingController extends Controller
             'message_timing' => 'required'
         ]);
 
-        $email_kit = EmailKit::where('id', $request->email_kit);
+        $email_kit = EmailKit::where(['account_id' => Auth::user()->id, 'is_admin' => false, 'master' => true]);
         $email_template = EmailTemplate::where('id', $request->email_template_id)->first();
         $mail_list = ListManagement::where('id', $request->email_list)->first();
 
