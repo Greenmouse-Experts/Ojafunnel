@@ -376,7 +376,7 @@ class EmailMarketingController extends Controller
     public function email_campaigns_create()
     {
         $email_templates = EmailTemplate::where(['user_id' => Auth::user()->id])->get();
-        $mail_lists = ListManagement::where('user_id', Auth::user()->id)->get();
+        $mail_lists = ListManagement::where('user_id', Auth::user()->id)->where('status', true)->get();
 
         return view('dashboard.email-marketing.email-campaigns.create', [
             'email_templates' => $email_templates,
