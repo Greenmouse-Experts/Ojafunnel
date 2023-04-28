@@ -132,7 +132,6 @@ Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->n
 // User Dashboard
 Route::prefix('{username}')->group(function () {
     // Route::domain('{username}.' . config('app.domain_url'))->group(function () {
-    Route::get('/test', [App\Http\Controllers\HomePageController::class, 'test']);
     Route::prefix('dashboard')->group(
         function () {
             Route::get('/', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('user.dashboard');
@@ -259,8 +258,6 @@ Route::prefix('{username}')->group(function () {
                     Route::post('/email-templates/delete', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_delete'])->name('user.email-marketing.email.templates.delete');
                     Route::get('/email-templates/editor/{id}', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_editor'])->name('user.email-marketing.email.templates.editor');
                     Route::post('/email-templates/editor/save', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_editor_save'])->name('user.email-marketing.email.templates.editor.save');
-                    Route::get('/email-lists', [App\Http\Controllers\EmailMarketingController::class, 'email_lists'])->name('user.email-marketing.email.lists');
-                    Route::get('/create-list', [App\Http\Controllers\EmailMarketingController::class, 'create_email_list'])->name('user.email.marketing.create.list');
                     Route::get('/email-campaigns', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns'])->name('user.email-marketing.email.campaigns');
                     Route::get('/email-campaigns/template_content/{id}', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns_template_content'])->name('user.email-marketing.email.campaigns.template_content');
                     Route::get('/email-campaigns/create', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns_create'])->name('user.email-marketing.email.campaigns.create');
@@ -333,6 +330,16 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/email', [App\Http\Controllers\DashboardController::class, 'support_email'])->name('user.main.email');
                 }
             );
+
+
+            // List Management
+            Route::prefix('/list/management')->group(
+                function () {
+                    Route::get('/index', [App\Http\Controllers\ListManagementController::class, 'list_management'])->name('user.list.management');
+                    Route::get('/create', [App\Http\Controllers\ListManagementController::class, 'create_list'])->name('user.create.list');
+                }
+            );
+
         }
     );
 });

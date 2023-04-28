@@ -39,11 +39,11 @@
             <div class="row">
                 <div class="card">
                     <div class="card-body" style="padding: 4rem;">
-                        <form method="post" action="{{ route('user.email.update.contact', Crypt::encrypt($contact->id)) }}">
+                        <form method="post" action="{{ route('user.update.contact', Crypt::encrypt($contact->id)) }}">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
-                                    <label for="">First Name</label>
+                                    <label for="">Name</label>
                                     <input type="text" name="name" class="form-control"  value="{{$contact->name}}" placeholder="Enter name" required />
                                 </div>
                                 <div class="col-lg-6 mb-4">
@@ -54,7 +54,7 @@
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Address 1</label>
-                                    <textarea type="text" name="address_1" class="form-control" value="{{$contact->address_1}}" placeholder="Enter address one" required>{{$contact->address_1}}</textarea>
+                                    <textarea type="text" name="address_1" class="form-control" value="{{$contact->address_1}}" placeholder="Enter address one">{{$contact->address_1}}</textarea>
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Address 2</label>
@@ -74,27 +74,27 @@
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
                                     <label for="">State</label>
-                                    <input type="text" name="state" class="form-control"  value="{{$contact->state}}" placeholder="Enter State" required />
+                                    <input type="text" name="state" class="form-control"  value="{{$contact->state}}" placeholder="Enter State" />
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Zip</label>
-                                    <input type="text" name="zip" class="form-control"  value="{{$contact->zip}}" placeholder="Enter Zip" required />
+                                    <input type="text" name="zip" class="form-control"  value="{{$contact->zip}}" placeholder="Enter Zip" />
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <label for="">Phone Number</label>
-                                <input type="text" name="phone" class="form-control"  value="{{$contact->phone}}" placeholder="Enter Phone Number" required />
+                                <input type="text" name="phone" class="form-control"  value="{{$contact->phone}}" placeholder="Enter Phone Number" />
                             </div>
-                            <div class="col-lg-12 mb-4">
+                            <!-- <div class="col-lg-12 mb-4">
                                 <label for="">Subscribe</label>
                                 <p class="text-xs text-gray-500">
                                     Will be sent emails
                                 </p>
                                 <input type="radio" id="subscribe" name="subscribe" value="1" {{$contact->subscribe == 1 ? 'checked' : ''}}/> Yes &nbsp;
                                 <input type="radio" id="subscribe" name="subscribe" value="0" {{$contact->subscribe == 0 ? 'checked' : ''}}/> No
-                            </div>
+                            </div> -->
                             <div class="text-end mt-2">
-                                <a href="{{route('user.email.view.list', Crypt::encrypt($contact->mail_list_id))}}">
+                                <a href="{{route('user.view.list', Crypt::encrypt($contact->mail_list_id))}}">
                                     <button type="button" class="btn px-4 py-1 btn-danger">
                                         Cancel
                                     </button>

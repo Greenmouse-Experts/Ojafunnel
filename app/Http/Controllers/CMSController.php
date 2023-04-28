@@ -241,7 +241,6 @@ class CMSController extends Controller
                     'lesson_video' => [
                         'required',
                         File::types(['mp3', 'mp4'])
-                            ->min(1024)
                             ->max(100 * 1024),
                     ],
                 ]);

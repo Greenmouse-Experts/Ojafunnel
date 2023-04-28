@@ -14,7 +14,6 @@ use App\Models\Message;
 use App\Models\OjaPlan;
 use App\Models\Category;
 use App\Models\EmailKit;
-use App\Models\MailList;
 use App\Models\ContactUs;
 use App\Models\OrderItem;
 use App\Models\ShopOrder;
@@ -22,7 +21,6 @@ use App\Models\FunnelPage;
 use App\Models\Newsletter;
 use App\Models\StoreOrder;
 use App\Models\Withdrawal;
-use App\Models\MailContact;
 use App\Models\MessageUser;
 use App\Models\SmsCampaign;
 use App\Models\Transaction;
@@ -40,6 +38,9 @@ use App\Models\ReplyMailSupport;
 use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use App\Models\ListManagement;
+use App\Models\ListManagementContact;
+use App\Models\Newsletter;
 use App\Models\OjafunnelMailSupport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -494,77 +495,6 @@ class AdminController extends Controller
 
         return view('Admin.email-marketing.email-campaigns.index', [
             'email_campaigns' => $email_campaigns
-        ]);
-    }
-
-    public function email_lists()
-    {
-        $lists = MailList::latest()->get();
-
-        return view('Admin.email-marketing.email-lists.index', [
-            'lists' => $lists
-        ]);
-    }
-
-    public function view_email_lists($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $mail_list = MailList::find($finder);
-
-        return view('Admin.email-marketing.email-lists.view')->with([
-            'mail_list' => $mail_list
-        ]);
-    }
-
-    public function activate_email_lists($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $mail_list = MailList::find($finder);
-
-        $mail_list->update([
-            'status' => true
-        ]);
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'List activated successfully.',
-        ]);
-    }
-
-    public function disactivate_email_lists($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $mail_list = MailList::find($finder);
-
-        $mail_list->update([
-            'status' => false
-        ]);
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'List disactivated successfully.',
-        ]);
-    }
-
-    public function delete_email_lists($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $list = MailList::find($finder);
-        $contact = MailContact::where('mail_list_id', $list->id)->get()->count();
-
-        if ($contact > 0) {
-            $contact->delete();
-        }
-
-        $list->delete();
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'List deleted!'
         ]);
     }
 
@@ -1880,4 +1810,243 @@ class AdminController extends Controller
             'message' => 'Email kit has been assigned master successfully'
         ]);
     }
+
+    public function user_list()
+    {
+        $lists = ListManagement::latest()->get();
+
+        return view('Admin.list-management.index', [
+            'lists' => $lists
+        ]);
+    }
+
+    public function view_list($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $list = ListManagement::find($finder);
+
+        return view('Admin.list-management.view')->with([
+            'list' => $list
+        ]);
+    }
+
+    public function edit_list($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $list = ListManagement::find($finder);
+
+        return view('Admin.list-management.edit')->with([
+            'list' => $list
+        ]);
+    }
+
+    public function enable_list($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $list = ListManagement::find($finder);
+
+        $list->update([
+            'status' => true
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'List activated successfully.',
+        ]);
+    }
+
+    public function disable_list($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $list = ListManagement::find($finder);
+
+        $list->update([
+            'status' => false
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'List disactivated successfully.',
+        ]);
+    }
+
+    public function update_list($id, Request $request)
+    {
+        $this->validate($request, [
+            'name'         => 'required|max:250',
+            'display_name' => 'required|max:250',
+            'description' => 'required|max:250',
+        ]);
+
+        $finder = Crypt::decrypt($id);
+
+        $list = ListManagement::find($finder);
+
+        if (empty($request->slug))
+        {
+            $list->update([
+                'uid' => Str::slug($request->display_name),
+                'name' => $request->name,
+                'display_name' => $request->display_name,
+                'slug' => $request->slug,
+                'description' => $request->description
+            ]);
+        } else {
+            if($list->slug == $request->slug)
+            {
+                $list->update([
+                    'uid' => Str::slug($request->display_name),
+                    'name' => $request->name,
+                    'display_name' => $request->display_name,
+                    'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
+                    'description' => $request->description
+                ]);
+            } else {
+                $this->validate($request, [
+                    'slug' => 'max:250|alpha_dash|unique:list_management',
+                ]);
+
+                $list->update([
+                    'uid' => Str::slug($request->display_name),
+                    'name' => $request->name,
+                    'display_name' => $request->display_name,
+                    'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
+                    'description' => $request->description
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.user.list')->with([
+            'type' => 'success',
+            'message' => 'List updated!'
+        ]);
+    }
+
+    public function delete_list($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $list = ListManagement::find($finder);
+        $contact = ListManagementContact::where('list_management_id', $list->id)->get()->count();
+
+        if ($contact > 0) {
+            $contact->delete();
+        }
+
+        $list->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'List deleted!'
+        ]);
+    }
+
+    public function edit_contact($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $contact = ListManagementContact::find($finder);
+
+        return view('Admin.list-management.contacts.edit')->with([
+            'contact' => $contact
+        ]);
+    }
+
+    function email_veriication($email)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.apilayer.com/email_verification/check?email=$email",
+            CURLOPT_HTTPHEADER => array(
+                "Content-Type: text/plain",
+                "apikey: hh1kBNxCPLAwYaePOR55kuyy3mT7zxow"
+            ),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET"
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $json = json_decode($response, true);
+
+        // dd($json);
+
+        if ($json !== null) {
+            if (in_array('format_valid', $json)) {
+                if ($json['format_valid'] == true) {
+                    return 'true';
+                }
+            }
+            if (in_array('success', $json)) {
+                if ($json['success'] == false) {
+                    return 'invalid';
+                }
+            }
+        }
+
+        return 'invalid';
+    }
+
+    public function update_contact($id, Request $request)
+    {
+        $this->validate($request, [
+            'name'  => 'required|max:250',
+            'email' => 'required|email|max:250',
+            'phone' => 'required|numeric',
+        ]);
+
+        $finder = Crypt::decrypt($id);
+
+        $contact = ListManagementContact::find($finder);
+
+        $emailVerification = $this->email_veriication($request->email);
+
+        if ($emailVerification !== 'true') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'The email address is not valid.'
+            ]);
+        }
+
+        $contact->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'address_1' => $request->address_1,
+            'address_2' => $request->address_2,
+            'country' => $request->country,
+            'state' => $request->state,
+            'zip' => $request->zip,
+            'phone' => $request->phone,
+        ]);
+
+        return redirect()->route('admin.view.user.list', Crypt::encrypt($contact->list_management_id))->with([
+            'type' => 'success',
+            'message' => 'Contact updated!'
+        ]);
+    }
+
+    public function delete_contact($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        ListManagementContact::find($finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Contact deleted!'
+        ]);
+    }
+
 }

@@ -45,22 +45,18 @@
                             Email Kits
                             </a>
                         </li>
-                        {{-- <li>
-                            <a href="/test-2" key="t-tui-calendar">
-                                Email Templates
-                            </a>
-                        </li> --}}
-                        <li>
-                            <a href="{{ route('admin.email-marketing.email-lists') }}" key="t-tui-calendar">
-                                Email Lists
-                            </a>
-                        </li> 
                         <li>
                             <a href="{{ route('admin.email-marketing.email-campaigns') }}" key="t-tui-calendar">
                                 Email Campaigns
                             </a>
                         </li> 
                     </ul>
+                </li>
+                <li>
+                    <a href="{{route('admin.user.list')}}">
+                        <i class="bi bi-person-lines-fill"></i>
+                        <span key="t-dashboards">List Management</span>
+                    </a>
                 </li>
                 <li>
                     <a href="{{route('affiliateList')}}">
