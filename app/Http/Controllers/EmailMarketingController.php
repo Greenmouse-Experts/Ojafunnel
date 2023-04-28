@@ -412,7 +412,7 @@ class EmailMarketingController extends Controller
         ]);
 
         $email_kit = EmailKit::where('id', $request->email_kit);
-        $email_template = EmailTemplate::where('id', $request->email_template)->first();
+        $email_template = EmailTemplate::where('id', $request->email_template_id)->first();
         $mail_list = ListManagement::where('id', $request->email_list)->first();
 
         if (!$email_kit->exists()) {
