@@ -273,7 +273,7 @@
                                 avaliable for you
                             </p>
                             <div class="con">
-                                <a href="#" class="text-purp">
+                                <a href="{{ route('user.email-marketing.email.templates', ['username' => Auth::user()->username]) }}" class="text-purp">
                                     <b> Continue <i class="bi bi-arrow-right"></i> </b>
                                 </a>
                             </div>

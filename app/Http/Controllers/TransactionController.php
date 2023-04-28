@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AdminWithdrawnNotification;
 use App\Models\Admin;
 use App\Models\BankDetail;
 use App\Models\OjafunnelNotification;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -25,7 +27,7 @@ class TransactionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth', 'verified']);
     }
 
     function fcm($body, $firebaseToken)
@@ -36,7 +38,7 @@ class TransactionController extends Controller
             "registration_ids" => $firebaseToken,
             "notification" => [
                 "title" => config('app.name'),
-                "body" => $body, 
+                "body" => $body,
                 'image' => URL::asset('assets/images/Logo-fav.png'),
             ],
             'vibrate' => 1,
@@ -57,8 +59,8 @@ class TransactionController extends Controller
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString); 
-        $result = curl_exec ( $ch );     
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $result = curl_exec($ch);
 
         return $result;
     }
@@ -81,16 +83,16 @@ class TransactionController extends Controller
         OjafunnelNotification::create([
             'to' => Auth::user()->id,
             'title' => config('app.name'),
-            'body' => 'Your '.config('app.name').' account has been funded ₦'.$amount.'.'
+            'body' => 'Your ' . config('app.name') . ' account has been funded ₦' . $amount . '.'
         ]);
 
         $user = User::where('id', Auth::user()->id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
-        $this->fcm('Your '.config('app.name').' account has been funded ₦'.$amount.'.', $user);
+        $this->fcm('Your ' . config('app.name') . ' account has been funded ₦' . $amount . '.', $user);
 
         return back()->with([
             'type' => 'success',
             'message' => 'Deposited successfully.'
-        ]);  
+        ]);
     }
 
     public function add_bank_information(Request $request)
@@ -107,12 +109,11 @@ class TransactionController extends Controller
 
         $bankInformations = BankDetail::where('user_id', Auth::user()->id)->get();
 
-        if($bankInformations->count() == 10)
-        {
+        if ($bankInformations->count() == 10) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'You are not allowed to enter more than ten(10) payment methods.'
-            ]);  
+            ]);
         }
 
         try {
@@ -125,8 +126,7 @@ class TransactionController extends Controller
             if (isset($response['account_name'])) {
                 if (Str::contains($response['account_name'], strtoupper(Auth::user()->first_name))) {
                     if (Str::contains($response['account_name'], strtoupper(Auth::user()->last_name))) {
-                        if($bankInformations->isEmpty())
-                        {
+                        if ($bankInformations->isEmpty()) {
                             BankDetail::create([
                                 'user_id' => Auth::user()->id,
                                 'type' => 'NGN',
@@ -139,7 +139,7 @@ class TransactionController extends Controller
                             return back()->with([
                                 'type' => 'success',
                                 'message' => 'Payment method added successfully.'
-                            ]);  
+                            ]);
                         } else {
                             foreach ($bankInformations as $bank) {
                                 $bank_number[] = $bank->account_number;
@@ -148,7 +148,7 @@ class TransactionController extends Controller
                                 return back()->with([
                                     'type' => 'danger',
                                     'message' => 'Payment method added before.'
-                                ]); 
+                                ]);
                             } else {
                                 BankDetail::create([
                                     'user_id' => Auth::user()->id,
@@ -158,37 +158,36 @@ class TransactionController extends Controller
                                     'bank_name' => $response['Bank_name'],
                                     'bank_code' => $response['bank_code']
                                 ]);
-        
+
                                 return back()->with([
                                     'type' => 'success',
                                     'message' => 'Payment method added successfully.'
-                                ]);  
+                                ]);
                             }
                         }
-                        
                     } else {
                         return back()->with([
                             'type' => 'danger',
                             'message' => 'Account Name must be the same name on your Account.'
-                        ]);  
+                        ]);
                     }
                 } else {
                     return back()->with([
                         'type' => 'danger',
                         'message' => 'Account Name must be the same name on your Account.'
-                    ]);  
+                    ]);
                 }
             } else {
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Invalid account number entered, ' . $response['message']
-                ]);  
+                ]);
             }
         } catch (Exception $e) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'This service is currently unavailable. Please try again.'
-            ]);  
+            ]);
         }
     }
 
@@ -218,16 +217,14 @@ class TransactionController extends Controller
 
         $bankInformations = BankDetail::where('user_id', Auth::user()->id)->get();
 
-        if($bankInformations->count() == 10)
-        {
+        if ($bankInformations->count() == 10) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'You are not allowed to enter more than ten(10) payment methods.'
-            ]);  
+            ]);
         }
 
-        if($bankInformations->isEmpty())
-        {
+        if ($bankInformations->isEmpty()) {
             BankDetail::create([
                 'user_id' => Auth::user()->id,
                 'type' => 'US',
@@ -240,7 +237,7 @@ class TransactionController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Payment method added successfully.'
-            ]);  
+            ]);
         } else {
             foreach ($bankInformations as $bank) {
                 $bank_number[] = $bank->account_number;
@@ -249,7 +246,7 @@ class TransactionController extends Controller
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Payment method added before.'
-                ]); 
+                ]);
             } else {
                 BankDetail::create([
                     'user_id' => Auth::user()->id,
@@ -263,7 +260,7 @@ class TransactionController extends Controller
                 return back()->with([
                     'type' => 'success',
                     'message' => 'Payment method added successfully.'
-                ]);  
+                ]);
             }
         }
     }
@@ -274,8 +271,7 @@ class TransactionController extends Controller
 
         $bank = BankDetail::find($idFinder);
 
-        if($request->account_number == $bank->account_number)
-        {
+        if ($request->account_number == $bank->account_number) {
             //Validate Request
             $this->validate($request, [
                 'account_name' => ['required', 'string'],
@@ -293,28 +289,27 @@ class TransactionController extends Controller
         }
 
         $bankInformations = BankDetail::where('user_id', Auth::user()->id)->get();
-        
-        if($bankInformations->count() == 10)
-        {
+
+        if ($bankInformations->count() == 10) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'You are not allowed to enter more than ten(10) payment methods.'
-            ]);  
+            ]);
         }
 
         // if($bankInformations->isEmpty())
         // {
-            $bank->update([
-                'account_name' => $request->account_name,
-                'type_of_bank_account' => $request->type_of_bank_account,
-                'routing_number' => $request->routing_number,
-                'account_number' => $request->account_number,
-            ]);
+        $bank->update([
+            'account_name' => $request->account_name,
+            'type_of_bank_account' => $request->type_of_bank_account,
+            'routing_number' => $request->routing_number,
+            'account_number' => $request->account_number,
+        ]);
 
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Payment method updated successfully.'
-            ]);  
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Payment method updated successfully.'
+        ]);
         // } else {
         //     foreach ($bankInformations as $bank) {
         //         $bank_number[] = $bank->account_number;
@@ -351,16 +346,14 @@ class TransactionController extends Controller
 
         $bankInformations = BankDetail::where('user_id', Auth::user()->id)->get();
 
-        if($bankInformations->count() == 10)
-        {
+        if ($bankInformations->count() == 10) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'You are not allowed to enter more than ten(10) payment methods.'
-            ]);  
+            ]);
         }
 
-        if($bankInformations->isEmpty())
-        {
+        if ($bankInformations->isEmpty()) {
             BankDetail::create([
                 'user_id' => Auth::user()->id,
                 'type' => 'PAYSTACK',
@@ -372,7 +365,7 @@ class TransactionController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Payment method added successfully.'
-            ]);  
+            ]);
         } else {
             foreach ($bankInformations as $bank) {
                 $public_key[] = $bank->public_key;
@@ -381,7 +374,7 @@ class TransactionController extends Controller
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Payment method added before.'
-                ]); 
+                ]);
             } else {
                 BankDetail::create([
                     'user_id' => Auth::user()->id,
@@ -394,7 +387,7 @@ class TransactionController extends Controller
                 return back()->with([
                     'type' => 'success',
                     'message' => 'Payment method added successfully.'
-                ]);  
+                ]);
             }
         }
     }
@@ -421,7 +414,7 @@ class TransactionController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Payment method updated successfully.'
-        ]);  
+        ]);
     }
 
     public function withdraw(Request $request)
@@ -460,10 +453,14 @@ class TransactionController extends Controller
 
             $administrator = Admin::latest()->first();
 
+            // send withdraw email notification here
+            Mail::to($administrator->email)->send(new AdminWithdrawnNotification($user, $withdraw->amount));
+            Mail::to($user->email)->send(new AdminWithdrawnNotification($user, $withdraw->amount));
+
             OjafunnelNotification::create([
                 'to' => Auth::user()->id,
                 'title' => config('app.name'),
-                'body' => 'Withdrawal request of ₦'.$withdraw->amount.'.',
+                'body' => 'Withdrawal request of ₦' . $withdraw->amount . '.',
             ]);
 
             OjafunnelNotification::create([
@@ -474,8 +471,8 @@ class TransactionController extends Controller
 
             $user = User::where('id', Auth::user()->id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
             $admin = Admin::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
-            
-            $this->fcm('Withdrawal request of ₦'.$withdraw->amount.'.', $user);
+
+            $this->fcm('Withdrawal request of ₦' . $withdraw->amount . '.', $user);
             $this->fcm(Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a withdrawal of ₦' . $withdraw->amount, $admin);
 
 
@@ -492,8 +489,7 @@ class TransactionController extends Controller
 
         $withdraw = Withdrawal::findorfail($idFinder);
 
-        if($withdraw->status == 'created')
-        {
+        if ($withdraw->status == 'created') {
             $user = User::find($withdraw->user_id);
 
             $user->wallet += $withdraw->amount;
