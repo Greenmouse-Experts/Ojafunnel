@@ -2,13 +2,14 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\ProcessEmailBirthday;
 use Carbon\Carbon;
+use App\Models\EmailKit;
 use App\Models\BirthdayContact;
 use Illuminate\Console\Command;
+use App\Jobs\ProcessEmailBirthday;
 use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\Log;
-use App\Models\EmailKit;
+use App\Models\ListManagementContact;
 
 class EmailBirthday extends Command
 {
@@ -50,7 +51,7 @@ class EmailBirthday extends Command
             $current_month = $date->format('m');
 
             if ($_campaign->sms_type == 'birthday') {
-                $lists = BirthdayContact::where(['birthday_contact_list_id' => $_campaign->birthday_contact_list_id])
+                $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id])
                     ->whereMonth('date_of_birth', $current_month)
                     ->whereDay('date_of_birth', $current_day)->get();
 
@@ -78,7 +79,7 @@ class EmailBirthday extends Command
             }
 
             if ($_campaign->sms_type == 'anniversary') {
-                $lists = BirthdayContact::where(['birthday_contact_list_id' => $_campaign->birthday_contact_list_id])
+                $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id])
                     ->whereMonth('anniv_date', $current_month)
                     ->whereDay('anniv_date', $current_day)->get();
 

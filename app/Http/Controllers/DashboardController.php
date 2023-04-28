@@ -42,6 +42,7 @@ use App\Models\EmailCampaignQueue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Models\ListManagementContact;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -901,7 +902,8 @@ class DashboardController extends Controller
         ])->withInput();
 
         // get contact list
-        $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
+        // $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
+        $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->get();
 
         if ($request->message_timing == 'Immediately') {
             if ($request->template == 'template1') {
@@ -924,7 +926,7 @@ class DashboardController extends Controller
 
                         return [
                             'wa_campaign_id' => $waCaimpagn->id,
-                            'phone_number' => $_contact->phone_number,
+                            'phone_number' => $_contact->phone,
                             'status' => 'Waiting',
                             'created_at' => $timestamp,
                             'updated_at' => $timestamp,
@@ -934,7 +936,7 @@ class DashboardController extends Controller
                     // bulk insert
                     WaQueues::insert($wa_queue);
 
-                    // divide into 10 chunks and 
+                    // divide into 10 chunks and
                     // delay each job between 10  - 20 sec in the queue
                     $chunks = $contacts->chunk(10);
                     $delay = mt_rand(10, 20);
@@ -971,7 +973,7 @@ class DashboardController extends Controller
                     $waCaimpagn->template = $request->template;
                     $waCaimpagn->template2_message = $request->template2_message;
 
-                    // filename 
+                    // filename
                     $file = $request->file('template2_file');
                     $path = $file->storeAs(
                         '/public/WAfiles',
@@ -988,7 +990,7 @@ class DashboardController extends Controller
 
                         return [
                             'wa_campaign_id' => $waCaimpagn->id,
-                            'phone_number' => $_contact->phone_number,
+                            'phone_number' => $_contact->phone,
                             'status' => 'Waiting',
                             'created_at' => $timestamp,
                             'updated_at' => $timestamp,
@@ -998,14 +1000,14 @@ class DashboardController extends Controller
                     // bulk insert
                     WaQueues::insert($wa_queue);
 
-                    // divide into 10 chunks and 
+                    // divide into 10 chunks and
                     // delay each job between 10  - 20 sec in the queue
                     $chunks = $contacts->chunk(10);
                     $delay = mt_rand(10, 20);
 
                     // dispatch job and delay
                     foreach ($chunks as $key => $_chunk) {
-                        // dispatch job 
+                        // dispatch job
                         ProcessTemplate2BulkWAMessages::dispatch($_chunk, [
                             'whatsapp_account' => $whatsapp_account[1],
                             'full_jwt_session' => $whatsapp_account[3],
@@ -1050,7 +1052,7 @@ class DashboardController extends Controller
 
                         return [
                             'wa_campaign_id' => $waCaimpagn->id,
-                            'phone_number' => $_contact->phone_number,
+                            'phone_number' => $_contact->phone,
                             'status' => 'Waiting',
                             'created_at' => $timestamp,
                             'updated_at' => $timestamp,
@@ -1060,7 +1062,7 @@ class DashboardController extends Controller
                     // bulk insert
                     WaQueues::insert($wa_queue);
 
-                    // divide into 10 chunks and 
+                    // divide into 10 chunks and
                     // delay each job between 10  - 20 sec in the queue
                     $chunks = $contacts->chunk(10);
                     $delay = mt_rand(10, 20);
@@ -1138,7 +1140,7 @@ class DashboardController extends Controller
 
                             return [
                                 'wa_campaign_id' => $waCaimpagn->id,
-                                'phone_number' => $_contact->phone_number,
+                                'phone_number' => $_contact->phone,
                                 'status' => 'Scheduled',
                                 'created_at' => $timestamp,
                                 'updated_at' => $timestamp,
@@ -1167,7 +1169,7 @@ class DashboardController extends Controller
                         $waCaimpagn->template = $request->template;
                         $waCaimpagn->template2_message = $request->template2_message;
 
-                        // filename 
+                        // filename
                         $file = $request->file('template2_file');
                         $path = $file->storeAs(
                             '/public/WAfiles',
@@ -1192,7 +1194,7 @@ class DashboardController extends Controller
 
                             return [
                                 'wa_campaign_id' => $waCaimpagn->id,
-                                'phone_number' => $_contact->phone_number,
+                                'phone_number' => $_contact->phone,
                                 'status' => 'Waiting',
                                 'created_at' => $timestamp,
                                 'updated_at' => $timestamp,
@@ -1242,7 +1244,7 @@ class DashboardController extends Controller
 
                             return [
                                 'wa_campaign_id' => $waCaimpagn->id,
-                                'phone_number' => $_contact->phone_number,
+                                'phone_number' => $_contact->phone,
                                 'status' => 'Waiting',
                                 'created_at' => $timestamp,
                                 'updated_at' => $timestamp,
@@ -1298,7 +1300,7 @@ class DashboardController extends Controller
 
                             return [
                                 'wa_campaign_id' => $waCaimpagn->id,
-                                'phone_number' => $_contact->phone_number,
+                                'phone_number' => $_contact->phone,
                                 'status' => 'Scheduled',
                                 'created_at' => $timestamp,
                                 'updated_at' => $timestamp,
@@ -1327,7 +1329,7 @@ class DashboardController extends Controller
                         $waCaimpagn->template = $request->template;
                         $waCaimpagn->template2_message = $request->template2_message;
 
-                        // filename 
+                        // filename
                         $file = $request->file('template2_file');
                         $path = $file->storeAs(
                             '/public/WAfiles',
@@ -1353,7 +1355,7 @@ class DashboardController extends Controller
 
                             return [
                                 'wa_campaign_id' => $waCaimpagn->id,
-                                'phone_number' => $_contact->phone_number,
+                                'phone_number' => $_contact->phone,
                                 'status' => 'Waiting',
                                 'created_at' => $timestamp,
                                 'updated_at' => $timestamp,
@@ -1404,7 +1406,7 @@ class DashboardController extends Controller
 
                             return [
                                 'wa_campaign_id' => $waCaimpagn->id,
-                                'phone_number' => $_contact->phone_number,
+                                'phone_number' => $_contact->phone,
                                 'status' => 'Waiting',
                                 'created_at' => $timestamp,
                                 'updated_at' => $timestamp,
@@ -1465,7 +1467,7 @@ class DashboardController extends Controller
 
                             return [
                                 'wa_campaign_id' => $waCaimpagn->id,
-                                'phone_number' => $_contact->phone_number,
+                                'phone_number' => $_contact->phone,
                                 'status' => 'Scheduled',
                                 'created_at' => $timestamp,
                                 'updated_at' => $timestamp,
@@ -1494,7 +1496,7 @@ class DashboardController extends Controller
                         $waCaimpagn->template = $request->template;
                         $waCaimpagn->template2_message = $request->template2_message;
 
-                        // filename 
+                        // filename
                         $file = $request->file('template2_file');
                         $path = $file->storeAs(
                             '/public/WAfiles',
@@ -1522,7 +1524,7 @@ class DashboardController extends Controller
 
                             return [
                                 'wa_campaign_id' => $waCaimpagn->id,
-                                'phone_number' => $_contact->phone_number,
+                                'phone_number' => $_contact->phone,
                                 'status' => 'Waiting',
                                 'created_at' => $timestamp,
                                 'updated_at' => $timestamp,
@@ -1575,7 +1577,7 @@ class DashboardController extends Controller
 
                             return [
                                 'wa_campaign_id' => $waCaimpagn->id,
-                                'phone_number' => $_contact->phone_number,
+                                'phone_number' => $_contact->phone,
                                 'status' => 'Waiting',
                                 'created_at' => $timestamp,
                                 'updated_at' => $timestamp,
