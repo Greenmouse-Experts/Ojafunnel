@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AdminWithdrawnNotification;
+use App\Mail\UserWithdrawnNotification;
 use App\Models\Admin;
 use App\Models\BankDetail;
 use App\Models\OjafunnelNotification;
@@ -454,8 +455,8 @@ class TransactionController extends Controller
             $administrator = Admin::latest()->first();
 
             // send withdraw email notification here
-            Mail::to($administrator->email)->send(new AdminWithdrawnNotification($user, $withdraw->amount));
-            Mail::to($user->email)->send(new AdminWithdrawnNotification($user, $withdraw->amount));
+            Mail::to($administrator->email)->send(new AdminWithdrawnNotification(Auth::user(), $withdraw->amount));
+            Mail::to(Auth::user()->email)->send(new UserWithdrawnNotification(Auth::user(), $withdraw->amount));
 
             OjafunnelNotification::create([
                 'to' => Auth::user()->id,

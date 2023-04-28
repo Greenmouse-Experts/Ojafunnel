@@ -1,7 +1,7 @@
 <x-mail::message>
 # Withdrawal Request
 
-Hello {{ $user }}, your withdrawal request of {{ $amount }} has been processed successfully.
+Hello {{ $_user }}, your withdrawal request of {{ $amount }} has been processed successfully.
 
 Thanks,<br>
 {{ config('app.name') }}

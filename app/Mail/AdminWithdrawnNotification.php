@@ -50,7 +50,7 @@ class AdminWithdrawnNotification extends Mailable
             markdown: 'emails.withdrawal.admin',
             with: [
                 'amount' => $this->amount,
-                'user' => $this->user->username
+                '_user' => $this->user->username
             ]
         );
     }
