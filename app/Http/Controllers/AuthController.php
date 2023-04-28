@@ -24,7 +24,7 @@ use Illuminate\Support\Str;
 class AuthController extends Controller
 {
     public function register(Request $request)
-    {  
+    {
         $customer = Customer::newCustomer();
 
         $user = new User();
@@ -56,7 +56,7 @@ class AuthController extends Controller
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Admin yet to add plans! Try again later.'
-                ]);
+                ])->withInput();
             }
 
             // user email verification
@@ -76,7 +76,6 @@ class AuthController extends Controller
                         'type' => 'success',
                         'message' => 'Registration Successful, Please verify your account!'
                     ]);
-
                 } catch (\Exception $e) {
                     // return view('somethingWentWrong', ['message' => trans('messages.something_went_wrong_with_email_service') . ": " . $e->getMessage()]);
                     return redirect()->route('verify.account', Crypt::encrypt($user->email))->with([
@@ -298,7 +297,6 @@ class AuthController extends Controller
 
                 //$referedMembers .= '- ' . $entry->name . '- Level: '. $level. '- Commission: '.$earnings.'<br/>';
                 $referedMembers .= $this->getAncestors($array, $deposit_amount, $entry->id, $level + 1);
-
             }
         }
 
@@ -440,7 +438,7 @@ class AuthController extends Controller
 
             Auth::logout();
 
-    
+
             return back()->with([
                 'type' => 'danger',
                 'message' => 'You are not a User.'
@@ -587,7 +585,6 @@ class AuthController extends Controller
             }
 
             return back()->with('failure_report', 'You are not an Administrator');
-
         } else {
             return back()->with('failure_report', 'User authentication failed.');
         }
@@ -609,18 +606,18 @@ class AuthController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.apilayer.com/email_verification/check?email=$email",
-        CURLOPT_HTTPHEADER => array(
-            "Content-Type: text/plain",
-            "apikey: hh1kBNxCPLAwYaePOR55kuyy3mT7zxow"
-        ),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET"
+            CURLOPT_URL => "https://api.apilayer.com/email_verification/check?email=$email",
+            CURLOPT_HTTPHEADER => array(
+                "Content-Type: text/plain",
+                "apikey: hh1kBNxCPLAwYaePOR55kuyy3mT7zxow"
+            ),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET"
         ));
 
         $response = curl_exec($curl);
@@ -631,7 +628,7 @@ class AuthController extends Controller
 
         // dd($json);
 
-        if($json == null){
+        if ($json == null) {
             return 'invalid';
         } elseif ($json['success'] == false) {
             return 'false';

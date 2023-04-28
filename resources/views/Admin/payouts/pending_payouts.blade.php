@@ -205,7 +205,7 @@ $admin = auth()->guard('admin')->user();
                                                                                                 <label>Status</label>
                                                                                                 <select name="status" required>
                                                                                                     <option value="{{$withdraw->status}}"> {{$withdraw->status}}</option>
-                                                                                                    <option value="created"> Created</option>
+                                                                                                    {{-- <option value="created"> Created</option> --}}
                                                                                                     <option value="refunded"> Refunded</option>
                                                                                                     <option value="finalized"> Finalized</option>
                                                                                                 </select>

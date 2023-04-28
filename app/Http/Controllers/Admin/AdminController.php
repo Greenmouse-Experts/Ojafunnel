@@ -18,6 +18,7 @@ use App\Models\ContactUs;
 use App\Models\OrderItem;
 use App\Models\ShopOrder;
 use App\Models\FunnelPage;
+use App\Models\Newsletter;
 use App\Models\StoreOrder;
 use App\Models\Withdrawal;
 use App\Models\MessageUser;
@@ -44,9 +45,12 @@ use App\Models\OjafunnelMailSupport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Models\OjafunnelNotification;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\UserApprovedWithdrawNotification;
+use App\Mail\AdminApprovedWithdrawNotification;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class AdminController extends Controller
@@ -1097,6 +1101,13 @@ class AdminController extends Controller
 
             $payout->transaction_id = $transaction->id;
             $payout->save();
+
+            $administrator = Admin::latest()->first();
+            $user = User::where('id', $payout->user_id)->first();
+
+            // send processed withdraw email notification here
+            Mail::to($administrator->email)->send(new AdminApprovedWithdrawNotification($user, $payout->amount));
+            Mail::to($user->email)->send(new UserApprovedWithdrawNotification($user, $payout->amount));
 
             OjafunnelNotification::create([
                 'to' => $payout->user_id,
