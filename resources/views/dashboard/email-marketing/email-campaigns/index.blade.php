@@ -92,8 +92,8 @@
                                                     @endif
                                                 </td> 
                                                 <td>
-                                                    @if (App\Models\ListManagementContact::where('id', $email_campaign->list_id)->exists())
-                                                        {{ App\Models\ListManagementContact::where('id', $email_campaign->list_id)->first()->name }}
+                                                    @if (App\Models\ListManagement::where('id', $email_campaign->list_id)->exists())
+                                                        {{ App\Models\ListManagement::where('id', $email_campaign->list_id)->first()->name }}
                                                     @else
                                                         <b>{{ 'DELETED' }}</b> 
                                                     @endif 
