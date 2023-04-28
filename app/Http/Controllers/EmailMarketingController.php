@@ -215,7 +215,7 @@ class EmailMarketingController extends Controller
             ]);
         }
 
-        $email_template = new EmailebTemplate();
+        $email_template = new EmailTemplate();
         $email_template->user_id = Auth::user()->id;
         $email_template->name = $request->name;
         $email_template->location = "views/emails/email-marketing-templates/$username/$slug.blade.php";
