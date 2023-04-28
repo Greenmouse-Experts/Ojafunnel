@@ -69,7 +69,13 @@
                                         @foreach ($bm as $b)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{\App\Models\BirthdayContactList::where('id', $b->birthday_contact_list_id)->first()->name}}</td>
+                                            <td>
+                                                @if (App\Models\ListManagement::where('id', $b->birthday_contact_list_id)->exists())
+                                                    {{ App\Models\ListManagement::where('id', $b->birthday_contact_list_id)->first()->name }}
+                                                @else
+                                                    <b>{{ 'DELETED' }}</b> 
+                                                @endif 
+                                            </td>
                                             <td>{{$b->title}}</td>
                                             <td>
                                                 {{-- @php
@@ -136,7 +142,7 @@
                                                                                 <div class="row">
                                                                                     <div class="col-md-12 mb-4">
                                                                                         <select name="birthday_list_id" id="" class='py-3 fs-6' required>
-                                                                                            <option selected value="{{$b->birthday_contact_list_id}}">{{App\Models\BirthdayContactList::find($b->birthday_contact_list_id)->name}}</option>
+                                                                                            <option selected value="{{$b->birthday_contact_list_id}}">{{App\Models\ListManagement::find($b->birthday_contact_list_id)->name}}</option>
                                                                                             <option disabled class='p-5'>Choose from birthday listing</option>
                                                                                             @if($birthlist->isEmpty())
                                                                                                 <option disabled value="">No Birthday List</option>

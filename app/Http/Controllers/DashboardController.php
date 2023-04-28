@@ -576,7 +576,7 @@ class DashboardController extends Controller
 
     public function newsms($username)
     {
-        $contact_lists = \App\Models\ContactList::where('user_id', Auth::user()->id)->get();
+        $contact_lists = \App\Models\ListManagement::where('user_id', Auth::user()->id)->where('status', true)->get();
         $integrations = Integration::latest()->where('user_id', Auth::user()->id)->get();
         return view('dashboard.newsms', [
             'username' => $username,
@@ -622,124 +622,6 @@ class DashboardController extends Controller
             'type' => 'success',
             'message' => 'Sms Campaign updated succesfully.'
         ]);
-    }
-
-    public function contact_list(Request $request)
-    {
-        $contact_lists = \App\Models\ContactList::latest()->where('user_id', Auth::user()->id)->cursor();
-
-        if ($request->isMethod('post')) {
-
-            if (\App\Models\ContactList::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->sms_contact_list) {
-                return back()->with([
-                    'type' => 'danger',
-                    'message' => 'Upgrade to enjoy more access'
-                ]);
-            }
-
-            $c = new \App\Models\ContactList();
-            $c->name = $request->name;
-            $c->user_id = Auth::user()->id;
-            $c->status = $request->status;
-            $c->save();
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Contact List Created.'
-            ]);
-        } else {
-            return view('dashboard.contact.list', compact('contact_lists'));
-        }
-    }
-
-    public function contact_list_update(Request $request)
-    {
-        $contact_lists = \App\Models\ContactList::latest()->where('user_id', Auth::user()->id)->cursor();
-
-        if ($request->isMethod('post')) {
-            $c = \App\Models\ContactList::findOrFail($request->list_id);
-            $c->name = $request->name;
-            $c->user_id = Auth::user()->id;
-            $c->status = $request->status;
-            $c->update();
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Contact List updated.'
-            ]);
-        } else {
-            return view('dashboard.contact.list', compact('contact_lists'));
-        }
-    }
-
-    public function contact_list_delete(Request $request)
-    {
-        if ($request->isMethod('post')) {
-            $contact_num = \App\Models\ContactNumber::where('contact_list_id', $request->list_id)->delete();
-            $c = \App\Models\ContactList::findOrFail($request->list_id);
-            $c->delete();
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Contact List deleted.'
-            ]);
-        } else {
-            return view('dashboard.contact.list', compact('contact_lists'));
-        }
-    }
-
-    public function add_contact_to_list(Request $request)
-    {
-        $contact = \App\Models\ContactNumber::latest()->where('contact_list_id', $request->list_id)->cursor();
-        $list_id = $request->list_id;
-        if ($request->isMethod('post')) {
-            $c = new \App\Models\ContactNumber();
-            $c->phone_number = $request->phone_no;
-            $c->name = $request->name;
-            $c->contact_list_id = $request->list_id;
-            $c->status = 'subscribed';
-            $c->save();
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Contact Added Successfully.'
-            ]);
-        } else {
-            return view('dashboard.contact.contact_number', compact('contact', 'list_id'));
-        }
-    }
-
-    public function update_contact_num(Request $request)
-    {
-
-        if ($request->isMethod('post')) {
-            $c = \App\Models\ContactNumber::findOrFail($request->contact_id);
-            $c->phone_number = $request->phone_no;
-            $c->name = $request->name;
-            $c->status = $request->status;
-            $c->update();
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Contact Updated Successfully.'
-            ]);
-        } else {
-            return view('dashboard.contact.contact_number', compact('contact', 'list_id'));
-        }
-    }
-
-    public function delete_contact_num(Request $request)
-    {
-        if ($request->isMethod('post')) {
-            $c = \App\Models\ContactNumber::findOrFail($request->contact_id)->delete();
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Contact Deleted Successfully.'
-            ]);
-        } else {
-            return view('dashboard.contact.contact_number', compact('contact', 'list_id'));
-        }
     }
 
     public function wa_number($username)
@@ -928,7 +810,7 @@ class DashboardController extends Controller
 
     public function sendbroadcast($username)
     {
-        $contact_lists = \App\Models\ContactList::where('user_id', Auth::user()->id)->get();
+        $contact_lists = \App\Models\ListManagement::where('user_id', Auth::user()->id)->where('status', true)->get();
         $integrations = Integration::latest()->where('user_id', Auth::user()->id)->get();
 
         $whatsapp_numbers = WhatsappNumber::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();

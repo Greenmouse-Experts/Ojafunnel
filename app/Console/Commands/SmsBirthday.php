@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use App\Models\BirthdayAutomation;
 use App\Models\BirthdayContact;
-use App\Models\BirthdayContactList;
 use App\Models\Integration;
+use App\Models\ListManagementContact;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
@@ -44,7 +44,7 @@ class SmsBirthday extends Command
 
         foreach ($birthday as $key => $ba) {
             if ($ba->sms_type == 'birthday') {
-                $birthdayContactList = BirthdayContact::where('birthday_contact_list_id', $ba->birthday_contact_list_id)->whereMonth('date_of_birth', '=', date('m'))->whereDay('date_of_birth', '=', date('d'))->select('phone_number')->get();
+                $birthdayContactList = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('date_of_birth', '=', date('m'))->whereDay('date_of_birth', '=', date('d'))->select('phone')->get();
                 // \Log::info($birthdayContactList);
 
                 if ($birthdayContactList->isEmpty()) {
@@ -156,7 +156,7 @@ class SmsBirthday extends Command
             }
 
             if ($ba->sms_type == 'anniversary') {
-                $birthdayContactList = BirthdayContact::where('birthday_contact_list_id', $ba->birthday_contact_list_id)->whereMonth('anniversary', '=', date('m'))->whereDay('anniversary', '=', date('d'))->select('phone_number')->get();
+                $birthdayContactList = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('anniversary', '=', date('m'))->whereDay('anniversary', '=', date('d'))->select('phone')->get();
                 // \Log::info($birthdayContactList);
 
                 if ($birthdayContactList->isEmpty()) {

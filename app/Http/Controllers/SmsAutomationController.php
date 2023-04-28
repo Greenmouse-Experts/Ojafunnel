@@ -266,7 +266,7 @@ class SmsAutomationController extends Controller
 
         $sms_type = $request->sms_type;
 
-        $contact = \App\Models\ContactNumber::where('contact_list_id', $request->mailinglist_id)->select('phone_number')
+        $contact = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')
             ->get();
 
         if ($request->message_timimg == 'Immediately') {
@@ -428,7 +428,7 @@ class SmsAutomationController extends Controller
             foreach ($contact as $receiver) {
                 \App\Models\SmsQueue::create([
                     'sms_campaign_id' => $new_campaign->id,
-                    'phone_number' => $receiver->phone_number,
+                    'phone_number' => $receiver->phone,
                     'status' => \App\Enums\SmsQueueStatus::WAITING
                 ]);
             }
@@ -454,7 +454,8 @@ class SmsAutomationController extends Controller
 
     public function sendMessageMultitexter(Request $request)
     {
-        $contacts = ContactNumber::where('contact_list_id', $request->mailinglist_id)->get('phone_number');
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')
+            ->get();
 
         $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
 
@@ -504,7 +505,8 @@ class SmsAutomationController extends Controller
 
     public function sendMessageNigeriaBulkSms(Request $request)
     {
-        $contacts = ContactNumber::where('contact_list_id', $request->mailinglist_id)->get('phone_number');
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')
+            ->get();
 
         $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
 
