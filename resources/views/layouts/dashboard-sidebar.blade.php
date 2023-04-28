@@ -36,7 +36,7 @@
                 </li>
                 <li>
                     <a href="{{route('user.list.management', Auth::user()->username)}}">
-                        <i class="bi bi-building"></i>
+                        <i class="bi bi-person-lines-fill"></i>
                         <span key="t-chat">List Management</span>
                     </a>
                 </li>

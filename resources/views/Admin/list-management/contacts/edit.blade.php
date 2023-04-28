@@ -1,5 +1,4 @@
-@extends('layouts.dashboard-frontend')
-
+@extends('layouts.admin-frontend')
 @section('page-content')
 <!-- ============================================================== -->
 <!-- Start right Content here -->
@@ -13,7 +12,7 @@
                         <h4 class="mb-sm-0 font-size-18">Edit Contact List</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
                                 <li class="breadcrumb-item active">Edit Contact List</li>
                             </ol>
                         </div>
@@ -27,9 +26,6 @@
                             <div class="col-md-9">
                                 <div class="py-2">
                                     <h4 class="font-500">Edit Contact List</h4>
-                                    <p>
-                                        Edit your contact list
-                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -39,16 +35,16 @@
             <div class="row">
                 <div class="card">
                     <div class="card-body" style="padding: 4rem;">
-                        <form method="post" action="{{ route('user.update.contact', Crypt::encrypt($contact->id)) }}">
+                        <form method="post" action="{{ route('admin.user.update.contact', Crypt::encrypt($contact->id)) }}">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Name</label>
-                                    <input type="text" name="name" class="form-control"  value="{{$contact->name}}" placeholder="Enter name" required />
+                                    <input type="text" name="name" class="form-control"  value="{{$contact->name}}" placeholder="Enter name" />
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Email Address</label>
-                                    <input type="email" name="email" class="form-control"  value="{{$contact->email}}" placeholder="Enter email" required />
+                                    <input type="email" name="email" class="form-control"  value="{{$contact->email}}" placeholder="Enter email" />
                                 </div>
                             </div>
                             <div class="row">

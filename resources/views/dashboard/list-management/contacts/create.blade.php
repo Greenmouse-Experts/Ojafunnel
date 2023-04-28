@@ -58,7 +58,7 @@
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Address 1</label>
-                                    <textarea type="text" name="address_1" class="form-control" value="{{old('address_1')}}" placeholder="Enter address one" required></textarea>
+                                    <textarea type="text" name="address_1" class="form-control" value="{{old('address_1')}}" placeholder="Enter address one"></textarea>
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Address 2</label>
@@ -77,16 +77,16 @@
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
                                     <label for="">State</label>
-                                    <input type="text" name="state" class="form-control"  value="{{old('state')}}" placeholder="Enter State" required />
+                                    <input type="text" name="state" class="form-control"  value="{{old('state')}}" placeholder="Enter State" />
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Zip</label>
-                                    <input type="text" name="zip" class="form-control"  value="{{old('zip')}}" placeholder="Enter Zip" required />
+                                    <input type="text" name="zip" class="form-control"  value="{{old('zip')}}" placeholder="Enter Zip" />
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <label for="">Phone Number</label>
-                                <input type="text" name="phone" class="form-control"  value="{{old('phone')}}" placeholder="Enter Phone Number" required />
+                                <input type="text" name="phone" class="form-control"  value="{{old('phone')}}" placeholder="Enter Phone Number" />
                             </div>
                             <!-- <div class="col-lg-12 mb-4">
                                 <label for="">Subscribe</label>

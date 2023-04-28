@@ -119,8 +119,6 @@ Route::prefix('user')->group(function () {
     Route::get('/list/management/list/view/{id}', [ListManagementController::class, 'view_list'])->name('user.view.list');
     Route::get('/list/management/list/edit/{id}', [ListManagementController::class, 'edit_list'])->name('user.edit.list');
     Route::post('/list/management/list/update/{id}', [ListManagementController::class, 'update_list'])->name('user.update.list');
-    Route::get('/list/management/list/enable/{id}', [ListManagementController::class, 'enable_list'])->name('user.enable.list');
-    Route::get('/list/management/list/disabled/{id}', [ListManagementController::class, 'disable_list'])->name('user.disable.list');
     Route::post('/list/management/list/delete/{id}', [ListManagementController::class, 'delete_list'])->name('user.delete.list');
     Route::get('/list/management/create/contact/list/{id}', [ListManagementController::class, 'create_contact_list'])->name('user.create.contact.list');
     Route::post('/list/management/create/contact/{id}', [ListManagementController::class, 'create_contact'])->name('user.create.contact');

@@ -1,4 +1,4 @@
-@extends('layouts.dashboard-frontend')
+@extends('layouts.admin-frontend')
 
 @section('page-content')
 <!-- ============================================================== -->
@@ -6,38 +6,42 @@
 <!-- ============================================================== -->
 <div class="main-content">
     <div class="page-content">
+        <!-- container-fluid -->
         <div class="container-fluid">
+            <!-- start page title -->
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">List Management</h4>
+                        <h4 class="mb-sm-0 font-size-18">{{$list->name}} List</h4>
+
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
-                                <li class="breadcrumb-item active">List Management</li>
+                                <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
+                                <li class="breadcrumb-item active">View list</li>
                             </ol>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="card account-head">
+                <div class="card">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="py-2">
-                                    <h4 class="font-500">List Management</h4>
+                                    <h4>{{$list->name}} List</h4>
                                     <p>
-                                        All your list management List in one Place
+                                        View list
                                     </p>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="">
                                     <div class="all-create">
-                                        <a href="{{ route('user.create.list', ['username' => Auth::user()->username]) }}">
+                                        <a href="{{route('admin.user.list')}}">
                                             <button>
-                                                + Add List
+                                                Edit List
                                             </button>
                                         </a>
                                     </div>
@@ -48,46 +52,76 @@
                 </div>
             </div>
             <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-lg-12 mb-4">
+                                    <label class="text-weight-500" for="">List Name</label>
+                                    <input type="text" class="form-control"  value="{{$list->name ?? ''}}" placeholder="Enter list name" readonly />
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label class="text-weight-500" for="">Display Name</label>
+                                    <input type="text" class="form-control" value="{{$list->display_name}}" placeholder="Enter display name" readonly />
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label class="text-weight-500" for="">URL Slug</label>
+                                    <input type="text" class="form-control" value="{{$list->slug}}" placeholder="Enter url slug" readonly />
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="border-left: 1px solid gainsboro; padding: 50px;">
+                                <div class="col-lg-12 mb-4">
+                                    <label class="text-weight-500" for="">Description</label>
+                                    <textarea type="text" class="form-control" value="{{$list->description}}" placeholder="Enter description" readonly>{{$list->description}}</textarea>
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label class="text-weight-500" for="">Status</label>
+                                    @if($list->status == true)
+                                    <p class="badge badge-pill badge-soft-success font-size-11">Active</p>
+                                    @else
+                                    <p class="badge badge-pill badge-soft-danger font-size-11">In-active</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">View List</h4>
-                            <div class="table-responsive">
+                            <h4 class="card-title mb-4">Contacts</h4>
+                            <div class="table-responsive"> 
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
-                                            <th>Display Name</th>
-                                            <th>Slug</th>
-                                            <th>Description</th>
-                                            <th>Contact</th>
+                                            <th>Email</th> 
+                                            <th>Address</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach(App\Models\ListManagement::latest()->where('user_id', Auth::user()->id)->get() as $key => $list)
+                                    </thead> 
+                                    <tbody> 
+                                        @foreach(App\Models\ListManagementContact::latest()->where('list_management_id', $list->id)->get() as $key => $contact)
                                         <tr>
-                                            <th scope="row">{{$loop->iteration}}</th>
+                                            <td scope="row">{{$loop->iteration}}</td>
                                             <td>
-                                                <p class='text-bold-600'> {{$list->name}} </p>
+                                                <p class='text-bold-600'> {{$contact->name}}</p>
                                             </td>
                                             <td>
-                                                {{$list->display_name}}
+                                                {{$contact->email}}
                                             </td>
                                             <td>
-                                                {{ $list->slug }}
+                                                {{ $contact->address_1 }}, {{ $contact->state }}, {{ $contact->country }}
                                             </td>
                                             <td>
-                                                <p class='text-bold-600'>{{ $list->description }}</p>
-                                            </td>
-                                            <td>{{App\Models\ListManagementContact::where('list_management_id', $list->id)->get()->count()}} Contact</td>
-                                            <td>
-                                                @if($list->status == true)
-                                                <span class="badge badge-pill badge-soft-success font-size-11">Active</span>
+                                                @if($contact->subscribe == true)
+                                                <span class="badge badge-pill badge-soft-success font-size-11">Subscribed</span>
                                                 @else
-                                                <span class="badge badge-pill badge-soft-danger font-size-11">In-active</span>
+                                                <span class="badge badge-pill badge-soft-danger font-size-11">Unsubscribed</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -96,14 +130,12 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('user.view.list', Crypt::encrypt($list->id))}}" style="cursor: pointer;">View</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('user.edit.list', Crypt::encrypt($list->id))}}" style="cursor: pointer;">Edit</a></li>
-                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$list->id}}">Delete</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('admin.user.edit.contact', Crypt::encrypt($contact->id))}}" style="cursor: pointer;">View/Edit</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$contact->id}}">Delete</a></li>
                                                     </ul>
                                                 </div>
-
-                                                 <!-- Modal START -->
-                                                 <div class="modal fade" id="delete-{{$list->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <!-- Modal START -->
+                                                <div class="modal fade" id="delete-{{$contact->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content pb-3">
                                                             <div class="modal-header border-bottom-0">
@@ -112,18 +144,18 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        <form method="POST" action="{{ route('user.delete.list', Crypt::encrypt($list->id))}}">
+                                                                        <form method="POST" action="{{ route('admin.user.delete.contact', Crypt::encrypt($contact->id))}}">
                                                                             @csrf
                                                                             <div class="form">
-                                                                                <p><b>Delete List</b></p>
+                                                                                <p><b>Delete Contact</b></p>
                                                                                 <div class="row">
                                                                                     <div class="col-lg-12">
-                                                                                        <p>This action cannot be undone. </p> <p>This will permanently delete this list and all contact attached to it.</p>
+                                                                                        <p>This action cannot be undone. </p> <p>This will permanently delete this contact.</p>
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <div class="boding">
                                                                                             <button type="submit" class="form-btn">
-                                                                                                I understand this consquences, Delete List
+                                                                                                I understand this consquences, Delete Contact
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>

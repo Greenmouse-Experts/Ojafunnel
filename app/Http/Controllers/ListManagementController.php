@@ -93,7 +93,6 @@ class ListManagementController extends Controller
             'name'         => 'required|max:250',
             'display_name' => 'required|max:250',
             'description' => 'required|max:250',
-            'slug'         => 'max:250|alpha_dash|unique:mail_lists,slug',
         ]);
 
         $finder = Crypt::decrypt($id);
@@ -110,50 +109,33 @@ class ListManagementController extends Controller
                 'description' => $request->description
             ]);
         } else {
-            $list->update([
-                'uid' => Str::slug($request->display_name),
-                'name' => $request->name,
-                'display_name' => $request->display_name,
-                'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
-                'description' => $request->description
-            ]);
+            if($list->slug == $request->slug)
+            {
+                $list->update([
+                    'uid' => Str::slug($request->display_name),
+                    'name' => $request->name,
+                    'display_name' => $request->display_name,
+                    'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
+                    'description' => $request->description
+                ]);
+            } else {
+                $this->validate($request, [
+                    'slug' => 'max:250|alpha_dash|unique:list_management',
+                ]);
+
+                $list->update([
+                    'uid' => Str::slug($request->display_name),
+                    'name' => $request->name,
+                    'display_name' => $request->display_name,
+                    'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
+                    'description' => $request->description
+                ]);
+            }
         }
 
         return redirect()->route('user.list.management', Auth::user()->username)->with([
             'type' => 'success',
             'message' => 'List updated!'
-        ]);
-    }
-
-    public function enable_list($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $list = ListManagement::find($finder);
-
-        $list->update([
-            'status' => true
-        ]);
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'List activated successfully.',
-        ]);
-    }
-
-    public function disable_list($id)
-    {
-        $finder = Crypt::decrypt($id);
-
-        $list = ListManagement::find($finder);
-
-        $list->update([
-            'status' => false
-        ]);
-
-        return back()->with([
-            'type' => 'success',
-            'message' => 'List disactivated successfully.',
         ]);
     }
 
@@ -234,10 +216,6 @@ class ListManagementController extends Controller
         $this->validate($request, [
             'name'  => 'required|max:250',
             'email'         => 'required|email|max:250',
-            'address_1' => 'required|max:250',
-            'country' => 'required|max:250',
-            'state' => 'required|max:250',
-            'zip' => 'required|max:250',
             'phone' => 'required|numeric',
         ]);
 
@@ -290,10 +268,6 @@ class ListManagementController extends Controller
         $this->validate($request, [
             'name'  => 'required|max:250',
             'email' => 'required|email|max:250',
-            'address_1' => 'required|max:250',
-            'country' => 'required|max:250',
-            'state' => 'required|max:250',
-            'zip' => 'required|max:250',
             'phone' => 'required|numeric',
         ]);
 

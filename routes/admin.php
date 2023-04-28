@@ -41,11 +41,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             // Email Marketing
             Route::get('/email-marketing/email-kits', [App\Http\Controllers\Admin\AdminController::class, 'view_email_kits'])->name('admin.email-marketing.email-kits');
             Route::get('/email-marketing/email-campaigns', [App\Http\Controllers\Admin\AdminController::class, 'view_email_campaigns'])->name('admin.email-marketing.email-campaigns');
-            Route::get('/email-marketing/email-lists', [App\Http\Controllers\Admin\AdminController::class, 'email_lists'])->name('admin.email-marketing.email-lists');
-            Route::get('/email-marketing/view/email-lists/{id}', [App\Http\Controllers\Admin\AdminController::class, 'view_email_lists'])->name('admin.email-marketing.email-lists.view');
-            Route::get('/email-marketing/disactivate/email-lists/{id}', [App\Http\Controllers\Admin\AdminController::class, 'disactivate_email_lists'])->name('admin.email-marketing.email-lists.disactivate');
-            Route::get('/email-marketing/activate/email-lists/{id}', [App\Http\Controllers\Admin\AdminController::class, 'activate_email_lists'])->name('admin.email-marketing.email-lists.activate');
-            Route::post('/email-marketing/delete/email-lists/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_email_lists'])->name('admin.email-marketing.email-lists.delete');
 
             // LMS
             Route::get('/viewCart', [App\Http\Controllers\Admin\AdminController::class, 'viewCart'])->name('viewCart');
@@ -154,6 +149,18 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::post('/integration/email/admin_update', [App\Http\Controllers\Admin\AdminController::class, 'integration_email_admin_update'])->name('user.integration.email.admin_update');
             Route::post('/integration/email/admin_delete', [App\Http\Controllers\Admin\AdminController::class, 'integration_email_admin_delete'])->name('user.integration.email.admin_delete');
             Route::post('/integration/email/admin_master', [App\Http\Controllers\Admin\AdminController::class, 'integration_email_admin_master'])->name('user.integration.email.admin_master');
+
+            // List Management
+            Route::get('/user/list/management', [App\Http\Controllers\Admin\AdminController::class, 'user_list'])->name('admin.user.list');
+            Route::get('/user/list/management/view/{id}', [App\Http\Controllers\Admin\AdminController::class, 'view_list'])->name('admin.view.user.list');
+            Route::get('/user/list/management/list/edit/{id}', [App\Http\Controllers\Admin\AdminController::class, 'edit_list'])->name('admin.edit.user.list');
+            Route::post('/user/management/update/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_list'])->name('admin.user.update.list');
+            Route::get('/user/management/enable/{id}', [App\Http\Controllers\Admin\AdminController::class, 'enable_list'])->name('admin.user.enable.list');
+            Route::get('/user/management/disabled/{id}', [App\Http\Controllers\Admin\AdminController::class, 'disable_list'])->name('admin.user.disable.list');
+            Route::post('/user/management/delete/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_list'])->name('admin.user.delete.list');
+            Route::get('/user/list/management/contact/edit/{id}', [App\Http\Controllers\Admin\AdminController::class, 'edit_contact'])->name('admin.user.edit.contact');
+            Route::post('/user/list/management/contact/update/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_contact'])->name('admin.user.update.contact');
+            Route::post('/user/list/management/contact/delete/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_contact'])->name('admin.user.delete.contact');
         }
     );
 });
