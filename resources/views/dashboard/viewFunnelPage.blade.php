@@ -226,9 +226,9 @@
                                                                     {{ $page->file_location	}}
                                                                 @else
                                                                     @if ($page->name == 'index.html')
-                                                                        {{ 'https://' . $page->slug . '-funnel.ojafunnel.com' . '/' }}
+                                                                        {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
                                                                     @else
-                                                                        {{ 'https://' . $page->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
+                                                                        {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
                                                                     @endif 
                                                                 @endif
                                                             </td> 
@@ -250,9 +250,9 @@
                                                                                     {{ $page->file_location	}}
                                                                                 @else
                                                                                     @if ($page->name == 'index.html')
-                                                                                        {{ 'https://' . $page->slug . '-funnel.ojafunnel.com' . '/' }}
+                                                                                        {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
                                                                                     @else
-                                                                                        {{ 'https://' . $page->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
+                                                                                        {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
                                                                                     @endif 
                                                                                 @endif
                                                                             ">View Page</a>
