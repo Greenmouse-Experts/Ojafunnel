@@ -26,9 +26,9 @@
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="font-60">Choose A Template</h4>
+                            <h4 class="font-60">Create A Page</h4>
                             <p>
-                            Pick a ready made template to begin building your pages
+                                Create a page and begin editing your pages with our ready made components.
                             </p>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="all-create">
-                            <button data-bs-toggle="modal" data-bs-target="#template" class="btn btn-primary d-block mt-2">New Template</button>
+                            <button data-bs-toggle="modal" data-bs-target="#template" class="btn btn-primary d-block mt-2">New Page</button>
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                                             <div class="inner first-grid">
                                                 <div class="text-center">
                                                     <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
-                                                    <button data-bs-toggle="modal" data-bs-target="#template" class="btn btn-primary d-block mt-2">New Template</button>
+                                                    <button data-bs-toggle="modal" data-bs-target="#template" class="btn btn-primary d-block mt-2">New Page</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,13 +134,13 @@
 
                                                     <i class="bi bi-bookmark-plus-fill fs-1 text-primary"></i>
                                                     <a class="btn btn-primary d-block mt-2" href="{{route('user.page.builder.view.editor', [Auth::user()->username, Crypt::encrypt($page->id)])}}">
-                                                        Use Template
+                                                        Edit Page
                                                     </a>
                                                     <a class="btn btn-primary d-block mt-2" data-bs-toggle="modal" data-bs-target="#Editing-{{$page->id}}">
-                                                        Edit Template
+                                                        Update Page
                                                     </a>
                                                     <a class="btn btn-primary d-block mt-2" data-bs-toggle="modal" data-bs-target="#Delete-{{$page->id}}">
-                                                        Delete Template
+                                                        Delete Page
                                                     </a>
                                                 </div>
                                             </div>
@@ -217,7 +217,7 @@
                                                                 <form method="POST" action="{{ route('user.page.builder.delete', Crypt::encrypt($page->id))}}">
                                                                     @csrf
                                                                     <div class="form">
-                                                                        <p><b>Delete Contact</b></p>
+                                                                        <p><b>Delete Page</b></p>
                                                                         <div class="row">
                                                                             <div class="col-lg-12">
                                                                                 <p>This action cannot be undone. This will permanently delete {{$page->name}} page.</p>
@@ -247,6 +247,85 @@
                                         <!-- end modal -->
                                     @endforeach
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">My Pages</h4>
+                            <div class="table-responsive"> 
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                    <thead class="tread">
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Title</th>
+                                            <th>Folder</th>
+                                            <th>Domain</th>
+                                            <th>Created At</th> 
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead> 
+                                    <tbody>
+                                        @forelse ($pages as $page)
+                                            <tr>
+                                                <td>{{ $loop->index + 1 }}</td>
+                                                <td>{{ $page->title }}</td>
+                                                <td>{{ $page->folder }}</td> 
+                                                <td>
+                                                    @if (env('APP_ENV') == 'local')
+                                                        {{ $page->file_location	}}
+                                                    @else
+                                                        @if ($page->name == 'index.html')
+                                                            {{ 'https://' . $page->slug . '-page.ojafunnel.com' . '/' }}
+                                                        @else
+                                                            {{ 'https://' . $page->slug . '-page.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
+                                                        @endif 
+                                                    @endif
+                                                </td> 
+                                                <td>{{ $page->created_at->toDayDateTimeString() }}</td>
+                                                <td>
+                                                    <div class="dropdown-center">
+                                                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Options
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                            <li>
+                                                                <a class="dropdown-item" style="cursor: pointer;" href="
+                                                                {{route('user.page.builder.view.editor', [Auth::user()->username, Crypt::encrypt($page->id)])}}
+                                                                ">Edit Page</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" style="cursor: pointer;" target="_blank" href="
+                                                                    @if (env('APP_ENV') == 'local')
+                                                                        {{ $page->file_location	}}
+                                                                    @else
+                                                                        @if ($page->name == 'index.html')
+                                                                            {{ 'https://' . $page->slug . '-page.ojafunnel.com' . '/' }}
+                                                                        @else
+                                                                            {{ 'https://' . $page->slug . '-page.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
+                                                                        @endif 
+                                                                    @endif
+                                                                ">View Page</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" style="cursor: pointer;" href="
+                                                                ">Add Custom Domain</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div> 
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            {{ 'No pages at the moment' }}
+                                        @endforelse
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

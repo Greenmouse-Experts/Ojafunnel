@@ -41,11 +41,10 @@ class CMSController extends Controller
             'category' => ['required', 'string', 'max:255'],
         ]);
 
-        if(Course::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->courses)
-        {
+        if (Course::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->courses) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access'
             ]);
         }
 
@@ -234,7 +233,7 @@ class CMSController extends Controller
         ]);
 
         $section = Section::find($request->section_id);
-        
+
         if ($request->content_type == 'Video') {
             try {
                 $this->validate($request, [
@@ -528,11 +527,10 @@ class CMSController extends Controller
             ]
         );
 
-        if(Shop::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->shop)
-        {
+        if (Shop::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->shop) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access'
             ]);
         }
 
@@ -540,8 +538,7 @@ class CMSController extends Controller
 
         if ($shops->isEmpty()) {
 
-            if($request->primaryColor == '#000000')
-            {   
+            if ($request->primaryColor == '#000000') {
                 $request->validate(
                     [
                         'theme' => 'required'
@@ -594,8 +591,7 @@ class CMSController extends Controller
                     'message' => 'You already have a shop.'
                 ]);
             } else {
-                if($request->primaryColor == '#000000')
-                {   
+                if ($request->primaryColor == '#000000') {
                     $request->validate(
                         [
                             'theme' => 'required'
@@ -652,8 +648,7 @@ class CMSController extends Controller
                 ]
             );
 
-            if($request->primaryColor == '#000000')
-            {  
+            if ($request->primaryColor == '#000000') {
                 if (request()->hasFile('logo')) {
                     $this->validate($request, [
                         'logo' => 'required|mimes:jpeg,png,jpg',
@@ -731,8 +726,7 @@ class CMSController extends Controller
                 ]
             );
 
-            if($request->primaryColor == '#000000')
-            {  
+            if ($request->primaryColor == '#000000') {
                 if (request()->hasFile('logo')) {
                     $this->validate($request, [
                         'logo' => 'required|mimes:jpeg,png,jpg',

@@ -48,7 +48,7 @@ class StoreController extends Controller
         if (Store::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->store) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access.'
             ]);
         }
 
@@ -211,7 +211,7 @@ class StoreController extends Controller
         if (StoreProduct::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->products) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access.'
             ]);
         }
 
@@ -311,7 +311,7 @@ class StoreController extends Controller
             'content_type' => 'required',
             'file' => [
                 'required',
-                FacadeFile::types(['mp3','pdf','mp4'])
+                FacadeFile::types(['mp3', 'pdf', 'mp4'])
                     ->max(100 * 1024),
             ],
         ]);
@@ -319,7 +319,7 @@ class StoreController extends Controller
         if (StoreProduct::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->products) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access.'
             ]);
         }
 
@@ -370,7 +370,7 @@ class StoreController extends Controller
                 'type' => 'success',
                 'message' => $request->name . ' added to store product successfully'
             ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Failed to add product, please try again.'
@@ -398,30 +398,30 @@ class StoreController extends Controller
 
 
         $token = explode('/', $sp->link);
-        $token2 = explode('.', $token[sizeof($token)-1]);
+        $token2 = explode('.', $token[sizeof($token) - 1]);
 
-        if($sp->link)
-        {
-            cloudinary()->destroy(config('app.name').'/'.$token2[0]);
+        if ($sp->link) {
+            cloudinary()->destroy(config('app.name') . '/' . $token2[0]);
         }
 
-        if ($request->file('file')) 
-        {
+        if ($request->file('file')) {
             $productFile = request()->file->getClientOriginalName();
 
             $filename = pathinfo($productFile, PATHINFO_FILENAME);
 
-            $response = cloudinary()->uploadFile($request->file('file')->getRealPath(),
-                        [
-                            'folder' => config('app.name'),
-                            "public_id" => $filename,
-                            "use_filename" => TRUE
-                        ])->getSecurePath();
+            $response = cloudinary()->uploadFile(
+                $request->file('file')->getRealPath(),
+                [
+                    'folder' => config('app.name'),
+                    "public_id" => $filename,
+                    "use_filename" => TRUE
+                ]
+            )->getSecurePath();
 
             $sp->link = $response;
         }
 
-        
+
 
         // check if level1_comm <= level2_comm... then fail
         if ($request->level1_comm <= $request->level2_comm) return back()->with([
@@ -436,5 +436,4 @@ class StoreController extends Controller
             'message' => $sp->name . ' update successfully'
         ]);
     }
-
 }

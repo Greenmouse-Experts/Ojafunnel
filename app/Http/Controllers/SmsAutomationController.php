@@ -256,11 +256,10 @@ class SmsAutomationController extends Controller
             'integration' => ['required', 'string', 'max:255'],
         ], $messages);
 
-        if(SmsCampaign::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->sms_automation)
-        {
+        if (SmsCampaign::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->sms_automation) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access'
             ]);
         }
 
@@ -270,12 +269,10 @@ class SmsAutomationController extends Controller
             ->get();
 
         if ($request->message_timimg == 'Immediately') {
-            if ($request->integration == "Multitexter") 
-            {
+            if ($request->integration == "Multitexter") {
                 $message = $this->sendMessageMultitexter($request);
 
-                if(str_contains($message->msg, 'Message has been sent'))
-                {   
+                if (str_contains($message->msg, 'Message has been sent')) {
                     $new_campaign = SmsCampaign::create([
                         'title' => $request->campaign_name,
                         'user_id' => Auth::user()->id,
@@ -306,12 +303,10 @@ class SmsAutomationController extends Controller
                         'message' => $message
                     ]);
                 }
-            } elseif ($request->integration == "NigeriaBulkSms") 
-            {
+            } elseif ($request->integration == "NigeriaBulkSms") {
                 $message = $this->sendMessageNigeriaBulkSms($request);
 
-                if(str_contains($message, 'Message sent'))
-                {   
+                if (str_contains($message, 'Message sent')) {
                     $new_campaign = SmsCampaign::create([
                         'title' => $request->campaign_name,
                         'user_id' => Auth::user()->id,
@@ -336,8 +331,6 @@ class SmsAutomationController extends Controller
                         'type' => 'success',
                         'message' => 'SMS Campaign Automation Created.'
                     ]);
-
-
                 } else {
                     return back()->with([
                         'type' => 'danger',
@@ -351,8 +344,7 @@ class SmsAutomationController extends Controller
                 ]);
             }
         }
-        if ($request->message_timimg == 'Schedule') 
-        {
+        if ($request->message_timimg == 'Schedule') {
             $new_campaign = SmsCampaign::create([
                 'title' => $request->campaign_name,
                 'user_id' => Auth::user()->id,
@@ -449,7 +441,6 @@ class SmsAutomationController extends Controller
 
     public function sendMessageTwilio(Request $request)
     {
-        
     }
 
     public function sendMessageMultitexter(Request $request)

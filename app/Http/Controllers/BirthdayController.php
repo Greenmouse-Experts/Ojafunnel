@@ -129,7 +129,7 @@ class BirthdayController extends Controller
         if (\App\Models\BirthdayAutomation::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->birthday_automation) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access.'
             ]);
         }
 

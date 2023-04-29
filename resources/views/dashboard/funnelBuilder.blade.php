@@ -137,9 +137,19 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('user.view.funnel.pages', [Auth::user()->username, Crypt::encrypt($funnel->id)])}}">View Pages</a></li>
-                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit-{{$funnel->id}}">Edit</a></li>
-                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$funnel->id}}">Delete</a></li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="{{route('user.view.funnel.pages', [Auth::user()->username, Crypt::encrypt($funnel->id)])}}">View Pages</a>
+                                                        </li> 
+                                                        <li>
+                                                            <a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit-{{$funnel->id}}">Edit Funnel</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$funnel->id}}">Delete Funnel</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" style="cursor: pointer;" href="
+                                                            ">Add Custom Domain</a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                                 <!-- Modal START -->

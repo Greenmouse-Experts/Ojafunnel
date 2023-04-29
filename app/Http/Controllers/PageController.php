@@ -52,11 +52,10 @@ class PageController extends Controller
             'file_name' => ['required', 'string', 'max:255'],
         ]);
 
-        if(Page::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->page_builder)
-        {
+        if (Page::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->page_builder) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access.'
             ]);
         }
 
@@ -307,11 +306,10 @@ class PageController extends Controller
             'file_folder' => ['required', 'string', 'max:255'],
         ]);
 
-        if(Funnel::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->funnel_builder)
-        {
+        if (Funnel::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->funnel_builder) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Subscribe to enjoy more access.'
+                'message' => 'Upgrade to enjoy more access.'
             ]);
         }
 
