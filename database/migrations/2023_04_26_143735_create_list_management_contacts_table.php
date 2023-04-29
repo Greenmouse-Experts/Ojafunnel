@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('zip')->nullable();
             $table->string('phone')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->date('anniv_date')->nullable();
             $table->boolean('subscribe')->index();
             $table->timestamps();
         });
