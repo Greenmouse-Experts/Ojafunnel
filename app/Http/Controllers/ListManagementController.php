@@ -243,6 +243,8 @@ class ListManagementController extends Controller
             'state' => $request->state,
             'zip' => $request->zip,
             'phone' => $request->phone,
+            'date_of_birth' => $request->date_of_birth,
+            'anniv_date' => $request->anniv_date,
             'subscribe' => true
         ]);
 
@@ -293,6 +295,8 @@ class ListManagementController extends Controller
             'state' => $request->state,
             'zip' => $request->zip,
             'phone' => $request->phone,
+            'date_of_birth' => $request->date_of_birth,
+            'anniv_date' => $request->anniv_date,
         ]);
 
         return redirect()->route('user.view.list', Crypt::encrypt($contact->list_management_id))->with([
@@ -325,11 +329,6 @@ class ListManagementController extends Controller
 
     public function upload_contact($id, Request $request)
     {
-        //Validate Request
-        // $this->validate($request, [
-        //     'contact_upload' => 'required|in:csv,xsls,xsl|size:4096',
-        // ]);
-
         $validator = FacadesValidator::make(
             [
                 'file'      => $request->contact_upload,

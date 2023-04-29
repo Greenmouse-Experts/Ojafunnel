@@ -40,7 +40,6 @@ use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use App\Models\ListManagement;
 use App\Models\ListManagementContact;
-use App\Models\Newsletter;
 use App\Models\OjafunnelMailSupport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -2029,6 +2028,8 @@ class AdminController extends Controller
             'state' => $request->state,
             'zip' => $request->zip,
             'phone' => $request->phone,
+            'date_of_birth' => $request->date_of_birth,
+            'anniv_date' => $request->anniv_date,
         ]);
 
         return redirect()->route('admin.view.user.list', Crypt::encrypt($contact->list_management_id))->with([

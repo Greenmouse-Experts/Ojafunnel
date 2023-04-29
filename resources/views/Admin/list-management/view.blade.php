@@ -27,24 +27,22 @@
             <div class="row">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="py-2">
-                                    <h4>{{$list->name}} List</h4>
-                                    <p>
-                                        View list
-                                    </p>
-                                </div>
+                        <div class="col-md-9">
+                            <div class="py-2">
+                                <h4>{{$list->name}} List</h4>
+                                <p>
+                                    View list
+                                </p>
                             </div>
-                            <div class="col-md-3">
-                                <div class="">
-                                    <div class="all-create">
-                                        <a href="{{route('admin.user.list')}}">
-                                            <button>
-                                                Edit List
-                                            </button>
-                                        </a>
-                                    </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="">
+                                <div class="all-create">
+                                    <a href="{{route('admin.user.list')}}">
+                                        <button>
+                                            Edit List
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -52,35 +50,37 @@
                 </div>
             </div>
             <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-lg-12 mb-4">
-                                    <label class="text-weight-500" for="">List Name</label>
-                                    <input type="text" class="form-control"  value="{{$list->name ?? ''}}" placeholder="Enter list name" readonly />
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-lg-12 mb-4">
+                                        <label class="text-weight-500" for="">List Name</label>
+                                        <input type="text" class="form-control"  value="{{$list->name ?? ''}}" placeholder="Enter list name" readonly />
+                                    </div>
+                                    <div class="col-lg-12 mb-4">
+                                        <label class="text-weight-500" for="">Display Name</label>
+                                        <input type="text" class="form-control" value="{{$list->display_name}}" placeholder="Enter display name" readonly />
+                                    </div>
+                                    <div class="col-lg-12 mb-4">
+                                        <label class="text-weight-500" for="">URL Slug</label>
+                                        <input type="text" class="form-control" value="{{$list->slug}}" placeholder="Enter url slug" readonly />
+                                    </div>
                                 </div>
-                                <div class="col-lg-12 mb-4">
-                                    <label class="text-weight-500" for="">Display Name</label>
-                                    <input type="text" class="form-control" value="{{$list->display_name}}" placeholder="Enter display name" readonly />
-                                </div>
-                                <div class="col-lg-12 mb-4">
-                                    <label class="text-weight-500" for="">URL Slug</label>
-                                    <input type="text" class="form-control" value="{{$list->slug}}" placeholder="Enter url slug" readonly />
-                                </div>
-                            </div>
-                            <div class="col-md-6" style="border-left: 1px solid gainsboro; padding: 50px;">
-                                <div class="col-lg-12 mb-4">
-                                    <label class="text-weight-500" for="">Description</label>
-                                    <textarea type="text" class="form-control" value="{{$list->description}}" placeholder="Enter description" readonly>{{$list->description}}</textarea>
-                                </div>
-                                <div class="col-lg-12 mb-4">
-                                    <label class="text-weight-500" for="">Status</label>
-                                    @if($list->status == true)
-                                    <p class="badge badge-pill badge-soft-success font-size-11">Active</p>
-                                    @else
-                                    <p class="badge badge-pill badge-soft-danger font-size-11">In-active</p>
-                                    @endif
+                                <div class="col-md-6" style="border-left: 1px solid gainsboro; padding: 50px;">
+                                    <div class="col-lg-12 mb-4">
+                                        <label class="text-weight-500" for="">Description</label>
+                                        <textarea type="text" class="form-control" value="{{$list->description}}" placeholder="Enter description" readonly>{{$list->description}}</textarea>
+                                    </div>
+                                    <div class="col-lg-12 mb-4">
+                                        <label class="text-weight-500" for="">Status</label>
+                                        @if($list->status == true)
+                                        <p class="badge badge-pill badge-soft-success font-size-11">Active</p>
+                                        @else
+                                        <p class="badge badge-pill badge-soft-danger font-size-11">In-active</p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
