@@ -108,7 +108,7 @@
             <li>
                 <a href="{{route('user.main.promotion', Auth::user()->username)}}">
                     <i class="bi bi-people"></i>
-                    <span key="t-chat">Promotion</span>
+                    <span key="t-chat">Marketplace</span>
                 </a>
             </li>
             <li>

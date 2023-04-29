@@ -170,7 +170,7 @@
                                                     Yes
                                                 </td>
                                                 <td>
-                                                    {{ $product->created_at }}
+                                                    {{ $lm->created_at }}
                                                 </td>
                                                 <td>
                                                     <ul class="list-unstyled hstack gap-1 mb-0">
