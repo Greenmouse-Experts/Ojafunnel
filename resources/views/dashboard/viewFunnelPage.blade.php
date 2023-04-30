@@ -234,8 +234,7 @@
                                                                             {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
                                                                         @endif 
                                                                     @endif 
-                                                                @endif
-                                                                sdmnmd
+                                                                @endif 
                                                             </td> 
                                                             <td>{{ $page->created_at->toDayDateTimeString() }}</td>
                                                             <td>
@@ -251,15 +250,19 @@
                                                                         </li>
                                                                         <li>
                                                                             <a class="dropdown-item" style="cursor: pointer;" target="_blank" href="
-                                                                                @if (env('APP_ENV') == 'local')
-                                                                                    {{ $page->file_location	}}
+                                                                            @if (env('APP_ENV') == 'local')
+                                                                                {{ $page->file_location	}}
+                                                                            @else
+                                                                                @if (\App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->exists())
+                                                                                    {{ \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' . explode('.', $page->name)[0] }}
                                                                                 @else
                                                                                     @if ($page->name == 'index.html')
                                                                                         {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
                                                                                     @else
                                                                                         {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
                                                                                     @endif 
-                                                                                @endif
+                                                                                @endif 
+                                                                            @endif
                                                                             ">View Page</a>
                                                                         </li> 
                                                                     </ul>
