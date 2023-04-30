@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use App\Models\Domain;
 use App\Models\Funnel;
 use App\Models\FunnelPage;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
 class CustomSubDomain extends Controller
 {
     // www - 
-    public function wwwOrPageOrFunnelIndex(Request $request, $subdomain)
+    public function subdomainIndex(Request $request, $subdomain)
     {
         if ($subdomain == 'www') return redirect(env('APP_URL'));
 
@@ -45,7 +46,7 @@ class CustomSubDomain extends Controller
     }
 
     // custom - handle for both page and funnel builder
-    public function custom(Request $request, $subdomain)
+    public function subdomainPages(Request $request, $subdomain)
     {
         // page handler
         if (str_ends_with($subdomain, '-page')) {
@@ -75,5 +76,30 @@ class CustomSubDomain extends Controller
                 return $content;
             } else return 'The funnel you\'re looking for doesn\'t exist.';
         }
+    }
+
+    public function domainIndex(Request $request, $domain)
+    {
+        $_domain = Domain::where('domain', $domain)->first();
+
+        // pages
+        if ($_domain->type == 'page') {
+        }
+
+        // funnels
+        if ($_domain->type == 'funnel') {
+            $_funnel = Funnel::where(['slug' => $_domain->slug])->first();
+            $_page = FunnelPage::where(['name' => 'index.html', 'folder_id' => $_funnel->id]);
+
+            if ($_page->exists()) {
+                $content = file_get_contents(public_path('funnelBuilder/' . $_funnel->slug . '/' . 'index.html'));
+
+                return $content;
+            } else return 'The funnel you\'re looking for doesn\'t exist.';
+        }
+    }
+
+    public function domainPages(Request $request, $domain)
+    {
     }
 }

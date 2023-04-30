@@ -1,25 +1,13 @@
 <?php
 
-use App\Events\SendMessage;
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\CustomSubDomain;
 use App\Http\Controllers\PayPalController;
-// Paypal Testing
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailMarketingController;
 
 Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamScore']);
-
-// sub domain for page and funnel builder - production  
-Route::group(['domain' => '{subdomain}.ojafunnel.com'], function () {
-    Route::get('/', [CustomSubDomain::class, 'wwwOrPageOrFunnelIndex']);
-
-    Route::get('/{page}', [CustomSubDomain::class, 'custom']);
-});
-
 Route::get('/text', [AuthController::class, 'text']);
 
 // FrontEnd
@@ -153,6 +141,9 @@ Route::prefix('{username}')->group(function () {
             Route::prefix('/funnel-builder')->group(
                 function () {
                     Route::get('/choose-temp', [App\Http\Controllers\DashboardController::class, 'choose_temp'])->name('user.choose.temp');
+                    Route::get('/add-custom-domain/{id}', [App\Http\Controllers\DashboardController::class, 'add_funnel_custom_domain'])->name('user.add.custom.domain');
+                    Route::post('/save-custom-domain', [App\Http\Controllers\DashboardController::class, 'save_funnel_custom_domain'])->name('user.save.custom.domain');
+                    Route::post('/remove-custom-domain', [App\Http\Controllers\DashboardController::class, 'remove_funnel_custom_domain'])->name('user.remove.custom.domain');
                     Route::get('/choose-temp/funnel/pages/{id}', [App\Http\Controllers\DashboardController::class, 'view_funnel_pages'])->name('user.view.funnel.pages');
                     Route::get('page-builder/{page}/editor', [App\Http\Controllers\PageController::class, 'viewFunnelEditor'])->name('user.funnel.builder.view.editor');
                     Route::get('/choose-temp/take-quiz', [App\Http\Controllers\DashboardController::class, 'take_quiz'])->name('user.take.quiz');
@@ -339,7 +330,6 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/create', [App\Http\Controllers\ListManagementController::class, 'create_list'])->name('user.create.list');
                 }
             );
-
         }
     );
 });
