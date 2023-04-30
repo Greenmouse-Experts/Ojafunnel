@@ -80,15 +80,17 @@ class CustomSubDomain extends Controller
 
     public function domainIndex(Request $request, $domain)
     {
-        $_domain = Domain::where('domain', $domain)->first();
+        $_domain = Domain::where('domain', $domain);
+
+        if (!$_domain->exists()) return 'The funnel you\'re looking for doesn\'t exist.';
 
         // pages
-        if ($_domain->type == 'page') {
+        if ($_domain->first()->type == 'page') {
         }
 
         // funnels
-        if ($_domain->type == 'funnel') {
-            $_funnel = Funnel::where(['slug' => $_domain->slug])->first();
+        if ($_domain->first()->type == 'funnel') {
+            $_funnel = Funnel::where(['slug' => $_domain->first()->slug])->first();
             $_page = FunnelPage::where(['name' => 'index.html', 'folder_id' => $_funnel->id]);
 
             if ($_page->exists()) {
