@@ -37,15 +37,33 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+            // local routes
+            if (env('APP_ENV') == 'local') {
+                Route::middleware('web')
+                    ->group(base_path('routes/web.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/user.php'));
+                Route::middleware('web')
+                    ->group(base_path('routes/user.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/admin.php'));
+                Route::middleware('web')
+                    ->group(base_path('routes/admin.php'));
+            }
 
+            // production routes
+            if (env('APP_ENV') == 'production') {
+                Route::group(['domain' => 'ojafunnel.com'], function () {
+                    Route::middleware('web')
+                        ->group(base_path('routes/web.php'));
+
+                    Route::middleware('web')
+                        ->group(base_path('routes/user.php'));
+
+                    Route::middleware('web')
+                        ->group(base_path('routes/admin.php'));
+                });
+            }
+
+            // production domain and subdomain routes
             Route::middleware('web')
                 ->group(base_path('routes/domain.php'));
         });
