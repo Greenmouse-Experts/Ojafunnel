@@ -50,6 +50,7 @@ use Symfony\Component\Console\Input\Input;
 use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
+use App\Models\Domain;
 
 class DashboardController extends Controller
 {
@@ -342,6 +343,124 @@ class DashboardController extends Controller
         return view('dashboard.funnelBuilder', [
             'username' => $username,
             'funnels' => $funnels
+        ]);
+    }
+
+    public function add_funnel_custom_domain(Request $request, $username)
+    {
+        $funnel = Funnel::where(['id' => $request->id, 'user_id' => Auth::user()->id]);
+        if (!$funnel->exists()) {
+            return redirect(route('user.choose.temp', ['username' => Auth::user()->username]));
+        }
+
+        $index = FunnelPage::where(['name' => 'index.html', 'user_id' => Auth::user()->id, 'folder_id' => $funnel->first()->id]);
+        if (!$index->exists()) {
+            return redirect(route('user.choose.temp', ['username' => Auth::user()->username]))->with([
+                'type' => 'danger',
+                'message' => 'You are required to have index page name in your funnel to use custom domain feature'
+            ]);
+        }
+
+        $domain = Domain::where(['type' => 'funnel', 'slug' => $funnel->first()->slug, 'user_id' => Auth::user()->id]);
+
+        return view('dashboard.funnelCustomDomain', [
+            'funnel' => $funnel->first(),
+            'domain' => $domain->first()
+        ]);
+    }
+
+    public function save_funnel_custom_domain(Request $request, $username)
+    {
+        $request->validate([
+            'request_type' => 'required'
+        ]);
+
+        if ($request->request_type == 'save') {
+            $request->validate([
+                'id' => 'required',
+                'file_folder' => 'required',
+                'domain' => 'unique:domains,domain,except,id|regex:/^(?!\-)(?:(?:[a-zA-Z\d][a-zA-Z\d\-]{0,61})?[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/',
+            ]);
+
+            $funnel = Funnel::where(['id' => $request->id, 'user_id' => Auth::user()->id]);
+
+            if (!$funnel->exists()) {
+                return redirect(route('user.choose.temp', ['username' => Auth::user()->username]));
+            }
+
+            $domain = Domain::where('domain', $request->domain);
+
+            if ($domain->exists()) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'The domain name is in use by another user.'
+                ]);
+            }
+
+            $domain = new Domain();
+            $domain->user_id = Auth::user()->id;
+            $domain->type = 'funnel';
+            $domain->subdomain = $funnel->first()->slug . '-funnel';
+            $domain->slug = $funnel->first()->slug;
+            $domain->domain = $request->domain;
+            $domain->status = 'pending';
+            $domain->save();
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'The domain name has been added successfully.'
+            ]);
+        }
+
+        if ($request->request_type == 'update') {
+            $request->validate([
+                'id' => 'required',
+                'file_folder' => 'required',
+                'domain' => 'regex:/^(?!\-)(?:(?:[a-zA-Z\d][a-zA-Z\d\-]{0,61})?[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/',
+            ]);
+
+            $funnel = Funnel::where(['id' => $request->id, 'user_id' => Auth::user()->id]);
+
+            if (!$funnel->exists()) {
+                return redirect(route('user.choose.temp', ['username' => Auth::user()->username]));
+            }
+
+            $domain = Domain::where(['type' => 'funnel', 'slug' => $funnel->first()->slug, 'user_id' => Auth::user()->id]);
+
+            $domain->update([
+                'user_id' => Auth::user()->id,
+                'type' => 'funnel',
+                'subdomain' => $funnel->first()->slug . '-funnel',
+                'slug' => $funnel->first()->slug,
+                'domain' => $request->domain,
+                'status' => 'pending'
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'The domain name has been updated successfully.'
+            ]);
+        }
+    }
+
+    public function remove_funnel_custom_domain(Request $request)
+    {
+        $request->validate(['id' => 'required']);
+
+        if ($request->delete != 'DELETE') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Please type DELETE to confirm.'
+            ]);
+        }
+
+        $domain = Domain::where(['id' => $request->id, 'type' => 'funnel', 'user_id' => Auth::user()->id]);
+
+        $domain->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The domain name has been removed successfully.'
         ]);
     }
 

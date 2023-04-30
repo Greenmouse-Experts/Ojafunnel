@@ -148,6 +148,7 @@
                                                         </li>
                                                         <li>
                                                             <a class="dropdown-item" style="cursor: pointer;" href="
+                                                            {{ route('user.add.custom.domain', ['username' => Auth::user()->username, 'id' => $funnel->id])}}
                                                             ">Add Custom Domain</a>
                                                         </li>
                                                     </ul>
@@ -210,7 +211,7 @@
                                                                         <form method="POST" action="{{ route('user.funnel.builder.delete', Crypt::encrypt($funnel->id))}}">
                                                                             @csrf
                                                                             <div class="form">
-                                                                                <p><b>Delete Contact</b></p>
+                                                                                <p><b>Delete Funnel</b></p>
                                                                                 <div class="row">
                                                                                     <div class="col-lg-12">
                                                                                         <p>This action cannot be undone. This will permanently delete {{$funnel->folder}}.</p>
