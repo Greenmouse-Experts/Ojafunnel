@@ -103,5 +103,26 @@ class CustomSubDomain extends Controller
 
     public function domainPages(Request $request, $domain)
     {
+        $_domain = Domain::where('domain', $domain);
+
+        if (!$_domain->exists()) return 'The funnel you\'re looking for doesn\'t exist.';
+
+        // pages
+        if ($_domain->first()->type == 'page') {
+        }
+
+        // funnels
+        if ($_domain->first()->type == 'funnel') {
+            $page = $request->page;
+
+            $funnel = Funnel::where(['slug' => $_domain->first()->slug])->first();
+            $_page = FunnelPage::where(['name' => $page . '.html', 'folder_id' => $funnel->id]);
+
+            if ($_page->exists()) {
+                $content = file_get_contents(public_path('funnelBuilder/' . $_domain->first()->slug . '/' . $page . '.html'));
+
+                return $content;
+            } else return 'The funnel you\'re looking for doesn\'t exist.';
+        }
     }
 }

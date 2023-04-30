@@ -138,7 +138,7 @@
                                         <thead>
                                             <tr> 
                                                 <th scope="col">Domain</th>
-                                                <th scope="col">Status</th> 
+                                                {{-- <th scope="col">Status</th>  --}}
                                                 <th scope="col">Actions</th>
                                             </tr> 
                                         </thead> 
@@ -146,7 +146,7 @@
                                             @if ($domain)
                                                 <tr>
                                                     <td> {{ $domain->domain }} </td>
-                                                    <td> {{ $domain->status }} </td>
+                                                    {{-- <td> {{ $domain->status }} </td> --}}
                                                     <td> 
                                                         <button class="btn btn-danger" type="button"  data-bs-toggle="modal" data-bs-target="#remove">
                                                             Remove
