@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
+use App\Models\Domain;
 use App\Models\Funnel;
 use App\Models\FunnelPage;
-use App\Models\OjaPlanParameter;
-use App\Models\Page;
 use Illuminate\Http\Request;
-use Dotlogics\Grapesjs\App\Traits\EditorTrait;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use App\Models\OjaPlanParameter;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
+use Dotlogics\Grapesjs\App\Traits\EditorTrait;
 
 class PageController extends Controller
 {
@@ -382,11 +383,14 @@ class PageController extends Controller
 
         $res = $this->generateFunnelSlug($request->file_folder);
 
+        // check slug exists on domain...
+        $domain = Domain::where(['type' => 'funnel', 'slug' => $funnel->slug, 'user_id' => Auth::user()->id]);
+
         // check if sub domain name taken
         if (!$res[0]) {
             return back()->with([
                 'type' => 'danger',
-                'message' => 'Sub domain already taken.'
+                'message' => 'Sub domain  already taken.'
             ]);
         }
 
@@ -412,6 +416,13 @@ class PageController extends Controller
 
         $funnel->update([
             'folder' => $request->file_folder,
+            'slug' => $res[1]
+        ]);
+
+        //  then update on domain
+        $domain->update([
+            'subdomain' => $res[1] . '-funnel',
+            'slug' => $res[1]
         ]);
 
         return back()->with([
@@ -432,6 +443,9 @@ class PageController extends Controller
 
             $funnel = Funnel::findorfail($idFinder);
 
+            // check slug exists on domain...
+            $domain = Domain::where(['type' => 'funnel', 'slug' => $funnel->slug, 'user_id' => Auth::user()->id]);
+
             $disk = public_path('funnelBuilder/' . $funnel->slug . '/');
 
             File::deleteDirectory($disk);
@@ -445,6 +459,9 @@ class PageController extends Controller
             }
 
             $funnel->delete();
+
+            //  then delete on domain
+            $domain->delete();
 
             return back()->with([
                 'type' => 'success',

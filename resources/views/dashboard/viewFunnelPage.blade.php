@@ -225,12 +225,17 @@
                                                                 @if (env('APP_ENV') == 'local')
                                                                     {{ $page->file_location	}}
                                                                 @else
-                                                                    @if ($page->name == 'index.html')
-                                                                        {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
+                                                                    @if (\App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->exists())
+                                                                        {{ \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' . explode('.', $page->name)[0] }}
                                                                     @else
-                                                                        {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
+                                                                        @if ($page->name == 'index.html')
+                                                                            {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
+                                                                        @else
+                                                                            {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
+                                                                        @endif 
                                                                     @endif 
                                                                 @endif
+                                                                sdmnmd
                                                             </td> 
                                                             <td>{{ $page->created_at->toDayDateTimeString() }}</td>
                                                             <td>
