@@ -11,7 +11,6 @@ class SSLManager
     private function execute($command)
     {
         $process = new Process($command, base_path());
-        $process->setOptions(['create_new_console' => true]);
         $process->start();
         $process->waitUntil(function ($type, $output) {
             return $type == Process::OUT ? true : false;
