@@ -3,6 +3,8 @@
 namespace App\Console;
 
 use App\Console\Commands\EmailBirthday;
+use App\Console\Commands\GenerateSSL;
+use App\Console\Commands\RenewSSL;
 use App\Console\Commands\SendEmailCampaign;
 use App\Console\Commands\SendSms;
 use App\Console\Commands\SendWABulk;
@@ -28,7 +30,9 @@ class Kernel extends ConsoleKernel
         SubscriptionReminder::class,
         WABirthday::class,
         EmailBirthday::class,
-        SendEmailCampaign::class
+        SendEmailCampaign::class,
+        GenerateSSL::class,
+        RenewSSL::class,
     ];
 
     /**
@@ -49,10 +53,14 @@ class Kernel extends ConsoleKernel
         $schedule->command('sendwabulk:run')->everyMinute()->withoutOverlapping();
         $schedule->command('emailcampaign:run')->everyMinute()->withoutOverlapping();
 
-        // run command every 12:00
+        // run command every day
         // birthday or anniversary 
-        $schedule->command('wabirthday:run')->dailyAt('00:00')->withoutOverlapping();
-        $schedule->command('emailbirthday:run')->dailyAt('00:00')->withoutOverlapping();
+        $schedule->command('wabirthday:run')->daily()->withoutOverlapping();
+        $schedule->command('emailbirthday:run')->daily()->withoutOverlapping();
+
+        // ssl
+        $schedule->command('generatessl:run')->everyThirtyMinutes()->withoutOverlapping();
+        $schedule->command('renewssl:run')->daily()->withoutOverlapping();
     }
 
     /**
