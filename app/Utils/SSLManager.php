@@ -8,7 +8,7 @@ use Symfony\Component\Process\Process;
 
 class SSLManager
 {
-    public function execute($command)
+    private function execute($command)
     {
         $process = new Process($command, base_path());
         $process->setOptions(['create_new_console' => true]);
@@ -17,6 +17,7 @@ class SSLManager
             return $type == Process::OUT ? true : false;
         });
 
+        Log::info('process execute()');
         Log::info($process->getOutput());
 
         return $process;
@@ -25,11 +26,9 @@ class SSLManager
     public function certbot_command($domain, $email)
     {
         if (env('SSL_CERTBOT_ENV') == 'staging') {
-            $command = [
-                "sudo", "certbot", "certonly", "--nginx --agree-tos --no-eff-email -d $domain --email $email --test-cert",
-            ];
+            $command = explode(" ", "sudo certbot certonly --nginx --agree-tos --no-eff-email -d $domain --email $email --test-cert");
         } else {
-            $command = ["sudo", "certbot", "certonly", "--nginx --agree-tos --no-eff-email -d $domain --email $email"];
+            $command = explode(" ", "sudo certbot certonly --nginx --agree-tos --no-eff-email -d $domain --email $email");
         }
 
         return $command;
@@ -101,13 +100,12 @@ class SSLManager
             }
 
             if ($nginx) {
-                $symlink = $this->execute(["sudo", "ln", "-s /etc/nginx/sites-available/$domain /etc/nginx/sites-enabled/"]);
+                $symlink = $this->execute(explode(" ", "sudo ln -s /etc/nginx/sites-available/$domain /etc/nginx/sites-enabled/"));
 
                 if ($symlink->isSuccessful()) {
-                    $test_config = $this->execute(["sudo", "nginx", "-t"]);
-                    $reload_nginx = $this->execute(["sudo", "systemctl", "reload", "nginx"]);
+                    $finally = $this->execute(explode(" ", "sudo nginx -t && sudo systemctl reload nginx"));
 
-                    return $test_config->isSuccessful() && $reload_nginx->isSuccessful() ? true : false;
+                    return $finally->isSuccessful() ? true : false;
                 }
             }
         } else return false;
@@ -115,7 +113,7 @@ class SSLManager
 
     public function renewSSL($domain)
     {
-        $command = ["sudo certbot certonly --force-renew -d $domain"];
+        $command = explode(" ", "sudo certbot certonly --force-renew -d $domain");
         $process = $this->execute($command);
 
         return $process->isSuccessful() ? true : false;
@@ -124,10 +122,10 @@ class SSLManager
     public function deleteSSL($domain)
     {
         $this->deleteConfig("/etc/nginx/sites-available/$domain");
-        $this->execute(["sudo rm -rf /etc/nginx/sites-enabled/$domain"]);
-        $this->execute(["sudo certbot delete --cert-name $domain --non-interactive"]);
+        $this->execute(explode(" ", "sudo rm -rf /etc/nginx/sites-enabled/$domain"));
+        $this->execute(explode(" ", "sudo certbot delete --cert-name $domain --non-interactive"));
 
-        $reload_nginx = $this->execute(["sudo nginx -t && sudo systemctl reload nginx"]);
+        $reload_nginx = $this->execute(explode(" ", "sudo nginx -t && sudo systemctl reload nginx"));
         return $reload_nginx->isSuccessful() ? true : false;
     }
 }
