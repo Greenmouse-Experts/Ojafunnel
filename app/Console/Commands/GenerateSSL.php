@@ -50,7 +50,7 @@ class GenerateSSL extends Command
                         'ssl_renewal_date' => Carbon::now()->addDays(60)->format('Y-m-d')
                     ]);
                 } else Domain::where('domain', $domain->domain)->update(['status' => 'SSL_GENERATION_FAILED']);
-            }
+            } else Domain::where('domain', $domain->domain)->update(['status' => 'DOMAIN_A_RECORD_NOT_FOUND']);
         });
 
         return Command::SUCCESS;
