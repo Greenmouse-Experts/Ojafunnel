@@ -2,12 +2,13 @@
 
 namespace App\Utils;
 
+use App\Models\Log;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 
 class SSLManager
 {
-    private function execute($command)
+    public function execute($command)
     {
         $process = new Process($command, base_path());
         $process->setOptions(['create_new_console' => true]);
@@ -16,15 +17,19 @@ class SSLManager
             return $type == Process::OUT ? true : false;
         });
 
+        Log::info($process->getOutput());
+
         return $process;
     }
 
     public function certbot_command($domain, $email)
     {
         if (env('SSL_CERTBOT_ENV') == 'staging') {
-            $command = ["sudo certbot certonly --nginx --agree-tos --no-eff-email -d $domain --email $email --test-cert"];
+            $command = [
+                "sudo", "certbot", "certonly", "--nginx --agree-tos --no-eff-email -d $domain --email $email --test-cert",
+            ];
         } else {
-            $command = ["sudo certbot certonly --nginx --agree-tos --no-eff-email -d $domain --email $email"];
+            $command = ["sudo", "certbot", "certonly", "--nginx --agree-tos --no-eff-email -d $domain --email $email"];
         }
 
         return $command;
@@ -96,12 +101,13 @@ class SSLManager
             }
 
             if ($nginx) {
-                $symlink = $this->execute(["sudo ln -s /etc/nginx/sites-available/$domain/etc/nginx/sites-enabled/"]);
+                $symlink = $this->execute(["sudo", "ln", "-s /etc/nginx/sites-available/$domain /etc/nginx/sites-enabled/"]);
 
                 if ($symlink->isSuccessful()) {
-                    $finally = $this->execute(["sudo nginx -t && sudo systemctl reload nginx"]);
+                    $test_config = $this->execute(["sudo", "nginx", "-t"]);
+                    $reload_nginx = $this->execute(["sudo", "systemctl", "reload", "nginx"]);
 
-                    return $finally->isSuccessful() ? true : false;
+                    return $test_config->isSuccessful() && $reload_nginx->isSuccessful() ? true : false;
                 }
             }
         } else return false;
