@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-use App\Models\Log;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 
