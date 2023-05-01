@@ -39,7 +39,7 @@ class GenerateSSL extends Command
             $recordFound = (new DomainHelper())->verifyARecord($domain->domain);
 
             if ($recordFound) {
-                Domain::where('domain', $domain->domain)->update(['status', 'DOMAIN_PROPAGATED']);
+                Domain::where('domain', $domain->domain)->update(['status' => 'DOMAIN_PROPAGATED']);
 
                 $user = User::where('id', $domain->user_id)->first();
                 $generated = (new SSLManager())->generateSSL($domain->domain, $user->email);
