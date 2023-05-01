@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use Illuminate\Support\Facades\Log;
+
 class DomainHelper
 {
     public $isfound = false;
@@ -15,7 +17,7 @@ class DomainHelper
 
         if (!empty($records)) {
             foreach ($records as $record) {
-                if ($record['target'] == env('SSL_APP_IP')) {
+                if ($record['ip'] == env('SSL_APP_IP')) {
                     $this->isfound = true;
 
                     break;
