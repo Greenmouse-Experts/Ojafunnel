@@ -12,8 +12,7 @@ class SSLManager
     {
         $process = new Process($command, base_path());
         $process->start();
-        $process->waitUntil(function ($type, $output) {
-            return $type == Process::OUT ? true : false;
+        $process->wait(function ($type, $output) {
         });
 
         Log::info('process execute()');
