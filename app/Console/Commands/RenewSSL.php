@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\ProcessSSLRenewal;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Domain;
@@ -39,14 +40,8 @@ class RenewSSL extends Command
             $recordFound = (new DomainHelper())->verifyARecord($domain->domain);
 
             if ($recordFound) {
-                $generated = (new SSLManager())->renewSSL($domain->domain);
-
-                if ($generated) {
-                    Domain::where('domain', $domain->domain)->update([
-                        'status' => 'SSL_ENABLED',
-                        'ssl_renewal_date' => Carbon::now()->addDays(60)->format('Y-m-d')
-                    ]);
-                } else Domain::where('domain', $domain->domain)->update(['status' => 'SSL_RENEWAL_FAILED']);
+                // // dispatch
+                // ProcessSSLRenewal::dispatch($domain->domain)->onQueue('sslRenewal');
             } else Domain::where('domain', $domain->domain)->update(['status' => 'DOMAIN_A_RECORD_NOT_FOUND']);
         });
 

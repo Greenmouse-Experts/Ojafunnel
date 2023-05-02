@@ -570,6 +570,125 @@ class DashboardController extends Controller
         return [true, $slug];
     }
 
+    public function add_page_custom_domain(Request $request)
+    {
+        $page = Page::where(['id' => $request->id, 'user_id' => Auth::user()->id]);
+
+        if (!$page->exists()) {
+            return redirect(route('user.page.builder', ['username' => Auth::user()->username]));
+        }
+
+        $index = Page::where(['name' => 'index.html', 'user_id' => Auth::user()->id, 'id' => $page->first()->id]);
+        if (!$index->exists()) {
+            return redirect(route('user.page.builder', ['username' => Auth::user()->username]))->with([
+                'type' => 'danger',
+                'message' => 'You are required to have index page name in your page sub domain.'
+            ]);
+        }
+
+        $domain = Domain::where(['type' => 'page', 'slug' => $page->first()->slug, 'user_id' => Auth::user()->id]);
+
+        return view('dashboard.pageCustomDomain', [
+            'page' => $page->first(),
+            'domain' => $domain->first()
+        ]);
+    }
+
+    public function save_page_custom_domain(Request $request)
+    {
+        $request->validate([
+            'request_type' => 'required'
+        ]);
+
+        if ($request->request_type == 'save') {
+            $request->validate([
+                'id' => 'required',
+                'file_folder' => 'required',
+                'domain' => 'unique:domains,domain,except,id|regex:/^(?!\-)(?:(?:[a-zA-Z\d][a-zA-Z\d\-]{0,61})?[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/',
+            ]);
+
+            $page = Page::where(['id' => $request->id, 'user_id' => Auth::user()->id]);
+
+            if (!$page->exists()) {
+                return redirect(route('user.page.builder', ['username' => Auth::user()->username]));
+            }
+
+            $domain = Domain::where('domain', $request->domain);
+
+            if ($domain->exists()) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'The domain name is in use by another user.'
+                ]);
+            }
+
+            $domain = new Domain();
+            $domain->user_id = Auth::user()->id;
+            $domain->type = 'page';
+            $domain->subdomain = $page->first()->slug . '-page';
+            $domain->slug = $page->first()->slug;
+            $domain->domain = $request->domain;
+            $domain->status = 'pending';
+            $domain->save();
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'The domain name has been added successfully.'
+            ]);
+        }
+
+        if ($request->request_type == 'update') {
+            $request->validate([
+                'id' => 'required',
+                'file_folder' => 'required',
+                'domain' => 'regex:/^(?!\-)(?:(?:[a-zA-Z\d][a-zA-Z\d\-]{0,61})?[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/',
+            ]);
+
+            $page = Page::where(['id' => $request->id, 'user_id' => Auth::user()->id]);
+
+            if (!$page->exists()) {
+                return redirect(route('user.page.builder', ['username' => Auth::user()->username]));
+            }
+
+            $domain = Domain::where(['type' => 'page', 'slug' => $page->first()->slug, 'user_id' => Auth::user()->id]);
+
+            $domain->update([
+                'user_id' => Auth::user()->id,
+                'type' => 'page',
+                'subdomain' => $page->first()->slug . '-page',
+                'slug' => $page->first()->slug,
+                'domain' => $request->domain,
+                'status' => 'pending'
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'The domain name has been updated successfully.'
+            ]);
+        }
+    }
+
+    public function remove_page_custom_domain(Request $request)
+    {
+        $request->validate(['id' => 'required']);
+
+        if ($request->delete != 'DELETE') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Please type DELETE to confirm.'
+            ]);
+        }
+
+        $domain = Domain::where(['id' => $request->id, 'type' => 'page', 'user_id' => Auth::user()->id]);
+
+        $domain->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The domain name has been removed successfully.'
+        ]);
+    }
+
     public function create_use_page_builder_template(Request $request)
     {
         //Validate Request

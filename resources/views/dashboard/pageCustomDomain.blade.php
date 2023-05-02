@@ -11,14 +11,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-13">FUNNEL CUSTOM DOMAIN</h4>
+                        <h4 class="mb-sm-0 font-size-13">PAGE CUSTOM DOMAIN</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
                                 <li class="breadcrumb-item active">Add Custom Domain</li>
                             </ol>
-                        </div>
-
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -29,7 +28,7 @@
                         <div class="card-body">
                             <h4 class="font-60">Add Custom Domain</h4>
                             <p>
-                                Add your top-level domain to your funnel with a button click.
+                                Add your top-level domain to your page with a button click.
                             </p>
                         </div>
                     </div>
@@ -66,7 +65,7 @@
                                     <p>
                                         <span>e.g</span><br>
                                         <span> Point <b>@</b> to <b>45.79.102.122</b> - root domain (example.com)</span><br>
-                                        <span> Point <b>funnel</b> to <b>45.79.102.122</b> - sub domain (funnel.example.com)</span>
+                                        <span> Point <b>page</b> to <b>45.79.102.122</b> - sub domain (page.example.com)</span>
                                     </p>
                                 </div>
                             </div>
@@ -79,20 +78,20 @@
                                 <div class="col-lg-11"> 
                                     <div class="row">
                                         <div class="">
-                                            <form method="POST" action="{{ route('user.save.custom.domain', ['username' => Auth::user()->username]) }}">
+                                            <form method="POST" action="{{ route('user.page.save.custom.domain', ['username' => Auth::user()->username]) }}">
                                                 @csrf
                                                 <div class="form">
                                                     <p>
                                                         Submit Your Domain
                                                     </p>
                                                     <div class="row">
-                                                        <input type="hidden" name="id" value="{{ $funnel->id }}">
+                                                        <input type="hidden" name="id" value="{{ $page->id }}">
                                                         <input type="hidden" name="request_type" value="{{ $domain ? 'update' : 'save' }}"> 
                                                         <div class="col-lg-12">
                                                             <label>Sub Domain</label>
                                                             <div class="row">
                                                                 <div class="col-md-12 mb-4">
-                                                                    <input type="text" placeholder="File Folder" name="file_folder" id="subdomain" class="input" value="{{$funnel->folder}}" required readonly>
+                                                                    <input type="text" placeholder="File Folder" name="file_folder" id="subdomain" class="input" value="{{$page->folder}}" required readonly>
                                                                     <small id="generateSubDomain"></small>
                                                                 </div>
                                                             </div>
@@ -101,7 +100,7 @@
                                                             <label>Domain</label>
                                                             <div class="row">
                                                                 <div class="col-md-12 mb-4">
-                                                                    <input type="text" placeholder="Enter your domain name e.g example.com or funnel.example.com" name="domain" class="input" value="{{ $domain ? $domain->domain : null }}" required> 
+                                                                    <input type="text" placeholder="Enter your domain name e.g example.com or page.example.com" name="domain" class="input" value="{{ $domain ? $domain->domain : null }}" required> 
                                                                     <small>
                                                                         NB: Enter domain name <b>without</b> protocol <b>(https:// or http://)</b> 
                                                                     </small>
@@ -166,7 +165,7 @@
                                                     <div class="modal-body ">
                                                         <div class="row">
                                                             <div class="Editt">
-                                                                <form method="POST" action="{{ route('user.remove.custom.domain', ['username' => Auth::user()->username]) }}">
+                                                                <form method="POST" action="{{ route('user.page.remove.custom.domain', ['username' => Auth::user()->username]) }}">
                                                                     @csrf
                                                                     <div class="form">
                                                                         <p><b>Remove Domain</b></p>
@@ -262,7 +261,7 @@
     let subdomaintext = document.getElementById('generateSubDomain'); 
 
     if('{{ env('APP_URL') }}'.startsWith('https')) 
-            subdomaintext.innerText = `https://${subdomain.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-funnel'}.ojafunnel.com` 
+            subdomaintext.innerText = `https://${subdomain.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-page'}.ojafunnel.com`
 </script>
 <!-- Modal Ends -->
 @endsection

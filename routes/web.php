@@ -154,11 +154,16 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/choose-temp/congratulation', [App\Http\Controllers\DashboardController::class, 'congratulation'])->name('user.congratulation');
                 }
             );
+
             Route::get('/page-builder', [App\Http\Controllers\DashboardController::class, 'page_builder'])->name('user.page.builder');
             Route::get('/page-builder/use-template/{id}', [App\Http\Controllers\DashboardController::class, 'view_use_page_builder_template'])->name('user.page.use_template');
             Route::post('/page-builder/use-template-create', [App\Http\Controllers\DashboardController::class, 'create_use_page_builder_template'])->name('user.page.create_use_template');
+            Route::get('/page-builder/add-custom-domain/{id}', [App\Http\Controllers\DashboardController::class, 'add_page_custom_domain'])->name('user.page.add.custom.domain');
+            Route::post('/page-builder/save-custom-domain', [App\Http\Controllers\DashboardController::class, 'save_page_custom_domain'])->name('user.page.save.custom.domain');
+            Route::post('/page-builder/remove-custom-domain', [App\Http\Controllers\DashboardController::class, 'remove_page_custom_domain'])->name('user.page.remove.custom.domain');
             Route::get('page-builder/{page}/editor', [App\Http\Controllers\PageController::class, 'viewEditor'])->name('user.page.builder.view.editor');
             Route::get('page-builder/{page}', [App\Http\Controllers\PageController::class, 'viewPage'])->name('user.page.builder.view.page');
+
             Route::prefix('/chat-automation')->group(
                 function () {
                     Route::get('/sms-automation', [App\Http\Controllers\DashboardController::class, 'sms_automation'])->name('user.sms.automation');

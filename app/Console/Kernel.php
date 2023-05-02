@@ -59,8 +59,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('emailbirthday:run')->daily()->withoutOverlapping();
 
         // ssl
-        // $schedule->command('generatessl:run')->everyThirtyMinutes()->withoutOverlapping();
-        // $schedule->command('renewssl:run')->daily()->withoutOverlapping();
+        $schedule->command('generatessl:run')->everyThirtyMinutes()->withoutOverlapping();
+        $schedule->command('renewssl:run')->daily()->withoutOverlapping();
     }
 
     /**
