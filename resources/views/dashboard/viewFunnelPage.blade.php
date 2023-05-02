@@ -226,7 +226,11 @@
                                                                     {{ $page->file_location	}}
                                                                 @else
                                                                     @if (\App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->exists())
-                                                                        {{ \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' . explode('.', $page->name)[0] }}
+                                                                        @if ($page->name == 'index.html')
+                                                                            {{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' }}
+                                                                        @else
+                                                                            {{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' . explode('.', $page->name)[0] }}
+                                                                        @endif 
                                                                     @else
                                                                         @if ($page->name == 'index.html')
                                                                             {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
@@ -234,7 +238,7 @@
                                                                             {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $page->name)[0] }}
                                                                         @endif 
                                                                     @endif 
-                                                                @endif 
+                                                                @endif
                                                             </td> 
                                                             <td>{{ $page->created_at->toDayDateTimeString() }}</td>
                                                             <td>
@@ -254,7 +258,11 @@
                                                                                 {{ $page->file_location	}}
                                                                             @else
                                                                                 @if (\App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->exists())
-                                                                                    {{ \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' . explode('.', $page->name)[0] }}
+                                                                                    @if ($page->name == 'index.html')
+                                                                                        {{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' }}
+                                                                                    @else
+                                                                                        {{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' . explode('.', $page->name)[0] }}
+                                                                                    @endif 
                                                                                 @else
                                                                                     @if ($page->name == 'index.html')
                                                                                         {{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}

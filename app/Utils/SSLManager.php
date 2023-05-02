@@ -32,57 +32,48 @@ class SSLManager
         return $command;
     }
 
-    public function nginx_config($domain): string
+    public function nginx_config($domain, $host)
     {
-        $host = env('SSL_APP_DOMAIN');
-
         $content = "
-        server {
-            if (\$host = $domain) {
-               return 301 https://\$host\$request_uri;
-            }
-            listen 80;
-            listen [::]:80;
-            server_name $domain;
-        }
-        server {
-            listen 443 ssl http2;
-            listen [::]:443 ssl http2;
-            server_name $domain;
-            return 301 https://$host\$request_uri;
-            resolver 8.8.8.8;
-            location / {
-                include proxy_params;
-                proxy_pass https://$host\$request_uri;
-                proxy_set_header Host $domain;
-                proxy_set_header X-Forwarded-Host \$http_host;
-                proxy_set_header X-Real-IP \$remote_addr;
-                proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Proto \$scheme;
-                proxy_redirect off;
-                proxy_http_version 1.1;
-                proxy_set_header Upgrade \$http_upgrade;
-            }
-            ssl_certificate /etc/letsencrypt/live/$domain/fullchain.pem;
-            ssl_certificate_key /etc/letsencrypt/live/$domain/privkey.pem;
-            ssl_trusted_certificate /etc/letsencrypt/live/$domain/chain.pem;
-            include /etc/letsencrypt/options-ssl-nginx.conf;
-            ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
-        }";
+server {
+    listen 80;
+    listen [::]:80;
+    server_name $domain;
+    return 301 https://\$server_name\$request_uri
+}
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name $domain; 
+    resolver 8.8.8.8;
+    location / {
+        include proxy_params;
+        proxy_pass https://$host\$request_uri;
+        proxy_set_header Host $domain;
+        proxy_set_header X-Forwarded-Host \$http_host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_redirect off;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+    }
+    ssl_certificate /etc/letsencrypt/live/$domain/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/$domain/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/$domain/chain.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+}";
 
         return $content;
     }
 
     public function deleteConfig($file_path)
     {
-        if (File::exists($file_path)) {
-            return File::delete($file_path);
-        } else {
-            return false;
-        }
+        return File::exists($file_path) ? File::delete($file_path) : false;
     }
 
-    public function generateSSL($domain, $email = null)
+    public function generateSSL($domain, $host, $email = null)
     {
         $command = $this->certbot_command($domain, $email);
         $process = $this->execute($command);
@@ -91,19 +82,20 @@ class SSLManager
             $file_path = "/etc/nginx/sites-available/$domain";
 
             if (File::exists($file_path)) {
-                $nginx = File::put($file_path, $this->nginx_config($domain));
+                $nginx = File::put($file_path, $this->nginx_config($domain, $host));
             } else {
                 touch($file_path);
-                $nginx = File::put($file_path, $this->nginx_config($domain));
+                $nginx = File::put($file_path, $this->nginx_config($domain, $host));
             }
 
             if ($nginx) {
                 $symlink = $this->execute(explode(" ", "sudo ln -s /etc/nginx/sites-available/$domain /etc/nginx/sites-enabled/"));
 
                 if ($symlink->isSuccessful()) {
-                    $finally = $this->execute(explode(" ", "sudo nginx -t && sudo systemctl reload nginx"));
+                    $test_config = $this->execute(explode(" ", "sudo nginx -t"));
+                    $reload_nginx = $this->execute(explode(" ", "sudo systemctl reload nginx"));
 
-                    return $finally->isSuccessful() ? true : false;
+                    return $test_config->isSuccessful() && $reload_nginx->isSuccessful() ? true : false;
                 }
             }
         } else return false;
@@ -123,7 +115,9 @@ class SSLManager
         $this->execute(explode(" ", "sudo rm -rf /etc/nginx/sites-enabled/$domain"));
         $this->execute(explode(" ", "sudo certbot delete --cert-name $domain --non-interactive"));
 
-        $reload_nginx = $this->execute(explode(" ", "sudo nginx -t && sudo systemctl reload nginx"));
-        return $reload_nginx->isSuccessful() ? true : false;
+        $test_config = $this->execute(explode(" ", "sudo nginx -t"));
+        $reload_nginx = $this->execute(explode(" ", "sudo systemctl reload nginx"));
+
+        return $test_config->isSuccessful() && $reload_nginx->isSuccessful() ? true : false;
     }
 }

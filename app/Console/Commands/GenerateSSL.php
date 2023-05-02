@@ -42,7 +42,9 @@ class GenerateSSL extends Command
                 Domain::where('domain', $domain->domain)->update(['status' => 'DOMAIN_PROPAGATED']);
 
                 $user = User::where('id', $domain->user_id)->first();
-                $generated = (new SSLManager())->generateSSL($domain->domain, $user->email);
+                $host = $domain->slug . '-' . $domain->type . '.' . env('SSL_APP_DOMAIN');
+
+                $generated = (new SSLManager())->generateSSL($domain->domain, $host, $user->email);
 
                 if ($generated) {
                     Domain::where('domain', $domain->domain)->update([
