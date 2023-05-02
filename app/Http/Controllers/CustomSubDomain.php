@@ -86,6 +86,13 @@ class CustomSubDomain extends Controller
 
         // pages
         if ($_domain->first()->type == 'page') {
+            $_page = Page::where(['name' => 'index.html', 'slug' => $_domain->first()->slug]);
+
+            if ($_page->exists()) {
+                $content = file_get_contents(public_path('pageBuilder/' . $_domain->first()->slug . '/' . 'index.html'));
+
+                return $content;
+            } else return 'The page you\'re looking for doesn\'t exist.';
         }
 
         // funnels
@@ -109,6 +116,15 @@ class CustomSubDomain extends Controller
 
         // pages
         if ($_domain->first()->type == 'page') {
+            $page = $request->page;
+
+            $_page = Page::where(['name' => $page . '.html', 'slug' => $_domain->first()->slug]);
+
+            if ($_page->exists()) {
+                $content = file_get_contents(public_path('pageBuilder/' . $_domain->first()->slug . '/' . $page . '.html'));
+
+                return $content;
+            } else return 'The page you\'re looking for doesn\'t exist.';
         }
 
         // funnels

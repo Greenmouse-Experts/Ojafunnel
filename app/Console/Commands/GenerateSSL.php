@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\ProcessSSLGeneration;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Domain;
-use App\Utils\SSLManager;
 use App\Utils\DomainHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -41,17 +41,11 @@ class GenerateSSL extends Command
             if ($recordFound) {
                 Domain::where('domain', $domain->domain)->update(['status' => 'DOMAIN_PROPAGATED']);
 
-                $user = User::where('id', $domain->user_id)->first();
-                $host = $domain->slug . '-' . $domain->type . '.' . env('SSL_APP_DOMAIN');
+                // $user = User::where('id', $domain->user_id)->first();
+                // $host = $domain->slug . '-' . $domain->type . '.' . env('SSL_APP_DOMAIN');
 
-                $generated = (new SSLManager())->generateSSL($domain->domain, $host, $user->email);
-
-                if ($generated) {
-                    Domain::where('domain', $domain->domain)->update([
-                        'status' => 'SSL_ENABLED',
-                        'ssl_renewal_date' => Carbon::now()->addDays(60)->format('Y-m-d')
-                    ]);
-                } else Domain::where('domain', $domain->domain)->update(['status' => 'SSL_GENERATION_FAILED']);
+                // // dispatch ssl generate to queue
+                // ProcessSSLGeneration::dispatch($domain->domain, $host, $user->email)->onQueue('sslGeneration');
             } else Domain::where('domain', $domain->domain)->update(['status' => 'DOMAIN_A_RECORD_NOT_FOUND']);
         });
 

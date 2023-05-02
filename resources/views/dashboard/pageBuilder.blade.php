@@ -315,7 +315,8 @@
                                                             </li>
                                                             <li>
                                                                 <a class="dropdown-item" style="cursor: pointer;" href="
-                                                                ">Add Custom Domain</a>
+                                                                {{ route('user.page.add.custom.domain', ['username' => Auth::user()->username, 'id' => $page->id])}}
+                                                                ">Custom Domain</a>
                                                             </li>
                                                         </ul>
                                                     </div> 
