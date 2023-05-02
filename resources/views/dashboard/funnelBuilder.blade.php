@@ -138,7 +138,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li>
-                                                            <a class="dropdown-item" href="{{route('user.view.funnel.pages', [Auth::user()->username, Crypt::encrypt($funnel->id)])}}">View Pages</a>
+                                                            <a class="dropdown-item" href="{{route('user.view.funnel.pages', [Auth::user()->username, Crypt::encrypt($funnel->id)])}}">View Funnel Pages</a>
                                                         </li> 
                                                         <li>
                                                             <a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit-{{$funnel->id}}">Edit Funnel</a>
@@ -149,7 +149,7 @@
                                                         <li>
                                                             <a class="dropdown-item" style="cursor: pointer;" href="
                                                             {{ route('user.add.custom.domain', ['username' => Auth::user()->username, 'id' => $funnel->id])}}
-                                                            ">Add Custom Domain</a>
+                                                            ">Custom Domain</a>
                                                         </li>
                                                     </ul>
                                                 </div>

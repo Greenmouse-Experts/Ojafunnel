@@ -63,8 +63,15 @@
 				</button>
 
 				<button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download" data-v-download="
-					@if (env('APP_ENV') == 'local')
-						{{ $currentpage->file_location	}}
+				@if (env('APP_ENV') == 'local')
+					{{ $currentpage->file_location	}}
+				@else
+					@if (\App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->exists())
+						@if ($currentpage->name == 'index.html')
+							{{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' }}
+						@else
+							{{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' . explode('.', $currentpage->name)[0] }}
+						@endif 
 					@else
 						@if ($currentpage->name == 'index.html')
 							{{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
@@ -72,6 +79,7 @@
 							{{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $currentpage->name)[0] }}
 						@endif 
 					@endif 
+				@endif
 				">
 					<i class="la la-download"></i>
 				</button>
@@ -85,14 +93,22 @@
 			</div>
 
 			<div class="btn-group float-end me-3 responsive-btns" role="group">
-                <a href=" 
+                <a href="
 					@if (env('APP_ENV') == 'local')
 						{{ $currentpage->file_location	}}
 					@else
-						@if ($currentpage->name == 'index.html')
-							{{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
+						@if (\App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->exists())
+							@if ($currentpage->name == 'index.html')
+								{{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' }}
+							@else
+								{{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' . explode('.', $currentpage->name)[0] }}
+							@endif 
 						@else
-							{{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $currentpage->name)[0] }}
+							@if ($currentpage->name == 'index.html')
+								{{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
+							@else
+								{{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $currentpage->name)[0] }}
+							@endif 
 						@endif 
 					@endif
 				" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
