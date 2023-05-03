@@ -601,39 +601,23 @@ class AuthController extends Controller
 
     public function text()
     {
-        $email = 'promiseezema11@gmail@gmail.com';
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.apilayer.com/email_verification/check?email=$email",
-            CURLOPT_HTTPHEADER => array(
-                "Content-Type: text/plain",
-                "apikey: hh1kBNxCPLAwYaePOR55kuyy3mT7zxow"
-            ),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET"
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        $json = json_decode($response, true);
-
-        // dd($json);
-
-        if ($json == null) {
-            return 'invalid';
-        } elseif ($json['success'] == false) {
-            return 'false';
-        } elseif ($json['format_valid'] == true) {
-            return 'true';
-        }
+        $data_json = '{
+            "from":"Infobip",
+            "to":"08161215848",
+            "text":"test msg."
+         }';
+         $authorization = base64_encode('tmas35:8#d!Xaoke');
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Accept: application/json',"Authorization: Basic $authorization"));
+                //curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+                curl_setopt($ch, CURLOPT_URL, 'https://api.infobip.com/sms/1/text/single');
+            
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS,$data_json);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $response  = curl_exec($ch);
+                //var_dump(curl_getinfo($ch));
+                return ($response);
+                curl_close($ch);
     }
 }

@@ -76,7 +76,7 @@
                                             <th scope="col">Price</th>
                                             <th scope="col">Commission(s)</th>
                                             <th scope="col">Multi Level</th>
-                                            {{-- <th scope="col">Visit</th> --}}
+                                            <th scope="col">Type</th>
                                             <th scope="col">Created</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -99,9 +99,13 @@
                                                 <td>
                                                     Yes
                                                 </td>
-                                                {{-- <td>
-                                                    0
-                                                </td> --}}
+                                                <td>
+                                                    @if($product->link == null)
+                                                    Physical
+                                                    @else
+                                                    Digital
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     {{ $product->created_at }}
                                                 </td>

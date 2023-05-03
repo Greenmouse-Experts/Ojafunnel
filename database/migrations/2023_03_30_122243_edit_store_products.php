@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('store_products', function (Blueprint $table) {
-            $table->decimal('price', 8, 2)->default('0.00')->change();
+            $table->double('price')->default('0.00')->change();
         });
     }
 

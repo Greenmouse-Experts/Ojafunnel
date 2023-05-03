@@ -143,6 +143,11 @@
                 @foreach ($products as $item)
                     <div class="col-md-4" id="item-{{ $item->id }}">
                         <div class="founds">
+                          @if($item->link == null)
+                          <span class="badge badge-pill badge-soft-dark text-end font-size-11" style="float: right;">Physical</span>
+                          @else
+                          <span class="badge badge-pill badge-soft-dark text-end font-size-11" style="float: right;">Digital</span>
+                          @endif
                           <div class="found-top">
                               <img src="{{Storage::url($item->image)}}" alt="">
                           </div>

@@ -15,6 +15,7 @@ use Auth;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\File as FacadeFile;
 
 
@@ -309,12 +310,32 @@ class StoreController extends Controller
             'level1_comm' => 'required',
             'level2_comm' => 'required',
             'content_type' => 'required',
-            'file' => [
-                'required',
-                FacadeFile::types(['mp3', 'pdf', 'mp4'])
-                    ->max(100 * 1024),
-            ],
+            // 'file' => [
+            //     'required',
+            //     FacadeFile::types(['mp3', 'pdf', 'mp4'])
+            //         ->max(100 * 1024),
+            // ],
         ]);
+
+        $validator = Validator::make(
+            [
+                'file'      => $request->file,
+                'extension' => strtolower($request->file->getClientOriginalExtension()),
+                'size' => strtolower($request->file->getSize())
+            ],
+            [
+                'file'          => 'required',
+                'extension'      => 'required|in:mp3,pdf,mp4',
+                'size' => 'required|max:102400'
+            ]
+        );
+
+        if($validator->fails()){
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'The selected file format is invalid or file size greater than 100MB'
+            ]); 
+        }
 
         if (StoreProduct::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->products) {
             return back()->with([
