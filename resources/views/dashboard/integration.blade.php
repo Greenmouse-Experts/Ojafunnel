@@ -281,7 +281,7 @@
                     <div class="Edit-level">
                         <form method="POST" action="{{ route('user.integration.create')}}">
                             @csrf
-                            <input name="type" value="Twilio" hidden>
+                            <input name="type" value="Twillio" hidden>
                             <div class="form">
                                 <div class="col-lg-12">
                                     <label>SID</label>

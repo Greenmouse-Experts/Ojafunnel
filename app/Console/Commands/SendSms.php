@@ -15,6 +15,7 @@ use \Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
+use Twilio\Rest\Client as twilio;
 
 class SendSms extends Command
 {
@@ -182,6 +183,52 @@ class SendSms extends Command
                         }
                     }
 
+                    if($sms->integration == 'Twillio')
+                    {
+                        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+
+                        $d = $contact->toArray();
+
+                        foreach ($d as $val) {
+                            $str = implode(',', $val);
+                            $data[] = $str;
+                        }
+                        $datum = implode(',', $data);
+
+                        $sid = $integration->sid;
+                        $auth_token = $integration->token;
+                        $from_number = $integration->from;
+                        $message = $sms->message;
+                        $sender_name = $sms->sender_name;
+                        $recipients = explode(',', $datum);
+
+                        try {
+                            $sid = $sid; // Your Account SID from www.twilio.com/console
+                            $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+                            $from_number = $from_number; // Valid Twilio number
+
+                            $client = new twilio($sid, $auth_token);
+
+                            $count = 0;
+
+                            foreach( $recipients as $number )
+                            {
+                                $count++;
+
+                                $client->messages->create(
+                                    $number,
+                                    [
+                                        'from' => $from_number,
+                                        'body' => $message,
+                                    ]
+                                );
+                            }
+
+                        } catch(Exception $e) {
+                            $responseBody = $e->getMessage();
+                        }  
+                    }
+
                     $data = $sms->update();
                 }
             }
@@ -268,8 +315,6 @@ class SendSms extends Command
                         } catch (Exception $e) {
                             $responseBody = $e;
                         }
-
-                        // return $responseBody;
                     }
 
                     if ($sms->integration == "NigeriaBulkSms") 
@@ -328,6 +373,52 @@ class SendSms extends Command
                         } catch (Exception $e) {
                             $responseBody = $e;
                         }
+                    }
+
+                    if($sms->integration == 'Twillio')
+                    {
+                        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+
+                        $d = $contact->toArray();
+
+                        foreach ($d as $val) {
+                            $str = implode(',', $val);
+                            $data[] = $str;
+                        }
+                        $datum = implode(',', $data);
+
+                        $sid = $integration->sid;
+                        $auth_token = $integration->token;
+                        $from_number = $integration->from;
+                        $message = $sms->message;
+                        $sender_name = $sms->sender_name;
+                        $recipients = explode(',', $datum);
+
+                        try {
+                            $sid = $sid; // Your Account SID from www.twilio.com/console
+                            $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+                            $from_number = $from_number; // Valid Twilio number
+
+                            $client = new twilio($sid, $auth_token);
+
+                            $count = 0;
+
+                            foreach( $recipients as $number )
+                            {
+                                $count++;
+
+                                $client->messages->create(
+                                    $number,
+                                    [
+                                        'from' => $from_number,
+                                        'body' => $message,
+                                    ]
+                                );
+                            }
+
+                        } catch(Exception $e) {
+                            $responseBody = $e->getMessage();
+                        }  
                     }
 
                     $data = $sms->update();

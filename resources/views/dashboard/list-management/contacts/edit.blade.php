@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <label for="">Phone Number</label>
-                                <input type="text" name="phone" class="form-control"  value="{{$contact->phone}}" placeholder="Enter Phone Number" />
+                                <input type="text" name="phone" class="form-control"  id="phone_number" value="{{$contact->phone}}" placeholder="Enter Phone Number" />
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
@@ -104,7 +104,7 @@
                                 <input type="radio" id="subscribe" name="subscribe" value="0" {{$contact->subscribe == 0 ? 'checked' : ''}}/> No
                             </div> -->
                             <div class="text-end mt-2">
-                                <a href="{{route('user.view.list', Crypt::encrypt($contact->mail_list_id))}}">
+                                <a href="{{route('user.view.list', Crypt::encrypt($contact->list_management_id))}}">
                                     <button type="button" class="btn px-4 py-1 btn-danger">
                                         Cancel
                                     </button>
@@ -120,4 +120,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#phone_number").intlTelInput({
+            // preferredCountries: ["us", "ca"],
+            separateDialCode: true,
+            initialCountry: ""
+        }).on('countrychange', function (e, countryData) {
+            $("#phone_number").val('+'+($("#phone_number").intlTelInput("getSelectedCountryData").dialCode));
+        });
+    });
+</script>
+<style>
+    .iti {
+        display: block !important;
+    }
+    .iti__country-list {
+        z-index: 2000 !important;
+    }
+</style>
 @endsection

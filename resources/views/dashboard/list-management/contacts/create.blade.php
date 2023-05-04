@@ -123,4 +123,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#phone_number").intlTelInput({
+            // preferredCountries: ["us", "ca"],
+            separateDialCode: true,
+            initialCountry: ""
+        }).on('countrychange', function (e, countryData) {
+            $("#phone_number").val('+'+($("#phone_number").intlTelInput("getSelectedCountryData").dialCode));
+        });
+    });
+</script>
+
+<style>
+    .iti {
+        display: block !important;
+    }
+    .iti__country-list {
+        z-index: 2000 !important;
+    }
+</style>
 @endsection

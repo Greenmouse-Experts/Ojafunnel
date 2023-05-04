@@ -106,7 +106,7 @@
                                                                 <div class="row">
                                                                     <div class="Editt">
                                                                         <div class="form">
-                                                                            @if($sms_integration->type == 'Twilio')
+                                                                            @if($sms_integration->type == 'Twillio')
                                                                             <p><b>View Twilio Integrations</b></p>
                                                                             <div class="row">
                                                                                 <div class="col-lg-12">
@@ -250,7 +250,7 @@
                                                                 <div class="row">
                                                                     <div class="Editt">
                                                                         <div class="form">
-                                                                            @if($sms_integration->type == 'Twilio')
+                                                                            @if($sms_integration->type == 'Twillio')
                                                                             <p><b>Update Your Twilio Integrations</b></p>
                                                                             <div class="row">
                                                                                 <form method="POST" action="{{ route('user.integration.update', Crypt::encrypt($sms_integration->id))}}">

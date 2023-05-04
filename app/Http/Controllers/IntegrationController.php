@@ -73,7 +73,7 @@ class IntegrationController extends Controller
         $integrations = Integration::where('user_id', Auth::user()->id)->get();
 
         if ($integrations->isEmpty()) {
-            if ($request->type == 'Twilio') {
+            if ($request->type == 'Twillio') {
                 //Validate Request
                 $this->validate($request, [
                     'sid' => ['required', 'string', 'max:255'],

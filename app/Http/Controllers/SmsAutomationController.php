@@ -337,6 +337,40 @@ class SmsAutomationController extends Controller
                         'message' => $message
                     ]);
                 }
+            } elseif ($request->integration == "Twillio") {
+                $message = $this->sendMessageTwilio($request);
+
+                if ($message == true ) {
+                    $new_campaign = SmsCampaign::create([
+                        'title' => $request->campaign_name,
+                        'user_id' => Auth::user()->id,
+                        'message' => $request->message,
+                        'sender_name' => $request->sender_name,
+                        'integration' => $request->integration,
+                        'receivers' => $contact,
+                        'sms_type' => $sms_type,
+                        'status' => 'send',
+                    ]);
+
+                    $new_campaign->cache = json_encode([
+                        'ContactCount' => $contact->count(),
+                        'DeliveredCount' => $contact->count(),
+                        'FailedDeliveredCount' => 0,
+                        'NotDeliveredCount' => 0,
+                    ]);
+
+                    $new_campaign->save();
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => 'SMS Campaign Automation Created.'
+                    ]);
+                } else {
+                    return back()->with([
+                        'type' => 'danger',
+                        'message' => $message
+                    ]);
+                }
             } else {
                 return back()->with([
                     'type' => 'danger',
@@ -441,6 +475,53 @@ class SmsAutomationController extends Controller
 
     public function sendMessageTwilio(Request $request)
     {
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')
+            ->get();
+
+        $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+
+        $d = $contacts->toArray();
+
+        foreach ($d as $val) {
+            $str = implode(',', $val);
+            $data[] = $str;
+        }
+        $datum = implode(',', $data);
+
+        $sid = $integration->sid;
+        $auth_token = $integration->token;
+        $from_number = $integration->from;
+        $message = $request->message;
+        $sender_name = $request->sender_name;
+        $recipients = explode(',', $datum);
+
+        try {
+            $sid = $sid; // Your Account SID from www.twilio.com/console
+            $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+            $from_number = $from_number; // Valid Twilio number
+
+            $client = new twilio($sid, $auth_token);
+
+            $count = 0;
+
+            foreach( $recipients as $number )
+            {
+                $count++;
+
+                $client->messages->create(
+                    $number,
+                    [
+                        'from' => $from_number,
+                        'body' => $message,
+                    ]
+                );
+            }
+            
+            return true;
+
+        } catch(Exception $e) {
+            return $e->getMessage();
+        }  
     }
 
     public function sendMessageMultitexter(Request $request)

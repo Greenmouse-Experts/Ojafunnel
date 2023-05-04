@@ -100,7 +100,7 @@
                                 <input type="radio" id="subscribe" name="subscribe" value="0" {{$contact->subscribe == 0 ? 'checked' : ''}}/> No
                             </div> -->
                             <div class="text-end mt-2">
-                                <a href="{{route('user.view.list', Crypt::encrypt($contact->mail_list_id))}}">
+                                <a href="{{route('user.view.list', Crypt::encrypt($contact->list_management_id))}}">
                                     <button type="button" class="btn px-4 py-1 btn-danger">
                                         Cancel
                                     </button>

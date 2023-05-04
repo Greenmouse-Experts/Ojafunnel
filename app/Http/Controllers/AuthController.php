@@ -601,23 +601,54 @@ class AuthController extends Controller
 
     public function text()
     {
-        $data_json = '{
-            "from":"Infobip",
-            "to":"08161215848",
-            "text":"test msg."
-         }';
-         $authorization = base64_encode('tmas35:8#d!Xaoke');
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Accept: application/json',"Authorization: Basic $authorization"));
-                //curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-                curl_setopt($ch, CURLOPT_URL, 'https://api.infobip.com/sms/1/text/single');
-            
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS,$data_json);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $response  = curl_exec($ch);
-                //var_dump(curl_getinfo($ch));
-                return ($response);
-                curl_close($ch);
-    }
+        // $data_json = '{
+        //     "from":"Infobip",
+        //     "to":"08161215848",
+        //     "text":"test msg."
+        //  }';
+
+        // $authorization = base64_encode('tmas35:8#d!Xaoke');
+        // $ch = curl_init();
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Accept: application/json',"Authorization: Basic $authorization"));
+        // //curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+        // curl_setopt($ch, CURLOPT_URL, 'https://api.infobip.com/sms/1/text/single');
+    
+        // curl_setopt($ch, CURLOPT_POST, 1);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS,$data_json);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // $response  = curl_exec($ch);
+        // //var_dump(curl_getinfo($ch));
+        // return ($response);
+        // curl_close($ch);
+
+
+
+
+
+        $curl = curl_init();
+
+        $authorization = base64_encode('tmas35:8#d!Xaoke');
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://nzwjey.api.infobip.com/sms/2/text/advanced',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>'{"messages":[{"destinations":[{"to":"41793026727"}],"from":"InfoSMS","text":"This is a sample message"}]}',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: {authorization}',
+                'Content-Type: application/json',
+                'Accept: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return $response;
+}
 }
