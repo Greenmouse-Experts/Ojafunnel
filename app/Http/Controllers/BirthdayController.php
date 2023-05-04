@@ -198,7 +198,7 @@ class BirthdayController extends Controller
             }
 
             if ($automation == 'sms automation') {
-                $contact = ListManagement::findOrFail($request->birthday_list_id)->get();
+                $contact = ListManagementContact::where('list_management_id', $request->birthday_list_id)->select('phone')->get();
                 $bm = new BirthdayAutomation();
                 $bm->user_id = Auth::user()->id;
                 $bm->birthday_contact_list_id = $request->birthday_list_id;

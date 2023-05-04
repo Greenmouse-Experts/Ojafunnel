@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Twilio\Rest\Client as twilio;
 
 class SmsBirthday extends Command
 {
@@ -51,8 +52,6 @@ class SmsBirthday extends Command
                     return;
                 }
 
-                // foreach (json_decode($ba->automation) as $automation) {
-                // }
                 if ($ba->automation == 'sms automation') {
                     $integration = Integration::find($ba->integration);
                     // \Log::info($integration->type);
@@ -151,20 +150,61 @@ class SmsBirthday extends Command
                         } catch (Exception $e) {
                             $responseBody = $e;
                         }
+                    }
+
+                    if($integration->type == 'Twillio')
+                    {
+                        $d = $birthdayContactList->toArray();
+
+                        foreach ($d as $val) {
+                            $str = implode(',', $val);
+                            $data[] = $str;
+                        }
+                        $datum = implode(',', $data);
+
+                        $sid = $integration->sid;
+                        $auth_token = $integration->token;
+                        $from_number = $integration->from;
+                        $message = $ba->message;
+                        $sender_name = $ba->sender_name;
+                        $recipients = explode(',', $datum);
+
+                        try {
+                            $sid = $sid; // Your Account SID from www.twilio.com/console
+                            $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+                            $from_number = $from_number; // Valid Twilio number
+
+                            $client = new twilio($sid, $auth_token);
+
+                            $count = 0;
+
+                            foreach( $recipients as $number )
+                            {
+                                $count++;
+
+                                $client->messages->create(
+                                    $number,
+                                    [
+                                        'from' => $from_number,
+                                        'body' => $message,
+                                    ]
+                                );
+                            }
+
+                        } catch(Exception $e) {
+                            $responseBody = $e->getMessage();
+                        }  
                     }
                 }
             }
 
             if ($ba->sms_type == 'anniversary') {
                 $birthdayContactList = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('anniversary', '=', date('m'))->whereDay('anniversary', '=', date('d'))->select('phone')->get();
-                // \Log::info($birthdayContactList);
 
                 if ($birthdayContactList->isEmpty()) {
                     return;
                 }
 
-                // foreach (json_decode($ba->automation) as $automation) {
-                // }
                 if ($ba->automation == 'sms automation') {
                     $integration = Integration::find($ba->integration);
                     // \Log::info($integration->type);
@@ -263,6 +303,50 @@ class SmsBirthday extends Command
                         } catch (Exception $e) {
                             $responseBody = $e;
                         }
+                    }
+
+                    if($integration->type == 'Twillio')
+                    {
+                        $d = $birthdayContactList->toArray();
+
+                        foreach ($d as $val) {
+                            $str = implode(',', $val);
+                            $data[] = $str;
+                        }
+                        $datum = implode(',', $data);
+
+                        $sid = $integration->sid;
+                        $auth_token = $integration->token;
+                        $from_number = $integration->from;
+                        $message = $ba->message;
+                        $sender_name = $ba->sender_name;
+                        $recipients = explode(',', $datum);
+
+                        try {
+                            $sid = $sid; // Your Account SID from www.twilio.com/console
+                            $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+                            $from_number = $from_number; // Valid Twilio number
+
+                            $client = new twilio($sid, $auth_token);
+
+                            $count = 0;
+
+                            foreach( $recipients as $number )
+                            {
+                                $count++;
+
+                                $client->messages->create(
+                                    $number,
+                                    [
+                                        'from' => $from_number,
+                                        'body' => $message,
+                                    ]
+                                );
+                            }
+
+                        } catch(Exception $e) {
+                            $responseBody = $e->getMessage();
+                        }  
                     }
                 }
             }

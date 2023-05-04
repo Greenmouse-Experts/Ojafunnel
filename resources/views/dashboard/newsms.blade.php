@@ -66,6 +66,9 @@
                                                 <textarea name="message" id="message" cols="30" rows="5" placeholder="Enter the message you would like to send to the reciepient(s) details below "></textarea>
                                                 <div class="messageCounter" id="the-count"><span id="characters">0</span></div>
                                                 <span class="text-danger">160 characters length per message</span>
+                                                <p>
+                                                    <code>$name</code> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
