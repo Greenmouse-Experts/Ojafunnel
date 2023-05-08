@@ -1163,6 +1163,14 @@ class AdminController extends Controller
     public function transaction_confirm($id, $response, $status, $description)
     {
         $payout = Withdrawal::find($id);
+        $user = User::find($payout->user_id);
+
+        if ($payout->amount > $user->wallet) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'This user balance is not up to the requested withdrawal amount.'
+            ]);
+        }
 
         if ($status == 'finalized') {
             $payout->description = $description;
@@ -1177,6 +1185,16 @@ class AdminController extends Controller
 
             $payout->transaction_id = $transaction->id;
             $payout->save();
+
+            $user->wallet -= $payout->amount;
+            $user->save();
+
+            Transaction::create([
+                'user_id' => $payout->user_id,
+                'amount' => $payout->amount,
+                'reference' => 'Withdrawal request of ' . $payout->amount . ' has been paid',
+                'status' => 'Withdrawal Paid'
+            ]);
 
             OjafunnelNotification::create([
                 'to' => $payout->user_id,
@@ -1197,8 +1215,6 @@ class AdminController extends Controller
             $payout->status = 'refunded';
             $payout->save();
 
-            $user = User::find($payout->user_id);
-
             $user->wallet += $payout->amount;
             $user->save();
 
@@ -1206,7 +1222,7 @@ class AdminController extends Controller
                 'user_id' => $payout->user_id,
                 'amount' => $payout->amount,
                 'reference' => 'Withdrawal request of ' . $payout->amount . ' has been refunded',
-                'status' => 'Withdraw Refunded'
+                'status' => 'Withdrawal Refunded'
             ]);
 
             OjafunnelNotification::create([
@@ -1226,7 +1242,7 @@ class AdminController extends Controller
 
         return back()->with([
             'type' => 'danger',
-            'message' => 'Action failed.',
+            'message' => 'Payment can be finalized or refunded.',
         ]);
     }
 

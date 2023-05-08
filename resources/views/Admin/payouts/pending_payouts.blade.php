@@ -45,6 +45,7 @@ $admin = auth()->guard('admin')->user();
                                         <tr>
                                             <th class="align-middle">S/N</th>
                                             <th class="align-middle">User</th>
+                                            <th class="align-middle">User Balance</th>
                                             <th class="align-middle">Amount</th>
                                             <th class="align-middle">Payment Method</th>
                                             <th class="align-middle">Description</th>
@@ -60,6 +61,9 @@ $admin = auth()->guard('admin')->user();
                                             <td>
                                                 {{ App\Models\User::find($withdraw->user_id)->first_name }} {{ App\Models\User::find($withdraw->user_id)->last_name }}
                                                 <p class='text-bold-600'> {{ App\Models\User::find($withdraw->user_id)->email }} </p>
+                                            </td>
+                                            <td>
+                                                <p class='text-bold-600'> ₦{{ number_format(App\Models\User::find($withdraw->user_id)->wallet, 2) }} </p>
                                             </td>
                                             <td>
                                                 <p class='text-bold-600'> ₦{{number_format($withdraw->amount, 2)}} </p>

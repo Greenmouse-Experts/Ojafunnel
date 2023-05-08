@@ -79,7 +79,7 @@
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <label for="">Phone Number</label>
-                                <input type="text" name="phone" class="form-control"  value="{{$contact->phone}}" placeholder="Enter Phone Number" />
+                                <input type="text" name="phone" class="form-control"  value="{{$contact->phone}}" id="phone_number" placeholder="Enter Phone Number" />
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
@@ -116,4 +116,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#phone_number").intlTelInput({
+            // preferredCountries: ["us", "ca"],
+            separateDialCode: true,
+            initialCountry: ""
+        }).on('countrychange', function (e, countryData) {
+            $("#phone_number").val('+'+($("#phone_number").intlTelInput("getSelectedCountryData").dialCode));
+        });
+    });
+</script>
+<style>
+    .iti {
+        display: block !important;
+    }
+    .iti__country-list {
+        z-index: 2000 !important;
+    }
+</style>
 @endsection

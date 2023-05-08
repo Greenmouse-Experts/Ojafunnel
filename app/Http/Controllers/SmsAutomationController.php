@@ -15,6 +15,7 @@ use Twilio\Rest\Client as twilio;
 use GuzzleHttp\Client;
 use App\Library\Tool;
 use App\Models\OjaPlanParameter;
+use Illuminate\Support\Str;
 
 class SmsAutomationController extends Controller
 {
@@ -272,7 +273,7 @@ class SmsAutomationController extends Controller
             if ($request->integration == "Multitexter") {
                 $message = $this->sendMessageMultitexter($request);
 
-                if (str_contains($message->msg, 'Message has been sent')) {
+                if ($message == true) {
                     $new_campaign = SmsCampaign::create([
                         'title' => $request->campaign_name,
                         'user_id' => Auth::user()->id,
@@ -306,7 +307,8 @@ class SmsAutomationController extends Controller
             } elseif ($request->integration == "NigeriaBulkSms") {
                 $message = $this->sendMessageNigeriaBulkSms($request);
 
-                if (str_contains($message, 'Message sent')) {
+                // if (str_contains($message, 'Message sent')) {
+                if ($message == true) {
                     $new_campaign = SmsCampaign::create([
                         'title' => $request->campaign_name,
                         'user_id' => Auth::user()->id,
@@ -379,9 +381,16 @@ class SmsAutomationController extends Controller
             }
         }
         if ($request->message_timimg == 'Schedule') {
+
+            $this->validate($request, [
+                'schedule_date' => ['required'],
+                'schedule_time' => ['required'],
+            ]);
+
             $new_campaign = SmsCampaign::create([
                 'title' => $request->campaign_name,
                 'user_id' => Auth::user()->id,
+                'maillist_id' => $request->mailinglist_id,
                 'message' => $request->message,
                 'sender_name' => $request->sender_name,
                 'integration' => $request->integration,
@@ -391,7 +400,7 @@ class SmsAutomationController extends Controller
             ]);
 
             $schedule_date = $request->schedule_date . ' ' . $request->schedule_time;
-            //dd($schedule_date);
+            // dd($request->schedule_date);
             $schedule_time = $schedule_date;
 
             $new_campaign->status = SmsCampaign::STATUS_SCHEDULED;
@@ -402,6 +411,10 @@ class SmsAutomationController extends Controller
                 // working with onetime schedule
                 $new_campaign->schedule_type = SmsCampaign::TYPE_ONETIME;
             } else {
+                $this->validate($request, [
+                    'recurring_date' => ['required'],
+                    'recurring_time' => ['required'],
+                ]);
                 // working with recurring schedule
                 //if schedule time frequency is not one time then check frequency details
                 $recurring_date = $request->recurring_date . ' ' . $request->recurring_time;
@@ -433,22 +446,8 @@ class SmsAutomationController extends Controller
                 'FailedDeliveredCount' => 0,
                 'NotDeliveredCount' => 0,
             ]);
-            //dd($request->hasFile('mms_file'));
-            if ($sms_type == 'whatsapp' && $request->hasFile('mms_file')) {
-                $new_campaign->media_url = Tool::uploadImage($request->file('mms_file'));
-            }
-
             //finally, store data and return response
             $camp = $new_campaign->save();
-
-
-            //dd($contact);
-            //$receivers = implode(';', $contact);
-
-            // Need to validate specified phone numbers
-
-            //dd($receivers);
-            //$receivers = implode(';', $request->receivers);
 
             // Now add the phone numbers with messages to queue that will be handled further
             foreach ($contact as $receiver) {
@@ -475,182 +474,316 @@ class SmsAutomationController extends Controller
 
     public function sendMessageTwilio(Request $request)
     {
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')
-            ->get();
+        $contains = Str::contains($request->message, '$name');
 
-        $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+        if($contains)
+        {
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone', 'name')->get();
 
-        $d = $contacts->toArray();
+            $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
 
-        foreach ($d as $val) {
-            $str = implode(',', $val);
-            $data[] = $str;
-        }
-        $datum = implode(',', $data);
+            $d = $contacts->toArray();
 
-        $sid = $integration->sid;
-        $auth_token = $integration->token;
-        $from_number = $integration->from;
-        $message = $request->message;
-        $sender_name = $request->sender_name;
-        $recipients = explode(',', $datum);
+            $sid = $integration->sid;
+            $auth_token = $integration->token;
+            $from_number = $integration->from;
+            $sender_name = $request->sender_name;
+            $recipients = $d;
 
-        try {
-            $sid = $sid; // Your Account SID from www.twilio.com/console
-            $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
-            $from_number = $from_number; // Valid Twilio number
+            try {
+                $sid = $sid; // Your Account SID from www.twilio.com/console
+                $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+                $from_number = $from_number; // Valid Twilio number
 
-            $client = new twilio($sid, $auth_token);
+                $client = new twilio($sid, $auth_token);
 
-            $count = 0;
+                $count = 0;
 
-            foreach( $recipients as $number )
-            {
-                $count++;
+                foreach( $recipients as $value )
+                {
+                    $messageContent = str_replace('$name', $value['name'], $request->message);
 
-                $client->messages->create(
-                    $number,
-                    [
-                        'from' => $from_number,
-                        'body' => $message,
-                    ]
-                );
+                    $count++;
+
+                    $client->messages->create(
+                        $value['phone'],
+                        [
+                            'from' => $from_number,
+                            'body' => $messageContent,
+                        ]
+                    );
+                }
+                
+                return true;
+
+            } catch(Exception $e) {
+                return $e->getMessage();
+            }  
+
+        } else {
+
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')->get();
+
+            $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+
+            $d = $contacts->toArray();
+
+            foreach ($d as $val) {
+                $str = implode(',', $val);
+                $data[] = $str;
             }
-            
-            return true;
+            $datum = implode(',', $data);
 
-        } catch(Exception $e) {
-            return $e->getMessage();
-        }  
+            $sid = $integration->sid;
+            $auth_token = $integration->token;
+            $from_number = $integration->from;
+            $message = $request->message;
+            $sender_name = $request->sender_name;
+            $recipients = explode(',', $datum);
+
+            try {
+                $sid = $sid; // Your Account SID from www.twilio.com/console
+                $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+                $from_number = $from_number; // Valid Twilio number
+
+                $client = new twilio($sid, $auth_token);
+
+                $count = 0;
+
+                foreach( $recipients as $number )
+                {
+                    $count++;
+
+                    $client->messages->create(
+                        $number,
+                        [
+                            'from' => $from_number,
+                            'body' => $message,
+                        ]
+                    );
+                }
+                
+                return true;
+
+            } catch(Exception $e) {
+                return $e->getMessage();
+            }  
+        }
+        
     }
 
     public function sendMessageMultitexter(Request $request)
     {
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')
-            ->get();
+        $contains = Str::contains($request->message, '$name');
 
-        $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+        if($contains)
+        {
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone', 'name')->get();
 
-        $d = $contacts->toArray();
+            $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
 
-        foreach ($d as $val) {
-            $str = implode(',', $val);
-            $data[] = $str;
+            $email = $integration->email;
+            $password = $integration->password;
+            $sender_name = $request->sender_name;
+            $api_key = $integration->api_key;
+
+            try {
+                foreach($contacts as $contact)
+                {
+                    $client = new Client(); //GuzzleHttp\Client
+                    $url = "https://app.multitexter.com/v2/app/sendsms";
+
+                    $messageContent = str_replace('$name', $contact->name, $request->message);
+
+                    $params = [
+                        "email" => $email,
+                        "password" => $password,
+                        "sender_name" => $sender_name,
+                        "message" => $messageContent,
+                        "recipients" => $contact->phone
+                    ];
+
+                    $headers = [
+                        'Authorization' => 'Bearer ' . $api_key
+                    ];
+
+                    $client->request('POST', $url, [
+                        'json' => $params,
+                        'headers' => $headers,
+                    ]);
+                }
+                // $responseBody = json_decode($response->getBody());
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e;
+            }
+
+            return $responseBody;
+
+        } else {
+
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')
+                ->get();
+
+            $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+
+            $d = $contacts->toArray();
+
+            foreach ($d as $val) {
+                $str = implode(',', $val);
+                $data[] = $str;
+            }
+            $datum = implode(',', $data);
+
+            $email = $integration->email;
+            $password = $integration->password;
+            $message = $request->message;
+            $sender_name = $request->sender_name;
+            $recipients = $datum;
+            $api_key = $integration->api_key;
+
+            try {
+                $client = new Client(); //GuzzleHttp\Client
+                $url = "https://app.multitexter.com/v2/app/sendsms";
+
+                $params = [
+                    "email" => $email,
+                    "password" => $password,
+                    "sender_name" => $sender_name,
+                    "message" => $message,
+                    "recipients" => $recipients
+                ];
+
+                $headers = [
+                    'Authorization' => 'Bearer ' . $api_key
+                ];
+
+                $client->request('POST', $url, [
+                    'json' => $params,
+                    'headers' => $headers,
+                ]);
+
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e;
+            }
+
+            return $responseBody;
         }
-        $datum = implode(',', $data);
-
-        $email = $integration->email;
-        $password = $integration->password;
-        $message = $request->message;
-        $sender_name = $request->sender_name;
-        $recipients = $datum;
-        $api_key = $integration->api_key;
-
-        try {
-            $client = new Client(); //GuzzleHttp\Client
-            $url = "https://app.multitexter.com/v2/app/sendsms";
-
-            $params = [
-                "email" => $email,
-                "password" => $password,
-                "sender_name" => $sender_name,
-                "message" => $message,
-                "recipients" => $recipients
-            ];
-
-            $headers = [
-                'Authorization' => 'Bearer ' . $api_key
-            ];
-
-            $response = $client->request('POST', $url, [
-                'json' => $params,
-                'headers' => $headers,
-            ]);
-
-            $responseBody = json_decode($response->getBody());
-        } catch (Exception $e) {
-            $responseBody = $e;
-        }
-
-        return $responseBody;
     }
 
     public function sendMessageNigeriaBulkSms(Request $request)
     {
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')
-            ->get();
+        $contains = Str::contains($request->message, '$name');
 
-        $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+        if($contains)
+        {
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone', 'name')->get();
 
-        $d = $contacts->toArray();
+            $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
 
-        foreach ($d as $val) {
-            $str = implode(',', $val);
-            $data[] = $str;
-        }
-        $datum = implode(',', $data);
+            $username = $integration->username;
+            $password = $integration->password;
+            $sender = $request->sender_name;
 
-        // Initialize variables ( set your variables here )
-        $username = $integration->username;
-        $password = $integration->password;
-        $sender = $request->sender_name;
-        $message = $request->message;
-        $recipients = $datum;
+            try {
+                foreach($contacts as $contact)
+                {
+                    $messageContent = str_replace('$name', $contact->name, $request->message);
 
-        try {
-            /*
-            Sending messages using our API
-            Requirements - PHP, cURL (enabled) function
-            */
+                    // Separate multiple numbers by comma
+                    $mobiles = $contact->phone;
 
-            // Separate multiple numbers by comma
+                    // Set your domain's API URL
+                    $api_url = 'http://portal.nigeriabulksms.com/api/?';
 
-            $mobiles = $recipients;
+                    //Create the message data
+                    $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $messageContent, 'mobiles' => $mobiles);
 
-            // Set your domain's API URL
+                    //URL encode the message data
+                    $data = http_build_query($data);
 
-            $api_url = 'http://portal.nigeriabulksms.com/api/?';
+                    //Send the message
+                    $ch = curl_init(); // Initialize a cURL connection
 
+                    curl_setopt($ch, CURLOPT_URL, $api_url);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_POST, true);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-            //Create the message data
+                    $result = curl_exec($ch);
 
-            $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $message, 'mobiles' => $mobiles);
+                    $result = json_decode($result);
 
-            //URL encode the message data
+                }
 
-            $data = http_build_query($data);
-
-            //Send the message
-
-            $ch = curl_init(); // Initialize a cURL connection
-
-            curl_setopt($ch, CURLOPT_URL, $api_url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
-            $result = curl_exec($ch);
-
-            $result = json_decode($result);
-
-
-            if (isset($result->status) && strtoupper($result->status) == 'OK') {
-                // Message sent successfully, do anything here
-
-                return 'Message sent at N' . $result->price;
-            } else if (isset($result->error)) {
-                // Message failed, check reason.
-
-                return 'Message failed - error: ' . $result->error;
-            } else {
-                // Could not determine the message response.
-
-                return 'Unable to process request';
+                $responseBody = true;
+                // if (isset($result->status) && strtoupper($result->status) == 'OK') {
+                //     // Message sent successfully, do anything here
+                //     return 'Message sent at N' . $result->price;
+                // } else if (isset($result->error)) {
+                //     // Message failed, check reason.
+                //     return 'Message failed - error: ' . $result->error;
+                // } else {
+                //     // Could not determine the message response.
+                //     return 'Unable to process request';
+                // }
+            } catch (Exception $e) {
+                $responseBody = $e;
             }
-        } catch (Exception $e) {
-            $responseBody = $e;
-        }
 
-        return $responseBody;
+            return $responseBody;
+
+        } else {
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')->get();
+
+            $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+
+            $d = $contacts->toArray();
+
+            foreach ($d as $val) {
+                $str = implode(',', $val);
+                $data[] = $str;
+            }
+            $datum = implode(',', $data);
+
+            // Initialize variables ( set your variables here )
+            $username = $integration->username;
+            $password = $integration->password;
+            $sender = $request->sender_name;
+            $message = $request->message;
+            $recipients = $datum;
+
+            try {
+                // Separate multiple numbers by comma
+                $mobiles = $recipients;
+
+                // Set your domain's API URL
+                $api_url = 'http://portal.nigeriabulksms.com/api/?';
+
+                //Create the message data
+                $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $message, 'mobiles' => $mobiles);
+
+                //URL encode the message data
+                $data = http_build_query($data);
+
+                //Send the message
+                $ch = curl_init(); // Initialize a cURL connection
+                curl_setopt($ch, CURLOPT_URL, $api_url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+                $result = curl_exec($ch);
+
+                $result = json_decode($result);
+
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e;
+            }
+
+            return $responseBody;
+        }
     }
 }
