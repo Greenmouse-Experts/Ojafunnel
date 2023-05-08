@@ -86,7 +86,7 @@
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <label for="">Phone Number</label>
-                                <input type="text" name="phone" class="form-control"  value="{{old('phone')}}" placeholder="Enter Phone Number" />
+                                <input type="text" name="phone" class="form-control"  value="{{old('phone')}}" id="phone_number" placeholder="Enter Phone Number" />
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 mb-4">

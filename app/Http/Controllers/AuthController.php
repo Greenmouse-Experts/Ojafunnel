@@ -601,36 +601,32 @@ class AuthController extends Controller
 
     public function text()
     {
-        // $data_json = '{
-        //     "from":"Infobip",
-        //     "to":"08161215848",
-        //     "text":"test msg."
-        //  }';
+        $BASE_URL = "19d24x.api.infobip.com";
+        $API_KEY = "App 1cb209108a9763c43915bac4ad33723a-081fd161-468d-4ac5-8c89-013a13b38abf";
+        $SENDER = "InfoSMS";
+        $RECIPIENT = "447522097511";
+        $MESSAGE_TEXT = "This is a sample message";
+        $USERNAME = 'promi9';
+        $PASSWORD = '@chinonyerem_370';
 
-        // $authorization = base64_encode('tmas35:8#d!Xaoke');
-        // $ch = curl_init();
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Accept: application/json',"Authorization: Basic $authorization"));
-        // //curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-        // curl_setopt($ch, CURLOPT_URL, 'https://api.infobip.com/sms/1/text/single');
-    
-        // curl_setopt($ch, CURLOPT_POST, 1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS,$data_json);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // $response  = curl_exec($ch);
-        // //var_dump(curl_getinfo($ch));
-        // return ($response);
-        // curl_close($ch);
-
-
-
-
+        $data_json = '{
+            "messages": [
+              {
+                "destinations": [
+                  {
+                    "to": "41793026727"
+                  }
+                ],
+                "from": "InfoSMS",
+                "text": "This is a sample message"
+              }
+            ]
+        }';
 
         $curl = curl_init();
 
-        $authorization = base64_encode('tmas35:8#d!Xaoke');
-
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://nzwjey.api.infobip.com/sms/2/text/advanced',
+            CURLOPT_URL => $BASE_URL.'/sms/2/text/advanced',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -638,9 +634,9 @@ class AuthController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS =>'{"messages":[{"destinations":[{"to":"41793026727"}],"from":"InfoSMS","text":"This is a sample message"}]}',
+            CURLOPT_POSTFIELDS => $data_json,
             CURLOPT_HTTPHEADER => array(
-                'Authorization: {authorization}',
+                'Authorization: '.$API_KEY,
                 'Content-Type: application/json',
                 'Accept: application/json'
             ),
@@ -650,5 +646,27 @@ class AuthController extends Controller
 
         curl_close($curl);
         return $response;
-}
+
+        // $curl = curl_init();
+
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://nzwjey.api.infobip.com/sms/1/text/query?username=tmas35&password=8#d!Xaoke&from=InfoSMS&to=41793026727,41793026834&text=HELLO&flash=true&transliteration=TURKISH&languageCode=TR&intermediateReport=true&notifyUrl=https://www.example.com&notifyContentType=application/json&callbackData=callbackData&validityPeriod=720&track=URL&trackingType=Custom%20tracking%20type',
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'GET',
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Accept: application/json'
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+
+        // curl_close($curl);
+        // return $response;
+
+    }
 }
