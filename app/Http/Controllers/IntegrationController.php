@@ -153,6 +153,25 @@ class IntegrationController extends Controller
                     'message' => 'Multitexter Integration Created Successfully!'
                 ]);
             }
+            if ($request->type == 'AWS') {
+                //Validate Request
+                $this->validate($request, [
+                    'key' => ['required', 'string', 'max:255'],
+                    'secret' => ['required', 'string', 'max:255']
+                ]);
+
+                Integration::create([
+                    'user_id' => Auth::user()->id,
+                    'key' => $request->key,
+                    'secret' => $request->secret,
+                    'type' => $request->type
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'AWS Integration Created Successfully!'
+                ]);
+            }
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Integration Not Found.'
@@ -164,13 +183,13 @@ class IntegrationController extends Controller
 
             // return $type;
 
-            if (in_array($request->type, $type) || in_array($request->type, $type) || in_array($request->type, $type) || in_array($request->type, $type)) {
+            if (in_array($request->type, $type) || in_array($request->type, $type) || in_array($request->type, $type) || in_array($request->type, $type) || in_array($request->type, $type)) {
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Integration added before.',
                 ]);
             } else {
-                if ($request->type == 'Twilio') {
+                if ($request->type == 'Twillio') {
                     //Validate Request
                     $this->validate($request, [
                         'sid' => ['required', 'string', 'max:255'],
@@ -250,6 +269,25 @@ class IntegrationController extends Controller
                         'message' => 'Multitexter Integration Created Successfully!'
                     ]);
                 }
+                if ($request->type == 'AWS') {
+                    //Validate Request
+                    $this->validate($request, [
+                        'key' => ['required', 'string', 'max:255'],
+                        'secret' => ['required', 'string', 'max:255']
+                    ]);
+    
+                    Integration::create([
+                        'user_id' => Auth::user()->id,
+                        'key' => $request->key,
+                        'secret' => $request->secret,
+                        'type' => $request->type
+                    ]);
+    
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => 'AWS Integration Created Successfully!'
+                    ]);
+                }
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Integration Not Found.'
@@ -264,7 +302,7 @@ class IntegrationController extends Controller
 
         $integration = Integration::findorfail($idFinder);
 
-        if ($integration->type == 'Twilio') {
+        if ($integration->type == 'Twillio') {
             //Validate Request
             $this->validate($request, [
                 'sid' => ['required', 'string', 'max:255'],
@@ -334,6 +372,23 @@ class IntegrationController extends Controller
             return back()->with([
                 'type' => 'success',
                 'message' => 'Multitexter Integration Updated Successfully!'
+            ]);
+        }
+        if ($integration->type == 'AWS') {
+            //Validate Request
+            $this->validate($request, [
+                'key' => ['required', 'string', 'max:255'],
+                'secret' => ['required', 'string', 'max:255']
+            ]);
+
+            $integration->update([
+                'key' => $request->key,
+                'secret' => $request->secret
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'AWS Integration Updated Successfully!'
             ]);
         }
         return back()->with([

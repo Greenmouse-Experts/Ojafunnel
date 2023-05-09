@@ -230,6 +230,33 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                            @elseif($sms_integration->type == 'AWS')
+                                                                            <p><b>View AWS Integrations</b></p>
+                                                                            <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <label>Key</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input value="{{$sms_integration->key}}" class="input" readonly>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <label>Secret</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input value="{{$sms_integration->secret}}" class="input" readonly>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <div class="boding">
+                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                            Cancel
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                             @endif
                                                                         </div>
                                                                     </div>
@@ -389,6 +416,41 @@
                                                                                         <div class="row">
                                                                                             <div class="col-md-12 mb-4">
                                                                                                 <input type="text" value="{{$sms_integration->api_key}}" name="api_key" class="input" required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row justify-content-between">
+                                                                                        <div class="col-6">
+                                                                                            <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                                Cancel
+                                                                                            </button>
+                                                                                        </div>
+                                                                                        <div class="col-6 text-end">
+                                                                                            <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                                                                                Update
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                            @elseif($sms_integration->type == 'AWS')
+                                                                            <p><b>Update Your AWS Integrations</b></p>
+                                                                            <div class="row">
+                                                                                <form method="POST" action="{{ route('user.integration.update', Crypt::encrypt($sms_integration->id))}}">
+                                                                                    @csrf
+                                                                                    <div class="col-lg-12">
+                                                                                        <label>Key</label>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 mb-4">
+                                                                                                <input type="text" value="{{$sms_integration->key}}" name="key" class="input" required>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12">
+                                                                                        <label>Secret</label>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 mb-4">
+                                                                                                <input type="text" value="{{$sms_integration->secret}}" name="secret" class="input" required>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>

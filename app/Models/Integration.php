@@ -14,17 +14,5 @@ class Integration extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'user_id',
-        'email',
-        'username',
-        'password',
-        'sid',
-        'token',
-        'from',
-        'api_key',
-        'api_base_url',
-        'type',
-        'status'
-    ];
+    protected $guarded = [];
 }

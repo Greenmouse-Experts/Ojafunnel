@@ -107,7 +107,7 @@
                                                                                         <div class="col-lg-12 mb-4">
                                                                                             <label for="Name">Phone number</label>
                                                                                             <input type="hidden" name="id" value="{{ $whatsapp_number['id'] }}">
-                                                                                            <input type="text" name="phone_number" value="{{ $whatsapp_number['phone_number'] }}" placeholder="Enter your phone number" required />
+                                                                                            <input type="text" name="phone_number" value="{{ $whatsapp_number['phone_number'] }}" id="phone_number" placeholder="Enter your phone number" required />
                                                                                         </div>   
                                                                                         <div class="text-end mt-2">
                                                                                             <a href="#" class="text-decoration-none">
@@ -184,7 +184,7 @@
                                                                                 @csrf
                                                                                 <div class="form">
                                                                                     <div class="row">
-                                                                                        <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to delete this WhatsApp Number <br> ({{ $whatsapp_number['phone_number'] }})</h3>
+                                                                                        <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to delete <br> this WhatsApp Number <br> ({{ $whatsapp_number['phone_number'] }})</h3>
                                                                                         <div class="row justify-content-between">
                                                                                             <div class="col-6">
                                                                                                 <a href="#" class="text-decoration-none">
@@ -344,6 +344,9 @@
 <style>
     .input {
         padding-left: 100px !important;
+    }
+    .iti {
+        width: inherit !important;
     }
 </style>
 <!-- end modal -->

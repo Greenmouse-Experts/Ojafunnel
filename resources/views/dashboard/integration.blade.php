@@ -415,7 +415,44 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h1 class="text-center">AWS Coming Soon</h1>
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="POST" action="{{ route('user.integration.create')}}">
+                            @csrf
+                            <input name="type" value="AWS" hidden>
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label>Key</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="ACe75dc47f94c7f33f7dd6128843c532ce" name="key" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Secret</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="password" placeholder="8198fe19c3a7a410790b731e1e29fafa" name="secret" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

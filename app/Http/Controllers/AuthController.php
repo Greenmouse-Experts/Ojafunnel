@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Aws\Sns\SnsClient;      //// Import this package
 
 class AuthController extends Controller
 {
@@ -602,23 +603,21 @@ class AuthController extends Controller
     public function text()
     {
         $BASE_URL = "19d24x.api.infobip.com";
-        $API_KEY = "App 1cb209108a9763c43915bac4ad33723a-081fd161-468d-4ac5-8c89-013a13b38abf";
+        $API_KEY = "1cb209108a9763c43915bac4ad33723a-081fd161-468d-4ac5-8c89-013a13b38abf";
         $SENDER = "InfoSMS";
-        $RECIPIENT = "447522097511";
+        $RECIPIENT = "+2348161215848";
         $MESSAGE_TEXT = "This is a sample message";
-        $USERNAME = 'promi9';
-        $PASSWORD = '@chinonyerem_370';
 
         $data_json = '{
             "messages": [
               {
                 "destinations": [
                   {
-                    "to": "41793026727"
+                    "to": "'.$RECIPIENT.'"
                   }
                 ],
-                "from": "InfoSMS",
-                "text": "This is a sample message"
+                "from": "'.$SENDER.'",
+                "text": "'.$MESSAGE_TEXT.'"
               }
             ]
         }';
@@ -626,7 +625,7 @@ class AuthController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $BASE_URL.'/sms/2/text/advanced',
+            CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -636,7 +635,7 @@ class AuthController extends Controller
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => $data_json,
             CURLOPT_HTTPHEADER => array(
-                'Authorization: '.$API_KEY,
+                'Authorization: App '.$API_KEY,
                 'Content-Type: application/json',
                 'Accept: application/json'
             ),
@@ -668,5 +667,40 @@ class AuthController extends Controller
         // curl_close($curl);
         // return $response;
 
+
+
+        // Required variables to initialize SNS Client Object
+        // $params = [
+        //     'credentials' => [
+        //         'key' => 'AKIAS5W2TU6XQTF7U4HS',
+        //         'secret' => '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'
+        //     ],
+        //     'region' => 'us-east-1',
+        //     'version' => 'latest'
+        // ];
+
+        
+        // $SnSclient = new SnsClient($params);
+
+        // /// Basic Configuration of messages like SMS type, message, and phone number
+        // $args = [
+        //     'MessageAttributes' => [
+        //         'AWS.SNS.SMS.SenderID' => [
+        //             'DataType' => 'String',
+        //             'StringValue'=> 'Ojafunnel'
+        //         ],
+        //         'AWS.SNS.SMS.SMSType' => [
+        //             'DataType' => 'String',
+        //             'StringValue'=>'Transactional'
+        //         ]
+        //     ],
+        //     "Message" => 'Promise Ezema',
+        //     "PhoneNumber" => '+2348161215848'
+        // ];
+
+        
+        // $result = $SnSclient->publish($args);
+
+        // return $result;
     }
 }

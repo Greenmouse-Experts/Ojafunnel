@@ -16,6 +16,7 @@ use GuzzleHttp\Client;
 use App\Library\Tool;
 use App\Models\OjaPlanParameter;
 use Illuminate\Support\Str;
+use Aws\Sns\SnsClient;
 
 class SmsAutomationController extends Controller
 {
@@ -373,7 +374,75 @@ class SmsAutomationController extends Controller
                         'message' => $message
                     ]);
                 }
-            } else {
+            } elseif ($request->integration == "AWS") {
+                $message = $this->sendMessageAWS($request);
+
+                if ($message == true ) {
+                    $new_campaign = SmsCampaign::create([
+                        'title' => $request->campaign_name,
+                        'user_id' => Auth::user()->id,
+                        'message' => $request->message,
+                        'sender_name' => $request->sender_name,
+                        'integration' => $request->integration,
+                        'receivers' => $contact,
+                        'sms_type' => $sms_type,
+                        'status' => 'send',
+                    ]);
+
+                    $new_campaign->cache = json_encode([
+                        'ContactCount' => $contact->count(),
+                        'DeliveredCount' => $contact->count(),
+                        'FailedDeliveredCount' => 0,
+                        'NotDeliveredCount' => 0,
+                    ]);
+
+                    $new_campaign->save();
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => 'SMS Campaign Automation Created.'
+                    ]);
+                } else {
+                    return back()->with([
+                        'type' => 'danger',
+                        'message' => $message
+                    ]);
+                }
+            } elseif ($request->integration == "InfoBip") {
+                $message = $this->sendMessageInfoBip($request);
+
+                if ($message == true ) {
+                    $new_campaign = SmsCampaign::create([
+                        'title' => $request->campaign_name,
+                        'user_id' => Auth::user()->id,
+                        'message' => $request->message,
+                        'sender_name' => $request->sender_name,
+                        'integration' => $request->integration,
+                        'receivers' => $contact,
+                        'sms_type' => $sms_type,
+                        'status' => 'send',
+                    ]);
+
+                    $new_campaign->cache = json_encode([
+                        'ContactCount' => $contact->count(),
+                        'DeliveredCount' => $contact->count(),
+                        'FailedDeliveredCount' => 0,
+                        'NotDeliveredCount' => 0,
+                    ]);
+
+                    $new_campaign->save();
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => 'SMS Campaign Automation Created.'
+                    ]);
+                } else {
+                    return back()->with([
+                        'type' => 'danger',
+                        'message' => $message
+                    ]);
+                }
+            }else {
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Integration service ongoing.'
@@ -777,6 +846,249 @@ class SmsAutomationController extends Controller
                 $result = curl_exec($ch);
 
                 $result = json_decode($result);
+
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e;
+            }
+
+            return $responseBody;
+        }
+    }
+
+    public function sendMessageAWS(Request $request)
+    {
+        $contains = Str::contains($request->message, '$name');
+
+        if($contains)
+        {
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone', 'name')->get();
+
+            $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+
+            $key = $integration->key;
+            $secret = $integration->secret;
+            $sender = $request->sender_name;
+
+            try {
+                foreach($contacts as $contact)
+                {
+                    $messageContent = str_replace('$name', $contact->name, $request->message);
+
+                    // Required variables to initialize SNS Client Object
+                    $params = [
+                        'credentials' => [
+                            'key' => $key,
+                            'secret' => $secret
+                        ],
+                        'region' => 'us-east-1',
+                        'version' => 'latest'
+                    ];
+
+                    $SnSclient = new SnsClient($params);
+
+                    // Basic Configuration of messages like SMS type, message, and phone number
+                    $args = [
+                        'MessageAttributes' => [
+                            'AWS.SNS.SMS.SenderID' => [
+                                'DataType' => 'String',
+                                'StringValue'=> $sender
+                            ],
+                            'AWS.SNS.SMS.SMSType' => [
+                                'DataType' => 'String',
+                                'StringValue'=> 'Transactional'
+                            ]
+                        ],
+                        "Message" => $messageContent,
+                        "PhoneNumber" => $contact->phone
+                    ];
+
+                    
+                    $result = $SnSclient->publish($args);
+                    // return $result;
+                }
+
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e;
+            }
+
+            return $responseBody;
+
+        } else {
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')->get();
+
+            $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+
+            $key = $integration->key;
+            $secret = $integration->secret;
+            $sender = $request->sender_name;
+            $message = $request->message;
+
+            try {
+                foreach($contacts as $contact)
+                {
+                    // Required variables to initialize SNS Client Object
+                    $params = [
+                        'credentials' => [
+                            'key' => $key,
+                            'secret' => $secret
+                        ],
+                        'region' => 'us-east-1',
+                        'version' => 'latest'
+                    ];
+
+                    $SnSclient = new SnsClient($params);
+
+                    // Basic Configuration of messages like SMS type, message, and phone number
+                    $args = [
+                        'MessageAttributes' => [
+                            'AWS.SNS.SMS.SenderID' => [
+                                'DataType' => 'String',
+                                'StringValue'=> $sender
+                            ],
+                            'AWS.SNS.SMS.SMSType' => [
+                                'DataType' => 'String',
+                                'StringValue'=> 'Transactional'
+                            ]
+                        ],
+                        "Message" => $message,
+                        "PhoneNumber" => $contact->phone
+                    ];
+
+                    
+                    $result = $SnSclient->publish($args);
+                    // return $result;
+                }
+
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e;
+            }
+
+            return $responseBody;
+        }
+    }
+
+    public function sendMessageInfoBip(Request $request)
+    {
+        $contains = Str::contains($request->message, '$name');
+
+        if($contains)
+        {
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone', 'name')->get();
+
+            $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+
+            $API_KEY = $integration->api_key;
+            $BASE_URL = $integration->api_base_url;
+            $SENDER = $request->sender_name;
+
+            try {
+                foreach($contacts as $contact)
+                {
+                    $RECIPIENT = $contact->phone;
+
+                    $MESSAGE = str_replace('$name', $contact->name, $request->message);
+
+                    $data_json = '{
+                        "messages": [
+                          {
+                            "destinations": [
+                              {
+                                "to": "'.$RECIPIENT.'"
+                              }
+                            ],
+                            "from": "'.$SENDER.'",
+                            "text": "'.$MESSAGE.'"
+                          }
+                        ]
+                    }';
+            
+                    $curl = curl_init();
+            
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => $data_json,
+                        CURLOPT_HTTPHEADER => array(
+                            'Authorization: App '.$API_KEY,
+                            'Content-Type: application/json',
+                            'Accept: application/json'
+                        ),
+                    ));
+            
+                    $response = curl_exec($curl);
+            
+                    curl_close($curl);
+                }
+
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e;
+            }
+
+            return $responseBody;
+
+        } else {
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')->get();
+
+            $integration = Integration::where('user_id', Auth::user()->id)->where('type', $request->integration)->first();
+
+            $API_KEY = $integration->api_key;
+            $BASE_URL = $integration->api_base_url;
+            $SENDER = $request->sender_name;
+
+            try {
+                foreach($contacts as $contact)
+                {
+                    $RECIPIENT = $contact->phone;
+
+                    $MESSAGE = $request->message;
+
+                    $data_json = '{
+                        "messages": [
+                          {
+                            "destinations": [
+                              {
+                                "to": "'.$RECIPIENT.'"
+                              }
+                            ],
+                            "from": "'.$SENDER.'",
+                            "text": "'.$MESSAGE.'"
+                          }
+                        ]
+                    }';
+            
+                    $curl = curl_init();
+            
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => $data_json,
+                        CURLOPT_HTTPHEADER => array(
+                            'Authorization: App '.$API_KEY,
+                            'Content-Type: application/json',
+                            'Accept: application/json'
+                        ),
+                    ));
+            
+                    $response = curl_exec($curl);
+            
+                    curl_close($curl);
+                }
 
                 $responseBody = true;
             } catch (Exception $e) {

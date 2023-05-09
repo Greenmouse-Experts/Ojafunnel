@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('from')->nullable();
             $table->string('api_key')->nullable();
             $table->string('api_base_url')->nullable();
+            $table->string('key')->nullable();
+            $table->string('secret')->nullable();
             $table->string('type')->nullable();
             $table->enum('status', ['Active', 'Inactive'])->default('Active')->index();
             $table->timestamps();
