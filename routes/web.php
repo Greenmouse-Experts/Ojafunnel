@@ -83,26 +83,19 @@ Route::get('/features/emailmarketing', [App\Http\Controllers\HomePageController:
 Route::get('/chatautomation', [App\Http\Controllers\HomePageController::class, 'chatautomation'])->name('chatautomation');
 Route::get('/datatable_locale', [App\Http\Controllers\Controller::class, 'datatable_locale'])->name('datatable_locale');
 Route::get('/jquery_validate_locale', [App\Http\Controllers\Controller::class, 'jquery_validate_locale'])->name('jquery_validate_locale');
-
 // See Demo
 Route::get('/see-demo', [App\Http\Controllers\HomePageController::class, 'demo'])->name('demo');
-
 // Ecommerce Frontend
 Route::get('/features/ecommerce', [App\Http\Controllers\HomePageController::class, 'ecommerce'])->name('ecommerce');
-
 // Funnel Bulder Frontend
 Route::get('/features/funnelbuilder', [App\Http\Controllers\HomePageController::class, 'funnelbuilder'])->name('funnelbuilder');
-
 // Template Designs Frontend
 Route::get('/features/template', [App\Http\Controllers\HomePageController::class, 'template'])->name('template');
 Route::get('/features/template/{id}', [App\Http\Controllers\HomePageController::class, 'template_details'])->name('templateDetails');
-
 // Affiliate Marketing
 Route::get('/features/affiliate', [App\Http\Controllers\HomePageController::class, 'affiliate'])->name('affiliate');
-
 // Integration Frontend
 Route::get('/features/integrations', [App\Http\Controllers\HomePageController::class, 'integrations'])->name('integrations');
-
 //User Authentications
 Route::prefix('auth')->group(function () {
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
@@ -114,9 +107,7 @@ Route::prefix('auth')->group(function () {
     Route::get('/reset/password/email/{email}', [App\Http\Controllers\AuthController::class, 'password_reset_email'])->name('user.reset.password');
     Route::post('update/password/reset/', [App\Http\Controllers\AuthController::class, 'reset_password'])->name('user.update.password');
 });
-
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
-
 // User Dashboard
 Route::prefix('{username}')->group(function () {
     // Route::domain('{username}.' . config('app.domain_url'))->group(function () {
@@ -216,6 +207,8 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/stores', [App\Http\Controllers\DashboardController::class, 'stores'])->name('user.stores');
                     Route::get('/checkout', [App\Http\Controllers\DashboardController::class, 'checkout'])->name('user.checkout');
                     Route::get('/cart', [App\Http\Controllers\DashboardController::class, 'cart'])->name('user.cart');
+
+                    Route::get('/my-store/coupon', [App\Http\Controllers\StoreController::class, 'storeCoupon'])->name('user.store.coupon');
                 }
             );
             Route::prefix('/Learning')->group(

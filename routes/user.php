@@ -127,4 +127,9 @@ Route::prefix('user')->group(function () {
     Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('user.delete.contact');
     Route::get('/list/management/upload/contact/list/{id}', [ListManagementController::class, 'upload_contact_list'])->name('user.upload.contact.list');
     Route::post('/list/management/upload/contact/{id}', [ListManagementController::class, 'upload_contact'])->name('user.upload.contact');
+
+    // Store Coupon
+    Route::post('/my-store/create/coupon', [App\Http\Controllers\StoreController::class, 'storeCreateCoupon'])->name('user.store.create.coupon');
+    Route::post('/my-store/update/coupon/{id}', [App\Http\Controllers\StoreController::class, 'storeUpdateCoupon'])->name('user.store.update.coupon');
+    Route::post('/my-store/delete/coupon/{id}', [App\Http\Controllers\StoreController::class, 'storeDeleteCoupon'])->name('user.store.delete.coupon');
 }); 

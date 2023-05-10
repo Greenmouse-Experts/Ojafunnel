@@ -215,7 +215,9 @@ hr {
                                 <tr class="text-white">
                                     <th class="opacity-2">Product</th>
                                     <th class="opacity-2">Image</th>
+                                    <th class="opacity-2">Product Type</th>
                                     <th>Description</th>
+                                    <th>Product Type</th>
                                     <th>Qty</th>
                                     <th>Unit Price</th>
                                     <th width="140">Amount</th>
@@ -230,6 +232,13 @@ hr {
                                         <img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset="">
                                     </td>
                                     <td>{{$item->product->description}}</td>
+                                    <td> 
+                                        @if($item->product->type == 'Digital')
+                                        Digital - <a href="{{$item->product->link}}">Download</a>
+                                        @else 
+                                        Physical
+                                        @endif
+                                    </td>
                                     <td class="text-95">{{$item->quantity}}</td>
                                     <td class="text-secondary-d2">₦{{$item->amount}}</td>
                                     <td class="text-secondary-d2">₦{{$item->quantity*$item->amount}}</td>
@@ -405,7 +414,8 @@ hr {
                                             <th style="width: 70px;">No.</th>
                                             <th>Product Name</th>
                                             <th>Image</th>
-                                            <th>Price</th>
+                                            <th>Description</th>
+                                            <th>Product Type</th>
                                             <th>Qty</th>
                                             <th>Subtotal</th>
                                             <th>Tax Amount</th>
@@ -418,6 +428,13 @@ hr {
                                             <td>{{$item->product->name}}</td>
                                             <td><img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset=""></td>
                                             <td class="text-wrap" style="width: 330px;">{{$item->product->description}}</td>
+                                            <td> 
+                                                @if($item->product->type == 'Digital')
+                                                Digital - <a href="{{$item->product->link}}">Download</a>
+                                                @else 
+                                                Physical
+                                                @endif
+                                            </td>
                                             <td>{{$item->quantity}}</td>
                                             <td>₦{{number_format($item->amount, 2)}}</td>
                                             <td>₦{{number_format($item->quantity*$item->amount, 2)}}</td>

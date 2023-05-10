@@ -353,7 +353,10 @@
                        Product
                     </td>
                     <td class="title-dark" width="97">
-                      quantity
+                      Quantity
+                    </td>
+                    <td class="title-dark" width="97">
+                      Product Type
                     </td>
                     <td class="title-dark" width="97">
                       Total
@@ -377,6 +380,13 @@
                     </td>
                     <td class="item-col">{{$item->quantity}}</td>
                     <td class="item-col">
+                      @if($item->product->type == 'Digital')
+                      Digital - <a href="{{$item->product->link}}">Download</a>
+                      @else 
+                      Physical
+                      @endif
+                    </td>
+                    <td class="item-col">
                         ₦{{number_format($item->quantity*$item->amount, 2)}}
                     </td>
                   </tr>
@@ -389,8 +399,8 @@
 
 
                   <tr>
-                    <td class="item-col item">
-                    </td>
+                    <td class="item-col item"></td>
+                    <td class="item-col item"></td>
                     <td class="item-col quantity" style="text-align:right; padding-right: 10px; border-top: 1px solid #cccccc;">
                       <span class="total-space">Subtotal</span> <br />
                       <span class="total-space" style="font-weight: bold; color: #4d4d4d">Total</span>

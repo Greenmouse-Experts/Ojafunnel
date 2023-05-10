@@ -33,8 +33,10 @@
     <div class="container">
       <div class="row justify-content-between align-items-center">
         <div class="col-4 d-flex align-items-center">
-          <img src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="40" />
-          <h3 class="mt-3 px-2">{{$store->name}}</h3>
+            <a href="{{route('user.stores.link', $store->name)}}" style="display: contents;">
+                <img src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="40" />
+                <h3 class="mt-3 px-2">{{$store->name}}</h3>
+            </a>
         </div>
         <div class="col-4">
           <form class="app-search d-none d-lg-block">
@@ -249,6 +251,10 @@
                                             <div class="tab-pane fade" id="v-pills-confir" role="tabpanel" aria-labelledby="v-pills-confir-tab">
                                                 <div class="card shadow-none border mb-0">
                                                     <div class="card-body">
+                                                        
+                                                        <!-- <h4 class="card-title ">Note</h4> -->
+                                                        <h6 class="mb-4"><span class="text-danger">Note:</span> Kindly check your email to download your digital products.</h6>
+
                                                         <h4 class="card-title mb-4">Order Summary</h4>
                                                         <div class="table-responsive">
                                                             <table class="table align-middle mb-0 table-nowrap">

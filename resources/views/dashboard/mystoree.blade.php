@@ -33,8 +33,10 @@
     <div class="container">
       <div class="row justify-content-between align-items-center">
         <div class="col-4 d-flex align-items-center">
-          <img src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="40" />
-          <h3 class="mt-3 px-2">{{$store->name}}</h3>
+          <a href="{{route('user.stores.link', $store->name)}}" style="display: contents;">
+            <img src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="40" />
+            <h3 class="mt-3 px-2">{{$store->name}}</h3>
+          </a>
         </div>
         <div class="col-4">
           <form class="app-search d-none d-lg-block">
@@ -143,7 +145,7 @@
                 @foreach ($products as $item)
                     <div class="col-md-4" id="item-{{ $item->id }}">
                         <div class="founds">
-                          @if($item->link == null)
+                          @if($item->type == 'Physical')
                           <span class="badge badge-pill badge-soft-dark text-end font-size-11" style="float: right;">Physical</span>
                           @else
                           <span class="badge badge-pill badge-soft-dark text-end font-size-11" style="float: right;">Digital</span>

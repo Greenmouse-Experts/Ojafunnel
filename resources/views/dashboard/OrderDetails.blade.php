@@ -105,9 +105,27 @@
                                         @foreach ($orderItem as $item)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$item->product->name}}</td>
-                                            <td><img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset=""></td>
-                                            <td class="text-wrap" style="width: 330px;">{{$item->product->description}}</td>
+                                            <td>
+                                                @if (App\Models\StoreProduct::where('id', $item->store_product_id)->exists())
+                                                    {{$item->product->name}}
+                                                @else
+                                                    <b>{{ 'DELETED' }}</b> 
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (App\Models\StoreProduct::where('id', $item->store_product_id)->exists())
+                                                    <img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset="">
+                                                @else
+                                                    <b>{{ 'DELETED' }}</b> 
+                                                @endif
+                                            </td>
+                                            <td class="text-wrap" style="width: 330px;">
+                                                @if (App\Models\StoreProduct::where('id', $item->store_product_id)->exists())
+                                                    {{$item->product->description}}
+                                                @else
+                                                    <b>{{ 'DELETED' }}</b> 
+                                                @endif
+                                            </td>
                                             <td>{{$item->quantity}}</td> 
                                             <td>₦{{$item->amount}}</td>
                                             <td>₦{{number_format($item->quantity*$item->amount, 2)}}</td>

@@ -101,7 +101,7 @@
                                                 {{$item->name}}
                                             </td>
                                             <td>
-                                                @if($item->link == null)
+                                                @if($item->type == 'Physical')
                                                 Physical
                                                 @else
                                                 Digital <br>

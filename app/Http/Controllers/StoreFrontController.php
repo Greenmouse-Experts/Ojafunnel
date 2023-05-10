@@ -340,7 +340,7 @@ class StoreFrontController extends Controller
 
         foreach ($cart as $item) {
             $totalAmount += $item['price'] * $item['quantity'];
-            $qty += $item['quantity'];
+            $qty += $item['quantity'];  
         }
 
         // dd($request->name, $request->email, $request->phoneNo, $request->address, $request->state, $request->country);
@@ -428,7 +428,6 @@ class StoreFrontController extends Controller
 
         return view('myPDF', compact('store', 'order'));
         //return redirect()->back()->with('success', 'Order Completed!');
-        //dd($request, $cart, $totalAmount, $store->id);
     }
 
     public function Pdf()

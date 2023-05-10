@@ -33,8 +33,10 @@
     <div class="container">
       <div class="row justify-content-between align-items-center">
         <div class="col-4 d-flex align-items-center">
-          <img src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="40" />
-          <h3 class="mt-3 px-2">{{$store->name}}</h3>
+            <a href="{{route('user.stores.link', $store->name)}}" style="display: contents;">
+                <img src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="40" />
+                <h3 class="mt-3 px-2">{{$store->name}}</h3>
+            </a>
         </div>
         <div class="col-4">
           <form class="app-search d-none d-lg-block">

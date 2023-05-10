@@ -11,10 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Store;
+use App\Models\StoreCoupon;
 use Auth;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\File as FacadeFile;
 
@@ -187,7 +189,7 @@ class StoreController extends Controller
     public function order_details(Request $request, $username)
     {
         $order = StoreOrder::latest()->where('id', $request->id)->first();
-        //dd($order->store_id);
+        // dd($order->store_id);
         $store = Store::where('id', $order->store_id)->first();
 
         return view('dashboard.OrderDetails', [
@@ -233,6 +235,7 @@ class StoreController extends Controller
         $sp->image = $image;
         $sp->store_id = $request->store_id;
         $sp->user_id = Auth::user()->id;
+        $sp->type = 'Physical';
 
         if ($request->level1_comm < 0 || $request->level2_comm < 0) return back()->with([
             'type' => 'danger',
@@ -310,11 +313,6 @@ class StoreController extends Controller
             'level1_comm' => 'required',
             'level2_comm' => 'required',
             'content_type' => 'required',
-            // 'file' => [
-            //     'required',
-            //     FacadeFile::types(['mp3', 'pdf', 'mp4'])
-            //         ->max(100 * 1024),
-            // ],
         ]);
 
         $validator = Validator::make(
@@ -378,6 +376,7 @@ class StoreController extends Controller
             $sp->image = $image;
             $sp->store_id = $request->store_id;
             $sp->user_id = Auth::user()->id;
+            $sp->type = 'Digital';
 
             // check if level1_comm <= level2_comm... then fail
             if ($request->level1_comm <= $request->level2_comm) return back()->with([
@@ -455,6 +454,98 @@ class StoreController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => $sp->name . ' update successfully'
+        ]);
+    }
+
+    public function storeCoupon()
+    {
+        return view('dashboard.store.coupon');
+    }
+
+    public function storeCreateCoupon(Request $request)
+    {
+        $request->validate([
+            'store_id' => 'required',
+            'coupon_code' => 'required',
+            'discount_percent' => 'required|numeric',
+            'start_date' => 'required',
+            'end_date' => 'required'
+        ]);
+
+        $store = Store::find($request->store_id);
+
+        if($store)
+        {
+            StoreCoupon::create([
+                'user_id' => Auth::user()->id,
+                'store_id' => $store->id,
+                'coupon_code' => $request->coupon_code,
+                'discount_percent' => $request->discount_percent,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Coupon added successfully.'
+            ]);
+        }
+
+        return back()->with([
+            'type' => 'danger',
+            'message' => 'Store not found in our database'
+        ]);
+    }
+
+    public function storeUpdateCoupon($id, Request $request)
+    {
+        $request->validate([
+            'store_id' => 'required',
+            'coupon_code' => 'required',
+            'discount_percent' => 'required|numeric',
+            'start_date' => 'required',
+            'end_date' => 'required'
+        ]);
+
+        $finder = Crypt::decrypt($id);
+
+        $store = Store::find($request->store_id);
+
+        if($store)
+        {
+            $coupon = StoreCoupon::find($finder);
+
+            $coupon->update([
+                'store_id' => $store->id,
+                'coupon_code' => $request->coupon_code,
+                'discount_percent' => $request->discount_percent,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Coupon updated successfully.'
+            ]);
+        }
+
+        return back()->with([
+            'type' => 'danger',
+            'message' => 'Store not found in our database'
+        ]);
+    }
+
+    public function storeDeleteCoupon($id)
+    {
+        $finder = Crypt::decrypt($id);
+
+        $coupon = StoreCoupon::findOrFail($finder);
+
+        $coupon->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Coupon deleted successfully.'
         ]);
     }
 }

@@ -602,105 +602,23 @@ class AuthController extends Controller
 
     public function text()
     {
-        $BASE_URL = "19d24x.api.infobip.com";
-        $API_KEY = "1cb209108a9763c43915bac4ad33723a-081fd161-468d-4ac5-8c89-013a13b38abf";
-        $SENDER = "InfoSMS";
-        $RECIPIENT = "+2348161215848";
-        $MESSAGE_TEXT = "This is a sample message";
+        $client = new \GuzzleHttp\Client();
 
-        $data_json = '{
-            "messages": [
-              {
-                "destinations": [
-                  {
-                    "to": "'.$RECIPIENT.'"
-                  }
-                ],
-                "from": "'.$SENDER.'",
-                "text": "'.$MESSAGE_TEXT.'"
-              }
-            ]
-        }';
+        $response = $client->request('POST', 'https://api.smslive247.com/api/v4/sms', [
+        'body' => '{
+            "senderID":"Ojaa",
+            "messageText":"Welcome home",
+            "mobileNumber":"+2348161215848",
+            "route":"web"
+        }',
+        'headers' => [
+            'Authorization' => 'MA-d1081d4c-4068-465b-b7d9-6a3e91963748',
+            'accept' => 'application/json',
+            'content-type' => 'application/*+json',
+        ],
+        ]);
 
-        $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => $data_json,
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: App '.$API_KEY,
-                'Content-Type: application/json',
-                'Accept: application/json'
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
         return $response;
-
-        // $curl = curl_init();
-
-        // curl_setopt_array($curl, array(
-        //     CURLOPT_URL => 'https://nzwjey.api.infobip.com/sms/1/text/query?username=tmas35&password=8#d!Xaoke&from=InfoSMS&to=41793026727,41793026834&text=HELLO&flash=true&transliteration=TURKISH&languageCode=TR&intermediateReport=true&notifyUrl=https://www.example.com&notifyContentType=application/json&callbackData=callbackData&validityPeriod=720&track=URL&trackingType=Custom%20tracking%20type',
-        //     CURLOPT_RETURNTRANSFER => true,
-        //     CURLOPT_ENCODING => '',
-        //     CURLOPT_MAXREDIRS => 10,
-        //     CURLOPT_TIMEOUT => 0,
-        //     CURLOPT_FOLLOWLOCATION => true,
-        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        //     CURLOPT_CUSTOMREQUEST => 'GET',
-        //     CURLOPT_HTTPHEADER => array(
-        //         'Accept: application/json'
-        //     ),
-        // ));
-
-        // $response = curl_exec($curl);
-
-        // curl_close($curl);
-        // return $response;
-
-
-
-        // Required variables to initialize SNS Client Object
-        // $params = [
-        //     'credentials' => [
-        //         'key' => 'AKIAS5W2TU6XQTF7U4HS',
-        //         'secret' => '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'
-        //     ],
-        //     'region' => 'us-east-1',
-        //     'version' => 'latest'
-        // ];
-
-        
-        // $SnSclient = new SnsClient($params);
-
-        // /// Basic Configuration of messages like SMS type, message, and phone number
-        // $args = [
-        //     'MessageAttributes' => [
-        //         'AWS.SNS.SMS.SenderID' => [
-        //             'DataType' => 'String',
-        //             'StringValue'=> 'Ojafunnel'
-        //         ],
-        //         'AWS.SNS.SMS.SMSType' => [
-        //             'DataType' => 'String',
-        //             'StringValue'=>'Transactional'
-        //         ]
-        //     ],
-        //     "Message" => 'Promise Ezema',
-        //     "PhoneNumber" => '+2348161215848'
-        // ];
-
-        
-        // $result = $SnSclient->publish($args);
-
-        // return $result;
     }
 }
