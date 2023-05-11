@@ -133,7 +133,7 @@ class BirthdayController extends Controller
             ]);
         }
 
-        // 
+        //
         foreach ($request->automation as $key => $automation) {
             if ($automation == 'whatsapp automation') {
                 $request->validate([
@@ -197,7 +197,7 @@ class BirthdayController extends Controller
                 });
             }
 
-            if ($automation == 'sms automation') {
+            if ($automation == 'SMS & WhatsApp Automation') {
                 $contact = ListManagementContact::where('list_management_id', $request->birthday_list_id)->select('phone')->get();
                 $bm = new BirthdayAutomation();
                 $bm->user_id = Auth::user()->id;

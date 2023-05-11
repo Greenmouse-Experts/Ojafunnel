@@ -300,7 +300,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="context">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1678895618/OjaFunnel-Images/Automation_1_bfyz0j-removebg-preview_bzukxo.png" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1683810477/OjaFunnel-Images/Group_47822_erncdt.png" draggable="false">
                     </div>
                 </div>
             </div>
@@ -364,7 +364,7 @@
                             Schedule Emails
                         </h4>
                         <h2>
-                            Send emails automatically at the best time, every time
+                            Send emails and sms & whatsApp automatically at the best time, every time
                         </h2>
                         <p>
                             Take out the guesswork and automatically send emails at the best time, every time. Our data determines when your customers are most likely to engage so you can send at just the right time.
@@ -391,7 +391,7 @@
                             Schedule Emails
                         </h4>
                         <h2>
-                            Send emails automatically at the best time, every time
+                        Send emails and sms & whatsApp automatically at the best time, every time
                         </h2>
                         <p>
                             Take out the guesswork and automatically send emails at the best time, every time. Our data determines when your customers are most likely to engage so you can send at just the right time.
@@ -426,7 +426,7 @@
                             Easily set trigger based messages and follow ups
                         </h2>
                         <p>
-                            Set SMS , and emails that will be delivered to subscribers based on the action the subscriber took or not. Update customers with personalized transactional emails.
+                            Set SMS & WhatsApp , and emails that will be delivered to subscribers based on the action the subscriber took or not. Update customers with personalized transactional emails.
                         </p>
                        <a href="{{route('signup')}}">
                             <button>
@@ -491,19 +491,18 @@
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
                         <h1>
-                            SMS Automation
+                            SMS & WhatsApp Automation
                         </h1>
                     </div>
                 </a>
             </div>
-            <div class="col-lg-3">
-                <a href="{{route('affiliate')}}">
+             <div class="col-lg-3">
+                <a href="{{route('demo')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
                         <h1>
-                            Analysis and Reporting
+                            Template Design
                         </h1>
-
                     </div>
                 </a>
             </div>

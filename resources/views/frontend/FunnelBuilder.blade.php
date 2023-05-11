@@ -286,7 +286,11 @@
                                         <button style="background-color: #fff; "><a href="{{route('signup')}}" style="color: #000;">
                                                 Get Started
                                             </a></button>
-                                        <button style="background: #2F63CA;">See Demo</button>
+                                        <a href="{{route('demo')}}">
+                                            <button style="background: #2F63CA; color: #fff;">
+                                                See Demo
+                                            </button>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-md-3"></div>
@@ -409,7 +413,7 @@
                             generate LEADS
                         </h4>
                         <h2>
-                            Move leads through your funnel with emails
+                            Move leads through your funnel with emails , whatsApp & sms .
                         </h2>
                         <p>
                             Set funnels to take your customer engagement to the next level by using automated emails to send personalized follow-ups for your leads
@@ -540,22 +544,21 @@
                         <div class="card" data-aos="zoom-in-left">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
                             <h1>
-                                SMS Automation
+                                SMS & WhatsApp Automation
                             </h1>
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-3">
-                    <a href="{{route('affiliate')}}">
-                        <div class="card" data-aos="zoom-in-right">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
-                            <h1>
-                                Analysis and Reporting
-                            </h1>
-
-                        </div>
-                    </a>
-                </div>
+                 <div class="col-lg-3">
+                <a href="{{route('demo')}}">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
+                        <h1>
+                            Template Design
+                        </h1>
+                    </div>
+                </a>
+            </div>
                 <div class="col-lg-3">
                     <a href="{{route('ecommerce')}}">
                         <div class="card" data-aos="zoom-in-right">

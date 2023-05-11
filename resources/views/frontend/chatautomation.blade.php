@@ -283,7 +283,7 @@
                 <div class="col-lg-6">
                     <div class="btn-text">
                         <h1>
-                            Chat automations for your business
+                            Chat Automations That Work for your Entire Business
                         </h1>
                         <p>
                             Automate and personalize chats follow up to gain more leads and close more deals with highly.
@@ -302,7 +302,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="context">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661267657/OjaFunnel-Images/banner_ajpxfj.png" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1683809680/OjaFunnel-Images/Group_47967__1_-removebg-preview_lbmknp.png" draggable="false">
                     </div>
                 </div>
             </div>
@@ -334,14 +334,16 @@
                         <p>
                             Maximize your ability to reach engaged leads through personalized messages. With our chat automation, you can accomplish both when you add automated text messaging to your ongoing marketing strategies and tactics.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="imagess">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1683808364/OjaFunnel-Images/Automated_texts_to_reduce_your_everyday_workload_q6hklo.png" draggable="false">
                     </div>
                 </div>
             </div>
@@ -355,7 +357,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1683808194/OjaFunnel-Images/Chats_broadcasts_to_increase_your_reach_instantly_u8rs5r.png" draggable="false" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -394,14 +396,16 @@
                         <p>
                             Instantly reach maximum amount of audiences easily at the same time. You need every advantage to turn a client’s attention into a sale, rather than a missed opportunity.
                         </p>
-                        <button>
-                            Explore Now
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1683808413/OjaFunnel-Images/SUPPORT_gxhbz2.png" draggable="false" alt="">
                     </div>
                 </div>
             </div>
@@ -424,14 +428,16 @@
                         <p>
                             Users don’t stop reaching out after your shift is over. Set up a chat automations to answer prospects and already customer’s requests 24 hours a day.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="imagess">
-                        <img class="pulse" src="assets/images/rect.png" draggable="false">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1683808413/OjaFunnel-Images/SUPPORT_gxhbz2.png" draggable="false">
                     </div>
                 </div>
             </div>
@@ -486,22 +492,21 @@
                         <div class="card" data-aos="zoom-in-left">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
                             <h1>
-                                SMS Automation
+                                SMS & WhatsApp Automation
                             </h1>
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-3">
-                    <a href="{{route('affiliate')}}">
-                        <div class="card" data-aos="zoom-in-right">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
-                            <h1>
-                                Analysis and Reporting
-                            </h1>
-
-                        </div>
-                    </a>
-                </div>
+                 <div class="col-lg-3">
+                <a href="{{route('demo')}}">
+                    <div class="card" data-aos="zoom-in-right">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
+                        <h1>
+                            Template Design
+                        </h1>
+                    </div>
+                </a>
+            </div>
                 <div class="col-lg-3">
                     <a href="{{route('ecommerce')}}">
                         <div class="card" data-aos="zoom-in-right">
@@ -719,7 +724,7 @@
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/main.js')}}"></script>
-        <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </body>
 
 </html>

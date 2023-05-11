@@ -289,17 +289,21 @@
                         <p>
                             Take your marketing further when you connect to your favorite apps and web services
                         </p>
+                       <a href="{{route('signup')}}">
                         <button style="background-color: #fff;color:#000">
-                            Get Started
-                        </button>
-                        <button>
-                            See Demo
-                        </button>
+                                Get Started
+                            </button>
+                       </a>
+                        <a href="{{route('demo')}}">
+                            <button>
+                                See Demo
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="context">
-                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1661267657/OjaFunnel-Images/banner_ajpxfj.png" draggable="false">
+                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1683814551/OjaFunnel-Images/Integration_1_ub1h4h.png" draggable="false">
                     </div>
                 </div>
             </div>
@@ -400,7 +404,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="el-icon-message">
-                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675177012/OjaFunnel-Images/Group_46933_rmafev.png" draggable="false" alt="">
+                        <img class="pulse" src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1683816212/OjaFunnel-Images/WhatsApp_Image_2023-05-11_at_3.40.35_PM_rekoad.jpg" draggable="false" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -506,19 +510,18 @@
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
                         <h1>
-                            SMS Automation
+                            SMS & WhatsApp Automation
                         </h1>
                     </div>
                 </a>
             </div>
-            <div class="col-lg-3">
-                <a href="{{route('affiliate')}}">
+             <div class="col-lg-3">
+                <a href="{{route('demo')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
                         <h1>
-                            Analysis and Reporting
+                            Template Design
                         </h1>
-
                     </div>
                 </a>
             </div>

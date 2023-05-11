@@ -131,7 +131,7 @@
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <div class="flex-grow-1">
-                                            <p class="text-muted fw-medium">Sms Automations</p>
+                                            <p class="text-muted fw-medium">SMS & WhatsApp Automations</p>
                                             <h4 class="mb-0">{{App\Models\SmsAutomation::latest()->get()->count()}}</h4>
                                         </div>
 
@@ -224,7 +224,7 @@
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
-                                                
+
                                             </table>
                                         </div>
                                     </div>
@@ -371,6 +371,6 @@
         };
         new Notification(noteTitle, noteOptions);
     });
-   
+
 </script>
 @endsection

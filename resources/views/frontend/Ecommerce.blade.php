@@ -287,7 +287,9 @@
                                         <button style="background-color: #fff; "><a href="{{route('signup')}}" style="color: #000;">
                                                 Get Started
                                             </a></button>
-                                        <button>See Demo</button>
+                                        <a href="{{route('demo')}}">
+                                            <button>See Demo</button>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-md-3"></div>
@@ -357,9 +359,11 @@
                         <p>
                             Significantly increase revenue by utilizing one-click upsells, added purchase options at checkout, abandoned cart recovery, and other advanced features.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -387,14 +391,16 @@
                             Payout Checkout
                         </h4>
                         <h2>
-                            Integrated lightning-fast checkou
+                            Integrated lightning-fast Checkout
                         </h2>
                         <p>
                             Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -418,9 +424,11 @@
                         <p>
                             Set up your store easily by picking a template. Customize it with ease. Then publish. You’ll be ready to start accepting orders in minutes.
                         </p>
-                        <button>
-                            Explore
-                        </button>
+                        <a href="{{route('signup')}}">
+                            <button>
+                                Explore Now
+                            </button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -453,9 +461,11 @@
                     <p>
                         Say “goodbye” to slow loading checkout pages! Enhance user experience with lightning-fast checkout pages, including instant and secure credit card processing.
                     </p>
-                    <button>
-                        Explore
-                    </button>
+                    <a href="{{route('signup')}}">
+                        <button>
+                            Explore Now
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -509,19 +519,18 @@
                         <div class="card" data-aos="zoom-in-left">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
                             <h1>
-                                SMS Automation
+                                SMS & WhatsApp Automation
                             </h1>
                         </div>
                     </a>
                 </div>
                 <div class="col-lg-3">
-                    <a href="{{route('affiliate')}}">
+                    <a href="{{route('demo')}}">
                         <div class="card" data-aos="zoom-in-right">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
                             <h1>
-                                Analysis and Reporting
+                                Template Design
                             </h1>
-
                         </div>
                     </a>
                 </div>

@@ -2387,7 +2387,7 @@ class DashboardController extends Controller
         // $number1 = '+2348161215848';
         // $number2 = '+2348161215848';
         // try {
-        //     $sms = Sms::via('twilio')->send("Testing Ojafunnel SMS Automation Using Twilio")->to([$number1, $number2])->dispatch();
+        //     $sms = Sms::via('twilio')->send("Testing Ojafunnel SMS & WhatsApp Automation Using Twilio")->to([$number1, $number2])->dispatch();
         //     dd($sms);
         // } catch(Exception $e) {
         //     dd($e);

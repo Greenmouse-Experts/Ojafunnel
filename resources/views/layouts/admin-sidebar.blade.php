@@ -49,7 +49,7 @@
                             <a href="{{ route('admin.email-marketing.email-campaigns') }}" key="t-tui-calendar">
                                 Email Campaigns
                             </a>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -101,7 +101,7 @@
                         <span key="t-chat">Automation</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('smsAutomation')}}"  key="t-tui-calendar">SMS Automation</a></li>
+                        <li><a href="{{route('smsAutomation')}}"  key="t-tui-calendar">SMS & WhatsApp Automation</a></li>
                         <li><a href="{{route('whatsappAutomation')}}"  key="t-tui-calendar">Whatsapp Automation</a></li>
                     </ul>
                 </li>

@@ -15,7 +15,7 @@
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-envelope-paper"></i>
                         <span key="t-chat">Email Marketing</span>
-                    </a> 
+                    </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
                             <a href="{{route('user.email-marketing.email.kits', Auth::user()->username)}}" key="t-tui-calendar">
@@ -31,7 +31,7 @@
                             <a href="{{route('user.email-marketing.email.campaigns', Auth::user()->username)}}" key="t-tui-calendar">
                                 Email Campaign
                             </a>
-                        </li> 
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -82,7 +82,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.whatsapp.wa-number', Auth::user()->username)}}" key="t-tui-calendar">WA Number</a></li>
-                        <li><a href="{{route('user.sms.automation', Auth::user()->username)}}" key="t-tui-calendar">SMS Automation</a></li>
+                        <li><a href="{{route('user.sms.automation', Auth::user()->username)}}" key="t-tui-calendar">SMS & WhatsApp Automation</a></li>
                         <li><a href="{{route('user.whatsapp.automation', Auth::user()->username)}}" key="t-tui-calendar">Whatsapp Automation</a></li>
                     </ul>
                 </li>

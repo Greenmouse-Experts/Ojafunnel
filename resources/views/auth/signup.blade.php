@@ -94,12 +94,22 @@
                                     </div>
                                 </div>
                                 <!--Phone Number-->
-                                <div class="col-lg-12">
+                                <!-- <div class="col-lg-12">
                                     <label>Phone Number</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <i class="bi bi-phone"></i>
-                                            <input type="tel" placeholder="Enter your Phone Number" name="phone_number" id="phone_number" value="{{ old('phone_number') }}" class="input" required>
+                                            <input type="tel" placeholder="Enter your Phone Number" name="phone_number"  id="phone_number" value="{{ old('phone_number') }}" class="input" required>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                 <!--Phone Number-->
+                                 <div class="col-lg-12">
+                                    <label>Phone Number</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <i class="bi bi-phone"></i>
+                                            <input type="tel" placeholder="Enter your Phone Number" name="phone_number" id="phonee" class="input" required>
                                         </div>
                                     </div>
                                 </div>
@@ -209,16 +219,77 @@
                 input.attr("type", "password");
             }
         });
-        
+
+        // $(document).ready(function () {
+        //     $("#phone_number").intlTelInput({
+        //         // preferredCountries: ["us", "ca"],
+        //         separateDialCode: true,
+        //         initialCountry: ""
+        //     }).on('countrychange', function (e, countryData) {
+        //         $("#phone_number").val('+'+($("#phone_number").intlTelInput("getSelectedCountryData").dialCode));
+        //     });
+        // });
         $(document).ready(function () {
-            $("#phone_number").intlTelInput({
+            $("#phonee").intlTelInput({
                 // preferredCountries: ["us", "ca"],
                 separateDialCode: true,
                 initialCountry: ""
             }).on('countrychange', function (e, countryData) {
-                $("#phone_number").val('+'+($("#phone_number").intlTelInput("getSelectedCountryData").dialCode));
+                $("#phonee").val('+'+($("#phonee").intlTelInput("getSelectedCountryData").dialCode));
             });
         });
+    </script>
+    <script>
+
+var input = document.querySelector("#phonee");
+var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+    window.addEventListener("load", function () {
+
+        errorMsg = document.querySelector("#error-msg"),
+ validMsg = document.querySelector("#valid-msg");
+        var iti = window.intlTelInput(input, {
+            utilsScript:"https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.2/build/js/utils.js"
+        });
+        window.intlTelInput(input, {
+             geoIpLookup: function(callback) {
+         $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+           var countryCode = (resp && resp.country) ? resp.country : "";
+           callback(countryCode);
+         });
+       },
+            initialCountry: "auto",
+            placeholderNumberType: "MOBILE",
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.2/build/js/utils.js",
+        });
+        $(validMsg).addClass("hide");
+        input.addEventListener('blur', function () {
+            reset();
+            if (input.value.trim()) {
+                if (iti.isValidNumber()) {
+                    validMsg.classList.remove("hide");
+                } else {
+                    input.classList.add("error");
+                    var errorCode = iti.getValidationError();
+                    errorMsg.innerHTML = errorMap[errorCode];
+                    errorMsg.classList.remove("hide");
+                }
+            }
+        });
+
+        input.addEventListener('change', reset);
+        input.addEventListener('keyup', reset);
+    });
+
+
+    var reset = function () {
+        input.classList.remove("error");
+        errorMsg.innerHTML = "";
+        errorMsg.classList.add("hide");
+        validMsg.classList.add("hide");
+    };
+ $(document).ready(function () {
+        $("#phonee").val("+234");
+    });
     </script>
 
     <style>

@@ -81,7 +81,7 @@
                                             </div>
                                             <div class='d-flex mt-3 align-items-center'>
                                                 <input type='checkbox' checked class='w-auto mt-1' />
-                                                <label class='w-auto'>SMS Automation</label>
+                                                <label class='w-auto'>SMS & WhatsApp Automation</label>
                                             </div>
                                             <div class='d-flex mt-3 align-items-center'>
                                                 <input type='checkbox' class='w-auto mt-1' />

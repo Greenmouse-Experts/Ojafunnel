@@ -12,7 +12,7 @@ Route::prefix('user')->group(function () {
     Route::post('/profile/update', [App\Http\Controllers\ProfileController::class, 'profile_update'])->name('user.profile.update');
     Route::post('/password/update', [App\Http\Controllers\ProfileController::class, 'password_update'])->name('user.password.update');
 
-    // SMS Automation
+    // SMS & WhatsApp Automation
     Route::post('/sms/sendmessage/campaign', [App\Http\Controllers\SmsAutomationController::class, 'sms_sendmessage_campaign'])->name('user.sms.sendmessage.campaign');
 
     // Intgration - sms
@@ -92,7 +92,7 @@ Route::prefix('user')->group(function () {
     Route::get('/user/get/all/unread/notifications', [OjafunnelNotificationController::class, 'get_all_unread_notifications']);
     Route::get('/user/count/unread/notifications', [OjafunnelNotificationController::class, 'count_unread_notifications']);
 
-    // Sms Automation
+    // SMS & WhatsApp Automation
     Route::post('/sms-automation/delete/{id}', [App\Http\Controllers\DashboardController::class, 'delete_sms_campaign'])->name('user.delete.sms.campaign');
     Route::post('/sms-automation/update/{id}', [App\Http\Controllers\DashboardController::class, 'update_sms_campaign'])->name('user.update.sms.campaign');
 
@@ -132,4 +132,4 @@ Route::prefix('user')->group(function () {
     Route::post('/my-store/create/coupon', [App\Http\Controllers\StoreController::class, 'storeCreateCoupon'])->name('user.store.create.coupon');
     Route::post('/my-store/update/coupon/{id}', [App\Http\Controllers\StoreController::class, 'storeUpdateCoupon'])->name('user.store.update.coupon');
     Route::post('/my-store/delete/coupon/{id}', [App\Http\Controllers\StoreController::class, 'storeDeleteCoupon'])->name('user.store.delete.coupon');
-}); 
+});

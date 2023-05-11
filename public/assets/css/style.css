@@ -1322,7 +1322,7 @@ header nav .offcanvas-header button i {
 
 .Increasing .thread-text .output img {
     pointer-events: none;
-    width: 35%;
+    width: 25%;
     display: inline-block;
     margin: auto;
 }
@@ -1497,7 +1497,7 @@ header nav .offcanvas-header button i {
 
 .communication .thread-text .output img {
     pointer-events: none;
-    width: 35%;
+    width: 25%;
     display: inline-block;
     margin: auto;
 }
@@ -1685,7 +1685,7 @@ header nav .offcanvas-header button i {
 
 .Editable .thread-text .output img {
     pointer-events: none;
-    width: 35%;
+    width: 25%;
     display: inline-block;
     margin: auto;
 }
@@ -1859,7 +1859,7 @@ header nav .offcanvas-header button i {
 
 .Seemless .thread-text .output img {
     pointer-events: none;
-    width: 35%;
+    width: 25%;
     display: inline-block;
     margin: auto;
 }

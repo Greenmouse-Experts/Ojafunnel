@@ -322,7 +322,7 @@
                         <p>
                             Earn commission on every user that registers using your referral link with Ojafunnel
                         </p>
-                        <a href="#">
+                        <a href="signup">
                             <button>
                                 Sign up
                             </button>
@@ -341,7 +341,7 @@
                         <p>
                             Earn commission through a downline of the referrals on your created website
                         </p>
-                        <a href="#">
+                        <a href="signup">
                             <button>
                                 Sign up
                             </button>
@@ -432,14 +432,14 @@
                 </div>
                 <div class="col-lg-10">
                     <div class="faq-box">
-                        @foreach (\App\Models\Faq::all() as $faq) 
+                        @foreach (\App\Models\Faq::all() as $faq)
                             <details>
                                 <summary>{{ $faq->question }} ?</summary>
                                 <div class="faq-content">
                                     <p>{{ $faq->answer }}</p>
                                 </div>
-                            </details> 
-                        @endforeach 
+                            </details>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -492,19 +492,18 @@
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
                         <h1>
-                            SMS Automation
+                            SMS & WhatsApp Automation
                         </h1>
                     </div>
                 </a>
             </div>
             <div class="col-lg-3">
-                <a href="{{route('affiliate')}}">
+                <a href="{{route('demo')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
                         <h1>
-                            Analysis and Reporting
+                            Template Design
                         </h1>
-
                     </div>
                 </a>
             </div>

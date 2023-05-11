@@ -230,19 +230,18 @@
                     <div class="card" data-aos="zoom-in-left">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670000/OjaFunnel-Images/automation_n9hir4.png" draggable="false" alt="">
                         <h1>
-                            SMS Automation
+                            SMS & WhatsApp Automation
                         </h1>
                     </div>
                 </a>
             </div>
-            <div class="col-lg-3">
-                <a href="{{route('affiliate')}}">
+             <div class="col-lg-3">
+                <a href="{{route('demo')}}">
                     <div class="card" data-aos="zoom-in-right">
                         <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1677670161/OjaFunnel-Images/seo-report_rltbqw.png" draggable="false" alt="">
                         <h1>
-                            Analysis and Reporting
+                            Template Design
                         </h1>
-
                     </div>
                 </a>
             </div>

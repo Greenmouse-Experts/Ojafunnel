@@ -124,7 +124,7 @@
                                                                 @forelse ($email_integrations as $email_integration)
                                                                     <option value="{{ $email_integration->id }}">
                                                                         {{ $email_integration->host }} ({{  $email_integration->type }})
-                                                                    </option> 
+                                                                    </option>
                                                                 @empty
                                                                     <option value="" disabled>
                                                                         No email kit yet
@@ -136,8 +136,8 @@
                                                 </div>
                                             </div> --}}
                                             <div class='d-flex mt-3 align-items-center'>
-                                                <input type='checkbox' id="sms_select" onchange="smsAuto()" value="sms automation" name="automation[1]" class='w-auto mt-1' />
-                                                <label class='w-auto'>SMS Automation</label>
+                                                <input type='checkbox' id="sms_select" onchange="smsAuto()" value="SMS & WhatsApp Automation" name="automation[1]" class='w-auto mt-1' />
+                                                <label class='w-auto'>SMS & WhatsApp Automation</label>
                                             </div>
                                             <div class="sms_automation mt-2" style="display: none">
                                                 <div class="col-lg-12">
@@ -176,7 +176,7 @@
                                                                 @empty
                                                                     <option value="">No WA account found</option>
                                                                 @endforelse
-                                                            </select> 
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -236,15 +236,15 @@
 
 <script>
     $('textarea').keyup(function() {
-    
+
     var characterCount = $(this).val().length,
         current = $('#characters'),
         // maximum = $('#maximum'),
         theCount = $('#the-count');
-      
+
     current.text(characterCount);
-   
-    
+
+
     /*This isn't entirely necessary, just playin around*/
     if (characterCount < 70) {
       current.css('color', '#666');
@@ -261,7 +261,7 @@
     if (characterCount > 120 && characterCount < 139) {
       current.css('color', '#8f0001');
     }
-    
+
     if (characterCount >= 140) {
     //   maximum.css('color', '#8f0001');
       current.css('color', '#713F93');
@@ -270,8 +270,8 @@
     //   maximum.css('color','#666');
       theCount.css('font-weight','normal');
     }
-    
-        
+
+
   });
 </script>
 @endsection

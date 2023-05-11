@@ -52,7 +52,7 @@ class SmsBirthday extends Command
                     return;
                 }
 
-                if ($ba->automation == 'sms automation') {
+                if ($ba->automation == 'SMS & WhatsApp Automation') {
                     $integration = Integration::find($ba->integration);
                     // \Log::info($integration->type);
                     if ($integration->type == "Multitexter") {
@@ -193,7 +193,7 @@ class SmsBirthday extends Command
 
                         } catch(Exception $e) {
                             $responseBody = $e->getMessage();
-                        }  
+                        }
                     }
                 }
             }
@@ -205,7 +205,7 @@ class SmsBirthday extends Command
                     return;
                 }
 
-                if ($ba->automation == 'sms automation') {
+                if ($ba->automation == 'SMS & WhatsApp Automation') {
                     $integration = Integration::find($ba->integration);
                     // \Log::info($integration->type);
                     if ($integration->type == "Multitexter") {
@@ -346,7 +346,7 @@ class SmsBirthday extends Command
 
                         } catch(Exception $e) {
                             $responseBody = $e->getMessage();
-                        }  
+                        }
                     }
                 }
             }
@@ -356,5 +356,5 @@ class SmsBirthday extends Command
     }
 
 
-    
+
 }
