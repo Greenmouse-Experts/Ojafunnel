@@ -440,24 +440,12 @@ hr {
                                             <td>₦{{number_format($item->quantity*$item->amount, 2)}}</td>
                                         </tr>
                                         @endforeach
-                                        {{-- <tr>
-                                            <td colspan="6" class="border-0 text-end">
-                                                <strong>Sub Total:</strong>
-                                            </td>
-                                            <td class="border-0">$13.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6" class="border-0 text-end">
-                                                <strong>Tax (18%):</strong>
-                                            </td>
-                                            <td class="border-0">$13.00</td>
-                                        </tr> --}}
                                         <tr>
                                             <td colspan="6" class="border-0 text-end">
                                                 <strong>Total:</strong>
                                             </td>
                                             <td class="border-0">
-                                               <b>₦{{number_format($order->amount, 2)}}</b>
+                                               <b>₦{{number_format(json_decode($order->coupon)->amountPaid, 2)}}</b>
                                             </td>
                                         </tr>
                                     </tbody>

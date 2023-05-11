@@ -19,8 +19,7 @@ use Exception;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\File as FacadeFile;
-
-
+use Carbon\Carbon;
 
 class StoreController extends Controller
 {
@@ -34,6 +33,7 @@ class StoreController extends Controller
     {
         $this->middleware(['auth', 'verified']);
     }
+    
     public function store(Request $request)
     {
         $request->validate(
@@ -466,7 +466,7 @@ class StoreController extends Controller
     {
         $request->validate([
             'store_id' => 'required',
-            'coupon_code' => 'required',
+            'coupon_code' => 'required|unique:store_coupons',
             'discount_percent' => 'required|numeric',
             'start_date' => 'required',
             'end_date' => 'required'
@@ -548,4 +548,5 @@ class StoreController extends Controller
             'message' => 'Coupon deleted successfully.'
         ]);
     }
+
 }

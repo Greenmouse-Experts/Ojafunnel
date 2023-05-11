@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->foreignIdFor(Store::class);
             $table->string('quantity');
             $table->string('amount');
+            $table->string('coupon')->nullable();
             $table->string('status')->default('paid');
             $table->timestamps();
         });
