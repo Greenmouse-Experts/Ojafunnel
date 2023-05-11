@@ -53,7 +53,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach(App\Models\newsletter::latest()->get() as $newsletter)
+                                        @foreach(App\Models\Newsletter::latest()->get() as $newsletter)
                                         <tr>
 
                                             <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>

@@ -76,20 +76,26 @@
                                                 <td>{{ $loop->index + 1}}</td>
                                                 <td>{{ $email_campaign->name }}</td>
                                                 <td>{{ $email_campaign->subject }}</td> 
-                                                <td> 
-                                                    {{ App\Models\EmailKit::latest()->where('id', $email_campaign->email_kit_id)->first()->host }}
-                                                </td> 
-                                                <td> 
-                                                    {{ 
-                                                        App\Models\EmailTemplate::latest()
-                                                        ->where('id', $email_campaign->email_template_id)->first()->name 
-                                                    }}
+                                                <td>
+                                                    @if (App\Models\EmailKit::where('id', $email_campaign->email_kit_id)->exists())
+                                                        {{ App\Models\EmailKit::where('id', $email_campaign->email_kit_id)->first()->host }}
+                                                    @else
+                                                        <b>{{ 'DELETED' }}</b> 
+                                                    @endif
                                                 </td> 
                                                 <td>
-                                                    {{ 
-                                                        App\Models\MailList::latest()->where('id', $email_campaign->list_id)
-                                                        ->first()->name 
-                                                    }}
+                                                    @if (App\Models\EmailTemplate::where('id', $email_campaign->email_template_id)->exists())
+                                                        {{ App\Models\EmailTemplate::where('id', $email_campaign->email_template_id)->first()->name }}
+                                                    @else
+                                                        <b>{{ 'DELETED' }}</b> 
+                                                    @endif
+                                                </td> 
+                                                <td>
+                                                    @if (App\Models\ListManagement::where('id', $email_campaign->list_id)->exists())
+                                                        {{ App\Models\ListManagement::where('id', $email_campaign->list_id)->first()->name }}
+                                                    @else
+                                                        <b>{{ 'DELETED' }}</b> 
+                                                    @endif 
                                                 </td> 
                                                 <td>{{ $email_campaign->replyto_email }}</td>
                                                 <td>{{ $email_campaign->replyto_name }}</td>

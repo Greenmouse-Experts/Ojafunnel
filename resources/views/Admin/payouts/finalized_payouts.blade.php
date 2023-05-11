@@ -78,20 +78,20 @@
                                                                                     <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="">Account Holder Name</label>
-                                                                                    <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}" readonly />
+                                                                                    <label for="">Account Holder Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="bank">Bank Account</label>
-                                                                                    <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->type_of_bank_account}}" readonly />
+                                                                                    <label for="bank">Bank Account: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->type_of_bank_account}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="">Routing Number</label>
-                                                                                    <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->routing_number}}" readonly />
+                                                                                    <label for="">Routing Number: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->routing_number}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="">Account Number</label>
-                                                                                    <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_number}}" readonly />
+                                                                                    <label for="">Account Number: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_number}}</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -103,16 +103,16 @@
                                                                                     <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="">Account Holder Name</label>
-                                                                                    <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}" readonly />
+                                                                                    <label for="">Account Holder Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="">Secret Key</label>
-                                                                                    <input type="text" name="secret_key" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->secret_key}}" placeholder="Enter secret key" required />
+                                                                                    <label for="">Secret Key: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->secret_key}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="">Public Key</label>
-                                                                                    <input type="text" name="public_key" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}" placeholder="Enter public key" required />
+                                                                                    <label for="">Public Key: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -124,20 +124,20 @@
                                                                                     <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="">Account Name</label>
-                                                                                    <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}" readonly />
+                                                                                    <label for="">Account Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="">Account Number</label>
-                                                                                    <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_number}}" readonly />
+                                                                                    <label for="">Account Number: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_number}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="bank">Bank Name</label>
-                                                                                    <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->bank_name}}" readonly />
+                                                                                    <label for="bank">Bank Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->bank_name}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
-                                                                                    <label for="">Bank Code</label>
-                                                                                    <input type="text" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->bank_code}}" readonly />
+                                                                                    <label for="">Bank Code: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->bank_code}}</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
