@@ -48,6 +48,7 @@
                                             <th scope="col">Order Id</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Amount</th>
+                                            <th scope="col">Coupon</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Date</th>
                                             <th scope="col">Action</th>
@@ -58,7 +59,14 @@
                                             <tr>
                                                 <td>#{{$item->order_no}}</td>
                                                 <td>{{$item->quantity}}</td>
-                                                <td>₦{{number_format($item->amount, 2)}}</td>
+                                                <td>₦{{number_format(json_decode($item->coupon)->amountPaid, 2)}}</td>
+                                                <td>
+                                                    @if(json_decode($item->coupon)->coupon_id == '')
+                                                    false
+                                                    @else
+                                                    True
+                                                    @endif
+                                                </td>
                                                 <td>{{$item->status}}</td>
                                                 <td>{{$item->created_at->format('d M, Y')}}</td>
                                                 <td>

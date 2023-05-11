@@ -7,6 +7,7 @@ use App\Models\OjafunnelNotification;
 use App\Models\OrderItem;
 use App\Models\OrderUser;
 use App\Models\Store;
+use App\Models\StoreCoupon;
 use App\Models\StoreOrder;
 use App\Models\StoreProduct;
 use App\Models\Transaction;
@@ -16,6 +17,7 @@ use Auth;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class StoreFrontController extends Controller
 {
@@ -141,6 +143,10 @@ class StoreFrontController extends Controller
         $order->order_no = Str::random(6);
         $order->payment_method = 'Paystack';
         $order->quantity = $qty;
+        $order->coupon = json_encode([
+            'coupon_id' => $request->couponID,
+            'amountPaid' => $request->amountToPay,
+        ]);
         $order->amount = $totalAmount;
         $order->save();
 
@@ -332,6 +338,8 @@ class StoreFrontController extends Controller
 
     protected function checkoutPaymentWithoutPromotion(Request $request)
     {
+        // dd($request->amountToPay, $request->couponID);
+
         $store = Store::where('name', $request->storename)->first();
         $cart = session()->get('cart');
 
@@ -350,6 +358,10 @@ class StoreFrontController extends Controller
         $order->order_no = Str::random(6);
         $order->payment_method = 'Paystack';
         $order->quantity = $qty;
+        $order->coupon = json_encode([
+            'coupon_id' => $request->couponID,
+            'amountPaid' => $request->amountToPay,
+        ]);
         $order->amount = $totalAmount;
         $order->save();
 
@@ -380,7 +392,7 @@ class StoreFrontController extends Controller
 
         $userData = User::findOrFail($store->user_id);
 
-        $userData->wallet = $userData->wallet + $totalAmount;
+        $userData->wallet = $userData->wallet + $request->amountToPay;
         $userData->update();
 
         $user = new OrderUser();
@@ -395,7 +407,7 @@ class StoreFrontController extends Controller
 
         $trans = new Transaction();
         $trans->user_id = $store->user_id;
-        $trans->amount = $totalAmount;
+        $trans->amount = $request->amountToPay;
         $trans->reference = Str::random(8);
         $trans->status = 'Product Purchase';
         $trans->save();
@@ -443,5 +455,29 @@ class StoreFrontController extends Controller
         //dd($store);
 
         //return $pdf->download('invoice.pdf');
+    }
+
+    public function checkCoupon(Request $request)
+    {
+        $coupon = StoreCoupon::where('coupon_code', $request->coupon)->where('start_date', '<=', Carbon::today()->toDateString())
+        ->where('end_date', '>=', Carbon::today()->toDateString())->first();
+
+        if($coupon)
+        {
+            $discount_price = ($request->totalAmount / 100) * $coupon->discount_percent;
+
+            // return ($discount_price);
+            return response()->json([
+                'success' => true,
+                'message' => 'Discount initiated, place your order',
+                'data' => $discount_price,
+                'id' => $coupon->id
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => "Coupon code doesn't exist or it has expired.",
+        ]);
     }
 }

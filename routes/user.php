@@ -132,4 +132,6 @@ Route::prefix('user')->group(function () {
     Route::post('/my-store/create/coupon', [App\Http\Controllers\StoreController::class, 'storeCreateCoupon'])->name('user.store.create.coupon');
     Route::post('/my-store/update/coupon/{id}', [App\Http\Controllers\StoreController::class, 'storeUpdateCoupon'])->name('user.store.update.coupon');
     Route::post('/my-store/delete/coupon/{id}', [App\Http\Controllers\StoreController::class, 'storeDeleteCoupon'])->name('user.store.delete.coupon');
+
+    Route::post('/my-store/check/coupon', [App\Http\Controllers\StoreFrontController::class, 'checkCoupon'])->name('user.store.check.coupon');
 });

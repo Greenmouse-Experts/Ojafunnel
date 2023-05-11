@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('store_id')->nullable();
-            $table->string('coupon_code')->nullable();
+            $table->string('coupon_code')->unique();
             $table->string('discount_type')->default('Percent');
             $table->string('discount_percent')->nullable();
             $table->date('start_date')->nullable();

@@ -152,7 +152,7 @@
                                             route('payment.checkout', [
                                                 'storename' => $store->name, 
                                                 'promotion_id' => Request::get('promotion_id'), 
-                                                'product_id' => Request::get('product_id')
+                                                'product_id' => Request::get('product_id'),
                                             ]) 
                                         }}
                                     " id="checkoutForm" method="post">
@@ -286,13 +286,31 @@
                                                                             <h6 class="m-0 text-end">Total:</h6>
                                                                         </td>
                                                                         <td>
-                                                                            ₦ {{ $total }}
-                                                                            <input type="hidden" id="totalAmount" value="{{ $total }}" name="">
+                                                                            ₦ <input id="AmountToPay" value="" name="amountToPay" style="border: none; outline: none;">
+                                                                            <input type="hidden" id="couponDiscount" value="" name="">
+                                                                            <input type="hidden" id="couponID" value="" name="couponID">
+                                                                            <input type="hidden" id="totalAmount" value="{{ $total }}" name="totalAmount">
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
+                                                        <h4 class="card-title mt-4 mb-4">Have a coupon? <a href="#" onclick="myFunction()">Click here to enter your code</a></h4>
+                                                        <span style="color: red" id="couponerror"></span>
+                                                        <span style="color: green" id="couponsuccess"></span>
+                                                        <form>
+                                                            <div class="form" id="myDIV" style="display: none;">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6 mt-1 mb-4">
+                                                                        <p>If you have a coupon code, please apply it below.</p>
+                                                                        <div style="display: block ruby;">
+                                                                            <input type="text" name="coupon" id="coupon" required />
+                                                                            <input type="button" id="submitCoupon" value="Apply Coupon" style="background: #556ee6; padding: .8rem; color: #fff;"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
                                                         <div class="row mt-4">
                                                             <div class="col-sm-6">
                                                                 <button type="button" id="makePayment" class="btn btn-success text-white d-none d-sm-inline-block">
@@ -316,28 +334,28 @@
         </div>
     </div>
     <!-- End Page-content -->
-</div>
-<!-- Modal -->
-<div class="modal fade" id="CartDelete" tabindex="-1" aria-labelledby="CartDeleteLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content">
-            <div class="modal-body px-4 py-5 text-center">
-                <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="avatar-sm mb-4 mx-auto">
-                    <div class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3">
-                        <i class="mdi mdi-trash-can-outline"></i>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="CartDelete" tabindex="-1" aria-labelledby="CartDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-body px-4 py-5 text-center">
+                    <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="avatar-sm mb-4 mx-auto">
+                        <div class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3">
+                            <i class="mdi mdi-trash-can-outline"></i>
+                        </div>
                     </div>
-                </div>
-                <p class="text-muted font-size-16 mb-4">Are you sure you want to permanently remove this Product.</p>
+                    <p class="text-muted font-size-16 mb-4">Are you sure you want to permanently remove this Product.</p>
 
-                <div class="hstack gap-2 justify-content-center mb-0">
-                    <button type="button" class="btn btn-danger">Delete Now</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <div class="hstack gap-2 justify-content-center mb-0">
+                        <button type="button" class="btn btn-danger">Delete Now</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
   <footer class="footer">
@@ -365,50 +383,104 @@
   <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
 
   <script>
+    window.onload=function(){
+        $discount = $('#totalAmount').val() - $('#couponDiscount').val();
+        $('#AmountToPay').val($discount);
+    };
 
-  $("#activePayment").click(function() {
-    if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
-        $('#error').html('Please fill the asterisks field to continue');
-    } else {
-        $('#v-pills-shipping-tab').removeClass('active')
-        $('#v-pills-shipping').removeClass('show active')
-        $('#v-pills-payment-tab').addClass('active')
-        $('#v-pills-payment').addClass('show active')
+    $("#activePayment").click(function() {
+        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
+            $('#error').html('Please fill the asterisks field to continue');
+        } else {
+            $('#v-pills-shipping-tab').removeClass('active')
+            $('#v-pills-shipping').removeClass('show active')
+            $('#v-pills-payment-tab').addClass('active')
+            $('#v-pills-payment').addClass('show active')
+        }
+
+    })
+
+    $("#activeconfirm").click(function() {
+        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
+            $('#error').html('Please fill the asterisks field to continue');
+        } else {
+            $('#v-pills-payment-tab').removeClass('active')
+            $('#v-pills-payment').removeClass('show active')
+            $('#v-pills-confir-tab').addClass('active')
+            $('#v-pills-confir').addClass('show active')
+        }
+    })
+
+    $("#makePayment").click(function() {   
+        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
+            alert('Please fill the asterisks field to continue');
+            $('#error').html('Please fill the asterisks field to continue');
+        } else {
+            var handler = PaystackPop.setup({
+                key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
+                email: $('#email').val(),
+                amount: document.getElementById("AmountToPay").value * 100,
+                ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                callback: function(response){ 
+                    // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
+                    // url = url.replace(':response', response.reference);
+                    // url = url.replace(':amount', document.getElementById("amount").value);
+                    // document.location.href=url;
+                    $( "#checkoutForm" ).submit();
+                },
+                onClose: function(){
+                    alert('window closed');
+                }
+            });
+            handler.openIframe();
+        }
+    })
+
+    function myFunction() {
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
     }
 
-  })
+    $("#submitCoupon").click(function() 
+    {
+        if ($('#coupon').val() == '') {
+            $('#couponerror').html('Please fill the coupon field to continue.');
+        } else {
 
-  $("#activeconfirm").click(function() {
-    if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
-        $('#error').html('Please fill the asterisks field to continue');
-    } else {
-        $('#v-pills-payment-tab').removeClass('active')
-        $('#v-pills-payment').removeClass('show active')
-        $('#v-pills-confir-tab').addClass('active')
-        $('#v-pills-confir').addClass('show active')
-    }
-  })
-
-  $("#makePayment").click(function() {   
-        var handler = PaystackPop.setup({
-            key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
-            email: $('#email').val(),
-            amount: document.getElementById("totalAmount").value * 100,
-            ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-            callback: function(response){ 
-                // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
-                // url = url.replace(':response', response.reference);
-                // url = url.replace(':amount', document.getElementById("amount").value);
-                // document.location.href=url;
-                $( "#checkoutForm" ).submit();
-            },
-            onClose: function(){
-                alert('window closed');
-            }
-        });
-
-        handler.openIframe();
-  })
+            $coupon = $('#coupon').val();
+            $totalAmount = $('#totalAmount').val();
+            $.ajax({
+              url: "{{ route('user.store.check.coupon') }}",
+                method: "post",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    coupon: $coupon,
+                    totalAmount: $totalAmount,
+                },
+                success: function (response) {
+                    if(response['success'] === true)
+                    {
+                        $('#couponerror').hide();
+                        $('#couponsuccess').show();
+                        $('#couponsuccess').html(response['message']);
+                        $('#couponDiscount').val(response['data'])
+                        $('#couponID').val(response['id'])
+                        $discount = $('#totalAmount').val() - response['data'];
+                        $('#AmountToPay').val($discount);
+                        $('#coupon').val('')
+                    } else {
+                        $('#couponsuccess').hide();
+                        $('#couponerror').show();
+                        $('#couponerror').html(response['message']);
+                    }
+                }
+            });
+        }
+    });
 </script> 
 </body>
 <style>
