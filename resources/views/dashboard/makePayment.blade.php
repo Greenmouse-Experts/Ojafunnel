@@ -52,9 +52,22 @@
                             </h1>
                             @endforeach
                         @endif
-                        <button type="button" onclick="paySubscriptionWithPaystack()">
-                            PAY
-                        </button>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" onclick="paySubscriptionWithPaystack()">
+                                    PAY
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <form action="{{ route('user.upgrade.account.with.balance', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post">
+                                    @csrf
+                                    <button type="submit">
+                                        PAY WITH WALLET BALANCE
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="col-lg-8"></div>

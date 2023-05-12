@@ -675,7 +675,7 @@
                             @csrf
                             <div class="form"> 
                                 <div class="col-lg-12">
-                                    <label>Level 1 Commission</label>
+                                    <label>Level 1 Commission (%)</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Enter level 1 commission" name="level1_comm" value="{{ $course->level1_comm }}" class="input" required>
@@ -683,7 +683,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <label>Level 2 Commission</label>
+                                    <label>Level 2 Commission (%)</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Enter level 1 commission" name="level2_comm" value="{{ $course->level2_comm }}" class="input" required>

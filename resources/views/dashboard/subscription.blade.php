@@ -27,10 +27,23 @@
                 <div class="col-lg-11">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="font-60">Subscriptions History</h4>
-                            <p>
-                                View all your Subscriptions History in one place
-                            </p>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <h4 class="font-60">Subscriptions History</h4>
+                                    <p>
+                                        View all your Subscriptions History in one place
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="all-create">
+                                        <a href="{{route('user.upgrade', Auth::user()->username)}}">
+                                            <button>
+                                                Upgrade Account
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

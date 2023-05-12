@@ -136,4 +136,78 @@ class AccountUpgradeController extends Controller
             'message' => 'Account upgrade completed successfully.'
         ]);
     }
+
+    public function upgrade_account_with_balance($plan_id, $price, $currency)
+    {
+        $planId = Crypt::decrypt($plan_id);
+        $price = Crypt::decrypt($price);
+        $currency = Crypt::decrypt($currency);
+
+        if($price > Auth::user()->wallet)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Account wallet balance is low, top-up your wallet and try again.'
+            ]);
+        }
+
+        // dd($planId, number_format($price), $currency);
+
+        $plan = OjaPlan::find($planId);
+        $planInterval = OjaPlanInterval::where('plan_id', $plan->id)->where('price', $price)->where('currency', $currency)->first();
+
+        // return (now()->addMonth()->subDays(3)->toDateString());
+
+        if($planInterval->type == 'monthly')
+        {
+            $date = now()->addMonth();
+            $expiryNotice = now()->addMonth()->subDays(7)->toDateString();
+        }
+        if($planInterval->type == 'yearly')
+        {
+            $date = now()->addYear()->toDateString();
+            $expiryNotice = now()->addYear()->subDays(7)->toDateString();
+        }
+
+        OjaSubscription::create([
+            'user_id' => Auth::user()->id,
+            'plan_id' => $plan->id,
+            // 'plan_interval' => 
+            'status' => 'Active',
+            'ends_at' => $date,
+            'started_at' => now(),
+            'amount' => $planInterval->price,
+            'currency' => $planInterval->currency,
+            'expiry_notify_at' => $expiryNotice
+        ]);
+
+        $user = User::find(Auth::user()->id);
+
+        $user->update([
+            'plan' => $plan->id,
+            'wallet' => $user->wallet - $planInterval->price
+        ]);
+
+        Transaction::create([
+            'user_id' => $user->id,
+            'amount' => $planInterval->price,
+            'reference' => config('app.name'),
+            'status' => 'Account Upgrade.'
+        ]);
+
+        OjafunnelNotification::create([
+            'to' => Auth::user()->id,
+            'title' => config('app.name'),
+            'body' => 'Your '.config('app.name').' account has been upgraded successfully.'
+        ]);
+
+        $currentUser = User::where('id', Auth::user()->id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+        $this->fcm('Your '.config('app.name').' account has been upgraded successfully.', $currentUser);
+
+        return redirect()->route('user.upgrade', Auth::user()->username)->with([
+            'type' => 'success',
+            'message' => 'Account upgrade completed successfully.'
+        ]);
+    }
+    
 }

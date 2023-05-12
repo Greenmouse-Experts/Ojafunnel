@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('key')->nullable();
             $table->string('secret')->nullable();
             $table->string('type')->nullable();
-            $table->enum('status', ['Active', 'Inactive'])->default('Active')->index();
+            $table->enum('status', ['Active', 'Inactive'])->default('Inactive')->index();
             $table->timestamps();
         });
     }

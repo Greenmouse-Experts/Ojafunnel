@@ -57,7 +57,11 @@
                                 @if($singleplan->name == $plan->name)
                                 <a href="#" class="upgrade-btn" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
                                 @else
-                                <a class='upgrade-btn' href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->currency), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->price)])}}">CHANGE</a>
+                                    @if($singleplan->name == 'Free')
+                                    <a href="#" class="upgrade-btn" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Free Plan</a>
+                                    @else
+                                    <a class='upgrade-btn' href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->currency), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'monthly')->first()->price)])}}">CHANGE</a>
+                                    @endif
                                 @endif
                             @else
                             <!-- <h1 class="">No Yearly Plan</h1> -->
@@ -74,7 +78,11 @@
                                 @if($singleplan->name == $plan->name)
                                 <a class="-yearly -hide upgrade-btn" href="#" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Your Plan</a>
                                 @else
-                                <a class="-yearly -hide upgrade-btn" href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->currency), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->price)])}}">CHANGE</a>
+                                    @if($singleplan->name == 'Free')
+                                    <a href="#" class="-yearly -hide upgrade-btn" style="background: rgb(255, 255, 255); border: 3px solid rgb(0, 160, 255); color: rgb(0, 160, 255);">Free Plan</a>
+                                    @else
+                                    <a class="-yearly -hide upgrade-btn" href="{{route('user.upgrade.account', [Auth::user()->username, Crypt::encrypt($singleplan->id), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->currency), Crypt::encrypt(App\Models\OjaPlanInterval::where('plan_id', $singleplan->id)->where('type', 'yearly')->first()->price)])}}">CHANGE</a>
+                                    @endif
                                 @endif
                             @else
                             <!-- <h1 class="">No Yearly Plan</h1> -->

@@ -185,7 +185,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header border-bottom-0">
                                                 <h5 class="modal-title" id="staticBackdropLabel">
-                                                    Provide Us Your Option For Integration
+                                                    Your Active SMS Integration
                                                 </h5>
                                                 <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
                                             </div>
@@ -199,19 +199,21 @@
                                                                         @if($integrations->isEmpty())
                                                                         <div class="col-12">
                                                                             <div class="circle" style="padding: 20px 20px 20px 2px; text-align: center;">
-                                                                                <span class="text-dark">No SMS Integration Gateway Added</span>
+                                                                                <span class="text-dark">No SMS Integration Gateway</span>
                                                                             </div>
                                                                         </div>
                                                                         @else
                                                                         @foreach($integrations as $integration)
-                                                                        <div class="col-md-6">
+                                                                        <div class="col-2"></div>
+                                                                        <div class="col-8">
                                                                             <div class="circle" style="padding: 20px 20px 20px 20px;">
                                                                                 <span class="text-dark">{{$integration->type}}</span>
                                                                             </div>
                                                                             <div class="zazu">
-                                                                                <input type="radio" name="integration" value="{{$integration->type}}" style="margin-top: -70px !important;">
+                                                                                <input type="radio" name="integration" value="{{$integration->type}}" checked style="margin-top: -70px !important;">
                                                                             </div>
                                                                         </div>
+                                                                        <div class="col-2"></div>
                                                                         @endforeach
                                                                         @endif
                                                                         <div class="row">

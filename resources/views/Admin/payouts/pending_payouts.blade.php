@@ -92,15 +92,18 @@ $admin = auth()->guard('admin')->user();
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="bank">Bank Account: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->type_of_bank_account}}</label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($withdraw->payment_method)->type_of_bank_account}}</label>
+                                                                                    <p onmouseover="showTBA()" onmouseout="hideTBA();"><input type="password" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->type_of_bank_account}}" id="typeBA" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Routing Number: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->routing_number}}</label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($withdraw->payment_method)->routing_number}}</label>
+                                                                                    <p onmouseover="showRoutingNumber()" onmouseout="hideRoutingNumber();"><input type="password" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->routing_number}}" id="routingNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Number: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_number}}</label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($withdraw->payment_method)->account_number}}</label>
+                                                                                    <p onmouseover="showAccountNumber()" onmouseout="hideAccountNumber();"><i class="uil uil-wallet"></i> <input type="password" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_number}}" id="accountNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -117,11 +120,13 @@ $admin = auth()->guard('admin')->user();
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Secret Key: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->secret_key}}</label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($withdraw->payment_method)->secret_key}}</label>
+                                                                                    <p onmouseover="showSecret()" onmouseout="hideSecret();"><input type="password" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->secret_key}}" id="secretKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Public Key: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}</label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}</label>
+                                                                                    <p onmouseover="showPublic()" onmouseout="hidePublic();"><input type="password" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}" id="publicKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -364,6 +369,56 @@ $admin = auth()->guard('admin')->user();
             }
             
         }
+    }
+
+    function showSecret() {
+        var x = document.getElementById("secretKey");
+        x.type = "text";
+    }
+
+    function hideSecret() {
+        var x = document.getElementById("secretKey");
+        x.type = "password";
+    }
+
+    function showPublic() {
+        var x = document.getElementById("publicKey");
+        x.type = "text";
+    }
+
+    function hidePublic() {
+        var x = document.getElementById("publicKey");            
+        x.type = "password";
+    }
+
+    function showRoutingNumber() {
+        var x = document.getElementById("routingNumber");
+        x.type = "text";
+    }
+
+    function hideRoutingNumber() {
+        var x = document.getElementById("routingNumber");            
+        x.type = "password";
+    }
+
+    function showAccountNumber() {
+        var x = document.getElementById("accountNumber");
+        x.type = "text";
+    }
+
+    function hideAccountNumber() {
+        var x = document.getElementById("accountNumber");            
+        x.type = "password";
+    }
+
+    function showTBA() {
+        var x = document.getElementById("typeBA");
+        x.type = "text";
+    }
+
+    function hideTBA() {
+        var x = document.getElementById("typeBA");            
+        x.type = "password";
     }
 </script>
 @endsection

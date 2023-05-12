@@ -32,7 +32,6 @@ class SmsAutomationController extends Controller
 
     public function sms_sendmessage_campaign(Request $request)
     {
-
         // if ($request->mailinglist_id == null and $request->contacts !== null) {
         //     //Validate Request
         //     $this->validate($request, [
@@ -245,7 +244,8 @@ class SmsAutomationController extends Controller
         // }
 
         $messages = [
-            'mailinglist_id.required' => 'The Mailing list field is required.',
+            'mailinglist_id.required' => 'The list field is required.',
+            'integration.required' => 'Please activate or add SMS Integration.'
         ];
 
         $this->validate($request, [

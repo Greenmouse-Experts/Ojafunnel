@@ -816,7 +816,7 @@ class DashboardController extends Controller
     public function newsms($username)
     {
         $contact_lists = \App\Models\ListManagement::where('user_id', Auth::user()->id)->where('status', true)->get();
-        $integrations = Integration::latest()->where('user_id', Auth::user()->id)->get();
+        $integrations = Integration::latest()->where('user_id', Auth::user()->id)->where('status', 'Active')->get();
         return view('dashboard.newsms', [
             'username' => $username,
             'contact_lists' => $contact_lists,

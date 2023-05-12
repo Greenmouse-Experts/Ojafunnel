@@ -54,12 +54,16 @@
                                 <a href="javascript:void(0)"><i class="uil uil-heart-alt fs-18"></i></a>
                             </div>
                             <img src="https://www.freeiconspng.com/thumbs/credit-card-icon-png/credit-card-2-icon-7.png" alt="" height="50" class="mb-3"> &nbsp; {{$bank->type}}
-                            <h5 class="fs-17 mb-2"><a href="#" class="text-dark">{{$bank->account_name}}</a> </h5>
-                            <p class="text-muted fs-14 mb-1">{{$bank->type_of_bank_account}}</p>
-                            <p class="text-muted fs-14 mb-0">{{$bank->routing_number}}</p>
-                            <p class="text-muted fs-14 mb-1 text-truncate">{{$bank->secret_key}}</p>
-                            <p class="text-muted fs-14 mb-1 text-truncate">{{$bank->public_key}}</p>
-                            <p class="text-muted fs-14 mb-0"><i class="uil uil-wallet"></i> {{$bank->account_number}}</p>
+                            <h5 class="fs-17 mb-2"><a href="#" class="text-dark">{{$bank->account_name}}</a></h5>
+                            @if($bank->type == 'US')
+                            <p class="text-muted fs-14 mb-1" onmouseover="showTBA()" onmouseout="hideTBA();"><input type="password" class="form-control" value="{{$bank->type_of_bank_account}}" id="typeBA" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                            <p class="text-muted fs-14 mb-1" onmouseover="showRoutingNumber()" onmouseout="hideRoutingNumber();"><input type="password" class="form-control" value="{{$bank->routing_number}}" id="routingNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                            <p class="text-muted fs-14 mb-0" onmouseover="showAccountNumber()" onmouseout="hideAccountNumber();"><i class="uil uil-wallet"></i> <input type="password" class="form-control" value="{{$bank->account_number}}" id="accountNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                            @endif
+                            @if($bank->type == 'PAYSTACK')
+                            <p class="text-muted fs-14 mb-1" onmouseover="showSecret()" onmouseout="hideSecret();"><input type="password" class="form-control" value="{{$bank->secret_key}}" id="secretKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                            <p class="text-muted fs-14 mb-1" onmouseover="showPublic()" onmouseout="hidePublic();"><input type="password" class="form-control" value="{{$bank->public_key}}" id="publicKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                            @endif
                             <div class="mt-4 hstack gap-2">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#edit-{{$bank->id}}" class="btn text-light w-100" style="background: #70418f;">Edit</a>
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#delete-{{$bank->id}}" class="btn w-100 bg-danger text-light">Delete</a>
@@ -345,5 +349,56 @@
 </div>
 <!-- Modal Ends -->
 
+<script>
+    function showSecret() {
+        var x = document.getElementById("secretKey");
+        x.type = "text";
+    }
+
+    function hideSecret() {
+        var x = document.getElementById("secretKey");
+        x.type = "password";
+    }
+
+    function showPublic() {
+        var x = document.getElementById("publicKey");
+        x.type = "text";
+    }
+
+    function hidePublic() {
+        var x = document.getElementById("publicKey");            
+        x.type = "password";
+    }
+
+    function showRoutingNumber() {
+        var x = document.getElementById("routingNumber");
+        x.type = "text";
+    }
+
+    function hideRoutingNumber() {
+        var x = document.getElementById("routingNumber");            
+        x.type = "password";
+    }
+
+    function showAccountNumber() {
+        var x = document.getElementById("accountNumber");
+        x.type = "text";
+    }
+
+    function hideAccountNumber() {
+        var x = document.getElementById("accountNumber");            
+        x.type = "password";
+    }
+
+    function showTBA() {
+        var x = document.getElementById("typeBA");
+        x.type = "text";
+    }
+
+    function hideTBA() {
+        var x = document.getElementById("typeBA");            
+        x.type = "password";
+    }
+</script>
 
 @endsection

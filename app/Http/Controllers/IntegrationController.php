@@ -403,10 +403,20 @@ class IntegrationController extends Controller
 
         $integration = Integration::findorfail($idFinder);
 
+        $allIntegration = Integration::where('user_id', Auth::user()->id)->where('status', 'Active')->get();
+
+        if($allIntegration->count() > 0)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'You have an active SMS Integration, deactivate and try again!'
+            ]);
+        }
+            
         $integration->update([
             'status' => 'Active'
         ]);
-
+        
         return back()->with([
             'type' => 'success',
             'message' => $integration->type . ' Integration Enabled Successfully!'
