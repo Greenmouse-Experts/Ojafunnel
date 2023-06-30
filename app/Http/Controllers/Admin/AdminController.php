@@ -140,6 +140,13 @@ class AdminController extends Controller
         return view('Admin.user.view-users');
     }
 
+    public function user_login($id)
+    {
+        $user = Auth::loginUsingId($id);
+        
+        return redirect()->route('user.dashboard', $user->username);
+    }
+
     public function users_details()
     {
         return view('Admin.user.users-details');

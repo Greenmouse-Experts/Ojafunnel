@@ -57,6 +57,7 @@
                                     <tbody>
 
                                         @foreach ($admin->getAllCustomerLists() as $item)
+                                            @if($item->user->user_type == 'User')
                                             <tr>
                                                 <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
                                                 <td>{{$item->user->first_name}} {{$item->user->last_name}}</td>
@@ -80,6 +81,9 @@
                                                 </td>
                                                 <td>
                                                     <ul class="list-unstyled hstack gap-1 mb-0">
+                                                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Access User">
+                                                            <a href="{{route('admin.user.login', $item->user->id)}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-login"></i></a>
+                                                        </li>
                                                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
                                                             <a href="{{route('users.details', $item->uid)}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                         </li>
@@ -96,6 +100,7 @@
                                                     </ul>
                                                 </td>
                                             </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

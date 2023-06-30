@@ -134,7 +134,8 @@ class TransactionController extends Controller
                                 'account_name' => $response['account_name'],
                                 'account_number' => $response['account_number'],
                                 'bank_name' => $response['Bank_name'],
-                                'bank_code' => $response['bank_code']
+                                'bank_code' => $response['bank_code'],
+                                'status' => 'Active'
                             ]);
 
                             return back()->with([
@@ -157,7 +158,8 @@ class TransactionController extends Controller
                                     'account_name' => $response['account_name'],
                                     'account_number' => $response['account_number'],
                                     'bank_name' => $response['Bank_name'],
-                                    'bank_code' => $response['bank_code']
+                                    'bank_code' => $response['bank_code'],
+                                    'status' => 'Active'
                                 ]);
 
                                 return back()->with([
@@ -233,6 +235,7 @@ class TransactionController extends Controller
                 'type_of_bank_account' => $request->type_of_bank_account,
                 'routing_number' => $request->routing_number,
                 'account_number' => $request->account_number,
+                'status' => 'Active'
             ]);
 
             return back()->with([
@@ -256,6 +259,7 @@ class TransactionController extends Controller
                     'type_of_bank_account' => $request->type_of_bank_account,
                     'routing_number' => $request->routing_number,
                     'account_number' => $request->account_number,
+                    'status' => 'Active'
                 ]);
 
                 return back()->with([
@@ -361,6 +365,7 @@ class TransactionController extends Controller
                 'account_name' => $request->account_name,
                 'secret_key' => $request->secret_key,
                 'public_key' => $request->public_key,
+                'status' => 'Active'
             ]);
 
             return back()->with([
@@ -383,6 +388,7 @@ class TransactionController extends Controller
                     'account_name' => $request->account_name,
                     'secret_key' => $request->secret_key,
                     'public_key' => $request->public_key,
+                    'status' => 'Active'
                 ]);
 
                 return back()->with([

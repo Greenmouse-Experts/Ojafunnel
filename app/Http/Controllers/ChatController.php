@@ -52,7 +52,8 @@ class ChatController extends Controller
         return $result;
     }
 
-    public function check($recieverId){
+    public function check($recieverId)
+    {
         $senderId = Auth::user()->id;
 
         $data = [
@@ -111,7 +112,7 @@ class ChatController extends Controller
 
             if($sendMessage){
                 return "Message Sent";
-            }else{
+            } else {
                 return "Error sending message.";
             }
 

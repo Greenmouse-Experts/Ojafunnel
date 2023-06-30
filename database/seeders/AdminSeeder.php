@@ -22,7 +22,7 @@ class AdminSeeder extends Seeder
 
         // insert into users
         DB::insert("INSERT INTO `users` (`user_type`, `affiliate_link`, `code`, `photo`, `first_name`, `last_name`, `username`, `email`, `phone_number`, `referral_link`, `ref_bonus`, `email_verified_at`, `plan`, `customer_id`, `status`, `password`, `remember_token`, `created_at`, `updated_at`, `wallet`, `fcm_token`, `promotion_link`, `promotion_bonus`) VALUES
-        ('User', 'ojaFunnel', NULL, NULL, 'Oja', 'Funnel', 'ojafunnel', 'admin@ojafunnel.com', '090909090909', NULL, '0.00', '2023-01-06 07:05:19', '1', 1, 'active', '$2y$10\$YQ8n8kVsBAyghWIzfPyxA.lOfX9Ub7NUdMhFUfLo4RX06EPUR3TS6', NULL, '2023-01-06 07:03:32', '2023-01-10 12:10:22', '0.00', NULL, '9aef1d9ac', '0.00');");
+        ('Administrator', 'ojaFunnel', NULL, NULL, 'Oja', 'Funnel', 'ojafunnel', 'admin@ojafunnel.com', '090909090909', NULL, '0.00', '2023-01-06 07:05:19', '1', 1, 'active', '$2y$10\$YQ8n8kVsBAyghWIzfPyxA.lOfX9Ub7NUdMhFUfLo4RX06EPUR3TS6', NULL, '2023-01-06 07:03:32', '2023-01-10 12:10:22', '0.00', NULL, '9aef1d9ac', '0.00');");
 
         // insert into customers
         DB::insert("INSERT INTO `customers` (`uid`, `admin_id`, `contact_id`, `language_id`, `timezone`, `status`, `color_scheme`, `quota`, `created_at`, `updated_at`, `cache`, `text_direction`, `payment_method`, `auto_billing_data`, `menu_layout`, `theme_mode`) VALUES
