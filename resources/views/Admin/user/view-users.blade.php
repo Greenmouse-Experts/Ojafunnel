@@ -26,11 +26,19 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card account-head">
-                        <div class="py-2">
-                            <h4 class="font-500">View Users</h4>
-                            <p>
-                                Connect the tools that power your business
-                            </p>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="py-2">
+                                    <h4 class="font-500">View Users</h4>
+                                    <p>Connect the tools that power your business</p>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="mt-lg-4">
+                                    <button data-bs-toggle="modal" data-bs-target="#add_users" class="btn btn-primary d-block">Add Users</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,46 +63,46 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        @foreach ($admin->getAllCustomerLists() as $item)
-                                            @if($item->user->user_type == 'User')
+                                        @foreach (\App\Models\User::latest()->get() as $user)
+                                            @if($user->user_type == 'User')
                                             <tr>
                                                 <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
-                                                <td>{{$item->user->first_name}} {{$item->user->last_name}}</td>
+                                                <td>{{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}}</td>
                                                 <td>
-                                                    {{$item->user->email}}
+                                                    {{$user->email}}
                                                 </td>
                                                 <td>
-                                                    {{$item->user->phone_number}}
+                                                    {{ $user->phone_number != null ? $user->phone_number : "Not Specified"}}
                                                 </td>
                                                 <td>
-                                                    @if ($item->status == 'active')
-                                                        <span class="badge badge-pill badge-soft-success font-size-11">{{ trans('messages.user_status_' . $item->status) }}</span>
+                                                    @if ($user->status == 'active')
+                                                        <span class="badge badge-pill badge-soft-success font-size-11">{{ trans('messages.user_status_' . $user->status) }}</span>
                                                     @endif
 
-                                                    @if ($item->status == 'inactive')
+                                                    @if ($user->status == 'inactive')
                                                         <span class="badge badge-pill badge-soft-danger font-size-11">Banned</span>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{$item->user->created_at->format('d M, Y')}}
+                                                    {{$user->created_at->format('d M, Y')}}
                                                 </td>
                                                 <td>
                                                     <ul class="list-unstyled hstack gap-1 mb-0">
                                                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="Access User">
-                                                            <a href="{{route('admin.user.login', $item->user->id)}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-login"></i></a>
+                                                            <a href="{{route('admin.user.login', $user->id)}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-login"></i></a>
                                                         </li>
                                                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="View User">
-                                                            <a href="{{route('users.details', $item->uid)}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
+                                                            <!-- <a href="page/view_users/users-details/8383" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a> -->
+                                                            <a href="{{ route('users.details', ['id' => $user->id]) }}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                         </li>
-                                                        @if ($item->status == 'inactive')
+                                                        @if ($user->status == 'inactive')
                                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Activate">
-                                                                <a href="{{ route('enabled.user', ["uids" => $item->uid]) }}" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
+                                                                <a href="{{ route('enabled.user', ['uids' => $user->id]) }}" class="btn btn-sm btn-soft-success"><i class="bi bi-check2-all"></i></i></a>
                                                             </li>
                                                         @endif
-                                                        @if ($item->status == 'active')
+                                                        @if ($user->status == 'active')
                                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                                <a href="{{ route('disable.user', ["uids" => $item->uid]) }}" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
+                                                                <a href="{{ route('disable.user', ['uids' => $user->id]) }}" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
                                                             </li>
                                                         @endif
                                                     </ul>
@@ -112,4 +120,64 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="add_users" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Editt">
+                        <form method="POST" class="form_add_users">
+                            {{ csrf_field() }}
+                            <div class="form">
+                                <p class="mt-n4"><b>New New Users</b></p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>User Full Names</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Enter user full names" name="fullname" class="input" required style="text-transform:capitalize">
+
+                                                <input type="hidden" name="timezone" value="bbbbb">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>User Email</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Enter user email address" name="email" class="input" required> 
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>User Password</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="password" placeholder="Suggest a password for user" name="password" class="input" required>
+                                                <div style="font-size:12px">Users can later change their passwords</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 mb-4">
+                                        <div class="boding">
+                                            <button type="button" class="addUsers">Add Users</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

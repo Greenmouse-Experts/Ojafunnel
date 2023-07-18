@@ -34,7 +34,8 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Affiliate List</h4>
+                            <h4 class="card-title">Affiliate List</h4>
+                            <div class="mb-4">These users below are sorted by the highest referrals</div>
                             <div class="table-responsive">
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
@@ -42,22 +43,25 @@
                                             <th scope="col">S/N</th>
                                             <th scope="col">Names</th>
                                             <th scope="col">Email</th>
-                                            <th scope="col">Referred By</th>
+                                            <th scope="col">Referred</th>
                                             <th scope="col">Date Referred</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach(App\Models\User::latest()->where('referral_link', '!=', null)->get() as $affiliate)
-                                        <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$affiliate->first_name}} {{$affiliate->last_name}}</td>
-                                            <td>{{$affiliate->email}}</td>
-                                            <td>{{App\Models\User::find($affiliate->referral_link)->first_name}} {{App\Models\User::find($affiliate->referral_link)->last_name}}
-                                                <p>{{App\Models\User::find($affiliate->referral_link)->email}}</p>
-                                            </td>
-                                            <td>{{$affiliate->created_at->toDayDateTimeString()}}</td>
-                                        </tr>
-                                        @endforeach
+                                        @if(count($referrals) > 0)
+                                            @php $kk=1; @endphp
+                                            @foreach($referrals as $referral)
+                                            <tr>
+                                                <td>{{$kk}}</td>
+                                                <td>{{ $referral->full_names }}</td>
+                                                <td><a href="mailto:{{$referral->email}}">{{$referral->email}}</a></td>
+                                                <td>{{ $referral->total_referred }} <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#view_referrals" class="view_referrals" fullnames="{{ $referral->full_names }}" user_id="{{ $referral->user_id }}">(view)</a></p>
+                                                </td>
+                                                <td>{{$referral->dates}}</td>
+                                            </tr>
+                                            @php $kk++; @endphp
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -68,7 +72,36 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="view_referrals" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Editt">
+                        <div class="form">
+                            <p class="mt-n5"><b class="sub_name"></b></p>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="data-tables"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection
 <!-- ============================================================== -->
 <!-- Start right Content Ends -->
 <!-- ============================================================== -->
+

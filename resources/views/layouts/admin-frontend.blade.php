@@ -36,6 +36,12 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    
+    <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
+
+    <link rel='stylesheet' href="{{ asset('assets/css/sweetalert2.min.css') }}">
+    <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
+
     <script>
         window.setTimeout(function() {
             $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function() {
@@ -63,6 +69,12 @@
 </head>
 
 <body data-sidebar="dark" data-layout-mode="light">
+    <input type="hidden" value="{{ csrf_token() }}" id="txt_token">
+    <input type="hidden" value="{{ url('/') }}/" id="site_url">
+
+    <div class="alert1 alert-danger"></div>
+	<div class="overlay1"></div>
+
     @php
         $admin = auth()->guard('admin')->user();
     @endphp
@@ -96,7 +108,7 @@
     
     <!-- JAVASCRIPT -->
     <script src="{{URL::asset('admin/assets/libs/jquery/jquery.min.js')}}"></script>
-    {{-- <script src="{{URL::asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script> --}}
+    
     <script type="text/javascript" src="{{ URL::asset('core/bootstrap/js/bootstrap.bundle.min.js') }}"></script> 
     <script src="{{URL::asset('admin/assets/libs/metismenu/metisMenu.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/simplebar/simplebar.min.js')}}"></script>
@@ -124,10 +136,10 @@
     <script src="{{URL::asset('admin/assets/js/pages/product-filter-range.init.js')}}"></script>
 
     <!-- select 2 plugin -->
-    <!-- <script src="{{URL::asset('admin/assets/libs/select2/js/select2.min.js')}}"></script> -->
+    <script src="{{URL::asset('admin/assets/libs/select2/js/select2.min.js')}}"></script>
 
     <!-- dropzone plugin -->
-    <!-- <script src="{{URL::asset('admin/assets/libs/dropzone/min/dropzone.min.js')}}"></script> -->
+    <script src="{{URL::asset('admin/assets/libs/dropzone/min/dropzone.min.js')}}"></script>
 
     <!-- init js -->
     <!-- <script src="{{URL::asset('admin/assets/js/pages/ecommerce-select2.init.js')}}"></script> -->
@@ -145,6 +157,15 @@
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
+
+    <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
+
+    <script>
+    $(document).ready(function(){
+        $('.select2').select2();
+    });
+    </script>
+    
 
 
     <script>
@@ -254,8 +275,9 @@
 
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
 
+
     <script>
-        function showPreview(event) {
+        function showPreviewsss(event) {
             if (event.target.files.length > 0) {
                 var src = URL.createObjectURL(event.target.files[0]);
                 var preview = document.getElementById("file-ip-1-preview");
@@ -264,6 +286,9 @@
             }
         }
     </script>
+
+    
+    
 </body>
 
 </html>
