@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('/login', [App\Http\Controllers\Admin\Auth\AdminAuthController::class, 'getLogin'])->name('adminLogin');
     Route::post('/login', [App\Http\Controllers\Admin\Auth\AdminAuthController::class, 'postLogin'])->name('adminLoginPost');
@@ -39,7 +40,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/trans_details', [App\Http\Controllers\Admin\AdminController::class, 'trans_details'])->name('trans.details');
             Route::get('/affiliateList', [App\Http\Controllers\Admin\AdminController::class, 'affiliateList'])->name('affiliateList');
 
+            Route::post('/add-users', [App\Http\Controllers\Admin\AdminController::class, 'add_users']); //
+            Route::post('/send-broadcast', [App\Http\Controllers\Admin\AdminController::class, 'send_broadcast']); //
+            Route::post('/renew-extend', [App\Http\Controllers\Admin\AdminController::class, 'renew_extend']); //
+
             // Email Marketing
+            Route::get('/email-marketing/validate-email', [App\Http\Controllers\Admin\AdminController::class, 'validate_email'])->name('validate-email'); //
+            Route::post('/validate-user-emails', [App\Http\Controllers\Admin\AdminController::class, 'validate_user_emails']); //
+            Route::post('/fetch-referrals', [App\Http\Controllers\Admin\AdminController::class, 'fetch_referrals']); //
+            Route::post('/clrs', [App\Http\Controllers\Admin\AdminController::class, 'clrs']); //
             Route::get('/email-marketing/email-kits', [App\Http\Controllers\Admin\AdminController::class, 'view_email_kits'])->name('admin.email-marketing.email-kits');
             Route::get('/email-marketing/email-campaigns', [App\Http\Controllers\Admin\AdminController::class, 'view_email_campaigns'])->name('admin.email-marketing.email-campaigns');
 
@@ -62,6 +71,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/user/enable/{uids}', [App\Http\Controllers\Admin\CustomerController::class, 'enable'])->name('enabled.user');
 
             Route::get('/email-support', [App\Http\Controllers\Admin\AdminController::class, 'email_support'])->name('emailSupport');
+            Route::get('/broadcast', [App\Http\Controllers\Admin\AdminController::class, 'broadcast'])->name('broadcast'); //
+
             Route::post('/reply/email-support/{id}', [App\Http\Controllers\Admin\AdminController::class, 'reply_email_support'])->name('replyEmailSupport');
             Route::post('/send/email/user', [App\Http\Controllers\Admin\AdminController::class, 'send_email_to_user'])->name('admin.send.message.user');
             Route::get('/chat-support', [App\Http\Controllers\Admin\AdminController::class, 'chat_support'])->name('chatSupport');
@@ -87,6 +98,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             // sales analytics
             Route::get('sales-analytics', [App\Http\Controllers\Admin\AdminController::class, 'sales_analytics'])->name('salesAnalytics');
+            Route::get('email-analytics', [App\Http\Controllers\Admin\AdminController::class, 'email_analytics'])->name('emailAnalytics'); //
 
             // nofitication admin
             Route::get('notification', [App\Http\Controllers\Admin\AdminController::class, 'notification'])->name('notification');
