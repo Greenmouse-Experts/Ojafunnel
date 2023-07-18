@@ -36,6 +36,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    
+    <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
 
     <link rel='stylesheet' href="{{ asset('assets/css/sweetalert2.min.css') }}">
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
@@ -106,7 +108,7 @@
     
     <!-- JAVASCRIPT -->
     <script src="{{URL::asset('admin/assets/libs/jquery/jquery.min.js')}}"></script>
-    {{-- <script src="{{URL::asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script> --}}
+    
     <script type="text/javascript" src="{{ URL::asset('core/bootstrap/js/bootstrap.bundle.min.js') }}"></script> 
     <script src="{{URL::asset('admin/assets/libs/metismenu/metisMenu.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/simplebar/simplebar.min.js')}}"></script>
@@ -134,10 +136,10 @@
     <script src="{{URL::asset('admin/assets/js/pages/product-filter-range.init.js')}}"></script>
 
     <!-- select 2 plugin -->
-    <!-- <script src="{{URL::asset('admin/assets/libs/select2/js/select2.min.js')}}"></script> -->
+    <script src="{{URL::asset('admin/assets/libs/select2/js/select2.min.js')}}"></script>
 
     <!-- dropzone plugin -->
-    <!-- <script src="{{URL::asset('admin/assets/libs/dropzone/min/dropzone.min.js')}}"></script> -->
+    <script src="{{URL::asset('admin/assets/libs/dropzone/min/dropzone.min.js')}}"></script>
 
     <!-- init js -->
     <!-- <script src="{{URL::asset('admin/assets/js/pages/ecommerce-select2.init.js')}}"></script> -->
@@ -158,7 +160,11 @@
 
     <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
 
-    
+    <script>
+    $(document).ready(function(){
+        $('.select2').select2();
+    });
+    </script>
     
 
 
@@ -280,6 +286,9 @@
             }
         }
     </script>
+
+    
+    
 </body>
 
 </html>

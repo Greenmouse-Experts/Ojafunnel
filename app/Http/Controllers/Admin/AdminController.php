@@ -53,6 +53,12 @@ use App\Mail\AdminApprovedWithdrawNotification;
 use App\Mail\UserApprovedNotification;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use App\Models\Customer;
+use Twilio\Rest\Client as twilio;
+use Exception;
+use GuzzleHttp\Client;
+use Aws\Sns\SnsClient;
+
+
 
 class AdminController extends Controller
 {
@@ -825,6 +831,151 @@ class AdminController extends Controller
             'message' => "Error in adding user",
             'data' => ''
         ],200);
+    }
+
+
+
+    public function sendMessageTwilio($sms, $phones)
+    {
+        $integration = \App\Models\Integration::where('type', 'Multitexter')->first();
+        
+        // foreach ($phones as $val) {
+        //     $str = implode(',', $val);
+        //     $data[] = $str;
+        // }
+        // //$datum = implode(',', $data);
+        // $datum = implode(',', $phones);
+        // return $datum;
+
+        $sid = $integration->sid;
+        $auth_token = $integration->token;
+        $from_number = $integration->from;
+        $message = $sms['body'];
+        $sender_name = "OjaFunnel";
+        //$recipients = explode(',', $datum);
+        // $recipients = explode(',', $phones);
+
+        return $sid." == ".$auth_token." == ".$from_number." == ".$message." == ".$sender_name;
+
+        $phones = ['+2348035204317'];
+
+        try {
+            $sid = $sid; // Your Account SID from www.twilio.com/console
+            $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+            $from_number = $from_number; // Valid Twilio number
+
+            $client = new twilio($sid, $auth_token);
+            $count = 0;
+
+            return $client;
+
+            foreach( $phones as $number ){
+                $count++;
+                $client->messages->create(
+                    $number,
+                    [
+                        'from' => $from_number,
+                        'body' => $message,
+                    ]
+                );
+            }
+            return true;
+        }catch(Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+
+
+    public function send_broadcast(Request $request)
+    {
+        $rules = [
+            'channel'      => 'required', // 2 words and space
+            'subject'      => 'required',
+            'message'      => 'required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+        /* if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        } */
+
+        
+        $channels = $request->channel;
+        $user_channel = [];
+        if(isset($channels) && count($channels) > 0){
+            foreach($channels as $chan){
+                $user_channel[] = $chan;
+            }
+        }
+        $user_emails = [];
+        $user_phones = [];
+        $user_whatsapp = [];
+
+       if(in_array('emails', $user_channel)){
+        $user_emails = User::whereNotNull('email')->pluck('email')->toArray();
+       }
+       if(in_array('sms', $user_channel)){
+        $user_phones = User::whereNotNull('phone_number')->pluck('phone_number')->toArray();
+       }
+       if(in_array('whatsapp', $user_channel)){
+        $user_whatsapp = User::whereNotNull('phone_number')->pluck('phone_number')->toArray();
+       }
+
+       $allDataEmails = array_merge($user_emails);
+       $allDataPhones = array_merge($user_phones, $user_whatsapp);
+
+       $all_emails = "";
+       $all_phones = "";
+       if(count($allDataEmails) > 0){
+        foreach($allDataEmails as $allDataEmail){
+            $all_emails .= "$allDataEmail,";
+        }
+        $data = array(
+            'name' => "Hello Chief",
+            'subject' => $request->subject,
+            'body' => $request->message,
+            'emails' => $all_emails
+        );
+
+        // return $data['subject'];
+        
+        /* $send_emails = \Mail::send('emails.broadcast', $data, function ($m) use ($data) {
+            $m->to(env('MAIL_FROM_ADDRESS'))
+            ->bcc($data['emails'])
+            ->subject($data['subject']);
+        }); */
+       }
+
+       if(count($allDataPhones) > 0){
+        return $this->sendMessageTwilio($data, $allDataPhones);
+        
+        // $data1 = array(
+        //     'name' => "Hello Chief",
+        //     'body' => $request->message
+        // );
+        
+       }
+
+    //    return $all_emails;
+
+
+        /* if($user){
+            $users = User::where("id", $user->id)->update([
+                'customer_id' => $user->id
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "user added",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in adding user",
+            'data' => ''
+        ],200); */
     }
 
 

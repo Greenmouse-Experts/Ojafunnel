@@ -121,6 +121,47 @@ $('body').on('click', '.addUsers', function (e) {
 });
 
 
+$('body').on('click', '.sendBroadcast', function (e) {
+  var self = this;    
+  var results = '';
+  // $(self).attr('disabled', true).css({'opacity': '0.4'});
+  
+  $.ajax({
+    type : "POST",
+    url : site_url + "admin/page/send-broadcast",
+    data: $(".form_channel").serialize(),
+    success : function(data){
+      $.each(data, function(){
+        results += this + "<br>";
+      });
+
+      if(data.status=="success"){
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire("Successful", "User details has been sent to their email", "success");
+        $(".form_channel")[0].reset();
+      
+      }else{
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+          title: "Error!",
+          html: results,
+          icon: 'error',
+          timer: 3000
+        });
+      }
+    },error : function(data){
+      $(self).removeAttr('disabled').css({'opacity': '1'});
+      Swal.fire({
+        title: "Error!",
+        text: "Poor Network Connection!",
+        icon: 'error',
+        timer: 3000
+      });
+    }
+  });
+});
+
+
 $('body').on('click', '.addRenew', function (e) {
   e.preventDefault();
   var self = this;    
@@ -234,6 +275,10 @@ $('body').on('change', '.sub_type', function (e) {
     $('.ext_div').show();
   }
 });
+
+
+
+
 
 
 

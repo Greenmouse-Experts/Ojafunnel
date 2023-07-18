@@ -29,16 +29,16 @@
             <div class="modal-body bg-white p-2">
                 <div class="row">
                     <div class="Edit-level">
-                        <form method="post">
+                        <form method="post" class="form_channel">
                             @csrf
                             <div class="form">
                                 <div class="col-lg-12">
-                                    <label>Broadcast Channel</label>
+                                    <label style="background:white;color:#333;position:relative;top:30px;margin-bottom:20px;display:inline-block">Broadcast Channel</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <select name="name" class="input">
+                                            <select name="channel[]" multiple class="input select2">
                                                 <option value="">-- Select Channel --</option>
-                                                <option value="email">Email</option>
+                                                <option value="emails">Email</option>
                                                 <option value="sms">SMS</option>
                                                 <option value="whatsapp">WhatsApp</option>
                                             </select>
@@ -46,7 +46,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                <!-- <div class="col-lg-12">
                                     <label>Recipient</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
@@ -63,13 +63,13 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-lg-12">
                                     <label>Subject</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Enter your email..." name="subject" class="input" required>
+                                            <input type="text" placeholder="Enter your subject..." name="subject" class="input" required style="background-color:#F8F8FB!important;">
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +77,7 @@
                                     <label>Your Message</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <textarea name="message"></textarea>
+                                            <textarea name="message" placeholder="Write your message"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -88,10 +88,7 @@
                                         </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
-                                            >
-                                            Send
-                                        </button>
+                                        <button type="button" class="btn px-4 sendBroadcast" style="color: #ffffff; background-color: #714091">Send</button>
                                     </div>
                                 </div>
                             </div>
