@@ -51,6 +51,7 @@ class PageController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'file_folder' => ['required', 'string', 'max:255'],
             'file_name' => ['required', 'string', 'max:255'],
+            'page_type' => ['required', 'string']
         ]);
 
         if (Page::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->page_builder) {
@@ -136,6 +137,7 @@ class PageController extends Controller
                 'user_id' => Auth::user()->id,
                 'title' => $request->title,
                 'name' => $file,
+                'type' => $request->page_type,
                 'folder' => $request->file_folder,
                 'file_location' => config('app.url') . '/pageBuilder/' . $res[1] . '/' . $file,
                 'slug' => $res[1]
@@ -191,6 +193,44 @@ class PageController extends Controller
             header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
             echo "Error saving file. \nPossible causes are missing write permission or incorrect file path!";
         }
+    }
+
+    public function page_builder_template_view($username, $id, Request $request)
+    {
+        $templates = ['landing_page', 'optin_page', 'order_form_page', 'order_bump_upsell_page', 'thank_you_page'];
+        $template_folder = ['landing', 'opt-in', 'order-form', 'order-bump', 'thank-you'];
+        $template_index = (int) $id;
+
+        if ($template_index >= sizeof($templates)) {
+            return redirect()->back();
+        }
+
+        $template_name = $templates[$template_index];
+
+        // $template = file_get_contents(resource_path("views/pages/default/$template_name.blade.php"));
+        // $template_data_bindings = ['page_title'];
+        // $currentpage = FunnelPage::find(1);
+        // $pages = FunnelPage::where('user_id', Auth::user()->id)->get();
+        // $pbuilder = Funnel::where('id', 1)->first();
+
+        $currentpage = new \StdClass();
+        $currentpage->file_location = env('APP_URL') . "/pageBuilder/$template_folder[$template_index]/index.html";
+        $currentpage->folder_id = $template_index;
+        $currentpage->id = $template_index;
+        $currentpage->name = "index.html";
+        $currentpage->title = "Template " . ($template_index + 1);
+
+        $pbuilder = new \StdClass();
+        $pbuilder->user_id = Auth::user()->id;
+        $pbuilder->folder = 'template';
+        $pbuilder->slug = 'template';
+        $pbuilder->id = $template_index;
+
+        return view('dashboard.pageBuilderEditor', [
+            'currentpage' => $currentpage,
+            'pages' => [],
+            'pbuilder' => $pbuilder
+        ]);
     }
 
     public function page_builder_update($id, Request $request)

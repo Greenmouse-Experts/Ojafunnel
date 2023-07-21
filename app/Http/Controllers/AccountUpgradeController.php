@@ -34,7 +34,7 @@ class AccountUpgradeController extends Controller
             "registration_ids" => $firebaseToken,
             "notification" => [
                 "title" => config('app.name'),
-                "body" => $body, 
+                "body" => $body,
                 'image' => URL::asset('assets/images/Logo-fav.png'),
             ],
             'vibrate' => 1,
@@ -55,8 +55,8 @@ class AccountUpgradeController extends Controller
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString); 
-        $result = curl_exec ( $ch );     
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $result = curl_exec ( $ch );
 
         return $result;
     }
@@ -100,7 +100,7 @@ class AccountUpgradeController extends Controller
         OjaSubscription::create([
             'user_id' => Auth::user()->id,
             'plan_id' => $plan->id,
-            // 'plan_interval' => 
+            // 'plan_interval' =>
             'status' => 'Active',
             'ends_at' => $date,
             'started_at' => now(),
@@ -172,7 +172,7 @@ class AccountUpgradeController extends Controller
         OjaSubscription::create([
             'user_id' => Auth::user()->id,
             'plan_id' => $plan->id,
-            // 'plan_interval' => 
+            // 'plan_interval' =>
             'status' => 'Active',
             'ends_at' => $date,
             'started_at' => now(),
@@ -209,5 +209,5 @@ class AccountUpgradeController extends Controller
             'message' => 'Account upgrade completed successfully.'
         ]);
     }
-    
+
 }

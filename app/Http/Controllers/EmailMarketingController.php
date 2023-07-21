@@ -508,14 +508,14 @@ class EmailMarketingController extends Controller
                 // bulk insert
                 EmailCampaignQueue::insert($email_campaign_queue);
 
-                // divide into 500 chunks and 
+                // divide into 500 chunks and
                 // delay each job between 10  - 20 sec in the queue
                 $chunks = $contacts->chunk(500);
                 $delay = mt_rand(10, 20);
 
                 // dispatch job and delay
                 foreach ($chunks as $key => $_chunk) {
-                    // dispatch job 
+                    // dispatch job
                     ProcessEmailCampaign::dispatch([
                         'smtp_host'    => $email_kit->host,
                         'smtp_port'    => $email_kit->port,
@@ -669,7 +669,7 @@ class EmailMarketingController extends Controller
     {
         return '
                 <div class="footer" style="clear: both; margin-top: 10px; text-align: center; width: 100%; font-weight: bold; font-size: 16px;">
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%"> 
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
                     <tr>
                         <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;" valign="top" align="center">
                         Powered by <a href="https://ojafunnel.com" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">Ojafunnel</a>.
