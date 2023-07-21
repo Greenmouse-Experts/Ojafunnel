@@ -155,6 +155,9 @@ Route::prefix('{username}')->group(function () {
             Route::get('page-builder/{page}/editor', [App\Http\Controllers\PageController::class, 'viewEditor'])->name('user.page.builder.view.editor');
             Route::get('page-builder/{page}', [App\Http\Controllers\PageController::class, 'viewPage'])->name('user.page.builder.view.page');
 
+            // Page Builder template
+            Route::get('/page/builder/template/{id}', [App\Http\Controllers\PageController::class, 'page_builder_template_view'])->name('user.page.builder.template');
+
             Route::prefix('/chat-automation')->group(
                 function () {
                     Route::get('/sms-automation', [App\Http\Controllers\DashboardController::class, 'sms_automation'])->name('user.sms.automation');
@@ -347,8 +350,10 @@ Route::post('/support/sendMessage', [ChatController::class, 'store'])->name('sen
 Route::get('/support/loadMessage/{reciever}/{sender}', [ChatController::class, 'load']);
 Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [ChatController::class, 'retrieveNew']);
 
-// Builder
+// Page Builder
 Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');
+
+// Funnel Builder
 Route::post('/funnel/builder/save/page/{page}', [App\Http\Controllers\PageController::class, 'funnel_builder_save_page'])->name('user.funnel.builder.save.page');
 
 Route::get('payment', [PayPalController::class, 'okpay'])->name('ok.pay');
