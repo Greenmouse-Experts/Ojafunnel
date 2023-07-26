@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Ramsey\Uuid\Type\Integer;
+use App\Http\Controllers\HomePageController;
+
 
 class IntegrationController extends Controller
 {
@@ -17,8 +19,10 @@ class IntegrationController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+
+    private $home;
+    public function __construct(){
+        $this->home = new HomePageController;
         $this->middleware(['auth', 'verified']);
     }
 
@@ -70,6 +74,8 @@ class IntegrationController extends Controller
 
     public function integration_create(Request $request)
     {
+        if($this->home->site_features_settings('Integration Page') || $this->home->user_site_features_settings('Integration Page') > 0) return $this->home->redirects();
+
         $integrations = Integration::where('user_id', Auth::user()->id)->get();
 
         if ($integrations->isEmpty()) {

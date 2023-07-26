@@ -11,7 +11,7 @@
         <div class="container-fluid">
             <!-- start page title -->
             <div class="row">
-                <div class="col-lg-9 aminn">
+                <div class="col-lg-8 aminn">
                     <div class="card">
                         <div class="card-body">
                             <h4 style="color:#000; font-weight:600;">Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}} 👋</h4>
@@ -35,13 +35,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 aminn">
+                <div class="col-lg-3 aminn">
                     <div class="card">
                         <div class="card-body">
-                            <div class="all-create">
-                                <button type="button" class="px-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <div class="all-create" style="text-align:right!important;">
+                                <button type="button" class="px-3 mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display:inline">
                                     + Create
                                 </button>
+                                @if($users->paid_for_backup == 1)
+                                    <button type="button" class="px-3" style="display:inline;opacity:0.4">
+                                        <i class="fa fa-cloud-upload-alt"></i> Data Backedup
+                                    </button>
+                                @else
+                                    <button type="button" class="px-3 backup_data" data-bs-toggle="modal" data-bs-target="#backUpData" style="display:inline">
+                                        <i class="fa fa-cloud-upload-alt"></i> Backup my data
+                                    </button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -354,8 +363,60 @@
 </div>
 <!-- Modal Ends -->
 
+
+<div class="modal fade" id="backUpData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="backup_form">
+            <div class="modal-content px-2 py-2">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        Backup My Data
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-0 mb-3">Keep your data with us if you do not want to subscrive at the moment to avoid permanent deletion</div>
+                    <div class="row">
+                        <label style="font-weight:500;font-size:15px;margin-bottom:-4px">One Time Fee</label>
+                        <div class="col-md-12 mb-2">
+                            <label class="input" style="font-weight:600;font-size:22px">&#8358;{{ number_format($admin->backup_amt) }}</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label style="font-weight:500;font-size:15px;margin-bottom:-5px">Payment Method</label>
+                        <div class="col-md-12 mb-4">
+                            <select name="pay_mthd" id="" class="px-2 select_box pay_mthd" autocomplete="off">
+                                <option value="">-Choose One-</option>
+                                <option value="paystack" selected>Paystack</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <input type="hidden" class="pay_amt" value="{{ $admin->backup_amt }}">
+                <input type="hidden" class="user_email" value="{{ $users->email }}">
+                <input type="hidden" class="user_id" value="{{ $users->id }}">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close_me" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-success pay_backup">
+                        Pay &#8358;{{ number_format($admin->backup_amt) }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
+
 <script>
     window.onload=function(){
         document.getElementById("btn-nft-enable").click();

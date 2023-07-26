@@ -799,6 +799,7 @@ class Customer extends Model
 
                 $user = new User();
                 $user->fill($request->all());
+                $user->username = $fullname[0];
                 $user->first_name = $fullname[0];
                 $user->last_name = $fullname[1];
                 $user->email = $request->email;
@@ -829,6 +830,7 @@ class Customer extends Model
                 // User
                 $user = new User();
                 $user->fill($request->all());
+                $user->username = $fullname[0];
                 $user->first_name = $fullname[0];
                 $user->last_name = $fullname[1];
                 $user->email = $request->email;

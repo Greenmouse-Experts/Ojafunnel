@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb2397e3c7ac0b0d87a9d47c12ebefd1",
+    "content-hash": "21eee74caccfe8aa48f93bb47bd36c60",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -9133,6 +9133,69 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "zeevx/lara-termii",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zeevx/lara-termii.git",
+                "reference": "92317ba7eb16ee14932a824d03314ffe3a6af710"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zeevx/lara-termii/zipball/92317ba7eb16ee14932a824d03314ffe3a6af710",
+                "reference": "92317ba7eb16ee14932a824d03314ffe3a6af710",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/support": "~6|~7|~8|~9",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^8.4|^9.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Zeevx\\LaraTermii\\LaraTermiiServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaraTermii": "Zeevx\\LaraTermii\\LaraTermiiFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zeevx\\LaraTermii\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Adams",
+                    "email": "adamsohiani@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Package for Termii - https://www.termii.com",
+            "homepage": "https://github.com/zeevx/lara-termii",
+            "keywords": [
+                "lara-termii",
+                "zeevx"
+            ],
+            "support": {
+                "issues": "https://github.com/zeevx/lara-termii/issues",
+                "source": "https://github.com/zeevx/lara-termii/tree/master"
+            },
+            "time": "2022-03-20T21:47:15+00:00"
         }
     ],
     "packages-dev": [

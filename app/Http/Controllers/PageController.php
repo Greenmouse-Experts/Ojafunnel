@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Dotlogics\Grapesjs\App\Traits\EditorTrait;
+use App\Http\Controllers\HomePageController;
+
+
 
 class PageController extends Controller
 {
@@ -24,9 +27,14 @@ class PageController extends Controller
      *
      * @return void
      */
+    
+    private $home;
+
     public function __construct()
     {
+        $this->home = new HomePageController;
         $this->middleware(['auth', 'verified']);
+
     }
 
     public function generatePageSlug($folder)
@@ -540,6 +548,9 @@ class PageController extends Controller
 
     public function viewFunnelEditor($username, $id)
     {
+
+        if($this->home->site_features_settings('Funnel Builder') || $this->home->user_site_features_settings('Funnel Builder') > 0) return $this->home->redirects();
+
         $finder = Crypt::decrypt($id);
 
         $currentpage = FunnelPage::find($finder);

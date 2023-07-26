@@ -9,24 +9,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SubscriptionExpiryReminderMail extends Mailable
+class BroadcastEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
-    public $subscribe;
-    public $plan;
+    public $subject;
+    public $message;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user, $subscribe, $plan)
+    public function __construct($subject, $message)
     {
-        $this->user = $user;
-        $this->subscribe = $subscribe;
-        $this->plan = $plan;
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     /**
@@ -37,7 +35,7 @@ class SubscriptionExpiryReminderMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: config('app.name'),
+            subject: $this->subject,
         );
     }
 
@@ -49,8 +47,11 @@ class SubscriptionExpiryReminderMail extends Mailable
     public function content()
     {
         return new Content(
-            //view: 'emails.SubscriptionExpiryNotifyAdmin',
-            view: 'emails.subscriptionExpiryReminder',
+            markdown: 'emails.broadcast',
+            with: [
+                'message' => $this->message,
+                'subject' => $this->subject
+            ]
         );
     }
 

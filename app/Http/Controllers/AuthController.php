@@ -494,6 +494,7 @@ class AuthController extends Controller
         ]);
 
         // Send email to user
+        
         Mail::to($request->email)->send(new SendCodeResetPassword($codeData->code));
 
         return redirect()->route('user.reset.password', Crypt::encrypt($user->email))->with([

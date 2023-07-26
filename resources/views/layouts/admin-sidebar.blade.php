@@ -41,6 +41,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('priviledges') }}/">
+                        <i class="fa fa-user-secret"></i>
+                        <span key="t-chat">Priviledges</span>
+                    </a>
+                </li>
+                <li>
                     <a href="#" class="has-arrow">
                         <i class="bi bi-envelope-check"></i>
                         <span key="t-chat">Email Marketing</span>

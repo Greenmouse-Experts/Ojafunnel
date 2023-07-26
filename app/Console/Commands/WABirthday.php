@@ -75,6 +75,7 @@ class WABirthday extends Command
                 }
             }
 
+            
             if ($_campaign->sms_type == 'anniversary') {
                 $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id])
                     ->whereMonth('anniv_date', $current_month)

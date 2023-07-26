@@ -362,11 +362,8 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <p>Dear {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}},</p>
-                        <p>This is a subscription notice that your subscription plan -  {{$plan->name}} which was generated on {{date('Y-m-d', strtotime($subscribe->started_at))}} will be due on {{date('Y-m-d', strtotime($subscribe->ends_at))}}.</p>
-                        <p>Kindly resubscribe to aviod been interrupted.</p>
-                        <p style="font-weight: 700;">NB</p>
-                        <p>If you have any issues, our customer support team is available 24/7 to assist you with any issue you may be having.</p>
+                        <p>Hello {{$user}}</p>
+                        <p>{!! $messages !!}</p>
                         <p>Thanks for choosing {{config('app.name')}}.</p>
                       </td>
                     </tr>
