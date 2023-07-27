@@ -51,6 +51,10 @@ use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
 use App\Models\Domain;
+use Illuminate\Routing\Redirector;
+use App\Http\Controllers\HomePageController;
+use Illuminate\Support\Facades\Mail;
+
 
 class DashboardController extends Controller
 {
@@ -59,9 +63,25 @@ class DashboardController extends Controller
      *
      * @return void
      */
-    public function __construct()
+
+    private $home;
+    public function __construct(Redirector $redirect)
     {
+        $this->home = new HomePageController;
         $this->middleware(['auth', 'verified']);
+
+        /* $this->middleware(function ($request, $next) {
+
+
+            
+            
+            
+
+            return $next($request);
+        }); */
+
+        
+        
     }
 
     public function dashboard()
@@ -111,11 +131,99 @@ class DashboardController extends Controller
             $sent_mails[$index] = $result;
         }
 
+        $admin = Admin::find(1);
+        $user = Auth::user();
+
         return view('dashboard.dashboard', [
             'sales' => json_encode($sales),
-            'sent_mails' => json_encode($sent_mails)
+            'sent_mails' => json_encode($sent_mails),
+            'admin' => $admin,
+            'users' => $user,
         ]);
     }
+
+
+
+    function validate_buy_backup(Request $request){
+        $attributes = [
+            'user_id'      => 'User',
+            'amount'       => 'Amount',
+            'pay_mthd'     => 'Payment method',
+        ];
+        $rules = [
+            'amount'      => 'required|numeric|gt:0',
+            'pay_mthd'    => 'required',
+            'user_id'     => 'required',
+        ];
+        $messages = [
+            'required'      => ':attribute field is required',
+        ];
+        $validator = \Validator::make($request->all(), $rules, $messages)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->all(),
+                'data' => ''
+            ],200); 
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'validated',
+            'data' => ''
+        ],200); 
+    }
+
+
+    function buy_backup(Request $request){
+        $attributes = [
+            'user_id'      => 'User',
+            'amount'       => 'Amount',
+            'pay_mthd'     => 'Payment method',
+        ];
+        $rules = [
+            'amount'      => 'required|numeric|gt:0',
+            'pay_mthd'    => 'required',
+            'user_id'     => 'required',
+        ];
+        $messages = [
+            'required'      => ':attribute field is required',
+        ];
+        $validator = \Validator::make($request->all(), $rules, $messages)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->all(),
+                'data' => ''
+            ],200); 
+        }
+        $transactions = Transaction::create([
+            'user_id'               => $request->user_id,
+            'amount'                => $request->amount,
+            'reference'             => $request->response,
+            'transaction_status'    => "completed",
+            'payment_method'        => $request->pay_mthd,
+            'status'                => $request->narration,
+        ]);
+        if($transactions){
+            $user = User::find($request->user_id);
+            $user->update([
+                'paid_for_backup' => 1
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Successful transaction',
+                'data' => ''
+            ],200); 
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Could not create transaction',
+            'data' => ''
+        ],200); 
+    }
+
 
     public function list_setting($username)
     {
@@ -329,8 +437,10 @@ class DashboardController extends Controller
         ]);
     }
 
+
     public function subscription($username)
     {
+        if($this->home->site_features_settings('Subscription Page') || $this->home->user_site_features_settings('Subscription Page') > 0) return $this->home->redirects();
         return view('dashboard.subscription', [
             'username' => $username
         ]);
@@ -338,6 +448,8 @@ class DashboardController extends Controller
 
     public function choose_temp($username)
     {
+        if($this->home->site_features_settings('Funnel Builder') || $this->home->user_site_features_settings('Funnel Builder') > 0) return $this->home->redirects();
+   
         $funnels = Funnel::latest()->where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.funnelBuilder', [
@@ -348,6 +460,8 @@ class DashboardController extends Controller
 
     public function add_funnel_custom_domain(Request $request, $username)
     {
+        if($this->home->site_features_settings('Funnel Builder') || $this->home->user_site_features_settings('Funnel Builder') > 0) return $this->home->redirects();
+
         $funnel = Funnel::where(['id' => $request->id, 'user_id' => Auth::user()->id]);
         if (!$funnel->exists()) {
             return redirect(route('user.choose.temp', ['username' => Auth::user()->username]));
@@ -466,6 +580,8 @@ class DashboardController extends Controller
 
     public function view_funnel_pages($username, $id)
     {
+        if($this->home->site_features_settings('Funnel Builder') || $this->home->user_site_features_settings('Funnel Builder') > 0) return $this->home->redirects();
+
         $id = Crypt::decrypt($id);
 
         $funnel = Funnel::findorfail($id);
@@ -488,6 +604,8 @@ class DashboardController extends Controller
 
     public function take_quiz($username)
     {
+        if($this->home->site_features_settings('Funnel Builder') || $this->home->user_site_features_settings('Funnel Builder') > 0) return $this->home->redirects();
+
         return view('dashboard.takeQuiz', [
             'username' => $username
         ]);
@@ -528,9 +646,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    
+
 
     public function page_builder($username)
-    {
+    {   
+        if($this->home->site_features_settings('Page Builder') || $this->home->user_site_features_settings('Page Builder') > 0) return $this->home->redirects();
+
         $pages = Page::latest()->where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.pageBuilder', [
@@ -2197,6 +2319,9 @@ class DashboardController extends Controller
 
     public function integration($username)
     {
+
+        if($this->home->site_features_settings('Integration Page') || $this->home->user_site_features_settings('Integration Page') > 0) return $this->home->redirects();
+
         return view('dashboard.integration', [
             'username' => $username
         ]);
@@ -2204,6 +2329,8 @@ class DashboardController extends Controller
 
     public function manage_integration($username)
     {
+        if($this->home->site_features_settings('Integration Page') || $this->home->user_site_features_settings('Integration Page') > 0) return $this->home->redirects();
+
         $sms_integrations = Integration::latest()->where('user_id', Auth::user()->id)->get();
         $email_integrations = EmailKit::latest()->where(['account_id' => Auth::user()->id, 'is_admin' => false])->get();
 

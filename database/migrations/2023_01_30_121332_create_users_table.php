@@ -34,6 +34,8 @@ return new class extends Migration {
             $table->rememberToken();
             $table->timestamps();
             $table->string('wallet')->default('0.00');
+            $table->string('feature_access')->default(0);
+            $table->tinyInteger('paid_for_backup')->default(0);
         });
     }
 

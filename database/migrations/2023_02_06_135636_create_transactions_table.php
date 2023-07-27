@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('amount')->nullable();
             $table->string('reference')->nullable();
             $table->string('status')->nullable();
-            $table->timestamps();
+            $table->enum('transaction_status', ['pending', 'failed', 'completed'])->nullable();
+            $table->string('payment_method')->nullable();
+            $table->timestamps()->default('CURRENT_TIMESTAMP');
         });
     }
 

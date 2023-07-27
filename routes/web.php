@@ -109,6 +109,13 @@ Route::prefix('auth')->group(function () {
 });
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 // User Dashboard
+
+Route::prefix('dashboard')->group(function(){
+    Route::post('validate_buy_backup', [DashboardController::class, 'validate_buy_backup']);
+    Route::post('buy_backup', [DashboardController::class, 'buy_backup']);
+});
+
+
 Route::prefix('{username}')->group(function () {
     // Route::domain('{username}.' . config('app.domain_url'))->group(function () {
     Route::prefix('dashboard')->group(

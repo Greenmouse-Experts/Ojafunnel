@@ -57,13 +57,14 @@
                                             <th>User Name </th>
                                             <th>Email</th>
                                             <th>Phone Number</th>
+                                            <th>Priviledges</th>
                                             <th>Status</th>
                                             <th>Date Created</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (\App\Models\User::latest()->get() as $user)
+                                        @foreach ($all_users as $user)
                                             @if($user->user_type == 'User')
                                             <tr>
                                                 <td><a href="javascript: void(0);" class="text-body fw-bold">{{$loop->iteration}}</a> </td>
@@ -74,6 +75,18 @@
                                                 <td>
                                                     {{ $user->phone_number != null ? $user->phone_number : "Not Specified"}}
                                                 </td>
+
+                                                <td>
+                                                    @if(count($user->fts) > 0)
+                                                        @php $fts1=""; @endphp
+                                                        @foreach($user->fts as $fts)
+                                                            @php $fts1 .= $fts->features.", "; @endphp
+                                                        @endforeach
+                                                        <div style="font-size:12px;line-height:16px;margin-bottom:5px">{{ substr($fts1,0,-2) }} <div style="color:red">features are disabled</div></div>
+                                                    @endif
+                                                    <div><a href="javascript:;" data-bs-toggle="modal" data-bs-target="#assign_prv" class="assign_prv" user_id="{{ $user->id }}" user_name="{{ucwords($user->first_name.' '.$user->last_name)}}" style="font-size:12px;">Click to assign</a></div>
+                                                </td>
+                                                
                                                 <td>
                                                     @if ($user->status == 'active')
                                                         <span class="badge badge-pill badge-soft-success font-size-11">{{ trans('messages.user_status_' . $user->status) }}</span>
@@ -168,6 +181,47 @@
                                     <div class="col-lg-12 mb-4">
                                         <div class="boding">
                                             <button type="button" class="addUsers">Add Users</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="assign_prv" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Editt">
+                        <form method="POST" class="form_add_priv">
+                            {{ csrf_field() }}
+                            <div class="form">
+                                <p class="mt-n4"><b class="assign_name"></b></p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>Enable / Disable Priviledge</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <div class="user_privd_data"></div>
+                                                <input type="hidden" name="user_id" class="user_id">
+                                                <div style="margin-top:5px;font-size:12px">Hold ctrl to select multiple</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 mb-4">
+                                        <div class="boding">
+                                            <button type="button" class="saveUpdate">Save Update</button>
                                         </div>
                                     </div>
                                 </div>

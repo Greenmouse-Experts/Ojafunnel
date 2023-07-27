@@ -36,11 +36,12 @@
                                     <label style="background:white;color:#333;position:relative;top:30px;margin-bottom:20px;display:inline-block">Broadcast Channel</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <select name="channel[]" multiple class="input select2">
+                                            <!-- <select name="channel[]" multiple class="input select2"> -->
+                                            <select name="channel" class="input select2">
                                                 <option value="">-- Select Channel --</option>
                                                 <option value="emails">Email</option>
                                                 <option value="sms">SMS</option>
-                                                <option value="whatsapp">WhatsApp</option>
+                                                <option value="whatsapp" disabled>WhatsApp</option>
                                             </select>
                                         </div>
                                     </div>

@@ -41,13 +41,19 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/affiliateList', [App\Http\Controllers\Admin\AdminController::class, 'affiliateList'])->name('affiliateList');
 
             Route::post('/add-users', [App\Http\Controllers\Admin\AdminController::class, 'add_users']); //
+            Route::post('/update-prvdg', [App\Http\Controllers\Admin\AdminController::class, 'update_prvdg']); //
+            
             Route::post('/send-broadcast', [App\Http\Controllers\Admin\AdminController::class, 'send_broadcast']); //
             Route::post('/renew-extend', [App\Http\Controllers\Admin\AdminController::class, 'renew_extend']); //
+            Route::post('/react-feature', [App\Http\Controllers\Admin\AdminController::class, 'react_feature']); //
+            
 
             // Email Marketing
             Route::get('/email-marketing/validate-email', [App\Http\Controllers\Admin\AdminController::class, 'validate_email'])->name('validate-email'); //
             Route::post('/validate-user-emails', [App\Http\Controllers\Admin\AdminController::class, 'validate_user_emails']); //
             Route::post('/fetch-referrals', [App\Http\Controllers\Admin\AdminController::class, 'fetch_referrals']); //
+            Route::post('/get-users-prvd', [App\Http\Controllers\Admin\AdminController::class, 'get_users_prvd']); //
+            
             Route::post('/clrs', [App\Http\Controllers\Admin\AdminController::class, 'clrs']); //
             Route::get('/email-marketing/email-kits', [App\Http\Controllers\Admin\AdminController::class, 'view_email_kits'])->name('admin.email-marketing.email-kits');
             Route::get('/email-marketing/email-campaigns', [App\Http\Controllers\Admin\AdminController::class, 'view_email_campaigns'])->name('admin.email-marketing.email-campaigns');
@@ -72,6 +78,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             Route::get('/email-support', [App\Http\Controllers\Admin\AdminController::class, 'email_support'])->name('emailSupport');
             Route::get('/broadcast', [App\Http\Controllers\Admin\AdminController::class, 'broadcast'])->name('broadcast'); //
+            Route::get('/priviledges', [App\Http\Controllers\Admin\AdminController::class, 'priviledges'])->name('priviledges'); //
 
             Route::post('/reply/email-support/{id}', [App\Http\Controllers\Admin\AdminController::class, 'reply_email_support'])->name('replyEmailSupport');
             Route::post('/send/email/user', [App\Http\Controllers\Admin\AdminController::class, 'send_email_to_user'])->name('admin.send.message.user');

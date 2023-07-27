@@ -15,11 +15,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\HomePageController;
 
 class EmailMarketingController extends Controller
 {
+
+    private $home;
+    public function __construct(){
+        $this->home = new HomePageController;
+    }
+
     public function email_kits(Request $request)
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         $user_email_integrations = EmailKit::latest()->where(['account_id' => Auth::user()->id, 'is_admin' => false])->get();
         $admin_email_integrations = EmailKit::latest()->where(['is_admin' => true])->get();
 
@@ -120,6 +129,8 @@ class EmailMarketingController extends Controller
 
     public function email_templates(Request $request)
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         $email_templates = EmailTemplate::where(['user_id' => Auth::user()->id])->get();
 
         return view('dashboard.email-marketing.email-templates.index', [
@@ -129,11 +140,15 @@ class EmailMarketingController extends Controller
 
     public function email_templates_choose_temp()
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         return view('dashboard.email-marketing.email-templates.choose-temp', []);
     }
 
     public function email_templates_view_temp(Request $request)
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         if ($request->id > 4) return redirect(route('user.dashboard', ['username', Auth::user()->username]));
 
         $calltoaction1 = file_get_contents(resource_path('views/emails/email-marketing-templates/default/template-1.blade.php'));
@@ -326,6 +341,8 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns(Request $request)
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         $email_campaigns = EmailCampaign::latest()->where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.email-marketing.email-campaigns.index', [
@@ -358,6 +375,8 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns_overview(Request $request)
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         $email_campaign = EmailCampaign::latest()->where(['user_id' => Auth::user()->id, 'id' => $request->id])->first();
         $email_campaign_queues = EmailCampaignQueue::where('email_campaign_id', $email_campaign->id)->get();
 
@@ -369,6 +388,8 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns_create()
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         $email_templates = EmailTemplate::where(['user_id' => Auth::user()->id])->get();
         $mail_lists = ListManagement::where('user_id', Auth::user()->id)->where('status', true)->get();
 

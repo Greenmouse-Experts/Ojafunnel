@@ -1,9 +1,8 @@
 <x-mail::message>
 
-Hello Chief,<br>
+Hello {{ $user }}<br>
 {{ $message }}
 
 Thanks,<br>
 {{ config('app.name') }}
 </x-mail::message>
-

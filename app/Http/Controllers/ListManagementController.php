@@ -10,12 +10,26 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Illuminate\Support\Str;
+use App\Mail\UserApprovedNotification;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\HomePageController;
+
+
 
 class ListManagementController extends Controller
 {
+
+    private $home;
+    public function __construct(){
+        $this->home = new HomePageController;
+        $this->middleware(['auth', 'verified']);
+    }
     
     public function list_management($username)
     {
+
+        if($this->home->site_features_settings('List Management') || $this->home->user_site_features_settings('List Management') > 0) return $this->home->redirects();
+
         return view('dashboard.list-management.index', [
             'username' => $username
         ]);
@@ -42,7 +56,8 @@ class ListManagementController extends Controller
                 'name' => $request->name,
                 'display_name' => $request->display_name,
                 'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
-                'description' => $request->description
+                'description' => $request->description,
+                'status' => 0,
             ]);
         } else {
             $this->validate($request, [
@@ -55,9 +70,17 @@ class ListManagementController extends Controller
                 'name' => $request->name,
                 'display_name' => $request->display_name,
                 'slug' => $request->slug,
-                'description' => $request->description
+                'description' => $request->description,
+                'status' => 0,
             ]);
         }
+
+        $data = array(
+            'user' => 'OjaFunnel',
+            'message' => "A user $request->name has created a list, kindly login to your admin and react to it."
+        );
+
+        Mail::to('admin@ojafunnel.com')->send(new UserApprovedNotification($data['user'], $data['message'], ''));
 
         return redirect()->route('user.list.management', Auth::user()->username)->with([
             'type' => 'success',
@@ -67,6 +90,8 @@ class ListManagementController extends Controller
 
     public function view_list($id)
     {
+        if($this->home->site_features_settings('List Management') || $this->home->user_site_features_settings('List Management') > 0) return $this->home->redirects();
+
         $finder = Crypt::decrypt($id);
 
         $list = ListManagement::find($finder);
@@ -78,6 +103,8 @@ class ListManagementController extends Controller
 
     public function edit_list($id)
     {
+        if($this->home->site_features_settings('List Management') || $this->home->user_site_features_settings('List Management') > 0) return $this->home->redirects();
+
         $finder = Crypt::decrypt($id);
 
         $list = ListManagement::find($finder);
@@ -160,6 +187,8 @@ class ListManagementController extends Controller
 
     public function create_contact_list($id)
     {
+        if($this->home->site_features_settings('List Management') || $this->home->user_site_features_settings('List Management') > 0) return $this->home->redirects();
+
         $finder = Crypt::decrypt($id);
         $list = ListManagement::find($finder);
 

@@ -76,11 +76,31 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <label>Backup Data Amount</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <input type="number" name="backup_amt" placeholder="Enter amount for backup" value="{{$admin->backup_amt}}" class="input" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label>No of Months for non-active user</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <input type="number" name="months" placeholder="Enter months for non active users" value="{{$admin->months_nonactive_user}}" class="input" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         {{-- <div class="col-lg-6">
                                             <label>Last Name</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <input type="text" placeholder="Enter your last name"" class="input" required>
+                                                    <input type="text" placeholder="Enter your last name" class="input" required>
                                                 </div>
                                             </div>
                                         </div>

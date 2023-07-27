@@ -29,6 +29,8 @@ return new class extends Migration
             $table->string('text_direction')->default('ltr');
             $table->string('menu_layout')->default('none');
             $table->string('theme_mode')->default('light');
+            $table->double('backup_amt')->default(0);
+            $table->integer('months_nonactive_user')->default(0);
         });
     }
 

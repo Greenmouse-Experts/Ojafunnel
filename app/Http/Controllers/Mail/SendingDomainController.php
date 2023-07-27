@@ -135,6 +135,7 @@ class SendingDomainController extends Controller
             list($validator, $domain) = $domain->createFromArray($request->all(), null); // app based domain
         }
 
+        
         if (is_null($domain)) { // fail to create
             return redirect()->route('user.sending-domain.create', Auth::user()->username)->withErrors($validator);
         }
