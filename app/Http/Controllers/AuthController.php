@@ -413,6 +413,10 @@ class AuthController extends Controller
         if (auth()->attempt(array($fieldType => $input['email'], 'password' => $input['password']))) {
 
             if (!$user->email_verified_at) {
+                $code = mt_rand(100000, 999999);
+                $user->update([
+                    'code' => $code
+                ]);
                 // Send email to user
                 $user->notify(new SendVerificationCode($user));
 
