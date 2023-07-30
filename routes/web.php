@@ -96,6 +96,10 @@ Route::get('/features/template/{id}', [App\Http\Controllers\HomePageController::
 Route::get('/features/affiliate', [App\Http\Controllers\HomePageController::class, 'affiliate'])->name('affiliate');
 // Integration Frontend
 Route::get('/features/integrations', [App\Http\Controllers\HomePageController::class, 'integrations'])->name('integrations');
+
+// Verify Upsell Payments
+Route::get('/accept/{id}', [App\Http\Controllers\CallbackController::class, 'process_upsell_payments']);
+
 //User Authentications
 Route::prefix('auth')->group(function () {
     Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');

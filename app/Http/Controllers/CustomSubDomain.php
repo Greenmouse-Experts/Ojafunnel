@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class CustomSubDomain extends Controller
 {
-    // www - 
+    // www -
     public function subdomainIndex(Request $request, $subdomain)
     {
         if ($subdomain == 'www') return redirect(env('APP_URL'));

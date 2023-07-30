@@ -6,7 +6,11 @@ use App\Models\Page;
 use App\Models\Domain;
 use App\Models\Funnel;
 use App\Models\FunnelPage;
+use App\Models\BuilderPage;
+use App\Models\ListManagement;
+use App\Models\ListManagementContact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\OjaPlanParameter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +48,45 @@ class PageController extends Controller
         return [true, $slug];
     }
 
+    private function generate_payment_link($email, $amount, $callback)
+    {
+
+        // Replace 'YOUR_PAYSTACK_SECRET_KEY' with your actual Paystack API secret key
+        $paystackSecretKey = env('PAYSTACK_SECRET_KEY');
+        $url = "https://api.paystack.co/transaction/initialize";
+
+        $fields = [
+            'callback_url' => $callback,
+            'email' => $email,
+            'amount' => $amount * 100,
+        ];
+
+        $fields_string = http_build_query($fields);
+
+        //open connection
+        $ch = curl_init();
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Authorization: Bearer $paystackSecretKey",
+            "Cache-Control: no-cache",
+        ));
+
+        //So that curl_exec returns the contents of the cURL; rather than echoing it
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+
+        //execute post
+        $result = curl_exec($ch);
+        $result = json_decode($result, true);
+
+        $result['url'] = $result['data']['authorization_url'];
+        $result['ref'] = $result['data']['reference'];
+        return $result;
+    }
+
     public function page_builder_create(Request $request)
     {
         //Validate Request
@@ -54,7 +97,14 @@ class PageController extends Controller
             'page_type' => ['required', 'string']
         ]);
 
-        if (Page::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->page_builder) {
+        // if (Page::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->page_builder) {
+        //     return back()->with([
+        //         'type' => 'danger',
+        //         'message' => 'Upgrade to enjoy more access.'
+        //     ]);
+        // }
+
+        if (BuilderPage::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->page_builder) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access.'
@@ -92,14 +142,24 @@ class PageController extends Controller
 
         define('MAX_FILE_LIMIT', 1024 * 1024 * 2); //2 Megabytes max html file size
 
-        $data = file_get_contents(resource_path('views/builder/new-page-blank-template.blade.php'));
+        $data = null;
+
+        if ($request->type == "blank") {
+            $data = file_get_contents(resource_path('views/builder/new-page-blank-template.blade.php'));
+        } else {
+            $template_page_name = str_replace('_', '-', $request->page_type);
+            $data = file_get_contents(resource_path("views/builder/$template_page_name.blade.php"));
+        }
+
+        $data = str_replace('$title', $request->title, $data);
+        $data = str_replace('$product_name', $request->product_name, $data);
+        $data = str_replace('$product_price', number_format($request->product_price, 2), $data);
 
         $html = substr($data, 0, MAX_FILE_LIMIT);
-
         $file = $this->sanitizeFileName($file);
 
         // $datum = strval($request->file_folder);
-
+        // $_page = BuilderPage::where(['name' => $file, 'slug' => $res[1], 'user_id' => Auth::user()->id]);
         $_page = Page::where(['name' => $file, 'slug' => $res[1], 'user_id' => Auth::user()->id]);
 
         if ($_page->exists()) {
@@ -143,11 +203,154 @@ class PageController extends Controller
                 'slug' => $res[1]
             ]);
 
+            if($request->type != "blank") {
+                $id = Crypt::encrypt($page->id);
+                $route = route('page.submission', ['id' => $id]);
+                $html = str_replace('$action', $route, $html);
+                $disk->put($file, $html);
+            }
+
+            if($request->page_type == "upsell_page")
+            {
+                $_upsell = new \App\Models\UpsellPageProduct;
+                $_upsell->page_id = $page->id;
+                $_upsell->product_name = $request->product_name;
+                $_upsell->amount = $request->product_price;
+                $_upsell->account_id = $request->collection_account;
+                $_upsell->save();
+            }
+
             return back()->with([
                 'type' => 'success',
                 'message' => $page->name . ' created.'
             ]);
         };
+    }
+
+    function handle_form_page_submission($id, Request $request)
+    {
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
+            return abort(404);
+        }
+
+        $page = Page::findorFail($id);
+
+        // Opt - In Pages
+        if($page->type == "optin_page")
+        {
+            $list = ListManagement::where(['uid' => $page->id])->first();
+            // Check for existing List
+            if($list) {
+                ListManagementContact::create([
+                    'uid' => Str::uuid(),
+                    'list_management_id' => $list->id,
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'address_1' => $request->address,
+                    'address_2' => $request->address_2 ?? "N/A",
+                    'country' => $request->country ?? "N/A",
+                    'state' => $request->state ?? "N/A",
+                    'zip' => $request->zip ?? "N/A",
+                    'phone' => $request->phone,
+                    'date_of_birth' => $request->date_of_birth ?? null,
+                    'anniv_date' => $request->anniv_date ?? null,
+                    'subscribe' => true
+                ]);
+            }
+            else {
+                // Save Data to List Mgt
+                $list = ListManagement::create([
+                    'uid' => $page->id,
+                    'user_id' => $page->user_id,
+                    'name' => $page->title,
+                    'display_name' => $page->title . " (Opt-In Page)",
+                    'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
+                    'description' => "Opt-In Page"
+                ]);
+
+                // Add Contact to List
+                ListManagementContact::create([
+                    'uid' => Str::uuid(),
+                    'list_management_id' => $list->id,
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'address_1' => $request->address,
+                    'address_2' => $request->address_2 ?? "N/A",
+                    'country' => $request->country ?? "N/A",
+                    'state' => $request->state ?? "N/A",
+                    'zip' => $request->zip ?? "N/A",
+                    'phone' => $request->phone,
+                    'date_of_birth' => $request->date_of_birth ?? "N/A",
+                    'anniv_date' => $request->anniv_date ?? "N/A",
+                    'subscribe' => true
+                ]);
+            }
+
+            // Notify Page Owner about entry made.
+
+
+            return view('pages.default.thank_you_page')->with(['route' => \URL::previous()]);
+        }
+
+        // Upsell Pages
+        if($page->type == "upsell_page")
+        {
+            $upsell_page = \App\Models\UpsellPageProduct::where(['page_id' => $page->id])->first();
+            $list = ListManagement::where(['uid' => $page->id])->first();
+            $list_contact = null;
+
+            // Check for existing List
+            if($list) {
+                $list_contact = ListManagementContact::create([
+                    'uid' => Str::uuid(),
+                    'list_management_id' => $list->id,
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'subscribe' => true
+                ]);
+            }
+            else {
+                // Save Data to List Mgt
+                $list = ListManagement::create([
+                    'uid' => $page->id,
+                    'user_id' => $page->user_id,
+                    'name' => $page->title,
+                    'display_name' => $page->title . " (Upsell Page)",
+                    'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
+                    'description' => "Upsell Page"
+                ]);
+
+                // Add Contact to List
+                $list_contact = ListManagementContact::create([
+                    'uid' => Str::uuid(),
+                    'list_management_id' => $list->id,
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'subscribe' => true
+                ]);
+            }
+
+            $submission = new \App\Models\UpsellPageSubmission;
+            $submission->page_id = $upsell_page->page_id;
+            $submission->list_id = $list->id;
+            $submission->list_contact_id = $list_contact->id;
+            $submission->payment_link = 'N/A';
+            $submission->save();
+
+            $needle = Crypt::encrypt($submission->id);
+            $callback_url = env('APP_URL') . "/accept/" . $needle;
+            $paystack = $this->generate_payment_link($request->email, $upsell_page->amount, $callback_url);
+
+            \App\Models\UpsellPageSubmission::where('id', $submission->id)
+                ->update(['payment_link' => $paystack['url'], 'ref' => $paystack['ref']]);
+
+            return redirect($paystack['url']);
+        }
+
     }
 
     function sanitizeFileName($file)

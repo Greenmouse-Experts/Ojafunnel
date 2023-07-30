@@ -96,6 +96,54 @@ class TransactionController extends Controller
         ]);
     }
 
+    private function paystack_handler($url)
+    {
+
+        $curl = curl_init();
+
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+            "Authorization: Bearer " . env('PAYSTACK_SECRET_KEY'),
+            "Cache-Control: no-cache",
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+            return null;
+        }
+
+        return $response;
+    }
+
+    private function get_bank_by_id($bank_id, $data) {
+        $banks = (object) json_decode($data, true);
+        $bank_list = $banks->data;
+        $result = null;
+        foreach($bank_list as $bk) {
+            $needle = (object) $bk;
+            if($needle->id == $bank_id) {
+                $result = $needle;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
     public function add_bank_information(Request $request)
     {
         $messages = [
@@ -117,9 +165,28 @@ class TransactionController extends Controller
             ]);
         }
 
+        $get_data = null;
+
+        $get_data = $this->paystack_handler("https://api.paystack.co/bank/resolve?account_number=$request->account_number&bank_code=$request->bank_code");
+        $response = (Object) json_decode($get_data, true);
+        if ($response->status) {
+            $response = $response->data;
+
+            $banks = $this->paystack_handler("https://api.paystack.co/bank");
+            $result_bank = $this->get_bank_by_id($response['bank_id'], $banks);
+            $response['Bank_name'] = $result_bank->name;
+            $response['bank_code'] = $result_bank->code;
+        } else {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Something went wrong while resolving account details.'
+            ]);
+        }
+
+
         try {
-            $get_data = Http::get('https://maylancer.org/api/nuban/api.php?account_number=' . $request->account_number . '&bank_code=' . $request->bank_code);
-            $response = json_decode($get_data, true);
+            // $get_data = Http::get('https://maylancer.org/api/nuban/api.php?account_number=' . $request->account_number . '&bank_code=' . $request->bank_code);
+            // $response = json_decode($get_data, true);
 
             // dd($response['account_name']);
             // dd(strtoupper(Auth::user()->first_name) . ' ' . Auth::user()->last_name);
@@ -323,7 +390,7 @@ class TransactionController extends Controller
         //         return back()->with([
         //             'type' => 'danger',
         //             'message' => 'Details added before.'
-        //         ]); 
+        //         ]);
         //     } else {
         //         $bank->update([
         //             'account_name' => $request->account_name,
@@ -335,7 +402,7 @@ class TransactionController extends Controller
         //         return back()->with([
         //             'type' => 'success',
         //             'message' => 'Details updated successfully.'
-        //         ]);  
+        //         ]);
         //     }
         // }
     }
