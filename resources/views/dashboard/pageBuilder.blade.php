@@ -119,50 +119,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="single-template">
-                                                            <div class="inner first-grid">
-                                                                <div class="text-center">
-                                                                    <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
-                                                                    <a href="{{ route('user.page.builder.template', ['username' =>  Auth::user()->username, 'id' =>  1]) }}" target="_blank" class="btn btn-primary d-block mt-2">View Opt-In Page</a>
-                                                                    <button data-bs-toggle="modal" data-bs-target="#template1" class="btn btn-primary d-block mt-2">Use Template</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="single-template">
-                                                            <div class="inner first-grid">
-                                                                <div class="text-center">
-                                                                    <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
-                                                                    <a href="{{ route('user.page.builder.template', ['username' =>  Auth::user()->username, 'id' =>  2]) }}" target="_blank" class="btn btn-primary d-block mt-2">View Order Form Page</a>
-                                                                    <button data-bs-toggle="modal" data-bs-target="#template2" class="btn btn-primary d-block mt-2">Use Template</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="template-listing">
-                                                    <div class="template-listing-grid">
-                                                        <div class="single-template">
-                                                            <div class="inner first-grid">
-                                                                <div class="text-center">
-                                                                    <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
-                                                                    <a href="{{ route('user.page.builder.template', ['username' =>  Auth::user()->username, 'id' =>  3]) }}" class="btn btn-primary d-block mt-2">View Order Bump / Upsell Page</a>
-                                                                    <button data-bs-toggle="modal" data-bs-target="#template3" class="btn btn-primary d-block mt-2">Use Template</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="single-template">
-                                                            <div class="inner first-grid">
-                                                                <div class="text-center">
-                                                                    <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
-                                                                    <a href="{{ route('user.page.builder.template', ['username' =>  Auth::user()->username, 'id' =>  4]) }}" target="_blank" class="btn btn-primary d-block mt-2">View Thank You Page</a>
-                                                                    <button data-bs-toggle="modal" data-bs-target="#template4" class="btn btn-primary d-block mt-2">Use Template</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        {{-- @foreach($pages as $page)
+                                                        @foreach($pages as $page)
 
                                                             <div class="single-template">
                                                                 <h6 class="text-center pageName">{{$page->name}}</h6>
@@ -287,7 +244,52 @@
                                                                 </div>
                                                             </div>
                                                             <!-- end modal -->
-                                                        @endforeach --}}
+                                                        @endforeach
+
+                                                        {{-- <div class="single-template">
+                                                            <div class="inner first-grid">
+                                                                <div class="text-center">
+                                                                    <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
+                                                                    <a href="{{ route('user.page.builder.template', ['username' =>  Auth::user()->username, 'id' =>  1]) }}" target="_blank" class="btn btn-primary d-block mt-2">View Opt-In Page</a>
+                                                                    <button data-bs-toggle="modal" data-bs-target="#template1" class="btn btn-primary d-block mt-2">Use Template</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="single-template">
+                                                            <div class="inner first-grid">
+                                                                <div class="text-center">
+                                                                    <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
+                                                                    <a href="{{ route('user.page.builder.template', ['username' =>  Auth::user()->username, 'id' =>  2]) }}" target="_blank" class="btn btn-primary d-block mt-2">View Order Form Page</a>
+                                                                    <button data-bs-toggle="modal" data-bs-target="#template2" class="btn btn-primary d-block mt-2">Use Template</button>
+                                                                </div>
+                                                            </div>
+                                                        </div> --}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="template-listing">
+                                                    <div class="template-listing-grid">
+                                                        {{-- <div class="single-template">
+                                                            <div class="inner first-grid">
+                                                                <div class="text-center">
+                                                                    <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
+                                                                    <a href="{{ route('user.page.builder.template', ['username' =>  Auth::user()->username, 'id' =>  3]) }}" class="btn btn-primary d-block mt-2">View Order Bump / Upsell Page</a>
+                                                                    <button data-bs-toggle="modal" data-bs-target="#template3" class="btn btn-primary d-block mt-2">Use Template</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="single-template">
+                                                            <div class="inner first-grid">
+                                                                <div class="text-center">
+                                                                    <i class="bi bi-bookmark-plus-fill text-secondary fs-1"></i>
+                                                                    <a href="{{ route('user.page.builder.template', ['username' =>  Auth::user()->username, 'id' =>  4]) }}" target="_blank" class="btn btn-primary d-block mt-2">View Thank You Page</a>
+                                                                    <button data-bs-toggle="modal" data-bs-target="#template4" class="btn btn-primary d-block mt-2">Use Template</button>
+                                                                </div>
+                                                            </div>
+                                                        </div> --}}
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -330,8 +332,10 @@
                                                         Landing Page
                                                     @elseif($page->type == "optin_page")
                                                         Opt-In Page
-                                                    @elseif($page->type == "checkout_page")
-                                                        {{$page->type}}
+                                                    @elseif($page->type == "upsell_page")
+                                                        Upsell Page
+                                                    @elseif($page->type == "upsell_bump_page")
+                                                        Upsell & Bump Page
                                                     @endif
                                                 </th>
                                                 <td>{{ $page->folder }}</td>
@@ -449,17 +453,60 @@
                                         <label>Page Type</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <select name="page_type" class="input" required style="height: 50px;">
+                                                <select name="page_type" id="page_options" class="input" required style="height: 50px;" onchange="enableFields()">
                                                     <option>--Select Page Type--</option>
                                                     <option value="landing_page">Landing Page</option>
                                                     <option value="optin_page">Opt-In Page</option>
-                                                    <option value="order_form_page">Order Form Page</option>
-                                                    <option value="order_bump_upsell">Order Bump/Upsell Page</option>
-                                                    <option value="thank_you_page">Thank You Page</option>
+                                                    <option value="upsell_page">Upsell Form Page</option>
+                                                    <option value="upsell_bump_page">Order Bump/Upsell Page</option>
                                                 </select>
                                                 <small id="generatePage"></small>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div  id="upsell_select" style="display: none">
+                                        <div class="col-lg-12">
+                                            <label>Product Name</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="text" placeholder="e.g Data Analytics Course" id="product_name" name="product_name" class="input" required>
+                                                    <small id="generatePage"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <label>Product Price</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="number" placeholder="e.g 1000" id="product_price" name="product_price" class="input" required>
+                                                    <small id="generatePage"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <label>Collection Account</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <select name="collection_account" class="input" required>
+                                                        @foreach (\App\Models\BankDetail::where('user_id', Auth::user()->id)->get() as $acc)
+                                                            @if($acc->type != "PAYSTACK")
+                                                                <option value="{{$acc->id}}">{{$acc->bank_name}} / {{$acc->account_number}}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <small id="generatePage"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="bumpsell_select" class="col-lg-12" style="display: none">
+                                        More Product and Price
+                                    </div>
+
+                                    <div id="success_select" class="col-lg-12" style="display: none">
+                                        Select success page
                                     </div>
                                     <div class="col-lg-12 mb-4">
                                         <div class="boding">
@@ -570,6 +617,26 @@
         color: #fff;
     }
 </style>
+<script>
+function enableFields() {
+    const selectedOption = document.getElementById("page_options").value;
+    const divOption1 = document.getElementById("upsell_select");
+    const divOption2 = document.getElementById("bumpsell_select");
+    const divOption3 = document.getElementById("success_select");
+
+    // Hide all divs initially
+    divOption1.style.display = "none";
+    divOption2.style.display = "none";
+    divOption3.style.display = "none";
+
+    // Show the corresponding div based on the selected option
+    if (selectedOption === "upsell_page") {
+        divOption1.style.display = "block";
+    } else if (selectedOption === "upsell_bump_page") {
+        divOption2.style.display = "block";
+    }
+}
+</script>
 <script>
     let subdomain = document.getElementById('subdomain');
     let pagename = document.getElementById('pagename');

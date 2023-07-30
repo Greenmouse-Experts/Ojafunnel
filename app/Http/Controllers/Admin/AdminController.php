@@ -172,7 +172,7 @@ class AdminController extends Controller
     public function user_login($id)
     {
         $user = Auth::loginUsingId($id);
-        
+
         return redirect()->route('user.dashboard', $user->username);
     }
 
