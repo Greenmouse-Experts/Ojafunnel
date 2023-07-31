@@ -470,7 +470,7 @@
                                             <label>Product Name</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <input type="text" placeholder="e.g Data Analytics Course" id="product_name" name="product_name" class="input" required>
+                                                    <input type="text" placeholder="e.g Data Analytics Course" id="product_name" name="product_name" class="input">
                                                     <small id="generatePage"></small>
                                                 </div>
                                             </div>
@@ -479,7 +479,7 @@
                                             <label>Product Price</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <input type="number" placeholder="e.g 1000" id="product_price" name="product_price" class="input" required>
+                                                    <input type="number" placeholder="e.g 1000" id="product_price" name="product_price" class="input">
                                                     <small id="generatePage"></small>
                                                 </div>
                                             </div>
@@ -488,7 +488,7 @@
                                             <label>Collection Account</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <select name="collection_account" class="input" required>
+                                                    <select name="collection_account" class="input">
                                                         @foreach (\App\Models\BankDetail::where('user_id', Auth::user()->id)->get() as $acc)
                                                             @if($acc->type != "PAYSTACK")
                                                                 <option value="{{$acc->id}}">{{$acc->bank_name}} / {{$acc->account_number}}</option>
