@@ -32,6 +32,9 @@
                                 Email Campaign
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('broadcast-message', Auth::user()->username) }}" key="t-chat">Broadcast</a>
+                        </li>
                     </ul>
                 </li>
                 <li>

@@ -365,6 +365,24 @@ class AdminController extends Controller
 
     public function broadcast()
     {
+        $lists = ListManagement::latest()->get();
+
+        // $list_tags = "";
+        // foreach($lists as $list){
+        //     if($list->tags !== null){
+        //         $list_tags .= $list->tags.",";
+        //     }
+        // }
+        // $list_tags = str_replace(", ", ",", $list_tags);
+        // $list_tags = array_unique(explode(',', $list_tags));
+
+        // $arrs=[];
+        // foreach($list_tags as $list_tag){
+        //     if($list_tag !== ""){
+        //         $arrs[] = $list_tag;
+        //     }
+        // }
+        // $data['tags'] = $arrs;
         return view('Admin.broadcast');
     }
 
@@ -2629,8 +2647,27 @@ class AdminController extends Controller
 
         $list = ListManagement::find($finder);
 
+        $lists = ListManagementContact::where('list_management_id', $finder)->get();
+        $list_tags = "";
+        foreach($lists as $list1){
+            if($list1->tags !== null){
+                $list_tags .= $list1->tags.",";
+            }
+        }
+        $list_tags = str_replace(", ", ",", $list_tags);
+        $list_tags = array_unique(explode(',', $list_tags));
+
+        $arrs=[];
+        foreach($list_tags as $list_tag){
+            if($list_tag !== ""){
+                $arrs[] = $list_tag;
+            }
+        }
+        $data['tags'] = $arrs;
+
         return view('Admin.list-management.view')->with([
-            'list' => $list
+            'list' => $list,
+            'tags1' => $data
         ]);
     }
 

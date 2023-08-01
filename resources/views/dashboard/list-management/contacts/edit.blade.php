@@ -88,12 +88,19 @@
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Date of Birth</label>
-                                    <input type="date" name="date_of_birth" class="form-control"  value="{{$contact->date_of_birth}}" placeholder="Enter Date of Birth" />
+                                    
+                                    @php $dob = $contact->date_of_birth !== null ? date("Y-m-d", strtotime($contact->date_of_birth)) : "" @endphp
+                                    <input type="date" name="date_of_birth" class="form-control"  value="{{$dob}}" placeholder="Enter Date of Birth" />
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Anniversary Date</label>
-                                    <input type="date" name="anniv_date" class="form-control"  value="{{$contact->anniv_date}}" placeholder="Enter Anniversary Date" />
+                                    @php $anni = $contact->anniv_date !== null ? date("Y-m-d", strtotime($contact->anniv_date)) : date("Y-m-d", time()) @endphp
+                                    <input type="date" name="anniv_date" class="form-control"  value="{{$anni}}" placeholder="Enter Anniversary Date" />
                                 </div>
+                            </div>
+                            <div class="col-lg-12 mb-4">
+                                <label for="">Add Tags</label>
+                                <textarea type="text" name="tags" class="form-control" placeholder="Enter tags separated with comma" style="height:7em!important">{{$contact->tags}}</textarea>
                             </div>
                             <!-- <div class="col-lg-12 mb-4">
                                 <label for="">Subscribe</label>

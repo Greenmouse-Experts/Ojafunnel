@@ -109,6 +109,7 @@ Route::prefix('auth')->group(function () {
 });
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 // User Dashboard
+Route::post('send-broadcast', [App\Http\Controllers\DashboardController::class, 'send_broadcast']); //
 
 Route::prefix('dashboard')->group(function(){
     Route::post('validate_buy_backup', [DashboardController::class, 'validate_buy_backup']);
@@ -125,6 +126,9 @@ Route::prefix('{username}')->group(function () {
             Route::get('/upgrade/account/{plan_id}/{currency}/{price}', [App\Http\Controllers\DashboardController::class, 'upgrade_account'])->name('user.upgrade.account');
             Route::get('/transaction', [App\Http\Controllers\DashboardController::class, 'transaction'])->name('user.transaction');
             Route::get('/subscription', [App\Http\Controllers\DashboardController::class, 'subscription'])->name('user.subscription');
+
+            Route::get('/broadcast-message', [App\Http\Controllers\EmailMarketingController::class, 'broadcast_message'])->name('broadcast-message');
+            
             Route::prefix('/accounts')->group(
                 function () {
                     Route::get('/contact', [App\Http\Controllers\Mail\AccountController::class, 'contact'])->name('user.account.contact');
@@ -257,6 +261,9 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/email-templates/editor/{id}', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_editor'])->name('user.email-marketing.email.templates.editor');
                     Route::post('/email-templates/editor/save', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_editor_save'])->name('user.email-marketing.email.templates.editor.save');
                     Route::get('/email-campaigns', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns'])->name('user.email-marketing.email.campaigns');
+                    // Route::get('/broadcast-message', [App\Http\Controllers\EmailMarketingController::class, 'broadcast_message'])->name('broadcast-message');
+                    
+                    
                     Route::get('/email-campaigns/template_content/{id}', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns_template_content'])->name('user.email-marketing.email.campaigns.template_content');
                     Route::get('/email-campaigns/create', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns_create'])->name('user.email-marketing.email.campaigns.create');
                     Route::post('/email-campaigns/delete', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns_delete'])->name('user.email-marketing.email.campaigns.delete');

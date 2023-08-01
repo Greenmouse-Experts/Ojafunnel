@@ -350,6 +350,31 @@ class EmailMarketingController extends Controller
         ]);
     }
 
+    
+    public function broadcast_message(Request $request)
+    {
+        $lists = ListManagementContact::latest()->get();
+
+        $list_tags = "";
+        foreach($lists as $list){
+            if($list->tags !== null){
+                $list_tags .= $list->tags.",";
+            }
+        }
+        $list_tags = str_replace(", ", ",", $list_tags);
+        $list_tags = array_unique(explode(',', $list_tags));
+
+        $arrs=[];
+        foreach($list_tags as $list_tag){
+            if($list_tag !== ""){
+                $arrs[] = $list_tag;
+            }
+        }
+        $data['tags'] = $arrs;
+        return view('dashboard.broadcast', $data);
+    }
+
+
     public function email_campaigns_delete(Request $request)
     {
         $email_campaign = EmailCampaign::find($request->id);

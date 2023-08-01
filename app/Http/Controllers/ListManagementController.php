@@ -58,6 +58,7 @@ class ListManagementController extends Controller
                 'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
                 'description' => $request->description,
                 'status' => 0,
+                // 'tags' => $request->tags,
             ]);
         } else {
             $this->validate($request, [
@@ -72,6 +73,7 @@ class ListManagementController extends Controller
                 'slug' => $request->slug,
                 'description' => $request->description,
                 'status' => 0,
+                // 'tags' => $request->tags,
             ]);
         }
 
@@ -81,6 +83,7 @@ class ListManagementController extends Controller
         );
 
         Mail::to('admin@ojafunnel.com')->send(new UserApprovedNotification($data['user'], $data['message'], ''));
+        // Mail::to('donchibobo@gmail.com')->send(new UserApprovedNotification($data['user'], $data['message'], ''));
 
         return redirect()->route('user.list.management', Auth::user()->username)->with([
             'type' => 'success',
@@ -95,9 +98,29 @@ class ListManagementController extends Controller
         $finder = Crypt::decrypt($id);
 
         $list = ListManagement::find($finder);
+        // return $list;
+
+        $lists = ListManagementContact::where('list_management_id', $finder)->get();
+        $list_tags = "";
+        foreach($lists as $list1){
+            if($list1->tags !== null){
+                $list_tags .= $list1->tags.",";
+            }
+        }
+        $list_tags = str_replace(", ", ",", $list_tags);
+        $list_tags = array_unique(explode(',', $list_tags));
+
+        $arrs=[];
+        foreach($list_tags as $list_tag){
+            if($list_tag !== ""){
+                $arrs[] = $list_tag;
+            }
+        }
+        $data['tags'] = $arrs;
 
         return view('dashboard.list-management.view')->with([
-            'list' => $list
+            'list' => $list,
+            'tags1' => $data,
         ]);
     }
 
@@ -133,7 +156,8 @@ class ListManagementController extends Controller
                 'name' => $request->name,
                 'display_name' => $request->display_name,
                 'slug' => $request->slug,
-                'description' => $request->description
+                'description' => $request->description,
+                // 'tags' => $request->tags,
             ]);
         } else {
             if($list->slug == $request->slug)
@@ -143,7 +167,8 @@ class ListManagementController extends Controller
                     'name' => $request->name,
                     'display_name' => $request->display_name,
                     'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
-                    'description' => $request->description
+                    'description' => $request->description,
+                    // 'tags' => $request->tags,
                 ]);
             } else {
                 $this->validate($request, [
@@ -274,7 +299,8 @@ class ListManagementController extends Controller
             'phone' => $request->phone,
             'date_of_birth' => $request->date_of_birth,
             'anniv_date' => $request->anniv_date,
-            'subscribe' => true
+            'subscribe' => true,
+            'tags' => $request->tags,
         ]);
 
         return redirect()->route('user.view.list', Crypt::encrypt($list->id))->with([
@@ -326,6 +352,7 @@ class ListManagementController extends Controller
             'phone' => $request->phone,
             'date_of_birth' => $request->date_of_birth,
             'anniv_date' => $request->anniv_date,
+            'tags' => $request->tags,
         ]);
 
         return redirect()->route('user.view.list', Crypt::encrypt($contact->list_management_id))->with([

@@ -40,13 +40,13 @@
                             <div class="form">
                                 <div class="row">
                                     <p class="tell mb-4 mt-n3">
-                                        <b>Provide Us Your Details to add Plans</b>
+                                        <b>You can only enter a maximum of 10 emails at a go. This is to reduce the work load on the api check</b>
                                     </p>
                                     <div class="col-lg-12">
                                         <label>Email Addresses</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <textarea type="text" placeholder="Enter email addresses" name="emails" class="input emails" required></textarea>
+                                                <textarea type="text" placeholder="Enter email addresses. Eg. abcd@test.com, wxyz@testing.com" name="emails" class="input emails" required></textarea>
                                                 <p class="text-danger">Please seperate the emails separated by comma (,)</p>
                                             </div>
                                         </div>
