@@ -74,7 +74,7 @@
 
     <link rel='stylesheet' href="{{ asset('assets/css/sweetalert2.min.css') }}">
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
-    
+
     <script>
         window.setTimeout(function() {
             $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function() {
@@ -193,8 +193,11 @@
     <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
 
+    
+
     <!-- apexcharts -->
     <script src="{{URL::asset('dash/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+
 
     <!-- dashboard init -->
     <script src="{{URL::asset('dash/assets/js/pages/datatables.init.js')}}"></script>

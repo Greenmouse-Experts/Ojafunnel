@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->boolean('notification')->default(false);
             $table->string('status')->default(true);
+            $table->text('tags')->nullable();
             $table->timestamps();
         });
     }

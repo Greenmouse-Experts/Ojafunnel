@@ -71,6 +71,7 @@
 <body data-sidebar="dark" data-layout-mode="light">
     <input type="hidden" value="{{ csrf_token() }}" id="txt_token">
     <input type="hidden" value="{{ url('/') }}/" id="site_url">
+    <input type="hidden" value="" id="PAYSKey" style="display:none" autocomplete="off">
 
     <div class="alert1 alert-danger"></div>
 	<div class="overlay1"></div>
@@ -106,8 +107,17 @@
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div> 
     
+
+    
+    
+
+    
     <!-- JAVASCRIPT -->
     <script src="{{URL::asset('admin/assets/libs/jquery/jquery.min.js')}}"></script>
+    <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
+
+    
+    
     
     <script type="text/javascript" src="{{ URL::asset('core/bootstrap/js/bootstrap.bundle.min.js') }}"></script> 
     <script src="{{URL::asset('admin/assets/libs/metismenu/metisMenu.min.js')}}"></script>
@@ -115,7 +125,7 @@
     <script src="{{URL::asset('admin/assets/libs/node-waves/waves.min.js')}}"></script>
 
     <!-- apexcharts -->
-    <script src="{{URL::asset('admin/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+    <!-- <script src="{{URL::asset('admin/assets/libs/apexcharts/apexcharts.min.js')}}"></script> -->
 
     <!-- Saas dashboard init -->
     <script src="{{URL::asset('admin/assets/js/pages/saas-dashboard.init.js')}}"></script>
@@ -158,13 +168,45 @@
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
 
-    <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
+    
+
+    <script src="{{ asset('assets/js/amcharts.js') }}"></script> 
+    <script src="{{ asset('assets/js/pie.js') }}"></script> 
+    <script src="{{ asset('assets/js/light.js') }}"></script>
+    
 
     <script>
     $(document).ready(function(){
         // setTimeout(function(){
             $('.select2').select2();
         // },4000);
+    });
+
+
+
+    var chart = AmCharts.makeChart( "chartdiv", {
+        "type": "pie",
+        "theme": "light",
+        "dataProvider": [ {
+            "campaigns": "Subscribers",
+            "value": 260
+        }, {
+            "campaigns": "Broadcasts",
+            "value": 201
+        }, {
+            "campaigns": "OptIn Rates",
+            "value": 65
+        }],
+        "valueField": "value",
+        "titleField": "campaigns",
+        "outlineAlpha": 0.4,
+        "depth3D": 25,
+        "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+        "angle": 30,
+        "fontSize": 13,
+        "export": {
+            "enabled": true
+        }
     });
     </script>
     

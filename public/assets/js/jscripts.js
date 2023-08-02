@@ -211,6 +211,9 @@ $('body').on('click', '.sendBroadcast', function (e) {
 });
 
 
+
+
+
 $('body').on('click', '.reactFeatures', function (e) {
   e.preventDefault();
   var self = this;    
@@ -414,9 +417,12 @@ $('body').on('click', '.view_referrals', function (e) {
 
 $('body').on('change', '.sub_type', function (e) {
   var sub_type = $(this).val();
+  // alert(sub_type);
   $('.ext_div').hide();
+  $('.addRenew').html('Renew Subscription');
   if(sub_type == "extend"){
     $('.ext_div').show();
+    $('.addRenew').html('Extend Subscription');
   }
 });
 

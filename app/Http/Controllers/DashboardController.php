@@ -51,6 +51,7 @@ use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
 use App\Models\Domain;
+use App\Mail\BroadcastEmail;
 use Illuminate\Routing\Redirector;
 use App\Http\Controllers\HomePageController;
 use Illuminate\Support\Facades\Mail;
@@ -676,6 +677,53 @@ class DashboardController extends Controller
             'page' => $page->first()
         ]);
     }
+
+
+    public function send_broadcast(Request $request)
+    {
+        $rules = [
+            'channel'      => 'required',
+            'subject'      => 'required',
+            'message'      => 'required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+
+       $channels = $request->channel;
+       $user_emails = \App\Models\ListManagementContact::where('tags', 'like', "%$channels%")->pluck('email')->toArray();
+
+       $all_emails = "";
+       $send_emails = false;
+
+        if(count($user_emails) > 0){
+            $data = array(
+                'name' => "Hello Chief",
+                'subject' => $request->subject,
+                'body' => $request->message,
+                'emails' => $user_emails
+            );
+            Mail::to(env('MAIL_FROM_ADDRESS'))->bcc($data['emails'])->send(new BroadcastEmail($data['subject'], $data['body']));
+            $send_emails = true;
+        }
+
+        if($send_emails){
+            return response()->json([
+                'status' => 'success',
+                'message' => "Broadcast sent",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in sending broadcast",
+            'data' => ''
+        ],200);
+    }
+
 
     public function generatePageSlug($folder)
     {
