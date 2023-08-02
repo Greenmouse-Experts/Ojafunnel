@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('theme_mode')->default('light');
             $table->double('backup_amt')->default(0);
             $table->integer('months_nonactive_user')->default(0);
+            
         });
     }
 
