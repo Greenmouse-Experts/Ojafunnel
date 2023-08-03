@@ -211,7 +211,45 @@ $('body').on('click', '.sendBroadcast', function (e) {
 });
 
 
+$('body').on('click', '.sendBroadcastUser', function (e) {
+  var self = this;    
+  var results = '';
+  $(self).attr('disabled', true).css({'opacity': '0.4'});
+  
+  $.ajax({
+    type : "POST",
+    url : site_url + "send-broadcast",
+    data: $(".form_channel").serialize(),
+    success : function(data){
+      // $.each(data, function(){
+      //   results += this + "<br>";
+      // });
 
+      if(data.status=="success"){
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire("Successful", "Broadcast sent to their channels", "success");
+        $(".form_channel")[0].reset();
+      
+      }else{
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+          title: "Error!",
+          html: data.message,
+          icon: 'error',
+          timer: 3000
+        });
+      }
+    },error : function(data){
+      $(self).removeAttr('disabled').css({'opacity': '1'});
+      Swal.fire({
+        title: "Error!",
+        text: "There are some wrong email addresses or phone numbers",
+        icon: 'error',
+        timer: 5000
+      });
+    }
+  });
+});
 
 
 $('body').on('click', '.reactFeatures', function (e) {

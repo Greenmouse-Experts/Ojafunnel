@@ -25,7 +25,7 @@ return new class extends Migration
             $table->dateTime('expiry_notify_at')->nullable();
             $table->integer('subscription_reminder')->default(0);
             $table->integer('extended')->default(0);
-            $table->integer('renewed')->default(0);
+            $table->integer('renewed')->default(0); //
             $table->dateTime('ends_at')->nullable();
             $table->dateTime('started_at')->nullable();
             $table->timestamps();

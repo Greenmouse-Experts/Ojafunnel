@@ -182,32 +182,6 @@
         // },4000);
     });
 
-
-
-    var chart = AmCharts.makeChart( "chartdiv", {
-        "type": "pie",
-        "theme": "light",
-        "dataProvider": [ {
-            "campaigns": "Subscribers",
-            "value": 260
-        }, {
-            "campaigns": "Broadcasts",
-            "value": 201
-        }, {
-            "campaigns": "OptIn Rates",
-            "value": 65
-        }],
-        "valueField": "value",
-        "titleField": "campaigns",
-        "outlineAlpha": 0.4,
-        "depth3D": 25,
-        "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-        "angle": 30,
-        "fontSize": 13,
-        "export": {
-            "enabled": true
-        }
-    });
     </script>
     
 
