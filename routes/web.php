@@ -99,6 +99,7 @@ Route::get('/features/integrations', [App\Http\Controllers\HomePageController::c
 
 // Verify Upsell Payments
 Route::get('/accept/{id}', [App\Http\Controllers\CallbackController::class, 'process_upsell_payments']);
+Route::get('/accept/bump/{id}', [App\Http\Controllers\CallbackController::class, 'process_bump_payments']);
 
 //User Authentications
 Route::prefix('auth')->group(function () {

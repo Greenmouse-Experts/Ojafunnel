@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\UpsellPageSubmission;
+use App\Models\BumpsellSubmission;
 
 class CallbackController extends Controller
 {
@@ -49,6 +50,30 @@ class CallbackController extends Controller
             if($status) {
                 // Update Table
                 UpsellPageSubmission::where('id', $decrypted)
+                    ->update(['status' => 'Paid']);
+            }
+
+            return redirect($submission->page->file_location);
+        } catch(\Exception $e) {
+            abort(404);
+        }
+
+    }
+
+    public function process_bump_payments($id, Request $request)
+    {
+
+        try{
+            $decrypted = Crypt::decrypt($id);
+            $submission = BumpsellSubmission::where('id', $decrypted)
+                ->with('page')
+                ->first();
+
+            $status = $this->validate_payment($submission->ref);
+
+            if($status) {
+                // Update Table
+                BumpsellSubmission::where('id', $decrypted)
                     ->update(['status' => 'Paid']);
             }
 
