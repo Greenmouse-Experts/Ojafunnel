@@ -3,7 +3,7 @@
 @section('page-content')
 
 @php
-    $user = $customer->user;
+    $user = $customer;
 @endphp
 <!-- ============================================================== -->
 <!-- Start right Content here -->

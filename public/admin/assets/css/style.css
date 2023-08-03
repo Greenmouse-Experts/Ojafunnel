@@ -1082,6 +1082,26 @@ body {
 }
 /* Email  Summary  Ends*/
 
+
+
+.select_box{
+  width: 100%;
+  padding: 13px 10px;
+  border: 1px solid #ddd !important;
+  border-radius: 6px;
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.select_box:focus, .select_box:active{
+  border: 1px solid #ddd !important;
+}
+.select_box option{
+  font-size: 16px !important;
+  padding: 13px 10px !important;
+}
+
+
 /* Email  Campaign */
 .all-create button,
 .all-create .btn {

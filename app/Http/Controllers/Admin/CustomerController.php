@@ -49,7 +49,7 @@ class CustomerController extends Controller
      */
     public function disable(Request $request)
     {
-        $items = Customer::whereIn(
+        /* $items = Customer::whereIn(
             'uid',
             is_array($request->uids) ? $request->uids : explode(',', $request->uids)
         );
@@ -58,11 +58,11 @@ class CustomerController extends Controller
             // authorize
 
             $item->disable();
-        }
+        } */
 
-        $customer = Customer::where('uid', $request->uids)->first();
+        // $customer = Customer::where('uid', $request->uids)->first();
 
-        $user = User::where('customer_id', $customer->id)->first();
+        $user = User::where('id', $request->uids)->first();
 
         $user->update([
             'status' => 'inactive'
@@ -77,7 +77,8 @@ class CustomerController extends Controller
 
     public function view(Request $request, $id)
     {
-        $customer = Customer::findByUid($id);
+        $customer = User::where('id', $id)->first();
+        // return $customer;
 
         //dd($customer);
         event(new \App\Events\UserUpdated($customer));

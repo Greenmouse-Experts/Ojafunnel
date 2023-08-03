@@ -15,6 +15,7 @@ use App\Models\OjaPlan;
 use App\Models\Category;
 use App\Models\EmailKit;
 use App\Models\ContactUs;
+use App\Models\Broadcast;
 use App\Models\OrderItem;
 use App\Models\ShopOrder;
 use App\Models\FunnelPage;
@@ -829,6 +830,7 @@ class AdminController extends Controller
         $lms = [];
         $ecommerce = [];
 
+
         $year = now()->format('Y');
 
         $lms['January'] = ShopOrder::latest()->whereMonth('created_at', 1)->whereYear('created_at', $year)->sum('amount');
@@ -1217,6 +1219,14 @@ class AdminController extends Controller
         }
 
         if(count($allDataPhones) > 0){
+
+            /* Broadcast::create([
+                'subject' => $request->question,
+                'message' => $request->answer,
+                'channel' => $request->answer,
+                'answer' => $request->answer,
+            ]); */
+
             // if(in_array('sms', $request->channel)){
             if($request->channel == "sms"){
                 $data = array(
@@ -1238,6 +1248,11 @@ class AdminController extends Controller
         }
 
         if($send_emails){
+            /* Broadcast::create([
+                'question' => $request->question,
+                'answer' => $request->answer
+            ]); */
+
             return response()->json([
                 'status' => 'success',
                 'message' => "Broadcast sent",
