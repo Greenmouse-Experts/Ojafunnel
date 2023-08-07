@@ -44,6 +44,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::post('/update-prvdg', [App\Http\Controllers\Admin\AdminController::class, 'update_prvdg']); //
             
             Route::post('/send-broadcast', [App\Http\Controllers\Admin\AdminController::class, 'send_broadcast']); //
+            Route::post('/get-statistics', [App\Http\Controllers\Admin\AdminController::class, 'getStatistics']); //
+            
             Route::post('/renew-extend', [App\Http\Controllers\Admin\AdminController::class, 'renew_extend']); //
             Route::post('/react-feature', [App\Http\Controllers\Admin\AdminController::class, 'react_feature']); //
             

@@ -10,6 +10,9 @@ use App\Http\Controllers\EmailMarketingController;
 Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamScore']);
 Route::get('/text', [AuthController::class, 'text']);
 
+Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');
+    Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');
+
 // FrontEnd
 Route::get('/page-builder/create', [App\Http\Controllers\PageController::class, 'page_builder_create'])->name('user.page.builder.create');
 Route::get('pages/{page}/editor', [App\Http\Controllers\PageController::class, 'viewEditor'])->name('user.page.builder.view.editor');
@@ -252,6 +255,8 @@ Route::prefix('{username}')->group(function () {
                     // Route::get('/create-course/enroll-cur', [App\Http\Controllers\DashboardController::class, 'enroll_cur'])->name('user.enroll.cur');
                 }
             );
+
+            
 
             // email marketing
             Route::prefix('/email-marketing')->group(

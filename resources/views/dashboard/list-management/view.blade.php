@@ -164,6 +164,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li><a class="dropdown-item" href="{{route('user.edit.contact', Crypt::encrypt($contact->id))}}" style="cursor: pointer;">View/Edit</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#unsubscribe-{{$contact->id}}">Unsubscribe</a></li>
                                                         <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$contact->id}}">Delete</a></li>
                                                     </ul>
                                                 </div>
@@ -177,7 +178,11 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        <form method="POST" action="{{ route('user.delete.contact', Crypt::encrypt($contact->id))}}">
+                                                                        @php /*
+                                                                        <form method="POST" action="{{ route('delete_contact', Crypt::encrypt($contact->id))}}">
+                                                                        */
+                                                                        @endphp
+                                                                        <form method="POST" action="{{ url('user/list/management/contact/delete/'.Crypt::encrypt($contact->id)) }}">
                                                                             @csrf
                                                                             <div class="form">
                                                                                 <p><b>Delete Contact</b></p>
@@ -189,6 +194,40 @@
                                                                                         <div class="boding">
                                                                                             <button type="submit" class="form-btn">
                                                                                                 I understand this consquences, Delete Contact
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id="unsubscribe-{{$contact->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content pb-3">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body ">
+                                                                <div class="row">
+                                                                    <div class="Editt">
+                                                                        <form method="POST" action="{{ url('user/list/management/contact/unsub/'.Crypt::encrypt($contact->id)) }}">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <p><b>Unsubscribe from this list?</b></p>
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12">
+                                                                                        <p>This action cannot be undone. </p> <p>You will not be able to receive latest updates from this list, continue?</p>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <div class="boding">
+                                                                                            <button type="submit" class="form-btn">
+                                                                                                I understand this consquences, UnSubscribe
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>
