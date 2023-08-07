@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomSubDomain;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\CallbackController;
 
 // Form Submission for page builder
-Route::post('/form-submission/{id}', [PageController::class, 'handle_form_page_submission'])
+Route::post('/form-submission/{id}', [CallbackController::class, 'handle_form_page_submission'])
     ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])
     ->name('page.submission');
 
