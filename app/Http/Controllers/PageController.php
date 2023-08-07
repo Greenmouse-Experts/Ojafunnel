@@ -286,6 +286,7 @@ class PageController extends Controller
         };
     }
 
+    /*
     function handle_form_page_submission($id, Request $request)
     {
         try {
@@ -341,8 +342,8 @@ class PageController extends Controller
                     'state' => $request->state ?? "N/A",
                     'zip' => $request->zip ?? "N/A",
                     'phone' => $request->phone,
-                    'date_of_birth' => $request->date_of_birth ?? "N/A",
-                    'anniv_date' => $request->anniv_date ?? "N/A",
+                    // 'date_of_birth' => $request->date_of_birth ?? "N/A",
+                    // 'anniv_date' => $request->anniv_date ?? "N/A",
                     'subscribe' => true
                 ]);
             }
@@ -479,6 +480,7 @@ class PageController extends Controller
             return redirect($paystack['url']);
         }
     }
+    */
 
     function sanitizeFileName($file)
     {
