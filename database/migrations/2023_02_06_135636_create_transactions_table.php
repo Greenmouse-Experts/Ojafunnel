@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->enum('transaction_status', ['pending', 'failed', 'completed'])->nullable();
             $table->string('payment_method')->nullable();
-            $table->timestamps()->default('CURRENT_TIMESTAMP');
+            $table->timestamps();
         });
     }
 
