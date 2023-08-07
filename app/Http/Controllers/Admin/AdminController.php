@@ -62,6 +62,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Aws\Sns\SnsClient;
 use App\Mail\AccountInfoMail;
+use App\Models\UpsellPageSubmission;
 
 
 
@@ -173,7 +174,7 @@ class AdminController extends Controller
     public function user_login($id)
     {
         $user = Auth::loginUsingId($id);
-
+        
         return redirect()->route('user.dashboard', $user->username);
     }
 
@@ -824,33 +825,87 @@ class AdminController extends Controller
     }
 
 
+    function getStats(){
+        $dailyRecords = Broadcast::whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])->count();
+        $weeklyRecords = Broadcast::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+        $monthlyRecords = Broadcast::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
+        $yearlyRecords = Broadcast::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
+        $broadcasts = Broadcast::where('channel', '!=', 'whatsapp')->count();
+        $smsBroadcst = Broadcast::where('channel', 'sms')->count();
+        $emailBroadcst = Broadcast::where('channel', 'email')->count();
+
+        $dailySubRecords = \App\Models\OjaSubscription::whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])->count();
+        $weeklySubRecords = \App\Models\OjaSubscription::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+        $monthlySubRecords = \App\Models\OjaSubscription::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
+        $yearlySubRecords = \App\Models\OjaSubscription::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
+        $subCounts = \App\Models\OjaSubscription::count();
+        $activeSub = \App\Models\OjaSubscription::where('status', 'Active')->count();
+
+        $dailyOptRecords = UpsellPageSubmission::whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])->groupBy('page_id')->count();
+        $weeklyOptRecords = UpsellPageSubmission::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->groupBy('page_id')->count();
+        $monthlyOptRecords = UpsellPageSubmission::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->groupBy('page_id')->count();
+        $yearlyOptRecords = UpsellPageSubmission::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->groupBy('page_id')->count();
+        $optCounts = UpsellPageSubmission::groupBy('page_id')->count();
+        $pendingOpt = UpsellPageSubmission::where('status', 'Pending')->groupBy('page_id')->count();
+        $paidOpt = UpsellPageSubmission::where('status', 'Paid')->groupBy('page_id')->count();
+        $failedOpt = UpsellPageSubmission::where('status', 'Failed')->groupBy('page_id')->count();
+
+        $data = [
+            'daily'             => $dailyRecords,
+            'weekly'            => $weeklyRecords,
+            'monthly'           => $monthlyRecords,
+            'yearly'            => $yearlyRecords,
+            'broadcasts'        => $broadcasts,
+            'smsBroadcst'       => $smsBroadcst,
+            'emailBroadcst'     => $emailBroadcst,
+            //////////////////////////////////////////
+            'ojaSubDaily'       => $dailySubRecords,
+            'ojaSubWeekly'      => $weeklySubRecords,
+            'ojaSubMonthly'     => $monthlySubRecords,
+            'ojaSubYearly'      => $yearlySubRecords,
+            'ojaSub'            => $subCounts,
+            'ojaActiveSub'      => $activeSub,
+            //////////////////////////////////////////
+            'ojaOptDaily'       => $dailyOptRecords,
+            'ojaOptWeekly'      => $weeklyOptRecords,
+            'ojaOptMonthly'     => $monthlyOptRecords,
+            'ojaOptYearly'      => $yearlyOptRecords,
+            'ojaOpt'            => $optCounts,
+            'pendingOpt'        => $pendingOpt,
+            'paidOpt'           => $paidOpt,
+            'failedOpt'         => $failedOpt,
+        ];
+        return $data;
+    }
+
+
     // sales analytics
     public function email_analytics(Request $request)
+    {   
+        $data = $this->getStats();
+        return view('Admin.emailAnalytics', $data);
+        
+    }
+
+    
+    public function getStatistics(Request $request)
     {
-        $lms = [];
-        $ecommerce = [];
+        $rules = [
+            'sory_by'  => 'bail|required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
 
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
 
-        $year = now()->format('Y');
-
-        $lms['January'] = ShopOrder::latest()->whereMonth('created_at', 1)->whereYear('created_at', $year)->sum('amount');
-        $lms['February'] = ShopOrder::latest()->whereMonth('created_at', 2)->whereYear('created_at', $year)->sum('amount');
-        $lms['March'] = ShopOrder::latest()->whereMonth('created_at', 3)->whereYear('created_at', $year)->sum('amount');
-        $lms['April'] = ShopOrder::latest()->whereMonth('created_at', 4)->whereYear('created_at', $year)->sum('amount');
-        $lms['May'] = ShopOrder::latest()->whereMonth('created_at', 5)->whereYear('created_at', $year)->sum('amount');
-        $lms['June'] = ShopOrder::latest()->whereMonth('created_at', 6)->whereYear('created_at', $year)->sum('amount');
-        $lms['July'] = ShopOrder::latest()->whereMonth('created_at', 7)->whereYear('created_at', $year)->sum('amount');
-        $lms['August'] = ShopOrder::latest()->whereMonth('created_at', 8)->whereYear('created_at', $year)->sum('amount');
-        $lms['September'] = ShopOrder::latest()->whereMonth('created_at', 9)->whereYear('created_at', $year)->sum('amount');
-        $lms['October'] = ShopOrder::latest()->whereMonth('created_at', 10)->whereYear('created_at', $year)->sum('amount');
-        $lms['November'] = ShopOrder::latest()->whereMonth('created_at', 11)->whereYear('created_at', $year)->sum('amount');
-        $lms['December'] = ShopOrder::latest()->whereMonth('created_at', 12)->whereYear('created_at', $year)->sum('amount');
-
-        // return $lms;
-
-        return view('Admin.emailAnalytics', [
-            'lms' => $lms,
-        ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => "Data retrieved",
+            'data' => $this->getStats()
+        ],200);
     }
 
 
@@ -1214,21 +1269,24 @@ class AdminController extends Controller
                 'body' => $request->message,
                 'emails' => $allDataEmails
             );
+
+            Broadcast::create([
+                'subject' => $request->subject,
+                'message' => $request->message,
+                'channel' => 'email',
+            ]);
+
             Mail::to(env('MAIL_FROM_ADDRESS'))->bcc($data['emails'])->send(new BroadcastEmail($data['subject'], $data['body']));
             $send_emails = true;
         }
 
         if(count($allDataPhones) > 0){
-
-            /* Broadcast::create([
-                'subject' => $request->question,
-                'message' => $request->answer,
-                'channel' => $request->answer,
-                'answer' => $request->answer,
-            ]); */
-
             // if(in_array('sms', $request->channel)){
             if($request->channel == "sms"){
+                Broadcast::create([
+                    'message' => $request->message,
+                    'channel' => $request->channel,
+                ]);
                 $data = array(
                     'name' => "Hello Chief",
                     'body' => $request->message,
@@ -1238,6 +1296,11 @@ class AdminController extends Controller
 
             // if(in_array('whatsapp', $request->channel)){
             if($request->channel == "whatsapp"){
+                Broadcast::create([
+                    'subject' => $request->subject,
+                    'message' => $request->message,
+                    'channel' => $request->channel,
+                ]);
                 $data = array(
                     'name' => "Hello Chief",
                     'subject' => $request->subject,
@@ -1248,11 +1311,6 @@ class AdminController extends Controller
         }
 
         if($send_emails){
-            /* Broadcast::create([
-                'question' => $request->question,
-                'answer' => $request->answer
-            ]); */
-
             return response()->json([
                 'status' => 'success',
                 'message' => "Broadcast sent",

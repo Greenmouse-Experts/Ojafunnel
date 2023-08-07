@@ -373,6 +373,17 @@ class ListManagementController extends Controller
         ]);
     }
 
+    public function unsub_contact($id)
+    {
+        // $finder = Crypt::decrypt($id);
+        // ListManagementContact::find($finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Unsubscribed successfully!'
+        ]);
+    }
+
     public function upload_contact_list($id)
     {
         $finder = Crypt::decrypt($id);
