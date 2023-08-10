@@ -158,6 +158,8 @@ Route::prefix('{username}')->group(function () {
             Route::post('/page-builder/save-custom-domain', [App\Http\Controllers\DashboardController::class, 'save_page_custom_domain'])->name('user.page.save.custom.domain');
             Route::post('/page-builder/remove-custom-domain', [App\Http\Controllers\DashboardController::class, 'remove_page_custom_domain'])->name('user.page.remove.custom.domain');
             Route::get('page-builder/{page}/editor', [App\Http\Controllers\PageController::class, 'viewEditor'])->name('user.page.builder.view.editor');
+            Route::get('/page-builder/{page}/quiz', [App\Http\Controllers\PageController::class, 'viewQuizPageFields'])->name('user.page.builder.view.edit.quiz');
+            Route::post('/page-builder/{page}/quiz/fields', [App\Http\Controllers\PageController::class, 'viewQuizPageAddFields'])->name('user.page.builder.view.edit.quiz.addfields');
             Route::get('page-builder/{page}', [App\Http\Controllers\PageController::class, 'viewPage'])->name('user.page.builder.view.page');
 
             // Page Builder template

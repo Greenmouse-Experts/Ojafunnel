@@ -319,6 +319,34 @@ class CallbackController extends Controller
 
             return redirect($paystack['url']);
         }
+
+        if($page->type == "questionaire_page")
+        {
+            $form_id = $request->form_id;
+
+            $form = \App\Models\QuizAutomationForm::where('id', $form_id)
+                ->with('formfields')
+                ->first();
+
+            $responses = [];
+            foreach($form->formfields as $field) {
+                $response = $request->input($field->id);
+                if(!empty($response))
+                {
+                    array_push($responses, (object) [
+                        $field->field_question => $response
+                    ]);
+                }
+            }
+            $responses = json_encode($responses);
+
+            $submission = new \App\Models\QuizAutomationSubmission;
+            $submission->quiz_automation_id = $form_id;
+            $submission->response = $responses;
+            $submission->save();
+
+            return view('pages.default.thank_you_page')->with(['route' => \URL::previous()]);
+        }
     }
 
 }

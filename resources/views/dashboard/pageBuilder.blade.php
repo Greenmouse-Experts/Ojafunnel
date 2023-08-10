@@ -132,6 +132,11 @@
                                                                     <div class="start-template">
 
                                                                         <i class="bi bi-bookmark-plus-fill fs-1 text-primary"></i>
+                                                                        @if($page->type == "questionaire_page")
+                                                                            <a class="btn btn-primary d-block mt-2" target="_blank" href="
+                                                                            {{route('user.page.builder.view.edit.quiz', [Auth::user()->username, Crypt::encrypt($page->id)])}}
+                                                                            ">Edit Quiz Field</a>
+                                                                        @endif
                                                                         <a class="btn btn-primary d-block mt-2" href="{{route('user.page.builder.view.editor', [Auth::user()->username, Crypt::encrypt($page->id)])}}">
                                                                             Edit Page
                                                                         </a>
@@ -336,6 +341,8 @@
                                                         Upsell Page
                                                     @elseif($page->type == "upsell_bump_page")
                                                         Upsell & Bump Page
+                                                    @elseif($page->type == "questionaire_page")
+                                                        Quiz Page
                                                     @endif
                                                 </th>
                                                 <td>{{ $page->folder }}</td>
@@ -357,6 +364,13 @@
                                                             Options
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                            @if($page->type == "questionaire_page")
+                                                            <li>
+                                                                <a class="dropdown-item" style="cursor: pointer;" href="
+                                                                {{route('user.page.builder.view.edit.quiz', [Auth::user()->username, Crypt::encrypt($page->id)])}}
+                                                                ">Edit Quiz Field</a>
+                                                            </li>
+                                                            @endif
                                                             <li>
                                                                 <a class="dropdown-item" style="cursor: pointer;" href="
                                                                 {{route('user.page.builder.view.editor', [Auth::user()->username, Crypt::encrypt($page->id)])}}
@@ -459,6 +473,7 @@
                                                     <option value="optin_page">Opt-In Page</option>
                                                     <option value="upsell_page">Upsell Form Page</option>
                                                     <option value="upsell_bump_page">Order Bump/Upsell Page</option>
+                                                    <option value="questionaire_page">Quiz Page</option>
                                                 </select>
                                                 <small id="generatePage"></small>
                                             </div>
