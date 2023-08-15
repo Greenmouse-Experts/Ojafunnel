@@ -760,6 +760,7 @@ class PageController extends Controller
     {
         //Validate Request
         $this->validate($request, [
+            'category_id' => ['required'],
             'file_folder' => ['required', 'string', 'max:255'],
         ]);
 
@@ -810,6 +811,7 @@ class PageController extends Controller
                 'user_id' => Auth::user()->id,
                 'folder' => $request->file_folder,
                 'slug' => $res[1],
+                'category_id' => $request->category_id
             ]);
 
             return back()->with([
