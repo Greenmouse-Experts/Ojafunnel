@@ -154,8 +154,14 @@ class PageController extends Controller
 
         $data = null;
 
-        if ($request->type == "landing_page") {
+        if ($request->page_type == "landing_page") {
             $data = file_get_contents(resource_path('views/builder/new-page-blank-template.blade.php'));
+        }
+        elseif($request->page_type == "questionaire_page") {
+            $template_page_name = str_replace('_', '-', $request->page_type);
+            $data = file_get_contents(resource_path("views/builder/$template_page_name.blade.php"));
+
+            $data = str_replace('$title', $request->title, $data);
         } else {
             $template_page_name = str_replace('_', '-', $request->page_type);
             $data = file_get_contents(resource_path("views/builder/$template_page_name.blade.php"));
@@ -249,7 +255,7 @@ class PageController extends Controller
                 'slug' => $res[1]
             ]);
 
-            if($request->type != "blank") {
+            if($request->page_type != "blank") {
                 $id = Crypt::encrypt($page->id);
                 $route = route('page.submission', ['id' => $id]);
                 $html = str_replace('$action', $route, $html);
@@ -285,6 +291,15 @@ class PageController extends Controller
                     $_bumpsellproduct->product_price = $bp['price'];
                     $_bumpsellproduct->save();
                 }
+            }
+
+            if($request->page_type == "questionaire_page")
+            {
+                $_quiz = new \App\Models\QuizAutomationForm;
+                $_quiz->page_id = $page->id;
+                $_quiz->user_id = auth()->user()->id;
+                $_quiz->title = $request->title;
+                $_quiz->save();
             }
 
             return back()->with([
@@ -513,6 +528,75 @@ class PageController extends Controller
         return view('dashboard.page', compact('page'));
     }
 
+    public function viewQuizPageFields($username, $page, Request $request)
+    {
+        $page_id = Crypt::decrypt($page);
+        $page = Page::find($page_id);
+
+        $form = \App\Models\QuizAutomationForm::where(['page_id' => $page->id])
+            ->with(['formfields'])
+            ->first();
+
+        return view('dashboard.pageBuilderQuizField', [
+            'page' => $page,
+            'form' => $form
+        ]);
+    }
+
+    public function viewQuizPageAddFields($username, $page, Request $request)
+    {
+        $form_id = $request->form_id;
+
+        $page_id = Crypt::decrypt($page);
+        $page = Page::find($page_id);
+
+        $formfield = new \App\Models\QuizAutomationFormField;
+        $formfield->quiz_automation_id = $form_id;
+        $formfield->field_question = $request->question;
+        $formfield->field_type = $request->field_type;
+        $formfield->save();
+
+        $form = \App\Models\QuizAutomationForm::where(['page_id' => $page->id, 'id' => $form_id])
+            ->with(['formfields'])
+            ->first();
+
+        $formfields = $form->formfields;
+
+        $input = "";
+        $index = 0;
+        foreach ($formfields as $field) {
+            $input .= '<div class="form-group" style="margin-bottom: 100px">';
+            $input .=   '<label>' . $field->field_question . '</label>';
+            $input .=   "<input type='$field->field_type' name='$field->id' class='form-control'  />";
+            $input .= '</div>';
+            $index++;
+        }
+
+        $input .= '<div class="form-group">';
+        $input .=   '<input type="submit" class="btn btn-success">';
+        $input .= '</div>';
+
+        $html = file_get_contents(resource_path("views/builder/questionaire-page.blade.php"));
+
+        $id = Crypt::encrypt($page->id);
+        $formfield_id = Crypt::encrypt($formfield->id);
+        $route = route('page.submission', ['id' => $id, 'form_id' => $form_id]);
+
+        $html = str_replace('$title', $form->title, $html);
+        $html = str_replace('$action', $route, $html);
+        $html = str_replace('$content', $input, $html);
+
+        // save html to existing template file.
+        $disk = public_path('pageBuilder/' . $page->slug . '/' . $page->name);
+
+        @file_put_contents($disk, $html);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Page updated successfully!'
+        ]);
+    }
+
     public function page_builder_save_page()
     {
         $page = Page::find($_POST['id']);
@@ -684,6 +768,7 @@ class PageController extends Controller
     {
         //Validate Request
         $this->validate($request, [
+            'category_id' => ['required'],
             'file_folder' => ['required', 'string', 'max:255'],
         ]);
 
@@ -734,6 +819,7 @@ class PageController extends Controller
                 'user_id' => Auth::user()->id,
                 'folder' => $request->file_folder,
                 'slug' => $res[1],
+                'category_id' => $request->category_id
             ]);
 
             return back()->with([

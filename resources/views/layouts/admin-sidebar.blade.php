@@ -139,12 +139,24 @@
                         <span key="t-chat">Page Builder</span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{route('funnelBuilder')}}">
                         <i class="bi bi-window-fullscreen"></i>
                         <span key="t-chat">Funnel Builder</span>
                     </a>
+                </li> --}}
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bi bi-window-fullscreen"></i>
+                        <span key="t-chat">Funnel Builder</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('funnelBuilder')}}" key="t-tui-calendar">Funnels</a></li>
+                        <li><a href="{{route('funnelBuilder.categories')}}" key="t-tui-calendar">Funnel Catgories</a></li>
+                    </ul>
                 </li>
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i class="bi bi-book"></i>

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Admin;
 use App\Models\Course;
 use App\Models\Funnel;
+use App\Models\FunnelCategory;
 use App\Models\Message;
 use App\Models\OjaPlan;
 use App\Models\Category;
@@ -358,6 +359,48 @@ class AdminController extends Controller
             'funnel' => $funnel,
             'pages' => $pages
         ]);
+    }
+
+    public function funnel_builder_categories()
+    {
+        $categories = FunnelCategory::latest()->get();
+
+        return view('Admin.funnelBuilderCategory', [
+            'categories' => $categories
+        ]);
+    }
+
+    public function funnel_category_create(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        FunnelCategory::create(['name' => $request->name]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Funnel category created successfully.',
+        ]);
+    }
+
+    public function funnel_category_delete($id, Request $request)
+    {
+        $id = Crypt::decrypt($id);
+        try {
+            FunnelCategory::where(['id' => $id])
+            ->delete();
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Funnel category created successfully.',
+            ]);
+        } catch(\Exception $e) {
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Funnel category already in use - cannot be deleted.',
+            ]);
+        }
     }
 
     public function email_support()

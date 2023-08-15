@@ -9,6 +9,7 @@ use App\Models\BumpsellSubmission;
 use App\Models\ListManagement;
 use App\Models\ListManagementContact;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 
 class CallbackController extends Controller
@@ -189,6 +190,12 @@ class CallbackController extends Controller
             }
 
             // Notify Page Owner about entry made.
+            $bundle = [
+                'candidate' => $request->name,
+                'page' => $page->title . " (Opt-In Page)"
+            ];
+            $vendor = User::find($page->user_id);
+            $vendor->notify(new \App\Notifications\LeadNotification($bundle));
 
 
             return view('pages.default.thank_you_page')->with(['route' => \URL::previous()]);
@@ -241,6 +248,14 @@ class CallbackController extends Controller
             $submission->payment_link = 'N/A';
             $submission->save();
 
+            // Notify Page Owner about entry made.
+            $bundle = [
+                'candidate' => $request->name,
+                'page' => $page->title . " (Upsell Page)"
+            ];
+            $vendor = User::find($page->user_id);
+            $vendor->notify(new \App\Notifications\LeadNotification($bundle));
+
             $needle = Crypt::encrypt($submission->id);
             $callback_url = env('APP_URL') . "/accept/" . $needle;
             $paystack = $this->generate_payment_link($request->email, $upsell_page->amount, $callback_url);
@@ -292,6 +307,14 @@ class CallbackController extends Controller
                 ]);
             }
 
+            // Notify Page Owner about entry made.
+            $bundle = [
+                'candidate' => $request->name,
+                'page' => $page->title . " (Upsell Page with Bump Page)"
+            ];
+            $vendor = User::find($page->user_id);
+            $vendor->notify(new \App\Notifications\LeadNotification($bundle));
+
             $total = 0;
             $products = \App\Models\BumpsellProductListing::where('bumpsell_products_id', $bumpsell_page->id)->get();
             foreach($products as $p)
@@ -318,6 +341,42 @@ class CallbackController extends Controller
                 ->update(['payment_link' => $paystack['url'], 'ref' => $paystack['ref']]);
 
             return redirect($paystack['url']);
+        }
+
+        if($page->type == "questionaire_page")
+        {
+            $form_id = $request->form_id;
+
+            $form = \App\Models\QuizAutomationForm::where('id', $form_id)
+                ->with('formfields')
+                ->first();
+
+            $responses = [];
+            foreach($form->formfields as $field) {
+                $response = $request->input($field->id);
+                if(!empty($response))
+                {
+                    array_push($responses, (object) [
+                        $field->field_question => $response
+                    ]);
+                }
+            }
+            $responses = json_encode($responses);
+
+            $submission = new \App\Models\QuizAutomationSubmission;
+            $submission->quiz_automation_id = $form_id;
+            $submission->response = $responses;
+            $submission->save();
+
+            // Notify Page Owner about entry made.
+            $bundle = [
+                'candidate' => $request->name,
+                'page' => $page->title . " (Questionaire)"
+            ];
+            $vendor = User::find($page->user_id);
+            $vendor->notify(new \App\Notifications\LeadNotification($bundle));
+
+            return view('pages.default.thank_you_page')->with(['route' => \URL::previous()]);
         }
     }
 

@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-13">FUNNEL BUILDER</h4>
+                        <h4 class="mb-sm-0 font-size-13">FUNNEL BUILDER CATEGORY</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('adminDashboard')}}">Home</a></li>
-                                <li class="breadcrumb-item active">Funnel Builder</li>
+                                <li class="breadcrumb-item active">Funnel Builder Category</li>
                             </ol>
                         </div>
 
@@ -21,94 +21,58 @@
             </div>
             <!-- start page title -->
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-9">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="font-60">View All Funnel</h4>
+                            <h4 class="font-60">View All Funnel Categories</h4>
                             <p>
-                                View all ojafunnel users funnel templates.
+                                View all ojafunnel users funnel categories.
                             </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="all-create">
+                                <button data-bs-toggle="modal" data-bs-target="#template">
+                                    + Create Funnel Category
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- store data information-->
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-bs-toggle="tab" href="#home1" role="tab">
-                                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                        <span class="d-none d-sm-block"><i class="bi bi-sliders2"></i> All</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#profile1" role="tab">
-                                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                        <span class="d-none d-sm-block"></span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#messages1" role="tab">
-                                        <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                                        <span class="d-none d-sm-block"></span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#settings1" role="tab">
-                                        <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
-                                        <span class="d-none d-sm-block"></span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#messages1" role="tab">
-                                        <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                                        <span class="d-none d-sm-block"></span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#settings1" role="tab">
-                                        <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
-                                        <span class="d-none d-sm-block"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title mb-3">Funnels</h4>
+                            <h4 class="card-title mb-3">Categories</h4>
                             <div class="table-responsive mt-2">
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th scope="col">S/N</th>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Folder Name</th>
-                                            <th scope="col">Number of Pages</th>
+                                            <th scope="col">Name</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($funnels as $funnel)
+                                        @foreach($categories as $funnel)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$funnel->created_at->toDayDateTimeString()}}</td>
-                                            <td>{{$funnel->folder}}</td>
-                                            <td>{{\App\Models\FunnelPage::where('folder_id', $funnel->id)->count()}}</td>
+                                            <td>{{$funnel->name}}</td>
                                             <td>
                                                 <div class="dropdown-center">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('funnelBuilderView', ['id' => Crypt::encrypt($funnel->id)])}}">View Pages</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('funnelBuilder.categories.delete', ['id' => Crypt::encrypt($funnel->id)])}}">Delete Category</a></li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -168,6 +132,51 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal START -->
+<div class="modal fade" id="template" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content pb-3">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="Editt">
+                        <form method="POST" action="{{route('funnelBuilder.categories.add')}}">
+                            {{ csrf_field() }}
+                            <div class="form">
+                                <p>
+                                    <b>
+                                        Funnel Category
+                                    </b>
+                                </p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>Category name</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" id="subdomain" placeholder="e.g Tola Cake And Pasteries" name="name" class="input" required>
+                                                {{-- <small id="generateSubDomain"></small> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mb-4">
+                                        <div class="boding">
+                                            <button type="submit">
+                                                Proceed
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

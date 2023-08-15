@@ -117,6 +117,7 @@
                                         <tr>
                                             <th scope="col">S/N</th>
                                             <th scope="col">Date</th>
+                                            <th scope="col">Category</th>
                                             <th scope="col">Folder Name</th>
                                             <th scope="col">Number of Pages</th>
                                             <th scope="col">Actions</th>
@@ -129,6 +130,7 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$funnel->created_at->toDayDateTimeString()}}</td>
+                                            <td>{{\App\Models\Funnel::getCategory($funnel->category_id)}}</td>
                                             <td>{{$funnel->folder}}</td>
                                             <td>{{\App\Models\FunnelPage::where('folder_id', $funnel->id)->count()}}</td>
                                             <td>
@@ -139,7 +141,7 @@
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li>
                                                             <a class="dropdown-item" href="{{route('user.view.funnel.pages', [Auth::user()->username, Crypt::encrypt($funnel->id)])}}">View Funnel Pages</a>
-                                                        </li> 
+                                                        </li>
                                                         <li>
                                                             <a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit-{{$funnel->id}}">Edit Funnel</a>
                                                         </li>
@@ -276,6 +278,19 @@
                                 </p>
                                 <div class="row">
                                     <div class="col-lg-12">
+                                        <label>Select Category</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <select name="category_id" class="input" required>
+                                                    <option>---Select Category---</option>
+                                                    @foreach (\App\Models\FunnelCategory::all() as $rec)
+                                                        <option value="{{$rec->id}}">{{$rec->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
                                         <label>Sub Domain</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
@@ -347,21 +362,21 @@
     </div>
 </div>
 <script>
-    let subdomain = document.getElementById('subdomain'); 
-    let subdomaintext = document.getElementById('generateSubDomain'); 
+    let subdomain = document.getElementById('subdomain');
+    let subdomaintext = document.getElementById('generateSubDomain');
 
     subdomain.addEventListener('input', (event) => {
-        if('{{ env('APP_URL') }}'.startsWith('https')) 
+        if('{{ env('APP_URL') }}'.startsWith('https'))
             subdomaintext.innerText = `https://${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-funnel'}.ojafunnel.com`
 
         subdomain.value = event.target.value.replace(/\s+/g, ' ')
     })
 
-    let subdomain1 = document.getElementById('subdomain1'); 
-    let subdomain1text = document.getElementById('generateSubDomain1'); 
+    let subdomain1 = document.getElementById('subdomain1');
+    let subdomain1text = document.getElementById('generateSubDomain1');
 
     subdomain1.addEventListener('input', (event) => {
-        if('{{ env('APP_URL') }}'.startsWith('https')) 
+        if('{{ env('APP_URL') }}'.startsWith('https'))
             subdomain1text.innerText = `https://${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-funnel'}.ojafunnel.com`
 
         subdomain1.value = event.target.value.replace(/\s+/g, ' ')
