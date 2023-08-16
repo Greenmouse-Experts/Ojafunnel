@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         SubscriptionReminder::class,
         WABirthday::class,
         EmailBirthday::class,
+        EmailCartReminder::class,
         SendEmailCampaign::class,
         GenerateSSL::class,
         RenewSSL::class,
@@ -57,6 +58,7 @@ class Kernel extends ConsoleKernel
         // birthday or anniversary 
         $schedule->command('wabirthday:run')->daily()->withoutOverlapping();
         $schedule->command('emailbirthday:run')->daily()->withoutOverlapping();
+        $schedule->command('sms_cart_reminder:run')->daily()->withoutOverlapping();
 
         // ssl
         $schedule->command('generatessl:run')->everyThirtyMinutes()->withoutOverlapping();

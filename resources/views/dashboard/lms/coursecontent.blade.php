@@ -360,14 +360,14 @@
                                                             </thead>
                                                             <tbody>
                                                                 @foreach(App\Models\Requirement::latest()->where('course_id', $course->id)->get() as $requirment)
-                                                                <tr>
+                                                                <tr class="table-{{ $requirment->id }}">
                                                                     <td>{{$loop->iteration}}</td>
                                                                     <td>{{$requirment->description}}</td>
                                                                     <td>{{$requirment->created_at->toDayDateTimeString()}}</td>
                                                                     <td>
                                                                         <ul class="list-unstyled hstack gap-1 mb-0">
                                                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                                                <a href="#" class="btn btn-sm btn-soft-danger"><i class="bi bi-x-circle"></i></a>
+                                                                                <a href="javascript:;" class="btn btn-sm btn-soft-danger deleteReqs" ids="{{ $requirment->id }}"><i class="bi bi-x-circle"></i></a>
                                                                             </li>
                                                                         </ul>
                                                                     </td>

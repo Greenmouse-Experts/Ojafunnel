@@ -11,6 +11,7 @@ use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\Log;
 use App\Models\ListManagementContact;
 
+
 class EmailBirthday extends Command
 {
     /**

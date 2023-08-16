@@ -55,6 +55,7 @@ class Country extends Model
      *
      * @return array
      */
+    
     public static function countries()
     {
         $countries = array();

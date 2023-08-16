@@ -236,6 +236,18 @@ class HomePageController extends Controller
         dd($response);
     }
 
+    public function store_cart_details_tmp(Request $request){
+        // store temporary user details on the database incase they didnt purchase, we will have to remind them
+        // delete back this if they have made payment
+        session()->put('customer_email', request()->customer_email);
+        $temp_carts = \App\Models\TempCart::create([
+            'email' => request()->customer_email,
+            'product_id' => request()->product_id,
+            'product_type' => request()->product_type,
+        ]);
+    }
+
+
     public function contactConfirm(Request $request)
     {
         //Validate Request

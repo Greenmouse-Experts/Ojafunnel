@@ -124,6 +124,15 @@
                                             <div>
                                                 <a href="{{route('user.view.course.details', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View Course Details</u></strong></a>
                                             </div>
+
+                                            <div>
+                                                <a href="{{route('view-quiz', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View / Create Quiz</u></strong></a>
+                                            </div>
+
+                                            <div>
+                                                <!-- <a href="{{route('view-scores', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View User Scores</u></strong></a> -->
+                                            </div>
+
                                             <div class="course-price">
                                                 <span class="current-price">{{$course->currency}} {{number_format($course->price, 2)}}</span>
                                             </div>
