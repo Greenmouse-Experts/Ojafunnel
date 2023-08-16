@@ -92,7 +92,7 @@
 
                                                             <li>
                                                                 <a class="dropdown-item" style="cursor: pointer;" href="
-                                                                {{route('user.page.builder.view.editor', [Auth::user()->username, Crypt::encrypt($field->id)])}}
+                                                                {{route('user.page.builder.view.quiz.field.delete', [Auth::user()->username, Crypt::encrypt($page->id), Crypt::encrypt($field->id)])}}?form_id={{$form->id}}
                                                                 ">DELETE FIELD</a>
                                                             </li>
 

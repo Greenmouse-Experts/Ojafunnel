@@ -630,6 +630,59 @@ class PageController extends Controller
         ]);
     }
 
+    public function deleteQuizPageField($username, $page, $id, Request $request)
+    {
+        $page_id = Crypt::decrypt($page);
+        $page = Page::find($page_id);
+        $field_id = Crypt::decrypt($id);
+
+        $form_id = $request->form_id;
+
+        \App\Models\QuizAutomationFormField::where(['id' => $field_id, 'quiz_automation_id' => $form_id])
+            ->delete();
+
+
+        $form = \App\Models\QuizAutomationForm::where(['page_id' => $page->id, 'id' => $form_id])
+            ->with(['formfields'])
+            ->first();
+
+        $formfields = $form->formfields;
+
+        $input = "";
+        $index = 0;
+        foreach ($formfields as $field) {
+            $input .= '<div class="form-group" style="margin-bottom: 100px">';
+            $input .=   '<label>' . $field->field_question . '</label>';
+            $input .=   "<input type='$field->field_type' name='$field->id' class='form-control'  />";
+            $input .= '</div>';
+            $index++;
+        }
+
+        $input .= '<div class="form-group">';
+        $input .=   '<input type="submit" class="btn btn-success">';
+        $input .= '</div>';
+
+        $html = file_get_contents(resource_path("views/builder/questionaire-page.blade.php"));
+
+        $id = Crypt::encrypt($page->id);
+        // $formfield_id = Crypt::encrypt($formfield->id);
+        $route = route('page.submission', ['id' => $id, 'form_id' => $form_id]);
+
+        $html = str_replace('$title', $form->title, $html);
+        $html = str_replace('$action', $route, $html);
+        $html = str_replace('$content', $input, $html);
+
+        // save html to existing template file.
+        $disk = public_path('pageBuilder/' . $page->slug . '/' . $page->name);
+
+        @file_put_contents($disk, $html);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Form Field deleted successfully!'
+        ]);
+    }
+
     public function page_builder_save_page()
     {
         $page = Page::find($_POST['id']);
