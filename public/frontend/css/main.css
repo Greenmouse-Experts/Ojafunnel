@@ -23,6 +23,12 @@ body {
     font-size: 15px;
 }
 
+.options:hover{
+    font-weight: 600 !important;
+    cursor: pointer;
+    /* font-size: 12px !important; */
+}
+
 body.white-bg {
     background: #fff;
 }

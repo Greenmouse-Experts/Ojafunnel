@@ -172,8 +172,11 @@
                                                                 </div>
                                                                 <div class="col-lg-6 mb-4">
                                                                     <label for="Name">Email *</label>
-                                                                    <input type="email" name="email" id="email" placeholder="Enter your email" required />
+                                                                    <input type="email" name="email" id="email" class="customer_email" placeholder="Enter your email" required />
                                                                 </div>
+
+                                                                <input type="hidden" name="product_id" class="product_id" value="{{ Request::get('product_id') }}" />
+
                                                                 <div class="col-lg-6 mb-4">
                                                                     <label for="Name">Phone Number *</label>
                                                                     <input type="tel" name="phoneNo" id="phoneNo" placeholder="Enter your number" required />
@@ -373,6 +376,9 @@
   </footer>
   <!-- Button trigger modal -->
 
+  <input type="hidden" value="{{ csrf_token() }}" id="txt_token1">
+  <input type="hidden" value="{{ url('/') }}/" id="site_url">
+
 
   <!-- JAVASCRIPT -->
   <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
@@ -383,6 +389,9 @@
   <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
 
   <script>
+    var token = $('#txt_token1').val();
+    var site_url = $('#site_url').val();
+    
     window.onload=function(){
         $discount = $('#totalAmount').val() - $('#couponDiscount').val();
         $('#AmountToPay').val($discount);
@@ -392,10 +401,28 @@
         if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
             $('#error').html('Please fill the asterisks field to continue');
         } else {
+
+            if($('.customer_email').val() !== ""){
+                var datastring='customer_email='+$('.customer_email').val()
+                +'&product_id='+$('.product_id').val()
+                +'&product_type=products'
+                +'&_token='+token;
+            
+                $.ajax({
+                    type: "POST",
+                    url : site_url + "store-cart-details-tmp", // store users email temporary, delete back if they complete the payment
+                    data: datastring,
+                    cache: false,
+                    timeout: 30000, // 30 second timeout
+                    success : function(data){}
+                });
+            }
+
             $('#v-pills-shipping-tab').removeClass('active')
             $('#v-pills-shipping').removeClass('show active')
             $('#v-pills-payment-tab').addClass('active')
             $('#v-pills-payment').addClass('show active')
+            
         }
 
     })

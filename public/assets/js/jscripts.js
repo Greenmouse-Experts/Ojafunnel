@@ -1,7 +1,9 @@
 
 var token = $('#txt_token').val();
 var site_url = $('#site_url').val();
-var PAYSKey = atob($('#PAYSKey').val());
+var PAYSKey = $('#PAYSKey').val() !== undefined ? atob($('#PAYSKey').val()) : '';
+
+// alert($('#PAYSKey').val())
 
 //var xx;
 // alert(site_url)
@@ -117,6 +119,172 @@ $('body').on('click', '.addUsers', function (e) {
         text: "Poor Network Connection!",
         icon: 'error',
         timer: 3000
+      });
+    }
+  });
+});
+
+
+
+$('body').on('click', '.submitAnswers', function (e) {
+  e.preventDefault();
+  var self = this;    
+  var results = '';
+
+  Swal.fire({
+    title: `Confirm action?`,
+    html: `Submitting this cannot be undone, cross-check your answers before submitting, proceed anyway?`,
+    icon: 'question',
+    iconHtml: '?',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#999',
+    confirmButtonText: 'Yes, proceed'
+  }).then((result) => {
+    if (result.isConfirmed) {  
+      Swal.fire({
+        title: 'Updating...',
+        text: "Please wait a second for a response...",
+        icon: 'success',
+        showConfirmButton: false,
+        confirmButtonColor: '#027937',
+        cancelButtonColor: '#d33',
+      });
+      $(self).attr('disabled', true).css({'opacity': '0.4'});
+
+      $.ajax({
+        type : "POST",
+        url : site_url + "submit-answers",
+        data: $(".quiz_questions").serialize(),
+        success : function(data){
+          $.each(data, function(){
+            results += this + "<br>";
+          });
+    
+          if(data.status=="success"){
+            $(self).removeAttr('disabled').css({'opacity': '1'});
+            $(".quiz_questions")[0].reset();
+            // window.location.href = "../"; // show ur scores
+    
+          }else{
+            $(self).removeAttr('disabled').css({'opacity': '1'});
+            Swal.fire({
+              title: "Error!",
+              html: results,
+              icon: 'error',
+              timer: 4000
+            });
+          }
+        },error : function(data){
+          $(self).removeAttr('disabled').css({'opacity': '1'});
+          Swal.fire({
+            title: "Error!",
+            text: "Poor Network Connection!",
+            icon: 'error',
+            timer: 4000
+          });
+        }
+      });
+    }
+  });
+});
+
+
+
+
+
+
+$('body').on('click', '.storeSession', function (e) {
+  e.preventDefault();
+  var self = this;    
+  var results = '';
+  $(self).attr('disabled', true).css({'opacity': '0.4'});
+  var quiz_session = $('.quiz_session').val();
+  var course_id = $('.course_id').val();
+  
+  
+  $.ajax({
+    type : "POST",
+    url : site_url + "add-quiz-session",
+    data: $(".quiz_forms_input").serialize(),
+    success : function(data){
+      $.each(data, function(){
+        results += this + "<br>";
+      });
+
+      if(data.status=="success"){
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        // Swal.fire("Successful", "Quiz session has been created. You can now add questions and answers", "success");
+        
+        // $(".questions_form").fadeIn('fast');
+        //window.location.href = site_url + 'dashboard/profile/';
+        window.location.href = course_id + '/enter-quiz-'+quiz_session;
+
+      }else{
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+          title: "Error!",
+          html: results,
+          icon: 'error',
+          timer: 4000
+        });
+      }
+    },error : function(data){
+      $(self).removeAttr('disabled').css({'opacity': '1'});
+      Swal.fire({
+        title: "Error!",
+        text: "Poor Network Connection!",
+        icon: 'error',
+        timer: 4000
+      });
+    }
+  });
+});
+
+
+$('body').on('click', '.storeQuiz', function (e) {
+  e.preventDefault();
+  var self = this;    
+  var results = '';
+  $(self).attr('disabled', true).css({'opacity': '0.4'});
+  
+  $.ajax({
+    type : "POST",
+    url : site_url + "submit-quizzes",
+    data: $(".quiz_forms_input").serialize(),
+    success : function(data){
+      $.each(data, function(){
+        results += this + "<br>";
+      });
+
+      if(data.status=="success"){
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+
+        $caption = "updated";
+        if($('.quiz_each_id').val() == ""){
+          $(".reset").val('');
+          $caption = "added";
+        }
+        Swal.fire("Successful", `Questions have been ${$caption} to this session`, "success");
+        
+        $(".questions_form").fadeIn('fast');
+
+      }else{
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+          title: "Error!",
+          html: results,
+          icon: 'error',
+          timer: 4000
+        });
+      }
+    },error : function(data){
+      $(self).removeAttr('disabled').css({'opacity': '1'});
+      Swal.fire({
+        title: "Error!",
+        text: "Poor Network Connection!",
+        icon: 'error',
+        timer: 4000
       });
     }
   });
@@ -322,6 +490,354 @@ $('body').on('click', '.reactFeatures', function (e) {
       });
     }
   })
+});
+
+
+$('body').on('click', '.cmdPayNow', function (e) {
+  var self = this;    
+  var results = '';
+  $(self).attr('disabled', true).css({'opacity': '0.4'});
+
+  // alert(site_url)
+  
+  $.ajax({
+    type : "POST",
+    url : site_url + "stripe",
+    data: $(".stripe_payment").serialize(),
+    success : function(data){
+      // $.each(data, function(){
+      //   results += this + "<br>";
+      // });
+
+      if(data.status=="success"){
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        // Swal.fire("Successful", "Broadcast sent to their channels", "success");
+        alert('Broadcast sent to their channels')
+        // $(".stripe_payment")[0].reset();
+      
+      }else{
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+          title: "Error!",
+          html: data.message,
+          icon: 'error',
+          timer: 3000
+        });
+      }
+    },error : function(data){
+      $(self).removeAttr('disabled').css({'opacity': '1'});
+      Swal.fire({
+        title: "Error!",
+        text: "There are some wrong email addresses or phone numbers",
+        icon: 'error',
+        timer: 5000
+      });
+    }
+  });
+});
+
+
+
+
+var $form = $(".require-validation");
+
+function stripeResponseHandler_(status, response) {
+  if (response.error) { // uncomment later
+    errorAlertDanger("Error! " + response.error.message);
+    alertMsg(5000);
+    $('.cmdPayNow').removeAttr('disabled').css({'opacity': 1});
+    return;
+  }
+
+  // insert the token into the form so it gets submitted to the server
+  $form.find('input[type=text]').empty(); // uncomment later
+
+  $('.stripeToken').val('tok_mastercard');
+  var token1 = $('.stripeToken').val();
+  var amount = $('#txtFinalAmt').val();
+
+  var datastring='params='
+  +'&_token='+token
+  +'&amount='+amount
+  +'&stripeToken='+token1;
+
+  $.ajax({
+    type: "POST",
+    url: site_urls + "stripe_pay",
+    data: datastring,
+    success:function(data){
+      if(data.status == "success"){
+        
+        $('.cmdPayNow').removeAttr('disabled').css({'opacity': '1'});
+
+        $('.payment_form').hide();
+        $('.receipt').show();
+
+        $('.receipt_link').html(`<a target="_blank" class="btn btn-primary pe-6 ps-6" href="${data.msg.receipt_url}">View your receipt</a>`); // receipt_url is gotten from stripepay response data
+
+      }else if(data.status == "failed"){
+        errorAlertDanger(data.message);
+        alertMsg(5000);
+        
+      }else{
+        errorAlertDanger(data.msg);
+        alertMsg(5000);
+        $('.cmdPayNow').removeAttr('disabled').css({'opacity': '1'});
+      }
+
+    },error: function(data){
+      $('.cmdPayNow').removeAttr('disabled').css({'opacity': '1'});
+      errorAlertDanger(data.message);
+      alertMsg(5000);
+    }
+  });
+  
+}
+
+
+
+$('body').on('click', '.cmdPayNow_', function (e) {
+  // alert('sssss')
+  e.preventDefault();
+  $(".alert1, .overlay1").hide();
+  var self = this;
+  var results = '';
+  $('.stripeToken').val('');
+
+  // do validation here
+  var $form     = $(".require-validation"),
+  inputSelector = ['input[type=email]',
+                  'input[type=text]',
+                  'input[type=number]'].join(', '),
+  $inputs       = $form.find('.required').find(inputSelector),
+  valid         = true;
+
+  $(self).attr('disabled', true).css({'opacity': '0.4'});
+
+  // stripeResponseHandler('', ''); // comment later
+  // return; // comment later
+
+  var card_number = $('.card-number').val();
+  card_number = card_number.replace(/ /g, '');
+
+  Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+  var response = Stripe.createToken({
+      number: card_number,
+      cvc: $('.card-cvc').val(),
+      exp_month: $('.card-expiry-month').val(),
+      exp_year: $('.card-expiry-year').val()
+  }, stripeResponseHandler);
+
+  //alert(response.error.code);
+
+});
+
+
+
+
+
+var $form = $(".require-validation");
+$('form.require-validation').bind('submit', function(e) {
+    var $form = $(".require-validation"),
+    inputSelector = ['input[type=email]', 'input[type=password]',
+                     'input[type=text]', 'input[type=file]',
+                     'textarea'].join(', '),
+    $inputs = $form.find('.required').find(inputSelector),
+    $errorMessage = $form.find('div.error'),
+    valid = true;
+    $errorMessage.addClass('hide');
+
+    $('.has-error').removeClass('has-error');
+    $inputs.each(function(i, el) {
+      var $input = $(el);
+      if ($input.val() === '') {
+        $input.parent().addClass('has-error');
+        $errorMessage.removeClass('hide');
+        e.preventDefault();
+      }
+    });
+
+
+    if (!$form.data('cc-on-file')) {
+      e.preventDefault();
+      Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+      Stripe.createToken({
+        number: $('.card-number').val(),
+        cvc: $('.card-cvc').val(),
+        exp_month: $('.card-expiry-month').val(),
+        exp_year: $('.card-expiry-year').val()
+      }, stripeResponseHandler);
+    }
+});
+
+  
+
+/*------------------------------------------
+
+--------------------------------------------
+
+Stripe Response Handler
+
+--------------------------------------------
+
+--------------------------------------------*/
+
+function stripeResponseHandler(status, response) {
+    if (response.error) {
+        $('.error')
+            .removeClass('hide')
+            .find('.alert')
+            .text(response.error.message);
+    } else {
+        /* token contains id, last4, and card type */
+        var token = response['id'];
+        $form.find('input[type=text]').empty();
+        $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+        $form.get(0).submit();
+    }
+}
+
+ 
+
+
+
+
+
+$('body').on('click', '.deleteReqs', function (e) {
+  e.preventDefault();
+  var self = this;    
+  var results = '';
+  var ids = $(this).attr('ids');
+
+  Swal.fire({
+    title: `Confirm action?`,
+    html: `Deleting this cannot be undone, proceed?`,
+    icon: 'question',
+    iconHtml: '?',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#999',
+    confirmButtonText: 'Yes, proceed'
+  }).then((result) => {
+    if (result.isConfirmed) {  
+    Swal.fire({
+        title: 'Deleting...',
+        text: "Please wait a second for a response...",
+        icon: 'success',
+        showConfirmButton: false,
+        confirmButtonColor: '#027937',
+        cancelButtonColor: '#d33',
+    });
+    
+    $(self).attr('disabled', true).css({'opacity': '0.4'});
+
+    var datastring='ids='+ids
+    +'&_token='+token;
+
+    $.ajax({
+        type : "POST",
+        url : site_url + "delete-requirement",
+        data: datastring,
+        success : function(data){
+        $.each(data, function(){
+            results += this + "<br>";
+        });
+    
+        if(data.status=="success"){
+          $(self).removeAttr('disabled').css({'opacity': '1'});
+          $('.table-'+ids).slideUp('fast');
+          Swal.fire("Successful", "Requirement session deleted successfully", "success");
+    
+        }else{
+            $(self).removeAttr('disabled').css({'opacity': '1'});
+            Swal.fire({
+            title: "Error!",
+            html: results,
+            icon: 'error',
+            timer: 4000
+            });
+        }
+        },error : function(data){
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+            title: "Error!",
+            text: "Poor Network Connection!",
+            icon: 'error',
+            timer: 4000
+        });
+        }
+    });
+    }
+  });
+});
+
+
+$('body').on('click', '.deteleQuizSession', function (e) {
+  e.preventDefault();
+  var self = this;    
+  var results = '';
+  var ids = $(this).attr('ids');
+
+  Swal.fire({
+    title: `Confirm action?`,
+    html: `Deleting this cannot will delete all the quiz associated with this session and cannot be undone, proceed?`,
+    icon: 'question',
+    iconHtml: '?',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#999',
+    confirmButtonText: 'Yes, proceed'
+  }).then((result) => {
+    if (result.isConfirmed) {  
+    Swal.fire({
+        title: 'Updating...',
+        text: "Please wait a second for a response...",
+        icon: 'success',
+        showConfirmButton: false,
+        confirmButtonColor: '#027937',
+        cancelButtonColor: '#d33',
+    });
+    
+    $(self).attr('disabled', true).css({'opacity': '0.4'});
+
+    var datastring='ids='+ids
+    +'&_token='+token;
+
+    $.ajax({
+        type : "POST",
+        url : site_url + "delete-session",
+        data: datastring,
+        success : function(data){
+        $.each(data, function(){
+            results += this + "<br>";
+        });
+    
+        if(data.status=="success"){
+          $(self).removeAttr('disabled').css({'opacity': '1'});
+          $('.table-'+ids).slideUp('fast');
+          Swal.fire("Successful", "Quiz session deleted successfully", "success");
+    
+        }else{
+            $(self).removeAttr('disabled').css({'opacity': '1'});
+            Swal.fire({
+            title: "Error!",
+            html: results,
+            icon: 'error',
+            timer: 4000
+            });
+        }
+        },error : function(data){
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+            title: "Error!",
+            text: "Poor Network Connection!",
+            icon: 'error',
+            timer: 4000
+        });
+        }
+    });
+    }
+  });
 });
 
 
