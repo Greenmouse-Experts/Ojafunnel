@@ -370,7 +370,7 @@ class CallbackController extends Controller
 
             // Notify Page Owner about entry made.
             $bundle = [
-                'candidate' => $request->name,
+                'candidate' => "A Candidate",
                 'page' => $page->title . " (Questionaire)"
             ];
             $vendor = User::find($page->user_id);

@@ -133,6 +133,10 @@
 
                                                                         <i class="bi bi-bookmark-plus-fill fs-1 text-primary"></i>
                                                                         @if($page->type == "questionaire_page")
+                                                                            <a class="btn btn-primary d-block mt-2" target="_blank" style="cursor: pointer;" href="
+                                                                            {{route('user.page.builder.view.quiz.response', [Auth::user()->username, Crypt::encrypt($page->id)])}}
+                                                                            ">View Responses</a>
+
                                                                             <a class="btn btn-primary d-block mt-2" target="_blank" href="
                                                                             {{route('user.page.builder.view.edit.quiz', [Auth::user()->username, Crypt::encrypt($page->id)])}}
                                                                             ">Edit Quiz Field</a>
@@ -365,6 +369,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                             @if($page->type == "questionaire_page")
+                                                            <li>
+                                                                <a class="dropdown-item" style="cursor: pointer;" href="
+                                                                {{route('user.page.builder.view.quiz.response', [Auth::user()->username, Crypt::encrypt($page->id)])}}
+                                                                ">View Responses</a>
+                                                            </li>
                                                             <li>
                                                                 <a class="dropdown-item" style="cursor: pointer;" href="
                                                                 {{route('user.page.builder.view.edit.quiz', [Auth::user()->username, Crypt::encrypt($page->id)])}}
