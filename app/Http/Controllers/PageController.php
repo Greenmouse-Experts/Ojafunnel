@@ -543,6 +543,47 @@ class PageController extends Controller
         ]);
     }
 
+    public function viewQuizResponses($username, $page, Request $request)
+    {
+        $page_id = Crypt::decrypt($page);
+        $page = Page::find($page_id);
+
+        $qz_automation = \App\Models\QuizAutomationForm::where(['page_id' => $page->id])->first();
+
+        $response = \App\Models\QuizAutomationSubmission::where(['quiz_automation_id' => $qz_automation->id])
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        $result = [];
+
+        foreach($response as $res)
+        {
+            if($res->response == "" || $res->response == "[]")
+            {
+                $res->response = [];
+            } else {
+                $sub = json_decode($res->response);
+                $sbs = [];
+                foreach($sub as $val) {
+                    foreach($val as $k => $v) {
+                        array_push($sbs, $k . " : " . $v);
+                        continue;
+                    }
+                }
+
+                $res->response = $sbs;
+            }
+
+            array_push($result, $res);
+        }
+
+        return view('dashboard.pageBuilderQuizResponse', [
+            'page' => $page,
+            'qz' => $qz_automation,
+            'response' => $response
+        ]);
+    }
+
     public function viewQuizPageAddFields($username, $page, Request $request)
     {
         $form_id = $request->form_id;
