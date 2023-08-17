@@ -11,6 +11,7 @@ use App\Console\Commands\SendWABulk;
 use App\Console\Commands\WABirthday;
 use App\Console\Commands\SmsBirthday;
 use App\Console\Commands\Subscription;
+use App\Console\Commands\EmailCartReminder;
 use App\Console\Commands\SubscriptionReminder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
