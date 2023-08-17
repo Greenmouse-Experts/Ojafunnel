@@ -215,7 +215,7 @@ class StoreFrontController extends Controller
 
             // add fund to promoter and promoter referral wallet
             if ($item['id'] == $product_id && $promoter->exists()) {
-                // level1 fee 
+                // level1 fee
                 $promoter->update([
                     'wallet' => $promoter->first()->wallet + $level1_fee,
                     'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
@@ -285,7 +285,7 @@ class StoreFrontController extends Controller
             }
         }
 
-        // 
+        //
         $user = new OrderUser();
         $user->store_order_id = $order->id;
         $user->name = $request->name;
@@ -348,7 +348,7 @@ class StoreFrontController extends Controller
 
         foreach ($cart as $item) {
             $totalAmount += $item['price'] * $item['quantity'];
-            $qty += $item['quantity'];  
+            $qty += $item['quantity'];
         }
 
         // dd($request->name, $request->email, $request->phoneNo, $request->address, $request->state, $request->country);
