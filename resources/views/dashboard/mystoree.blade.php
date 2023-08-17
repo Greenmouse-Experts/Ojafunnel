@@ -26,6 +26,14 @@
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+      #countdown {
+          font-size: 24px;
+          text-align: center;
+          margin-top: 50px;
+      }
+  </style>
 </head>
 
 <body class="bg-white">
@@ -152,9 +160,11 @@
                           @endif
                           <div class="found-top">
                               <img src="{{Storage::url($item->image)}}" alt="">
-                              <!-- <div>
+                              <div id="countdown">
                                 timer
-                              </div> -->
+                              </div>
+
+                              
                           </div>
                           <div class="p-2">
                               <p class="font-500">{{$item->name}}</p>
@@ -184,6 +194,11 @@
       </div>
     </div>
   </div>
+
+
+  
+
+
   <footer class="footer">
     <div class="container">
       <div class="row">
