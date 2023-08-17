@@ -26,6 +26,14 @@
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+      #countdown {
+          font-size: 24px;
+          text-align: center;
+          margin-top: 50px;
+      }
+  </style>
 </head>
 
 <body class="bg-white">
@@ -152,9 +160,29 @@
                           @endif
                           <div class="found-top">
                               <img src="{{Storage::url($item->image)}}" alt="">
-                              <!-- <div>
+                              <div id="countdown">
                                 timer
-                              </div> -->
+                              </div>
+
+                              <script>
+                                const startDate = new Date("2024-09-18T13:30:00").getTime();
+                                const endDate = new Date("2024-09-25T13:30:00").getTime();
+                                
+                                const now = new Date().getTime();
+                                if (now >= endDate) {
+                                    clearInterval(countdownInterval);
+                                    document.getElementById("countdown").innerHTML = "Countdown expired!";
+                                } else {
+                                    const timeRemaining = endDate - now;
+
+                                    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                                    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                                    document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                                }
+                              </script>
                           </div>
                           <div class="p-2">
                               <p class="font-500">{{$item->name}}</p>
@@ -184,6 +212,11 @@
       </div>
     </div>
   </div>
+
+
+  
+
+
   <footer class="footer">
     <div class="container">
       <div class="row">
