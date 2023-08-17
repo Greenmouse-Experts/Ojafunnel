@@ -152,6 +152,9 @@
                           @endif
                           <div class="found-top">
                               <img src="{{Storage::url($item->image)}}" alt="">
+                              <!-- <div>
+                                timer
+                              </div> -->
                           </div>
                           <div class="p-2">
                               <p class="font-500">{{$item->name}}</p>
