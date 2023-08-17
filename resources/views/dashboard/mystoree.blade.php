@@ -164,25 +164,7 @@
                                 timer
                               </div>
 
-                              <script>
-                                const startDate = new Date("2024-09-18T13:30:00").getTime();
-                                const endDate = new Date("2024-09-25T13:30:00").getTime();
-                                
-                                const now = new Date().getTime();
-                                if (now >= endDate) {
-                                    clearInterval(countdownInterval);
-                                    document.getElementById("countdown").innerHTML = "Countdown expired!";
-                                } else {
-                                    const timeRemaining = endDate - now;
-
-                                    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-                                    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-                                    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-                                    document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-                                }
-                              </script>
+                              
                           </div>
                           <div class="p-2">
                               <p class="font-500">{{$item->name}}</p>
