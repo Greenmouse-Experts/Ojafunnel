@@ -701,12 +701,10 @@ class AdminController extends Controller
         if ($messageUser->sender_id == Auth::guard('admin')->user()->id) {
             $user = User::where('id', $messageUser->reciever_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-            $data = [
-                'message_users_id' => $request->convo_id,
+            $sendMessage = Message::create([
+                'message_users_id' => $messageUser->id,
                 'message' => $request->message
-            ];
-
-            $sendMessage = Message::create($data);
+            ]);
 
             $this->fcm('Message from ' . Auth::guard('admin')->user()->name . ': ' . $request->message, $user);
 
@@ -718,12 +716,10 @@ class AdminController extends Controller
         } else {
             $user = User::where('id', $messageUser->sender_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-            $data = [
-                'message_users_id' => $request->convo_id,
+            $sendMessage = Message::create([
+                'message_users_id' => $messageUser->id,
                 'message' => $request->message
-            ];
-
-            $sendMessage = Message::create($data);
+            ]);
 
             $this->fcm('Message from ' . Auth::guard('admin')->user()->name . ': ' . $request->message, $user);
 

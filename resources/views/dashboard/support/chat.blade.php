@@ -263,7 +263,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             method: 'POST',
-            url: '`/support/sendMessage`',
+            url: '/support/sendMessage',
             data: {
                 'convo_id': $('#convo_id').val(),
                 'message': $('#messsageInput').val()
