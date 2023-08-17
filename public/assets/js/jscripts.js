@@ -493,6 +493,12 @@ $('body').on('click', '.reactFeatures', function (e) {
 });
 
 
+
+$('body').on('click', '.addTimer', function (e) {
+  $('.dynamic_timer').slideToggle('fast');
+});
+
+
 $('body').on('click', '.cmdPayNow', function (e) {
   var self = this;    
   var results = '';

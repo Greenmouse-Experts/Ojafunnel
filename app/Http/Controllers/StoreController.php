@@ -62,6 +62,7 @@ class StoreController extends Controller
                 ]
             );
 
+            $image="";
             if ($request->file('logo')) {
                 $image = $request->file('logo')->store(
                     'uploads/storeLogo/' . \Auth::user()->username,
@@ -225,6 +226,13 @@ class StoreController extends Controller
             );
         }
 
+        if (($request->new_price > 0 || $request->new_price != "") && ($request->from == "" || $request->to == "")) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Please select the duration of dynamic timer'
+            ]);
+        }
+
         $sp = new StoreProduct();
         $sp->name = $request->name;
         $sp->description = $request->description;
@@ -234,6 +242,9 @@ class StoreController extends Controller
         $sp->level2_comm = $request->level2_comm;
         $sp->image = $image;
         $sp->store_id = $request->store_id;
+        $sp->date_from = $request->from;
+        $sp->date_to = $request->to;
+        $sp->new_price = $request->new_price;
         $sp->user_id = Auth::user()->id;
         $sp->type = 'Physical';
 
