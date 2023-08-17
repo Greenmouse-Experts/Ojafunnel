@@ -25,7 +25,7 @@ class ChatController extends Controller
             "registration_ids" => $firebaseToken,
             "notification" => [
                 "title" => config('app.name'),
-                "body" => $body, 
+                "body" => $body,
                 'image' => URL::asset('assets/images/Logo-fav.png'),
             ],
             'vibrate' => 1,
@@ -46,8 +46,8 @@ class ChatController extends Controller
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString); 
-        $result = curl_exec ( $ch );     
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $result = curl_exec ( $ch );
 
         return $result;
     }
@@ -127,7 +127,7 @@ class ChatController extends Controller
         $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id',$reciever)->pluck('id');
 
         $allMessages = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
-        
+
         // foreach($allMessages as $row){
         //     if($id1[0]==$row['message_users_id']){$boxType = "p-2 recieverBox ml-auto";}else{$boxType = "float-left p-2 mb-2 senderBox";}
         //     echo "<div class='p-2 d-flex'>";

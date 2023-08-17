@@ -8,6 +8,8 @@ use App\Models\Customer;
 use App\Models\Newsletter;
 use App\Models\OjafunnelNotification;
 use App\Models\OjaPlan;
+use App\Models\OjaPlanParameter;
+use App\Models\OjaPlanInterval;
 use App\Models\Page;
 use App\Models\Plan;
 use App\Models\User;
@@ -53,10 +55,86 @@ class HomePageController extends Controller
     //  Pring
     public function pricing()
     {
-        $plans = OjaPlan::latest()->get();
+        $ojaplans = [];
+        $plans = OjaPlan::all();
+
+        foreach($plans as $plan)
+        {
+            $plan->parameter = OjaPlanParameter::where(['plan_id' => $plan->id])->first();
+            $plan->interval = OjaPlanInterval::where(['plan_id' => $plan->id])->get();
+
+            array_push($ojaplans, $plan);
+        }
+
+        $headprices = [];
+
+        foreach( $ojaplans as $ojplan )
+        {
+            array_push($headprices, (object) [
+                'name' => $ojplan->name,
+                'interval' => $ojplan->interval
+            ]);
+        }
+
+        $sms = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $parasm = (int) $ojplan->parameter->sms_automation;
+
+            array_push($sms, (object) [
+                'sms' => ($parasm > 0) ? true : false
+            ]);
+        }
+
+        $whatsapp = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $wa_auto = (int) $ojplan->parameter->whatsapp_automation;
+            $wa_numb = (int) $ojplan->parameter->wa_number;
+
+            array_push($whatsapp, (object) [
+                'wa_auto' => $wa_auto,
+                'wa_numb' => $wa_numb,
+            ]);
+        }
+
+        $pagebuilder = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $pb = (int) $ojplan->parameter->page_builder;
+            array_push($pagebuilder, $pb);
+        }
+
+        $fbuilder = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $pb = (int) $ojplan->parameter->funnel_builder;
+            array_push($fbuilder, $pb);
+        }
+
+        $lms = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $str = (int) $ojplan->parameter->store;
+            array_push($lms, $str);
+        }
+
+        $products = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $prd = (int) $ojplan->parameter->products;
+            array_push($products, $prd);
+        }
 
         return view('frontend.pricing', [
-            'plans' => $plans
+            'plans' => $ojaplans,
+            'headprices' => $headprices,
+            'sms' => $sms,
+            'whatsapp' => $whatsapp,
+            'pagebuilder' => $pagebuilder,
+            'funnelbuilder' => $fbuilder,
+            'lms' => $lms,
+            'products' => $products
         ]);
     }
 
