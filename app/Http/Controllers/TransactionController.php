@@ -522,8 +522,8 @@ class TransactionController extends Controller
                 'amount' => $request->amount
             ]);
 
-            // $user->wallet -= $request->amount;
-            // $user->save();
+            $user->wallet -= $request->amount;
+            $user->save();
 
             $administrator = Admin::latest()->first();
 
