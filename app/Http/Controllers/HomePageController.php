@@ -136,6 +136,8 @@ class HomePageController extends Controller
             'lms' => $lms,
             'products' => $products
         ]);
+
+
     }
 
     // Contact-Us
