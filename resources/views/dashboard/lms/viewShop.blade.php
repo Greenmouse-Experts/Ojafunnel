@@ -19,6 +19,39 @@
     <!-- Bootstrap Css -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <style>
+        @media (max-width: 480px) {
+            .mobile-cart-btn {
+                display: block;
+                background: indigo !important;
+                padding-bottom: 10px !important;
+                border:none;
+            }
+
+            .desktop-list {
+                display: none !important;
+            }
+
+            .mobile-list {
+                display: block;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .mobile-cart-btn {
+                display: block !important;
+            }
+
+            .desktop-list {
+                display: block;
+            }
+
+            .mobile-list {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -83,17 +116,17 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
-                                            <a href=" 
-                                            @if($isvalid) 
-                                                {{ 
+                                            <a href="
+                                            @if($isvalid)
+                                                {{
                                                     route('course.cart', [
-                                                        'shopname' => $shop->name, 
-                                                        'promotion_id' => Request::get('promotion_id'), 
+                                                        'shopname' => $shop->name,
+                                                        'promotion_id' => Request::get('promotion_id'),
                                                         'course_id' => Request::get('course_id')
-                                                    ]) 
-                                                }} 
-                                            @else 
-                                                {{ route('course.cart', ['shopname' => $shop->name]) }} 
+                                                    ])
+                                                }}
+                                            @else
+                                                {{ route('course.cart', ['shopname' => $shop->name]) }}
                                             @endif
                                             " style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" class="btn btn-primary btn-block">View all</a>
                                         </div>
@@ -180,39 +213,39 @@
                     <h2 class="course-carousel-title mb-4">All Courses Found {{\App\Models\Course::where('user_id', $shop->user_id)->where('approved', true)->get()->count()}}</h2>
                 </div>
                 @forelse(\App\Models\Course::where('user_id', $shop->user_id)->where('approved', true)->get() as $course)
-                <div class="col-lg-4" id="item-{{ $course->id }}">
+                <div class="col-lg-4 desktop-list" id="item-{{ $course->id }}">
                     <div class="course-box-wrap">
-                        <a href="
-                            @if($isvalid && Request::get('course_id') == $course->id) 
-                                {{ 
+                        <a class="has-popover" href="
+                            @if($isvalid && Request::get('course_id') == $course->id)
+                                {{
                                     route('view.course.details', [
-                                        'shopname' => $shop->name, 
+                                        'shopname' => $shop->name,
                                         'id' => Crypt::encrypt($course->id),
-                                        'promotion_id' => Request::get('promotion_id'), 
+                                        'promotion_id' => Request::get('promotion_id'),
                                         'course_id' => Request::get('course_id')
-                                    ]) 
-                                }} 
-                            @else 
-                                {{ route('view.course.details', ['shopname' => $shop->name, 'id' => Crypt::encrypt($course->id)]) }} 
+                                    ])
+                                }}
+                            @else
+                                {{ route('view.course.details', ['shopname' => $shop->name, 'id' => Crypt::encrypt($course->id)]) }}
                             @endif
-                        " class="has-popover">
+                        ">
                             <div class="course-box">
                                 <!-- <div class="course-badge position best-seller">Best seller</div> -->
-                                <div class="course-image">
+                                <div class="course-image" >
                                     <img src="{{$course->image ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" class="img-fluid">
                                 </div>
                                 <div class="course-details">
                                     <h5 class="title">{{$course->title}}</h5>
                                     <p class="instructors">{{$course->description}}</p>
                                     @if ($isvalid)
-                                        @if(Request::has('promotion_id') && Request::has('course_id')) 
+                                        @if(Request::has('promotion_id') && Request::has('course_id'))
                                             @if (Request::get('course_id') == $course->id)
                                                 <p class="text-dark">
                                                 Promotional code (<b>{{ Request::get('promotion_id') }}</b>) attached.
-                                                </p> 
-                                            @endif 
+                                                </p>
+                                            @endif
                                         @endif
-                                    @endif 
+                                    @endif
                                     <!-- <div class="rating">
                                         <i class="fas fa-star filled"></i>
                                         <i class="fas fa-star filled"></i>
@@ -222,7 +255,10 @@
                                     </div> -->
                                     <p class="price text-right">
                                         {{$course->currency}}{{number_format($course->price, 2)}}
-                                    </p> 
+                                    </p>
+                                    {{-- <button class="btn add-to-cart-btn mobile-cart-btn" item="{{$course->id}}" link="{{ route('add.course.to.cart', $course->id) }}" onclick="add_tocartMobile(this)">
+                                        Add To Cart
+                                    </button> --}}
                                 </div>
                             </div>
                         </a>
@@ -257,6 +293,62 @@
                                     <a href="{{ route('add.course.to.cart', $course->id) }}" type="button" class="btn add-to-cart-btn addedToCart big-cart-button-1" id="1">
                                         Add To Cart
                                     </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 mobile-list" id="item-{{ $course->id }}">
+                    <div class="course-box-wrap">
+                        <div class="has-popover" >
+                            <div class="course-box">
+                                <!-- <div class="course-badge position best-seller">Best seller</div> -->
+                                <a href="
+                                    @if($isvalid && Request::get('course_id') == $course->id)
+                                        {{
+                                            route('view.course.details', [
+                                                'shopname' => $shop->name,
+                                                'id' => Crypt::encrypt($course->id),
+                                                'promotion_id' => Request::get('promotion_id'),
+                                                'course_id' => Request::get('course_id')
+                                            ])
+                                        }}
+                                    @else
+                                        {{ route('view.course.details', ['shopname' => $shop->name, 'id' => Crypt::encrypt($course->id)]) }}
+                                    @endif
+                                ">
+                                    <div class="course-image" >
+                                        <img src="{{$course->image ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" class="img-fluid">
+                                    </div>
+                                </a>
+                                <div class="course-details">
+                                    <h5 class="title">{{$course->title}}</h5>
+                                    <p class="instructors">{{$course->description}}</p>
+                                    @if ($isvalid)
+                                        @if(Request::has('promotion_id') && Request::has('course_id'))
+                                            @if (Request::get('course_id') == $course->id)
+                                                <p class="text-dark">
+                                                Promotional code (<b>{{ Request::get('promotion_id') }}</b>) attached.
+                                                </p>
+                                            @endif
+                                        @endif
+                                    @endif
+                                    <!-- <div class="rating">
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="d-inline-block average-rating">5</span>
+                                    </div> -->
+                                    <p class="price text-right">
+                                        {{$course->currency}}{{number_format($course->price, 2)}}
+                                    </p>
+                                    <a class="btn add-to-cart-btn mobile-cart-btn" href="{{ route('add.course.to.cart', $course->id) }}">
+                                        Add To Cart
+                                    </a>
+                                    <br>
                                 </div>
                             </div>
                         </div>
@@ -298,6 +390,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+
+    <script>
+        function add_tocartMobile(e) {
+            var url = e.getAttribute('link');
+            window.location.href=url;
+        }
+    </script>
 </body>
 
 <style>
