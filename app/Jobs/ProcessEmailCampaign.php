@@ -21,7 +21,6 @@ class ProcessEmailCampaign implements ShouldQueue
 
     // queue setting 
     public $tries = 5;
-
     public $configuration;
     public $contacts;
     public $data;

@@ -54,12 +54,14 @@ class SendWABulk extends Command
         $current_date = $date->format('Y-m-d');
         $current_time = $date->format('H:i');
 
+
         $onetime = WaCampaigns::where([
             'frequency_cycle' => 'onetime',
             'message_timing' => 'Schedule',
             'start_time' => $current_time,
             'next_due_date' => $current_date,
         ])->get();
+        
 
         $onetime->map(function ($_campaign) {
             $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->get();

@@ -49,6 +49,7 @@ class SubscriptionExpiryReminderMail extends Mailable
     public function content()
     {
         return new Content(
+            //view: 'emails.SubscriptionExpiryNotifyAdmin',
             view: 'emails.subscriptionExpiryReminder',
         );
     }

@@ -412,7 +412,11 @@ class AuthController extends Controller
         // authentication attempt
         if (auth()->attempt(array($fieldType => $input['email'], 'password' => $input['password']))) {
 
-            if (!$user->email_verified_at) {
+            /* if (!$user->email_verified_at) {
+                $code = mt_rand(100000, 999999);
+                $user->update([
+                    'code' => $code
+                ]);
                 // Send email to user
                 $user->notify(new SendVerificationCode($user));
 
@@ -420,7 +424,7 @@ class AuthController extends Controller
                     'type' => 'success',
                     'message' => 'Registration Successful, Please verify your account!'
                 ]);
-            }
+            } */
 
             if ($user->status == 'inactive') {
 
@@ -494,6 +498,7 @@ class AuthController extends Controller
         ]);
 
         // Send email to user
+        
         Mail::to($request->email)->send(new SendCodeResetPassword($codeData->code));
 
         return redirect()->route('user.reset.password', Crypt::encrypt($user->email))->with([

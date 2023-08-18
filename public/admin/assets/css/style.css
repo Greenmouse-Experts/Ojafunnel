@@ -1082,6 +1082,26 @@ body {
 }
 /* Email  Summary  Ends*/
 
+
+
+.select_box{
+  width: 100%;
+  padding: 13px 10px;
+  border: 1px solid #ddd !important;
+  border-radius: 6px;
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.select_box:focus, .select_box:active{
+  border: 1px solid #ddd !important;
+}
+.select_box option{
+  font-size: 16px !important;
+  padding: 13px 10px !important;
+}
+
+
 /* Email  Campaign */
 .all-create button,
 .all-create .btn {
@@ -2292,4 +2312,63 @@ textarea{
     position: relative;
     left: 0px;
   }
+}
+
+
+
+
+.select_features {
+  height:18em!important;
+  letter-spacing:normal!important;
+  padding:10px!important;
+  font-size:13px!important;
+}
+
+.select_features option {
+  padding:4px 3px;
+  font-weight: 500;
+}
+
+
+.email_status th{
+  background-color: #666;
+  color: #fff;
+  padding: 7px;
+}
+.email_status td{
+  padding: 7px;
+  border-bottom: 1px solid #eee;
+}
+
+.referral_tbl th, .referral_tbl td{
+  font-size: 12px;
+  padding: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+
+.alert1, .overlay1{
+  position: fixed !important;
+  display: none;
+}
+.alert1{
+  right: 0px;
+  width: 29%;
+  z-index: 99999 !important;
+  top: 7%;
+  padding: 14px 15px;
+  border-radius: 4px 0 0 4px;
+  line-height: 20px !important;
+  font-size: 13.5px !important;
+}
+
+.overlay1{
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left:0;
+  right:0;
+  height: 100vh;
+  z-index: 99998 !important;
+  background-color: rgba(0, 0, 0, 0.4);
 }

@@ -48,7 +48,9 @@ class Admin extends Authenticatable
         'text_direction',
         'menu_layout',
         'theme_mode',
-        'fcm_token'
+        'fcm_token',
+        'backup_amt',
+        'months_nonactive_user',
     ];
 
     /**

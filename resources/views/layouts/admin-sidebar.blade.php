@@ -35,6 +35,18 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="{{ route('broadcast') }}/">
+                        <i class="bi bi-speaker"></i>
+                        <span key="t-chat">Broadcast</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('priviledges') }}/">
+                        <i class="fa fa-user-secret"></i>
+                        <span key="t-chat">Priviledges</span>
+                    </a>
+                </li>
+                <li>
                     <a href="#" class="has-arrow">
                         <i class="bi bi-envelope-check"></i>
                         <span key="t-chat">Email Marketing</span>
@@ -48,6 +60,16 @@
                         <li>
                             <a href="{{ route('admin.email-marketing.email-campaigns') }}" key="t-tui-calendar">
                                 Email Campaigns
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('validate-email') }}/" key="t-tui-calendar">
+                                Validate Email
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('emailAnalytics') }}/" key="t-tui-calendar">
+                                Report & Analytics
                             </a>
                         </li>
                     </ul>

@@ -746,6 +746,9 @@ class Customer extends Model
                 $this->status = self::STATUS_ACTIVE;
                 $this->save();
 
+                ///pick random referral_link
+                $referrer_id = User::where('affiliate_link', $request->referral_link)->where('id', '!=', $user->id)->orderByRaw('RAND()')->value('id');
+
                 // User
                 $user = new User();
                 $user->fill($request->all());
@@ -754,14 +757,104 @@ class Customer extends Model
                 $user->affiliate_link = $this->referrer_id_generate(9);
                 $user->promotion_link = $this->generateAndValidateIfPromotionLinkNotExist();
                 $user->plan = $plan->id;
+                $user->referral_link = $referrer_id;
                 $user->customer()->associate($this);
                 $user->save();
+                
+
+                $referral = new Referral();
+                $referral->fill($request->all());
+                $referral->user = $referrer_id;
+                $referral->referred = $user->id;
+                $referral->save();
             }
         });
 
         // Important: return the newly created USER
         return $user;
     }
+
+
+    public function adminCreateAccountAndUser($request)
+    {
+        $user = new User();
+        
+
+        DB::transaction(function () use ($request, &$user) {
+            $fullname = explode(" ", $request->fullname);
+
+            $plan = OjaPlan::where('name', 'Free')->first();
+
+            if (!$request->referral_link == null) {
+                $request->validate([
+                    'referral_link' => 'exists:users,affiliate_link'
+                ]);
+
+                $referrer_id = User::where('affiliate_link', $request->referral_link)->first();
+                // Customer
+                $this->fill($request->all());
+                $this->status = self::STATUS_ACTIVE;
+                $this->timezone = ' ';
+                $this->save();
+
+                $user = new User();
+                $user->fill($request->all());
+                $user->username = $fullname[0];
+                $user->first_name = $fullname[0];
+                $user->last_name = $fullname[1];
+                $user->email = $request->email;
+                $user->password = bcrypt($request->password);
+                $user->user_type = 'User';
+                $user->affiliate_link = $this->referrer_id_generate(9);
+                $user->referral_link = $referrer_id->id;
+                $user->plan = 1;
+                $user->promotion_link = $this->generateAndValidateIfPromotionLinkNotExist();
+                $user->customer()->associate($this);
+                $user->save();
+
+                $subscribe_amount = 10000;
+                $array = User::all();
+                $parent = $user->id;
+
+                $this->getAncestors($array, $subscribe_amount, $parent);
+            } else {
+                // Customer
+                $this->fill($request->all());
+                $this->status = self::STATUS_ACTIVE;
+                $this->timezone = ' ';
+                $this->save();
+
+                ///pick random referral_link
+                $referrer_id = User::where('affiliate_link', $request->referral_link)->where('id', '!=', $user->id)->orderByRaw('RAND()')->value('id');
+
+                // User
+                $user = new User();
+                $user->fill($request->all());
+                $user->username = $fullname[0];
+                $user->first_name = $fullname[0];
+                $user->last_name = $fullname[1];
+                $user->email = $request->email;
+                $user->password = bcrypt($request->password);
+                $user->user_type = 'User';
+                $user->affiliate_link = $this->referrer_id_generate(9);
+                $user->plan = 1;
+                $user->referral_link = $referrer_id;
+                $user->promotion_link = $this->generateAndValidateIfPromotionLinkNotExist();
+                $user->customer()->associate($this);
+                $user->save();
+            }
+
+            $referral = new Referral();
+            $referral->fill($request->all());
+            $referral->user = $referrer_id;
+            $referral->referred = $user->id;
+            $referral->save();
+        });
+
+        // Important: return the newly created USER
+        return $user;
+    }
+
 
     public function sendingServers()
     {

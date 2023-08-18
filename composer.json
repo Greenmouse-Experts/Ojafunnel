@@ -45,7 +45,8 @@
         "swiftmailer/swiftmailer": "^6.0",
         "twig/twig": "^3.5",
         "twilio/sdk": "^6.43",
-        "unicodeveloper/laravel-paystack": "1.0.*"
+        "unicodeveloper/laravel-paystack": "1.0.*",
+        "zeevx/lara-termii": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
