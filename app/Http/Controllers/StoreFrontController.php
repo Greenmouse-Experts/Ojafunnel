@@ -101,7 +101,13 @@ class StoreFrontController extends Controller
     {
         if ($request->id) {
             $cart = session()->get('cart');
+            $customer_email = session()->get('customer_email');
             if (isset($cart[$request->id])) {
+
+                $product_id = $cart[$request->id];
+                \App\Models\TempCart::where('email', $customer_email)->where('product_id', $product_id)->delete();
+                session()->forget('customer_email');
+
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
@@ -117,7 +123,7 @@ class StoreFrontController extends Controller
         // is there any promotion link?
         return $promotion_id && $product_id
             ? $this->checkoutPaymentWithPromotion($request, $promotion_id, $product_id)
-            : $this->checkoutPaymentWithoutPromotion($request);
+            : $this->checkoutPaymentWithoutPromotion($request, $product_id);
     }
 
     protected function checkoutPaymentWithPromotion(Request $request, $promotion_id, $product_id)
@@ -309,6 +315,9 @@ class StoreFrontController extends Controller
         //     'body' => $request->name.' purchase product in your shop.'
         // ]);
 
+        // delete my details since i have made payment
+        \App\Models\TempCart::where('email', $request->email)->where('product_id', $product_id)->delete();
+
         session()->forget('cart');
 
         /** Store information to include in mail in $data as an array */
@@ -336,7 +345,7 @@ class StoreFrontController extends Controller
         return view('myPDF', compact('store', 'order'));
     }
 
-    protected function checkoutPaymentWithoutPromotion(Request $request)
+    protected function checkoutPaymentWithoutPromotion(Request $request, $product_id)
     {
         // dd($request->amountToPay, $request->couponID);
 
@@ -418,6 +427,9 @@ class StoreFrontController extends Controller
             'body' => $request->name . ' purchase product in your shop.'
         ]);
 
+        // delete my details since i have made payment
+        \App\Models\TempCart::where('email', $request->email)->where('product_id', $product_id)->delete();
+        
         session()->forget('cart');
 
         /** Store information to include in mail in $data as an array */

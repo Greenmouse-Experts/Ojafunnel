@@ -87,9 +87,12 @@
                                             <th scope="col">Product Name</th>
                                             <th scope="col">Product Type</th>
                                             <th scope="col">Product Image</th>
-                                            <th scope="col" style="width: 20%;">Product Description</th> 
+                                            <th scope="col" style="width: 15%;">Product Description</th> 
                                             <th scope="col">Price</th>
                                             <th scope="col">Quantity</th>
+                                            <th scope="col">Promo Price</th>
+                                            <th scope="col">Date From</th>
+                                            <th scope="col">Date To</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -115,10 +118,19 @@
                                                 <div class="font-size-14 text-wrap" style="width: 500px;">{{$item->description}}</div>
                                             </td> 
                                             <td>
-                                                ₦ {{number_format($item->price, 2)}}
+                                                ₦{{number_format($item->price, 2)}}
                                             </td>
                                             <td>
                                                 {{$item->quantity}}
+                                            </td>
+                                            <td>
+                                                ₦{{number_format($item->new_price)}}
+                                            </td>
+                                            <td>
+                                                {{ $item->date_from ? date("D jS, M Y h:ia", strtotime($item->date_from)) : '' }}
+                                            </td>
+                                            <td>
+                                                {{ $item->date_to ? date("D jS, M Y h:ia", strtotime($item->date_to)) : '' }}
                                             </td>
                                             <td>
                                                 <div class="dropdown">
@@ -345,11 +357,35 @@
                                     <label for="Name">Product Description</label>
                                     <textarea name="description" id="" cols="30" rows="10" placeholder="Enter your product description" required></textarea>
                                 </div>
-                                <div class="col-lg-12 mb-4">
+                                <div class="col-lg-9 mb-4">
                                     <label for="Name">Price</label>
                                     <input type="number" name="price" placeholder="Enter price" required />
                                     <span style="color:red;">Please enter numbers</span>
                                 </div>
+                                <div class="col-lg-3 mb-4 ps-0">
+                                    <button type="button" class="btn mt-2 addTimer" style="color:#714091; border:1px solid #714091; padding:13px 10px; background:#ccc;border:1px solid #999">
+                                        Add Timer
+                                    </button>
+                                </div>
+
+                                <div class="col-lg-12 mb-2 dynamic_timer p-3" style="background:#eee; border-radius:8px; display:none">
+                                    <div class="row">
+                                        <div style="margin:-5px 0 10px 0; font-size:12px; line-height:19px">If price is entered, date from and date to must be entered as well</div>
+                                        <div class="col-lg-6 mb-2 pe-1">
+                                            <label>From</label>
+                                            <input type="datetime-local" name="from" placeholder="Select Date" />
+                                        </div>
+                                        <div class="col-lg-6 mb-2 ps-1">
+                                            <label>To</label>
+                                            <input type="datetime-local" name="to" placeholder="Select Date" />
+                                        </div>
+                                        <div class="col-lg-12 mb-0">
+                                            <label>Price</label>
+                                            <input type="number" name="new_price" placeholder="Enter new price" />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Quantity</label>
                                     <input type="number" name="quantity" placeholder="Enter quantity" required />

@@ -11,6 +11,7 @@ use App\Console\Commands\SendWABulk;
 use App\Console\Commands\WABirthday;
 use App\Console\Commands\SmsBirthday;
 use App\Console\Commands\Subscription;
+use App\Console\Commands\EmailCartReminder;
 use App\Console\Commands\SubscriptionReminder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -30,6 +31,7 @@ class Kernel extends ConsoleKernel
         SubscriptionReminder::class,
         WABirthday::class,
         EmailBirthday::class,
+        EmailCartReminder::class,
         SendEmailCampaign::class,
         GenerateSSL::class,
         RenewSSL::class,
@@ -57,6 +59,7 @@ class Kernel extends ConsoleKernel
         // birthday or anniversary 
         $schedule->command('wabirthday:run')->daily()->withoutOverlapping();
         $schedule->command('emailbirthday:run')->daily()->withoutOverlapping();
+        $schedule->command('sms_cart_reminder:run')->daily()->withoutOverlapping();
 
         // ssl
         $schedule->command('generatessl:run')->everyThirtyMinutes()->withoutOverlapping();

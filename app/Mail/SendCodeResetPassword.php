@@ -23,6 +23,7 @@ class SendCodeResetPassword extends Mailable
         $this->code = $code;
     }
 
+    
     /**
      * Build the message.
      *

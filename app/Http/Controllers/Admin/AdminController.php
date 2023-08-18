@@ -17,6 +17,7 @@ use App\Models\OjaPlan;
 use App\Models\Category;
 use App\Models\EmailKit;
 use App\Models\ContactUs;
+use App\Models\Broadcast;
 use App\Models\OrderItem;
 use App\Models\ShopOrder;
 use App\Models\FunnelPage;
@@ -27,6 +28,7 @@ use App\Models\MessageUser;
 use App\Models\SmsCampaign;
 use App\Models\Transaction;
 use App\Models\WaCampaigns;
+use App\Models\SiteFeature;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Models\StoreProduct;
@@ -51,11 +53,28 @@ use App\Models\OjafunnelNotification;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\UserApprovedWithdrawNotification;
+use App\Mail\BroadcastEmail;
+use App\Mail\SubscriptionExpiryNotifyAdmin;
 use App\Mail\AdminApprovedWithdrawNotification;
+use App\Mail\UserApprovedNotification;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
+use App\Models\Customer;
+use Twilio\Rest\Client as twilio;
+use Exception;
+use GuzzleHttp\Client;
+use Aws\Sns\SnsClient;
+use App\Mail\AccountInfoMail;
+use App\Models\UpsellPageSubmission;
+
+
 
 class AdminController extends Controller
 {
+
+    public function __construct(){
+        $this->all_emails = [];
+    }
+
     function fcm($body, $firebaseToken)
     {
         $SERVER_API_KEY = config('app.fcm_token');
@@ -95,6 +114,9 @@ class AdminController extends Controller
     {
         $ad = Admin::findOrFail(Auth::guard('admin')->user()->id);
         $ad->name = $request->name;
+        $ad->backup_amt = $request->backup_amt;
+        $ad->months_nonactive_user = $request->months;
+
         $ad->update();
         return back()->with([
             'type' => 'success',
@@ -139,13 +161,22 @@ class AdminController extends Controller
 
     public function view_users()
     {
-        return view('Admin.user.view-users');
+        $data['site_features'] = SiteFeature::get();
+        $all_users = User::latest()->get();
+
+        $selected_fts = "";
+        foreach($all_users as $user){
+            $feature_access = explode(",", $user->feature_access);
+            $user->fts = SiteFeature::whereIN('id', $feature_access)->get(['features']);
+        }
+        $data['all_users'] = $all_users;
+        return view('Admin.user.view-users', $data);
     }
 
     public function user_login($id)
     {
         $user = Auth::loginUsingId($id);
-
+        
         return redirect()->route('user.dashboard', $user->username);
     }
 
@@ -199,8 +230,10 @@ class AdminController extends Controller
         return view('Admin.generalSettings');
     }
 
+
     public function subscribtions()
     {
+
         return view('Admin.subscription.subscriptions');
     }
 
@@ -216,7 +249,20 @@ class AdminController extends Controller
 
     public function affiliateList()
     {
-        return view('Admin.affiliateList');
+        $referrals = \App\Models\Referral::select(\DB::raw("user as user_id, COUNT(user) as total_referred"))->whereRaw("referred IN (SELECT id FROM users)")->groupBy("user")->havingRaw("COUNT(user) > 0")->orderBy('total_referred', 'desc')->get();
+
+        if(count($referrals) > 0){
+            foreach($referrals as $referral){
+                $customers = User::select('first_name', 'last_name', 'email')->where('id', $referral->user_id)->first();
+                $referral->full_names = ucwords($customers->first_name." ".$customers->last_name);
+                $referral->email = $customers->email;
+
+                $dates = \App\Models\Referral::where('user', $referral->user_id)->value('created_at');
+                $referral->dates = date("D jS, M Y h:ia", strtotime($dates));
+            }
+        }
+        $data['referrals'] = $referrals;
+        return view('Admin.affiliateList', $data);
     }
 
     public function product()
@@ -363,6 +409,169 @@ class AdminController extends Controller
         return view('Admin.support.emailSupport');
     }
 
+    public function broadcast()
+    {
+        $lists = ListManagement::latest()->get();
+
+        // $list_tags = "";
+        // foreach($lists as $list){
+        //     if($list->tags !== null){
+        //         $list_tags .= $list->tags.",";
+        //     }
+        // }
+        // $list_tags = str_replace(", ", ",", $list_tags);
+        // $list_tags = array_unique(explode(',', $list_tags));
+
+        // $arrs=[];
+        // foreach($list_tags as $list_tag){
+        //     if($list_tag !== ""){
+        //         $arrs[] = $list_tag;
+        //     }
+        // }
+        // $data['tags'] = $arrs;
+        return view('Admin.broadcast');
+    }
+
+    
+    public function priviledges()
+    {
+        $data['site_features'] = SiteFeature::get();
+        return view('Admin.priviledges', $data);
+    }
+
+    
+    public function validate_user_emails(Request $request)
+    {
+        $ABSTRACTAPI = env('ABSTRACTAPI');
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://emailvalidation.abstractapi.com/v1/?api_key=$ABSTRACTAPI&email=$request->email");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        $data = curl_exec($ch);
+        curl_close($ch);
+
+        $data = json_decode($data, true);
+
+        session()->push('hidden_emails', $data['email']);
+        session()->push('hidden_deliverability', $data['deliverability']);
+
+        $hidden_emails = session()->get('hidden_emails');
+        $hidden_deliverability = session()->get('hidden_deliverability');
+
+        $results = "";
+
+        $results .= '<table class="email_status">
+            <tr>
+                <th>Sn</th>
+                <th>Email</th>
+                <th>Status</th>
+            </tr>';
+
+        if(count($hidden_emails) > 0){
+            $k=1;
+            foreach($hidden_emails as $index => $hidden_email){
+                $status = strtolower($hidden_deliverability[$index]) == "deliverable" ? "Active" : "Not Active";
+                $results .= "<tr>
+                    <td>$k</td>
+                    <td>$hidden_email</td>
+                    <td>$status</td>
+                </tr>";
+                $k++;
+            }
+        }
+        $results .= "</table>";
+        return $results;        
+    }
+
+
+    public function fetch_referrals(Request $request)
+    {
+        $rules = [
+            'user_id' => 'required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+        $results = "";
+        $results .= '<table class="referral_tbl">
+            <tr>
+                <th>Sn</th>
+                <th>Users</th>
+                <th>Email</th>
+                <th>Date</th>
+            </tr>';
+
+        $referrals = \App\Models\Referral::where('user', $request->user_id)->whereRaw("referred IN (SELECT id FROM users)")->get();
+
+        if(count($referrals) > 0){
+            $k=1;
+            foreach($referrals as $referral){
+                $customers = User::select('first_name', 'last_name', 'email')->where('id', $referral->referred)->first();
+                $dates = \App\Models\Referral::where('user', $request->user_id)->value('created_at');
+
+                $fullnames = ucwords($customers->first_name." ".$customers->last_name);
+                if($customers && strlen($fullnames) < 4){
+                    $fullnames = "Not specified";
+                }
+                $email = $customers->email;
+                if($customers && strlen($email) < 4){
+                    $email = "Not specified";
+                }
+
+                $results .= "<tr>
+                    <td>$k</td>
+                    <td>".$fullnames."</td>
+                    <td>".$email."</td>
+                    <td>".date("D jS, M Y h:ia", strtotime($dates))."</td>
+                </tr>";
+                $k++;
+            }
+        }
+        $results .= "</table>";
+        return $results;        
+    }
+
+
+    public function get_users_prvd(Request $request)
+    {
+        $rules = [
+            'user_id' => 'required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+        $site_features = User::where('id', $request->user_id)->first();
+        $user_fts = explode(",", $site_features->feature_access);
+        $site_features = SiteFeature::select('id', 'features')->get();
+
+        $results = "";
+        $results .= '<select name="features[]" multiple class="input select_features">
+            <option value=""></option>';
+            if(count($site_features) > 0){
+                foreach($site_features as $feature){
+                    $selected = in_array($feature->id, $user_fts) ? "selected" : "";
+                    $results .= '<option value="'.$feature->id.'" '.$selected.'>'.$feature->features.'</option>';
+                }
+            }
+        $results .= '</select>';
+        return $results;        
+    }
+
+    
+    public function clrs(){
+        session()->forget('hidden_emails');
+        session()->forget('hidden_deliverability');
+    }
+
     public function reply_email_support($id, Request $request)
     {
         //Validate Request
@@ -493,12 +702,10 @@ class AdminController extends Controller
         if ($messageUser->sender_id == Auth::guard('admin')->user()->id) {
             $user = User::where('id', $messageUser->reciever_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-            $data = [
-                'message_users_id' => $request->convo_id,
+            $sendMessage = Message::create([
+                'message_users_id' => $messageUser->id,
                 'message' => $request->message
-            ];
-
-            $sendMessage = Message::create($data);
+            ]);
 
             $this->fcm('Message from ' . Auth::guard('admin')->user()->name . ': ' . $request->message, $user);
 
@@ -510,12 +717,10 @@ class AdminController extends Controller
         } else {
             $user = User::where('id', $messageUser->sender_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-            $data = [
-                'message_users_id' => $request->convo_id,
+            $sendMessage = Message::create([
+                'message_users_id' => $messageUser->id,
                 'message' => $request->message
-            ];
-
-            $sendMessage = Message::create($data);
+            ]);
 
             $this->fcm('Message from ' . Auth::guard('admin')->user()->name . ': ' . $request->message, $user);
 
@@ -565,6 +770,11 @@ class AdminController extends Controller
         return view('Admin.email-marketing.email-kits.index', [
             'admin_email_integrations' => $admin_email_integrations
         ]);
+    }
+
+    public function validate_email()
+    {
+        return view('Admin.email-marketing.email-kits.validate_email');
     }
 
     public function view_email_campaigns()
@@ -654,8 +864,634 @@ class AdminController extends Controller
         ]);
     }
 
-    // EMAIL-MARKETING
 
+    function getStats(){
+        $dailyRecords = Broadcast::whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])->count();
+        $weeklyRecords = Broadcast::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+        $monthlyRecords = Broadcast::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
+        $yearlyRecords = Broadcast::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
+        $broadcasts = Broadcast::where('channel', '!=', 'whatsapp')->count();
+        $smsBroadcst = Broadcast::where('channel', 'sms')->count();
+        $emailBroadcst = Broadcast::where('channel', 'email')->count();
+
+        $dailySubRecords = \App\Models\OjaSubscription::whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])->count();
+        $weeklySubRecords = \App\Models\OjaSubscription::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
+        $monthlySubRecords = \App\Models\OjaSubscription::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->count();
+        $yearlySubRecords = \App\Models\OjaSubscription::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->count();
+        $subCounts = \App\Models\OjaSubscription::count();
+        $activeSub = \App\Models\OjaSubscription::where('status', 'Active')->count();
+
+        $dailyOptRecords = UpsellPageSubmission::whereBetween('created_at', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])->groupBy('page_id')->count();
+        $weeklyOptRecords = UpsellPageSubmission::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->groupBy('page_id')->count();
+        $monthlyOptRecords = UpsellPageSubmission::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->groupBy('page_id')->count();
+        $yearlyOptRecords = UpsellPageSubmission::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])->groupBy('page_id')->count();
+        $optCounts = UpsellPageSubmission::groupBy('page_id')->count();
+        $pendingOpt = UpsellPageSubmission::where('status', 'Pending')->groupBy('page_id')->count();
+        $paidOpt = UpsellPageSubmission::where('status', 'Paid')->groupBy('page_id')->count();
+        $failedOpt = UpsellPageSubmission::where('status', 'Failed')->groupBy('page_id')->count();
+
+        $data = [
+            'daily'             => $dailyRecords,
+            'weekly'            => $weeklyRecords,
+            'monthly'           => $monthlyRecords,
+            'yearly'            => $yearlyRecords,
+            'broadcasts'        => $broadcasts,
+            'smsBroadcst'       => $smsBroadcst,
+            'emailBroadcst'     => $emailBroadcst,
+            //////////////////////////////////////////
+            'ojaSubDaily'       => $dailySubRecords,
+            'ojaSubWeekly'      => $weeklySubRecords,
+            'ojaSubMonthly'     => $monthlySubRecords,
+            'ojaSubYearly'      => $yearlySubRecords,
+            'ojaSub'            => $subCounts,
+            'ojaActiveSub'      => $activeSub,
+            //////////////////////////////////////////
+            'ojaOptDaily'       => $dailyOptRecords,
+            'ojaOptWeekly'      => $weeklyOptRecords,
+            'ojaOptMonthly'     => $monthlyOptRecords,
+            'ojaOptYearly'      => $yearlyOptRecords,
+            'ojaOpt'            => $optCounts,
+            'pendingOpt'        => $pendingOpt,
+            'paidOpt'           => $paidOpt,
+            'failedOpt'         => $failedOpt,
+        ];
+        return $data;
+    }
+
+
+    // sales analytics
+    public function email_analytics(Request $request)
+    {   
+        $data = $this->getStats();
+        return view('Admin.emailAnalytics', $data);
+        
+    }
+
+    
+    public function getStatistics(Request $request)
+    {
+        $rules = [
+            'sory_by'  => 'bail|required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => "Data retrieved",
+            'data' => $this->getStats()
+        ],200);
+    }
+
+
+    public function add_users(Request $request)
+    {
+        $rules = [
+            'fullname'      => 'bail|required|regex:/^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/', // 2 words and space
+            'email'         => 'required|email|string|unique:users,email',
+            'password'      => 'required|string|min:8',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+
+        // return $request->referral_link;
+
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+
+        $customer = Customer::newCustomer();
+
+        $user = new User();
+        if (!empty($request->old())) {
+            $customer->fill($request->old());
+            $user->fill($request->old());
+        }
+
+        // save posted data
+        if ($request->isMethod('post')) {
+            $user->fill($request->all());
+            $rules = $user->registerRules();
+
+            $plan = OjaPlan::where('name', 'Free')->first();
+            // Okay, create it
+            if ($plan) {
+                $user = $customer->adminCreateAccountAndUser($request);
+            } else {
+                
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Admin yet to add plans! Try again later.'
+                ])->withInput();
+            }
+
+        }
+
+        if($user){
+            $users = User::where("id", $user->id)->update([
+                'customer_id' => $user->id
+            ]);
+
+            Mail::to($request->email)->send(new AccountInfoMail($request->email, $request->password));
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "user added",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in adding user",
+            'data' => ''
+        ],200);
+    }
+
+
+    public function update_prvdg(Request $request)
+    {
+        $rules = [
+            'features'      => 'bail|required',
+            'user_id'      => 'required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+        $features1 = $request->features;
+        $all_fts = "";
+        if(isset($features1) && count($features1) > 0){
+            foreach($features1 as $fts){
+                $all_fts .= "$fts,";
+            }
+        }
+        $all_fts = substr($all_fts, 0, -1);
+
+        $users = User::where("id", $request->user_id)->update([
+            'feature_access' => $all_fts
+        ]);
+
+        if($users){
+            return response()->json([
+                'status' => 'success',
+                'message' => "user priviledges changed",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in updating user priviledges",
+            'data' => ''
+        ],200);
+    }
+
+
+    public function sendMessageMultitexter($data, $allDataPhones)
+    {
+        $contacts = User::whereNotNull('phone_number')->pluck('phone_number')->toArray();
+        $integration = \App\Models\Integration::where('type', 'Multitexter')->first();
+        $api_key = env('MULTITEXTER_API');
+
+        try {
+            foreach($allDataPhones as $phone)
+            {
+                $phoneNumber = trim("0" . ltrim(ltrim(ltrim(ltrim($phone, "0"), "2340"), "234"), "+234"));
+                // $get_formatted_phone = "+234".(int)$phoneNumber."<br>";
+                $phoneNumber = str_replace("+", "", $phoneNumber);
+
+                $client = new Client(); //GuzzleHttp\Client
+                $url = "https://app.multitexter.com/v2/app/sendsms";
+
+                $params = [
+                    "sender_name" => 'OjaFunnel',
+                    "message" => $data['body'],
+                    "recipients" => $phoneNumber
+                    // "recipients" => "08161215848"
+                ];
+
+                $headers = [
+                    'Authorization' => 'Bearer ' . $api_key
+                ];
+
+                $client->request('POST', $url, [
+                    'json' => $params,
+                    'headers' => $headers,
+                ]);
+            }
+            // $responseBody = json_decode($response->getBody());
+            $responseBody = true;
+        } catch (Exception $e) {
+            $responseBody = $e;
+        }
+        return $responseBody;
+    }
+
+
+
+    public function sendMessageTwilio($sms, $phones)
+    {
+        $integration = \App\Models\Integration::where('type', 'Multitexter')->first();
+        $sid = env('TWILIO_SID');
+        $auth_token = env('TWILIO_TOKEN');
+        $from_number = env('TWILIO_FROM');
+        $notify_sid = env('TWILIO_NOTIFY_SID');
+        $message = $sms['body'];
+        $sender_name = "OjaFunnel";
+
+        $phones = ['+2348038204317'];
+
+        // this below is working////
+            /* $twilio = new twilio($sid, $auth_token);        
+            $verification = $twilio->verify
+            ->v2->services(ENV('TWILIO_SERVICE_ID'))
+            ->verifications
+            ->create('+2348035204317', "sms");
+            return $verification; */
+        // this below is working////
+
+
+
+        // $sid = getenv("TWILIO_ACCOUNT_SID");
+        // $token = getenv("TWILIO_AUTH_TOKEN");
+        // $notify_sid = getenv("TWILIO_NOTIFY_SID");
+
+        // $twilio = new Client($sid, $token);
+        $twilio = new twilio($sid, $auth_token); 
+
+        return $twilio->messages->create(
+            $number,
+            [
+                'from' => $from_number,
+                'body' => $message,
+            ]);
+
+
+            
+        // return $twilio->messages->create(
+        //     $number,
+        //     [
+        //         // 'from' => $from_number,
+        //         'body' => $message,
+        //     ]
+        // );
+
+
+        /* foreach( $phones as $number ){
+            $twilio->messages->create(
+            $number,
+            [
+                'from' => $from_number,
+                'body' => $message,
+            ]);
+        } */
+
+        
+
+        // $users = User::where('user_type','user')->pluck('phone');
+        $subscribers = [];
+        foreach($phones as $user)
+        {
+            $subscribers[] = json_encode(['binding_type' => 'sms','address' => $user]);
+        }
+
+        $request_data = [
+            'toBinding' => $subscribers,
+            'body' => $message
+        ];
+
+        //Create a notification
+        try
+        {
+            $notification = $twilio->notify->services($notify_sid)->notifications->create($request_data);
+
+        }catch(\Exception $e)
+        {
+            //echo $e;
+            $error = $e->getMessage();
+            // Log::channel('daily')->error('Admin push notification failed, error message : ' . $error);
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Error occured sending notification. error message ' . $error
+            ],400);
+        }
+        
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Message sent successfully'
+        ],200);
+          
+
+
+       
+
+        // try {
+        //     $sid = $sid; // Your Account SID from www.twilio.com/console
+        //     $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+        //     $from_number = $from_number; // Valid Twilio number
+
+        //     $client = new twilio($sid, $auth_token);
+        //     $count = 0;
+
+        //     $message = $client->messages
+        //     ->create("+447522097511", // to
+        //         array(
+        //         "from" => "+2348035204317",
+        //         "body" => "this is a test"
+        //         )
+        //     );
+
+        //     /* foreach( $phones as $number ){
+        //         $count++;
+        //         $client->messages->create(
+        //             $number,
+        //             [
+        //                 'from' => $from_number,
+        //                 'body' => $message,
+        //             ]
+        //         );
+        //     } */
+        //     return true;
+        // }catch(Exception $e) {
+        //     return $e->getMessage();
+        // }
+    }
+
+
+    public function sendMessageToWhatsApp($sms, $phones)
+    {
+        // $date = Carbon::now();
+
+        // $current_date = $date->format('Y-m-d');
+        // $current_time = $date->format('H:i');
+
+        $contacts = User::whereNotNull('phone_number')->get();
+
+        // divide into 10 chunks and 
+        // delay each job between 10  - 20 sec in the queue
+        $chunks = $contacts->chunk(10);
+        $delay = mt_rand(10, 20);
+
+        // dispatch job and delay
+        foreach ($chunks as $key => $_chunk) {
+            // dispatch job
+            ProcessTemplate1BulkWAMessages::dispatch($_chunk, [
+                'whatsapp_account' => $_chunk->phone_number,
+                'full_jwt_session' => $_chunk->full_jwt_session,
+                'template1_message' => $_campaign->template1_message,
+                'wa_campaign_id' => $_campaign->id
+            ])->onQueue('waTemplate1')->delay($delay);
+
+            $delay += mt_rand(10, 20);
+        }
+        
+
+        // update the campaign queue to waiting
+        WaQueues::where(['wa_campaign_id' => $_campaign->id])->update([
+            'status' => 'Waiting'
+        ]);
+    }
+
+
+
+    public function send_broadcast(Request $request)
+    {
+        $rules = [
+            'channel'      => 'required',
+            'subject'      => 'required',
+            'message'      => 'required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+
+        $channels = $request->channel;
+        $user_emails = [];
+        $user_phones = [];
+        $user_whatsapp = [];
+
+        //if(in_array('emails', $user_channel)){
+        if($request->channel == "emails"){
+            // $user_emails = User::whereNotNull('email')->whereRaw("email LIKE '%chinny%' OR email LIKE '%chibobo%' OR email LIKE '%promiseezema11%'")->pluck('email')->toArray();
+            $user_emails = User::whereNotNull('email')->pluck('email')->toArray();
+        }
+        //if(in_array('sms', $user_channel)){
+        if($request->channel == "sms"){
+            $user_phones = User::whereNotNull('phone_number')->pluck('phone_number')->toArray();
+        }
+        //if(in_array('whatsapp', $user_channel)){
+        if($request->channel == "whatsapp"){
+            $user_whatsapp = User::whereNotNull('phone_number')->pluck('phone_number')->toArray();
+        }
+
+       $allDataEmails = array_merge($user_emails);
+       $allDataPhones = array_merge($user_phones, $user_whatsapp);
+
+       $all_emails = "";
+       $all_phones = "";
+       $send_emails = false;
+
+        if(count($allDataEmails) > 0){
+            $data = array(
+                'name' => "Hello Chief",
+                'subject' => $request->subject,
+                'body' => $request->message,
+                'emails' => $allDataEmails
+            );
+
+            Broadcast::create([
+                'subject' => $request->subject,
+                'message' => $request->message,
+                'channel' => 'email',
+            ]);
+
+            Mail::to(env('MAIL_FROM_ADDRESS'))->bcc($data['emails'])->send(new BroadcastEmail($data['subject'], $data['body']));
+            $send_emails = true;
+        }
+
+        if(count($allDataPhones) > 0){
+            // if(in_array('sms', $request->channel)){
+            if($request->channel == "sms"){
+                Broadcast::create([
+                    'message' => $request->message,
+                    'channel' => $request->channel,
+                ]);
+                $data = array(
+                    'name' => "Hello Chief",
+                    'body' => $request->message,
+                );
+                $send_emails = $this->sendMessageMultitexter($data, $allDataPhones);
+            }
+
+            // if(in_array('whatsapp', $request->channel)){
+            if($request->channel == "whatsapp"){
+                Broadcast::create([
+                    'subject' => $request->subject,
+                    'message' => $request->message,
+                    'channel' => $request->channel,
+                ]);
+                $data = array(
+                    'name' => "Hello Chief",
+                    'subject' => $request->subject,
+                    'body' => $request->message,
+                );
+                $send_emails = $this->sendMessageToWhatsApp($data, $allDataPhones);
+            }
+        }
+
+        if($send_emails){
+            return response()->json([
+                'status' => 'success',
+                'message' => "Broadcast sent",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in sending broadcast",
+            'data' => ''
+        ],200);
+    }
+
+
+    public function renew_extend(Request $request)
+    {
+        // return $request->all();
+        $attributes = [
+            'sub_type'          => 'Subscription type',
+            'start_date'        => 'Start date',
+            'end_date'          => 'Extend date',
+            'subscription_id'   => 'ID',
+            
+        ];
+        $rules = [
+            'subscription_id'   => 'bail|required',
+            'sub_type'          => 'bail|required',
+            'start_date'        => 'required|date',
+            'end_date'          => 'date|required_if:sub_type,==,extend',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+
+        $nowDate = Carbon::now();
+        $toDate = Carbon::parse($request->end_date);
+        $fromDate = Carbon::parse($request->start_date);
+        $months = $toDate->diffInDays($fromDate);
+
+        if($toDate <= $nowDate && $request->sub_type == "extend"){
+            return response()->json([
+                'message' => "Invalid date, cannot choose past or present date",
+            ],200); 
+        }
+
+        $toDate1 = Carbon::parse($request->end_date);
+        $fromDate1 = Carbon::now();
+        $extend_days = $toDate1->diffInDays($fromDate1);
+
+        if($months <= 31 && $months >= 28){ // one month
+            $duration_timestamp = strtotime(Carbon::now()->addDays((int)$months)->toDateTimeString());
+            $expiryNotice = strtotime(Carbon::now()->addDays((int)$months)->subDays(7)->toDateTimeString());
+        }else{ // one year
+            $duration_timestamp = strtotime(Carbon::now()->addYears(1)->toDateTimeString());
+            $expiryNotice = strtotime(Carbon::now()->addYears(1)->subDays(7)->toDateTimeString());
+        }
+
+
+        if($request->sub_type == "renew"){
+            $duration_timestamp1 = date("Y-m-d H:i:s", $duration_timestamp);
+            $subs = \App\Models\OjaSubscription::where("id", $request->subscription_id)->update([
+                'ends_at' => $duration_timestamp1,
+                'expiry_notify_at' => $expiryNotice,
+                'renewed'=> \DB::raw('renewed+1'), 
+            ]);
+        }else{ // extend
+            $duration_timestamp = strtotime(Carbon::now()->addDays((int)$extend_days));
+            $duration_timestamp1 = date("Y-m-d H:i:s", $duration_timestamp);
+            $subs = \App\Models\OjaSubscription::where("id", $request->subscription_id)->update([
+                'ends_at' => $duration_timestamp1,
+                'expiry_notify_at' => $expiryNotice,
+                'extended'=> \DB::raw('extended+1'), 
+            ]);
+        }
+
+        if($subs){
+            if($request->sub_type == "renew"){
+                $caption1 = "renewed";
+                $caption2 = "renewing";
+            }else{
+                $caption1 = "extended";
+                $caption2 = "extending";
+            }
+            return response()->json([
+                'status' => 'success',
+                'message' => "Subscription has been $caption1 by $extend_days days",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in $caption2 subscription",
+            'data' => ''
+        ],200);
+    }
+
+
+    public function react_feature(Request $request)
+    {
+        $attributes = ['id'  => 'ID'];
+        $rules = ['id'   => 'required'];
+        $validator = \Validator::make($request->all(), $rules)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+
+        $site_features = SiteFeature::whereRaw("md5(id) = '$request->id'")->first();
+        $site_features->update([
+            'status' => $site_features->status == "enable" ? "disabled" : "enable"
+        ]);
+
+        if($site_features){
+            return response()->json([
+                'status' => 'success',
+                'message' => "Successful",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in reacting to feature",
+            'data' => ''
+        ],200);
+    }
+
+
+    public function generateAndValidateIfPromotionLinkNotExist()
+    {
+        $promotionLink = substr(sha1(mt_rand()), 17, 20);
+        $user = User::where('promotion_link', $promotionLink);
+        if ($user->exists()) $this->generateAndValidateIfPromotionLinkNotExist();
+        return $promotionLink;
+    }
+
+
+    // EMAIL-MARKETING
     public function add_category(Request $request)
     {
         //Validate Request
@@ -820,6 +1656,10 @@ class AdminController extends Controller
     {
         return view('Admin.frontend.contact_us');
     }
+
+
+
+
 
     public function delete_contact_us($id)
     {
@@ -1920,8 +2760,27 @@ class AdminController extends Controller
 
         $list = ListManagement::find($finder);
 
+        $lists = ListManagementContact::where('list_management_id', $finder)->get();
+        $list_tags = "";
+        foreach($lists as $list1){
+            if($list1->tags !== null){
+                $list_tags .= $list1->tags.",";
+            }
+        }
+        $list_tags = str_replace(", ", ",", $list_tags);
+        $list_tags = array_unique(explode(',', $list_tags));
+
+        $arrs=[];
+        foreach($list_tags as $list_tag){
+            if($list_tag !== ""){
+                $arrs[] = $list_tag;
+            }
+        }
+        $data['tags'] = $arrs;
+
         return view('Admin.list-management.view')->with([
-            'list' => $list
+            'list' => $list,
+            'tags1' => $data
         ]);
     }
 
@@ -1946,6 +2805,16 @@ class AdminController extends Controller
             'status' => true
         ]);
 
+        
+        $names = User::find($list->user_id)->first_name.' '.User::find($list->user_id)->first_name;
+        $email = User::find($list->user_id)->email;
+        // $email = "donchibobo@gmail.com";
+        $list_name = ucwords($list->name);
+        $message = "Your list $list_name has been approved and is now available for other subscribers";
+        $title = "List activated successfully.";
+
+        Mail::to($email)->send(new UserApprovedNotification($names, $message, $title));
+
         return back()->with([
             'type' => 'success',
             'message' => 'List activated successfully.',
@@ -1961,6 +2830,15 @@ class AdminController extends Controller
         $list->update([
             'status' => false
         ]);
+
+        $names = User::find($list->user_id)->first_name.' '.User::find($list->user_id)->first_name;
+        $email = User::find($list->user_id)->email;
+        // $email = "donchibobo@gmail.com";
+        $list_name = ucwords($list->name);
+        $message = "Your list $list_name has been declined. Please contact the admin for any enquiries, thank you!";
+        $title = "List disactivated successfully.";
+
+        Mail::to($email)->send(new UserApprovedNotification($names, $message, $title));
 
         return back()->with([
             'type' => 'success',

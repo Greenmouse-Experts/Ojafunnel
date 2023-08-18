@@ -22,7 +22,10 @@ return new class extends Migration
             $table->string('currency')->nullable();
             $table->dateTime('current_period_ends_at')->nullable();
             $table->boolean('canceled_immediately')->nullable();
-            $table->date('expiry_notify_at')->nullable();
+            $table->dateTime('expiry_notify_at')->nullable();
+            $table->integer('subscription_reminder')->default(0);
+            $table->integer('extended')->default(0);
+            $table->integer('renewed')->default(0); //
             $table->dateTime('ends_at')->nullable();
             $table->dateTime('started_at')->nullable();
             $table->timestamps();

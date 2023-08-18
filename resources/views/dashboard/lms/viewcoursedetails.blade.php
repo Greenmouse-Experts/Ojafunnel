@@ -130,7 +130,7 @@
                                     <section class="course-content-area">
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-12">
                                                     <div class="what-you-get-box">
                                                         <div class="what-you-get-title">What i will learn?</div>
                                                         <ul class="what-you-get__items">
@@ -191,6 +191,31 @@
                                                             <div class="description-content">
                                                                 {{$course->description}}
                                                             </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="description-box view-more-parent">
+                                                        <div class="description-title">Quiz Section</div>
+                                                            <!-- <a href="{{ $course->id }}/take-quiz"><b>Click to take this quiz</b></a> -->
+
+                                                            
+
+                                                        <div class="requirements-content">
+                                                            <ul class="requirements__list">
+                                                                @if(count(App\Models\LmsQuiz::where('course_id', $course->id)->where('user_id', Auth::user()->id)->get()) > 0)
+                                                                    @foreach(App\Models\LmsQuiz::where('course_id', $course->id)->where('user_id', Auth::user()->id)->get() as $index => $quizes)
+
+                                                                        @php
+                                                                        $usernames = Auth::user()->username;
+                                                                        $url = url("$usernames/dashboard/Learning/view-course-details/$course->id/take-quiz/$quizes->session");
+                                                                        @endphp
+
+                                                                        <li style="margin-bottom:10px;font-size:14px;"><a href="{{ $url }}"><b>Click to take this quiz {{ $index+1 }}</b></a></li>
+                                                                    @endforeach
+                                                                @else
+                                                                    <li>No quiz found yet</li>
+                                                                @endif
+                                                            </ul>
                                                         </div>
                                                     </div>
                                                 </div>

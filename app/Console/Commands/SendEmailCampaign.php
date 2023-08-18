@@ -27,6 +27,7 @@ class SendEmailCampaign extends Command
      * @var string
      */
     protected $description = 'This command checks for due email campaign and send';
+    
 
     /**
      * Execute the console command.

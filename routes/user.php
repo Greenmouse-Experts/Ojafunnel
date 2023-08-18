@@ -39,6 +39,9 @@ Route::prefix('user')->group(function () {
     Route::post('/subscriber/mailing/contact/delete/{id}', [App\Http\Controllers\SubscriberController::class, 'subscriber_mailing_contact_delete'])->name('user.subscriber.mailing.contact.delete');
     Route::get('/subscriber/mailing/format/download', [App\Http\Controllers\SubscriberController::class, 'subscriber_download_format'])->name('user.subscriber.download.format');
 
+    // UnSubscribers 
+    Route::get('/unsubscribe/{id}', [App\Http\Controllers\SubscriberController::class, 'unsubscribe_user'])->name('unsubscribe'); //
+
     // Page Builder
     Route::post('/page/builder/create', [App\Http\Controllers\PageController::class, 'page_builder_create'])->name('user.page.builder.create');
     Route::any('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');
@@ -125,7 +128,8 @@ Route::prefix('user')->group(function () {
     Route::post('/list/management/create/contact/{id}', [ListManagementController::class, 'create_contact'])->name('user.create.contact');
     Route::get('/list/management/contact/edit/{id}', [ListManagementController::class, 'edit_contact'])->name('user.edit.contact');
     Route::post('/list/management/contact/update/{id}', [ListManagementController::class, 'update_contact'])->name('user.update.contact');
-    Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('user.delete.contact');
+    Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');
+    Route::post('/list/management/contact/unsub/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');
     Route::get('/list/management/upload/contact/list/{id}', [ListManagementController::class, 'upload_contact_list'])->name('user.upload.contact.list');
     Route::post('/list/management/upload/contact/{id}', [ListManagementController::class, 'upload_contact'])->name('user.upload.contact');
 

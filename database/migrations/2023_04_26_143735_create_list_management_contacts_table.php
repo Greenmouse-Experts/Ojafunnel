@@ -28,6 +28,7 @@ return new class extends Migration
             $table->date('date_of_birth')->nullable();
             $table->date('anniv_date')->nullable();
             $table->boolean('subscribe')->index();
+            $table->string('tags', 150)->nullable();
             $table->timestamps();
         });
     }

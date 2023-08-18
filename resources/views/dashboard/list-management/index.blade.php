@@ -63,6 +63,7 @@
                                             <th>Description</th>
                                             <th>Contact</th>
                                             <th>Status</th>
+                                            <!-- <th>Tags</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -90,6 +91,22 @@
                                                 <span class="badge badge-pill badge-soft-danger font-size-11">In-active</span>
                                                 @endif
                                             </td>
+                                            <!-- <td>
+                                                @php
+                                                $tags=[];
+                                                if($list->tags != ""){
+                                                    $tags = str_replace(", ", ",", $list->tags);
+                                                    $tags = explode(",", $tags);
+                                                }
+                                                @endphp
+
+
+                                                @if(count($tags) > 0)
+                                                    @foreach($tags as $tag)
+                                                        <p class='text-bold-600' style="display:inline"><label style="background:#999;border-radius:30px;padding:1px 7px;color:#fff;font-size:12px;">{{ $tag }}</label></p>
+                                                    @endforeach
+                                                @endif
+                                            </td> -->
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

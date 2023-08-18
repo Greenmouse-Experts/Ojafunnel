@@ -125,7 +125,7 @@
                                             <th>Phone</th>
                                             <th>Address</th>
                                             <th>Status</th>
-                                            <!-- <th>List</th> -->
+                                            <th>Tags</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -152,7 +152,15 @@
                                                 <span class="badge badge-pill badge-soft-danger font-size-11">Unsubscribed</span>
                                                 @endif
                                             </td>
-                                            <!-- <td></td> -->
+                                            
+                                            <td>
+                                                @if(count($tags1['tags']) > 0)
+                                                    @foreach($tags1['tags'] as $tag)
+                                                        <p class='text-bold-600' style="display:inline"><label style="background:#999;border-radius:30px;padding:1px 7px;color:#fff;font-size:12px;">{{ $tag }}</label></p>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -160,6 +168,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li><a class="dropdown-item" href="{{route('user.edit.contact', Crypt::encrypt($contact->id))}}" style="cursor: pointer;">View/Edit</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#unsubscribe-{{$contact->id}}">Unsubscribe</a></li>
                                                         <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$contact->id}}">Delete</a></li>
                                                     </ul>
                                                 </div>
@@ -173,7 +182,11 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        <form method="POST" action="{{ route('user.delete.contact', Crypt::encrypt($contact->id))}}">
+                                                                        @php /*
+                                                                        <form method="POST" action="{{ route('delete_contact', Crypt::encrypt($contact->id))}}">
+                                                                        */
+                                                                        @endphp
+                                                                        <form method="POST" action="{{ url('user/list/management/contact/delete/'.Crypt::encrypt($contact->id)) }}">
                                                                             @csrf
                                                                             <div class="form">
                                                                                 <p><b>Delete Contact</b></p>
@@ -185,6 +198,40 @@
                                                                                         <div class="boding">
                                                                                             <button type="submit" class="form-btn">
                                                                                                 I understand this consquences, Delete Contact
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id="unsubscribe-{{$contact->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content pb-3">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body ">
+                                                                <div class="row">
+                                                                    <div class="Editt">
+                                                                        <form method="POST" action="{{ url('user/list/management/contact/unsub/'.Crypt::encrypt($contact->id)) }}">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <p><b>Unsubscribe from this list?</b></p>
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12">
+                                                                                        <p>This action cannot be undone. </p> <p>You will not be able to receive latest updates from this list, continue?</p>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <div class="boding">
+                                                                                            <button type="submit" class="form-btn">
+                                                                                                I understand this consquences, UnSubscribe
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>

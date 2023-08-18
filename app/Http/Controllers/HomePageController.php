@@ -28,6 +28,37 @@ class HomePageController extends Controller
     {
         return view('frontend.index');
     }
+
+    function redirects() {
+        $user = Auth::user()->id;
+        $username = User::where('id', $user)->value('username');
+        $js = "<script>";
+        $js .= "alert(\"This page has been disabled by the admin, try again later\");";
+        $js .= "window.location = `/$username/dashboard/`;";
+        $js .= "</script>";
+        return $js;
+    }
+
+    public function site_features_settings($page_name){
+        $site_features = \App\Models\SiteFeature::where('features', $page_name)->where('status', 'disabled')->first();
+        return $site_features;
+    }
+    public function user_site_features_settings($page_name){
+        $feature_access = explode(",", Auth::user()->feature_access);
+        $user_site_features = \App\Models\SiteFeature::whereIN('id', $feature_access)->pluck('id')->toArray();
+        $m=0;
+        if(count($user_site_features) > 0){
+            $m=0;
+            foreach($user_site_features as $user_site_feature){
+                $isDisabled = \App\Models\SiteFeature::where('id', $user_site_feature)->where('features', $page_name)->first();
+                if($isDisabled){
+                    $m+=1;
+                }
+            }
+        }
+        return $m;
+    }
+
     public function subscribe_newsletter(Request $request)
     {
         //Validate Request
@@ -284,6 +315,18 @@ class HomePageController extends Controller
         curl_close($curl);
         dd($response);
     }
+
+    public function store_cart_details_tmp(Request $request){
+        // store temporary user details on the database incase they didnt purchase, we will have to remind them
+        // delete back this if they have made payment
+        session()->put('customer_email', request()->customer_email);
+        $temp_carts = \App\Models\TempCart::create([
+            'email' => request()->customer_email,
+            'product_id' => request()->product_id,
+            'product_type' => request()->product_type,
+        ]);
+    }
+
 
     public function contactConfirm(Request $request)
     {

@@ -1218,12 +1218,12 @@ body {
     display: block;
     width: 100%;
     margin-top: -10px;
-    padding: 10px 5px 10px 40px;
+    padding: 13px 5px 12px 12px;
     border-radius: 3px;
     border: 1px solid #70418F;
     letter-spacing: 0.8px;
     background-color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     transition: 0.6s;
 }
 
@@ -1231,26 +1231,29 @@ body {
     display: block;
     width: 100%;
     margin-top: -10px;
-    padding: 10px 5px 10px 20px;
+    padding: 13px 5px 12px 12px;
     border-radius: 3px;
     border: 1px solid #70418F;
     letter-spacing: 0.8px;
     background-color: #F8F8FB;
-    font-size: 12px;
+    font-size: 14px;
     transition: 0.6s;
+    resize: none !important;
 }
 
 .form select {
     display: block;
     width: 100%;
     margin-top: -10px;
-    padding: 10px 5px 10px 20px;
+    padding: 13px 5px 12px 12px;
+    height: auto !important;
     border-radius: 3px;
     border: 1px solid #70418F;
-    letter-spacing: 0.8px;
-    background-color: #F8F8FB;
-    font-size: 10px;
+    letter-spacing: 0;
+    background-color: #eee;
+    font-size: 14px;
     transition: 0.6s;
+    font-weight: 600;
 }
 
 .Dept {
@@ -1262,7 +1265,7 @@ body {
 /* Email  Summary  Ends*/
 
 /* Email  Campaign */
-.all-create button {
+.all-create button, .add_more, .custom_btns, .custom_btns1 {
     border: 1px solid #70418F;
     padding: 10px 20px 10px 20px;
     background-color: #70418F;
@@ -1270,6 +1273,62 @@ body {
     display: block;
     margin: auto;
     border-radius: 5px;
+}
+
+
+
+.add_more {
+    border: 1px solid #888;
+    padding: 10px 20px 10px 20px;
+    background-color: #888;
+    color: #fff;
+    display: block;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.add_more, .custom_btns, .custom_btns1 {
+    float: right;
+    font-size: 14px !important;
+}
+
+.custom_btns1 {
+    float: none;
+    width: 100%;
+}
+
+.remove_btn{
+    border: none;
+    font-size: 13px;
+    background-color: #e95a5a;
+    color: #fff;
+    font-weight: 500;
+    padding: 13px 8px;
+    margin-top: 11px;
+    border-radius: 5px;
+}
+
+#chartdiv {
+	width: 100%;
+	height: 435px;
+	font-size: 11px;
+}
+
+.select_box{
+    width: 100%;
+    padding: 13px 10px;
+    border: 1px solid #ddd !important;
+    border-radius: 6px;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.select_box:focus, .select_box:active{
+    border: 1px solid #ddd !important;
+}
+.select_box option{
+    font-size: 16px !important;
+    padding: 13px 10px !important;
 }
 
 .all-create button:hover {
