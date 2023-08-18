@@ -59,6 +59,9 @@ class StoreFrontController extends Controller
     public function addToCart($id)
     {
         $product = StoreProduct::findOrFail($id);
+        $targetDate = strtotime($product->date_to);
+        $now = time();
+        $timeRemaining = $targetDate - $now;
 
         $cart = session()->get('cart', []);
 
@@ -70,7 +73,7 @@ class StoreFrontController extends Controller
                 "name" => $product->name,
                 "quantity" => 1,
                 'rmQuan' => $product->quantity,
-                "price" => $product->price,
+                "price" => $timeRemaining > 0 ? $product->new_price : $product->price,
                 "description" => $product->description,
                 "image" => $product->image
             ];

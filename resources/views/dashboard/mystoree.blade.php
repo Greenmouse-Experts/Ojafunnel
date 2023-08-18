@@ -27,13 +27,6 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <style>
-      #countdown {
-          font-size: 24px;
-          text-align: center;
-          margin-top: 50px;
-      }
-  </style>
 </head>
 
 <body class="bg-white">
@@ -95,7 +88,7 @@
                                 </div>
                                 <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                     <p>{{ $details['name'] }}</p>
-                                    <span class="price text-info"> #{{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
+                                    <span class="price text-info"> NGN{{ number_format($details['price']) }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
                                 </div>
                             </div>
                         @endforeach
@@ -160,19 +153,39 @@
                           @endif
                           <div class="found-top">
                               <img src="{{Storage::url($item->image)}}" alt="">
-                              <div id="countdown">
-                                timer
-                              </div>
 
-                              
+                              @php
+                                $targetDate = strtotime($item->date_to);
+                                $now = time();
+                                $timeRemaining = $targetDate - $now;
+
+                                if ($timeRemaining > 0) {
+                                    $days = floor($timeRemaining / (60 * 60 * 24));
+                                    $hours = floor(($timeRemaining % (60 * 60 * 24)) / (60 * 60));
+                                    $minutes = floor(($timeRemaining % (60 * 60)) / 60);
+                                    $seconds = $timeRemaining % 60;
+
+                                    echo "<div id='countdown'><label>{$days}d {$hours}h {$minutes}m {$seconds}s</label></div>";
+                                }
+                              @endphp
                           </div>
                           <div class="p-2">
                               <p class="font-500">{{$item->name}}</p>
-                              <p>{{number_format($item->price, 2)}} NGN</p>
-                              @if ($item->price >= 1)
-                                  <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
+
+                              @if ($timeRemaining <= 0)
+                                <p class="dynamic_price">NGN{{number_format($item->price, 2)}}</p>
+                                @if ($item->price >= 1)
+                                    <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
+                                @else
+                                    <button disabled>Out of Stock</button>
+                                @endif
                               @else
-                                  <button disabled>Out of Stock</button>
+                                <p class="dynamic_price">NGN{{number_format($item->new_price, 2)}} <span style="text-decoration:line-through;color:red;opacity:0.6;margin-left:4px;font-size:12px">NGN{{number_format($item->price, 2)}}</span></p>
+                                @if ($item->new_price >= 1)
+                                    <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
+                                @else
+                                    <button disabled>Out of Stock</button>
+                                @endif
                               @endif
 
                               @if ($isvalid)

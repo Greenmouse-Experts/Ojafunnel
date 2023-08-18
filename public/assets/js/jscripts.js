@@ -499,6 +499,50 @@ $('body').on('click', '.addTimer', function (e) {
 });
 
 
+
+$('body').on('click', '.accessCourse', function (e) {
+  e.preventDefault();
+  var self = this;    
+  var results = '';
+  $(self).attr('disabled', true).css({'opacity': '0.4'});
+  
+  $.ajax({
+    type : "POST",
+    url : site_url + "get-access-course",
+    data: $(".form_access_course").serialize(),
+    success : function(data){
+      if(data.status=="success"){
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire("Successful", "Authentication was successful", "success");
+        $(".form_access_course")[0].reset();
+
+        setTimeout(() => {
+          location.reload();
+        }, 300);
+      
+      }else{
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+          title: "Error!",
+          html: data.message,
+          icon: 'error',
+          timer: 3000
+        });
+      }
+    },error : function(data){
+      $(self).removeAttr('disabled').css({'opacity': '1'});
+      Swal.fire({
+        title: "Error!",
+        text: "Poor Network Connection!",
+        icon: 'error',
+        timer: 3000
+      });
+    }
+  });
+});
+
+
+
 $('body').on('click', '.cmdPayNow', function (e) {
   var self = this;    
   var results = '';

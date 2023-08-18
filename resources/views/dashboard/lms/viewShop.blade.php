@@ -75,8 +75,8 @@
                                             <img style="width: 70px" src="{{ $details['image'] ?? URL::asset('dash/assets/image/store-logo.png') }}" />
                                         </div>
                                         <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                            <p>{{ $details['title'] }}</p>
-                                            <span class="price text-info"> {{ $details['currency'] }}{{ number_format($details['price'], 2) }}</span>
+                                            <p>{{ isset($details['title']) ? $details['title'] : '' }}</p>
+                                            <span class="price text-info"> {{ isset($details['currency']) ? $details['currency'] : 'NGN' }}{{ $details['price'] ? number_format($details['price'], 2) : '' }}</span>
                                         </div>
                                     </div>
                                     @endforeach
