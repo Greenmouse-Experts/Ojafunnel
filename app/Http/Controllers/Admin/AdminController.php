@@ -11,6 +11,7 @@ use App\Models\Admin;
 use App\Models\Course;
 use App\Models\Funnel;
 use App\Models\FunnelCategory;
+use App\Models\CurrencyRate;
 use App\Models\Message;
 use App\Models\OjaPlan;
 use App\Models\Category;
@@ -3019,6 +3020,46 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Contact deleted!'
+        ]);
+    }
+
+    public function lms_xrate()
+    {
+        $xrates = CurrencyRate::all();
+
+        return view('Admin.lms.xrate')->with([
+            'records' => $xrates
+        ]);
+    }
+
+    public function lms_xrate_submit(Request $request)
+    {
+        $records = CurrencyRate::all();
+
+        if(sizeof($records) > 0) {
+
+            CurrencyRate::where(['fx_symbol' => 'USD'])
+                ->update(['fiat' => $request->dollar]);
+
+            CurrencyRate::where(['fx_symbol' => 'GBP'])
+                ->update(['fiat' => $request->pounds]);
+        } else {
+            $cur = new CurrencyRate;
+            $cur->fx_symbol = 'USD';
+            $cur->fx_amount = '1.00';
+            $cur->fiat =  $request->dollar;
+            $cur->save();
+
+            $cur = new CurrencyRate;
+            $cur->fx_symbol = 'GBP';
+            $cur->fx_amount = '1.00';
+            $cur->fiat =  $request->pounds;
+            $cur->save();
+        }
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Exchang rate updated!'
         ]);
     }
 

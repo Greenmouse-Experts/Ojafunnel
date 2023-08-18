@@ -90,6 +90,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/integration', [App\Http\Controllers\Admin\AdminController::class, 'integration'])->name('integration');
             Route::get('/birthday-module', [App\Http\Controllers\Admin\AdminController::class, 'birthday_module'])->name('birthdayModule');
 
+            Route::get('/exchange-rate', [App\Http\Controllers\Admin\AdminController::class, 'lms_xrate'])->name('system.xrate');
+            Route::post('/exchange-rate/update', [App\Http\Controllers\Admin\AdminController::class, 'lms_xrate_submit'])->name('xrate.update');
             // Whatsapp Support
             Route::get('/support/whatsapp', [App\Http\Controllers\Admin\AdminController::class, 'support_whatsapp'])->name('whatsappSupport');
             Route::post('/add/support/whatsapp', [App\Http\Controllers\Admin\AdminController::class, 'add_support_whatsapp'])->name('whatsappSupportAdd');

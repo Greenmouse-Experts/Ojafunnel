@@ -825,6 +825,36 @@ class PageController extends Controller
 
             $page = Page::findorfail($idFinder);
 
+            if($page->type == "questionaire_page") {
+
+                $form = \App\Models\QuizAutomationForm::where(['page_id' => $page->id])
+                    ->first();
+
+                \App\Models\QuizAutomationSubmission::where(['quiz_automation_id' => $form->id])
+                    ->delete();
+
+                \App\Models\QuizAutomationFormField::where(['quiz_automation_id' => $form->id])
+                    ->delete();
+
+                \App\Models\QuizAutomationForm::where(['page_id' => $page->id])
+                    ->delete();
+
+                if ($page->thumbnail) {
+                    Storage::delete(str_replace("storage", "public", $page->thumbnail));
+                }
+
+                if ($page->file_location) {
+                    File::deleteDirectory(public_path('pageBuilder/' . $page->slug));
+                }
+
+                $page->delete();
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'Page deleted successfully!'
+                ]);
+            }
+
             if ($page->thumbnail) {
                 Storage::delete(str_replace("storage", "public", $page->thumbnail));
             }

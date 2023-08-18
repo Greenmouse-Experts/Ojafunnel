@@ -109,8 +109,8 @@
                                         <form action="
                                             {{
                                                 route('course.payment.checkout', [
-                                                    'shopname' => $shop->name, 
-                                                    'promotion_id' => Request::get('promotion_id'), 
+                                                    'shopname' => $shop->name,
+                                                    'promotion_id' => Request::get('promotion_id'),
                                                     'course_id' => Request::get('course_id')
                                                 ])
                                             }}
@@ -313,6 +313,8 @@
                                                                                 <h6 class="m-0 text-end">Total:</h6>
                                                                             </td>
                                                                             <td>
+                                                                                {{ $details['currency'] }}{{ number_format($total, 2) }}
+                                                                                <input type="hidden" id="curr" value="{{$details['currency']}}" name="">
                                                                                 {{ isset($details) ? $details['currency'] : 'NGN' }}{{ number_format($total, 2) }}
                                                                                 <input type="hidden" id="totalAmount" value="{{ $total }}" name="">
                                                                             </td>
@@ -453,10 +455,28 @@
             if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '') {
                 $('#error').html('Please fill the asterisks field to continue');
             }
+            var currency = document.getElementById("curr").value;
+            var tamount = document.getElementById("totalAmount").value;
+            if(currency != "NGN") {
+                var multiplier = 1;
+                if(currency == "USD"){
+                    multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('USD')}}");
+                    tamount  = tamount * multiplier;
+                }
+
+                if(currency != "GBP") {
+                    multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('GBP')}}");
+                    tamount  = tamount * multiplier;
+                }
+
+                if(currency != "NGN") {
+                    tamount = 1 * Number.parseInt(tamount);
+                }
+            }
             var handler = PaystackPop.setup({
                 key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
                 email: $('#email').val(),
-                amount: document.getElementById("totalAmount").value * 100,
+                amount: tamount * 100,
                 ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
                 callback: function(response) {
                     // alert(JSON.stringify(response))

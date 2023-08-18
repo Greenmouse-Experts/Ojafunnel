@@ -139,16 +139,18 @@ class ShopFrontController extends Controller
         $shop = Shop::latest()->where('name', $request->shopname)->first();
         $courses = Course::latest()->where('user_id', $shop->user_id)->get();
 
-        $countries = \App\Models\Country::countries();
+        return view('dashboard.lms.checkout', compact('shop', 'courses'));
+
+//         $countries = \App\Models\Country::countries();
         // return $permissions;
 
         // foreach ($countries as $country) {
         //     $rules['permissions.' . $type] = 'required';
         // }
 
-        return view('dashboard.lms.checkout', compact('shop', 'courses'), [
-            'countries' => $countries
-        ]);
+//         return view('dashboard.lms.checkout', compact('shop', 'courses'), [
+//             'countries' => $countries
+//         ]);
         
         // return view('dashboard.lms.checkout', [
         //     'username' => $username
@@ -279,7 +281,7 @@ class ShopFrontController extends Controller
 
             // add fund to promoter and promoter referral wallet
             if ($item['id'] == $course_id && $promoter->exists()) {
-                // level1 fee 
+                // level1 fee
                 $promoter->update([
                     'wallet' => $promoter->first()->wallet + $level1_fee,
                     'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
