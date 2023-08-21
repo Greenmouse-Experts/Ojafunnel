@@ -150,7 +150,7 @@
 
                                                                     <select class="form-control p-15 txt_state" name="txt_state">
                                                                         <option value="">-Select Country-</option>
-                                                                        @if(count($countries) > 0)
+                                                                        @if(sizeof($countries) > 0)
                                                                             @foreach($countries as $index => $country)
                                                                                 @php
                                                                                     $country_code = $country['code'];
@@ -267,7 +267,7 @@
                                                                         </div>
 
                                                                         <input type='hidden' autocomplete='off' class='stripeToken' name='stripeToken' />
-                                                                        
+
                                                                         <div class="col-md-12 mt-4 text-center">
                                                                             <button class="btn btn-primary pe-6 ps-6 cmdPayNow" type="submit">Pay Now ($0.00)</button>
 
@@ -400,15 +400,15 @@
 
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
-    <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
-    
+    <script src="{{ asset('assets/js/jscripts.js') }}"></script>
 
-    
+
+
 
     <script>
         var token = $('#txt_token1').val();
         var site_url = $('#site_url').val();
-        
+
         $("#activePayment").click(function() {
             if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '') {
                 $('#error').html('Please fill the asterisks field to continue');
@@ -419,7 +419,7 @@
                     +'&product_id='+$('.product_id').val()
                     +'&product_type=courses'
                     +'&_token='+token;
-                
+
                     $.ajax({
                         type: "POST",
                         url : site_url + "store-cart-details-tmp", // store users email temporary, delete back if they complete the payment
@@ -429,7 +429,7 @@
                         success : function(data){}
                     });
                 }
-                
+
                 $('#v-pills-shipping-tab').removeClass('active')
                 $('#v-pills-shipping').removeClass('show active')
                 $('#v-pills-payment-tab').addClass('active')
