@@ -1,5 +1,6 @@
 @extends('layouts.admin-frontend')
 @section('page-content')
+@inject('uc', 'App\Http\Controllers\DashboardController')
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -38,6 +39,7 @@
                             <div class="mb-4">These users below are sorted by the highest referrals</div>
                             <div class="table-responsive">
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                    <?php /*
                                     <thead class="tread">
                                         <tr>
                                             <th scope="col">S/N</th>
@@ -63,6 +65,24 @@
                                             @endforeach
                                         @endif
                                     </tbody>
+                                    */ ?>
+
+                                    <thead class="tread">
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Name</th>
+                                            <th>Affiliate Type</th>
+                                            <th>Level</th>
+                                            <th>Commission (%)</th>
+                                            <th>Referred By</th>
+                                            <th>Status</th>
+                                            <th>Joined Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="myTable">
+                                        {!! $uc->getdownlines(\App\Models\User::all()) !!}
+                                    </tbody>
+
                                 </table>
                             </div>
                         </div>

@@ -129,6 +129,7 @@ Route::post('submit-answers', [App\Http\Controllers\DashboardController::class, 
 Route::post('submit-quizzes', [App\Http\Controllers\DashboardController::class, 'submit_quizzes'])->name('submit-quizzes');
 
 Route::post('delete-session', [App\Http\Controllers\DashboardController::class, 'delete_session'])->name('delete-session');
+Route::post('delete-course', [App\Http\Controllers\DashboardController::class, 'delete_course'])->name('delete-course');
 Route::post('delete-requirement', [App\Http\Controllers\DashboardController::class, 'delete_requirement'])->name('delete-requirement');
 Route::post('stripe', [App\Http\Controllers\ShopFrontController::class, 'stripePost'])->name('stripe.post');
 
