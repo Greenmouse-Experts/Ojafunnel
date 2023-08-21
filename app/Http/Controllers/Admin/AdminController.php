@@ -1309,7 +1309,7 @@ class AdminController extends Controller
 
         if(count($allDataEmails) > 0){
             $data = array(
-                'name' => "Hello Chief",
+                'name' => "OjaFunnel",
                 'subject' => $request->subject,
                 'body' => $request->message,
                 'emails' => $allDataEmails
@@ -1333,7 +1333,7 @@ class AdminController extends Controller
                     'channel' => $request->channel,
                 ]);
                 $data = array(
-                    'name' => "Hello Chief",
+                    'name' => "OjaFunnel",
                     'body' => $request->message,
                 );
                 $send_emails = $this->sendMessageMultitexter($data, $allDataPhones);
@@ -1347,7 +1347,7 @@ class AdminController extends Controller
                     'channel' => $request->channel,
                 ]);
                 $data = array(
-                    'name' => "Hello Chief",
+                    'name' => "OjaFunnel",
                     'subject' => $request->subject,
                     'body' => $request->message,
                 );

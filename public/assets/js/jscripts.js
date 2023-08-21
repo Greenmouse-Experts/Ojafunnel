@@ -386,7 +386,6 @@ $('body').on('click', '.sendBroadcastUser', function (e) {
   
   $.ajax({
     type : "POST",
-    // url : site_url + "get-statistics",
     url : site_url + "send-broadcast",
     data: $(".form_channel").serialize(),
     success : function(data){

@@ -139,7 +139,10 @@ class ShopFrontController extends Controller
         $shop = Shop::latest()->where('name', $request->shopname)->first();
         $courses = Course::latest()->where('user_id', $shop->user_id)->get();
 
-        return view('dashboard.lms.checkout', compact('shop', 'courses'));
+        $countries = \App\Models\Country::countries();
+        return view('dashboard.lms.checkout', compact('shop', 'courses'), [
+            'countries' => $countries
+        ]);
 
 //         $countries = \App\Models\Country::countries();
         // return $permissions;

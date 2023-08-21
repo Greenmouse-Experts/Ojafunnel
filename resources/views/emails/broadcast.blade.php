@@ -1,6 +1,6 @@
 <x-mail::message>
 
-Hello Chief,<br>
+OjaFunnel,<br>
 {{ $message }}
 
 Thanks,<br>

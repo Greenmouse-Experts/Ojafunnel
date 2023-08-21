@@ -701,7 +701,7 @@ class DashboardController extends Controller
 
         if(count($user_emails) > 0){
             $data = array(
-                'name' => "Hello Chief",
+                'name' => "OjaFunnel",
                 'subject' => $request->subject,
                 'body' => $request->message,
                 'emails' => $user_emails
