@@ -249,18 +249,22 @@ class AdminController extends Controller
 
     public function affiliateList()
     {
-        $referrals = \App\Models\Referral::select(\DB::raw("user as user_id, COUNT(user) as total_referred"))->whereRaw("referred IN (SELECT id FROM users)")->groupBy("user")->havingRaw("COUNT(user) > 0")->orderBy('total_referred', 'desc')->get();
+        // $referrals = \App\Models\Referral::select(\DB::raw("user as user_id, COUNT(user) as total_referred"))->whereRaw("referred IN (SELECT id FROM users)")->groupBy("user")->havingRaw("COUNT(user) > 0")->orderBy('total_referred', 'desc')->get();
 
-        if(count($referrals) > 0){
-            foreach($referrals as $referral){
-                $customers = User::select('first_name', 'last_name', 'email')->where('id', $referral->user_id)->first();
-                $referral->full_names = ucwords($customers->first_name." ".$customers->last_name);
-                $referral->email = $customers->email;
+        // if(count($referrals) > 0){
+        //     foreach($referrals as $referral){
+        //         $customers = User::select('first_name', 'last_name', 'email')->where('id', $referral->user_id)->first();
+        //         $referral->full_names = ucwords($customers->first_name." ".$customers->last_name);
+        //         $referral->email = $customers->email;
 
-                $dates = \App\Models\Referral::where('user', $referral->user_id)->value('created_at');
-                $referral->dates = date("D jS, M Y h:ia", strtotime($dates));
-            }
-        }
+        //         $dates = \App\Models\Referral::where('user', $referral->user_id)->value('created_at');
+        //         $referral->dates = date("D jS, M Y h:ia", strtotime($dates));
+        //     }
+        // }
+
+        $referrals = User::get();
+        // return $referrals;
+
         $data['referrals'] = $referrals;
         return view('Admin.affiliateList', $data);
     }
@@ -1309,7 +1313,7 @@ class AdminController extends Controller
 
         if(count($allDataEmails) > 0){
             $data = array(
-                'name' => "Hello Chief",
+                'name' => "OjaFunnel",
                 'subject' => $request->subject,
                 'body' => $request->message,
                 'emails' => $allDataEmails
@@ -1333,7 +1337,7 @@ class AdminController extends Controller
                     'channel' => $request->channel,
                 ]);
                 $data = array(
-                    'name' => "Hello Chief",
+                    'name' => "OjaFunnel",
                     'body' => $request->message,
                 );
                 $send_emails = $this->sendMessageMultitexter($data, $allDataPhones);
@@ -1347,7 +1351,7 @@ class AdminController extends Controller
                     'channel' => $request->channel,
                 ]);
                 $data = array(
-                    'name' => "Hello Chief",
+                    'name' => "OjaFunnel",
                     'subject' => $request->subject,
                     'body' => $request->message,
                 );

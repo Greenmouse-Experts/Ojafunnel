@@ -74,7 +74,9 @@
                         </div>
                         @php $total = 0 @endphp
                         @foreach((array) session('cart') as $id => $details)
+                          @if(isset($details['quantity']) && isset($details['price']))
                             @php $total += $details['price'] * $details['quantity'] @endphp
+                          @endif
                         @endforeach
                         <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
                             <p>Total: <span class="text-info"># {{ $total }}</span></p>
@@ -87,8 +89,8 @@
                                     <img style="width: 70px" src="{{ Storage::url($details['image']) }}" />
                                 </div>
                                 <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                    <p>{{ $details['name'] }}</p>
-                                    <span class="price text-info"> NGN{{ number_format($details['price']) }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
+                                    <p>{{ isset($details['name']) ? $details['name'] : '' }}</p>
+                                    <span class="price text-info"> NGN{{ $details['price'] ? number_format($details['price']) : 0 }}</span> <span class="count"> Quantity:{{ isset($details['quantity']) ? $details['quantity'] : 1 }}</span>
                                 </div>
                             </div>
                         @endforeach
