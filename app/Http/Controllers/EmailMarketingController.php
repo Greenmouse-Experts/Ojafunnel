@@ -510,7 +510,7 @@ class EmailMarketingController extends Controller
                 $email_campaign->email_kit_id = $email_kit->id;
                 $email_campaign->list_id = $mail_list->id;
                 $email_campaign->email_template_id = $email_template->id;
-                $email_campaign->sent = 0;
+                $email_campaign->sent = 1;
                 $email_campaign->bounced = 0;
                 $email_campaign->spam_score = 0;
                 $email_campaign->message_timing = $request->message_timing;

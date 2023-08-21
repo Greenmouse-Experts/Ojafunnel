@@ -2,7 +2,7 @@
     <h1>An account has been created for you</h1>
     <p>Below are the details of your account:</p>
 
-    <p><b>Your Email:</b> {{ $email }}</p>
-    <p><b>Your Password:</b> {{ $password }}</p>
+    {{ $email_message }}
+
 
 @endcomponent

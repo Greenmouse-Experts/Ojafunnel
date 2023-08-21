@@ -13,16 +13,18 @@ class AccountInfoMail extends Mailable
 
     public $email;
     public $password;
+    public $email_message;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($email, $password)
+    public function __construct($email, $password, $email_message)
     {
         $this->email = $email;
         $this->password = $password;
+        $this->email_message = $email_message;
     }
 
     

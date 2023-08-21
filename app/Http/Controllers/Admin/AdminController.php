@@ -958,7 +958,12 @@ class AdminController extends Controller
                 'customer_id' => $user->id
             ]);
 
-            Mail::to($request->email)->send(new AccountInfoMail($request->email, $request->password));
+            $email_message = "
+            <p><b>Your Email:</b> {{ $request->email }}</p>
+            <p><b>Your Password:</b> {{ $request->password }}</p>
+            ";
+
+            Mail::to($request->email)->send(new AccountInfoMail($request->email, $request->password, $email_message));
 
             return response()->json([
                 'status' => 'success',
