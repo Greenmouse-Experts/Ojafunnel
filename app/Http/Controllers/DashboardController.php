@@ -2289,19 +2289,12 @@ class DashboardController extends Controller
         ]);
     }
 
+
     public function view_course_details1($username, Request $request)
     {
         $course = Course::find($request->id);
-
         $lmss = \App\Models\LmsQuiz::where('course_id', $request->id)->where('user_id', Auth::user()->id)->where('session', $request->session)->first();
-
-        // @if(count(App\Models\QuizAnswer::where('course_id', $course->id)->where('user_id', Auth::user()->id)->where('session', $session)->get()) > 0)
-        //     @foreach(App\Models\QuizAnswer::where('course_id', $course->id)->where('user_id', Auth::user()->id)->where('session', $session)->orderByRaw('RAND()')->get() as $index => $quizes)
-        //     @endforeach
-        // @endif
-
         $QuizAnswers = \App\Models\QuizAnswer::where('course_id', $request->id)->where('user_id', Auth::user()->id)->where('sessions', $request->session)->first();
-
         return view('dashboard.lms.take_quiz', [
             'username' => $username,
             'course' => $course,

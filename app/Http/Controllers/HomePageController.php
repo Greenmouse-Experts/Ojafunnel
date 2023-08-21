@@ -328,6 +328,50 @@ class HomePageController extends Controller
     }
 
 
+    public function access_course(Request $request){
+        $user_email = session()->get('email');
+        $user_order_no = session()->get('order_no');
+        $auth_details = \App\Models\Enrollment::whereRaw("md5(email) = '$user_email' AND md5(order_no) = '$user_order_no'")->first();
+        $course_id = \App\Models\ShopOrder::where('enrollment_id', $auth_details->id)->value('course_id');
+        $data['auths'] = 0;
+
+        if($auth_details){
+            $course = \App\Models\Course::where('id', $course_id)->first();
+            $data['auths'] = 1;
+            $data['course'] = $course;
+            $data['username'] = $user_email;
+        }
+        return view('frontend.access_course', $data);
+    }
+
+    
+    public function access_auth_course(Request $request)
+    {
+        $this->validate($request, [
+            'email'     => 'required|email',
+            'order_no'  => 'required|numeric',
+        ]);
+
+        $auth_details = \App\Models\Enrollment::where('email', trim($request->email))->where('order_no', trim($request->order_no))->first();
+
+        if($auth_details){
+            session()->put('email', md5(trim($request->email)));
+            session()->put('order_no', md5(trim($request->order_no)));
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'authenticated',
+                'data' => ''
+            ],200);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid details entered!',
+            'data' => ''
+        ],200);
+    }
+
+
     public function contactConfirm(Request $request)
     {
         //Validate Request

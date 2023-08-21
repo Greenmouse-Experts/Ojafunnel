@@ -14,7 +14,8 @@ Route::post('/list/management/contact/delete/{id}', [ListManagementController::c
     Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');
 
 Route::post('store-cart-details-tmp', [App\Http\Controllers\HomePageController::class, 'store_cart_details_tmp']);
-
+Route::get('access-course', [App\Http\Controllers\HomePageController::class, 'access_course']);
+Route::post('get-access-course', [App\Http\Controllers\HomePageController::class, 'access_auth_course']);
 
 
 
@@ -271,6 +272,7 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/course/checkout', [App\Http\Controllers\DashboardController::class, 'course_checkout'])->name('user.course.checkout');
                     Route::get('/course/cart', [App\Http\Controllers\DashboardController::class, 'course_cart'])->name('user.course.cart');
                     Route::get('/view-course-details/{id}', [App\Http\Controllers\DashboardController::class, 'view_course_details'])->name('user.view.course.details');
+                    // Route::get('/view-course-details1/{id}', [App\Http\Controllers\DashboardController::class, 'view_course_details1']);
                     Route::get('/view-course-details/{id}/{name}/{session}', [App\Http\Controllers\DashboardController::class, 'view_course_details1']);
                     Route::get('/view-quiz/{id}', [App\Http\Controllers\DashboardController::class, 'view_quiz'])->name('view-quiz');
                     Route::get('/view-quiz/{id}/view-scores/{session}', [App\Http\Controllers\DashboardController::class, 'view_scores']);
