@@ -90,6 +90,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/integration', [App\Http\Controllers\Admin\AdminController::class, 'integration'])->name('integration');
             Route::get('/birthday-module', [App\Http\Controllers\Admin\AdminController::class, 'birthday_module'])->name('birthdayModule');
 
+            Route::get('/exchange-rate', [App\Http\Controllers\Admin\AdminController::class, 'lms_xrate'])->name('system.xrate');
+            Route::post('/exchange-rate/update', [App\Http\Controllers\Admin\AdminController::class, 'lms_xrate_submit'])->name('xrate.update');
             // Whatsapp Support
             Route::get('/support/whatsapp', [App\Http\Controllers\Admin\AdminController::class, 'support_whatsapp'])->name('whatsappSupport');
             Route::post('/add/support/whatsapp', [App\Http\Controllers\Admin\AdminController::class, 'add_support_whatsapp'])->name('whatsappSupportAdd');
@@ -115,8 +117,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             // Admin page builder
             Route::get('page-builder', [App\Http\Controllers\Admin\AdminController::class, 'page_builder'])->name('pageBuilder');
             Route::get('funnel-builder', [App\Http\Controllers\Admin\AdminController::class, 'funnel_builder'])->name('funnelBuilder');
+            Route::get('funnel-builder/categories', [App\Http\Controllers\Admin\AdminController::class, 'funnel_builder_categories'])->name('funnelBuilder.categories');
+            Route::post('/funnel-builder/categories', [App\Http\Controllers\Admin\AdminController::class, 'funnel_category_create'])->name('funnelBuilder.categories.add');
+            Route::get('/funnel-builder/categories/{id}/delete', [App\Http\Controllers\Admin\AdminController::class, 'funnel_category_delete'])->name('funnelBuilder.categories.delete');
             Route::get('/funnel-builder/pages/{id}', [App\Http\Controllers\Admin\AdminController::class, 'view_funnel_pages'])->name('funnelBuilderView');
-
             // Admin Page Builder
             Route::post('/page/builder/create', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_create'])->name('admin.page.builder.create');
             Route::any('/page/builder/save/page', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_save_page'])->name('admin.page.builder.save.page');
@@ -149,7 +153,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/transaction/confirm/{id}/{response}/{status}/{description}', [App\Http\Controllers\Admin\AdminController::class, 'transaction_confirm'])->name('transaction.confirm');
             Route::get('/finalized/payouts', [App\Http\Controllers\Admin\AdminController::class, 'finalized_payouts'])->name('finalized.payouts');
 
-            // 
+            //
             Route::post('/add-plan', [App\Http\Controllers\Admin\AdminController::class, 'add_plan'])->name('admin.addPlan');
             Route::post('/update-plan/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_plan'])->name('admin.updatePlan');
             Route::post('/delete-plan/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_plan'])->name('admin.deletePlan');

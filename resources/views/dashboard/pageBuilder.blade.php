@@ -132,6 +132,15 @@
                                                                     <div class="start-template">
 
                                                                         <i class="bi bi-bookmark-plus-fill fs-1 text-primary"></i>
+                                                                        @if($page->type == "questionaire_page")
+                                                                            <a class="btn btn-primary d-block mt-2" target="_blank" style="cursor: pointer;" href="
+                                                                            {{route('user.page.builder.view.quiz.response', [Auth::user()->username, Crypt::encrypt($page->id)])}}
+                                                                            ">View Responses</a>
+
+                                                                            <a class="btn btn-primary d-block mt-2" target="_blank" href="
+                                                                            {{route('user.page.builder.view.edit.quiz', [Auth::user()->username, Crypt::encrypt($page->id)])}}
+                                                                            ">Edit Quiz Field</a>
+                                                                        @endif
                                                                         <a class="btn btn-primary d-block mt-2" href="{{route('user.page.builder.view.editor', [Auth::user()->username, Crypt::encrypt($page->id)])}}">
                                                                             Edit Page
                                                                         </a>
@@ -336,6 +345,8 @@
                                                         Upsell Page
                                                     @elseif($page->type == "upsell_bump_page")
                                                         Upsell & Bump Page
+                                                    @elseif($page->type == "questionaire_page")
+                                                        Quiz Page
                                                     @endif
                                                 </th>
                                                 <td>{{ $page->folder }}</td>
@@ -357,6 +368,18 @@
                                                             Options
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                            @if($page->type == "questionaire_page")
+                                                            <li>
+                                                                <a class="dropdown-item" style="cursor: pointer;" href="
+                                                                {{route('user.page.builder.view.quiz.response', [Auth::user()->username, Crypt::encrypt($page->id)])}}
+                                                                ">View Responses</a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" style="cursor: pointer;" href="
+                                                                {{route('user.page.builder.view.edit.quiz', [Auth::user()->username, Crypt::encrypt($page->id)])}}
+                                                                ">Edit Quiz Field</a>
+                                                            </li>
+                                                            @endif
                                                             <li>
                                                                 <a class="dropdown-item" style="cursor: pointer;" href="
                                                                 {{route('user.page.builder.view.editor', [Auth::user()->username, Crypt::encrypt($page->id)])}}
@@ -459,6 +482,7 @@
                                                     <option value="optin_page">Opt-In Page</option>
                                                     <option value="upsell_page">Upsell Form Page</option>
                                                     <option value="upsell_bump_page">Order Bump/Upsell Page</option>
+                                                    <option value="questionaire_page">Quiz Page</option>
                                                 </select>
                                                 <small id="generatePage"></small>
                                             </div>
@@ -502,7 +526,62 @@
                                     </div>
 
                                     <div id="bumpsell_select" class="col-lg-12" style="display: none">
-                                        More Product and Price
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Product Name</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <input type="text" placeholder="e.g Data Analytics Course" id="bump_product_name" name="bump_product_name_main" class="input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label>Product Price</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <input type="number" placeholder="e.g 10000" id="bump_product_price" name="bump_product_price_main" class="input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <legend style="font-size: 14px; font-weight: 600">Set Bump Products </legend>
+                                        <div id="bumps">
+                                            <div class="row">
+                                                <div class="col-md-7">
+                                                    <label>Product Name</label>
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-2">
+                                                            <input type="text" placeholder="e.g Data Analytics Course" id="bump_product_name" name="bump_product_name" class="input">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label>Product Price</label>
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-2">
+                                                            <input type="number" placeholder="e.g 10000" id="bump_product_price" name="bump_product_price" class="input">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <a href="#" onclick="addMore()">Add more fields</a>
+                                        <div class="col-lg-12 mt-3">
+                                            <label>Collection Account</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <select name="collection_account" class="input">
+                                                        @foreach (\App\Models\BankDetail::where('user_id', Auth::user()->id)->get() as $acc)
+                                                            @if($acc->type != "PAYSTACK")
+                                                                <option value="{{$acc->id}}">{{$acc->bank_name}} / {{$acc->account_number}}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <small id="generatePage"></small>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div id="success_select" class="col-lg-12" style="display: none">
@@ -636,6 +715,44 @@ function enableFields() {
         divOption2.style.display = "block";
     }
 }
+function removeField(e) {
+    const field = e.parentNode.parentNode;
+    // console.log(field);
+    const container = document.getElementById('bumps');
+    container.removeChild(field);
+}
+
+let fieldCounter = 1;
+function addMore() {
+    fieldCounter++;
+    const container = document.getElementById('bumps');
+    const field = document.createElement('div');
+    field.className = 'row';
+    field.innerHTML = `
+            <div class="col-md-6">
+                <label>Product Name</label>
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <input type="text" placeholder="e.g Data Analytics Course" id="bump_product_name" name="bump_product_name_${fieldCounter}" class="input">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <label>Product Price</label>
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <input type="number" placeholder="e.g 10000" id="bump_product_price" name="bump_product_price_${fieldCounter}" class="input">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <a href="#" onclick="removeField(this)"><i class="fa fa-times"></i></a>
+            </div>`;
+    container.appendChild(field);
+}
+
+
+
 </script>
 <script>
     let subdomain = document.getElementById('subdomain');

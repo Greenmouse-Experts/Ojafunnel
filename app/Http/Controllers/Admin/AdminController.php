@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Admin;
 use App\Models\Course;
 use App\Models\Funnel;
+use App\Models\FunnelCategory;
+use App\Models\CurrencyRate;
 use App\Models\Message;
 use App\Models\OjaPlan;
 use App\Models\Category;
@@ -360,6 +362,48 @@ class AdminController extends Controller
         ]);
     }
 
+    public function funnel_builder_categories()
+    {
+        $categories = FunnelCategory::latest()->get();
+
+        return view('Admin.funnelBuilderCategory', [
+            'categories' => $categories
+        ]);
+    }
+
+    public function funnel_category_create(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        FunnelCategory::create(['name' => $request->name]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Funnel category created successfully.',
+        ]);
+    }
+
+    public function funnel_category_delete($id, Request $request)
+    {
+        $id = Crypt::decrypt($id);
+        try {
+            FunnelCategory::where(['id' => $id])
+            ->delete();
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Funnel category created successfully.',
+            ]);
+        } catch(\Exception $e) {
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Funnel category already in use - cannot be deleted.',
+            ]);
+        }
+    }
+
     public function email_support()
     {
         return view('Admin.support.emailSupport');
@@ -658,12 +702,10 @@ class AdminController extends Controller
         if ($messageUser->sender_id == Auth::guard('admin')->user()->id) {
             $user = User::where('id', $messageUser->reciever_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-            $data = [
-                'message_users_id' => $request->convo_id,
+            $sendMessage = Message::create([
+                'message_users_id' => $messageUser->id,
                 'message' => $request->message
-            ];
-
-            $sendMessage = Message::create($data);
+            ]);
 
             $this->fcm('Message from ' . Auth::guard('admin')->user()->name . ': ' . $request->message, $user);
 
@@ -675,12 +717,10 @@ class AdminController extends Controller
         } else {
             $user = User::where('id', $messageUser->sender_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-            $data = [
-                'message_users_id' => $request->convo_id,
+            $sendMessage = Message::create([
+                'message_users_id' => $messageUser->id,
                 'message' => $request->message
-            ];
-
-            $sendMessage = Message::create($data);
+            ]);
 
             $this->fcm('Message from ' . Auth::guard('admin')->user()->name . ': ' . $request->message, $user);
 
@@ -2985,6 +3025,46 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Contact deleted!'
+        ]);
+    }
+
+    public function lms_xrate()
+    {
+        $xrates = CurrencyRate::all();
+
+        return view('Admin.lms.xrate')->with([
+            'records' => $xrates
+        ]);
+    }
+
+    public function lms_xrate_submit(Request $request)
+    {
+        $records = CurrencyRate::all();
+
+        if(sizeof($records) > 0) {
+
+            CurrencyRate::where(['fx_symbol' => 'USD'])
+                ->update(['fiat' => $request->dollar]);
+
+            CurrencyRate::where(['fx_symbol' => 'GBP'])
+                ->update(['fiat' => $request->pounds]);
+        } else {
+            $cur = new CurrencyRate;
+            $cur->fx_symbol = 'USD';
+            $cur->fx_amount = '1.00';
+            $cur->fiat =  $request->dollar;
+            $cur->save();
+
+            $cur = new CurrencyRate;
+            $cur->fx_symbol = 'GBP';
+            $cur->fx_amount = '1.00';
+            $cur->fiat =  $request->pounds;
+            $cur->save();
+        }
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Exchang rate updated!'
         ]);
     }
 

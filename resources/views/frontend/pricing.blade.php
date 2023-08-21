@@ -29,11 +29,19 @@
                     <tbody>
                         <tr>
                             <td></td>
+                            @foreach ($headprices as $head)
                             <td class="price">
-                                <br>Free
+                                <div class="arel">{{$head->name}}</div>
+                                @foreach ($head->interval as $intvl)
+                                    @if($intvl->type == 'monthly' && $head->name != 'Free')
+                                    <br>{{$intvl->currency_sign}} {{number_format($intvl->price, 2)}} / {{$intvl->type}}
+                                    @endif
+                                @endforeach
                                 <br>
                             </td>
-                            <td class="price">
+                            @endforeach
+
+                            {{-- <td class="price">
                                 <div class="arel">Starter</div>
                                 <br>₦100 / monthly
                                 <br>
@@ -57,27 +65,36 @@
                                 <div class="arel">Enterprise</div>
                                 <br>₦550 / monthly
                                 <br>
-                            </td>
+                            </td> --}}
                         </tr>
                         <tr>
                             <td><a href="#wordpress-asset-updates" class="price-table-help"><i class="bi bi-info-circle"></i></a> SMS</td>
+                            @foreach ($sms as $s)
+                                @if($s->sms)
+                                    <td><i class="fas fa-check"></i></td>
+                                @else
+                                    <td><i class="fas fa-times"></i></td>
+                                @endif
+                            @endforeach
+                            {{-- <td><i class="fas fa-times"></i></td>
                             <td><i class="fas fa-times"></i></td>
                             <td><i class="fas fa-times"></i></td>
                             <td><i class="fas fa-times"></i></td>
                             <td><i class="fas fa-times"></i></td>
-                            <td><i class="fas fa-times"></i></td>
-                            <td><i class="fas fa-times"></i></td>
+                            <td><i class="fas fa-times"></i></td> --}}
                         </tr>
                         <tr>
                             <td><a href="#wordpress-core-updates" class="price-table-help"><i class="bi bi-info-circle"></i></a> Whatsapp</td>
-                            <td>14 daily 1 WhatsApp</td>
-                            <td>100 daily 2 WhatsApp</td>
+                            @foreach ($whatsapp as $s)
+                                <td>{{$s->wa_auto}} daily {{$s->wa_numb}} WhatsApp</td>
+                            @endforeach
+                            {{-- <td>100 daily 2 WhatsApp</td>
                             <td>1000 daily 2 WhatsApp</td>
                             <td>2000 daily 2 WhatsApp</td>
                             <td>3000 daily 2 WhatsApp</td>
-                            <td>Unlimited daily 6 WhatsApp</td>
+                            <td>Unlimited daily 6 WhatsApp</td> --}}
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td><a href="#wordpress-security-monitoring" class="price-table-help"><i class="bi bi-info-circle"></i></a> Email</td>
                             <td>500 daily</td>
                             <td>1000 daily</td>
@@ -85,83 +102,71 @@
                             <td>3000 daily</td>
                             <td>4000 daily</td>
                             <td>Unlimited</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td><a href="#wordpress-uptime-monitoring" class="price-table-help"><i class="bi bi-info-circle"></i></a> Page builder</td>
-                            <td>2</td>
+                            @foreach ($pagebuilder as $pb)
+                                <td>{{$pb}}</td>
+                            @endforeach
+                            {{-- <td>2</td>
                             <td>10</td>
                             <td>20</td>
                             <td>30</td>
                             <td>40</td>
-                            <td>Unlimited</td>
+                            <td>Unlimited</td> --}}
                         </tr>
                         <tr>
                             <td><a href="#wordpress-malware-cleanup" class="price-table-help"><i class="bi bi-info-circle"></i></a> Custom domain</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
+                            @foreach ($pagebuilder as $pb)
+                                <td>Yes</td>
+                            @endforeach
                         </tr>
                         <tr>
                             <td><a href="#wordpress-security-audit" class="price-table-help"><i class="bi bi-info-circle"></i></a> Funnel builder</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Unlimited</td>
+                            @foreach ($funnelbuilder as $fb)
+                                <td>{{$fb}}</td>
+                            @endforeach
                         </tr>
                         <tr>
                             <td><a href="#wordpress-security-audit" class="price-table-help"><i class="bi bi-info-circle"></i></a> LMS</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Unlimited</td>
+                            @foreach ($lms as $l)
+                                <td>{{$l}}</td>
+                            @endforeach
                         </tr>
                         <tr>
                             <td><a href="#wordpress-priority-support" class="price-table-help"><i class="bi bi-info-circle"></i></a> Ecommerce Products</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Unlimited</td>
+                            @foreach ($products as $p)
+                                <td>{{($p > 0) ? "Yes" : "No"}}</td>
+                            @endforeach
                         </tr>
                         <tr>
                             <td><a href="#wordpress-billing" class="price-table-help"><i class="bi bi-info-circle"></i></a> Upload list</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Yes</td>
-                            <td>Unlimited</td>
+                            @foreach ($pagebuilder as $pb)
+                                <td>Yes</td>
+                            @endforeach
                         </tr>
                         <tr>
                             <td><a href="#wordpress-billing" class="price-table-help"><i class="bi bi-info-circle"></i></a> Use your own email server (AWS, etc)</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>No</td>
+                            @foreach ($pagebuilder as $pb)
+                                <td>Yes</td>
+                            @endforeach
                         </tr>
                         <tr>
                             <td><a href="#wordpress-billing" class="price-table-help"><i class="bi bi-info-circle"></i></a> Footer Branding</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>No</td>
-                            <td>No</td>
+                            @foreach ($pagebuilder as $pb)
+                                <td>Yes</td>
+                            @endforeach
                         </tr>
                         <tr>
                             <td></td>
-                            <td></td>
+                            {{-- <td></td> --}}
+                            @foreach ($plans as $pb)
                             <td class="price">
+                                <a href="{{route('signup')}}">Get started</a>
+                            </td>
+                            @endforeach
+
+                            {{-- <td class="price">
                                 <a href="{{route('signup')}}">Get started</a>
                             </td>
                             <td class="price">
@@ -172,10 +177,7 @@
                             </td>
                             <td class="price">
                                 <a href="{{route('signup')}}">Get started</a>
-                            </td>
-                            <td class="price">
-                                <a href="{{route('signup')}}">Get started</a>
-                            </td>
+                            </td> --}}
                         </tr>
                     </tbody>
                 </table>
