@@ -31,7 +31,7 @@ class PageController extends Controller
      *
      * @return void
      */
-    
+
     private $home;
 
     public function __construct()
@@ -162,6 +162,16 @@ class PageController extends Controller
             $data = file_get_contents(resource_path("views/builder/$template_page_name.blade.php"));
 
             $data = str_replace('$title', $request->title, $data);
+        }
+        elseif($request->page_type == "dynamic_timer_page") {
+            $template_page_name = str_replace('_', '-', $request->page_type);
+            $data = file_get_contents(resource_path("views/builder/$template_page_name.blade.php"));
+
+            $data = str_replace('$title', $request->title, $data);
+            $data = str_replace('$product_name', $request->product_name, $data);
+            $data = str_replace('$product_price', number_format($request->product_price, 2), $data);
+            $data = str_replace('$timer', $request->offer_time, $data);
+            $data = str_replace('$rate', $request->rate, $data);
         } else {
             $template_page_name = str_replace('_', '-', $request->page_type);
             $data = file_get_contents(resource_path("views/builder/$template_page_name.blade.php"));
@@ -300,6 +310,19 @@ class PageController extends Controller
                 $_quiz->user_id = auth()->user()->id;
                 $_quiz->title = $request->title;
                 $_quiz->save();
+            }
+
+            if($request->page_type == "dynamic_timer_page")
+            {
+                $_dpp = new \App\Models\DynamicTimerProductPage;
+                $_dpp->page_id = $page->id;
+                $_dpp->title = $page->title;
+                $_dpp->offer_time = $request->offer_time;
+                $_dpp->rate = $request->rate;
+                $_dpp->product_name = $request->product_name;
+                $_dpp->amount = $request->product_price;
+                $_dpp->user_id = auth()->user()->id;
+                $_dpp->save();
             }
 
             return back()->with([
@@ -853,6 +876,16 @@ class PageController extends Controller
                     'type' => 'success',
                     'message' => 'Page deleted successfully!'
                 ]);
+            }
+
+            if($page->type == "dynamic_timer_page") {
+
+                \App\Models\DynamicTimerPageSubmission::where(['page_id' => $page->id])
+                    ->delete();
+
+                \App\Models\DynamicTimerProductPage::where(['page_id' => $page->id])
+                    ->delete();
+
             }
 
             if ($page->thumbnail) {
