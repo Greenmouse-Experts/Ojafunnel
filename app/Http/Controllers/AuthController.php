@@ -627,4 +627,11 @@ class AuthController extends Controller
 
         return $response;
     }
+
+    public function copyText(Request $request)
+    {
+        $text = $request->get('text');
+
+        return response()->json(['text' => $text]);
+    }
 }
