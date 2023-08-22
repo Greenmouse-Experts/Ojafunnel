@@ -2874,6 +2874,7 @@ class DashboardController extends Controller
 
     public function getdownlines($array, $parent = 0, $level = 1)
     {
+        if($level >= 5) $level = 5;
         $referedMembers = '';
         foreach ($array as $key => $entry) {
             if ($entry->referral_link == $parent) {

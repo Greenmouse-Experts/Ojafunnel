@@ -16,6 +16,7 @@ Route::post('/list/management/contact/delete/{id}', [ListManagementController::c
 Route::post('store-cart-details-tmp', [App\Http\Controllers\HomePageController::class, 'store_cart_details_tmp']);
 Route::get('access-course', [App\Http\Controllers\HomePageController::class, 'access_course']);
 Route::post('get-access-course', [App\Http\Controllers\HomePageController::class, 'access_auth_course']);
+Route::get('magic-login-link/{id}', [App\Http\Controllers\HomePageController::class, 'magic_login_link']);
 
 
 

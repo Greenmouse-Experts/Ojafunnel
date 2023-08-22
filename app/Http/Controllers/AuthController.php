@@ -472,6 +472,7 @@ class AuthController extends Controller
         return $user;
     }
 
+
     public function forget()
     {
         return view('auth.forget');
