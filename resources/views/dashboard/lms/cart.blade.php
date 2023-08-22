@@ -91,6 +91,8 @@
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
+                                @php $total = 0 @endphp
+                                @if(session('cart'))
                                 <tbody>
                                     @php $total = 0 @endphp
                                     @if(session('cart'))
@@ -124,6 +126,7 @@
                                         <td colspan="7" class="text-right"><h4>Total {{ $details['currency'] }}{{ number_format($total, 2) }}</h4></td>
                                     </tr>
                                 </tfoot>
+                                @endif
                             </table>
                         </div>
                         <div class="mt-4" style="display: flex; justify-content: space-between;">
