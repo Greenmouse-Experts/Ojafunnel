@@ -922,6 +922,8 @@ class PageController extends Controller
         return [true, $slug];
     }
 
+
+
     public function funnel_builder_create_folder(Request $request)
     {
         //Validate Request
