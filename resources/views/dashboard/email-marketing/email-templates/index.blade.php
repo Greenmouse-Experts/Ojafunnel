@@ -52,17 +52,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">View Email Templates</h4>
-                            <div class="table-responsive"> 
+                            <div class="table-responsive">
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
                                             <th>Created At</th>
-                                            <th>Action</th> 
+                                            <th>Action</th>
                                         </tr>
-                                    </thead> 
-                                    <tbody> 
+                                    </thead>
+                                    <tbody>
                                         @forelse ($email_templates as $email_template)
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
@@ -78,7 +78,7 @@
                                                                 <a class="dropdown-item" href="{{ route('user.email-marketing.email.templates.editor', ['username' => Auth::user()->username, 'id' => $email_template->id]) }}">
                                                                     Edit Template
                                                                 </a>
-                                                            </li> 
+                                                            </li>
                                                             <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$email_template->id}}">Delete</a></li>
                                                         </ul>
                                                     </div>

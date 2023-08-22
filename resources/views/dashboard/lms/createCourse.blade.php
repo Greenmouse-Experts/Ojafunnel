@@ -67,7 +67,7 @@
                         <div class="category-course-list">
                             <ul>
                                 @foreach(\App\Models\Course::where('user_id', Auth::user()->id)->get() as $course)
-                                <li>
+                                <li class="table-{{ $course->id }}">
                                     <div class="course-box-2">
                                         <div class="course-image">
                                             <a href="{{route('user.course.content', [Auth::user()->username, Crypt::encrypt($course->id)])}}">
@@ -124,8 +124,21 @@
                                             <div>
                                                 <a href="{{route('user.view.course.details', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View Course Details</u></strong></a>
                                             </div>
+
+                                            <div>
+                                                <a href="{{route('view-quiz', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View / Create Quiz</u></strong></a>
+                                            </div>
+
+                                            <div>
+                                                <!-- <a href="{{route('view-scores', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View User Scores</u></strong></a> -->
+                                            </div>
+
                                             <div class="course-price">
                                                 <span class="current-price">{{$course->currency}} {{number_format($course->price, 2)}}</span>
+                                            </div>
+
+                                            <div class="mt-5">
+                                                <a href="javascript:;" ids="{{ $course->id }}" class="block deleteCourse" style="color:red"><strong>Delete Course</strong></a>
                                             </div>
                                         </div>
                                     </div>

@@ -50,7 +50,7 @@ class UserApprovedWithdrawNotification extends Mailable
             markdown: 'emails.withdrawal-approve.user',
             with: [
                 'amount' => $this->amount,
-                '_user' => $this->user->username
+                '_user' => $this->user
             ]
         );
     }

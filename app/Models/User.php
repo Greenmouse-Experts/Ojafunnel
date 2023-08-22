@@ -35,7 +35,9 @@ class User extends Authenticatable
         'promotion_bonus',
         'password',
         'status',
-        'fcm_token'
+        'fcm_token',
+        'feature_access',
+        'paid_for_backup',
     ];
 
     /**

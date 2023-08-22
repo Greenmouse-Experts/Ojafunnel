@@ -51,6 +51,11 @@ use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
 use App\Models\Domain;
+use App\Mail\BroadcastEmail;
+use Illuminate\Routing\Redirector;
+use App\Http\Controllers\HomePageController;
+use Illuminate\Support\Facades\Mail;
+
 
 class DashboardController extends Controller
 {
@@ -59,9 +64,25 @@ class DashboardController extends Controller
      *
      * @return void
      */
-    public function __construct()
+
+    private $home;
+    public function __construct(Redirector $redirect)
     {
+        $this->home = new HomePageController;
         $this->middleware(['auth', 'verified']);
+
+        /* $this->middleware(function ($request, $next) {
+
+
+            
+            
+            
+
+            return $next($request);
+        }); */
+
+        
+        
     }
 
     public function dashboard()
@@ -111,11 +132,99 @@ class DashboardController extends Controller
             $sent_mails[$index] = $result;
         }
 
+        $admin = Admin::find(1);
+        $user = Auth::user();
+
         return view('dashboard.dashboard', [
             'sales' => json_encode($sales),
-            'sent_mails' => json_encode($sent_mails)
+            'sent_mails' => json_encode($sent_mails),
+            'admin' => $admin,
+            'users' => $user,
         ]);
     }
+
+
+
+    function validate_buy_backup(Request $request){
+        $attributes = [
+            'user_id'      => 'User',
+            'amount'       => 'Amount',
+            'pay_mthd'     => 'Payment method',
+        ];
+        $rules = [
+            'amount'      => 'required|numeric|gt:0',
+            'pay_mthd'    => 'required',
+            'user_id'     => 'required',
+        ];
+        $messages = [
+            'required'      => ':attribute field is required',
+        ];
+        $validator = \Validator::make($request->all(), $rules, $messages)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->all(),
+                'data' => ''
+            ],200); 
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => 'validated',
+            'data' => ''
+        ],200); 
+    }
+
+
+    function buy_backup(Request $request){
+        $attributes = [
+            'user_id'      => 'User',
+            'amount'       => 'Amount',
+            'pay_mthd'     => 'Payment method',
+        ];
+        $rules = [
+            'amount'      => 'required|numeric|gt:0',
+            'pay_mthd'    => 'required',
+            'user_id'     => 'required',
+        ];
+        $messages = [
+            'required'      => ':attribute field is required',
+        ];
+        $validator = \Validator::make($request->all(), $rules, $messages)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->all(),
+                'data' => ''
+            ],200); 
+        }
+        $transactions = Transaction::create([
+            'user_id'               => $request->user_id,
+            'amount'                => $request->amount,
+            'reference'             => $request->response,
+            'transaction_status'    => "completed",
+            'payment_method'        => $request->pay_mthd,
+            'status'                => $request->narration,
+        ]);
+        if($transactions){
+            $user = User::find($request->user_id);
+            $user->update([
+                'paid_for_backup' => 1
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Successful transaction',
+                'data' => ''
+            ],200); 
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Could not create transaction',
+            'data' => ''
+        ],200); 
+    }
+
 
     public function list_setting($username)
     {
@@ -329,8 +438,10 @@ class DashboardController extends Controller
         ]);
     }
 
+
     public function subscription($username)
     {
+        if($this->home->site_features_settings('Subscription Page') || $this->home->user_site_features_settings('Subscription Page') > 0) return $this->home->redirects();
         return view('dashboard.subscription', [
             'username' => $username
         ]);
@@ -338,6 +449,8 @@ class DashboardController extends Controller
 
     public function choose_temp($username)
     {
+        if($this->home->site_features_settings('Funnel Builder') || $this->home->user_site_features_settings('Funnel Builder') > 0) return $this->home->redirects();
+   
         $funnels = Funnel::latest()->where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.funnelBuilder', [
@@ -348,6 +461,8 @@ class DashboardController extends Controller
 
     public function add_funnel_custom_domain(Request $request, $username)
     {
+        if($this->home->site_features_settings('Funnel Builder') || $this->home->user_site_features_settings('Funnel Builder') > 0) return $this->home->redirects();
+
         $funnel = Funnel::where(['id' => $request->id, 'user_id' => Auth::user()->id]);
         if (!$funnel->exists()) {
             return redirect(route('user.choose.temp', ['username' => Auth::user()->username]));
@@ -466,6 +581,8 @@ class DashboardController extends Controller
 
     public function view_funnel_pages($username, $id)
     {
+        if($this->home->site_features_settings('Funnel Builder') || $this->home->user_site_features_settings('Funnel Builder') > 0) return $this->home->redirects();
+
         $id = Crypt::decrypt($id);
 
         $funnel = Funnel::findorfail($id);
@@ -488,6 +605,8 @@ class DashboardController extends Controller
 
     public function take_quiz($username)
     {
+        if($this->home->site_features_settings('Funnel Builder') || $this->home->user_site_features_settings('Funnel Builder') > 0) return $this->home->redirects();
+
         return view('dashboard.takeQuiz', [
             'username' => $username
         ]);
@@ -528,9 +647,13 @@ class DashboardController extends Controller
         ]);
     }
 
+    
+
 
     public function page_builder($username)
-    {
+    {   
+        if($this->home->site_features_settings('Page Builder') || $this->home->user_site_features_settings('Page Builder') > 0) return $this->home->redirects();
+
         $pages = Page::latest()->where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.pageBuilder', [
@@ -554,6 +677,53 @@ class DashboardController extends Controller
             'page' => $page->first()
         ]);
     }
+
+
+    public function send_broadcast(Request $request)
+    {
+        $rules = [
+            'channel'      => 'required',
+            'subject'      => 'required',
+            'message'      => 'required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+
+       $channels = $request->channel;
+       $user_emails = \App\Models\ListManagementContact::where('tags', 'like', "%$channels%")->pluck('email')->toArray();
+
+       $all_emails = "";
+       $send_emails = false;
+
+        if(count($user_emails) > 0){
+            $data = array(
+                'name' => "OjaFunnel",
+                'subject' => $request->subject,
+                'body' => $request->message,
+                'emails' => $user_emails
+            );
+            Mail::to(env('MAIL_FROM_ADDRESS'))->bcc($data['emails'])->send(new BroadcastEmail($data['subject'], $data['body']));
+            $send_emails = true;
+        }
+
+        if($send_emails){
+            return response()->json([
+                'status' => 'success',
+                'message' => "Broadcast sent",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in sending broadcast",
+            'data' => ''
+        ],200);
+    }
+
 
     public function generatePageSlug($folder)
     {
@@ -1944,6 +2114,7 @@ class DashboardController extends Controller
 
     public function checkout($username)
     {
+        // return 333;
         return view('dashboard.Checkout', [
             'username' => $username
         ]);
@@ -2118,6 +2289,395 @@ class DashboardController extends Controller
         ]);
     }
 
+
+    public function view_course_details1($username, Request $request)
+    {
+        $course = Course::find($request->id);
+        $lmss = \App\Models\LmsQuiz::where('course_id', $request->id)->where('user_id', Auth::user()->id)->where('session', $request->session)->first();
+        $QuizAnswers = \App\Models\QuizAnswer::where('course_id', $request->id)->where('user_id', Auth::user()->id)->where('sessions', $request->session)->first();
+        return view('dashboard.lms.take_quiz', [
+            'username' => $username,
+            'course' => $course,
+            'session' => $request->session,
+            'lmss' => $lmss,
+            'QuizAnswers' => $QuizAnswers,
+        ]);
+    }
+
+    public function view_quiz($username, Request $request)
+    {
+        $quiz_id = $request->id;
+        $lmss = \App\Models\LmsQuiz::where('course_id', $quiz_id)->where('user_id', Auth::user()->id)->get();
+
+        foreach($lmss as $lms){
+            $lms->course_title = Course::where('id', $quiz_id)->value('title');
+            $lms->counts = \App\Models\Quiz::where('session', $lms->session)->where('course_id', $quiz_id)->where('user_id', Auth::user()->id)->count();
+            $lms->students = \App\Models\QuizAnswer::where('sessions', $lms->session)->where('course_id', $quiz_id)->where('user_id', Auth::user()->id)->count();
+        }
+        // return $lmss;
+
+        return view('dashboard.lms.quiz', [
+            'username' => $username,
+            'lmss' => $lmss,
+            'quiz_id' => $quiz_id,
+        ]);
+    }
+
+
+    public function view_scores($username, Request $request)
+    {
+        $quiz_id = $request->id;
+        $lmss = \App\Models\QuizAnswer::where('course_id', $quiz_id)->where('sessions', $request->session)->get();
+
+        foreach($lmss as $lms){
+            $users = User::where('id', "$lms->user_id")->first();
+            $lms->names = ucwords("$users->first_name $users->last_name");
+            $lms->course_title = Course::where('id', $quiz_id)->value('title');
+            $lms->counts = \App\Models\Quiz::where('session', $lms->session)->where('course_id', $quiz_id)->where('user_id', Auth::user()->id)->count();
+            $lms->quiz_titles = \App\Models\LmsQuiz::where('course_id', $quiz_id)->where('session', $request->session)->where('user_id', Auth::user()->id)->value('quiz_title');
+        }
+
+        // return $lmss;
+
+        return view('dashboard.lms.quiz_scores_page', [
+            'username' => $username,
+            'lmss' => $lmss,
+            'quiz_id' => $quiz_id
+        ]);
+    }
+
+    public function create_quiz($username, Request $request)
+    {
+        $quiz_id = $request->id;
+        // return strlen($request->session);
+        // return $request->session;
+        $sessions = "";
+        if(strlen($request->session) > 0){
+            $sessions = explode("-", $request->session)[2];
+        }
+        // return $sessions;
+        $quiz_sessions = \App\Models\LmsQuiz::where('course_id', $quiz_id)->orderBy("id", "desc")->first();
+        $quizzes=[];
+        if($quiz_sessions){
+            $quizzes = \App\Models\Quiz::where('course_id', $quiz_sessions->course_id)->where('session', $quiz_sessions->session)->where('user_id', $quiz_sessions->user_id)->orderBy("id", "desc")->get();
+        }
+
+        return view('dashboard.lms.create_quiz', [
+            'username' => $username,
+            'quiz_id' => $quiz_id,
+            'quiz_sessions' => $quiz_sessions,
+            'sessions' => $sessions,
+            'quizzes' => $quizzes,
+        ]);
+    }
+
+    
+    public function add_quiz_session(Request $request)
+    {
+        $rules = [
+            'quiz_title'      => 'required',
+            'description'     => 'required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+
+       $created = \App\Models\LmsQuiz::create([
+            'user_id' => Auth::user()->id,
+            'course_id' => $request->course_id,
+            'session' => $request->quiz_session,
+            'quiz_title' => $request->quiz_title,
+            'description' => $request->description,
+        ]);
+
+        if($created){
+            return response()->json([
+                'status' => 'success',
+                'message' => "Quiz session created",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in creating quiz",
+            'data' => ''
+        ],200);
+    }
+
+
+    public function submit_quizzes(Request $request)
+    {
+        $rules = [
+            'question'      => 'required',
+            'option_a'      => 'required',
+            'option_b'      => 'required',
+            'ans'           => 'required',
+        ];
+        $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors()->all(),
+            ],200); 
+        }
+
+        $quiz_session = $request->quiz_session1;
+        $questions = $request->question;
+        $option_a = $request->option_a;
+        $option_b = $request->option_b;
+        $option_c = $request->option_c;
+        $option_d = $request->option_d;
+        $ans = $request->ans;
+        $quiz_each_id = $request->quiz_each_id;
+        
+        $submitted = false;
+
+        if(count($questions) <= 0 || count($option_a) <= 0 || count($option_b) <= 0 || count($ans) <= 0){
+            return response()->json([
+                'message' => "One or more fields is required",
+                'data' => ''
+            ],200);
+        }
+        
+        if(isset($questions) && count($questions) > 0){
+            foreach($questions as $index => $question){
+                if(isset($ans[$index]) && $ans[$index] == "a") $ans[$index] = isset($option_a[$index]) ? $option_a[$index] : '';
+                else if(isset($ans[$index]) && $ans[$index] == "b") $ans[$index] = isset($option_b[$index]) ? $option_b[$index] : '';
+                else if(isset($ans[$index]) && $ans[$index] == "c") $ans[$index] = isset($option_c[$index]) ? $option_c[$index] : '';
+                else if(isset($ans[$index]) && $ans[$index] == "d") $ans[$index] = isset($option_d[$index]) ? $option_d[$index] : '';
+
+                if(isset($quiz_each_id[$index]) && $quiz_each_id[$index] != ''){
+                    $quizz = \App\Models\Quiz::find($quiz_each_id[$index]);
+                    $quizz->update([
+                        'questions'   => $question,
+                        'option1'     => $option_a[$index],
+                        'option2'     => $option_b[$index],
+                        'option3'     => isset($option_c[$index]) ? $option_c[$index] : '',
+                        'option4'     => isset($option_d[$index]) ? $option_d[$index] : '',
+                        'ans'         => $ans[$index],
+                    ]);
+                    if(!$quizz){
+                        \App\Models\Quiz::create([
+                            'session'     => $quiz_session,
+                            'user_id'     => Auth::user()->id,
+                            'course_id'   => $request->course_id1,
+                            'questions'   => $question,
+                            'option1'     => $option_a[$index],
+                            'option2'     => $option_b[$index],
+                            'option3'     => isset($option_c[$index]) ? $option_c[$index] : '',
+                            'option4'     => isset($option_d[$index]) ? $option_d[$index] : '',
+                            'ans'         => $ans[$index],
+                        ]);
+                    }
+                }else{
+                    \App\Models\Quiz::create([
+                        'session'     => $quiz_session,
+                        'user_id'     => Auth::user()->id,
+                        'course_id'   => $request->course_id1,
+                        'questions'   => $question,
+                        'option1'     => $option_a[$index],
+                        'option2'     => $option_b[$index],
+                        'option3'     => isset($option_c[$index]) ? $option_c[$index] : '',
+                        'option4'     => isset($option_d[$index]) ? $option_d[$index] : '',
+                        'ans'         => $ans[$index],
+                    ]);
+                }
+                $submitted = true;
+            }
+        }
+        if($submitted){
+            return response()->json([
+                'status' => 'success',
+                'message' => "Quiz questions created",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in creating quiz",
+            'data' => ''
+        ],200);
+    }
+
+
+    public function delete_session(Request $request)
+    {
+        $attributes = [
+            'ids'      => 'Quiz ID',
+        ];
+        $rules = [
+            'ids'      => 'required',
+        ];
+        $messages = [
+            'required'      => ':attribute field is required',
+        ];
+        $validator = \Validator::make($request->all(), $rules, $messages)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->all(),
+                'data' => ''
+            ],200); 
+        }
+        if($request->ids != ""){
+            $lmss = \App\Models\LmsQuiz::where('id', $request->ids)->first();
+            \App\Models\Quiz::where('user_id', $lmss->user_id)->where('session', $lmss->session)->delete();
+            \App\Models\QuizAnswer::where('user_id', $lmss->user_id)->where('sessions', $lmss->session)->delete();
+            $deleted = $lmss->delete();
+
+            if($deleted){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => "Quiz session deleted",
+                    'data' => ''
+                ],200);         
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => "Error in deleting quiz",
+                'data' => ''
+            ],200);
+        }
+        
+       
+    }
+
+
+    public function delete_course(Request $request)
+    {
+        $attributes = [
+            'ids'      => 'Course ID',
+        ];
+        $rules = [
+            'ids'      => 'required',
+        ];
+        $messages = [
+            'required'      => ':attribute field is required',
+        ];
+        $validator = \Validator::make($request->all(), $rules, $messages)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->all(),
+                'data' => ''
+            ],200); 
+        }
+        if($request->ids != ""){
+            $course = \App\Models\Course::where('id', $request->ids)->first();
+
+            \App\Models\LmsQuiz::where('course_id', $course->id)->delete();
+            \App\Models\Quiz::where('course_id', $course->id)->delete();
+            \App\Models\QuizAnswer::where('course_id', $course->id)->delete();
+            $deleted = $course->delete();
+
+            if($deleted){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => "Course deleted",
+                    'data' => ''
+                ],200);         
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => "Error in deleting course",
+                'data' => ''
+            ],200);
+        }
+        
+       
+    }
+
+
+    public function delete_requirement(Request $request)
+    {
+        $attributes = [
+            'ids'      => 'Requirement ID',
+        ];
+        $rules = [
+            'ids'      => 'required',
+        ];
+        $messages = [
+            'required'      => ':attribute field is required',
+        ];
+        $validator = \Validator::make($request->all(), $rules, $messages)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->all(),
+                'data' => ''
+            ],200); 
+        }
+        if($request->ids != ""){
+            $deleted = \App\Models\Requirement::where('id', $request->ids)->delete();
+
+            if($deleted){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => "Requirement deleted",
+                    'data' => ''
+                ],200);         
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => "Error in deleting requirement",
+                'data' => ''
+            ],200);
+        }
+        
+       
+    }
+
+
+    public function submit_answers(Request $request)
+    {
+        // return $request->all();
+
+        // $djjdj = $request->answers;
+
+        $sum=0;
+        $user_answers="";
+        $real_answers="";
+        foreach($request->answers as $index => $answer){
+            // echo $request->option[$index]."<br>";
+            // echo $answer."<br>";
+            $user_answers .= $request->option[$index]."||";
+            $real_answers .= $answer."||";
+
+            if($request->option[$index] == $answer){
+                $sum+=1;
+            }
+        }
+        // return $sum;
+
+        $submitted = \App\Models\QuizAnswer::create([
+            'user_id'       => Auth::user()->id,
+            'sessions'      => $request->quiz_session1,
+            'course_id'     => $request->course_id1,
+            'scores'        => $sum,
+            'user_answers'  => $user_answers,
+            'real_answers'  => $real_answers,
+        ]);
+
+        if($submitted){
+            return response()->json([
+                'status' => 'success',
+                'message' => "Your answers have been submitted",
+                'data' => ''
+            ],200);         
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => "Error in creating quiz",
+            'data' => ''
+        ],200);
+    }
+
+
     public function course_details($username)
     {
         return view('dashboard.lms.coursedetails', [
@@ -2187,6 +2747,7 @@ class DashboardController extends Controller
 
     public function affiliate_marketing($username)
     {
+
         $referrals = User::where('referral_link', Auth::user()->id)->get();
 
         return view('dashboard.affiliateMarketing', [
@@ -2197,6 +2758,9 @@ class DashboardController extends Controller
 
     public function integration($username)
     {
+
+        if($this->home->site_features_settings('Integration Page') || $this->home->user_site_features_settings('Integration Page') > 0) return $this->home->redirects();
+
         return view('dashboard.integration', [
             'username' => $username
         ]);
@@ -2204,6 +2768,8 @@ class DashboardController extends Controller
 
     public function manage_integration($username)
     {
+        if($this->home->site_features_settings('Integration Page') || $this->home->user_site_features_settings('Integration Page') > 0) return $this->home->redirects();
+
         $sms_integrations = Integration::latest()->where('user_id', Auth::user()->id)->get();
         $email_integrations = EmailKit::latest()->where(['account_id' => Auth::user()->id, 'is_admin' => false])->get();
 
@@ -2308,23 +2874,26 @@ class DashboardController extends Controller
 
     public function getdownlines($array, $parent = 0, $level = 1)
     {
+        if($level >= 5) $level = 5;
         $referedMembers = '';
         foreach ($array as $key => $entry) {
             if ($entry->referral_link == $parent) {
 
                 if ($level == 1) {
                     $levelQuote = "Direct Referral";
+                    $percentage = 10;
                 } else {
                     $levelQuote = "Indirect Referral";
+                    $percentage = 5;
                 }
 
                 $referedMembers .= "
               <tr>
               <td> $key </td>
-              <td> $entry->first_name $entry->last_name</td>
+              <td> ".ucwords("$entry->first_name $entry->last_name")."</td>
               <td> $levelQuote </td>" .
-                    '<td><a href="javascript: void(0);" class="badge badge-soft-primary font-size-11 m-1">' . "Tier " . $level . "</a></td>" .
-                    '<td>' . "10%" . '</td>' .
+              '<td><a href="javascript: void(0);" class="badge badge-soft-primary font-size-11 m-1">' . "Tier " . $level . "</a></td>" .
+              '<td>' . "$percentage%" . '</td>' .
                     '<td>' . $this->getUserParent($entry->id) . '</td>' .
                     '<td>' . $this->getUserStatus($entry->id) . '</td>
               <td>' . $this->getUserRegDate($entry->id) . '</td>

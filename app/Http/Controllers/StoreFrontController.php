@@ -59,6 +59,9 @@ class StoreFrontController extends Controller
     public function addToCart($id)
     {
         $product = StoreProduct::findOrFail($id);
+        $targetDate = strtotime($product->date_to);
+        $now = time();
+        $timeRemaining = $targetDate - $now;
 
         $cart = session()->get('cart', []);
 
@@ -70,7 +73,7 @@ class StoreFrontController extends Controller
                 "name" => $product->name,
                 "quantity" => 1,
                 'rmQuan' => $product->quantity,
-                "price" => $product->price,
+                "price" => $timeRemaining > 0 ? $product->new_price : $product->price,
                 "description" => $product->description,
                 "image" => $product->image
             ];
@@ -101,7 +104,13 @@ class StoreFrontController extends Controller
     {
         if ($request->id) {
             $cart = session()->get('cart');
+            $customer_email = session()->get('customer_email');
             if (isset($cart[$request->id])) {
+
+                $product_id = $cart[$request->id];
+                \App\Models\TempCart::where('email', $customer_email)->where('product_id', $product_id)->delete();
+                session()->forget('customer_email');
+
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
@@ -117,7 +126,7 @@ class StoreFrontController extends Controller
         // is there any promotion link?
         return $promotion_id && $product_id
             ? $this->checkoutPaymentWithPromotion($request, $promotion_id, $product_id)
-            : $this->checkoutPaymentWithoutPromotion($request);
+            : $this->checkoutPaymentWithoutPromotion($request, $product_id);
     }
 
     protected function checkoutPaymentWithPromotion(Request $request, $promotion_id, $product_id)
@@ -215,7 +224,7 @@ class StoreFrontController extends Controller
 
             // add fund to promoter and promoter referral wallet
             if ($item['id'] == $product_id && $promoter->exists()) {
-                // level1 fee 
+                // level1 fee
                 $promoter->update([
                     'wallet' => $promoter->first()->wallet + $level1_fee,
                     'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
@@ -285,7 +294,7 @@ class StoreFrontController extends Controller
             }
         }
 
-        // 
+        //
         $user = new OrderUser();
         $user->store_order_id = $order->id;
         $user->name = $request->name;
@@ -308,6 +317,9 @@ class StoreFrontController extends Controller
         //     'title' => config('app.name'),
         //     'body' => $request->name.' purchase product in your shop.'
         // ]);
+
+        // delete my details since i have made payment
+        \App\Models\TempCart::where('email', $request->email)->where('product_id', $product_id)->delete();
 
         session()->forget('cart');
 
@@ -336,7 +348,7 @@ class StoreFrontController extends Controller
         return view('myPDF', compact('store', 'order'));
     }
 
-    protected function checkoutPaymentWithoutPromotion(Request $request)
+    protected function checkoutPaymentWithoutPromotion(Request $request, $product_id)
     {
         // dd($request->amountToPay, $request->couponID);
 
@@ -348,7 +360,7 @@ class StoreFrontController extends Controller
 
         foreach ($cart as $item) {
             $totalAmount += $item['price'] * $item['quantity'];
-            $qty += $item['quantity'];  
+            $qty += $item['quantity'];
         }
 
         // dd($request->name, $request->email, $request->phoneNo, $request->address, $request->state, $request->country);
@@ -418,6 +430,9 @@ class StoreFrontController extends Controller
             'body' => $request->name . ' purchase product in your shop.'
         ]);
 
+        // delete my details since i have made payment
+        \App\Models\TempCart::where('email', $request->email)->where('product_id', $product_id)->delete();
+        
         session()->forget('cart');
 
         /** Store information to include in mail in $data as an array */

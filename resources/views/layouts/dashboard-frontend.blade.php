@@ -71,6 +71,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/css/intlTelInput.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/js/intlTelInput-jquery.min.js"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
+
+    <link rel='stylesheet' href="{{ asset('assets/css/sweetalert2.min.css') }}">
+    <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
+
     <script>
         window.setTimeout(function() {
             $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function() {
@@ -93,6 +97,18 @@
             } else {
                 x.style.display = "none";
             }
+
+            // var copyText = document.getElementById("myInput");
+
+            // Select the text field
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText.value);
+
+            // Alert the copied text
+            alert("Copied the text: " + copyText.value);
         }
 
         function emailAuto(){
@@ -148,6 +164,11 @@
     </script>
 </head>
 <body data-sidebar="dark" data-layout-mode="light">
+
+    <input type="hidden" value="{{ url('/') }}/" id="site_url">
+    <input type="hidden" value="{{ csrf_token() }}" id="txt_token">
+    <input type="hidden" value="{{ base64_encode(env('PAYSTACK_KEY')) }}" id="PAYSKey" style="display:none" autocomplete="off">
+    
     <!-- Alerts  Start-->
     <div style="position: fixed; top: 20px; right: 20px; z-index: 100000; width: auto;">
         @include('layouts.alerts')
@@ -184,8 +205,11 @@
     <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
 
+    
+
     <!-- apexcharts -->
     <script src="{{URL::asset('dash/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+
 
     <!-- dashboard init -->
     <script src="{{URL::asset('dash/assets/js/pages/datatables.init.js')}}"></script>
@@ -214,6 +238,9 @@
     <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
+
+    <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
+
     <script>
         function myFunction() {
             // Get the text field

@@ -15,11 +15,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\HomePageController;
 
 class EmailMarketingController extends Controller
 {
+
+    private $home;
+    public function __construct(){
+        $this->home = new HomePageController;
+    }
+
     public function email_kits(Request $request)
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         $user_email_integrations = EmailKit::latest()->where(['account_id' => Auth::user()->id, 'is_admin' => false])->get();
         $admin_email_integrations = EmailKit::latest()->where(['is_admin' => true])->get();
 
@@ -120,6 +129,8 @@ class EmailMarketingController extends Controller
 
     public function email_templates(Request $request)
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         $email_templates = EmailTemplate::where(['user_id' => Auth::user()->id])->get();
 
         return view('dashboard.email-marketing.email-templates.index', [
@@ -129,11 +140,15 @@ class EmailMarketingController extends Controller
 
     public function email_templates_choose_temp()
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         return view('dashboard.email-marketing.email-templates.choose-temp', []);
     }
 
     public function email_templates_view_temp(Request $request)
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         if ($request->id > 4) return redirect(route('user.dashboard', ['username', Auth::user()->username]));
 
         $calltoaction1 = file_get_contents(resource_path('views/emails/email-marketing-templates/default/template-1.blade.php'));
@@ -326,12 +341,40 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns(Request $request)
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         $email_campaigns = EmailCampaign::latest()->where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.email-marketing.email-campaigns.index', [
             'email_campaigns' => $email_campaigns
         ]);
     }
+
+    
+    public function broadcast_message(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $lists = ListManagementContact::whereRaw("list_management_id IN (SELECT id FROM list_management WHERE user_id='$user_id')")->get();
+
+        $list_tags = "";
+        foreach($lists as $list){
+            if($list->tags !== null){
+                $list_tags .= $list->tags.",";
+            }
+        }
+        $list_tags = str_replace(", ", ",", $list_tags);
+        $list_tags = array_unique(explode(',', $list_tags));
+
+        $arrs=[];
+        foreach($list_tags as $list_tag){
+            if($list_tag !== ""){
+                $arrs[] = $list_tag;
+            }
+        }
+        $data['tags'] = $arrs;
+        return view('dashboard.broadcast', $data);
+    }
+
 
     public function email_campaigns_delete(Request $request)
     {
@@ -358,6 +401,8 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns_overview(Request $request)
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         $email_campaign = EmailCampaign::latest()->where(['user_id' => Auth::user()->id, 'id' => $request->id])->first();
         $email_campaign_queues = EmailCampaignQueue::where('email_campaign_id', $email_campaign->id)->get();
 
@@ -369,6 +414,8 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns_create()
     {
+        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
+
         $email_templates = EmailTemplate::where(['user_id' => Auth::user()->id])->get();
         $mail_lists = ListManagement::where('user_id', Auth::user()->id)->where('status', true)->get();
 
@@ -422,7 +469,7 @@ class EmailMarketingController extends Controller
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'You currently have no master email kit. Likewise Ojafunnel team have no master email kit. Please set up email kit and it make master. Thanks.'
-                ])->withInput();
+            ])->withInput();
             }
 
             $email_kit = $email_kit->first();
@@ -464,7 +511,7 @@ class EmailMarketingController extends Controller
                 $email_campaign->email_kit_id = $email_kit->id;
                 $email_campaign->list_id = $mail_list->id;
                 $email_campaign->email_template_id = $email_template->id;
-                $email_campaign->sent = 0;
+                $email_campaign->sent = 1;
                 $email_campaign->bounced = 0;
                 $email_campaign->spam_score = 0;
                 $email_campaign->message_timing = $request->message_timing;
@@ -508,14 +555,14 @@ class EmailMarketingController extends Controller
                 // bulk insert
                 EmailCampaignQueue::insert($email_campaign_queue);
 
-                // divide into 500 chunks and 
+                // divide into 500 chunks and
                 // delay each job between 10  - 20 sec in the queue
                 $chunks = $contacts->chunk(500);
                 $delay = mt_rand(10, 20);
 
                 // dispatch job and delay
                 foreach ($chunks as $key => $_chunk) {
-                    // dispatch job 
+                    // dispatch job
                     ProcessEmailCampaign::dispatch([
                         'smtp_host'    => $email_kit->host,
                         'smtp_port'    => $email_kit->port,
@@ -669,7 +716,7 @@ class EmailMarketingController extends Controller
     {
         return '
                 <div class="footer" style="clear: both; margin-top: 10px; text-align: center; width: 100%; font-weight: bold; font-size: 16px;">
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%"> 
+                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
                     <tr>
                         <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;" valign="top" align="center">
                         Powered by <a href="https://ojafunnel.com" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">Ojafunnel</a>.

@@ -40,6 +40,7 @@
                                         <tr>
                                             <th scope="col">S/N</th>
                                             <th scope="col">User</th>
+                                            <th scope="col">Action</th>
                                             <th scope="col">Start Date</th>
                                             <th scope="col">End Date</th>
                                             <th scope="col">Type</th>
@@ -51,12 +52,21 @@
                                     </thead>
                                     <tbody>
                                         @Foreach(App\Models\OjaSubscription::latest()->where('status', 'Active')->get() as $sub)
+
+                                        @php
+                                            $fullnames = App\Models\User::find($sub->user_id)->first_name." ".App\Models\User::find($sub->user_id)->last_name;
+
+                                            $end_date = date("Y-m-d", strtotime($sub->ends_at));
+
+                                        @endphp
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>
-                                                {{App\Models\User::find($sub->user_id)->first_name}} {{App\Models\User::find($sub->user_id)->last_name}}
-                                                <p class="font-italic">{{App\Models\User::find($sub->user_id)->email}}</p>
+                                                {{$fullnames}}
+                                                <p class="font-italic"><a href="mailto:{{App\Models\User::find($sub->user_id)->email}}">{{App\Models\User::find($sub->user_id)->email}}</a></p>
                                             </td>
+                                            <td><a href="javascript:;" data-bs-toggle="modal" data-bs-target="#renew_sub" class="renew_sub" fullnames="{{ $fullnames }}" starts_at="{{ $sub->started_at }}" ends_at="{{ $end_date }}" subscription_id="{{ $sub->id }}" style="font-weight:500;">Renew / Extend</a></td>
+
                                             <td>{{date('D/M/Y', strtotime($sub->started_at))}}</td>
                                             <td>{{date('D/M/Y', strtotime($sub->ends_at))}}</td>
                                             <td>{{App\Models\OjaPlan::find($sub->plan_id)->name}} Plan</td>
@@ -82,6 +92,63 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="renew_sub" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Editt">
+                        <form method="POST" class="form_renew_sub">
+                            {{ csrf_field() }}
+                            <div class="form">
+                                <p class="mt-n4"><b class="sub_name"></b></p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>Select Subscription Type</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <select name="sub_type" class="input sub_type">
+                                                    <option value="">-- Select One --</option>
+                                                    <option value="renew" selected>Renew</option>
+                                                    <option value="extend">Extend</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="start_date" class="input start_date"> 
+                                    <input type="hidden" name="end_date" class="input end_date"> 
+                                    <input type="hidden" name="subscription_id" class="input subscription_id"> 
+
+                                    <div class="col-lg-12 ext_div" style="display:none">
+                                        <label>Extend to</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="date" name="end_date" class="input end_date"> 
+                                                <div class="expiry_info" style="font-size:12px;margin-top:3px"></div>
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                    <div class="col-lg-12 mb-4">
+                                        <div class="boding">
+                                            <button type="button" class="addRenew">Renew Subscription</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 <!-- ============================================================== -->
 <!-- Start right Content Ends -->

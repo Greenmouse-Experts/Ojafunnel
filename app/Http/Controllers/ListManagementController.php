@@ -10,12 +10,26 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Illuminate\Support\Str;
+use App\Mail\UserApprovedNotification;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\HomePageController;
+
+
 
 class ListManagementController extends Controller
 {
+
+    private $home;
+    public function __construct(){
+        $this->home = new HomePageController;
+        $this->middleware(['auth', 'verified']);
+    }
     
     public function list_management($username)
     {
+
+        if($this->home->site_features_settings('List Management') || $this->home->user_site_features_settings('List Management') > 0) return $this->home->redirects();
+
         return view('dashboard.list-management.index', [
             'username' => $username
         ]);
@@ -42,7 +56,9 @@ class ListManagementController extends Controller
                 'name' => $request->name,
                 'display_name' => $request->display_name,
                 'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
-                'description' => $request->description
+                'description' => $request->description,
+                'status' => 0,
+                // 'tags' => $request->tags,
             ]);
         } else {
             $this->validate($request, [
@@ -55,9 +71,19 @@ class ListManagementController extends Controller
                 'name' => $request->name,
                 'display_name' => $request->display_name,
                 'slug' => $request->slug,
-                'description' => $request->description
+                'description' => $request->description,
+                'status' => 0,
+                // 'tags' => $request->tags,
             ]);
         }
+
+        $data = array(
+            'user' => 'OjaFunnel',
+            'message' => "A user $request->name has created a list, kindly login to your admin and react to it."
+        );
+
+        Mail::to('admin@ojafunnel.com')->send(new UserApprovedNotification($data['user'], $data['message'], ''));
+        // Mail::to('donchibobo@gmail.com')->send(new UserApprovedNotification($data['user'], $data['message'], ''));
 
         return redirect()->route('user.list.management', Auth::user()->username)->with([
             'type' => 'success',
@@ -67,17 +93,26 @@ class ListManagementController extends Controller
 
     public function view_list($id)
     {
+        if($this->home->site_features_settings('List Management') || $this->home->user_site_features_settings('List Management') > 0) return $this->home->redirects();
+
         $finder = Crypt::decrypt($id);
 
+        $user_id = Auth::user()->id;
         $list = ListManagement::find($finder);
+        $lists = ListManagementContact::whereRaw("list_management_id IN (SELECT id FROM list_management WHERE user_id='$user_id')")->get();
 
         return view('dashboard.list-management.view')->with([
-            'list' => $list
+            'list' => $list,
+            'tags1' => [],// $data,
+            'lists' => $lists,
+            // 'tags1' => $lists,
         ]);
     }
 
     public function edit_list($id)
     {
+        if($this->home->site_features_settings('List Management') || $this->home->user_site_features_settings('List Management') > 0) return $this->home->redirects();
+
         $finder = Crypt::decrypt($id);
 
         $list = ListManagement::find($finder);
@@ -106,7 +141,8 @@ class ListManagementController extends Controller
                 'name' => $request->name,
                 'display_name' => $request->display_name,
                 'slug' => $request->slug,
-                'description' => $request->description
+                'description' => $request->description,
+                // 'tags' => $request->tags,
             ]);
         } else {
             if($list->slug == $request->slug)
@@ -116,7 +152,8 @@ class ListManagementController extends Controller
                     'name' => $request->name,
                     'display_name' => $request->display_name,
                     'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
-                    'description' => $request->description
+                    'description' => $request->description,
+                    // 'tags' => $request->tags,
                 ]);
             } else {
                 $this->validate($request, [
@@ -160,6 +197,8 @@ class ListManagementController extends Controller
 
     public function create_contact_list($id)
     {
+        if($this->home->site_features_settings('List Management') || $this->home->user_site_features_settings('List Management') > 0) return $this->home->redirects();
+
         $finder = Crypt::decrypt($id);
         $list = ListManagement::find($finder);
 
@@ -245,7 +284,8 @@ class ListManagementController extends Controller
             'phone' => $request->phone,
             'date_of_birth' => $request->date_of_birth,
             'anniv_date' => $request->anniv_date,
-            'subscribe' => true
+            'subscribe' => true,
+            'tags' => $request->tags,
         ]);
 
         return redirect()->route('user.view.list', Crypt::encrypt($list->id))->with([
@@ -297,6 +337,7 @@ class ListManagementController extends Controller
             'phone' => $request->phone,
             'date_of_birth' => $request->date_of_birth,
             'anniv_date' => $request->anniv_date,
+            'tags' => $request->tags,
         ]);
 
         return redirect()->route('user.view.list', Crypt::encrypt($contact->list_management_id))->with([
@@ -314,6 +355,17 @@ class ListManagementController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Contact deleted!'
+        ]);
+    }
+
+    public function unsub_contact($id)
+    {
+        // $finder = Crypt::decrypt($id);
+        // ListManagementContact::find($finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Unsubscribed successfully!'
         ]);
     }
 

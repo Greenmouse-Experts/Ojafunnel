@@ -8,6 +8,8 @@ use App\Models\Customer;
 use App\Models\Newsletter;
 use App\Models\OjafunnelNotification;
 use App\Models\OjaPlan;
+use App\Models\OjaPlanParameter;
+use App\Models\OjaPlanInterval;
 use App\Models\Page;
 use App\Models\Plan;
 use App\Models\User;
@@ -26,6 +28,37 @@ class HomePageController extends Controller
     {
         return view('frontend.index');
     }
+
+    function redirects() {
+        $user = Auth::user()->id;
+        $username = User::where('id', $user)->value('username');
+        $js = "<script>";
+        $js .= "alert(\"This page has been disabled by the admin, try again later\");";
+        $js .= "window.location = `/$username/dashboard/`;";
+        $js .= "</script>";
+        return $js;
+    }
+
+    public function site_features_settings($page_name){
+        $site_features = \App\Models\SiteFeature::where('features', $page_name)->where('status', 'disabled')->first();
+        return $site_features;
+    }
+    public function user_site_features_settings($page_name){
+        $feature_access = explode(",", Auth::user()->feature_access);
+        $user_site_features = \App\Models\SiteFeature::whereIN('id', $feature_access)->pluck('id')->toArray();
+        $m=0;
+        if(count($user_site_features) > 0){
+            $m=0;
+            foreach($user_site_features as $user_site_feature){
+                $isDisabled = \App\Models\SiteFeature::where('id', $user_site_feature)->where('features', $page_name)->first();
+                if($isDisabled){
+                    $m+=1;
+                }
+            }
+        }
+        return $m;
+    }
+
     public function subscribe_newsletter(Request $request)
     {
         //Validate Request
@@ -53,11 +86,89 @@ class HomePageController extends Controller
     //  Pring
     public function pricing()
     {
-        $plans = OjaPlan::latest()->get();
+        $ojaplans = [];
+        $plans = OjaPlan::all();
+
+        foreach($plans as $plan)
+        {
+            $plan->parameter = OjaPlanParameter::where(['plan_id' => $plan->id])->first();
+            $plan->interval = OjaPlanInterval::where(['plan_id' => $plan->id])->get();
+
+            array_push($ojaplans, $plan);
+        }
+
+        $headprices = [];
+
+        foreach( $ojaplans as $ojplan )
+        {
+            array_push($headprices, (object) [
+                'name' => $ojplan->name,
+                'interval' => $ojplan->interval
+            ]);
+        }
+
+        $sms = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $parasm = (int) $ojplan->parameter->sms_automation;
+
+            array_push($sms, (object) [
+                'sms' => ($parasm > 0) ? true : false
+            ]);
+        }
+
+        $whatsapp = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $wa_auto = (int) $ojplan->parameter->whatsapp_automation;
+            $wa_numb = (int) $ojplan->parameter->wa_number;
+
+            array_push($whatsapp, (object) [
+                'wa_auto' => $wa_auto,
+                'wa_numb' => $wa_numb,
+            ]);
+        }
+
+        $pagebuilder = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $pb = (int) $ojplan->parameter->page_builder;
+            array_push($pagebuilder, $pb);
+        }
+
+        $fbuilder = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $pb = (int) $ojplan->parameter->funnel_builder;
+            array_push($fbuilder, $pb);
+        }
+
+        $lms = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $str = (int) $ojplan->parameter->store;
+            array_push($lms, $str);
+        }
+
+        $products = [];
+        foreach( $ojaplans as $ojplan )
+        {
+            $prd = (int) $ojplan->parameter->products;
+            array_push($products, $prd);
+        }
 
         return view('frontend.pricing', [
-            'plans' => $plans
+            'plans' => $ojaplans,
+            'headprices' => $headprices,
+            'sms' => $sms,
+            'whatsapp' => $whatsapp,
+            'pagebuilder' => $pagebuilder,
+            'funnelbuilder' => $fbuilder,
+            'lms' => $lms,
+            'products' => $products
         ]);
+
+
     }
 
     // Contact-Us
@@ -65,6 +176,34 @@ class HomePageController extends Controller
     {
         return view('frontend.contact');
     }
+
+    public function magic_login_link(Request $request, $id){
+        $login_magic = User::whereRaw("sha1(id)='$id'")->first();
+        if($login_magic){
+            Auth::guard("web")->login($login_magic);
+            if ($login_magic->status == 'inactive') {
+                Auth::logout();
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Account inactive, please contact administrator.'
+                ]);
+            }
+            if ($login_magic->user_type == 'User') {
+                return redirect()->route('user.dashboard', $login_magic->username);
+            }
+            Auth::logout();
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'You are not a User.'
+            ]);
+        }
+        Auth::logout();
+        return redirect('/login')->with([
+            'type' => 'danger',
+            'message' => 'Invalid link or link has expired'
+        ]);
+    }
+
     // Login
     public function login()
     {
@@ -137,6 +276,10 @@ class HomePageController extends Controller
     {
         return view('frontend.Ecommerce');
     }
+
+    public function magic_link(){
+        return 344;
+    }
     // Funnel Builder
     public function funnelbuilder()
     {
@@ -204,6 +347,62 @@ class HomePageController extends Controller
         curl_close($curl);
         dd($response);
     }
+
+    public function store_cart_details_tmp(Request $request){
+        // store temporary user details on the database incase they didnt purchase, we will have to remind them
+        // delete back this if they have made payment
+        session()->put('customer_email', request()->customer_email);
+        $temp_carts = \App\Models\TempCart::create([
+            'email' => request()->customer_email,
+            'product_id' => request()->product_id,
+            'product_type' => request()->product_type,
+        ]);
+    }
+
+
+    public function access_course(Request $request){
+        $user_email = session()->get('email');
+        $user_order_no = session()->get('order_no');
+        $auth_details = \App\Models\Enrollment::whereRaw("md5(email) = '$user_email' AND md5(order_no) = '$user_order_no'")->first();
+        $course_id = \App\Models\ShopOrder::where('enrollment_id', $auth_details->id)->value('course_id');
+        $data['auths'] = 0;
+
+        if($auth_details){
+            $course = \App\Models\Course::where('id', $course_id)->first();
+            $data['auths'] = 1;
+            $data['course'] = $course;
+            $data['username'] = $user_email;
+        }
+        return view('frontend.access_course', $data);
+    }
+
+    
+    public function access_auth_course(Request $request)
+    {
+        $this->validate($request, [
+            'email'     => 'required|email',
+            'order_no'  => 'required|numeric',
+        ]);
+
+        $auth_details = \App\Models\Enrollment::where('email', trim($request->email))->where('order_no', trim($request->order_no))->first();
+
+        if($auth_details){
+            session()->put('email', md5(trim($request->email)));
+            session()->put('order_no', md5(trim($request->order_no)));
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'authenticated',
+                'data' => ''
+            ],200);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid details entered!',
+            'data' => ''
+        ],200);
+    }
+
 
     public function contactConfirm(Request $request)
     {

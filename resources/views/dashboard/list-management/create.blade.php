@@ -71,6 +71,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6" style="border-left: 1px solid gainsboro; padding: 50px;">
+                                    <!-- <div class="col-lg-12 mb-4">
+                                        <label for="">Add Tags</label>
+                                        <p class="text-xs text-gray-500">
+                                            Add tags separated with comma.
+                                        </p>
+                                        <textarea type="text" name="tags" class="form-control" value="{{old('tags')}}" placeholder="Enter tags separated with comma" style="height:7em!important"></textarea>
+                                    </div> -->
                                     <div class="col-lg-12 mb-4">
                                         <label for="">Description</label>
                                         <p class="text-xs text-gray-500">

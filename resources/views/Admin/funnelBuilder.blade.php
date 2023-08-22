@@ -1,6 +1,6 @@
 @extends('layouts.admin-frontend')
 
-@section('page-content') 
+@section('page-content')
 <div class="main-content">
     <div class="page-content">
         <!-- container-fluid -->
@@ -30,7 +30,7 @@
                             </p>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
             <!-- store data information-->
             <div class="row">
@@ -93,8 +93,8 @@
                                             <th scope="col">Folder Name</th>
                                             <th scope="col">Number of Pages</th>
                                             <th scope="col">Actions</th>
-                                        </tr> 
-                                    </thead> 
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         @foreach($funnels as $funnel)
                                         <tr>
@@ -108,9 +108,9 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('funnelBuilderView', ['id' => Crypt::encrypt($funnel->id)])}}">View Pages</a></li> 
+                                                        <li><a class="dropdown-item" href="{{route('funnelBuilderView', ['id' => Crypt::encrypt($funnel->id)])}}">View Pages</a></li>
                                                     </ul>
-                                                </div> 
+                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -126,7 +126,7 @@
     </div>
     <!-- End Page-content -->
 </div>
-<!-- END layout-wrapper --> 
+<!-- END layout-wrapper -->
 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

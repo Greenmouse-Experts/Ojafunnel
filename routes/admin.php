@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('/login', [App\Http\Controllers\Admin\Auth\AdminAuthController::class, 'getLogin'])->name('adminLogin');
     Route::post('/login', [App\Http\Controllers\Admin\Auth\AdminAuthController::class, 'postLogin'])->name('adminLoginPost');
@@ -23,6 +24,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::post('/profile-update', [App\Http\Controllers\Admin\AdminController::class, 'changePassword'])->name('admin.change-password');
             Route::get('dashboard', [App\Http\Controllers\Admin\AdminController::class, 'dashboard'])->name('adminDashboard');
             Route::get('/view_users', [App\Http\Controllers\Admin\AdminController::class, 'view_users'])->name('view_users');
+            Route::get('/user/login/{id}', [App\Http\Controllers\Admin\AdminController::class, 'user_login'])->name('admin.user.login');
             Route::get('/view_users/users-details/{id}', [App\Http\Controllers\Admin\CustomerController::class, 'view'])->name('users.details');
             Route::get('/add_plans', [App\Http\Controllers\Admin\AdminController::class, 'add_plans'])->name('add_plans');
             Route::get('/manage_plans', [App\Http\Controllers\Admin\AdminController::class, 'manage_plans'])->name('manage_plans');
@@ -38,7 +40,23 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/trans_details', [App\Http\Controllers\Admin\AdminController::class, 'trans_details'])->name('trans.details');
             Route::get('/affiliateList', [App\Http\Controllers\Admin\AdminController::class, 'affiliateList'])->name('affiliateList');
 
+            Route::post('/add-users', [App\Http\Controllers\Admin\AdminController::class, 'add_users']); //
+            Route::post('/update-prvdg', [App\Http\Controllers\Admin\AdminController::class, 'update_prvdg']); //
+            
+            Route::post('/send-broadcast', [App\Http\Controllers\Admin\AdminController::class, 'send_broadcast']); //
+            Route::post('/get-statistics', [App\Http\Controllers\Admin\AdminController::class, 'getStatistics']); //
+            
+            Route::post('/renew-extend', [App\Http\Controllers\Admin\AdminController::class, 'renew_extend']); //
+            Route::post('/react-feature', [App\Http\Controllers\Admin\AdminController::class, 'react_feature']); //
+            
+
             // Email Marketing
+            Route::get('/email-marketing/validate-email', [App\Http\Controllers\Admin\AdminController::class, 'validate_email'])->name('validate-email'); //
+            Route::post('/validate-user-emails', [App\Http\Controllers\Admin\AdminController::class, 'validate_user_emails']); //
+            Route::post('/fetch-referrals', [App\Http\Controllers\Admin\AdminController::class, 'fetch_referrals']); //
+            Route::post('/get-users-prvd', [App\Http\Controllers\Admin\AdminController::class, 'get_users_prvd']); //
+            
+            Route::post('/clrs', [App\Http\Controllers\Admin\AdminController::class, 'clrs']); //
             Route::get('/email-marketing/email-kits', [App\Http\Controllers\Admin\AdminController::class, 'view_email_kits'])->name('admin.email-marketing.email-kits');
             Route::get('/email-marketing/email-campaigns', [App\Http\Controllers\Admin\AdminController::class, 'view_email_campaigns'])->name('admin.email-marketing.email-campaigns');
 
@@ -61,6 +79,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/user/enable/{uids}', [App\Http\Controllers\Admin\CustomerController::class, 'enable'])->name('enabled.user');
 
             Route::get('/email-support', [App\Http\Controllers\Admin\AdminController::class, 'email_support'])->name('emailSupport');
+            Route::get('/broadcast', [App\Http\Controllers\Admin\AdminController::class, 'broadcast'])->name('broadcast'); //
+            Route::get('/priviledges', [App\Http\Controllers\Admin\AdminController::class, 'priviledges'])->name('priviledges'); //
+
             Route::post('/reply/email-support/{id}', [App\Http\Controllers\Admin\AdminController::class, 'reply_email_support'])->name('replyEmailSupport');
             Route::post('/send/email/user', [App\Http\Controllers\Admin\AdminController::class, 'send_email_to_user'])->name('admin.send.message.user');
             Route::get('/chat-support', [App\Http\Controllers\Admin\AdminController::class, 'chat_support'])->name('chatSupport');
@@ -69,6 +90,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/integration', [App\Http\Controllers\Admin\AdminController::class, 'integration'])->name('integration');
             Route::get('/birthday-module', [App\Http\Controllers\Admin\AdminController::class, 'birthday_module'])->name('birthdayModule');
 
+            Route::get('/exchange-rate', [App\Http\Controllers\Admin\AdminController::class, 'lms_xrate'])->name('system.xrate');
+            Route::post('/exchange-rate/update', [App\Http\Controllers\Admin\AdminController::class, 'lms_xrate_submit'])->name('xrate.update');
             // Whatsapp Support
             Route::get('/support/whatsapp', [App\Http\Controllers\Admin\AdminController::class, 'support_whatsapp'])->name('whatsappSupport');
             Route::post('/add/support/whatsapp', [App\Http\Controllers\Admin\AdminController::class, 'add_support_whatsapp'])->name('whatsappSupportAdd');
@@ -86,6 +109,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             // sales analytics
             Route::get('sales-analytics', [App\Http\Controllers\Admin\AdminController::class, 'sales_analytics'])->name('salesAnalytics');
+            Route::get('email-analytics', [App\Http\Controllers\Admin\AdminController::class, 'email_analytics'])->name('emailAnalytics'); //
 
             // nofitication admin
             Route::get('notification', [App\Http\Controllers\Admin\AdminController::class, 'notification'])->name('notification');
@@ -93,8 +117,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             // Admin page builder
             Route::get('page-builder', [App\Http\Controllers\Admin\AdminController::class, 'page_builder'])->name('pageBuilder');
             Route::get('funnel-builder', [App\Http\Controllers\Admin\AdminController::class, 'funnel_builder'])->name('funnelBuilder');
+            Route::get('funnel-builder/categories', [App\Http\Controllers\Admin\AdminController::class, 'funnel_builder_categories'])->name('funnelBuilder.categories');
+            Route::post('/funnel-builder/categories', [App\Http\Controllers\Admin\AdminController::class, 'funnel_category_create'])->name('funnelBuilder.categories.add');
+            Route::get('/funnel-builder/categories/{id}/delete', [App\Http\Controllers\Admin\AdminController::class, 'funnel_category_delete'])->name('funnelBuilder.categories.delete');
             Route::get('/funnel-builder/pages/{id}', [App\Http\Controllers\Admin\AdminController::class, 'view_funnel_pages'])->name('funnelBuilderView');
-
             // Admin Page Builder
             Route::post('/page/builder/create', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_create'])->name('admin.page.builder.create');
             Route::any('/page/builder/save/page', [App\Http\Controllers\Admin\AdminController::class, 'page_builder_save_page'])->name('admin.page.builder.save.page');
@@ -127,7 +153,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/transaction/confirm/{id}/{response}/{status}/{description}', [App\Http\Controllers\Admin\AdminController::class, 'transaction_confirm'])->name('transaction.confirm');
             Route::get('/finalized/payouts', [App\Http\Controllers\Admin\AdminController::class, 'finalized_payouts'])->name('finalized.payouts');
 
-            // 
+            //
             Route::post('/add-plan', [App\Http\Controllers\Admin\AdminController::class, 'add_plan'])->name('admin.addPlan');
             Route::post('/update-plan/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_plan'])->name('admin.updatePlan');
             Route::post('/delete-plan/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_plan'])->name('admin.deletePlan');

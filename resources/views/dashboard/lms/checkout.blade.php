@@ -26,6 +26,9 @@
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel='stylesheet' href="{{ asset('assets/css/sweetalert2.min.css') }}">
+    <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
 </head>
 
 <body>
@@ -106,8 +109,8 @@
                                         <form action="
                                             {{
                                                 route('course.payment.checkout', [
-                                                    'shopname' => $shop->name, 
-                                                    'promotion_id' => Request::get('promotion_id'), 
+                                                    'shopname' => $shop->name,
+                                                    'promotion_id' => Request::get('promotion_id'),
                                                     'course_id' => Request::get('course_id')
                                                 ])
                                             }}
@@ -128,8 +131,11 @@
                                                                 </div>
                                                                 <div class="col-lg-6 mb-4">
                                                                     <label for="Name">Email *</label>
-                                                                    <input type="email" name="email" id="email" placeholder="Enter your email" required />
+                                                                    <input type="email" name="email" id="email" class="customer_email" placeholder="Enter your email" required />
                                                                 </div>
+
+                                                                <input type="hidden" name="product_id" class="product_id" value="{{ Request::get('course_id') }}" />
+
                                                                 <div class="col-lg-6 mb-4">
                                                                     <label for="Name">Phone Number *</label>
                                                                     <input type="tel" name="phoneNo" id="phoneNo" placeholder="Enter your number" required />
@@ -139,12 +145,26 @@
                                                                     <input type="text" name="address" id="address" placeholder="Enter your address" required />
                                                                 </div>
                                                                 <div class="col-lg-6 mb-4">
-                                                                    <label for="Name">State *</label>
-                                                                    <input type="tel" name="state" id="state" placeholder="Enter your state" required />
+                                                                    <label for="Name">Country *</label>
+                                                                    <!-- <input type="text" name="country" id="country" placeholder="Enter your country" required /> -->
+
+                                                                    <select class="form-control p-15 txt_state" name="txt_state">
+                                                                        <option value="">-Select Country-</option>
+                                                                        @if(count($countries) > 0)
+                                                                            @foreach($countries as $index => $country)
+                                                                                @php
+                                                                                    $country_code = $country['code'];
+                                                                                    $country = $country['name'];
+                                                                                @endphp
+                                                                                <option value="{{ $country_code }}">{{ $country }}</option>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </select>
+                                                                    <!-- stripe/stripe-php -->
                                                                 </div>
                                                                 <div class="col-lg-6 mb-4">
-                                                                    <label for="Name">Country *</label>
-                                                                    <input type="text" name="country" id="country" placeholder="Enter your country" required />
+                                                                    <label for="Name">State *</label>
+                                                                    <input type="tel" name="state" id="state" placeholder="Enter your state" required />
                                                                 </div>
                                                                 <div class="text-end mt-2">
                                                                     <a class="nav-link" class="text-decoration-none">
@@ -157,6 +177,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+
+
                                                 <div class="tab-pane fade" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
                                                     <div>
                                                         <h4 class="card-title">Payment information</h4>
@@ -202,7 +225,62 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <!-- <div class="stripe_div">
+                                                        <div class="panel panel-default credit-card-box">
+                                                            <div class="row display-tr text-center mt-n4">
+                                                                <div class="display-td">
+                                                                    <img class="img-responsive" src="{{ asset('images/stripe.png') }}" style="width:110px;height:auto">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="panel-body mt-n1">
+                                                                <form role="form" action="#" method="post" action="{{ route('stripe.post') }}"  class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
+
+                                                                    @csrf
+                                                                    <input type="hidden" id="txtFinalAmt" name="txtFinalAmt" value="100">
+
+                                                                    <div class="row">
+                                                                        <div class="mb-3 col-md-12 required">
+                                                                            <label for="card-name" class="form-label">Name on Card <span class="text-danger">*</span></label>
+                                                                            <input type="text" class="form-control" id="card-name" name="card-name" placeholder="Enter your names on card" style="text-transform: capitalize;">
+                                                                        </div>
+
+                                                                        <div class="mb-3 col-md-12 required">
+                                                                            <label for="card-number" class="form-label">Card Number <span class="text-danger">*</span></label>
+                                                                            <input autocomplete='off' type="number" class="form-control card-number" id="card-number" placeholder="Enter your card number" name="card-number">
+                                                                        </div>
+
+                                                                        <div class="mb-3 col-sm-4 pe-sm-2 required">
+                                                                            <label for="cvc" class="form-label">CVC <span class="text-danger">*</span></label>
+                                                                            <input autocomplete='off' type="number" class="form-control card-cvc" id="cvc" placeholder="ex. 311" size='4' name="cvc">
+                                                                        </div>
+
+                                                                        <div class="mb-3 col-sm-4 col-6 pe-2 required">
+                                                                            <label for="card-expiry-month" class="form-label">Exp Month <span class="text-danger">*</span></label>
+                                                                            <input autocomplete='off' type="number" class="form-control card-expiry-month" id="card-expiry-month" placeholder="MM" size='2' name="card-expiry-month">
+                                                                        </div>
+
+                                                                        <div class="mb-3 col-sm-4 col-6 ps-2 required">
+                                                                            <label for="card-expiry-year" class="form-label">Exp Year <span class="text-danger">*</span></label>
+                                                                            <input autocomplete='off' type="number" class="form-control card-expiry-year" id="card-expiry-year" placeholder="YYYY" size='4' name="card-expiry-year">
+                                                                        </div>
+
+                                                                        <input type='hidden' autocomplete='off' class='stripeToken' name='stripeToken' />
+                                                                        
+                                                                        <div class="col-md-12 mt-4 text-center">
+                                                                            <button class="btn btn-primary pe-6 ps-6 cmdPayNow" type="submit">Pay Now ($0.00)</button>
+
+                                                                            <button class="btn btn-primary ms-2 pe-4 ps-4 cmdBack1" type="button">Back</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
                                                 </div>
+
+
                                                 <div class="tab-pane fade" id="v-pills-confir" role="tabpanel" aria-labelledby="v-pills-confir-tab">
                                                     <div class="card shadow-none border mb-0">
                                                         <div class="card-body">
@@ -224,9 +302,9 @@
                                                                         <tr>
                                                                             <th scope="row"><img src="{{ $details['image'] ?? URL::asset('dash/assets/image/store-logo.png') }}" alt="product-img" title="product-img" class="avatar-md"></th>
                                                                             <td>
-                                                                                <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ $details['title'] }} </a></h5>
+                                                                                <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ isset($details['title']) ? $details['title'] : '' }} </a></h5>
                                                                             </td>
-                                                                            <td>{{ $details['currency'] }}{{ number_format($details['price'], 2) }}</td>
+                                                                            <td>{{ isset($details['currency']) ? $details['currency'] : 'NGN' }}{{ number_format($details['price'], 2) }}</td>
                                                                         </tr>
                                                                         @endforeach
                                                                         @endif
@@ -236,6 +314,8 @@
                                                                             </td>
                                                                             <td>
                                                                                 {{ $details['currency'] }}{{ number_format($total, 2) }}
+                                                                                <input type="hidden" id="curr" value="{{$details['currency']}}" name="">
+                                                                                {{ isset($details) ? $details['currency'] : 'NGN' }}{{ number_format($total, 2) }}
                                                                                 <input type="hidden" id="totalAmount" value="{{ $total }}" name="">
                                                                             </td>
                                                                         </tr>
@@ -289,6 +369,8 @@
     </div>
 
 
+
+
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -304,6 +386,8 @@
     </footer>
     <!-- Button trigger modal -->
 
+    <input type="hidden" value="{{ csrf_token() }}" id="txt_token1">
+    <input type="hidden" value="{{ url('/') }}/" id="site_url">
 
     <!-- JAVASCRIPT -->
     <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
@@ -313,11 +397,39 @@
     <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
 
+
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+    <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
+    
+
+    
+
     <script>
+        var token = $('#txt_token1').val();
+        var site_url = $('#site_url').val();
+        
         $("#activePayment").click(function() {
             if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '') {
                 $('#error').html('Please fill the asterisks field to continue');
             } else {
+
+                if($('.customer_email').val() !== ""){
+                    var datastring='customer_email='+$('.customer_email').val()
+                    +'&product_id='+$('.product_id').val()
+                    +'&product_type=courses'
+                    +'&_token='+token;
+                
+                    $.ajax({
+                        type: "POST",
+                        url : site_url + "store-cart-details-tmp", // store users email temporary, delete back if they complete the payment
+                        data: datastring,
+                        cache: false,
+                        timeout: 30000, // 30 second timeout
+                        success : function(data){}
+                    });
+                }
+                
                 $('#v-pills-shipping-tab').removeClass('active')
                 $('#v-pills-shipping').removeClass('show active')
                 $('#v-pills-payment-tab').addClass('active')
@@ -343,10 +455,28 @@
             if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '') {
                 $('#error').html('Please fill the asterisks field to continue');
             }
+            var currency = document.getElementById("curr").value;
+            var tamount = document.getElementById("totalAmount").value;
+            if(currency != "NGN") {
+                var multiplier = 1;
+                if(currency == "USD"){
+                    multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('USD')}}");
+                    tamount  = tamount * multiplier;
+                }
+
+                if(currency != "GBP") {
+                    multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('GBP')}}");
+                    tamount  = tamount * multiplier;
+                }
+
+                if(currency != "NGN") {
+                    tamount = 1 * Number.parseInt(tamount);
+                }
+            }
             var handler = PaystackPop.setup({
                 key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
                 email: $('#email').val(),
-                amount: document.getElementById("totalAmount").value * 100,
+                amount: tamount * 100,
                 ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
                 callback: function(response) {
                     // alert(JSON.stringify(response))
