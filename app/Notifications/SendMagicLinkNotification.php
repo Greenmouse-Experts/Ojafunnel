@@ -48,10 +48,14 @@ class SendMagicLinkNotification extends Notification
         $generator->setRedirectUrl($this->new_user->username.'/dashboard');
         $url = $generator->generate();
 
+        $urls = env('APP_URL')."/magic-login-link/".sha1($this->new_user->id)."?expires=1654454567";
+
+        //https://ojafunnel.com/magic-login/17?expires=1692683844&redirect_to=chinny%2Fdashboard&user_type=app-models-user&signature=ea52ff361c44f7756aae998e5e3926ba5890fd7ee85420400eb29a17b5394d12
+
         return (new MailMessage)
                     ->subject('Your Login Magic Link!')
                     ->line('Click this link to log in!')
-                    ->action('Login', $url)
+                    ->action('Login', $urls)
                     ->line('Thank you for using our application!');
     }
 

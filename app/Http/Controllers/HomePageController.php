@@ -176,6 +176,34 @@ class HomePageController extends Controller
     {
         return view('frontend.contact');
     }
+
+    public function magic_login_link(Request $request, $id){
+        $login_magic = User::whereRaw("sha1(id)='$id'")->first();
+        if($login_magic){
+            Auth::guard("web")->login($login_magic);
+            if ($login_magic->status == 'inactive') {
+                Auth::logout();
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Account inactive, please contact administrator.'
+                ]);
+            }
+            if ($login_magic->user_type == 'User') {
+                return redirect()->route('user.dashboard', $login_magic->username);
+            }
+            Auth::logout();
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'You are not a User.'
+            ]);
+        }
+        Auth::logout();
+        return redirect('/login')->with([
+            'type' => 'danger',
+            'message' => 'Invalid link or link has expired'
+        ]);
+    }
+
     // Login
     public function login()
     {
@@ -247,6 +275,10 @@ class HomePageController extends Controller
     public function ecommerce()
     {
         return view('frontend.Ecommerce');
+    }
+
+    public function magic_link(){
+        return 344;
     }
     // Funnel Builder
     public function funnelbuilder()
