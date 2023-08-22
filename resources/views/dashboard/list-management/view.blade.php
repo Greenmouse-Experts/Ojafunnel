@@ -130,23 +130,25 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach(App\Models\ListManagementContact::latest()->where('list_management_id', $list->id)->get() as $key => $contact)
+                                        <?php /* @foreach(App\Models\ListManagementContact::latest()->where('list_management_id', $list->id)->get() as $key => $contact) */ ?>
+
+                                        @foreach($lists as $list1)
                                         <tr>
                                             <td scope="row">{{$loop->iteration}}</td>
                                             <td>
-                                                <p class='text-bold-600'> {{$contact->name}}</p>
+                                                <p class='text-bold-600'> {{$list1->name}}</p>
                                             </td>
                                             <td>
-                                                {{$contact->email}}
+                                                {{$list1->email}}
                                             </td>
                                             <td>
-                                                {{$contact->phone}}
+                                                {{$list1->phone}}
                                             </td>
                                             <td>
-                                                {{ $contact->address_1 }}, {{ $contact->state }}, {{ $contact->country }}
+                                                {{ $list1->address_1 }}, {{ $list1->state }}, {{ $list1->country }}
                                             </td>
                                             <td>
-                                                @if($contact->subscribe == true)
+                                                @if($list1->subscribe == true)
                                                 <span class="badge badge-pill badge-soft-success font-size-11">Subscribed</span>
                                                 @else
                                                 <span class="badge badge-pill badge-soft-danger font-size-11">Unsubscribed</span>
@@ -154,8 +156,10 @@
                                             </td>
                                             
                                             <td>
-                                                @if(count($tags1['tags']) > 0)
-                                                    @foreach($tags1['tags'] as $tag)
+                                                @php $tags = explode(", ", $list1->tags); @endphp
+
+                                                @if(count($tags) > 0)
+                                                    @foreach($tags as $tag)
                                                         <p class='text-bold-600' style="display:inline"><label style="background:#999;border-radius:30px;padding:1px 7px;color:#fff;font-size:12px;">{{ $tag }}</label></p>
                                                     @endforeach
                                                 @endif
@@ -167,13 +171,13 @@
                                                         Options
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="{{route('user.edit.contact', Crypt::encrypt($contact->id))}}" style="cursor: pointer;">View/Edit</a></li>
-                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#unsubscribe-{{$contact->id}}">Unsubscribe</a></li>
-                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$contact->id}}">Delete</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('user.edit.contact', Crypt::encrypt($list1->id))}}" style="cursor: pointer;">View/Edit</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#unsubscribe-{{$list1->id}}">Unsubscribe</a></li>
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$list1->id}}">Delete</a></li>
                                                     </ul>
                                                 </div>
                                                 <!-- Modal START -->
-                                                <div class="modal fade" id="delete-{{$contact->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="delete-{{$list1->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content pb-3">
                                                             <div class="modal-header border-bottom-0">
@@ -183,10 +187,10 @@
                                                                 <div class="row">
                                                                     <div class="Editt">
                                                                         @php /*
-                                                                        <form method="POST" action="{{ route('delete_contact', Crypt::encrypt($contact->id))}}">
+                                                                        <form method="POST" action="{{ route('delete_contact', Crypt::encrypt($list1->id))}}">
                                                                         */
                                                                         @endphp
-                                                                        <form method="POST" action="{{ url('user/list/management/contact/delete/'.Crypt::encrypt($contact->id)) }}">
+                                                                        <form method="POST" action="{{ url('user/list/management/contact/delete/'.Crypt::encrypt($list1->id)) }}">
                                                                             @csrf
                                                                             <div class="form">
                                                                                 <p><b>Delete Contact</b></p>
@@ -211,7 +215,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="modal fade" id="unsubscribe-{{$contact->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="unsubscribe-{{$list1->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content pb-3">
                                                             <div class="modal-header border-bottom-0">
@@ -220,7 +224,7 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        <form method="POST" action="{{ url('user/list/management/contact/unsub/'.Crypt::encrypt($contact->id)) }}">
+                                                                        <form method="POST" action="{{ url('user/list/management/contact/unsub/'.Crypt::encrypt($list1->id)) }}">
                                                                             @csrf
                                                                             <div class="form">
                                                                                 <p><b>Unsubscribe from this list?</b></p>

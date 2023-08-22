@@ -13,6 +13,6 @@ class CurrencyRate extends Model
     {
         $rec = \App\Models\CurrencyRate::where(['fx_symbol' => $sym])->first();
 
-        return $rec->fiat;
+        return $rec ? $rec->fiat : 0;
     }
 }

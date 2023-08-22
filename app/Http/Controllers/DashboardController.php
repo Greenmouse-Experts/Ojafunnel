@@ -701,7 +701,7 @@ class DashboardController extends Controller
 
         if(count($user_emails) > 0){
             $data = array(
-                'name' => "Hello Chief",
+                'name' => "OjaFunnel",
                 'subject' => $request->subject,
                 'body' => $request->message,
                 'emails' => $user_emails
@@ -2289,19 +2289,12 @@ class DashboardController extends Controller
         ]);
     }
 
+
     public function view_course_details1($username, Request $request)
     {
         $course = Course::find($request->id);
-
         $lmss = \App\Models\LmsQuiz::where('course_id', $request->id)->where('user_id', Auth::user()->id)->where('session', $request->session)->first();
-
-        // @if(count(App\Models\QuizAnswer::where('course_id', $course->id)->where('user_id', Auth::user()->id)->where('session', $session)->get()) > 0)
-        //     @foreach(App\Models\QuizAnswer::where('course_id', $course->id)->where('user_id', Auth::user()->id)->where('session', $session)->orderByRaw('RAND()')->get() as $index => $quizes)
-        //     @endforeach
-        // @endif
-
         $QuizAnswers = \App\Models\QuizAnswer::where('course_id', $request->id)->where('user_id', Auth::user()->id)->where('sessions', $request->session)->first();
-
         return view('dashboard.lms.take_quiz', [
             'username' => $username,
             'course' => $course,
@@ -2553,6 +2546,52 @@ class DashboardController extends Controller
     }
 
 
+    public function delete_course(Request $request)
+    {
+        $attributes = [
+            'ids'      => 'Course ID',
+        ];
+        $rules = [
+            'ids'      => 'required',
+        ];
+        $messages = [
+            'required'      => ':attribute field is required',
+        ];
+        $validator = \Validator::make($request->all(), $rules, $messages)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->all(),
+                'data' => ''
+            ],200); 
+        }
+        if($request->ids != ""){
+            $course = \App\Models\Course::where('id', $request->ids)->first();
+
+            \App\Models\LmsQuiz::where('course_id', $course->id)->delete();
+            \App\Models\Quiz::where('course_id', $course->id)->delete();
+            \App\Models\QuizAnswer::where('course_id', $course->id)->delete();
+            $deleted = $course->delete();
+
+            if($deleted){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => "Course deleted",
+                    'data' => ''
+                ],200);         
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => "Error in deleting course",
+                'data' => ''
+            ],200);
+        }
+        
+       
+    }
+
+
     public function delete_requirement(Request $request)
     {
         $attributes = [
@@ -2708,6 +2747,7 @@ class DashboardController extends Controller
 
     public function affiliate_marketing($username)
     {
+
         $referrals = User::where('referral_link', Auth::user()->id)->get();
 
         return view('dashboard.affiliateMarketing', [
@@ -2834,6 +2874,7 @@ class DashboardController extends Controller
 
     public function getdownlines($array, $parent = 0, $level = 1)
     {
+        if($level >= 5) $level = 5;
         $referedMembers = '';
         foreach ($array as $key => $entry) {
             if ($entry->referral_link == $parent) {
@@ -2849,7 +2890,7 @@ class DashboardController extends Controller
                 $referedMembers .= "
               <tr>
               <td> $key </td>
-              <td> $entry->first_name $entry->last_name</td>
+              <td> ".ucwords("$entry->first_name $entry->last_name")."</td>
               <td> $levelQuote </td>" .
               '<td><a href="javascript: void(0);" class="badge badge-soft-primary font-size-11 m-1">' . "Tier " . $level . "</a></td>" .
               '<td>' . "$percentage%" . '</td>' .

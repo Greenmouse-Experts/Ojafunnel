@@ -386,7 +386,7 @@ $('body').on('click', '.sendBroadcastUser', function (e) {
   
   $.ajax({
     type : "POST",
-    url : site_url + "get-statistics",
+    url : site_url + "send-broadcast",
     data: $(".form_channel").serialize(),
     success : function(data){
       // $.each(data, function(){
@@ -497,6 +497,50 @@ $('body').on('click', '.reactFeatures', function (e) {
 $('body').on('click', '.addTimer', function (e) {
   $('.dynamic_timer').slideToggle('fast');
 });
+
+
+
+$('body').on('click', '.accessCourse', function (e) {
+  e.preventDefault();
+  var self = this;    
+  var results = '';
+  $(self).attr('disabled', true).css({'opacity': '0.4'});
+  
+  $.ajax({
+    type : "POST",
+    url : site_url + "get-access-course",
+    data: $(".form_access_course").serialize(),
+    success : function(data){
+      if(data.status=="success"){
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire("Successful", "Authentication was successful", "success");
+        $(".form_access_course")[0].reset();
+
+        setTimeout(() => {
+          location.reload();
+        }, 300);
+      
+      }else{
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+          title: "Error!",
+          html: data.message,
+          icon: 'error',
+          timer: 3000
+        });
+      }
+    },error : function(data){
+      $(self).removeAttr('disabled').css({'opacity': '1'});
+      Swal.fire({
+        title: "Error!",
+        text: "Poor Network Connection!",
+        icon: 'error',
+        timer: 3000
+      });
+    }
+  });
+});
+
 
 
 $('body').on('click', '.cmdPayNow', function (e) {
@@ -753,6 +797,76 @@ $('body').on('click', '.deleteReqs', function (e) {
           $(self).removeAttr('disabled').css({'opacity': '1'});
           $('.table-'+ids).slideUp('fast');
           Swal.fire("Successful", "Requirement session deleted successfully", "success");
+    
+        }else{
+            $(self).removeAttr('disabled').css({'opacity': '1'});
+            Swal.fire({
+            title: "Error!",
+            html: results,
+            icon: 'error',
+            timer: 4000
+            });
+        }
+        },error : function(data){
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+            title: "Error!",
+            text: "Poor Network Connection!",
+            icon: 'error',
+            timer: 4000
+        });
+        }
+    });
+    }
+  });
+});
+
+
+
+$('body').on('click', '.deleteCourse', function (e) {
+  e.preventDefault();
+  var self = this;    
+  var results = '';
+  var ids = $(this).attr('ids');
+
+  Swal.fire({
+    title: `Confirm action?`,
+    html: `Deleting this cannot will delete all the contents and quiz that might be associated with it and cannot be undone, proceed?`,
+    icon: 'question',
+    iconHtml: '?',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#999',
+    confirmButtonText: 'Yes, delete'
+  }).then((result) => {
+    if (result.isConfirmed) {  
+    Swal.fire({
+        title: 'Updating...',
+        text: "Please wait a second for a response...",
+        icon: 'success',
+        showConfirmButton: false,
+        confirmButtonColor: '#027937',
+        cancelButtonColor: '#d33',
+    });
+    
+    $(self).attr('disabled', true).css({'opacity': '0.4'});
+
+    var datastring='ids='+ids
+    +'&_token='+token;
+
+    $.ajax({
+        type : "POST",
+        url : site_url + "delete-course",
+        data: datastring,
+        success : function(data){
+        $.each(data, function(){
+            results += this + "<br>";
+        });
+    
+        if(data.status=="success"){
+          $(self).removeAttr('disabled').css({'opacity': '1'});
+          $('.table-'+ids).slideUp('fast');
+          Swal.fire("Successful", "Quiz session deleted successfully", "success");
     
         }else{
             $(self).removeAttr('disabled').css({'opacity': '1'});

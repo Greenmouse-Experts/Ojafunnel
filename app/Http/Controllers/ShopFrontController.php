@@ -141,21 +141,6 @@ class ShopFrontController extends Controller
         $countries = \App\Models\Country::countries();
 
         return view('dashboard.lms.checkout', compact('shop', 'courses', 'countries'));
-
-//         $countries = \App\Models\Country::countries();
-        // return $permissions;
-
-        // foreach ($countries as $country) {
-        //     $rules['permissions.' . $type] = 'required';
-        // }
-
-//         return view('dashboard.lms.checkout', compact('shop', 'courses'), [
-//             'countries' => $countries
-//         ]);
-
-        // return view('dashboard.lms.checkout', [
-        //     'username' => $username
-        // ]);
     }
 
     public function course_update(Request $request)

@@ -302,9 +302,9 @@
                                                                         <tr>
                                                                             <th scope="row"><img src="{{ $details['image'] ?? URL::asset('dash/assets/image/store-logo.png') }}" alt="product-img" title="product-img" class="avatar-md"></th>
                                                                             <td>
-                                                                                <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ $details['title'] }} </a></h5>
+                                                                                <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ isset($details['title']) ? $details['title'] : '' }} </a></h5>
                                                                             </td>
-                                                                            <td>{{ $details['currency'] }}{{ number_format($details['price'], 2) }}</td>
+                                                                            <td>{{ isset($details['currency']) ? $details['currency'] : 'NGN' }}{{ number_format($details['price'], 2) }}</td>
                                                                         </tr>
                                                                         @endforeach
                                                                         @endif

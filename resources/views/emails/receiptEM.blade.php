@@ -414,6 +414,7 @@
               </td>
             </tr>
         </table>
+        <div style="text-align:center"><a href="{{ env('APP_URL') }}/login/">Click here to start</a></div>
       </center>
     </td>
   </tr>

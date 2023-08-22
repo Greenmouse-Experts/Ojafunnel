@@ -81,7 +81,9 @@
                         </div>
                         @php $total = 0 @endphp
                         @foreach((array) session('cart') as $id => $details)
+                          @if(isset($details['quantity']) && isset($details['price']))
                             @php $total += $details['price'] * $details['quantity'] @endphp
+                          @endif
                         @endforeach
                         <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
                             <p>Total: <span class="text-info"># {{ $total }}</span></p>
@@ -94,8 +96,8 @@
                                     <img style="width: 70px" src="{{ Storage::url($details['image']) }}" />
                                 </div>
                                 <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                    <p>{{ $details['name'] }}</p>
-                                    <span class="price text-info"> #{{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
+                                    <p>{{ isset($details['name']) ? $details['name'] : '' }}</p>
+                                    <span class="price text-info"> NGN{{ $details['price'] ? number_format($details['price']) : 0 }}</span> <span class="count"> Quantity:{{ isset($details['quantity']) ? $details['quantity'] : 1 }}</span>
                                 </div>
                             </div>
                         @endforeach
@@ -165,16 +167,24 @@
                                 <span name="ctimer" class="ctimer" from="{{$item->date_from}}" to="{{$item->date_to}}"></span>
 
                               </div>
-
-
                           </div>
                           <div class="p-2">
                               <p class="font-500">{{$item->name}}</p>
-                              <p>{{number_format($item->price, 2)}} NGN</p>
-                              @if ($item->price >= 1)
-                                  <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
+
+                              @if ($timeRemaining <= 0)
+                                <p class="dynamic_price">NGN{{number_format($item->price, 2)}}</p>
+                                @if ($item->price >= 1)
+                                    <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
+                                @else
+                                    <button disabled>Out of Stock</button>
+                                @endif
                               @else
-                                  <button disabled>Out of Stock</button>
+                                <p class="dynamic_price">NGN{{number_format($item->new_price, 2)}} <span style="text-decoration:line-through;color:red;opacity:0.6;margin-left:4px;font-size:12px">NGN{{number_format($item->price, 2)}}</span></p>
+                                @if ($item->new_price >= 1)
+                                    <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
+                                @else
+                                    <button disabled>Out of Stock</button>
+                                @endif
                               @endif
 
                               @if ($isvalid)

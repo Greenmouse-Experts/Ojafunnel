@@ -37,7 +37,7 @@ class EmailCartReminder extends Command
         $send_emails = false;
         if(count($user_emails) > 0){
             $data = array(
-                'name' => "Hello Chief",
+                'name' => "OjaFunnel",
                 'subject' => "Unfinished Shopping",
                 'body' => "We noticed you didn't complete your shopping process, we are ready to assist you if you are facing any challenges or problems. Kindly contact us lets put you through in completing your shopping.",
                 'emails' => $user_emails

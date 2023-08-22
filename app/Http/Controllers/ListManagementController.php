@@ -97,30 +97,15 @@ class ListManagementController extends Controller
 
         $finder = Crypt::decrypt($id);
 
+        $user_id = Auth::user()->id;
         $list = ListManagement::find($finder);
-        // return $list;
-
-        $lists = ListManagementContact::where('list_management_id', $finder)->get();
-        $list_tags = "";
-        foreach($lists as $list1){
-            if($list1->tags !== null){
-                $list_tags .= $list1->tags.",";
-            }
-        }
-        $list_tags = str_replace(", ", ",", $list_tags);
-        $list_tags = array_unique(explode(',', $list_tags));
-
-        $arrs=[];
-        foreach($list_tags as $list_tag){
-            if($list_tag !== ""){
-                $arrs[] = $list_tag;
-            }
-        }
-        $data['tags'] = $arrs;
+        $lists = ListManagementContact::whereRaw("list_management_id IN (SELECT id FROM list_management WHERE user_id='$user_id')")->get();
 
         return view('dashboard.list-management.view')->with([
             'list' => $list,
-            'tags1' => $data,
+            'tags1' => [],// $data,
+            'lists' => $lists,
+            // 'tags1' => $lists,
         ]);
     }
 

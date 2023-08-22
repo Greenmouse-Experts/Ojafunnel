@@ -399,6 +399,7 @@
               </td>
             </tr>
         </table>
+        <div style="text-align:center"><a href="{{ env('APP_URL') }}/access-course/">Click here to start learning</a></div>
       </center>
     </td>
   </tr>

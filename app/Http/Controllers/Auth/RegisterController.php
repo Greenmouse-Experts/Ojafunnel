@@ -24,8 +24,8 @@ class RegisterController extends Controller
 
         // return dd($ApiResponse);
         if($ApiResponse['success'] === true){
-            return redirect()->route('emailverification')->with('email', $ApiResponse['data']['email']); 
-        }else{  
+            return redirect()->route('emailverification')->with('email', $ApiResponse['data']['email']);
+        }else{
             return back()->withInput()->with([
                 'type' => 'danger',
                 'message' => $ApiResponse['message']
@@ -42,8 +42,8 @@ class RegisterController extends Controller
 
         // return dd($ApiResponse);
         if($ApiResponse['success'] === true){
-            return redirect()->route('login')->with('site', $ApiResponse['data']['site']); 
-        }else{  
+            return redirect()->route('login')->with('site', $ApiResponse['data']['site']);
+        }else{
             return back()->withInput()->with([
                 'type' => 'danger',
                 'message' => $ApiResponse['message']

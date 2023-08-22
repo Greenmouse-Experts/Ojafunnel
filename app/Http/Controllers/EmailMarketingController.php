@@ -353,7 +353,8 @@ class EmailMarketingController extends Controller
     
     public function broadcast_message(Request $request)
     {
-        $lists = ListManagementContact::latest()->get();
+        $user_id = Auth::user()->id;
+        $lists = ListManagementContact::whereRaw("list_management_id IN (SELECT id FROM list_management WHERE user_id='$user_id')")->get();
 
         $list_tags = "";
         foreach($lists as $list){
@@ -468,7 +469,7 @@ class EmailMarketingController extends Controller
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'You currently have no master email kit. Likewise Ojafunnel team have no master email kit. Please set up email kit and it make master. Thanks.'
-                ])->withInput();
+            ])->withInput();
             }
 
             $email_kit = $email_kit->first();
@@ -510,7 +511,7 @@ class EmailMarketingController extends Controller
                 $email_campaign->email_kit_id = $email_kit->id;
                 $email_campaign->list_id = $mail_list->id;
                 $email_campaign->email_template_id = $email_template->id;
-                $email_campaign->sent = 0;
+                $email_campaign->sent = 1;
                 $email_campaign->bounced = 0;
                 $email_campaign->spam_score = 0;
                 $email_campaign->message_timing = $request->message_timing;
