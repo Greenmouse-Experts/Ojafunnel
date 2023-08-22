@@ -97,10 +97,12 @@ class ListManagementController extends Controller
 
         $finder = Crypt::decrypt($id);
 
+        $user_id = Auth::user()->id;
         $list = ListManagement::find($finder);
-        // return $list;
+        $lists = ListManagementContact::whereRaw("list_management_id IN (SELECT id FROM list_management WHERE user_id='$user_id')")->get();
+        /* return $lists;
 
-        $lists = ListManagementContact::where('list_management_id', $finder)->get();
+        // $lists = ListManagementContact::where('list_management_id', $finder)->get();
         $list_tags = "";
         foreach($lists as $list1){
             if($list1->tags !== null){
@@ -116,11 +118,17 @@ class ListManagementController extends Controller
                 $arrs[] = $list_tag;
             }
         }
-        $data['tags'] = $arrs;
+        $data['tags'] = $arrs; */
+
+        // foreach($lists as $list){
+        //     $list->tags = "ssss";
+        // }
 
         return view('dashboard.list-management.view')->with([
             'list' => $list,
-            'tags1' => $data,
+            'tags1' => [],// $data,
+            'lists' => $lists,
+            // 'tags1' => $lists,
         ]);
     }
 
