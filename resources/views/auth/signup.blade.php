@@ -17,13 +17,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/css/intlTelInput.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/js/intlTelInput-jquery.min.js"></script>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         window.setTimeout(function() {
             $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function() {
                 $(this).remove();
             });
         }, 8000);
-    </script>
+    </script> -->
 </head>
 
 <body id="lent">
