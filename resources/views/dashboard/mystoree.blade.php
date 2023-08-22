@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
-      #countdown {
+      .countdown {
           font-size: 24px;
           text-align: center;
           margin-top: 50px;
@@ -100,19 +100,19 @@
                             </div>
                         @endforeach
                     @endif
-                    <div class="row"> 
-                        <div class="col-lg-12 col-sm-12 col-12 text-center checkout"> 
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
                             <a href="
-                              @if($isvalid) 
-                                {{ 
+                              @if($isvalid)
+                                {{
                                   route('cart', [
-                                    'storename' => $store->name, 
-                                    'promotion_id' => Request::get('promotion_id'), 
+                                    'storename' => $store->name,
+                                    'promotion_id' => Request::get('promotion_id'),
                                     'product_id' => Request::get('product_id')
-                                  ]) 
-                                }} 
-                              @else 
-                                {{ route('cart', ['storename' => $store->name]) }} 
+                                  ])
+                                }}
+                              @else
+                                {{ route('cart', ['storename' => $store->name]) }}
                               @endif
                               " class="btn btn-primary btn-block">View all</a>
                         </div>
@@ -160,11 +160,13 @@
                           @endif
                           <div class="found-top">
                               <img src="{{Storage::url($item->image)}}" alt="">
-                              <div id="countdown">
-                                timer
+                              <div class="countdown">
+
+                                <span name="ctimer" class="ctimer" from="{{$item->date_from}}" to="{{$item->date_to}}"></span>
+
                               </div>
 
-                              
+
                           </div>
                           <div class="p-2">
                               <p class="font-500">{{$item->name}}</p>
@@ -176,14 +178,14 @@
                               @endif
 
                               @if ($isvalid)
-                                @if(Request::has('promotion_id') && Request::has('product_id')) 
+                                @if(Request::has('promotion_id') && Request::has('product_id'))
                                   @if (Request::get('product_id') == $item->id)
                                     <div class="mt-2">
                                       Promotional code (<b>{{ Request::get('promotion_id') }}</b>) attached.
-                                    </div> 
-                                  @endif 
+                                    </div>
+                                  @endif
                                 @endif
-                              @endif 
+                              @endif
                           </div>
                         </div>
                     </div>
@@ -196,7 +198,7 @@
   </div>
 
 
-  
+
 
 
   <footer class="footer">
@@ -222,6 +224,44 @@
   <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
   <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
   <!-- Code injected by live-server -->
+
+  <script>
+    setInterval(() => {
+        var ctimers = document.getElementsByClassName('ctimer');
+        for(let i=0; i<ctimers.length; i++) {
+            const el = ctimers[i];
+            var date_from = el.getAttribute("from");
+            var date_to = el.getAttribute("to");
+
+            var deadline = new Date(date_to).getTime();
+            var now = new Date().getTime();
+
+            if(now < deadline) {
+                var t = deadline - now;
+
+                let days = Math.floor(t / (1000 * 60 * 60 * 24));
+                let hours = Math.floor(
+                    (t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor(
+                    (t % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor(
+                    (t % (1000 * 60)) / 1000);
+
+                el.innerHTML = "" +
+                        days + "d " + hours + "h " +
+                        minutes + "m " + seconds + "s";
+
+            } else {
+                // de = true;
+                // if(de) {
+                //     document.getElementById("offer_form").setAttribute("action", uri + "&ext=1");
+                // }
+                // document.getElementById("timer").innerHTML = "";
+                // document.getElementById("amt").innerHTML = new_amt;
+            }
+        }
+    }, 500);
+  </script>
 </body>
 <style>
 .thumbnail {

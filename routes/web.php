@@ -152,7 +152,7 @@ Route::prefix('{username}')->group(function () {
             Route::get('/subscription', [App\Http\Controllers\DashboardController::class, 'subscription'])->name('user.subscription');
 
             Route::get('/broadcast-message', [App\Http\Controllers\EmailMarketingController::class, 'broadcast_message'])->name('broadcast-message');
-            
+
             Route::prefix('/accounts')->group(
                 function () {
                     Route::get('/contact', [App\Http\Controllers\Mail\AccountController::class, 'contact'])->name('user.account.contact');
@@ -254,8 +254,8 @@ Route::prefix('{username}')->group(function () {
                 }
             );
 
-            
-            
+
+
             Route::prefix('/Learning')->group(
                 function () {
                     Route::get('/create-course', [App\Http\Controllers\DashboardController::class, 'create_course'])->name('user.create.course');
@@ -277,9 +277,9 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/view-scores/{id}', [App\Http\Controllers\DashboardController::class, 'view_scores'])->name('view-scores');
                     Route::get('/create-quiz/{id}', [App\Http\Controllers\DashboardController::class, 'create_quiz'])->name('create-quiz');
                     Route::get('/view-quiz/{id}/{session}', [App\Http\Controllers\DashboardController::class, 'create_quiz'])->name('create-quiz1');
-                    
-                    
-                    
+
+
+
                     Route::get('/course-details', [App\Http\Controllers\DashboardController::class, 'course_details'])->name('user.course.details');
                     Route::get('/course-details', [App\Http\Controllers\DashboardController::class, 'courses_details'])->name('user.details');
                     // Route::get('/create-course/get-quiz', [App\Http\Controllers\DashboardController::class, 'get_quiz'])->name('user.get.quiz');
@@ -289,7 +289,7 @@ Route::prefix('{username}')->group(function () {
                 }
             );
 
-            
+
 
             // email marketing
             Route::prefix('/email-marketing')->group(
@@ -307,8 +307,8 @@ Route::prefix('{username}')->group(function () {
                     Route::post('/email-templates/editor/save', [App\Http\Controllers\EmailMarketingController::class, 'email_templates_editor_save'])->name('user.email-marketing.email.templates.editor.save');
                     Route::get('/email-campaigns', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns'])->name('user.email-marketing.email.campaigns');
                     // Route::get('/broadcast-message', [App\Http\Controllers\EmailMarketingController::class, 'broadcast_message'])->name('broadcast-message');
-                    
-                    
+
+
                     Route::get('/email-campaigns/template_content/{id}', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns_template_content'])->name('user.email-marketing.email.campaigns.template_content');
                     Route::get('/email-campaigns/create', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns_create'])->name('user.email-marketing.email.campaigns.create');
                     Route::post('/email-campaigns/delete', [App\Http\Controllers\EmailMarketingController::class, 'email_campaigns_delete'])->name('user.email-marketing.email.campaigns.delete');

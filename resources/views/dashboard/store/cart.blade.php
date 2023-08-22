@@ -161,7 +161,7 @@
                                                         <td style="display: flex; flex-direction: row">
                                                             {{-- <button class="btn btn-danger" style="margin-right: 10px;font-size: 18px;">-</button> --}}
                                                             <div class="me-3" style="width: 80px;margin-top: 10px">
-                                                                <input type="number" id="qty" onkeyup="compute_tcost()" value="{{ $details['quantity'] }}" class="form-control quantity update-cart">
+                                                                <input type="text" id="qty" onkeyup="compute_tcost()" value="{{ $details['quantity'] }}" class="form-control quantity update-cart">
                                                                 <small style="font-size: 63%">Availabe: {{ $details['rmQuan'] }}</small>
                                                             </div>
                                                             {{-- <button class="btn btn-success">+</button> --}}

@@ -758,7 +758,7 @@ function enableFields() {
     divOption1.style.display = "none";
     divOption2.style.display = "none";
     divOption3.style.display = "none";
-    dynamic_timer_div.display = "none";
+    dynamic_timer_div.style.display = "none";
 
     // Show the corresponding div based on the selected option
     if (selectedOption === "upsell_page") {

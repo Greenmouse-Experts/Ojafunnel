@@ -49,7 +49,7 @@
                                             <th>S/N</th>
                                             <th>Currency</th>
                                             <th>Amount</th>
-                                            <th>Fiat</th>
+                                            <th>Naira</th>
                                             <th>Date Created</th>
                                         </tr>
                                     </thead>

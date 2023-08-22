@@ -87,7 +87,7 @@
                                         <th scope="col">Image</th>
                                         <th scope="col">Course Description</th>
                                         <th scope="col">Price</th>
-                                        <th scope="col">Total</th>
+                                        {{-- <th scope="col">Total</th> --}}
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -109,9 +109,9 @@
                                                     <td>
                                                         {{ $details['currency'] }}{{ number_format($details['price'], 2) }}
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         {{ $details['currency'] }}{{ number_format($details['price'], 2)}}
-                                                    </td>
+                                                    </td> --}}
                                                     <td>
                                                         <a href="javascript(0);" class="action-icon text-danger remove-from-cart"> <i class="fas fa-trash-can font-size-18"></i></a>
                                                     </td>
@@ -135,8 +135,8 @@
                                     <a href="
                                     {{
                                         route('course.checkout', [
-                                            'shopname' => $shop->name, 
-                                            'promotion_id' => Request::get('promotion_id'), 
+                                            'shopname' => $shop->name,
+                                            'promotion_id' => Request::get('promotion_id'),
                                             'course_id' => Request::get('course_id')
                                         ])
                                     }}
