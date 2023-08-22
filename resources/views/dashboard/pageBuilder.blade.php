@@ -347,6 +347,8 @@
                                                         Upsell & Bump Page
                                                     @elseif($page->type == "questionaire_page")
                                                         Quiz Page
+                                                    @elseif($page->type == "dynamic_timer_page")
+                                                        Dynamic Timer for Product Page
                                                     @endif
                                                 </th>
                                                 <td>{{ $page->folder }}</td>
@@ -483,6 +485,7 @@
                                                     <option value="upsell_page">Upsell Form Page</option>
                                                     <option value="upsell_bump_page">Order Bump/Upsell Page</option>
                                                     <option value="questionaire_page">Quiz Page</option>
+                                                    <option value="dynamic_timer_page">Dynamic Timer for Product Page</option>
                                                 </select>
                                                 <small id="generatePage"></small>
                                             </div>
@@ -587,6 +590,53 @@
                                     <div id="success_select" class="col-lg-12" style="display: none">
                                         Select success page
                                     </div>
+
+                                    <div id="dynamic_timer_div" class="col-lg-12" style="display: none">
+                                        <div class="col-lg-12">
+                                            <label>Product Name</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="text" placeholder="e.g Data Analytics Course" id="product_name" name="product_name" class="input">
+                                                    <small id="generatePage"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <label>Product Price</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <input type="number" placeholder="e.g 1000" id="product_price" name="product_price" class="input">
+                                                    <small id="generatePage"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Offer Time (Interval) days</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <input id="offer_time" placeholder="No of days" type="number" name="offer_time" class="input" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label>Rate %</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <select name="rate" class="input">
+                                                            <option value="10">+10%</option>
+                                                            <option value="20">+20%</option>
+                                                            <option value="50">+50%</option>
+                                                            <option value="70">+70%</option>
+                                                            <option value="100">+100%</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-lg-12 mb-4">
                                         <div class="boding">
                                             <button type="submit">
@@ -702,17 +752,21 @@ function enableFields() {
     const divOption1 = document.getElementById("upsell_select");
     const divOption2 = document.getElementById("bumpsell_select");
     const divOption3 = document.getElementById("success_select");
+    const dynamic_timer_div = document.getElementById("dynamic_timer_div");
 
     // Hide all divs initially
     divOption1.style.display = "none";
     divOption2.style.display = "none";
     divOption3.style.display = "none";
+    dynamic_timer_div.style.display = "none";
 
     // Show the corresponding div based on the selected option
     if (selectedOption === "upsell_page") {
         divOption1.style.display = "block";
     } else if (selectedOption === "upsell_bump_page") {
         divOption2.style.display = "block";
+    } else if (selectedOption === "dynamic_timer_page") {
+        dynamic_timer_div.style.display = "block";
     }
 }
 function removeField(e) {

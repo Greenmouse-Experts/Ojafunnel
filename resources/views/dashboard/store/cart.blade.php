@@ -156,16 +156,18 @@
                                                             <h5 class="font-size-14 text-wrap" style="width: 330px;"><a href="#" class="text-dark">{{ $details['description'] }}</a></h5>
                                                         </td>
                                                         <td>
-                                                            ₦ {{ $details['price'] }}
+                                                            ₦ <span id="price">{{ $details['price'] }}</span>
                                                         </td>
-                                                        <td>
-                                                            <div class="me-3" style="width: 120px;">
-                                                                <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart">
+                                                        <td style="display: flex; flex-direction: row">
+                                                            {{-- <button class="btn btn-danger" style="margin-right: 10px;font-size: 18px;">-</button> --}}
+                                                            <div class="me-3" style="width: 80px;margin-top: 10px">
+                                                                <input type="text" id="qty" onkeyup="compute_tcost()" value="{{ $details['quantity'] }}" class="form-control quantity update-cart">
                                                                 <small style="font-size: 63%">Availabe: {{ $details['rmQuan'] }}</small>
                                                             </div>
+                                                            {{-- <button class="btn btn-success">+</button> --}}
                                                         </td>
                                                         <td>
-                                                            ₦ {{ $details['price'] * $details['quantity'] }}
+                                                            ₦ <span id="tcost">{{ $details['price'] * $details['quantity'] }}</span>
                                                         </td>
                                                         <td>
                                                             <a href="javascript(0);" class="action-icon text-danger remove-from-cart"> <i class="mdi mdi-trash-can font-size-18"></i></a>
@@ -184,19 +186,19 @@
                             <div class="row mt-4">
                                 <div class="col-sm-6">
                                     <a href="
-                                    @if(Request::has('product_id')) 
-                                        {{ 
+                                    @if(Request::has('product_id'))
+                                        {{
                                             route('user.stores.link', [
-                                                'storename' => $store->name, 
-                                                'promotion_id' => Request::get('promotion_id'), 
+                                                'storename' => $store->name,
+                                                'promotion_id' => Request::get('promotion_id'),
                                                 'product_id' => Request::get('product_id')
-                                            ]) . '#item-' . Request::get('product_id') 
-                                        }} 
+                                            ]) . '#item-' . Request::get('product_id')
+                                        }}
                                     @else
                                       {{
                                         route('user.stores.link', [
-                                            'storename' => $store->name, 
-                                            'promotion_id' => Request::get('promotion_id'), 
+                                            'storename' => $store->name,
+                                            'promotion_id' => Request::get('promotion_id'),
                                             'product_id' => Request::get('product_id')
                                         ])
                                       }}
@@ -208,11 +210,11 @@
                                         <a href="
                                             {{
                                                 route('checkout', [
-                                                    'storename' => $store->name, 
-                                                    'promotion_id' => Request::get('promotion_id'), 
+                                                    'storename' => $store->name,
+                                                    'promotion_id' => Request::get('promotion_id'),
                                                     'product_id' => Request::get('product_id')
-                                                ]) 
-                                            }} 
+                                                ])
+                                            }}
                                             " class="btn btn-success">
                                             <i class="mdi mdi-truck-fast me-1"></i> Proceed to Checkout </a>
                                     </div>
@@ -273,6 +275,24 @@
   <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
 
   <script>
+
+    function compute_tcost() {
+        var price = $("#price").text();
+        var qty = $("#qty").val();
+
+        if(qty == "") {
+            $("#qty").val("1");
+            qty = "1";
+        }
+
+        if(qty == "0") {
+            $("#qty").val("1");
+            qty = "1";
+        }
+
+        var tcost = Number.parseInt(price) * Number.parseInt(qty);
+        $("#tcost").html(tcost);
+    }
 
   $(".update-cart").change(function (e) {
       e.preventDefault();

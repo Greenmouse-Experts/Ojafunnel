@@ -432,7 +432,7 @@ class StoreFrontController extends Controller
 
         // delete my details since i have made payment
         \App\Models\TempCart::where('email', $request->email)->where('product_id', $product_id)->delete();
-        
+
         session()->forget('cart');
 
         /** Store information to include in mail in $data as an array */

@@ -112,7 +112,7 @@
                                             <th>Image</th>
                                             <th>Price</th>
                                             <th>Subtotal</th>
-                                            <th>Tax Amount</th>
+                                            {{-- <th>Tax Amount</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -121,19 +121,19 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{\App\Models\Course::find($item->course_id)->title}}</td>
                                             <td><img style="width: 50px" src="{{\App\Models\Course::find($item->course_id)->image ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" srcset=""></td>
-                                            <td class="text-wrap" style="width: 330px;">₦{{$item->amount}}</td>
-                                            <td>₦{{number_format($item->amount)}}</td>
-                                            <td>₦{{number_format($item->amount, 2)}}</td>
+                                            <td class="text-wrap" style="width: 330px;">{{\App\Models\ShopOrder::getCurrency($item->course_id)}}{{$item->amount}}</td>
+                                            <td>{{\App\Models\ShopOrder::getCurrency($item->course_id)}}{{number_format($item->amount)}}</td>
+                                            {{-- <td>{{\App\Models\ShopOrder::getCurrency($item->course_id)}}{{number_format($item->amount, 2)}}</td> --}}
                                         </tr>
                                         @endforeach
-                                        <tr>
+                                        {{-- <tr>
                                             <td colspan="5" class="border-0 text-end">
                                                 <strong>Total:</strong>
                                             </td>
                                             <td class="border-0">
                                                <b>₦{{number_format($orderItem->sum('amount'), 2)}}</b>
                                             </td>
-                                        </tr>
+                                        </tr> --}}
                                     </tbody>
                                 </table>
                             </div>
