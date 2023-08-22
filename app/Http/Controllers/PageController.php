@@ -314,6 +314,7 @@ class PageController extends Controller
 
             if($request->page_type == "dynamic_timer_page")
             {
+                // Dynamic Timer
                 $_dpp = new \App\Models\DynamicTimerProductPage;
                 $_dpp->page_id = $page->id;
                 $_dpp->title = $page->title;
