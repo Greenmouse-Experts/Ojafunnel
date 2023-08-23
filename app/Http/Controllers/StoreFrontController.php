@@ -28,6 +28,11 @@ class StoreFrontController extends Controller
 
         $isvalid = false;
 
+        // "timeRemaining" => $timeRemaining,
+
+        // $product = StoreProduct::findOrFail($id);
+        
+
         if ($request->has('promotion_id')) {
             $user = User::where('promotion_link', $request->promotion_id);
 
@@ -125,9 +130,11 @@ class StoreFrontController extends Controller
         $product_id = $request->has('product_id') ? $request->get('product_id') : null;
 
         // is there any promotion link?
-        return $promotion_id && $product_id
+        /* return $promotion_id && $product_id
             ? $this->checkoutPaymentWithPromotion($request, $promotion_id, $product_id)
-            : $this->checkoutPaymentWithoutPromotion($request, $product_id);
+            : $this->checkoutPaymentWithoutPromotion($request, $product_id); */
+
+        return $this->checkoutPaymentWithPromotion($request, $promotion_id, $product_id);
     }
 
     protected function checkoutPaymentWithPromotion(Request $request, $promotion_id, $product_id)

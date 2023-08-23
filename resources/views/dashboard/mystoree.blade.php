@@ -153,6 +153,12 @@
           <div class="row">
             @if ($products->count() > 0)
                 @foreach ($products as $item)
+                    @php
+                    $targetDate = strtotime($item->date_to);
+                    $now = time();
+                    $timeRemaining = $targetDate - $now;
+                    @endphp
+                    
                     <div class="col-md-4" id="item-{{ $item->id }}">
                         <div class="founds">
                           @if($item->type == 'Physical')
