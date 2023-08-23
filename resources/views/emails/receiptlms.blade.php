@@ -400,6 +400,7 @@
             </tr>
         </table>
         <div style="text-align:center"><a href="{{ env('APP_URL') }}/access-course/">Click here to start learning</a></div>
+        <div style="text-align:center">Use your <b>Email address</b> and your <b>Order no</b> to login and access your course.</div>
       </center>
     </td>
   </tr>

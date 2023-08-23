@@ -364,14 +364,16 @@ class HomePageController extends Controller
         $user_email = session()->get('email');
         $user_order_no = session()->get('order_no');
         $auth_details = \App\Models\Enrollment::whereRaw("md5(email) = '$user_email' AND md5(order_no) = '$user_order_no'")->first();
-        $course_id = \App\Models\ShopOrder::where('enrollment_id', $auth_details->id)->value('course_id');
         $data['auths'] = 0;
 
         if($auth_details){
+            $course_id = \App\Models\ShopOrder::where('enrollment_id', $auth_details->id)->value('course_id');
             $course = \App\Models\Course::where('id', $course_id)->first();
-            $data['auths'] = 1;
-            $data['course'] = $course;
-            $data['username'] = $user_email;
+            if($course){
+                $data['auths'] = 1;
+                $data['course'] = $course;
+                $data['username'] = $user_email;
+            }
         }
         return view('frontend.access_course', $data);
     }
