@@ -152,7 +152,7 @@
                                             route('payment.checkout', [
                                                 'storename' => $store->name, 
                                                 'promotion_id' => Request::get('promotion_id'), 
-                                                'product_id' => Request::get('product_id'),
+                                                'product_id' => Request::get('product_id')
                                             ]) 
                                         }}
                                     " id="checkoutForm" method="post">

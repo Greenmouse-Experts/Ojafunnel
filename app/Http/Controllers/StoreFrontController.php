@@ -175,11 +175,11 @@ class StoreFrontController extends Controller
                 $product = StoreProduct::find($item['id'])->first();
 
                 // promoter fee
-                $level1_fee = $product->level1_comm / 100 * $item_price;
+                $level1_fee = ($product->level1_comm / 100) * $item_price;
 
                 if ($promoter->first()->referral_link != null) {
                     // promoter's refer by free
-                    $level2_fee = $product->level2_comm / 100 * $item_price;
+                    $level2_fee = ($product->level2_comm / 100) * $item_price;
                 }
 
                 $item_amount = $item_price - ($level1_fee + $level2_fee);
