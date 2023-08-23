@@ -80,7 +80,7 @@ class ShopFrontController extends Controller
 
                 "source" => $request->stripeToken,
 
-                "description" => "Test payment from itsolutionstuff.com." 
+                "description" => "Test payment from itsolutionstuff.com."
         ]);
         Session::flash('success', 'Payment successful!');
         return back();
@@ -99,7 +99,7 @@ class ShopFrontController extends Controller
                 "description" => "Service payments from Sharreit"
             ]);
             if($response){
-                
+
                 return $response;
             }
 
@@ -138,11 +138,9 @@ class ShopFrontController extends Controller
     {
         $shop = Shop::latest()->where('name', $request->shopname)->first();
         $courses = Course::latest()->where('user_id', $shop->user_id)->get();
-
         $countries = \App\Models\Country::countries();
-        return view('dashboard.lms.checkout', compact('shop', 'courses'), [
-            'countries' => $countries
-        ]);
+
+        return view('dashboard.lms.checkout', compact('shop', 'courses', 'countries'));
     }
 
     public function course_update(Request $request)

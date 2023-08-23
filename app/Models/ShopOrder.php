@@ -10,4 +10,9 @@ class ShopOrder extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public static function getCurrency($cid) {
+        $course = \App\Models\Course::find($cid);
+        return $course->currency;
+    }
 }

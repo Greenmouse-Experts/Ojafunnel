@@ -266,6 +266,71 @@ class CallbackController extends Controller
             return redirect($paystack['url']);
         }
 
+        // Dynamic Timer Sell Pages
+        if($page->type == "dynamic_timer_page")
+        {
+            $upsell_page = \App\Models\DynamicTimerProductPage::where(['page_id' => $page->id])->first();
+            $list = ListManagement::where(['uid' => $page->id])->first();
+            $list_contact = null;
+
+            // Check for existing List
+            if($list) {
+                $list_contact = ListManagementContact::create([
+                    'uid' => Str::uuid(),
+                    'list_management_id' => $list->id,
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'subscribe' => true
+                ]);
+            }
+            else {
+                // Save Data to List Mgt
+                $list = ListManagement::create([
+                    'uid' => $page->id,
+                    'user_id' => $page->user_id,
+                    'name' => $page->title,
+                    'display_name' => $page->title . " (Dynamic Timer Product Page)",
+                    'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
+                    'description' => "Dynamic Timer Product Page"
+                ]);
+
+                // Add Contact to List
+                $list_contact = ListManagementContact::create([
+                    'uid' => Str::uuid(),
+                    'list_management_id' => $list->id,
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'subscribe' => true
+                ]);
+            }
+
+            $submission = new \App\Models\DynamicTimerPageSubmission;
+            $submission->page_id = $upsell_page->page_id;
+            $submission->list_id = $list->id;
+            $submission->list_contact_id = $list_contact->id;
+            $submission->payment_link = 'N/A';
+            $submission->save();
+
+            // Notify Page Owner about entry made.
+            $bundle = [
+                'candidate' => $request->name,
+                'page' => $page->title . " (Dynamic Timer Product Page)"
+            ];
+            $vendor = User::find($page->user_id);
+            $vendor->notify(new \App\Notifications\LeadNotification($bundle));
+
+            $needle = Crypt::encrypt($submission->id);
+            $callback_url = env('APP_URL') . "/accept/" . $needle;
+            $paystack = $this->generate_payment_link($request->email, $upsell_page->amount, $callback_url);
+
+            \App\Models\DynamicTimerPageSubmission::where('id', $submission->id)
+                ->update(['payment_link' => $paystack['url'], 'ref' => $paystack['ref']]);
+
+            return redirect($paystack['url']);
+        }
+
 
         // Bump sell Pages
         if($page->type == "upsell_bump_page")

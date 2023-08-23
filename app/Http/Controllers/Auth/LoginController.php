@@ -33,8 +33,8 @@ class LoginController extends Controller
                 //write send re send code here
 
                 return redirect()->route('emailverification')->with('email', $ApiResponse['data']['email']);
-            } 
-        }else{  
+            }
+        }else{
             return back()->withInput()->with([
                 'type' => 'danger',
                 'message' => $ApiResponse['message']
