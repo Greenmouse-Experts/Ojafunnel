@@ -75,7 +75,8 @@ class StoreFrontController extends Controller
                 'rmQuan' => $product->quantity,
                 "price" => $timeRemaining > 0 ? $product->new_price : $product->price,
                 "description" => $product->description,
-                "image" => $product->image
+                "image" => $product->image,
+                "timeRemaining" => $timeRemaining,
             ];
         }
 
