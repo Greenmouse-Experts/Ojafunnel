@@ -57,7 +57,7 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-2">
                                                     <i class="bi bi-file-lock"></i>
-                                                    <input type="number" placeholder="Enter your order number" name="order_no" class="input">
+                                                    <input type="text" placeholder="Enter your order number" name="order_no" class="input">
                                                 </div>
                                             </div>
                                         </div>
