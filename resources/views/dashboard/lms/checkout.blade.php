@@ -313,9 +313,10 @@
                                                                                 <h6 class="m-0 text-end">Total:</h6>
                                                                             </td>
                                                                             <td>
-                                                                                {{ $details['currency'] }}{{ number_format($total, 2) }}
                                                                                 <input type="hidden" id="curr" value="{{$details['currency']}}" name="">
+
                                                                                 {{ isset($details) ? $details['currency'] : 'NGN' }}{{ number_format($total, 2) }}
+
                                                                                 <input type="hidden" id="totalAmount" value="{{ $total }}" name="">
                                                                             </td>
                                                                         </tr>
