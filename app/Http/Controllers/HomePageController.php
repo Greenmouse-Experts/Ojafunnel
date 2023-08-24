@@ -383,7 +383,7 @@ class HomePageController extends Controller
     {
         $this->validate($request, [
             'email'     => 'required|email',
-            'order_no'  => 'required|numeric',
+            'order_no'  => 'required',
         ]);
 
         $auth_details = \App\Models\Enrollment::where('email', trim($request->email))->where('order_no', trim($request->order_no))->first();
