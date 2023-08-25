@@ -18,7 +18,7 @@ Route::get('access-course', [App\Http\Controllers\HomePageController::class, 'ac
 Route::post('get-access-course', [App\Http\Controllers\HomePageController::class, 'access_auth_course']);
 Route::get('magic-login-link/{id}', [App\Http\Controllers\HomePageController::class, 'magic_login_link']);
 
-
+Route::post('checkout/payment/{storename}', [App\Http\Controllers\HomePageController::class, 'checkoutPayment'])->name('payment.checkout');
 
 // FrontEnd
 Route::get('/page-builder/create', [App\Http\Controllers\PageController::class, 'page_builder_create'])->name('user.page.builder.create');
@@ -27,7 +27,7 @@ Route::get('pages/{page}', [App\Http\Controllers\PageController::class, 'viewPag
 Route::get('/shop/{storename}', [App\Http\Controllers\StoreFrontController::class, 'storeFront'])->name('user.stores.link');
 Route::get('cart/{storename}', [App\Http\Controllers\StoreFrontController::class, 'cart'])->name('cart');
 Route::get('checkout/{storename}', [App\Http\Controllers\StoreFrontController::class, 'checkout'])->name('checkout');
-Route::post('checkout/payment/{storename}', [App\Http\Controllers\StoreFrontController::class, 'checkoutPayment'])->name('payment.checkout');
+// Route::post('checkout/payment/{storename}', [App\Http\Controllers\StoreFrontController::class, 'checkoutPayment'])->name('payment.checkout');
 Route::get('add-to-cart/{id}', [App\Http\Controllers\StoreFrontController::class, 'addToCart'])->name('add.to.cart');
 Route::patch('update-cart', [App\Http\Controllers\StoreFrontController::class, 'update'])->name('update.cart');
 Route::delete('remove-from-cart', [App\Http\Controllers\StoreFrontController::class, 'remove'])->name('remove.from.cart');

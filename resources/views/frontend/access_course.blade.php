@@ -13,6 +13,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
+                        @if($auths == 0)
                         <div class="text">
                             <h1>
                                 Enter your email and order no. to continue
@@ -21,6 +22,13 @@
                                 Your email you used to buy the course and order no is sent to your email address
                             </p>
                         </div>
+                        @endif
+
+                        @if($auths == 1)
+                        <div class="text">
+                            <h1>View Your Course</h1>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -170,16 +170,20 @@ class ShopFrontController extends Controller
         }
     }
 
+
     public function courseCheckoutPayment(Request $request)
     {
         $promotion_id = $request->has('promotion_id') ? $request->get('promotion_id') : null;
         $course_id = $request->has('course_id') ? $request->get('course_id') : null;
 
         // is there any promotion link?
-        return $promotion_id && $course_id
-            ? $this->checkoutPaymentWithPromotion($request, $promotion_id, $course_id)
-            : $this->checkoutPaymentWithoutPromotion($request);
+        // return $promotion_id && $course_id
+        //     ? $this->checkoutPaymentWithPromotion($request, $promotion_id, $course_id)
+        //     : $this->checkoutPaymentWithoutPromotion($request);
+
+        return $this->checkoutPaymentWithPromotion($request, $promotion_id, $course_id);
     }
+
 
     public function checkoutPaymentWithPromotion(Request $request, $promotion_id, $course_id)
     {
@@ -238,11 +242,11 @@ class ShopFrontController extends Controller
                 $product = Course::find($item['id'])->first();
 
                 // promoter fee
-                $level1_fee = $product->level1_comm / 100 * $item['price'];
+                $level1_fee = ($product->level1_comm / 100) * $item['price'];
 
-                if ($promoter->first()->referral_link != null) {
+                if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
                     // promoter's refer by free
-                    $level2_fee = $product->level2_comm / 100 * $item['price'];
+                    $level2_fee = ($product->level2_comm / 100) * $item['price'];
                 }
 
                 $item_amount = $item['price'] - ($level1_fee + $level2_fee);
@@ -276,7 +280,7 @@ class ShopFrontController extends Controller
                 // notify level 1 here
 
                 // level2 fee
-                if ($promoter->first()->referral_link != null) {
+                if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
                     $user = User::where(['id' => $promoter->first()->referral_link]);
 
                     $user->update([
