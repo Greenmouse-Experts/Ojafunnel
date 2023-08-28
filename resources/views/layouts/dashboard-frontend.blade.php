@@ -242,7 +242,7 @@
     <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
 
     <script>
-        function myFunction() {
+        function myFunction1() {
             // Get the text field
             var copyText = document.getElementById("myInput");
 

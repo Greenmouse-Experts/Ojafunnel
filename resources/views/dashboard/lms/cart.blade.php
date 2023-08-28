@@ -109,11 +109,8 @@
                                                         <h5 class="font-size-14 text-wrap" style="width: 330px;"><a href="#" class="text-dark">{{ $details['description'] }}</a></h5>
                                                     </td>
                                                     <td>
-                                                        {{ isset($details['currency']) }}{{ number_format($details['price'], 2) }}
+                                                        {{ $details['currency'] }}{{ number_format($details['price'], 2) }}
                                                     </td>
-                                                    {{-- <td>
-                                                        {{ $details['currency'] }}{{ number_format($details['price'], 2)}}
-                                                    </td> --}}
                                                     <td>
                                                         <a href="javascript(0);" class="action-icon text-danger remove-from-cart"> <i class="fas fa-trash-can font-size-18"></i></a>
                                                     </td>
