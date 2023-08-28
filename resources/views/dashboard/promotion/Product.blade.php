@@ -476,16 +476,15 @@
     function copy(id) {
         // Get the text field
         var copyText = document.getElementById(`myInput${id}`);
-
-        // Select the text field
         copyText.select();
-        copyText.setSelectionRange(0, 99999); // For mobile devices
 
-        // Copy the text inside the text field
-        navigator.clipboard.writeText(copyText.value);
-
-        // Alert the copied text
-        alert("Copied the text: " + copyText.value);
+        try {
+            var successful = document.execCommand('copy');
+            var message = successful ? 'Text copied to clipboard' : 'Unable to copy text';
+            alert(message);
+        } catch (err) {
+            console.error('Oops, unable to copy', err);
+        }
     }
 </script>
 
@@ -496,13 +495,13 @@
 
         // Select the text field
         copyText.select();
-        copyText.setSelectionRange(0, 99999); // For mobile devices
-
-        // Copy the text inside the text field
-        navigator.clipboard.writeText(copyText.value);
-
-        // Alert the copied text
-        alert("Copied the text: " + copyText.value);
+        try {
+            var successful = document.execCommand('copy');
+            var message = successful ? 'Text copied to clipboard' : 'Unable to copy text';
+            alert(message);
+        } catch (err) {
+            console.error('Oops, unable to copy', err);
+        }
     }
 </script>
 
