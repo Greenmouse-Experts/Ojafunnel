@@ -244,17 +244,29 @@
     <script>
         function myFunction() {
             // Get the text field
-            var copyText = document.getElementById("myInput");
+            var input = document.getElementById("myInput");
+            input.select();
 
-            // Select the text field
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
+            try {
+                var successful = document.execCommand('copy');
+                var message = successful ? 'Text copied to clipboard' : 'Unable to copy text';
+                alert(message);
+            } catch (err) {
+                console.error('Oops, unable to copy', err);
+            }
+        }
+        function myFunction2() {
+            // Get the text field
+            var input = document.getElementById("myInput");
+            input.select();
 
-            // Copy the text inside the text field
-            navigator.clipboard.writeText(copyText.value);
-
-            // Alert the copied text
-            alert("Copied the text: " + copyText.value);
+            try {
+                var successful = document.execCommand('copy');
+                var message = successful ? 'Text copied to clipboard' : 'Unable to copy text';
+                alert(message);
+            } catch (err) {
+                console.error('Oops, unable to copy', err);
+            }
         }
     </script>
     <script>
