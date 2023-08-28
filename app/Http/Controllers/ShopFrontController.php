@@ -199,8 +199,6 @@ class ShopFrontController extends Controller
             $totalAmount += $item['price'];
         }
 
-        // dd($request->name, $request->email, $request->phoneNo, $request->address, $request->state, $request->country);
-
         $enroll = Enrollment::create([
             'shop_id' => $shop->id,
             'order_no' => Str::random(6),

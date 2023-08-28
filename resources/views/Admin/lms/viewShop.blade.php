@@ -69,7 +69,7 @@
                                             </td>
                                             <td>
                                                 <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
-                                                <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push" style="margin-left: 10px; padding: 0.2rem 0.5rem;"><i class="mdi mdi-content-copy"></i></button>
+                                                <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction1()" class="btn btn-secondary push" style="margin-left: 10px; padding: 0.2rem 0.5rem;"><i class="mdi mdi-content-copy"></i></button>
                                             </td>
                                             <td>
                                                 {{$item->created_at->toDayDateTimeString()}}

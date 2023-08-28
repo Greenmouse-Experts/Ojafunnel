@@ -83,8 +83,7 @@
                             </td>
                             <td>
                               <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
-                              <input type="text" value="{{$item->link}}" name="name" id="myInput">
-                              <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction2()" class="btn btn-secondary push" style="margin-left: 10px; padding: 0.2rem 0.5rem;"><i class="mdi mdi-content-copy"></i></button>
+                              <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction1()" class="btn btn-secondary push" style="margin-left: 10px; padding: 0.2rem 0.5rem;"><i class="mdi mdi-content-copy"></i></button>
                             </td>
                             <td>
                                 <button class="btn-list" data-bs-toggle="modal" data-bs-target="#editshop-{{$item->id}}">
@@ -166,7 +165,7 @@
                                                                             <input type="text" value="{{$item->link}}" name="link" id="myInput" class="input mov" readonly>
                                                                         </div>
                                                                         <div class="col-md-1 mt-3 mb-3">
-                                                                            <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
+                                                                            <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction1()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
