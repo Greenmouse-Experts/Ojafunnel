@@ -258,7 +258,11 @@
         function myFunction2() {
             // Get the text field
             var input = document.getElementById("myInput");
-            input.select();
+            var tempTextArea = document.createElement("textarea");
+
+            tempTextArea.value = input.value;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
 
             try {
                 var successful = document.execCommand('copy');
@@ -266,6 +270,8 @@
                 alert(message);
             } catch (err) {
                 console.error('Oops, unable to copy', err);
+            } finally {
+                document.body.removeChild(tempTextArea);
             }
         }
     </script>
