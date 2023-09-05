@@ -99,7 +99,8 @@ class ListManagementController extends Controller
 
         $user_id = Auth::user()->id;
         $list = ListManagement::find($finder);
-        $lists = ListManagementContact::whereRaw("list_management_id IN (SELECT id FROM list_management WHERE user_id='$user_id')")->get();
+        //$lists = ListManagementContact::whereRaw("list_management_id IN (SELECT id FROM list_management WHERE user_id='$user_id')")->get();
+        $lists = ListManagementContact::where('list_management_id', $list->id)->get();
 
         return view('dashboard.list-management.view')->with([
             'list' => $list,

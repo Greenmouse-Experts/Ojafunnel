@@ -176,17 +176,32 @@
     
 
     <script>
-    $(document).ready(function(){
-        // setTimeout(function(){
-            $('.select2').select2();
-        // },4000);
-    });
+        function myFunction2() {
+            // Get the text field
+            var input = document.getElementById("myInput");
+            var tempTextArea = document.createElement("textarea");
 
-    </script>
-    
+            tempTextArea.value = input.value;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
 
+            try {
+                var successful = document.execCommand('copy');
+                var message = successful ? 'Text copied to clipboard' : 'Unable to copy text';
+                alert(message);
+            } catch (err) {
+                console.error('Oops, unable to copy', err);
+            } finally {
+                document.body.removeChild(tempTextArea);
+            }
+        }
+        
+        $(document).ready(function(){
+            // setTimeout(function(){
+                $('.select2').select2();
+            // },4000);
+        });    
 
-    <script>
         // pricing switch button
         let pricingIsYearly = false;
         $('.js-switch-button-period').on('click', function(e) {

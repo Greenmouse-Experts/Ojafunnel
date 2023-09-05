@@ -531,12 +531,21 @@ $('body').on('click', '.accessCourse', function (e) {
       }
     },error : function(data){
       $(self).removeAttr('disabled').css({'opacity': '1'});
-      Swal.fire({
-        title: "Error!",
-        text: "Poor Network Connection!",
-        icon: 'error',
-        timer: 3000
-      });
+      if(data.status == 422){
+          Swal.fire({
+            title: "Error!",
+            text: data.responseJSON.message,
+            icon: 'error',
+            timer: 3000
+          });
+      }else{
+        Swal.fire({
+          title: "Error!",
+          text: "Poor Network Connection!",
+          icon: 'error',
+          timer: 3000
+        });
+      }
     }
   });
 });

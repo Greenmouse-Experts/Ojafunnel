@@ -55,7 +55,7 @@
                                             <input type="text" value="{{config('app.url')}}/course/shop/" name="link" id="myInput" class="input mov" readonly required>
                                         </div>
                                         <div class="col-md-1 mt-3 mb-3">
-                                            <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
+                                            <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction1()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
                                         </div>
                                     </div>
                                 </div>

@@ -461,6 +461,10 @@ class EmailMarketingController extends Controller
         $email_kit = EmailKit::where(['account_id' => Auth::user()->id, 'is_admin' => false, 'master' => true]);
         $email_template = EmailTemplate::where('id', $request->email_template_id)->first();
         $mail_list = ListManagement::where('id', $request->email_list)->first();
+        $mail_list_management = ListManagementContact::where('list_management_id', $mail_list->id)->get()->count();
+
+
+        return $mail_list_management;
 
         if (!$email_kit->exists()) {
             $email_kit = EmailKit::where(['is_admin' => true, 'master' => true]);

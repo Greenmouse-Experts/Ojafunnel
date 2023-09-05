@@ -28,6 +28,11 @@ class StoreFrontController extends Controller
 
         $isvalid = false;
 
+        // "timeRemaining" => $timeRemaining,
+
+        // $product = StoreProduct::findOrFail($id);
+        
+
         if ($request->has('promotion_id')) {
             $user = User::where('promotion_link', $request->promotion_id);
 
@@ -75,7 +80,8 @@ class StoreFrontController extends Controller
                 'rmQuan' => $product->quantity,
                 "price" => $timeRemaining > 0 ? $product->new_price : $product->price,
                 "description" => $product->description,
-                "image" => $product->image
+                "image" => $product->image,
+                "timeRemaining" => $timeRemaining,
             ];
         }
 
@@ -124,9 +130,11 @@ class StoreFrontController extends Controller
         $product_id = $request->has('product_id') ? $request->get('product_id') : null;
 
         // is there any promotion link?
-        return $promotion_id && $product_id
+        /* return $promotion_id && $product_id
             ? $this->checkoutPaymentWithPromotion($request, $promotion_id, $product_id)
-            : $this->checkoutPaymentWithoutPromotion($request, $product_id);
+            : $this->checkoutPaymentWithoutPromotion($request, $product_id); */
+
+        return $this->checkoutPaymentWithPromotion($request, $promotion_id, $product_id);
     }
 
     protected function checkoutPaymentWithPromotion(Request $request, $promotion_id, $product_id)
@@ -175,15 +183,17 @@ class StoreFrontController extends Controller
                 $product = StoreProduct::find($item['id'])->first();
 
                 // promoter fee
-                $level1_fee = $product->level1_comm / 100 * $item_price;
+                $level1_fee = ($product->level1_comm / 100) * $item_price;
 
-                if ($promoter->first()->referral_link != null) {
+                if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
                     // promoter's refer by free
-                    $level2_fee = $product->level2_comm / 100 * $item_price;
+                    $level2_fee = ($product->level2_comm / 100) * $item_price;
                 }
 
                 $item_amount = $item_price - ($level1_fee + $level2_fee);
-            } else $item_amount = $item_price;
+            } else {
+                $item_amount = $item_price;
+            }
 
             // order item
             $orderItem = new OrderItem();
@@ -257,7 +267,7 @@ class StoreFrontController extends Controller
                 Mail::to($promoter->first()->email)->send(new StoreFrontMail('Level 1 Fee Received', "Hello " . $promoter->first()->username . ", a total amount of $level1_fee has been added to your account for level 1 commission."));
 
                 // level2 fee
-                if ($promoter->first()->referral_link != null) {
+                if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
                     $user = User::where(['id' => $promoter->first()->referral_link]);
 
                     $user->update([
