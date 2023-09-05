@@ -33,7 +33,7 @@ class StoreController extends Controller
     {
         $this->middleware(['auth', 'verified']);
     }
-    
+
     public function store(Request $request)
     {
         $request->validate(
@@ -343,7 +343,7 @@ class StoreController extends Controller
             return back()->with([
                 'type' => 'danger',
                 'message' => 'The selected file format is invalid or file size greater than 100MB'
-            ]); 
+            ]);
         }
 
         if (StoreProduct::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->products) {

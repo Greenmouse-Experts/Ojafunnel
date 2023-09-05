@@ -47,7 +47,7 @@
           </form>
         </div>
         <div class="col-3 d-flex align-items-center justify-content-between">
-          <div> 
+          <div>
             @auth
                 <a href="{{route('user.my.store', Auth::user()->username)}}">Go to store</a>
             @else
@@ -150,10 +150,10 @@
                                     <form action="
                                         {{
                                             route('payment.checkout', [
-                                                'storename' => $store->name, 
-                                                'promotion_id' => Request::get('promotion_id'), 
-                                                'product_id' => Request::get('product_id')
-                                            ]) 
+                                                'storename' => $store->name,
+                                                'promotion_id' => Request::get('promotion_id'),
+                                                'product_id' => Request::get('product_id'),
+                                            ])
                                         }}
                                     " id="checkoutForm" method="post">
                                         @csrf
@@ -254,9 +254,11 @@
                                             <div class="tab-pane fade" id="v-pills-confir" role="tabpanel" aria-labelledby="v-pills-confir-tab">
                                                 <div class="card shadow-none border mb-0">
                                                     <div class="card-body">
-                                                        
+
                                                         <!-- <h4 class="card-title ">Note</h4> -->
-                                                        <h6 class="mb-4"><span class="text-danger">Note:</span> Kindly check your email to download your digital products.</h6>
+
+
+                                                        {{-- <h6 class="mb-4"><span class="text-danger">Note:</span> Kindly check your email to download your digital products.</h6> --}}
 
                                                         <h4 class="card-title mb-4">Order Summary</h4>
                                                         <div class="table-responsive">
@@ -277,7 +279,7 @@
                                                                             <tr>
                                                                                 <th scope="row"><img src="{{ Storage::url($details['image']) }}" alt="product-img" title="product-img" class="avatar-md"></th>
                                                                                 <td>
-                                                                                    <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ $details['name'] }} </a></h5>
+                                                                                    <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark"><span class="badge badge-success" style="background: green">({{\App\Models\StoreProduct::getProductLabel($details['id'])}} Product)</span><br />{{ $details['name'] }} </a></h5>
                                                                                 </td>
                                                                                 <td>₦ {{ $details['price'] }}</td>
                                                                                 <td>{{ $details['quantity'] }}</td>
@@ -391,7 +393,7 @@
   <script>
     var token = $('#txt_token1').val();
     var site_url = $('#site_url').val();
-    
+
     window.onload=function(){
         $discount = $('#totalAmount').val() - $('#couponDiscount').val();
         $('#AmountToPay').val($discount);
@@ -407,7 +409,7 @@
                 +'&product_id='+$('.product_id').val()
                 +'&product_type=products'
                 +'&_token='+token;
-            
+
                 $.ajax({
                     type: "POST",
                     url : site_url + "store-cart-details-tmp", // store users email temporary, delete back if they complete the payment
@@ -422,7 +424,7 @@
             $('#v-pills-shipping').removeClass('show active')
             $('#v-pills-payment-tab').addClass('active')
             $('#v-pills-payment').addClass('show active')
-            
+
         }
 
     })
@@ -438,7 +440,7 @@
         }
     })
 
-    $("#makePayment").click(function() {   
+    $("#makePayment").click(function() {
         if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
             alert('Please fill the asterisks field to continue');
             $('#error').html('Please fill the asterisks field to continue');
@@ -448,7 +450,7 @@
                 email: $('#email').val(),
                 amount: document.getElementById("AmountToPay").value * 100,
                 ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                callback: function(response){ 
+                callback: function(response){
                     // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
                     // url = url.replace(':response', response.reference);
                     // url = url.replace(':amount', document.getElementById("amount").value);
@@ -472,7 +474,7 @@
         }
     }
 
-    $("#submitCoupon").click(function() 
+    $("#submitCoupon").click(function()
     {
         if ($('#coupon').val() == '') {
             $('#couponerror').html('Please fill the coupon field to continue.');
@@ -508,7 +510,7 @@
             });
         }
     });
-</script> 
+</script>
 </body>
 <style>
 .thumbnail {
