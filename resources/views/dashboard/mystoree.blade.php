@@ -171,7 +171,7 @@
                           <div class="p-2">
                               <p class="font-500">{{$item->name}}</p>
 
-                              @if ($timeRemaining <= 0)
+                              @if (@$timeRemaining <= 0)
                                 <p class="dynamic_price">NGN{{number_format($item->price, 2)}}</p>
                                 @if ($item->price >= 1)
                                     <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>

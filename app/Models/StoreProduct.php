@@ -23,4 +23,10 @@ class StoreProduct extends Model
     {
         return self::select('store_products.*');
     }
+
+    public static function getProductLabel($id) {
+        $prd = self::find($id);
+
+        return $prd->type;
+    }
 }
