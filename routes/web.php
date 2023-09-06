@@ -18,7 +18,7 @@ Route::get('access-course', [App\Http\Controllers\HomePageController::class, 'ac
 Route::post('get-access-course', [App\Http\Controllers\HomePageController::class, 'access_auth_course']);
 Route::get('magic-login-link/{id}', [App\Http\Controllers\HomePageController::class, 'magic_login_link']);
 
-
+// Route::post('checkout/payment/{storename}', [App\Http\Controllers\HomePageController::class, 'checkoutPayment'])->name('payment.checkout');
 
 // FrontEnd
 Route::get('/page-builder/create', [App\Http\Controllers\PageController::class, 'page_builder_create'])->name('user.page.builder.create');

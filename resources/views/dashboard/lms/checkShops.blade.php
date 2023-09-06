@@ -83,7 +83,8 @@
                             </td>
                             <td>
                               <a href="{{$item->link}}" target="_blank" class="text-decoration-underline">Preview</a>
-                              <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push" style="margin-left: 10px; padding: 0.2rem 0.5rem;"><i class="mdi mdi-content-copy"></i></button>
+                              <input type="hidden" value="{{$item->link}}" name="name" id="myInput">
+                              <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction2()" class="btn btn-secondary push" style="margin-left: 10px; padding: 0.2rem 0.5rem;"><i class="mdi mdi-content-copy"></i></button>
                             </td>
                             <td>
                                 <button class="btn-list" data-bs-toggle="modal" data-bs-target="#editshop-{{$item->id}}">

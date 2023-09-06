@@ -357,24 +357,26 @@
                     </td>
                   </tr>
 
-                  @foreach ($orderItem as $item)
-                  <tr>
-                    <td class="item-col item">
-                      <table cellspacing="0" cellpadding="0" width="100%">
-                        <tr>
-                          <td class="mobile-hide-img">
-                            <a href=""><img width="110" height="92" src="{{URL::asset(\App\Models\Course::find($item->course_id)->image) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="item1"></a>
-                          </td>
-                          <td class="product">
-                            <span style="color: #4d4d4d; font-weight:bold;">{{\App\Models\Course::find($item->course_id)->title}}</span>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                    <td class="item-col">
-                        {{\App\Models\ShopOrder::getCurrency($item->course_id)}}{{number_format($item->amount, 2)}}
-                    </td>
-                  </tr>
+                  @php $currency=""; @endphp
+                    @foreach ($orderItem as $item)
+                    <tr>
+                      <td class="item-col item">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                          <tr>
+                            <td class="mobile-hide-img">
+                              <a href=""><img width="110" height="92" src="{{URL::asset(\App\Models\Course::find($item->course_id)->image) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="item1"></a>
+                            </td>
+                            <td class="product">
+                              <span style="color: #4d4d4d; font-weight:bold;">{{\App\Models\Course::find($item->course_id)->title}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                      <td class="item-col">
+                          {{\App\Models\ShopOrder::getCurrency($item->course_id)}}{{number_format($item->amount, 2)}}
+                      </td>
+                    </tr>
+                    @php $currency .= \App\Models\ShopOrder::getCurrency($item->course_id).","; @endphp
                   @endforeach
 
                   <tr>
@@ -382,6 +384,7 @@
                     <td class="item-col price"></td>
                   </tr>
 
+                  @php $currency1 = explode(",", $currency)[0]; @endphp
 
                   <tr>
                     <td class="item-col item">
@@ -391,14 +394,15 @@
                       <span class="total-space" style="font-weight: bold; color: #4d4d4d">Total</span>
                     </td>
                     <td class="item-col price" style="text-align: left; border-top: 1px solid #cccccc;">
-                      <span class="total-space">₦{{number_format($orderItem->sum('amount'), 2)}}</span> <br />
-                      <span class="total-space" style="font-weight:bold; color: #4d4d4d">₦{{number_format($orderItem->sum('amount'), 2)}}</span>
+                      <span class="total-space">{{ $currency1 }}{{number_format($orderItem->sum('amount'), 2)}}</span> <br />
+                      <span class="total-space" style="font-weight:bold; color: #4d4d4d">{{ $currency1 }}{{number_format($orderItem->sum('amount'), 2)}}</span>
                     </td>
                   </tr>
                 </table>
               </td>
             </tr>
         </table>
+        <div style="text-align:center">Use your <b>Email address</b> and your <b>Order no</b> to login and access your course.</div>
         <div style="text-align:center"><a href="{{ env('APP_URL') }}/access-course/">Click here to start learning</a></div>
       </center>
     </td>

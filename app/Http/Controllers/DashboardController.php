@@ -2692,7 +2692,8 @@ class DashboardController extends Controller
 
         return view('dashboard.promotion.Product', [
             'products' => $products,
-            'lms' => $lms
+            'lms' => $lms,
+            'user_id' => md5(Auth::user()->id),
         ]);
     }
 

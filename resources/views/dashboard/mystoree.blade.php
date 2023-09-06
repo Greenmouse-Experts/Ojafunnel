@@ -69,7 +69,7 @@
                     <i class="bi bi-cart-check"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}
                 </button>
             </a> --}}
-            <div class="dropdown">
+            <div class="dropdown" style="right: 0; left: auto !important">
                 <button type="button" class="btn btn-info dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                 </button>
@@ -153,6 +153,12 @@
           <div class="row">
             @if ($products->count() > 0)
                 @foreach ($products as $item)
+                    @php
+                    $targetDate = strtotime($item->date_to);
+                    $now = time();
+                    $timeRemaining = $targetDate - $now;
+                    @endphp
+                    
                     <div class="col-md-4" id="item-{{ $item->id }}">
                         <div class="founds">
                           @if($item->type == 'Physical')
