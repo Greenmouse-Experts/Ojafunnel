@@ -19,7 +19,7 @@ class ProcessEmailCampaign implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    // queue setting 
+    // queue setting
     public $tries = 5;
     public $configuration;
     public $contacts;
@@ -59,7 +59,9 @@ class ProcessEmailCampaign implements ShouldQueue
                     ->update(['status' => 'Sending']);
 
                 // send email
-                $mailer->to($_contact->email)->send($mailable);
+                @$mailer->to($_contact->email)->send($mailable);
+                // prevent exec break and force no error
+                // if persists plz check the cron job status.
 
                 // update status to Sent
                 EmailCampaignQueue::where(['email_campaign_id' => $email_campaign->id, 'recepient' => $_contact->email])
