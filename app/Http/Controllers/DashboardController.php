@@ -74,15 +74,15 @@ class DashboardController extends Controller
         /* $this->middleware(function ($request, $next) {
 
 
-            
-            
-            
+
+
+
 
             return $next($request);
         }); */
 
-        
-        
+
+
     }
 
     public function dashboard()
@@ -166,13 +166,13 @@ class DashboardController extends Controller
                 'status' => 'error',
                 'message' => $validator->errors()->all(),
                 'data' => ''
-            ],200); 
+            ],200);
         }
         return response()->json([
             'status' => 'success',
             'message' => 'validated',
             'data' => ''
-        ],200); 
+        ],200);
     }
 
 
@@ -197,7 +197,7 @@ class DashboardController extends Controller
                 'status' => 'error',
                 'message' => $validator->errors()->all(),
                 'data' => ''
-            ],200); 
+            ],200);
         }
         $transactions = Transaction::create([
             'user_id'               => $request->user_id,
@@ -216,13 +216,13 @@ class DashboardController extends Controller
                 'status' => 'success',
                 'message' => 'Successful transaction',
                 'data' => ''
-            ],200); 
+            ],200);
         }
         return response()->json([
             'status' => 'error',
             'message' => 'Could not create transaction',
             'data' => ''
-        ],200); 
+        ],200);
     }
 
 
@@ -450,7 +450,7 @@ class DashboardController extends Controller
     public function choose_temp($username)
     {
         if($this->home->site_features_settings('Funnel Builder') || $this->home->user_site_features_settings('Funnel Builder') > 0) return $this->home->redirects();
-   
+
         $funnels = Funnel::latest()->where('user_id', Auth::user()->id)->get();
 
         return view('dashboard.funnelBuilder', [
@@ -647,11 +647,11 @@ class DashboardController extends Controller
         ]);
     }
 
-    
+
 
 
     public function page_builder($username)
-    {   
+    {
         if($this->home->site_features_settings('Page Builder') || $this->home->user_site_features_settings('Page Builder') > 0) return $this->home->redirects();
 
         $pages = Page::latest()->where('user_id', Auth::user()->id)->get();
@@ -690,7 +690,7 @@ class DashboardController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
 
        $channels = $request->channel;
@@ -715,7 +715,7 @@ class DashboardController extends Controller
                 'status' => 'success',
                 'message' => "Broadcast sent",
                 'data' => ''
-            ],200);         
+            ],200);
         }
         return response()->json([
             'status' => 'error',
@@ -2371,7 +2371,7 @@ class DashboardController extends Controller
         ]);
     }
 
-    
+
     public function add_quiz_session(Request $request)
     {
         $rules = [
@@ -2382,7 +2382,7 @@ class DashboardController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
 
        $created = \App\Models\LmsQuiz::create([
@@ -2398,7 +2398,7 @@ class DashboardController extends Controller
                 'status' => 'success',
                 'message' => "Quiz session created",
                 'data' => ''
-            ],200);         
+            ],200);
         }
         return response()->json([
             'status' => 'error',
@@ -2420,7 +2420,7 @@ class DashboardController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
 
         $quiz_session = $request->quiz_session1;
@@ -2431,7 +2431,7 @@ class DashboardController extends Controller
         $option_d = $request->option_d;
         $ans = $request->ans;
         $quiz_each_id = $request->quiz_each_id;
-        
+
         $submitted = false;
 
         if(count($questions) <= 0 || count($option_a) <= 0 || count($option_b) <= 0 || count($ans) <= 0){
@@ -2440,7 +2440,7 @@ class DashboardController extends Controller
                 'data' => ''
             ],200);
         }
-        
+
         if(isset($questions) && count($questions) > 0){
             foreach($questions as $index => $question){
                 if(isset($ans[$index]) && $ans[$index] == "a") $ans[$index] = isset($option_a[$index]) ? $option_a[$index] : '';
@@ -2492,7 +2492,7 @@ class DashboardController extends Controller
                 'status' => 'success',
                 'message' => "Quiz questions created",
                 'data' => ''
-            ],200);         
+            ],200);
         }
         return response()->json([
             'status' => 'error',
@@ -2520,7 +2520,7 @@ class DashboardController extends Controller
                 'status' => 'error',
                 'message' => $validator->errors()->all(),
                 'data' => ''
-            ],200); 
+            ],200);
         }
         if($request->ids != ""){
             $lmss = \App\Models\LmsQuiz::where('id', $request->ids)->first();
@@ -2533,7 +2533,7 @@ class DashboardController extends Controller
                     'status' => 'success',
                     'message' => "Quiz session deleted",
                     'data' => ''
-                ],200);         
+                ],200);
             }
             return response()->json([
                 'status' => 'error',
@@ -2541,8 +2541,8 @@ class DashboardController extends Controller
                 'data' => ''
             ],200);
         }
-        
-       
+
+
     }
 
 
@@ -2564,7 +2564,7 @@ class DashboardController extends Controller
                 'status' => 'error',
                 'message' => $validator->errors()->all(),
                 'data' => ''
-            ],200); 
+            ],200);
         }
         if($request->ids != ""){
             $course = \App\Models\Course::where('id', $request->ids)->first();
@@ -2579,7 +2579,7 @@ class DashboardController extends Controller
                     'status' => 'success',
                     'message' => "Course deleted",
                     'data' => ''
-                ],200);         
+                ],200);
             }
             return response()->json([
                 'status' => 'error',
@@ -2587,8 +2587,8 @@ class DashboardController extends Controller
                 'data' => ''
             ],200);
         }
-        
-       
+
+
     }
 
 
@@ -2610,7 +2610,7 @@ class DashboardController extends Controller
                 'status' => 'error',
                 'message' => $validator->errors()->all(),
                 'data' => ''
-            ],200); 
+            ],200);
         }
         if($request->ids != ""){
             $deleted = \App\Models\Requirement::where('id', $request->ids)->delete();
@@ -2620,7 +2620,7 @@ class DashboardController extends Controller
                     'status' => 'success',
                     'message' => "Requirement deleted",
                     'data' => ''
-                ],200);         
+                ],200);
             }
             return response()->json([
                 'status' => 'error',
@@ -2628,8 +2628,8 @@ class DashboardController extends Controller
                 'data' => ''
             ],200);
         }
-        
-       
+
+
     }
 
 
@@ -2668,7 +2668,7 @@ class DashboardController extends Controller
                 'status' => 'success',
                 'message' => "Your answers have been submitted",
                 'data' => ''
-            ],200);         
+            ],200);
         }
         return response()->json([
             'status' => 'error',
