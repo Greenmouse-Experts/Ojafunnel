@@ -350,7 +350,7 @@ class EmailMarketingController extends Controller
         ]);
     }
 
-    
+
     public function broadcast_message(Request $request)
     {
         $user_id = Auth::user()->id;
@@ -464,7 +464,7 @@ class EmailMarketingController extends Controller
         $mail_list_management = ListManagementContact::where('list_management_id', $mail_list->id)->get()->count();
 
 
-        return $mail_list_management;
+        // return $mail_list_management;
 
         if (!$email_kit->exists()) {
             $email_kit = EmailKit::where(['is_admin' => true, 'master' => true]);
@@ -581,6 +581,8 @@ class EmailMarketingController extends Controller
                     ])->afterCommit()->onQueue('emailCampaign')->delay($delay);
 
                     $delay += mt_rand(10, 20);
+
+                    // Waiting on cron job to relay messages.
                 }
             });
 
