@@ -660,7 +660,7 @@ class SmsAutomationController extends Controller
                 foreach($contacts as $contact)
                 {
                     $client = new Client(); //GuzzleHttp\Client
-                    $url = "https://app.multitexter.com/v2/app/sendsms";
+                    $url = "https://app.multitexter.com/v2/app/sms";
 
                     $messageContent = str_replace('$name', $contact->name, $request->message);
 
@@ -713,7 +713,7 @@ class SmsAutomationController extends Controller
 
             try {
                 $client = new Client(); //GuzzleHttp\Client
-                $url = "https://app.multitexter.com/v2/app/sendsms";
+                $url = "https://app.multitexter.com/v2/app/sms";
 
                 $params = [
                     "email" => $email,
@@ -764,7 +764,7 @@ class SmsAutomationController extends Controller
                     $mobiles = $contact->phone;
 
                     // Set your domain's API URL
-                    $api_url = 'http://portal.nigeriabulksms.com/api/?';
+                    $api_url = 'http://portal.nigeriabulksms.com/api/';
 
                     //Create the message data
                     $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $messageContent, 'mobiles' => $mobiles);
@@ -828,7 +828,7 @@ class SmsAutomationController extends Controller
                 $mobiles = $recipients;
 
                 // Set your domain's API URL
-                $api_url = 'http://portal.nigeriabulksms.com/api/?';
+                $api_url = 'http://portal.nigeriabulksms.com/api/';
 
                 //Create the message data
                 $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $message, 'mobiles' => $mobiles);

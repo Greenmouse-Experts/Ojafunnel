@@ -340,7 +340,7 @@ class SendSms extends Command
                 foreach($contacts as $contact)
                 {
                     $client = new Client(); //GuzzleHttp\Client
-                    $url = "https://app.multitexter.com/v2/app/sendsms";
+                    $url = "https://app.multitexter.com/v2/app/sms";
 
                     $messageContent = str_replace('$name', $contact->name, $sms->message);
 
@@ -392,7 +392,7 @@ class SendSms extends Command
 
             try {
                 $client = new Client(); //GuzzleHttp\Client
-                $url = "https://app.multitexter.com/v2/app/sendsms";
+                $url = "https://app.multitexter.com/v2/app/sms";
 
                 $params = [
                     "email" => $email,
@@ -443,7 +443,7 @@ class SendSms extends Command
                     $mobiles = $contact->phone;
 
                     // Set your domain's API URL
-                    $api_url = 'http://portal.nigeriabulksms.com/api/?';
+                    $api_url = 'http://portal.nigeriabulksms.com/api/';
 
                     //Create the message data
                     $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $messageContent, 'mobiles' => $mobiles);
@@ -507,7 +507,7 @@ class SendSms extends Command
                 $mobiles = $recipients;
 
                 // Set your domain's API URL
-                $api_url = 'http://portal.nigeriabulksms.com/api/?';
+                $api_url = 'http://portal.nigeriabulksms.com/api/';
 
                 //Create the message data
                 $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $message, 'mobiles' => $mobiles);

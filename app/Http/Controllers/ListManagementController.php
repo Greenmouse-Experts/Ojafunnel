@@ -263,14 +263,14 @@ class ListManagementController extends Controller
 
         $list = ListManagement::find($finder);
 
-        $emailVerification = $this->email_veriication($request->email);
+        // $emailVerification = $this->email_veriication($request->email);
 
-        if ($emailVerification !== 'true') {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'The email address is not valid.'
-            ]);
-        }
+        // if ($emailVerification !== 'true') {
+        //     return back()->with([
+        //         'type' => 'danger',
+        //         'message' => 'The email address is not valid.'
+        //     ]);
+        // }
 
         ListManagementContact::create([
             'uid' => Str::uuid(),
@@ -318,14 +318,14 @@ class ListManagementController extends Controller
 
         $contact = ListManagementContact::find($finder);
 
-        $emailVerification = $this->email_veriication($request->email);
+        // $emailVerification = $this->email_veriication($request->email);
 
-        if ($emailVerification !== 'true') {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'The email address is not valid.'
-            ]);
-        }
+        // if ($emailVerification !== 'true') {
+        //     return back()->with([
+        //         'type' => 'danger',
+        //         'message' => 'The email address is not valid.'
+        //     ]);
+        // }
 
         $contact->update([
             'name' => $request->name,

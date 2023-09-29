@@ -76,7 +76,7 @@ class SmsBirthday extends Command
 
                         try {
                             $client = new Client(); //GuzzleHttp\Client
-                            $url = "https://app.multitexter.com/v2/app/sendsms";
+                            $url = "https://app.multitexter.com/v2/app/sms";
 
                             $params = [
                                 "email" => $email,
@@ -129,7 +129,7 @@ class SmsBirthday extends Command
                             $mobiles = $recipients;
 
                             // Set your domain's API URL
-                            $api_url = 'http://portal.nigeriabulksms.com/api/?';
+                            $api_url = 'http://portal.nigeriabulksms.com/api/';
 
 
                             // Create the message data
