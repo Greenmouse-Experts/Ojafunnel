@@ -86,7 +86,6 @@ class ShopFrontController extends Controller
         return back();
     }
 
-
     public function stripe_pay(Request $request){
         $user = auth('user')->user();
         //\Cart::clear();
@@ -131,8 +130,6 @@ class ShopFrontController extends Controller
             'data' => ''
         ],400);
     }
-
-
 
     public function course_checkout(Request $request)
     {
@@ -183,7 +180,6 @@ class ShopFrontController extends Controller
 
         return $this->checkoutPaymentWithPromotion($request, $promotion_id, $course_id);
     }
-
 
     public function checkoutPaymentWithPromotion(Request $request, $promotion_id, $course_id)
     {

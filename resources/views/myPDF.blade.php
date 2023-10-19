@@ -418,7 +418,7 @@ hr {
                                             <th>Product Type</th>
                                             <th>Qty</th>
                                             <th>Subtotal</th>
-                                            <th>Tax Amount</th>
+                                            <th>Total Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>

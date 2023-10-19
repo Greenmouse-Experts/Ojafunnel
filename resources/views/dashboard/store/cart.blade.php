@@ -159,12 +159,19 @@
                                                             ₦ <span id="price">{{ $details['price'] }}</span>
                                                         </td>
                                                         <td style="display: flex; flex-direction: row">
-                                                            {{-- <button class="btn btn-danger" style="margin-right: 10px;font-size: 18px;">-</button> --}}
-                                                            <div class="me-3" style="width: 80px;margin-top: 10px">
-                                                                <input type="text" id="qty" onkeyup="compute_tcost()" value="{{ $details['quantity'] }}" class="form-control quantity update-cart">
+                                                            <!-- <button class="btn btn-danger" style="margin-right: 10px;font-size: 18px;">-</button> -->
+                                                            <!-- <div class="me-3" style="width: 80px;margin-top: 10px">
+                                                                <input type="number" id="qty" onkeyup="compute_tcost()" value="{{ $details['quantity'] }}" class="form-control quantity update-cart>
                                                                 <small style="font-size: 63%">Availabe: {{ $details['rmQuan'] }}</small>
+                                                            </div> -->
+                                                             <!-- <button class="btn btn-success">+</button> -->
+                                                             <div class="me-3" style="width: 80px; margin-top: 10px">
+                                                                <input type="number" class="form-control quantity" 
+                                                                    data-item-id="{{ $details['id'] }}"
+                                                                    data-avail-quantity="{{ $details['rmQuan'] }}" 
+                                                                    value="{{ $details['quantity'] }}">
+                                                                <small style="font-size: 63%">Available: {{ $details['rmQuan'] }}</small>
                                                             </div>
-                                                            {{-- <button class="btn btn-success">+</button> --}}
                                                         </td>
                                                         <td>
                                                             ₦ <span id="tcost">{{ $details['price'] * $details['quantity'] }}</span>
@@ -276,49 +283,93 @@
 
   <script>
 
-    function compute_tcost() {
-        var price = $("#price").text();
-        var qty = $("#qty").val();
+//     function compute_tcost() {
+//         var price = $("#price").text();
+//         var qty = $("#qty").val();
 
-        if(qty == "") {
-            $("#qty").val("1");
-            qty = "1";
-        }
+//         if(qty == "") {
+//             $("#qty").val("1");
+//             qty = "1";
+//         }
 
-        if(qty == "0") {
-            $("#qty").val("1");
-            qty = "1";
-        }
+//         if(qty == "0") {
+//             $("#qty").val("1");
+//             qty = "1";
+//         }
 
-        var tcost = Number.parseInt(price) * Number.parseInt(qty);
-        $("#tcost").html(tcost);
+//         var tcost = Number.parseInt(price) * Number.parseInt(qty);
+//         $("#tcost").html(tcost);
+//     }
+
+//   $(".update-cart").change(function (e) {
+//       e.preventDefault();
+
+//       var ele = $(this);
+//       var quantity = ele.parents("tr").find(".quantity").val();
+//       var rm = "{{ $details['rmQuan'] ?? 0 }}";
+//       if (quantity > parseInt(rm)) {
+//         ele.parents("tr").find(".quantity").val(parseInt(rm))
+//       }
+//       else{
+//         $.ajax({
+//           url: '{{ route('update.cart') }}',
+//             method: "patch",
+//             data: {
+//                 _token: '{{ csrf_token() }}',
+//                 id: ele.parents("tr").attr("data-id"),
+//                 quantity: quantity
+//             },
+//             success: function (response) {
+//                 window.location.reload();
+//             }
+//         });
+//       }
+
+//   });
+
+    function debounce(func, wait) {
+        let timeout;
+        return function() {
+            const context = this;
+            const args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                func.apply(context, args);
+            }, wait);
+        };
     }
 
-  $(".update-cart").change(function (e) {
-      e.preventDefault();
+    $('.quantity').on('input', debounce(function () {
+        const input = $(this);
+        const itemId = input.data('item-id');
+        const availQuantity = input.data('avail-quantity');
+        const quantity = parseInt(input.val()) || 0;
 
-      var ele = $(this);
-      var quantity = ele.parents("tr").find(".quantity").val();
-      var rm = "{{ $details['rmQuan'] ?? 0 }}";
-      if (quantity > parseInt(rm)) {
-        ele.parents("tr").find(".quantity").val(parseInt(rm))
-      }
-      else{
+        if (quantity > availQuantity) {
+            input.val(availQuantity);
+        } else {
+            updateCart(itemId, quantity);
+        }
+    }, 500));
+
+    function updateCart(itemId, quantity) {
         $.ajax({
-          url: '{{ route('update.cart') }}',
-            method: "patch",
+            url: '{{ route('update.cart') }}',
+            method: 'patch',
             data: {
                 _token: '{{ csrf_token() }}',
-                id: ele.parents("tr").attr("data-id"),
+                id: itemId,
                 quantity: quantity
             },
             success: function (response) {
                 window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                // Handle AJAX request errors here
+                console.log(error);
             }
         });
-      }
-
-  });
+    }
 
   $(".remove-from-cart").click(function (e) {
       e.preventDefault();
