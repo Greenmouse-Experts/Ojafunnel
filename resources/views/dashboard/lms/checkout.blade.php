@@ -475,7 +475,7 @@
                 }
             }
             var handler = PaystackPop.setup({
-                key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
+                key: 'pk_test_77297b93cbc01f078d572fed5e2d58f4f7b518d7',
                 email: $('#email').val(),
                 amount: tamount * 100,
                 ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
