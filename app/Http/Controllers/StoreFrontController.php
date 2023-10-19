@@ -162,6 +162,7 @@ class StoreFrontController extends Controller
         $order->quantity = $qty;
         $order->coupon = json_encode([
             'coupon_id' => $request->couponID,
+            'percent' => StoreCoupon::find($request->couponID)->discount_percent ?? null,
             'amountPaid' => $request->amountToPay,
         ]);
         $order->amount = $totalAmount;
@@ -382,6 +383,7 @@ class StoreFrontController extends Controller
         $order->quantity = $qty;
         $order->coupon = json_encode([
             'coupon_id' => $request->couponID,
+            'percent' => StoreCoupon::find($request->couponID)->discount_percent ?? null,
             'amountPaid' => $request->amountToPay,
         ]);
         $order->amount = $totalAmount;

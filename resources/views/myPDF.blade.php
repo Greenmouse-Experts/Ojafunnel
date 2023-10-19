@@ -123,10 +123,10 @@
                                             <th style="width: 70px;">No.</th>
                                             <th>Product Name</th>
                                             <th>Image</th>
-                                            <th>Description</th>
                                             <th>Product Type</th>
                                             <th>Qty</th>
                                             <th>Subtotal</th>
+                                            <th>Discount</th>
                                             <th>Total Amount</th>
                                         </tr>
                                     </thead>
@@ -134,9 +134,11 @@
                                         @foreach ($orderItem as $item)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$item->product->name}}</td>
+                                            <td class="text-wrap" style="width: 330px;">
+                                                {{$item->product->name}}
+                                                <p>{{$item->product->description}}</p>
+                                            </td>
                                             <td><img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset=""></td>
-                                            <td class="text-wrap" style="width: 330px;">{{$item->product->description}}</td>
                                             <td> 
                                                 @if($item->product->type == 'Digital')
                                                 Digital - <a href="{{$item->product->link}}">Download</a>
@@ -146,6 +148,18 @@
                                             </td>
                                             <td>{{$item->quantity}}</td>
                                             <td>₦{{number_format($item->amount, 2)}}</td>
+                                            <td>
+                                                @if ($order['coupon'])
+                                                    @php
+                                                        $coupon = json_decode($order['coupon']);
+                                                    @endphp
+                                                    @if ($coupon)
+                                                        <p>{{ $coupon->percent }}% </p>
+                                                    @endif
+                                                @else
+                                                    <p>0%</p>
+                                                @endif
+                                            </td>
                                             <td>₦{{number_format($item->quantity*$item->amount, 2)}}</td>
                                         </tr>
                                         @endforeach

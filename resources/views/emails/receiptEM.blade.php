@@ -359,6 +359,9 @@
                       Product Type
                     </td>
                     <td class="title-dark" width="97">
+                      Discount
+                    </td>
+                    <td class="title-dark" width="97">
                       Total
                     </td>
                   </tr>
@@ -384,6 +387,18 @@
                       Digital - <a href="{{$item->product->link}}">Download</a>
                       @else 
                       Physical
+                      @endif
+                    </td>
+                    <td>
+                      @if ($order['coupon'])
+                          @php
+                              $coupon = json_decode($order['coupon']);
+                          @endphp
+                          @if ($coupon)
+                              {{ $coupon->percent }}%
+                          @endif
+                      @else
+                          0%
                       @endif
                     </td>
                     <td class="item-col">
