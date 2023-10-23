@@ -7,6 +7,8 @@ use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailMarketingController;
 
+\DB::table("SET GLOBAL super_read_only = 1");
+
 Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamScore']);
 Route::get('/text', [AuthController::class, 'text']);
 
