@@ -136,7 +136,7 @@
                                             'class' => 'input',
                                             'name' => 'timezone',
                                             'value' => $customer->timezone,
-                                            'options' => \App\Library\Tool::getTimezoneSelectOptions(),
+                                            'options' => $tz,
                                             'include_blank' => trans('messages.choose'),
                                             'rules' => $user->registerRules()
                                             ])
@@ -226,7 +226,8 @@
                 separateDialCode: true,
                 initialCountry: ""
             }).on('countrychange', function(e, countryData) {
-                $("#phonee").val('+' + ($("#phonee").intlTelInput("getSelectedCountryData").dialCode));
+                // $("#phonee").val('+' + ($("#phonee").intlTelInput("getSelectedCountryData").dialCode));
+                $("#phonee").val('+234');
             });
         });
     </script>
@@ -244,6 +245,7 @@
                 geoIpLookup: function(callback) {
                     $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
                         var countryCode = (resp && resp.country) ? resp.country : "";
+
                         callback(countryCode);
                     });
                 },

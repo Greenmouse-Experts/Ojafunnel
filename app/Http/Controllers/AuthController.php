@@ -383,7 +383,7 @@ class AuthController extends Controller
 
         $this->validate($request, [
             'email' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:1'],
             // 'g-recaptcha-response' => 'required|captcha',
         ]);
 
@@ -499,7 +499,7 @@ class AuthController extends Controller
         ]);
 
         // Send email to user
-        
+
         Mail::to($request->email)->send(new SendCodeResetPassword($codeData->code));
 
         return redirect()->route('user.reset.password', Crypt::encrypt($user->email))->with([
