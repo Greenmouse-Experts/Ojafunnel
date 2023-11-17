@@ -71,19 +71,25 @@
 							{{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' }}
 						@else
 							{{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' . explode('.', $currentpage->name)[0] }}
-						@endif 
+						@endif
 					@else
 						@if ($currentpage->name == 'index.html')
 							{{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
 						@else
 							{{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $currentpage->name)[0] }}
-						@endif 
-					@endif 
+						@endif
+					@endif
 				@endif
 				">
 					<i class="la la-download"></i>
 				</button>
 			</div>
+
+            <div class="btn-group me-3 float-end" role="group">
+                <a href="{{url()->previous()}}" class="btn btn-danger btn-icon" title="Exit editor" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="{{ route('user.page.builder.save.page') }}" data-v-vvveb-shortcut="ctrl+e">
+                    <i class="la la-door-open"></i> <span data-v-gettext>Exit page</span>
+                </a>
+            </div>
 
 			<div class="btn-group me-3 float-end" role="group">
                 <input id="id" name="id" value="{{$currentpage->id}}" hidden>
@@ -102,14 +108,14 @@
 								{{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' }}
 							@else
 								{{ 'http://' . \App\Models\Domain::where(['type' => 'funnel', 'slug' => $funnel->slug])->first()->domain . '/' . explode('.', $currentpage->name)[0] }}
-							@endif 
+							@endif
 						@else
 							@if ($currentpage->name == 'index.html')
 								{{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' }}
 							@else
 								{{ 'https://' . $funnel->slug . '-funnel.ojafunnel.com' . '/' . explode('.', $currentpage->name)[0] }}
-							@endif 
-						@endif 
+							@endif
+						@endif
 					@endif
 				" class="btn btn-outline-primary border-0 btn-xs btn-preview-url" style="font-size: 1rem; padding-top: 0.7rem;" target="blank">View page <i class="la la-external-link-alt la-md"></i></a>
 
@@ -259,7 +265,7 @@
 																		</div>
 																	</div>
 																	<div class="buttons"> <a class="delete-btn" href="" title="Remove section"><i class="la la-trash text-danger"></i></a>
-																		
+
 																		<a class="properties-btn" href="" title="Properties"><i class="la la-cog"></i></a> </div>
 																</div>
 																<input class="header_check" type="checkbox" id="section-components-9338">
@@ -462,15 +468,15 @@
 
 
 										<!-- typography -->
-										<!-- 
+										<!--
 											<label class="header" data-header="element_header" for="header_element_typography"><span>Typography</span>
 												<div class="header-arrow"></div>
 											</label>
-											
+
 											<input class="header_check" type="checkbox" checked="true" id="header_element_typography">
 											<div class="section" data-section="element_header">
-											
-											</div> 
+
+											</div>
 											-->
 
 									</div>
@@ -524,12 +530,12 @@
 										<a id="bold-btn" href="" title="Bold">
 											<svg height="24" viewBox="0 0 256 256" width="24" xmlns="http://www.w3.org/2000/svg">
 												<path clip-rule="evenodd" d="M56 40V216H148C176.719 216 200 192.719 200 164C200 147.849 192.637 133.418 181.084 123.88C187.926 115.076 192 104.014 192 92C192 63.2812 168.719 40 140 40H56ZM88 144V184H148C159.046 184 168 175.046 168 164C168 152.954 159.046 144 148 144H88ZM88 112V72H140C151.046 72 160 80.9543 160 92C160 103.046 151.046 112 140 112H88Z" fill="#252525" fill-rule="evenodd"/>
-											</svg>	
+											</svg>
 										</a>
 										<a id="italic-btn" href="" title="Italic">
 											<svg height="24" viewBox="0 0 256 256" width="24" xmlns="http://www.w3.org/2000/svg">
 												<path d="M202 40H84V64H126.182L89.8182 192H54V216H172V192H129.818L166.182 64H202V40Z" fill="#252525"/>
-											</svg>											
+											</svg>
 										</a>
 										<a id="underline-btn" href="" title="Underline">
 											<svg height="24" viewBox="0 0 256 256" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -945,10 +951,10 @@
 					{% } %}
 					<optgroup label="{%=options[i].optgroup%}">
 						{% optgroup = true; } else { %}
-						<option value="{%=options[i].value%}" {% 
+						<option value="{%=options[i].value%}" {%
 					for (attr in options[i]) {
 							if (attr != "value" && attr != "text") {
-						 %} {%=attr%}={%=options[i][attr]%} {% } 
+						 %} {%=attr%}={%=options[i][attr]%} {% }
 					} %}>
 							{%=options[i].text%}</option>
 						{% } } %}
@@ -1112,12 +1118,12 @@
 				<!-- div class="col-6">
 					<label>Small</label>
 					<select class="form-select" name="col-sm">
-						
+
 						<option value="">None</option>
 						{% for ( var i = 1; i <= 12; i++ ) { %}
 						<option value="{%=i%}" {% if ((typeof col_sm !== 'undefined') && col_sm == i) { %} selected {% } %}>{%=i%}</option>
 						{% } %}
-						
+
 					</select>
 					<br/>
 				</div -->
@@ -1366,7 +1372,7 @@
 					</div>
 					<div class="buttons">
 						<a class="delete-btn" href="" title="Remove section"><i class="la la-trash text-danger"></i></a>
-						<!-- 
+						<!--
 				<a class="up-btn" href="" title="Move element up"><i class="la la-arrow-up"></i></a>
 				<a class="down-btn" href="" title="Move element down"><i class="la la-arrow-down"></i></a>
 				-->
@@ -1544,21 +1550,21 @@
 	<!-- sections-->
 	<script src="{{URL::asset('builder/libs/builder/custom/section-navbars.js')}}"></script>
 	<script src="{{URL::asset('builder/libs/builder/custom/section-heroes.js')}}"></script>
-	<script src="{{URL::asset('builder/libs/builder/custom/section-features.js')}}"></script> 
-	<script src="{{URL::asset('builder/libs/builder/custom/section-jumbotrons.js')}}"></script> 
-	<script src="{{URL::asset('builder/libs/builder/custom/section-forms.js')}}"></script> 
-	<script src="{{URL::asset('builder/libs/builder/custom/section-breadcrumbs.js')}}"></script> 
-	<script src="{{URL::asset('builder/libs/builder/custom/section-lists.js')}}"></script> 
+	<script src="{{URL::asset('builder/libs/builder/custom/section-features.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/section-jumbotrons.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/section-forms.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/section-breadcrumbs.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/section-lists.js')}}"></script>
 	<script src="{{URL::asset('builder/libs/builder/custom/section-footers.js')}}"></script>
 
 	<script src="{{URL::asset('builder/libs/builder/sections-bootstrap4.js')}}"></script>
-	
+
 	<!-- blocks -->
-	<script src="{{URL::asset('builder/libs/builder/custom/block-heroes.js')}}"></script>  
-	<script src="{{URL::asset('builder/libs/builder/custom/block-features.js')}}"></script>  
-	<script src="{{URL::asset('builder/libs/builder/custom/block-jumbotrons.js')}}"></script>  
-	<script src="{{URL::asset('builder/libs/builder/custom/block-forms.js')}}"></script>  
-	<script src="{{URL::asset('builder/libs/builder/custom/block-lists.js')}}"></script>  
+	<script src="{{URL::asset('builder/libs/builder/custom/block-heroes.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/block-features.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/block-jumbotrons.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/block-forms.js')}}"></script>
+	<script src="{{URL::asset('builder/libs/builder/custom/block-lists.js')}}"></script>
 
 	<!-- <script src="demo/landing/sections/sections.js"></script>	-->
 	<!-- blocks-->
@@ -1574,22 +1580,22 @@
 	<script src="{{URL::asset('builder/libs/builder/plugin-codemirror.js')}}"></script>
 
 
-	<!-- 
+	<!--
 	Tinymce plugin
-	Clone or copy https://github.com/tinymce/tinymce-dist to libs/tinymce-dist 
+	Clone or copy https://github.com/tinymce/tinymce-dist to libs/tinymce-dist
 	-->
-		<!-- 
+		<!--
 	<script src="{{URL::asset('builder/libs/tinymce-dist/tinymce.min.js')}}"></script>
-	<script src="{{URL::asset('builder/libs/builder/plugin-tinymce.js')}}"></script>	
+	<script src="{{URL::asset('builder/libs/builder/plugin-tinymce.js')}}"></script>
 	-->
 
-		<!-- 
+		<!--
 	CKEditor plugin
 	Unzip the latest ckeditor release zip from https://github.com/ckeditor/ckeditor4/releases to libs/ckeditor
 	-->
 		<!--
 	<script src="{{URL::asset('builder/libs/ckeditor/ckeditor.js')}}"></script>
-	<script src="{{URL::asset('builder/libs/builder/plugin-ckeditor.js')}}"></script>	
+	<script src="{{URL::asset('builder/libs/builder/plugin-ckeditor.js')}}"></script>
 	-->
 
 	<!-- jszip - download page as zip -->
@@ -1649,10 +1655,10 @@
 
 			Vvveb.FileManager.addPages(pages);
 			//Vvveb.FileManager.loadPage("landing-page");
-			Vvveb.Breadcrumb.init(); 
+			Vvveb.Breadcrumb.init();
 		});
- 
-		
+
+
 	</script>
 </body>
 

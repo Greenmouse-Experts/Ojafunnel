@@ -24,7 +24,7 @@ class ListManagementController extends Controller
         $this->home = new HomePageController;
         $this->middleware(['auth', 'verified']);
     }
-    
+
     public function list_management($username)
     {
 
@@ -57,7 +57,7 @@ class ListManagementController extends Controller
                 'display_name' => $request->display_name,
                 'slug' => Str::slug($request->display_name).mt_rand(1000, 9999),
                 'description' => $request->description,
-                'status' => 0,
+                'status' => 1, // before 0
                 // 'tags' => $request->tags,
             ]);
         } else {
@@ -72,7 +72,7 @@ class ListManagementController extends Controller
                 'display_name' => $request->display_name,
                 'slug' => $request->slug,
                 'description' => $request->description,
-                'status' => 0,
+                'status' => 1, // before 0
                 // 'tags' => $request->tags,
             ]);
         }
@@ -399,9 +399,9 @@ class ListManagementController extends Controller
             return back()->with([
                 'type' => 'danger',
                 'message' => 'The selected file format is invalid'
-            ]); 
+            ]);
         }
-        
+
         $idFinder = Crypt::decrypt($id);
 
         $list = ListManagement::findorfail($idFinder);
@@ -424,12 +424,12 @@ class ListManagementController extends Controller
                     'phone' => 'required|numeric'
                 ],);
 
-        
+
                 if($validatedData->fails()){
                     return back()->with([
                         'type' => 'danger',
                         'message' => 'Oops something went wrong. field contain wrong information!'
-                    ]); 
+                    ]);
                 }
 
                 $contact[] = [
@@ -455,7 +455,7 @@ class ListManagementController extends Controller
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Contact arrangement invalid!'
-            ]); 
-        } 
+            ]);
+        }
     }
 }

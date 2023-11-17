@@ -224,7 +224,16 @@ class HomePageController extends Controller
 
         $referrer_id = $referrer ? $referrer->affiliate_link : null;
 
-        return view('auth.signup', compact('referrer_id', 'customer', 'user'));
+        $tz = \App\Library\Tool::getTimezoneSelectOptions();
+
+        $new = [
+            'value' => 'Africa/Lagos',
+            'text'  => 'GMT+01:00) Africa/Lagos'
+        ];
+
+        array_unshift($tz, $new);
+
+        return view('auth.signup', compact('referrer_id', 'customer', 'user', 'tz'));
     }
     // Email Verification
     public function emailverification()
@@ -378,7 +387,7 @@ class HomePageController extends Controller
         return view('frontend.access_course', $data);
     }
 
-    
+
     public function access_auth_course(Request $request)
     {
         $this->validate($request, [
