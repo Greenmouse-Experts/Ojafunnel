@@ -86,7 +86,7 @@
 			</div>
 
             <div class="btn-group me-3 float-end" role="group">
-                <a href="{{url()->previous()}}" class="btn btn-danger btn-icon" title="Exit editor" id="save-btn" data-vvveb-action="saveAjax" data-vvveb-url="{{ route('user.page.builder.save.page') }}" data-v-vvveb-shortcut="ctrl+e">
+                <a href="{{url()->previous()}}" class="btn btn-danger btn-icon" title="Exit editor">
                     <i class="la la-door-open"></i> <span data-v-gettext>Exit page</span>
                 </a>
             </div>

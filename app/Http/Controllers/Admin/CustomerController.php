@@ -26,8 +26,9 @@ class CustomerController extends Controller
 
         $customer = Customer::where('uid', $request->uids)->first();
 
-        $user = User::where('customer_id', $customer->id)->first();
-        
+        // $user = User::where('customer_id', $customer->id)->first();
+        $user = User::where('id', $request->uids)->first();
+
         $user->update([
             'status' => 'active'
         ]);

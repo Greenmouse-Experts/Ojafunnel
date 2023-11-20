@@ -63,7 +63,8 @@
                                             <td>{{App\Models\User::find($b->user_id)->first_name}}{{App\Models\User::find($b->user_id)->last_name}}
                                                 <p>{{App\Models\User::find($b->user_id)->email}}</p>
                                             </td>
-                                            <td>{{\App\Models\BirthdayContactList::where('id', $b->birthday_contact_list_id)->first()->name}}</td>
+                                            {{-- \App\Models\BirthdayContactList::where('id', $b->birthday_contact_list_id)->first()->name ?? --}}
+                                            <td>{{ $b->birthday_contact_list_id}}</td>
                                             <td>{{$b->title}}</td>
                                             <td>
                                                 {{-- @php

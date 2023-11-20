@@ -24,14 +24,23 @@ class StoreFrontController extends Controller
     public function storeFront(Request $request)
     {
         $store = Store::latest()->where('name', $request->storename)->first();
-        $products = StoreProduct::latest()->where('store_id', $store->id)->where('quantity', '>', 0)->get();
+        $products = [];
+
+        if(!isset($request->query)) {
+            $products = StoreProduct::latest()->where('store_id', $store->id)->where('quantity', '>', 0)->get();
+        } else {
+            $needle = $request['query'];
+            $products = StoreProduct::where('store_id', $store->id)->where('quantity', '>', 0)
+                ->where('name', 'like', "%$needle%")
+                ->get();
+        }
 
         $isvalid = false;
 
         // "timeRemaining" => $timeRemaining,
 
         // $product = StoreProduct::findOrFail($id);
-        
+
 
         if ($request->has('promotion_id')) {
             $user = User::where('promotion_link', $request->promotion_id);

@@ -47,9 +47,10 @@
           </a>
         </div>
         <div class="col-4">
-          <form class="app-search d-none d-lg-block">
+          <form class="app-search d-none d-lg-block" method="get" action="">
+
             <div class="position-relative">
-              <input type="text" class="form-control" placeholder="Search...">
+              <input type="text" class="form-control" name="query" placeholder="Search...">
               <span class="bx bx-search-alt"></span>
             </div>
           </form>
@@ -158,7 +159,7 @@
                     $now = time();
                     $timeRemaining = $targetDate - $now;
                     @endphp
-                    
+
                     <div class="col-md-4" id="item-{{ $item->id }}">
                         <div class="founds">
                           @if($item->type == 'Physical')
