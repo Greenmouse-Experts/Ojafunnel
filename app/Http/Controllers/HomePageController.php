@@ -228,7 +228,7 @@ class HomePageController extends Controller
 
         $new = [
             'value' => 'Africa/Lagos',
-            'text'  => 'GMT+01:00) Africa/Lagos'
+            'text'  => '(GMT+01:00) Africa/Lagos'
         ];
 
         array_unshift($tz, $new);

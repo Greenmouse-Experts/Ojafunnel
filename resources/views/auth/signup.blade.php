@@ -223,6 +223,7 @@
         $(document).ready(function() {
             $("#phonee").intlTelInput({
                 // preferredCountries: ["us", "ca"],
+                preferredCountries: ["ng"],
                 separateDialCode: true,
                 initialCountry: ""
             }).on('countrychange', function(e, countryData) {
