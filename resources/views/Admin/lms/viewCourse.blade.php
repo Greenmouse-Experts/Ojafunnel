@@ -61,8 +61,8 @@
                                                             <i class="mdi mdi-video-high-definition"></i>
                                                             @else
                                                             <i class="mdi mdi-youtube"></i>
-                                                            @endif    
-                                                            <span class="me-auto">{{$lesson->title}}</span> 
+                                                            @endif
+                                                            <span class="me-auto">{{$lesson->title}}</span>
                                                             <i class="mdi mdi-pin ms-auto"></i></a>
                                                         </li>
                                                         <div class="modal fade" id="show-{{$lesson->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
@@ -179,12 +179,12 @@
                                                                     <li class="border-bottom">
                                                                         <div class="custom-accordion mt-2">
                                                                             <a class="text-body fw-medium py-1 d-flex align-items-center" data-bs-toggle="collapse" href="#categories-collapse-{{$section->id}}" role="button" aria-expanded="false" aria-controls="categories-collapse">
-                                                                                
-                                                                                Section {{$loop->iteration}}: {{$section->title}} 
+
+                                                                                Section {{$loop->iteration}}: {{$section->title}}
                                                                                 <i class="accor-down-icon ms-auto">
                                                                                     <div class="float-right">
                                                                                         <span class="total-time">
-                                                                                            {{App\Models\Lesson::where('section_id', $section->id)->get()->count()}} lessons - 
+                                                                                            {{App\Models\Lesson::where('section_id', $section->id)->get()->count()}} lessons -
                                                                                         </span>
                                                                                         <span class="total-time">
                                                                                             {{App\Models\Lesson::where('section_id', $section->id)->sum('duration')}} minutes
@@ -267,7 +267,7 @@
                                                         <div class="description-box view-more-parent">
                                                             <div class="description-title">Description</div>
                                                             <div class="description-content-wrap">
-                                                                <div class="description-content">
+                                                                <div class="description-content" style="overflow-y: scroll; height:400px;">
                                                                     {{$course->description}}
                                                                 </div>
                                                             </div>

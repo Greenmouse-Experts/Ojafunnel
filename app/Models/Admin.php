@@ -338,6 +338,10 @@ class Admin extends Authenticatable
         return $this->getAllTransactions()->orderBy('created_at', 'DESC')->limit(5)->get();
     }
 
+    public function recentUsers() {
+        return \App\Models\User::where('user_type', 'User')->orderBy('created_at', 'DESC')->limit(8)->get();
+    }
+
     /**
      * Get recent resellers.
      *

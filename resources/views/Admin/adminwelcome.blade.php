@@ -221,10 +221,19 @@
                                                         <th>Phone Number</th>
                                                         <th>Status</th>
                                                         <th>Joined Date</th>
-                                                        <th>Action</th>
+                                                        {{-- <th>Action</th> --}}
                                                     </tr>
                                                 </thead>
-
+                                                @foreach ($admin->recentUsers() as $item)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$item->username}}</td>
+                                                    <td>{{$item->email}}</td>
+                                                    <td>{{$item->phone_number}}</td>
+                                                    <td>{{$item->status}}</td>
+                                                    <td>{{$item->created_at->format('d M, Y h:iA')}}</td>
+                                                </tr>
+                                                @endforeach
                                             </table>
                                         </div>
                                     </div>

@@ -95,7 +95,28 @@ class IntegrationController extends Controller
                     'type' => $request->type
                 ]);
 
-                return back()->with([
+                return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
+                    'type' => 'success',
+                    'message' => 'Twilio Integration Created Successfully!'
+                ]);
+            }
+            if ($request->type == 'SMSLive247') {
+                //Validate Request
+                $this->validate($request, [
+                    'sid' => ['required', 'string', 'max:255'],
+                    // 'token' => ['required', 'string', 'max:255'],
+                    'from' => ['required', 'string', 'max:255'],
+                ]);
+
+                Integration::create([
+                    'user_id' => Auth::user()->id,
+                    'sid' => $request->sid,
+                    // 'token' => $request->token,
+                    'from' => $request->from,
+                    'type' => $request->type
+                ]);
+
+                return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
                     'type' => 'success',
                     'message' => 'Twilio Integration Created Successfully!'
                 ]);
@@ -114,7 +135,7 @@ class IntegrationController extends Controller
                     'type' => $request->type
                 ]);
 
-                return back()->with([
+                return  redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
                     'type' => 'success',
                     'message' => 'InfoBip Integration Created Successfully!'
                 ]);
@@ -133,7 +154,7 @@ class IntegrationController extends Controller
                     'type' => $request->type
                 ]);
 
-                return back()->with([
+                return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
                     'type' => 'success',
                     'message' => 'NigeriaBulkSms Integration Created Successfully!'
                 ]);
@@ -154,7 +175,7 @@ class IntegrationController extends Controller
                     'type' => $request->type
                 ]);
 
-                return back()->with([
+                return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
                     'type' => 'success',
                     'message' => 'Multitexter Integration Created Successfully!'
                 ]);
@@ -173,7 +194,7 @@ class IntegrationController extends Controller
                     'type' => $request->type
                 ]);
 
-                return back()->with([
+                return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
                     'type' => 'success',
                     'message' => 'AWS Integration Created Successfully!'
                 ]);
@@ -211,7 +232,27 @@ class IntegrationController extends Controller
                         'type' => $request->type
                     ]);
 
-                    return back()->with([
+                    return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
+                        'type' => 'success',
+                        'message' => 'Twilio Integration Created Successfully!'
+                    ]);
+                }
+                if ($request->type == 'SMSLive247') {
+                    //Validate Request
+                    $this->validate($request, [
+                        'sid' => ['required', 'string', 'max:255'],
+                        'from' => ['required', 'string', 'max:255'],
+                    ]);
+
+                    Integration::create([
+                        'user_id' => Auth::user()->id,
+                        'sid' => $request->sid,
+                        // 'token' => $request->token,
+                        'from' => $request->from,
+                        'type' => $request->type
+                    ]);
+
+                    return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
                         'type' => 'success',
                         'message' => 'Twilio Integration Created Successfully!'
                     ]);
@@ -230,7 +271,7 @@ class IntegrationController extends Controller
                         'type' => $request->type
                     ]);
 
-                    return back()->with([
+                    return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
                         'type' => 'success',
                         'message' => 'InfoBip Integration Created Successfully!'
                     ]);
@@ -249,7 +290,7 @@ class IntegrationController extends Controller
                         'type' => $request->type
                     ]);
 
-                    return back()->with([
+                    return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
                         'type' => 'success',
                         'message' => 'NigeriaBulkSms Integration Created Successfully!'
                     ]);
@@ -270,7 +311,7 @@ class IntegrationController extends Controller
                         'type' => $request->type
                     ]);
 
-                    return back()->with([
+                    return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
                         'type' => 'success',
                         'message' => 'Multitexter Integration Created Successfully!'
                     ]);
@@ -281,15 +322,15 @@ class IntegrationController extends Controller
                         'key' => ['required', 'string', 'max:255'],
                         'secret' => ['required', 'string', 'max:255']
                     ]);
-    
+
                     Integration::create([
                         'user_id' => Auth::user()->id,
                         'key' => $request->key,
                         'secret' => $request->secret,
                         'type' => $request->type
                     ]);
-    
-                    return back()->with([
+
+                    return redirect()->route('user.manage_integration', ['username' => Auth::user()->username])->with([
                         'type' => 'success',
                         'message' => 'AWS Integration Created Successfully!'
                     ]);
@@ -418,11 +459,11 @@ class IntegrationController extends Controller
                 'message' => 'You have an active SMS Integration, deactivate and try again!'
             ]);
         }
-            
+
         $integration->update([
             'status' => 'Active'
         ]);
-        
+
         return back()->with([
             'type' => 'success',
             'message' => $integration->type . ' Integration Enabled Successfully!'
