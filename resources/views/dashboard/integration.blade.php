@@ -181,7 +181,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="circle"> 
+                                            <div class="circle">
                                                 <img src="{{URL::asset('assets/images/mailjet.png')}}" style="height: 50px; width: 100px" draggable="false" alt="">
                                                 <span class="text-dark">Mailjet</span>
                                             </div>
@@ -341,7 +341,47 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h1 class="text-center">SMSlive247 Coming Soon</h1>
+                <div class="row">
+                    <div class="Edit-level">
+                        <form method="POST" action="{{ route('user.integration.create')}}">
+                            @csrf
+                            <input name="type" value="SMSLive247" hidden>
+                            <div class="form">
+                                <div class="col-lg-12">
+                                    <label>API KEY</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="ACe75dc47f94c7f33f7dd6128843c532ce" name="sid" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <label>From</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="text" placeholder="Name <From>" name="from" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -602,7 +642,7 @@
                                             <input type="text" placeholder="Your AWS SES SMTP Host" name="host" class="input" required>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-lg-12">
                                     <label>Username</label>
                                     <div class="row">
@@ -623,7 +663,7 @@
                                     <label>Port</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input typnumberext" placeholder="Your AWS SES SMTP Port" name="port" class="input" value=""> 
+                                            <input typnumberext" placeholder="Your AWS SES SMTP Port" name="port" class="input" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -642,7 +682,7 @@
                                             <input type="text" placeholder="Your AWS SES SMTP MAIL FROM" name="from_email" class="input" required>
                                             <span style="color: green">Must be the verified domain on AWS SES</span>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Mail FROM-NAME</label>
@@ -650,15 +690,15 @@
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Your Brand Name" name="from_name" class="input" required>
                                         </div>
-                                    </div> 
-                                </div> 
+                                    </div>
+                                </div>
                                  <div class="col-lg-12">
                                     <label>Reply-TO Email</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="" required>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Reply-TO Name</label>
@@ -666,7 +706,7 @@
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="" required>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <input type="hidden" name="type" value="AWS SES" required>
                                 <div class="row justify-content-between">
@@ -689,7 +729,7 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
 
 <div class="modal fade" id="EmailSendgrid" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -713,7 +753,7 @@
                                             <input type="text" placeholder="Your SendGrid SMTP Host" name="host" class="input" required>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-lg-12">
                                     <label>Username</label>
                                     <div class="row">
@@ -734,7 +774,7 @@
                                     <label>Port</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input typenumberxt" placeholder="Your SendGrid SMTP Port" name="port" class="input" value=""> 
+                                            <input typenumberxt" placeholder="Your SendGrid SMTP Port" name="port" class="input" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -753,7 +793,7 @@
                                             <input type="text" placeholder="Your SendGrid SMTP MAIL FROM" name="from_email" class="input" required>
                                             <span style="color: green">Must be the verified domain on SendGrid</span>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Mail FROM-NAME</label>
@@ -761,15 +801,15 @@
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Your Brand Name" name="from_name" class="input" required>
                                         </div>
-                                    </div> 
-                                </div> 
+                                    </div>
+                                </div>
                                  <div class="col-lg-12">
                                     <label>Reply-TO Email</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="" required>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Reply-TO Name</label>
@@ -777,7 +817,7 @@
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="" required>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <input type="hidden" name="type" value="Sendgrid" required>
                                 <div class="row justify-content-between">
@@ -824,7 +864,7 @@
                                             <input type="text" placeholder="Your Sendinblue SMTP Host" name="host" class="input" required>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-lg-12">
                                     <label>Username</label>
                                     <div class="row">
@@ -845,7 +885,7 @@
                                     <label>Port</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="number" placeholder="Your Sendinblue SMTP Port" name="port" class="input" value=""> 
+                                            <input type="number" placeholder="Your Sendinblue SMTP Port" name="port" class="input" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -864,7 +904,7 @@
                                             <input type="text" placeholder="Your Sendinblue SMTP MAIL FROM" name="from_email" class="input" required>
                                             <span style="color: green">Must be the verified domain on Sendinblue</span>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Mail FROM-NAME</label>
@@ -872,15 +912,15 @@
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Your Brand Name" name="from_name" class="input" required>
                                         </div>
-                                    </div> 
-                                </div> 
+                                    </div>
+                                </div>
                                  <div class="col-lg-12">
                                     <label>Reply-TO Email</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="" required>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Reply-TO Name</label>
@@ -888,7 +928,7 @@
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="" required>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <input type="hidden" name="type" value="Sendinblue" required>
                                 <div class="row justify-content-between">
@@ -935,7 +975,7 @@
                                             <input type="text" placeholder="Your SendPulse SMTP Host" name="host" class="input" required>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-lg-12">
                                     <label>Username</label>
                                     <div class="row">
@@ -956,7 +996,7 @@
                                     <label>Port</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type=numbert" placeholder="Your SendPulse SMTP Port" name="port" class="input" value=""> 
+                                            <input type=numbert" placeholder="Your SendPulse SMTP Port" name="port" class="input" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -975,7 +1015,7 @@
                                             <input type="text" placeholder="Your SendPulse SMTP MAIL FROM" name="from_email" class="input" required>
                                             <span style="color: green">Must be the verified domain on SendPulse</span>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Mail FROM-NAME</label>
@@ -983,15 +1023,15 @@
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Your Brand Name" name="from_name" class="input" required>
                                         </div>
-                                    </div> 
-                                </div> 
+                                    </div>
+                                </div>
                                  <div class="col-lg-12">
                                     <label>Reply-TO Email</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="" required>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Reply-TO Name</label>
@@ -999,7 +1039,7 @@
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="" required>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <input type="hidden" name="type" value="SendPulse" required>
                                 <div class="row justify-content-between">
@@ -1046,7 +1086,7 @@
                                             <input type="text" placeholder="Your Mailjet SMTP Host" name="host" class="input" required>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-lg-12">
                                     <label>Username</label>
                                     <div class="row">
@@ -1067,7 +1107,7 @@
                                     <label>Port</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input typnumberext" placeholder="Your Mailjet SMTP Port" name="port" class="input" value=""> 
+                                            <input typnumberext" placeholder="Your Mailjet SMTP Port" name="port" class="input" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -1086,7 +1126,7 @@
                                             <input type="text" placeholder="Your Mailjet SMTP MAIL FROM" name="from_email" class="input" required>
                                             <span style="color: green">Must be the verified domain on Mailjet</span>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Mail FROM-NAME</label>
@@ -1094,15 +1134,15 @@
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Your Brand Name" name="from_name" class="input" required>
                                         </div>
-                                    </div> 
-                                </div> 
+                                    </div>
+                                </div>
                                  <div class="col-lg-12">
                                     <label>Reply-TO Email</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="" required>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <label>Reply-TO Name</label>
@@ -1110,7 +1150,7 @@
                                         <div class="col-md-12 mb-4">
                                             <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="" required>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <input type="hidden" name="type" value="Mailjet" required>
                                 <div class="row justify-content-between">

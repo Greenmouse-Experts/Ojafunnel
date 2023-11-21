@@ -228,7 +228,8 @@
                 initialCountry: ""
             }).on('countrychange', function(e, countryData) {
                 // $("#phonee").val('+' + ($("#phonee").intlTelInput("getSelectedCountryData").dialCode));
-                $("#phonee").val('+234');
+                // $("#phonee").val('+234');
+                $("#phonee").val('')
             });
         });
     </script>
@@ -281,7 +282,7 @@
             validMsg.classList.add("hide");
         };
         $(document).ready(function() {
-            $("#phonee").val("+234");
+            // $("#phonee").val("+234");
         });
     </script>
 
