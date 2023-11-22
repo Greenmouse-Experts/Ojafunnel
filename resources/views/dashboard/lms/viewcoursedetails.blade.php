@@ -61,8 +61,8 @@
                                                             <i class="mdi mdi-video-high-definition"></i>
                                                             @else
                                                             <i class="mdi mdi-youtube"></i>
-                                                            @endif    
-                                                            <span class="me-auto">{{$lesson->title}}</span> 
+                                                            @endif
+                                                            <span class="me-auto">{{$lesson->title}}</span>
                                                             <i class="mdi mdi-pin ms-auto"></i></a>
                                                         </li>
                                                         <div class="modal fade" id="show-{{$lesson->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
@@ -185,11 +185,22 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="description-box view-more-parent">
+                                                    {{-- <div class="description-box view-more-parent">
                                                         <div class="description-title">Description</div>
                                                         <div class="description-content-wrap">
-                                                            <div class="description-content">
+                                                            <div class="description-content" style="overflow-y: scroll; height:400px;">
                                                                 {{$course->description}}
+                                                            </div>
+                                                        </div>
+                                                    </div> --}}
+
+                                                    <div class="description-box view-more-parent">
+                                                        <div class="description-box view-more-parent">
+                                                            <div class="description-title">Description</div>
+                                                            <div class="description-content-wrap">
+                                                                <div class="description-content" style="overflow-y: scroll; height:200px !important;">
+                                                                    {{$course->description}}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -198,7 +209,7 @@
                                                         <div class="description-title">Quiz Section</div>
                                                             <!-- <a href="{{ $course->id }}/take-quiz"><b>Click to take this quiz</b></a> -->
 
-                                                            
+
 
                                                         <div class="requirements-content">
                                                             <ul class="requirements__list">
