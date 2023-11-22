@@ -42,20 +42,20 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
             Route::post('/add-users', [App\Http\Controllers\Admin\AdminController::class, 'add_users']); //
             Route::post('/update-prvdg', [App\Http\Controllers\Admin\AdminController::class, 'update_prvdg']); //
-            
+
             Route::post('/send-broadcast', [App\Http\Controllers\Admin\AdminController::class, 'send_broadcast']); //
             Route::post('/get-statistics', [App\Http\Controllers\Admin\AdminController::class, 'getStatistics']); //
-            
+
             Route::post('/renew-extend', [App\Http\Controllers\Admin\AdminController::class, 'renew_extend']); //
             Route::post('/react-feature', [App\Http\Controllers\Admin\AdminController::class, 'react_feature']); //
-            
+
 
             // Email Marketing
             Route::get('/email-marketing/validate-email', [App\Http\Controllers\Admin\AdminController::class, 'validate_email'])->name('validate-email'); //
             Route::post('/validate-user-emails', [App\Http\Controllers\Admin\AdminController::class, 'validate_user_emails']); //
             Route::post('/fetch-referrals', [App\Http\Controllers\Admin\AdminController::class, 'fetch_referrals']); //
             Route::post('/get-users-prvd', [App\Http\Controllers\Admin\AdminController::class, 'get_users_prvd']); //
-            
+
             Route::post('/clrs', [App\Http\Controllers\Admin\AdminController::class, 'clrs']); //
             Route::get('/email-marketing/email-kits', [App\Http\Controllers\Admin\AdminController::class, 'view_email_kits'])->name('admin.email-marketing.email-kits');
             Route::get('/email-marketing/email-campaigns', [App\Http\Controllers\Admin\AdminController::class, 'view_email_campaigns'])->name('admin.email-marketing.email-campaigns');
@@ -187,6 +187,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/user/list/management/contact/edit/{id}', [App\Http\Controllers\Admin\AdminController::class, 'edit_contact'])->name('admin.user.edit.contact');
             Route::post('/user/list/management/contact/update/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_contact'])->name('admin.user.update.contact');
             Route::post('/user/list/management/contact/delete/{id}', [App\Http\Controllers\Admin\AdminController::class, 'delete_contact'])->name('admin.user.delete.contact');
+
+            // Integration
+            Route::get('/integration/enable/{id}', [App\Http\Controllers\Admin\AdminController::class, 'integration_enable'])->name('admin.integration.enable');
+            Route::get('/integration/disable/{id}', [App\Http\Controllers\Admin\AdminController::class, 'integration_disable'])->name('admin.integration.disable');
+            Route::post('/integration/delete/{id}', [App\Http\Controllers\Admin\AdminController::class, 'integration_delete'])->name('admin.integration.delete');
+
         }
     );
 });

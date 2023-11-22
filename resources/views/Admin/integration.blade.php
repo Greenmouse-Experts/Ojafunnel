@@ -51,6 +51,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
+
                                     @foreach(App\Models\Integration::latest()->get() as $key => $integration)
                                     <tbody>
                                         <tr>
@@ -75,9 +76,9 @@
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#View-{{$integration->id}}">View</a></li>
                                                         @if($integration->status == 'Active')
-                                                        <li><a class="dropdown-item" href="{{route('user.integration.disable', Crypt::encrypt($integration->id))}}">Disable</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('admin.integration.disable', Crypt::encrypt($integration->id))}}">Disable</a></li>
                                                         @else
-                                                        <li><a class="dropdown-item" href="{{route('user.integration.enable', Crypt::encrypt($integration->id))}}">Enable</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('admin.integration.enable', Crypt::encrypt($integration->id))}}">Enable</a></li>
                                                         @endif
                                                         <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#Edit-Update-{{$integration->id}}">Edit/Update</a></li>
                                                         <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$integration->id}}">Delete</a></li>
@@ -129,6 +130,33 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
+                                                                            @elseif($integration->type == 'SMSLive247')
+                                                                            <p><b>View SMSLive247 Integrations</b></p>
+                                                                            <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <label>SID</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input readonly value="{{$integration->sid}}" class="input" readonly>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <label>From</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input readonly value="{{$integration->from}}" class="input" readonly>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <div class="boding">
+                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                            Cancel
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                             @elseif($integration->type == 'InfoBip')
                                                                             <p><b>View InfoBip Integrations</b></p>
                                                                             <div class="row">
@@ -145,6 +173,68 @@
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
                                                                                             <input type="text" value="{{$integration->api_base_url}}" class="input" readonly>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <div class="boding">
+                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                            Cancel
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            @elseif($integration->type == 'AWS')
+                                                                            <p><b>View AWS Integrations</b></p>
+                                                                            <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <label>KEY</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input value="{{$integration->key}}" class="input" readonly>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <label>SECRET</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input type="text" value="{{$integration->secret}}" class="input" readonly>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <div class="boding">
+                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                            Cancel
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            @elseif($integration->type == 'Twillio')
+                                                                            <p><b>View Twillio Integrations</b></p>
+                                                                            <div class="row">
+                                                                                <div class="col-lg-12">
+                                                                                    <label>SID</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input value="{{$integration->sid}}" class="input" readonly>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <label>TOKEN</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input type="text" value="{{$integration->token}}" class="input" readonly>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-lg-12">
+                                                                                    <label>FROM</label>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 mb-4">
+                                                                                            <input type="text" value="{{$integration->from}}" class="input" readonly>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -413,7 +503,7 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        <form method="POST" action="{{ route('user.integration.delete', Crypt::encrypt($integration->id))}}">
+                                                                        <form method="POST" action="{{ route('admin.integration.delete', Crypt::encrypt($integration->id))}}">
                                                                             @csrf
                                                                             <div class="form">
                                                                                 <p><b>Delete Contact</b></p>
