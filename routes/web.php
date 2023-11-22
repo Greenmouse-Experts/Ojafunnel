@@ -283,7 +283,8 @@ Route::prefix('{username}')->group(function () {
                     Route::get('/view-quiz/{id}/view-scores/{session}', [App\Http\Controllers\DashboardController::class, 'view_scores']);
                     Route::get('/view-scores/{id}', [App\Http\Controllers\DashboardController::class, 'view_scores'])->name('view-scores');
                     Route::get('/create-quiz/{id}', [App\Http\Controllers\DashboardController::class, 'create_quiz'])->name('create-quiz');
-                    Route::get('/view-quiz/{id}/{session}', [App\Http\Controllers\DashboardController::class, 'create_quiz'])->name('create-quiz1');
+                    // Route::get('/create-quiz/{id}/{session}', [App\Http\Controllers\DashboardController::class, 'create_quiz'])->name('create-quiz');
+                    Route::get('/create-quiz/{id}/{session}', [App\Http\Controllers\DashboardController::class, 'create_quiz'])->name('create-quiz1');
 
 
 

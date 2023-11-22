@@ -28,13 +28,13 @@
 
     <link rel='stylesheet' href="{{ asset('assets/css/sweetalert2.min.css') }}">
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
-    
+
 
 </head>
 <body>
     <input type="hidden" value="{{ csrf_token() }}" id="txt_token">
     <input type="hidden" value="{{ url('/') }}/" id="site_url">
-    
+
 <section class="menu-area">
         <div class="container">
             <div class="row">
@@ -123,7 +123,7 @@
                                                     {{ $lms->created_at }}
                                                 </td>
                                                 <td>
-                                                    <a href="{{ $quiz_id }}/create-quiz-{{ $lms->session }}" title="View Quiz" class="action-icon text-primary mr-2"> <i class="fa fa-eye font-size-18"></i></a>
+                                                    <a href="{{ route('create-quiz1', ['id' => $quiz_id, 'session' => 'enter-quiz-'.$lms->session, 'username' => Auth::user()->username]) }}" title="View Quiz" class="action-icon text-primary mr-2"> <i class="fa fa-eye font-size-18"></i></a>
 
                                                     <a href="javascript:;" title="Delete" class="action-icon text-danger deteleQuizSession" ids="{{ $lms->id }}"> <i class="fa fa-trash font-size-18"></i></a>
                                                 </td>
@@ -172,4 +172,4 @@
 <script src="{{URL::asset('dash/assets/js/pages/ecommerce-cart.init.js')}}"></script>
 
 <script src="{{URL::asset('admin/assets/libs/jquery/jquery.min.js')}}"></script>
-<script src="{{ asset('assets/js/jscripts.js') }}"></script> 
+<script src="{{ asset('assets/js/jscripts.js') }}"></script>

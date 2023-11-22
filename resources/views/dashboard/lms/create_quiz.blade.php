@@ -97,18 +97,18 @@
                                         <div class="col-lg-12 mb-2">
                                             <label for="Name">Quiz Title</label>
                                             <input type="text" name="quiz_title" style="background:#F8F8FB" value="" placeholder="Eg. Quiz 1" required />
-                                            
+
                                             <input type="hidden" name="quiz_session" class="quiz_session" value="{{ time() }}" />
                                             <input type="hidden" name="course_id" class="course_id" value="{{ $quiz_id }}" />
                                         </div>
                                         <div class="col-lg-12 mb-2">
-                                            <label for="Name">Quiz Description/Instructions (Optional)</label>
+                                            <label for="Name">Quiz Description/Instructions</label>
                                             <textarea name="description" id="" style="height:9em!important" placeholder="Enter your quiz description or instructions" required></textarea>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <button type="button" class="storeSession custom_btns">Create Session</button>
+                                        <div class="col-lg-12" style="display: flex; justify-content: center;">
+                                            <button type="button" class="storeSession custom_btns">Create Quiz</button>
                                         </div>
                                     </div>
                                 </div>
@@ -171,6 +171,7 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" name="quiz_each_id[]" class="quiz_each_id" value="{{ $quiz->id }}" />
+
                                         @endforeach
 
                                     @else
@@ -178,7 +179,7 @@
                                         <div class="row" id="myForm">
                                             <div class="col-sm-12 mb-3">
                                                 <label for="Name">Question</label>
-                                                <input type="text" name="question[]" class="reset" placeholder="Enter Question" required />                                        
+                                                <input type="text" name="question[]" class="reset" placeholder="Enter Question" required />
                                             </div>
                                             <div class="col-sm-6 mb-2">
                                                 <label for="Name">Option A</label>
@@ -212,18 +213,20 @@
 
                                     <input type="hidden" name="quiz_session1" class="quiz_session1" value="{{ $sessions }}" />
                                     <input type="hidden" name="course_id1" class="course_id1" value="{{ $quiz_id }}" />
-                                    
+
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-12 mt-1">
+
                                         <button type="button" class="add_more">Add more question</button>
                                     </div>
                                 </div>
 
                                 <div class="row mt-4">
-                                    <div class="col-lg-12">
-                                        <button type="button" class="storeQuiz custom_btns custom_btns1">{{ count($quizzes) > 0 ? 'Update Quiz' : 'Submit Quiz' }}</button>
+                                    <div class="col-lg-12" style="display: flex; flex-direction: row;">
+                                        <a href="{{ route('view-quiz', ['id' => $quiz_id, 'username' => Auth::user()->username]) }}" class="custom_btns" style="width: 40%; text-align: center;">Back to Quiz List</a>
+                                        <button type="button" class="storeQuiz custom_btns" style="width: 40%">{{ count($quizzes) > 0 ? 'Update Quiz' : 'Submit Quiz' }}</button>
                                     </div>
                                 </div>
 
@@ -234,8 +237,8 @@
                 </form>
             </div>
         </div>
-        
-        
+
+
     </div>
 
 
@@ -262,7 +265,7 @@
 
 <!-- Bootrstrap touchspin -->
 <script src="{{URL::asset('admin/assets/libs/jquery/jquery.min.js')}}"></script>
-<script src="{{ asset('assets/js/jscripts.js') }}"></script> 
+<script src="{{ asset('assets/js/jscripts.js') }}"></script>
 
 <script src="{{URL::asset('dash/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>
 <script src="{{URL::asset('dash/assets/js/pages/ecommerce-cart.init.js')}}"></script>
@@ -277,12 +280,12 @@
             <div class="row mt-4" id="myForm">
                 <div class="col-sm-10 pr-0 mb-3">
                     <label for="Name">Question</label>
-                    <input type="text" name="question[]" placeholder="Enter Question" required />                                        
+                    <input type="text" name="question[]" placeholder="Enter Question" required />
                 </div>
                 <div class="col-sm-2 pl-2 mb-3">
                     <button type="button" class="removeForm remove_btn">Remove</button>
                 </div>
-                
+
                 <div class="col-sm-6 mb-2">
                     <label for="Name">Option A</label>
                     <input type="text" name="option_a[]" class="reset" placeholder="Enter Option A" required />
@@ -323,6 +326,6 @@
         });
 
 
-        
+
     });
 </script>
