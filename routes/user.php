@@ -39,7 +39,7 @@ Route::prefix('user')->group(function () {
     Route::post('/subscriber/mailing/contact/delete/{id}', [App\Http\Controllers\SubscriberController::class, 'subscriber_mailing_contact_delete'])->name('user.subscriber.mailing.contact.delete');
     Route::get('/subscriber/mailing/format/download', [App\Http\Controllers\SubscriberController::class, 'subscriber_download_format'])->name('user.subscriber.download.format');
 
-    // UnSubscribers 
+    // UnSubscribers
     Route::get('/unsubscribe/{id}', [App\Http\Controllers\SubscriberController::class, 'unsubscribe_user'])->name('unsubscribe'); //
 
     // Page Builder

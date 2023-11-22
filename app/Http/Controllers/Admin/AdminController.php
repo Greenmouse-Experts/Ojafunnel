@@ -176,7 +176,7 @@ class AdminController extends Controller
     public function user_login($id)
     {
         $user = Auth::loginUsingId($id);
-        
+
         return redirect()->route('user.dashboard', $user->username);
     }
 
@@ -436,18 +436,18 @@ class AdminController extends Controller
         return view('Admin.broadcast');
     }
 
-    
+
     public function priviledges()
     {
         $data['site_features'] = SiteFeature::get();
         return view('Admin.priviledges', $data);
     }
 
-    
+
     public function validate_user_emails(Request $request)
     {
         $ABSTRACTAPI = env('ABSTRACTAPI');
-        
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://emailvalidation.abstractapi.com/v1/?api_key=$ABSTRACTAPI&email=$request->email");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -485,7 +485,7 @@ class AdminController extends Controller
             }
         }
         $results .= "</table>";
-        return $results;        
+        return $results;
     }
 
 
@@ -499,7 +499,7 @@ class AdminController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
         $results = "";
         $results .= '<table class="referral_tbl">
@@ -537,7 +537,7 @@ class AdminController extends Controller
             }
         }
         $results .= "</table>";
-        return $results;        
+        return $results;
     }
 
 
@@ -551,7 +551,7 @@ class AdminController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
         $site_features = User::where('id', $request->user_id)->first();
         $user_fts = explode(",", $site_features->feature_access);
@@ -567,10 +567,10 @@ class AdminController extends Controller
                 }
             }
         $results .= '</select>';
-        return $results;        
+        return $results;
     }
 
-    
+
     public function clrs(){
         session()->forget('hidden_emails');
         session()->forget('hidden_deliverability');
@@ -925,13 +925,13 @@ class AdminController extends Controller
 
     // sales analytics
     public function email_analytics(Request $request)
-    {   
+    {
         $data = $this->getStats();
         return view('Admin.emailAnalytics', $data);
-        
+
     }
 
-    
+
     public function getStatistics(Request $request)
     {
         $rules = [
@@ -942,7 +942,7 @@ class AdminController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
 
         return response()->json([
@@ -967,7 +967,7 @@ class AdminController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
 
         $customer = Customer::newCustomer();
@@ -988,7 +988,7 @@ class AdminController extends Controller
             if ($plan) {
                 $user = $customer->adminCreateAccountAndUser($request);
             } else {
-                
+
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Admin yet to add plans! Try again later.'
@@ -1013,7 +1013,7 @@ class AdminController extends Controller
                 'status' => 'success',
                 'message' => "user added",
                 'data' => ''
-            ],200);         
+            ],200);
         }
         return response()->json([
             'status' => 'error',
@@ -1034,7 +1034,7 @@ class AdminController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
         $features1 = $request->features;
         $all_fts = "";
@@ -1054,7 +1054,7 @@ class AdminController extends Controller
                 'status' => 'success',
                 'message' => "user priviledges changed",
                 'data' => ''
-            ],200);         
+            ],200);
         }
         return response()->json([
             'status' => 'error',
@@ -1119,7 +1119,7 @@ class AdminController extends Controller
         $phones = ['+2348038204317'];
 
         // this below is working////
-            /* $twilio = new twilio($sid, $auth_token);        
+            /* $twilio = new twilio($sid, $auth_token);
             $verification = $twilio->verify
             ->v2->services(ENV('TWILIO_SERVICE_ID'))
             ->verifications
@@ -1134,7 +1134,7 @@ class AdminController extends Controller
         // $notify_sid = getenv("TWILIO_NOTIFY_SID");
 
         // $twilio = new Client($sid, $token);
-        $twilio = new twilio($sid, $auth_token); 
+        $twilio = new twilio($sid, $auth_token);
 
         return $twilio->messages->create(
             $number,
@@ -1144,7 +1144,7 @@ class AdminController extends Controller
             ]);
 
 
-            
+
         // return $twilio->messages->create(
         //     $number,
         //     [
@@ -1163,7 +1163,7 @@ class AdminController extends Controller
             ]);
         } */
 
-        
+
 
         // $users = User::where('user_type','user')->pluck('phone');
         $subscribers = [];
@@ -1192,15 +1192,15 @@ class AdminController extends Controller
                 'message' => 'Error occured sending notification. error message ' . $error
             ],400);
         }
-        
+
         return response()->json([
             'status' => 'success',
             'message' => 'Message sent successfully'
         ],200);
-          
 
 
-       
+
+
 
         // try {
         //     $sid = $sid; // Your Account SID from www.twilio.com/console
@@ -1244,7 +1244,7 @@ class AdminController extends Controller
 
         $contacts = User::whereNotNull('phone_number')->get();
 
-        // divide into 10 chunks and 
+        // divide into 10 chunks and
         // delay each job between 10  - 20 sec in the queue
         $chunks = $contacts->chunk(10);
         $delay = mt_rand(10, 20);
@@ -1261,7 +1261,7 @@ class AdminController extends Controller
 
             $delay += mt_rand(10, 20);
         }
-        
+
 
         // update the campaign queue to waiting
         WaQueues::where(['wa_campaign_id' => $_campaign->id])->update([
@@ -1282,7 +1282,7 @@ class AdminController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
 
         $channels = $request->channel;
@@ -1364,7 +1364,7 @@ class AdminController extends Controller
                 'status' => 'success',
                 'message' => "Broadcast sent",
                 'data' => ''
-            ],200);         
+            ],200);
         }
         return response()->json([
             'status' => 'error',
@@ -1382,7 +1382,7 @@ class AdminController extends Controller
             'start_date'        => 'Start date',
             'end_date'          => 'Extend date',
             'subscription_id'   => 'ID',
-            
+
         ];
         $rules = [
             'subscription_id'   => 'bail|required',
@@ -1394,7 +1394,7 @@ class AdminController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
 
         $nowDate = Carbon::now();
@@ -1405,7 +1405,7 @@ class AdminController extends Controller
         if($toDate <= $nowDate && $request->sub_type == "extend"){
             return response()->json([
                 'message' => "Invalid date, cannot choose past or present date",
-            ],200); 
+            ],200);
         }
 
         $toDate1 = Carbon::parse($request->end_date);
@@ -1426,7 +1426,7 @@ class AdminController extends Controller
             $subs = \App\Models\OjaSubscription::where("id", $request->subscription_id)->update([
                 'ends_at' => $duration_timestamp1,
                 'expiry_notify_at' => $expiryNotice,
-                'renewed'=> \DB::raw('renewed+1'), 
+                'renewed'=> \DB::raw('renewed+1'),
             ]);
         }else{ // extend
             $duration_timestamp = strtotime(Carbon::now()->addDays((int)$extend_days));
@@ -1434,7 +1434,7 @@ class AdminController extends Controller
             $subs = \App\Models\OjaSubscription::where("id", $request->subscription_id)->update([
                 'ends_at' => $duration_timestamp1,
                 'expiry_notify_at' => $expiryNotice,
-                'extended'=> \DB::raw('extended+1'), 
+                'extended'=> \DB::raw('extended+1'),
             ]);
         }
 
@@ -1450,7 +1450,7 @@ class AdminController extends Controller
                 'status' => 'success',
                 'message' => "Subscription has been $caption1 by $extend_days days",
                 'data' => ''
-            ],200);         
+            ],200);
         }
         return response()->json([
             'status' => 'error',
@@ -1468,7 +1468,7 @@ class AdminController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors()->all(),
-            ],200); 
+            ],200);
         }
 
         $site_features = SiteFeature::whereRaw("md5(id) = '$request->id'")->first();
@@ -1481,7 +1481,7 @@ class AdminController extends Controller
                 'status' => 'success',
                 'message' => "Successful",
                 'data' => ''
-            ],200);         
+            ],200);
         }
         return response()->json([
             'status' => 'error',
@@ -2814,7 +2814,7 @@ class AdminController extends Controller
             'status' => true
         ]);
 
-        
+
         $names = User::find($list->user_id)->first_name.' '.User::find($list->user_id)->first_name;
         $email = User::find($list->user_id)->email;
         // $email = "donchibobo@gmail.com";
@@ -3069,6 +3069,73 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Exchang rate updated!'
+        ]);
+    }
+
+
+    public function integration_enable($id)
+    {
+        $idFinder = Crypt::decrypt($id);
+
+        $integration = \App\Models\Integration::findorfail($idFinder);
+
+        // $allIntegration = \App\Models\Integration::where('user_id', $integration->user_id)->where('status', 'Active')->get();
+
+        // if($allIntegration->count() > 0)
+        // {
+        //     return back()->with([
+        //         'type' => 'danger',
+        //         'message' => 'User already have an active SMS Integration, deactivate and try again!'
+        //     ]);
+        // }
+
+        $integration->update([
+            'status' => 'Active'
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => $integration->type . ' Integration Enabled Successfully!'
+        ]);
+    }
+
+    public function integration_disable($id)
+    {
+        $idFinder = Crypt::decrypt($id);
+
+        $integration = \App\Models\Integration::findorfail($idFinder);
+
+        $integration->update([
+            'status' => 'Inactive'
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => $integration->type . ' Integration Disabled Successfully!'
+        ]);
+    }
+
+    public function integration_delete($id, Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'delete_field' => ['required', 'string', 'max:255']
+        ]);
+
+        if ($request->delete_field == "DELETE") {
+            $idFinder = Crypt::decrypt($id);
+
+            \App\Models\Integration::findorfail($idFinder)->delete();
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Integration Deleted Successfully!'
+            ]);
+        }
+
+        return back()->with([
+            'type' => 'danger',
+            'message' => "Field doesn't match, Try Again!"
         ]);
     }
 

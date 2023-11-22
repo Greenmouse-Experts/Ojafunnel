@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="font-500 mt-5">
                                             <p>
-                                                Start putting together your course by creating sections, lessons and practice 
+                                                Start putting together your course by creating sections, lessons and practice
                                                 <!-- <a href="#">
                                                     (quizzes, and assignments)
                                                 </a> -->
@@ -190,7 +190,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-lg-12">
-                                                                                    <label>Duration (in seconds)</label>
+                                                                                    <label>Duration (in minutes)</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
                                                                                             <input type="number" placeholder="Enter Duration" name="lesson_duration" class="input">
@@ -431,7 +431,7 @@
                                                 <h4 class="card-title mb-4"><strong>Promotion</strong></h4>
                                                 <div class="visual">
                                                     <p>
-                                                        We offered you a 2 level commission for your course promoter. 
+                                                        We offered you a 2 level commission for your course promoter.
                                                     <div class="lamet float-end">
                                                         {{-- <a href="" data-bs-toggle="modal" data-bs-target="#createCoupon"><strong><u>Create Coupon</u></strong></a> --}}
 
@@ -673,7 +673,7 @@
                     <div class="Edit-level">
                         <form method="post" action="{{route('user.course.content.update_course_commission', ['username' => Auth::user()->username, 'id' => Crypt::encrypt($course->id)])}}">
                             @csrf
-                            <div class="form"> 
+                            <div class="form">
                                 <div class="col-lg-12">
                                     <label>Level 1 Commission (%)</label>
                                     <div class="row">
