@@ -342,7 +342,7 @@
 
     $(document).ready(function() {
         $("#phonee").intlTelInput({
-            // preferredCountries: ["us", "ca"],
+            preferredCountries: ["ng"], //["us", "ca"],
             separateDialCode: true,
             initialCountry: ""
         }).on('countrychange', function(e, countryData) {
