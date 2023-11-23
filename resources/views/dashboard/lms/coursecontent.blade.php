@@ -190,10 +190,10 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-lg-12">
-                                                                                    <label>Duration (in minutes)</label>
+                                                                                    <label>Duration (00:00:00)</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input type="number" placeholder="Enter Duration" name="lesson_duration" class="input">
+                                                                                            <input type="text" placeholder="Enter Duration ( 00:00:00 )" name="lesson_duration" class="input">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>

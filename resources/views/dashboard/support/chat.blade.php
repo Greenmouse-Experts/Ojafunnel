@@ -192,9 +192,9 @@
                     // console.log(response);
                     while (response[0][i] != null) {
                         if (response[1][0] == response[0][i].message_users_id) {
-                            $('#messageThread').append('<li class="right"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">You</div><p>' + response[0][i].message + '</p><p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>'+ formattedTime(response[0][i].created_at) +'</p></div></div></li>');
-                        } else {
-                            $('#messageThread').append('<li class="last-chat mt-3"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">'+ name +'</div><p>' + response[0][i].message + '</p><p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>'+ formattedTime(response[0][i].created_at) +'</p></div></div></li>');
+                            $('#messageThread').append('<li class="right"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">You</div><p>' + response[0][i].message + '</p><p class="chat-time mb-0"><i class="bx bx-time-check-double align-middle me-1"></i>'+ formattedTime(response[0][i].created_at) +'</p></div></div></li>');
+                        } else
+                            $('#messageThread').append('<li class="last-chat mt-3"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">'+ name +'</div><p>' + response[0][i].message + '</p><p class="chat-time mb-0"><i class="bx bx-check-double align-middle me-1"></i>'+ formattedTime(response[0][i].created_at) +'</p></div></div></li>');
                         }
                         lastMessageId = response[0][i].id + 1;
                         i++;

@@ -634,9 +634,16 @@ class AdminController extends Controller
         ]);
 
         /** Store information to include in mail in $data as an array */
+        // $data = array(
+        //     'name' => User::find($user->user_id)->first_name.' '.User::find($user->user_id)->first_name,
+        //     'email' => User::find($user->user_id)->email,
+        //     'title' => config('app.name'),
+        //     'body' => $request->message
+        // );
+
         $data = array(
-            'name' => User::find($user->user_id)->first_name.' '.User::find($user->user_id)->first_name,
-            'email' => User::find($user->user_id)->email,
+            'name' => $user->first_name.' '.$user->first_name,
+            'email' => $user->email,
             'title' => config('app.name'),
             'body' => $request->message
         );
