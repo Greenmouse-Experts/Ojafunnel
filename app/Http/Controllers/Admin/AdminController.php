@@ -75,41 +75,6 @@ class AdminController extends Controller
         $this->all_emails = [];
     }
 
-    function fcm($body, $firebaseToken)
-    {
-        $SERVER_API_KEY = config('app.fcm_token');
-
-        $data = [
-            "registration_ids" => $firebaseToken,
-            "notification" => [
-                "title" => config('app.name'),
-                "body" => $body,
-                'image' => URL::asset('assets/images/Logo-fav.png'),
-            ],
-            'vibrate' => 1,
-            'sound' => 1
-        ];
-
-        $dataString = json_encode($data);
-
-        $headers = [
-            'Authorization: key=' . $SERVER_API_KEY,
-            'Content-Type: application/json',
-        ];
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-        $result = curl_exec($ch);
-
-        return $result;
-    }
-
     public function profile_update(Request $request)
     {
         $ad = Admin::findOrFail(Auth::guard('admin')->user()->id);
@@ -592,6 +557,7 @@ class AdminController extends Controller
             'admin_id' => Auth::guard('admin')->user()->id,
             'title' => 'Reply',
             'body' => $request->message,
+            'replied_by' => 'admin',
         ]);
 
         /** Store information to include in mail in $data as an array */
@@ -772,6 +738,20 @@ class AdminController extends Controller
         $allMessages = Message::where('id', '>=', $lastId)->where('message_users_id', $id2)->orderBy('id', 'asc')->get();
 
         return $allMessages;
+    }
+
+    public function markMessageAsRead($messageId)
+    {
+        // Assuming you have a Message model with a read_at column
+        $message = Message::find($messageId);
+
+        // Check if the authenticated user is the recipient of the message
+        if (Auth::guard('admin')->user()->id <> $message->message_users_id) {
+            $message->update(['read_at' => now()]);
+        }
+
+        // You can return a response if needed
+        return $message;
     }
 
     public function view_email_kits()
@@ -1690,7 +1670,7 @@ class AdminController extends Controller
 
     public function saveToken(Request $request)
     {
-        $admin = Admin::findOrFail(Auth::guard('admin')->user()->id);
+        $admin = Admin::find(Auth::guard('admin')->user()->id);
 
         $admin->update([
             'fcm_token' => $request->token

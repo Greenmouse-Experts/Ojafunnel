@@ -28,11 +28,13 @@ use App\Library\Traits\TrackJobs;
 use App\Jobs\ImportBlacklistJob;
 use App\Library\Traits\HasUid;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 {
     use TrackJobs;
     use HasUid;
+    use Notifiable;
 
     public const STATUS_ACTIVE = 'active';
 

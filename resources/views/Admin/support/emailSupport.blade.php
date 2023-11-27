@@ -91,9 +91,15 @@
                                 </div>
                             </div>
                             <div class=''>
+                                @if($reply->replied_by == 'admin')
                                 <div class=''>
                                     <p class='p-0 m-0 fw-bold'>Reply sent to {{App\Models\User::find($ojafunnelmail->user_id)->first_name}} {{App\Models\User::find($ojafunnelmail->user_id)->last_name}}</p>
                                 </div>
+                                @else
+                                <div class=''>
+                                    <p class='p-0 m-0 fw-bold'>{{App\Models\User::find($ojafunnelmail->user_id)->first_name}} {{App\Models\User::find($ojafunnelmail->user_id)->last_name}} replied</p>
+                                </div>
+                                @endif
                                 <div>
                                     <p class='mb-1 mt-1'>{{$reply->body}}</p>
                                 </div>

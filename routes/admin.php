@@ -102,6 +102,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::post('/support/sendMessage', [App\Http\Controllers\Admin\AdminController::class, 'store'])->name('sendMessage');
             Route::get('/support/loadMessage/{reciever}/{sender}', [App\Http\Controllers\Admin\AdminController::class, 'load']);
             Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [App\Http\Controllers\Admin\AdminController::class, 'retrieveNew']);
+            Route::post('/support/markMessageAsRead/{messageId}', [App\Http\Controllers\Admin\AdminController::class, 'markMessageAsRead']);
 
             Route::get('ecommerce/sales-details/{id}', [App\Http\Controllers\Admin\AdminController::class, 'sales_details'])->name('salesDetail');
             // Email Canpaign

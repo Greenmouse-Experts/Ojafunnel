@@ -189,11 +189,35 @@
                     $('#messageThread').html('');
                     // console.log(response);
                     while (response[0][i] != null) {
-                        if (response[1][0] == response[0][i].message_users_id) {
-                            $('#messageThread').append('<li class="right"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">You</div><p>' + response[0][i].message + '</p><p class="chat-time mb-0"><i class="bx bx-check-double align-middle me-1"></i>'+ formattedTime(response[0][i].created_at) +'</p></div></div></li>');
+                        var isUserMessage = response[1][0] == response[0][i].message_users_id;
+                        var isMessageRead = response[0][i].read_at !== null;
+
+                        if (isUserMessage) {
+                            $('#messageThread').append(
+                                '<li class="right">' +
+                                    '<div class="conversation-list">' +
+                                        '<div class="ctext-wrap">' +
+                                            '<div class="conversation-name">You</div>' +
+                                            '<p>' + response[0][i].message + '</p>' +
+                                            (isMessageRead ? '<i class="bx bx-check-double read-icon" style="color: green;"></i>' : '<p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>') + formattedTime(response[0][i].created_at) + '</p>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</li>'
+                            );
                         } else {
-                            $('#messageThread').append('<li class="last-chat mt-3"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">'+ name +'</div><p>' + response[0][i].message + '</p><p class="chat-time mb-0"><i class="bx bx-check-double align-middle me-1"></i>'+ formattedTime(response[0][i].created_at) +'</p></div></div></li>');
+                            $('#messageThread').append(
+                                '<li class="last-chat mt-3">' +
+                                    '<div class="conversation-list">' +
+                                        '<div class="ctext-wrap">' +
+                                            '<div class="conversation-name">' + name + '</div>' +
+                                            '<p>' + response[0][i].message + '</p>' +
+                                            '<p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>' + formattedTime(response[0][i].created_at) + '</p>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</li>'
+                            );
                         }
+
                         lastMessageId = response[0][i].id + 1;
                         i++;
                     }
@@ -227,20 +251,68 @@
                 method: 'GET',
                 url: '/admin/page/support/retrieveMessages/' + user.id + '/' + authUser + '/' + lastMessageId,
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                     //console.log(lastMessageId);
-                    while (response[i] != null) {
-                        $('#messageThread').append('<li class="last-chat mt-3"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">'+ name +'</div><p>' + response[i].message + '</p><p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>'+ formattedTime(response[i].created_at) +'</p></div></div></li>');
+                    var shouldScroll = isScrolledToBottom(); // Check if user is already at the bottom before new messages are added
+
+                    while (i < response.length) {
+                    // Check if response[i] is defined
+                    if (response[i]) {
+                        var isRead = response[i].read_at !== null;
+                        var messageContent = '<li class="last-chat mt-3"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">'+ name +'</div><p>' + response[i].message + '</p><p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>'+ formattedTime(response[i].created_at) +'</p></div></div>';
+
+                        // Check if the message has been read and append a read receipt
+                        if (isRead) {
+                            messageContent += '<p class="read-receipt">Read</p>';
+                        }
+
+                        messageContent += '</li>';
+
+                        $('#messageThread').append(messageContent);
+                        
                         lastMessageId = response[i].id + 1;
-                        i++;
+
+                        // Update the read_at timestamp of the retrieved message
+                        markMessageAsRead(response[i].id);
+
+                        if (shouldScroll) {
+                            scrollPaubos(); // Scroll to the bottom only if the user was already at the bottom
+                        }
                     }
-                    // scrollChat();
-                },
+
+                    i++;
+                }
+            },
                 complete: function() {
                     retrieveMessages();
                 }
             });
         }
+    }
+
+    // Function to check if the user is scrolled to the bottom
+    function isScrolledToBottom() {
+        var messageThread = document.getElementById('messageThread');
+        return messageThread.scrollHeight - messageThread.clientHeight <= messageThread.scrollTop + 1;
+    }
+
+    // Function to mark a message as read
+    function markMessageAsRead(messageId) {
+        console.log(messageId);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'POST',
+            url: '/admin/page/support/markMessageAsRead/' + messageId,
+            success: function(response) {
+                // Handle success if needed
+                console.log(response);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
     }
 
     function copyToClipboard(element) {

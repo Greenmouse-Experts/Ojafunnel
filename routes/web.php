@@ -401,6 +401,7 @@ Route::prefix('{username}')->group(function () {
     );
 });
 
+
 // Save FCM Token
 Route::post('/save-token', [DashboardController::class, 'saveToken'])->name('save.token');
 
@@ -413,6 +414,7 @@ Route::get('/support/checkConvo/{recieverId}', [ChatController::class, 'check'])
 Route::post('/support/sendMessage', [ChatController::class, 'store'])->name('sendMessage');
 Route::get('/support/loadMessage/{reciever}/{sender}', [ChatController::class, 'load']);
 Route::get('/support/retrieveMessages/{reciever}/{sender}/{lastMsgId}', [ChatController::class, 'retrieveNew']);
+Route::post('/support/markMessageAsRead/{messageId}', [ChatController::class, 'markMessageAsRead']);
 
 // Page Builder
 Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::class, 'page_builder_save_page'])->name('user.page.builder.save.page');

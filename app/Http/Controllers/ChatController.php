@@ -140,6 +140,20 @@ class ChatController extends Controller
         return $tobePassed;
     }
 
+    public function markMessageAsRead($messageId)
+    {
+        // Assuming you have a Message model with a read_at column
+        $message = Message::find($messageId);
+
+        // Check if the authenticated user is the recipient of the message
+        if (Auth::user()->id <> $message->message_users_id) {
+            $message->update(['read_at' => now()]);
+        }
+
+        // You can return a response if needed
+        return $message;
+    }
+
     public function retrieveNew($reciever, $sender, $lastId)
     {
         $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id',$reciever)->pluck('id');

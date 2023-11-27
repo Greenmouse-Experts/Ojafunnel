@@ -52,25 +52,32 @@
             <div class="mt-2 p-5 bg-white">
                 @foreach(App\Models\OjafunnelMailSupport::latest()->where('user_id', Auth::user()->id)->get() as $ojafunnelmail)
                 <div class="email-msg-box">
-                    <div class='bg-white email-box' data-bs-toggle="modal" data-bs-target="#viewMail-{{$ojafunnelmail->id}}">
-                        <div class=''>
-                            <div class='bg-light email-img-box'>
-                                <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217513/OjaFunnel-Images/Logo-fav_d0wyqv.png' alt='profile' />
+                    <div class='bg-white email-box' style="display: flex; justify-content: space-between;" data-bs-toggle="modal" data-bs-target="#viewMail-{{$ojafunnelmail->id}}">
+                        <div class="d-flex">
+                            <div class=''>
+                                <div class='bg-light email-img-box'>
+                                    <img src='https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217513/OjaFunnel-Images/Logo-fav_d0wyqv.png' alt='profile' />
+                                </div>
+                            </div>
+                            <div class=''>
+                                <div class=''>
+                                    @if($ojafunnelmail->by_who == 'User')
+                                    <p class='p-0 m-0 fw-bold'>Sent to Administrator</p>
+                                    @else
+                                    <p class='p-0 m-0 fw-bold'>Message From Admininstrator</p>
+                                    @endif
+                                </div>
+                                <div>
+                                    <p class='mb-1 mt-1'>{{$ojafunnelmail->title}}</p>
+                                </div>
+                                <div>
+                                    <p class='fst-italic '>{{$ojafunnelmail->created_at->diffForHumans()}}</p>
+                                </div>
                             </div>
                         </div>
                         <div class=''>
-                            <div class=''>
-                                @if($ojafunnelmail->by_who == 'User')
-                                <p class='p-0 m-0 fw-bold'>Sent to Administrator</p>
-                                @else
-                                <p class='p-0 m-0 fw-bold'>Message From Admininstrator</p>
-                                @endif
-                            </div>
-                            <div>
-                                <p class='mb-1 mt-1'>{{$ojafunnelmail->title}}</p>
-                            </div>
-                            <div>
-                                <p class='fst-italic '>{{$ojafunnelmail->created_at->diffForHumans()}}</p>
+                            <div class='bg-light email-img-box' data-bs-toggle="modal" data-bs-target="#replyMail-{{$ojafunnelmail->id}}">
+                                <img src='https://static-00.iconduck.com/assets.00/mail-reply-sender-icon-245x256-vcu9gxgm.png' alt='profile' />
                             </div>
                         </div>
                     </div>
@@ -86,9 +93,15 @@
                                 </div>
                             </div>
                             <div class=''>
+                                @if($reply->replied_by == 'admin')
                                 <div class=''>
                                     <p class='p-0 m-0 fw-bold'>Administrator Reply</p>
                                 </div>
+                                @else
+                                <div class=''>
+                                    <p class='p-0 m-0 fw-bold'>Your Reply</p>
+                                </div>
+                                @endif
                                 <div>
                                     <p class='mb-1 mt-1'>{{$reply->body}}</p>
                                 </div>
@@ -123,6 +136,51 @@
                                         <div>
                                             <p>{{$ojafunnelmail->body}}</p>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="replyMail-{{$ojafunnelmail->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="staticBackdropLabel">
+                                    Reply {{App\Models\User::find($ojafunnelmail->user_id)->first_name}} {{App\Models\User::find($ojafunnelmail->user_id)->last_name}}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="Edit-level">
+                                        <form method="post" action="{{route('user.replyEmailSupport', Crypt::encrypt($ojafunnelmail->id))}}">
+                                            @csrf
+                                            <div class="form">
+                                                <div class="col-lg-12">
+                                                    <label>Your Message</label>
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-4">
+                                                            <textarea name="message"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-between">
+                                                    <div class="col-6">
+                                                        <button class="px-3 btn" data-bs-dismiss="modal" aria-label="Close" style="color: #714091; border: 1px solid #714091">
+                                                            Cancel
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-6 text-end">
+                                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091"
+                                                            >
+                                                            Send
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

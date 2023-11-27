@@ -92,6 +92,7 @@ Route::prefix('user')->group(function () {
 
     // Email
     Route::post('/user/send/message/admin', [OjafunnelNotificationController::class, 'user_send_message'])->name('user.send.message');
+    Route::post('/user/reply/email-support/{id}', [OjafunnelNotificationController::class, 'reply_email_support'])->name('user.replyEmailSupport');
     Route::get('/user/get/all/notifications', [OjafunnelNotificationController::class, 'get_all_notifications']);
     Route::get('/user/get/all/unread/notifications', [OjafunnelNotificationController::class, 'get_all_unread_notifications']);
     Route::get('/user/count/unread/notifications', [OjafunnelNotificationController::class, 'count_unread_notifications']);

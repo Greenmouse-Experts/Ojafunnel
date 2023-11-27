@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\URL;
 
 class Controller extends BaseController
 {
@@ -74,5 +75,40 @@ class Controller extends BaseController
             max: jQuery.validator.format("' . trans('messages.jvalidate_max') . '"),
             min: jQuery.validator.format("' . trans('messages.jvalidate_min') . '")
         });')->header('Content-Type', 'application/javascript');
+    }
+
+    function fcm($body, $firebaseToken)
+    {
+        $SERVER_API_KEY = config('app.fcm_token');
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => config('app.name'),
+                "body" => $body,
+                'image' => URL::asset('assets/images/Logo-fav.png'),
+            ],
+            'vibrate' => 1,
+            'sound' => 1
+        ];
+
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        $result = curl_exec($ch);
+
+        return $result;
     }
 }
