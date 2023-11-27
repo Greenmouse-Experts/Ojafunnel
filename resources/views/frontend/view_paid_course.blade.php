@@ -1,4 +1,35 @@
+<style>
+.bar-container {
+        background-color: #fff;
+        display: grid;
+        place-items: center;
+        margin-bottom: 20px;
+    }
+    .circular-progress {
+        position: relative;
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+    }
+    .circular-progress::before {
+        content: "";
+        display: block !important;
+        position: absolute;
+        height: 84%;
+        width: 84%;
+        background-color: #003866;
+        border-radius: 50%;
+    }
+    .value-container {
+        position: relative;
+        font-size: 15px;
+        color: #FFCAF0;
+    }
+</style>
 <div class="container-fluid">
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -7,7 +38,7 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{{ env('APP_URL') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('access_course') }}">Home</a></li>
                         <li class="breadcrumb-item active">Course</li>
                     </ol>
                 </div>
@@ -33,8 +64,16 @@
             <div class="card">
                 <div class="card-body">
                     <ul class="list-unstyled categories-list">
-                        <div class="border-bottom">
-                            <h5 class="card-title mb-3">Course Content</h5>
+                        <div class="border-bottom" style="display:flex; flex-direction: row; justify-content: space-between">
+
+                            <h5 class="card-title" style="margin-top: 20px;">Course Content</h5>
+
+                            <!-- Progress bar -->
+                            <div class="bar-container">
+                                <div class="circular-progress" style="background: conic-gradient(#FFCAF0 <?php echo $progress * 3.6; ?>deg, #003866 5deg);">
+                                <div class="value-container">{{$progress}}%</div>
+                                </div>
+                            </div>
                         </div>
                         @foreach(App\Models\Section::where('course_id', $course->id)->get() as $section)
                         <li class="border-bottom">
@@ -47,16 +86,17 @@
                                         <ul class="list-unstyled mb-0">
                                             @foreach(App\Models\Lesson::where('section_id', $section->id)->get() as $lesson)
                                                 <li>
-                                                    <a href="javascript: void(0);" class="d-flex align-items-center"  data-bs-toggle="modal" data-bs-target="#show-{{$lesson->id}}">
+                                                    <a href="javascript: void(0);" class="d-flex align-items-center" onclick="authorizedVideoListener({{$lesson->id}}, {{$section->id}}, {{$lesson->course_id}}, `{{session()->get('email')}}`)">
+                                                         {{-- data-bs-toggle="modal" data-bs-target="#show-{{$lesson->id}}"> --}}
                                                     @if($lesson->content_type == 'video')
                                                     <i class="mdi mdi-video-high-definition"></i>
                                                     @else
                                                     <i class="mdi mdi-youtube"></i>
-                                                    @endif    
-                                                    <span class="me-auto">{{$lesson->title}}</span> 
+                                                    @endif
+                                                    <span class="me-auto">{{$lesson->title}}</span>
                                                     <i class="mdi mdi-pin ms-auto"></i></a>
                                                 </li>
-                                                <div class="modal fade" id="show-{{$lesson->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div  id="show-{{$lesson->id}}" class="modal fade" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content pb-3">
                                                             <div class="modal-header border-bottom-0">
@@ -99,6 +139,27 @@
                         </li>
                         @endforeach
                     </ul>
+
+                    <br />
+                    <ul class="list-unstyled categories-list">
+                        <div class="border-bottom">
+                            <h5 class="card-title mb-3">Course Quiz</h5>
+                        </div>
+                        @foreach($quizzes as $quiz)
+                        <li class="border-bottom">
+                            <div class="custom-accordion mt-2">
+                                <a class="text-body fw-medium py-1 d-flex align-items-center"
+                                        target="_blank"
+                                        href="{{ route('access_course_quiz', ['quizId' => $quiz->id, 'sessionId' => $quiz->session]) }}">
+                                    {{ $quiz->quiz_title }} <i class="mdi mdi-chevron-up accor-down-icon ms-auto"></i>
+                                </a>
+                            </div>
+                        </li>
+                        @endforeach
+                    </ul>
+
+                    {{-- <br/> --}}
+                    <button class="btn btn-primary" type="button" onclick="generate_certificate({{$course->id}})">Generate Certificate</button>
                 </div>
             </div>
         </div>

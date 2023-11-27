@@ -69,7 +69,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-12 mb-0">
                                             <button type="button" class="accessCourse" style="padding:15px!important;border-radius:50px">
                                                 Access Course
@@ -94,7 +94,5 @@
 
 
     <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
-    <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
-    
-
+    <script src="{{ asset('assets/js/jscripts.js') }}"></script>
 @endsection

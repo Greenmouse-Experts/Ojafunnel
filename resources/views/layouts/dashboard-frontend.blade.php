@@ -168,7 +168,7 @@
     <input type="hidden" value="{{ url('/') }}/" id="site_url">
     <input type="hidden" value="{{ csrf_token() }}" id="txt_token">
     <input type="hidden" value="{{ base64_encode(env('PAYSTACK_KEY')) }}" id="PAYSKey" style="display:none" autocomplete="off">
-    
+
     <!-- Alerts  Start-->
     <div style="position: fixed; top: 20px; right: 20px; z-index: 100000; width: auto;">
         @include('layouts.alerts')
@@ -205,7 +205,7 @@
     <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
 
-    
+
 
     <!-- apexcharts -->
     <script src="{{URL::asset('dash/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
@@ -239,7 +239,7 @@
     <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
 
-    <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
+    <script src="{{ asset('assets/js/jscripts.js') }}"></script>
 
     <script>
         function myFunction1() {
@@ -295,7 +295,7 @@
                 $('.price-switcher-period__yearly').removeClass('active');
             }
         });
-    </script> 
+    </script>
     <script src="https://kit.fontawesome.com/997b229808.js" crossorigin="anonymous"></script>
     <script>
         function showPreview(event) {
@@ -306,7 +306,7 @@
                 preview.style.display = "block";
             }
         }
-        
+
         $(function(){
             $("body").on('hidden.bs.modal', function (e) {
                 var $iframes = $(e.target).find("iframe");
