@@ -1407,12 +1407,11 @@ class AdminController extends Controller
             $expiryNotice = strtotime(Carbon::now()->addYears(1)->subDays(7)->toDateTimeString());
         }
 
-
         if($request->sub_type == "renew"){
             $duration_timestamp1 = date("Y-m-d H:i:s", $duration_timestamp);
             $subs = \App\Models\OjaSubscription::where("id", $request->subscription_id)->update([
                 'ends_at' => $duration_timestamp1,
-                'expiry_notify_at' => $expiryNotice,
+                'expiry_notify_at' => date("Y-m-d H:i:s", $expiryNotice),
                 'renewed'=> \DB::raw('renewed+1'),
             ]);
         }else{ // extend
@@ -1420,7 +1419,7 @@ class AdminController extends Controller
             $duration_timestamp1 = date("Y-m-d H:i:s", $duration_timestamp);
             $subs = \App\Models\OjaSubscription::where("id", $request->subscription_id)->update([
                 'ends_at' => $duration_timestamp1,
-                'expiry_notify_at' => $expiryNotice,
+                'expiry_notify_at' => date("Y-m-d H:i:s", $expiryNotice),
                 'extended'=> \DB::raw('extended+1'),
             ]);
         }
