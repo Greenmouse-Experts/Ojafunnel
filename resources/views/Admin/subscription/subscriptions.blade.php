@@ -103,7 +103,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="Editt">
-                        <form method="POST" class="form_renew_sub">
+                        <form method="POST" action="{{route('renewExtend')}}">
                             {{ csrf_field() }}
                             <div class="form">
                                 <p class="mt-n4"><b class="sub_name"></b></p>
@@ -136,7 +136,7 @@
                                     </div>
                                     <div class="col-lg-12 mb-4">
                                         <div class="boding">
-                                            <button type="button" class="addRenew">Renew Subscription</button>
+                                            <button type="submit">Renew Subscription</button>
                                         </div>
                                     </div>
                                 </div>
