@@ -17,9 +17,15 @@ Route::post('/list/management/contact/delete/{id}', [ListManagementController::c
     Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');
 
 Route::post('store-cart-details-tmp', [App\Http\Controllers\HomePageController::class, 'store_cart_details_tmp']);
-Route::get('access-course', [App\Http\Controllers\HomePageController::class, 'access_course']);
+Route::get('access-course', [App\Http\Controllers\HomePageController::class, 'access_course'])->name('access_course');
+Route::get('access-course-quiz/{quizId}/{sessionId}', [App\Http\Controllers\HomePageController::class, 'access_course_quiz'])->name('access_course_quiz');
+Route::post('access-course-quiz/{quizId}/{sessionId}', [App\Http\Controllers\HomePageController::class, 'submit_course_quiz'])->name('submit.course.quiz');
 Route::post('get-access-course', [App\Http\Controllers\HomePageController::class, 'access_auth_course']);
+Route::get('course-quiz-result/{quizId}/{sessionId}', [App\Http\Controllers\HomePageController::class, 'course_quiz_result'])->name('course_quiz_result');
 Route::get('magic-login-link/{id}', [App\Http\Controllers\HomePageController::class, 'magic_login_link']);
+Route::get('check-course-eligibility', [App\Http\Controllers\HomePageController::class, 'checkForCourseEligibility'])->name('check.eligibility');
+Route::get('generate-certificate', [App\Http\Controllers\HomePageController::class, 'generateCertificate'])->name('generate.certificate');
+Route::get('issue-certificate', [App\Http\Controllers\HomePageController::class, 'issueCertificate'])->name('issue.certificate');
 
 // Route::post('checkout/payment/{storename}', [App\Http\Controllers\HomePageController::class, 'checkoutPayment'])->name('payment.checkout');
 

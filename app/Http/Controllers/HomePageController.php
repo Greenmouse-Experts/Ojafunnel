@@ -382,11 +382,153 @@ class HomePageController extends Controller
                 $data['auths'] = 1;
                 $data['course'] = $course;
                 $data['username'] = $user_email;
+
+                $all_lessions = [];
+
+                // get the course sections in sequence
+                $course_sections = \App\Models\Section::where(['course_id' => $course->id])->get();
+
+                // get videos based on the sections serially
+                foreach($course_sections as $section) {
+                    $courses = \App\Models\Lesson::where(['section_id' => $section->id])->get()->toArray();
+                    array_push($all_lessions, ...$courses);
+                }
+
+                $candidate_progress = \App\Models\CourseVideoProgress::where([
+                    'candidate' => session()->get('email'),
+                    'course_id' => $course->id,
+                ])->get();
+
+                $all = sizeof($all_lessions);
+                $pro = sizeof($candidate_progress);
+
+                $per = ($pro/$all) * 100;
+                $data['progress'] = $per;
             }
+
+            $data['quizzes'] = \App\Models\LmsQuiz::where('course_id', $course_id)->get();
         }
+
         return view('frontend.access_course', $data);
     }
 
+    public function access_course_quiz(Request $request, $quizId, $sessionId)
+    {
+        $user_email = session()->get('email');
+        $user_order_no = session()->get('order_no');
+        $auth_details = \App\Models\Enrollment::whereRaw("md5(email) = '$user_email' AND md5(order_no) = '$user_order_no'")->first();
+        $data['auths'] = 0;
+
+        if(!$auth_details){
+            return view('frontend.access_course', $data);
+        }
+
+        $quiz = \App\Models\LmsQuiz::where('id', $quizId)->first();
+        $data['quiz'] = $quiz;
+
+        $questions = \App\Models\Quiz::where('course_id', $quiz->course_id)->get();
+
+        if(sizeof($questions) > 0) {
+            $submittedIndex = $request->sindex ?? 0;
+            $data['index'] = $submittedIndex;
+            $data['raw'] = sizeof($questions);
+
+            $data['question'] = $questions[$submittedIndex];
+        } else {
+            return redirect()->back();
+        }
+
+        return view('frontend.view_course_quiz', $data);
+    }
+
+    public function submit_course_quiz(Request $request, $quizId, $sessionId)
+    {
+        $user_email = session()->get('email');
+        $user_order_no = session()->get('order_no');
+        $auth_details = \App\Models\Enrollment::whereRaw("md5(email) = '$user_email' AND md5(order_no) = '$user_order_no'")->first();
+        $data['auths'] = 0;
+
+        if(!$auth_details){
+            return view('frontend.access_course', $data);
+        }
+
+        $quiz = \App\Models\LmsQuiz::where('id', $quizId)->first();
+        $questions = \App\Models\Quiz::where('course_id', $quiz->course_id)->get();
+        $question = \App\Models\Quiz::where('session', $quiz->session)->first();
+
+        $next = $request->next;
+        $question_id = $request->question_id;
+        $answer = $request->ans;
+
+        $attendedQuestion = $question;
+        $indexSize = sizeof($questions) - 1;
+
+        $status = "Wrong";
+
+        if($attendedQuestion->ans == $answer)
+        {
+            $status = "Pass";
+        }
+
+        $alreadySubmitted = \App\Models\QuizSubmission::where([
+            'course_id' => $attendedQuestion->course_id,
+            'quiz_id' => $quiz->id,
+            'course_id' => $quiz->course_id,
+            'session' => $quiz->session,
+            'question_id' => $attendedQuestion->id,
+        ])->first();
+
+        if(!$alreadySubmitted) {
+            \App\Models\QuizSubmission::create([
+                'course_id' => $attendedQuestion->course_id,
+                'quiz_id' => $quiz->id,
+                'course_id' => $quiz->course_id,
+                'session' => $quiz->session,
+                'question_id' => $attendedQuestion->id,
+                'submitted' => $answer,
+                'answer' => $attendedQuestion->ans,
+                'status' => $status,
+                'candidate' => session()->get('email')
+            ]);
+        }
+
+        if($indexSize > $next) {
+            $next = $next + 1;
+            return redirect()->route('access_course_quiz', ['quizId' => $quizId, 'sessionId' => $sessionId, 'sindex' => $next]);
+        } else {
+            // redirect to result page.
+            return redirect()->route('course_quiz_result', [
+                'quizId' => $quizId,
+                'sessionId' => $sessionId
+            ]);
+        }
+    }
+
+    public function course_quiz_result(Request $request, $quizId, $sessionId)
+    {
+        $user_email = session()->get('email');
+        $user_order_no = session()->get('order_no');
+        $auth_details = \App\Models\Enrollment::whereRaw("md5(email) = '$user_email' AND md5(order_no) = '$user_order_no'")->first();
+        $data['auths'] = 0;
+
+        if(!$auth_details){
+            return view('frontend.access_course', $data);
+        }
+
+        $quiz = \App\Models\LmsQuiz::where('id', $quizId)->first();
+        $questions = \App\Models\Quiz::where('course_id', $quiz->course_id)->get();
+        $question = \App\Models\Quiz::where('session', $quiz->session)->first();
+
+        $questions = \App\Models\QuizSubmission::where([
+            'course_id' => $question->course_id,
+            'quiz_id' => $quiz->id,
+            'session' => $quiz->session])
+            ->with(['course', 'quiz', 'question'])
+            ->get();
+
+
+        return view('frontend.quiz_result')->with(['questions' => $questions]);
+    }
 
     public function access_auth_course(Request $request)
     {
@@ -414,6 +556,239 @@ class HomePageController extends Controller
         ],200);
     }
 
+    private function checkVideoIndex($lessons, $selectedLessionId)
+    {
+        $index = -1;
+        for($i=0; $i<sizeof($lessons); $i++) {
+            $lesson = (object) $lessons[$i];
+
+            if($selectedLessionId == $lesson->id){
+                $index = $i;
+                break;
+            }
+        }
+
+        return $index;
+    }
+
+    public function checkForCourseEligibility(Request $request)
+    {
+        $email = $request->email;
+        $courseId = $request->courseId;
+        $sectionId = $request->sectionId;
+        $lessionId = $request->lessonId;
+
+        $all_lessions = [];
+
+        // get the course sections in sequence
+        $course_sections = \App\Models\Section::where(['course_id' => $courseId])->get();
+
+        // get videos based on the sections serially
+        foreach($course_sections as $section) {
+            $courses = \App\Models\Lesson::where(['section_id' => $section->id])->get()->toArray();
+            array_push($all_lessions, ...$courses);
+        }
+
+        //check the index of the lesson video selected.
+        $lession_Index = $this->checkVideoIndex($all_lessions, $lessionId);
+
+        // register if the video selected is the first video of the course.
+        if($lession_Index == 0) {
+            // check if the course progress has been recorded or not -  then record or update the progress.
+            $alreadyRecorded = \App\Models\CourseProgress::where(['candidate' => session()->get('email'),
+                'course_id' => $courseId])->first();
+
+            if(!$alreadyRecorded) {
+                \App\Models\CourseProgress::create([
+                    'candidate' => session()->get('email'),
+                    'course_id' => $courseId,
+                    'bound' => sizeof($all_lessions),
+                    'achieved' => 1,
+                ]);
+
+                \App\Models\CourseVideoProgress::create([
+                    'candidate' => session()->get('email'),
+                    'course_id' => $courseId,
+                    'section_id' => $sectionId,
+                    'lesson_id' => $lessionId,
+                    'time' => '2', //  2mins default -> considerable time.
+                    'achieved' => 0
+                ]);
+
+                return response()->json(['success' => true, 'message' => 'Course lesson registered successfully'], 200,);
+            } else {
+                // record the learning progress
+                return $this->recordLearningProgress(
+                    session()->get('email'),
+                    $courseId,
+                    $sectionId,
+                    $lessionId
+                );
+            }
+        }
+
+        // check if the video is serially selected and record if true.
+        $listened_courses = \App\Models\CourseVideoProgress::where([
+            'course_id' => $courseId, 'candidate' => session()->get('email')])
+            ->get();
+
+        if(sizeof($listened_courses) > 0)
+        {
+            $last_listened_course = $listened_courses[sizeof($listened_courses) - 1];
+            if ($lessionId <= $last_listened_course->lesson_id)
+            {
+                // record the learning progress
+                return $this->recordLearningProgress(
+                    session()->get('email'),
+                    $courseId,
+                    $sectionId,
+                    $lessionId
+                );
+            } else {
+                if($last_listened_course->time == $last_listened_course->achieved) {
+                    // check if the selected course Id is next video to proceed with.
+                    return $this->validateNextLessonVideo($all_lessions, $last_listened_course->lesson_id, $lessionId);
+                } else {
+                    return response()->json(['success' => false, 'message' => 'Please complete the current lesson video before moving to next.']);
+                }
+            }
+
+        } else {
+            return response()->json(['success' => false, 'message' => 'Please start from the first section of the course video.']);
+        }
+    }
+
+    private function validateNextLessonVideo($lessons, $currentLessonId, $selectedLessionId)
+    {
+        $currentIndex = null;
+        for($i=0;$i<sizeof($lessons); $i++) {
+            $lesson = (object) $lessons[$i];
+            if ($lesson->id == $currentLessonId)
+            {
+                $currentIndex = $i;
+                break;
+            }
+        }
+
+        if($currentIndex == (sizeof($lessons) - 1)) {
+            return response()->json(['success' => false, 'message' => 'Current video lesson is the last of video for the course.'], 200);
+        }
+
+        $nextLessonVideo = (object) $lessons[$currentIndex + 1];
+        if($nextLessonVideo->id == $selectedLessionId)
+        {
+            $selectedLesson = \App\Models\Lesson::find($selectedLessionId);
+            // register video progress
+            \App\Models\CourseVideoProgress::create([
+                'candidate' => session()->get('email'),
+                'course_id' => $selectedLesson->course_id,
+                'section_id' => $selectedLesson->section_id,
+                'lesson_id' => $selectedLesson->id,
+                'time' => '2', //  2mins default -> considerable time.
+                'achieved' => 0
+            ]);
+
+            return response()->json(['success' => true, 'message' => 'Course lesson registered successfully'], 200);
+        } else {
+            // wrong selection.
+            return response()->json(['success' => false, 'message' => 'Please select the next video.'], 200);
+        }
+    }
+
+    private function recordLearningProgress($email, $courseId, $sectionId, $lessionId)
+    {
+        $progress = \App\Models\CourseVideoProgress::where([
+            'candidate' => $email,
+            'course_id' => $courseId,
+            'section_id' => $sectionId,
+            'lesson_id' => $lessionId,
+        ])->first();
+
+        $time = $progress->time;
+        $achieved = $progress->achieved;
+
+        if($achieved == $time) {
+            // Course completed
+            $progress->update(['achieved' => $achieved]);
+
+            return response()->json(['success' => true, 'message' => 'Video completed']);
+        } else {
+            // Course incompleted
+            $achieved += 0.5;
+            $progress->update(['achieved' => $achieved]);
+
+            return response()->json(['success' => true, 'message' => 'Video inprogress']);
+        }
+
+    }
+
+    public function generateCertificate(Request $request)
+    {
+        $courseId = $request->courseId;
+
+        $all_lessions = [];
+
+        // get the course sections in sequence
+        $course_sections = \App\Models\Section::where(['course_id' => $courseId])->get();
+
+        // get videos based on the sections serially
+        foreach($course_sections as $section) {
+            $courses = \App\Models\Lesson::where(['section_id' => $section->id])->get()->toArray();
+            array_push($all_lessions, ...$courses);
+        }
+
+        $candidate_progress = \App\Models\CourseVideoProgress::where([
+            'candidate' => session()->get('email'),
+            'course_id' => $courseId,
+        ])->get();
+
+        if(sizeof($candidate_progress) == sizeof($all_lessions))
+        {
+            // candidate has completed the course
+            return response()->json(['success' => true, 'message' => 'Certificate issued.']);
+        } else {
+            // candidate has not completed the course
+            return response()->json(['success' => false, 'message' => 'Please complete your courses to be eligible for certificate.']);
+        }
+    }
+
+    public function issueCertificate(Request $request)
+    {
+
+        $courseId = $request->courseId;
+
+        $all_lessions = [];
+
+        // get the course sections in sequence
+        $course_sections = \App\Models\Section::where(['course_id' => $courseId])->get();
+
+        // get videos based on the sections serially
+        foreach($course_sections as $section) {
+            $courses = \App\Models\Lesson::where(['section_id' => $section->id])->get()->toArray();
+            array_push($all_lessions, ...$courses);
+        }
+
+        $candidate_progress = \App\Models\CourseVideoProgress::where([
+            'candidate' => session()->get('email'),
+            'course_id' => $courseId,
+        ])->get();
+
+        if(sizeof($candidate_progress) == sizeof($all_lessions))
+        {
+            $user_email = session()->get('email');
+            $user_order_no = session()->get('order_no');
+            $auth_details = \App\Models\Enrollment::whereRaw("md5(email) = '$user_email' AND md5(order_no) = '$user_order_no'")->first();
+            $course = \App\Models\Course::find($courseId);
+            $last_progress = $candidate_progress[sizeof($candidate_progress) - 1];
+
+            $data['candidate_name'] = $auth_details->name;
+            $data['course_name'] = $course->title;
+            $data['completion_date'] = $last_progress->created_at->format('d M, Y');
+            return view('frontend.certificate', $data);
+        } else {
+            abort(404);
+        }
+    }
 
     public function contactConfirm(Request $request)
     {

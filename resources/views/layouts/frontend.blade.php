@@ -68,7 +68,7 @@
             $('.menu-image-holder img').attr("src", "https://res.cloudinary.com/greenmouse-tech/image/upload/v1660737789/OjaFunnel-Images/Stripe_bfhh6m_yk9kmo-removebg-preview_jih215.png");
         });
 
-        // 
+        //
         // pricing switch button
         let pricingIsYearly = false;
         $('.js-switch-button-period').on('click', function(e) {
@@ -88,6 +88,124 @@
                 $('.price-switcher-period__yearly').removeClass('active');
             }
         });
+    </script>
+    <script>
+        function accessCouseVideo(lessonId, sectionId, courseId)
+        {
+
+
+            if(!lessonId && !sectionId && !courseId)
+            {
+                return;
+            }
+
+            // check if the container is active.
+            $('#loader').show();
+            $.ajax({
+                url: `{{ route('check.eligibility') }}?lessonId=${lessonId}&sectionId=${sectionId}&courseId=${courseId}`,
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#loader').hide();
+                    if(!data.success) {
+                        // send error message
+                        const err = `<div style="position: fixed; top: 20px; right: 20px; z-index: 100000; width: auto;">
+                            <div class="col-12 mb-2">
+                                <div class="alert alert-danger alert-timeout alert-dismissible fade show" role="alert">
+                                    ${data.message}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>`;
+                        $('body').append(err);
+                        return;
+                    }
+                    localStorage.setItem(':is-current', `open:${lessonId}`);
+                    localStorage.setItem('lessonId', lessonId);
+                    localStorage.setItem('sectionId', sectionId);
+                    localStorage.setItem('courseId', courseId);
+                    $('#show-' + lessonId).modal('show');
+                },
+                error: function(error) {
+                    $('#loader').hide();
+                    console.log('error: ', error)
+                }
+            });
+        }
+
+        function authorizedVideoListener(lessonId, sectionId, courseId, email) {
+            // register the credentials
+            let switcher = false;
+            const isOpen = localStorage.getItem(':is-current');
+            if(isOpen === `open:${lessonId}`) {
+                // open modal
+                $('#show-' + lessonId).modal('show');
+            } else {
+                accessCouseVideo(lessonId, sectionId, courseId);
+            }
+        }
+
+        function recordVideoProgress() {
+
+            const lessonId = localStorage.getItem('lessonId');
+            const sectionId = localStorage.getItem('sectionId');
+            const courseId = localStorage.getItem('courseId');
+
+            if(!lessonId && !sectionId && !courseId)
+            {
+                return;
+            }
+
+            const isOpen = $('#show-' + lessonId).hasClass('show');
+
+            if($('#show-' + lessonId).hasClass('show')) {
+                $.ajax({
+                    url: `{{ route('check.eligibility') }}?lessonId=${lessonId}&sectionId=${sectionId}&courseId=${courseId}`,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        // do nothing
+                    },
+                    error: function(error) {
+                        // do nothing
+                    }
+                });
+            }
+        }
+
+        setInterval(recordVideoProgress, 30000);
+
+        function generate_certificate(courseId) {
+            $('#loader').show();
+            $.ajax({
+                url: `{{ route('generate.certificate') }}?courseId=${courseId}`,
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#loader').hide();
+                    if(!data.success) {
+                        // send error message
+                        const err = `<div style="position: fixed; top: 20px; right: 20px; z-index: 100000; width: auto;">
+                            <div class="col-12 mb-2">
+                                <div class="alert alert-danger alert-timeout alert-dismissible fade show" role="alert">
+                                    ${data.message}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>`;
+                        $('body').append(err);
+                        return;
+                    } else {
+                        // redirect to certificate page
+                        window.open("{{route('issue.certificate')}}?courseId="+courseId, "_blank");
+                    }
+                },
+                error: function(error) {
+                    $('#loader').hide();
+                    console.log('error: ', error)
+                }
+            });
+        }
     </script>
 </body>
 

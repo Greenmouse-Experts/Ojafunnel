@@ -228,7 +228,7 @@ class CMSController extends Controller
         //Validate Request
         $this->validate($request, [
             'lesson_title' => ['required', 'string', 'max:255'],
-            'lesson_duration' => ['required', 'numeric'],
+            'lesson_duration' => ['required', ], //'numeric'
             'content_type' => ['required', 'string', 'max:255'],
         ]);
 
