@@ -398,7 +398,8 @@ class AdminController extends Controller
         //     }
         // }
         // $data['tags'] = $arrs;
-        return view('Admin.broadcast');
+        $data['lists'] = ListManagement::where('status', 1)->get();
+        return view('Admin.broadcast', $data);
     }
 
 
@@ -1264,6 +1265,7 @@ class AdminController extends Controller
             'channel'      => 'required',
             'subject'      => 'required',
             'message'      => 'required',
+            'list_id'      => 'required'
         ];
         $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
         if($validator->fails()){
@@ -1272,23 +1274,50 @@ class AdminController extends Controller
             ],200);
         }
 
+
         $channels = $request->channel;
         $user_emails = [];
         $user_phones = [];
         $user_whatsapp = [];
 
-        //if(in_array('emails', $user_channel)){
-        if($request->channel == "emails"){
-            // $user_emails = User::whereNotNull('email')->whereRaw("email LIKE '%chinny%' OR email LIKE '%chibobo%' OR email LIKE '%promiseezema11%'")->pluck('email')->toArray();
-            $user_emails = User::whereNotNull('email')->pluck('email')->toArray();
-        }
-        //if(in_array('sms', $user_channel)){
-        if($request->channel == "sms"){
-            $user_phones = User::whereNotNull('phone_number')->pluck('phone_number')->toArray();
-        }
-        //if(in_array('whatsapp', $user_channel)){
-        if($request->channel == "whatsapp"){
-            $user_whatsapp = User::whereNotNull('phone_number')->pluck('phone_number')->toArray();
+        if($request->list_id == "all_users")
+        {
+            //if(in_array('emails', $user_channel)){
+            if($request->channel == "emails"){
+                // $user_emails = User::whereNotNull('email')->whereRaw("email LIKE '%chinny%' OR email LIKE '%chibobo%' OR email LIKE '%promiseezema11%'")->pluck('email')->toArray();
+                $user_emails = User::whereNotNull('email')->pluck('email')->toArray();
+            }
+            //if(in_array('sms', $user_channel)){
+            if($request->channel == "sms"){
+                $user_phones = User::whereNotNull('phone_number')->pluck('phone_number')->toArray();
+            }
+            //if(in_array('whatsapp', $user_channel)){
+            if($request->channel == "whatsapp"){
+                $user_whatsapp = User::whereNotNull('phone_number')->pluck('phone_number')->toArray();
+            }
+        } elseif($request->list_id == "newsletter_subscribers") {
+            if($request->channel == "emails"){
+                $user_emails = Newsletter::whereNotNull('email')->pluck('email')->toArray();
+            } else {
+                return response()->json([
+                    'message' => "Email channel is only available for newsletter.",
+                ],200);
+            }
+        } else {
+            if($request->channel == "emails"){
+                $user_emails = ListManagementContact::where('list_management_id', $request->list_id)
+                    ->whereNotNull('email')->pluck('email')->toArray();
+            }
+
+            if($request->channel == "sms"){
+                $user_phones = ListManagementContact::where('list_management_id', $request->list_id)
+                ->whereNotNull('phone')->pluck('phone')->toArray();
+            }
+
+            if($request->channel == "whatsapp"){
+                $user_whatsapp = ListManagementContact::where('list_management_id', $request->list_id)
+                    ->whereNotNull('phone')->pluck('phone')->toArray();
+            }
         }
 
        $allDataEmails = array_merge($user_emails);

@@ -47,6 +47,22 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-12">
+                                    <label>List</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <select name="list_id" class="input">
+                                                <option value="">--Select Contact List ---</option>
+                                                <option value="all_users">All Users</option>
+                                                <option value="newsletter_subscribers">Newsletter Subscribers</option>
+                                                @foreach ($lists as $list)
+                                                    <option value="{{$list->id}}">{{$list->display_name}} ({{$list->name}})</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- <div class="col-lg-12">
                                     <label>Recipient</label>
                                     <div class="row">
