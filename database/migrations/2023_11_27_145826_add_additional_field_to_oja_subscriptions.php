@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('oja_subscriptions', function (Blueprint $table) {
-            $table->string('renewed')->nullable();
-            $table->string('extended')->nullable();
+            $table->integer('renewed')->nullable();
+            $table->integer('extended')->nullable();
         });
     }
 

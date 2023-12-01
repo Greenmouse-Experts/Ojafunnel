@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
 
 class AccountUpgradeController extends Controller
@@ -63,6 +64,7 @@ class AccountUpgradeController extends Controller
 
     public function upgrade_account($amount)
     {
+
         $amount = Crypt::decrypt($amount);
 
         $user = User::findorfail(Auth::user()->id);

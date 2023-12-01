@@ -208,19 +208,15 @@
                                             <div class="tab-pane fade" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
                                                 <div>
                                                     <h4 class="card-title">Payment information</h4>
-                                                    <p class="card-title-desc">Select payment  below</p>
-                                                    <div>
-                                                        <div class="form-check form-check-inline font-size-16">
-                                                            <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" value="paystack" checked>
-                                                            <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Paystack</label>
-                                                        </div>
-                                                    </div>
+                                                    <p class="card-title-desc">Select payment below</p>
+                                                    @foreach(App\Models\PaymentGateway::latest()->where('status', 'Active')->get() as $payment)
                                                     <div class="mt-3">
                                                         <div class="form-check form-check-inline font-size-16">
-                                                            <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" value="flutterwave" checked>
-                                                            <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Flutterwave</label>
+                                                            <input class="form-check-input" type="radio" name="paymentOptions" id="paymemtOptions" value="{{$payment->name}}">
+                                                            <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><img src="{{URL::asset($payment->logo)}}" alt="{{$payment->name}}" class="me-1 font-size-20 align-top" width="15"/> {{$payment->name}}</label>
                                                         </div>
                                                     </div>
+                                                    @endforeach
                                                     {{-- <h5 class="mt-3 mb-3 font-size-15">For card Payment</h5> --}}
                                                     <div class="form">
                                                         <div class="row">
@@ -254,10 +250,7 @@
                                             <div class="tab-pane fade" id="v-pills-confir" role="tabpanel" aria-labelledby="v-pills-confir-tab">
                                                 <div class="card shadow-none border mb-0">
                                                     <div class="card-body">
-
                                                         <!-- <h4 class="card-title ">Note</h4> -->
-
-
                                                         {{-- <h6 class="mb-4"><span class="text-danger">Note:</span> Kindly check your email to download your digital products.</h6> --}}
 
                                                         <h4 class="card-title mb-4">Order Summary</h4>
@@ -400,10 +393,9 @@
     };
 
     $("#activePayment").click(function() {
-        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
+        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '' || $('#paymemtOptions').val() == '') {
             $('#error').html('Please fill the asterisks field to continue');
         } else {
-
             if($('.customer_email').val() !== ""){
                 var datastring='customer_email='+$('.customer_email').val()
                 +'&product_id='+$('.product_id').val()
@@ -424,9 +416,7 @@
             $('#v-pills-shipping').removeClass('show active')
             $('#v-pills-payment-tab').addClass('active')
             $('#v-pills-payment').addClass('show active')
-
         }
-
     })
 
     $("#activeconfirm").click(function() {
@@ -441,27 +431,35 @@
     })
 
     $("#makePayment").click(function() {
-        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
+        console.log($('#paymemtOptions').val());
+
+        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '' || $('#paymemtOptions').val() == '') {
             alert('Please fill the asterisks field to continue');
             $('#error').html('Please fill the asterisks field to continue');
         } else {
-            var handler = PaystackPop.setup({
-                key: 'pk_test_77297b93cbc01f078d572fed5e2d58f4f7b518d7',
-                email: $('#email').val(),
-                amount: document.getElementById("AmountToPay").value * 100,
-                ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                callback: function(response){
-                    // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
-                    // url = url.replace(':response', response.reference);
-                    // url = url.replace(':amount', document.getElementById("amount").value);
-                    // document.location.href=url;
-                    $( "#checkoutForm" ).submit();
-                },
-                onClose: function(){
-                    alert('window closed');
-                }
-            });
-            handler.openIframe();
+            if($('#paymemtOptions').val() == 'Flutterwave' || $('#paymemtOptions').val() == 'Stripe' || $('#paymemtOptions').val() == 'Paypal')
+            {
+                // Your conditions are met, trigger the form submission
+                $('#checkoutForm').submit();
+            } else {
+                var handler = PaystackPop.setup({
+                    key: 'pk_test_77297b93cbc01f078d572fed5e2d58f4f7b518d7',
+                    email: $('#email').val(),
+                    amount: document.getElementById("AmountToPay").value * 100,
+                    ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                    callback: function(response){
+                        // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
+                        // url = url.replace(':response', response.reference);
+                        // url = url.replace(':amount', document.getElementById("amount").value);
+                        // document.location.href=url;
+                        $( "#checkoutForm" ).submit();
+                    },
+                    onClose: function(){
+                        alert('window closed');
+                    }
+                });
+                handler.openIframe();
+            }
         }
     })
 

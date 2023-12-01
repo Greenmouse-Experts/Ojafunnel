@@ -1104,8 +1104,12 @@ $('body').on('change', '.sub_type', function (e) {
   $('.ext_div').hide();
   $('.addRenew').html('Renew Subscription');
   if(sub_type == "extend"){
+    $('.ext_duration').hide();
     $('.ext_div').show();
     $('.addRenew').html('Extend Subscription');
+  } else {
+    $('.ext_div').hide();
+    $('.ext_duration').show();
   }
 });
 

@@ -216,7 +216,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('general')}}" key="t-full-calendar">General</a></li>
-                        {{--<li><a href="{{route('security')}}" key="t-full-calendar">Security</a></li>--}}
+                        <li><a href="{{route('admin.payment.gateway')}}" key="t-full-calendar">Payment Gateway</a></li>
                     </ul>
                 </li>
             </ul>

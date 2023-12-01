@@ -386,6 +386,16 @@ class DashboardController extends Controller
 
     public function upgrade($username)
     {
+        $response = Http::get('https://api.frankfurter.app/latest', [
+            'amount' => 10,
+            'from' => 'USD',
+            // 'to' => 'GBP',
+        ]);
+
+        $data = $response->json();
+
+        return $data;
+
         $user = User::findorfail(Auth::user()->id);
 
         $plan = OjaPlan::where('id', $user->plan)->first();

@@ -64,9 +64,12 @@ use Exception;
 use GuzzleHttp\Client;
 use Aws\Sns\SnsClient;
 use App\Mail\AccountInfoMail;
+use App\Mail\NewsletterMail;
+use App\Models\OjaSubscription;
+use App\Models\PaymentGateway;
 use App\Models\UpsellPageSubmission;
-
-
+use DateInterval;
+use DateTime;
 
 class AdminController extends Controller
 {
@@ -1413,6 +1416,8 @@ class AdminController extends Controller
             ],200);
         }
 
+        $ojaSub = OjaSubscription::find($request->subscription_id);
+
         $nowDate = Carbon::now();
         $toDate = Carbon::parse($request->end_date);
         $fromDate = Carbon::parse($request->start_date);
@@ -1428,45 +1433,72 @@ class AdminController extends Controller
         $fromDate1 = Carbon::now();
         $extend_days = $toDate1->diffInDays($fromDate1);
 
-        if($months <= 31 && $months >= 28){ // one month
-            $duration_timestamp = strtotime(Carbon::now()->addDays((int)$months)->toDateTimeString());
-            $expiryNotice = strtotime(Carbon::now()->addDays((int)$months)->subDays(7)->toDateTimeString());
-        }else{ // one year
-            $duration_timestamp = strtotime(Carbon::now()->addYears(1)->toDateTimeString());
-            $expiryNotice = strtotime(Carbon::now()->addYears(1)->subDays(7)->toDateTimeString());
+        if($request->sub_duration == 'monthly')
+        {
+            $date = now()->addMonth();
+            $expiryNotice = now()->addMonth()->subDays(7)->toDateString();
+            // if($months <= 31 && $months >= 28){ // one month
+                // $duration_timestamp = strtotime(Carbon::now()->addDays((int)$months)->toDateTimeString());
+                // $expiryNotice = strtotime(Carbon::now()->addDays((int)$months)->subDays(7)->toDateTimeString());
+            // }
+        } else {
+            $date = now()->addYear()->toDateString();
+            $expiryNotice = now()->addYear()->subDays(7)->toDateString();
+            // $duration_timestamp = strtotime(Carbon::now()->addYears(1)->toDateTimeString());
+            // $expiryNotice = strtotime(Carbon::now()->addYears(1)->subDays(7)->toDateTimeString());
         }
 
         if($request->sub_type == "renew"){
-            $duration_timestamp1 = date("Y-m-d H:i:s", $duration_timestamp);
             $subs = \App\Models\OjaSubscription::where("id", $request->subscription_id)->update([
-                'ends_at' => $duration_timestamp1,
-                'expiry_notify_at' => date("Y-m-d H:i:s", $expiryNotice),
+                'started_at' => now(),
+                'ends_at' => $date,
+                'expiry_notify_at' => $expiryNotice,
                 'renewed'=> \DB::raw('renewed+1'),
             ]);
-        }else{ // extend
-            $duration_timestamp = strtotime(Carbon::now()->addDays((int)$extend_days));
-            $duration_timestamp1 = date("Y-m-d H:i:s", $duration_timestamp);
-            $subs = \App\Models\OjaSubscription::where("id", $request->subscription_id)->update([
-                'ends_at' => $duration_timestamp1,
-                'expiry_notify_at' => date("Y-m-d H:i:s", $expiryNotice),
-                'extended'=> \DB::raw('extended+1'),
-            ]);
-        }
 
-        if($subs){
-            if($request->sub_type == "renew"){
-                $caption1 = "renewed";
-                $caption2 = "renewing";
-            }else{
-                $caption1 = "extended";
-                $caption2 = "extending";
-            }
+            $caption1 = "renewed";
+
             return response()->json([
                 'status' => 'success',
-                'message' => "Subscription has been $caption1 by $extend_days days",
+                'message' => "Subscription has been $caption1 $request->sub_duration",
+                'data' => ''
+            ],200);
+        }else{ // extend
+            // $duration_timestamp = strtotime(Carbon::now()->addDays((int)$request->extend_end_date));
+            // $duration_timestamp1 = date("Y-m-d H:i:s", $request->extend_end_date);
+
+            $dateTime = new DateTime($request->extend_end_date);
+            // Set the specific time
+            $dateTime->setTime(14, 3, 26);
+            // Get the formatted result
+            $result = $dateTime->format('Y-m-d H:i:s');
+
+            // Subtract 7 days
+            $dateTime->sub(new DateInterval('P7D'));
+            // Get the formatted result
+            $notifyresult = $dateTime->format('Y-m-d H:i:s');
+            
+            $subs = \App\Models\OjaSubscription::where("id", $request->subscription_id)->update([
+                'ends_at' => $result,
+                'expiry_notify_at' => $notifyresult,
+                'extended'=> \DB::raw('extended+1'),
+            ]);
+
+            $caption1 = "extended";
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "Subscription has been $caption1",
                 'data' => ''
             ],200);
         }
+
+        if($request->sub_type == "renew"){
+            $caption2 = "renewing";
+        }else{
+            $caption2 = "extending";
+        }
+
         return response()->json([
             'status' => 'error',
             'message' => "Error in $caption2 subscription",
@@ -3151,6 +3183,80 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'danger',
             'message' => "Field doesn't match, Try Again!"
+        ]);
+    }
+
+    public function sendNewsletter(Request $request)
+    {
+        $this->validate($request, [
+            'subject' => ['required', 'string', 'max:255'],
+            'message' => ['required'],
+            'attachment' => ['nullable', 'file', 'max:5120'], // Max size in kilobytes (5MB = 5120KB)
+        ]);
+
+        $subscribers = Newsletter::all();
+
+        foreach ($subscribers as $subscriber) {
+            Mail::to($subscriber->email)->send(new NewsletterMail($request->subject, $request->message, $request->file('attachment')));
+        }
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Newsletter sent successfully!'
+        ]);
+    }
+
+    public function download($filename)
+    {
+        $path = 'attachment/' . $filename;
+
+        return response()->download(storage_path('app/public/' . $path), $filename);
+    }
+
+    public function payment_gateway()
+    {
+        $gateways = PaymentGateway::latest()->get();
+
+        return view('Admin.gateway.payment_gateway', [
+            'gateways' => $gateways
+        ]);
+    }
+
+    public function viewPaymentGateway($id)
+    {
+        // Fetch PaymentGateway details from the database
+        $paymentGateway = PaymentGateway::find($id);
+
+        // You can return a view or JSON response based on your needs
+        return response()->json($paymentGateway);
+    }
+
+    public function updatePaymentGateway(Request $request)
+    {
+        $this->validate($request, [
+            'id' => ['required', 'integer'],
+        ]);
+
+        $gateway = PaymentGateway::find($request->id);
+
+        $gateway->update([
+            'PAYSTACK_PUBLIC_KEY' => $request->PAYSTACK_PUBLIC_KEY,
+            'PAYSTACK_SECRET_KEY' => $request->PAYSTACK_SECRET_KEY,
+            'FLW_PUBLIC_KEY' => $request->FLW_PUBLIC_KEY,
+            'FLW_SECRET_KEY' => $request->FLW_SECRET_KEY,
+            'PAYPAL_MODE' => $request->PAYPAL_MODE,
+            'PAYPAL_CURRENCY' => $request->PAYPAL_CURRENCY,
+            'PAYPAL_SANDBOX_API_CERTIFICATE' => $request->PAYPAL_SANDBOX_API_CERTIFICATE,
+            'PAYPAL_CLIENT_ID' => $request->PAYPAL_CLIENT_ID,
+            'PAYPAL_CLIENT_SECRET' => $request->PAYPAL_CLIENT_SECRET,
+            'STRIPE_KEY' => $request->STRIPE_KEY,
+            'STRIPE_SECRET' => $request->STRIPE_SECRET,
+            'status' => $request->status,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => $gateway->name .' update successful.'
         ]);
     }
 

@@ -38,6 +38,7 @@
 
     
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 
     <link rel='stylesheet' href="{{ asset('assets/css/sweetalert2.min.css') }}">
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
@@ -167,15 +168,18 @@
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
-
-    
-
     <script src="{{ asset('assets/js/amcharts.js') }}"></script> 
     <script src="{{ asset('assets/js/pie.js') }}"></script> 
     <script src="{{ asset('assets/js/light.js') }}"></script>
     
-
     <script>
+        // Initialize the CKEditor on the textarea
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+
         function myFunction2() {
             // Get the text field
             var input = document.getElementById("myInput");

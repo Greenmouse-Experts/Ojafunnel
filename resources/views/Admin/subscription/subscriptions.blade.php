@@ -120,6 +120,18 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-12 ext_duration">
+                                        <label>Select Subscription Duration</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <select name="sub_duration" class="input sub_duration">
+                                                    <option value="">-- Select One --</option>
+                                                    <option value="monthly" selected>Monthly</option>
+                                                    <option value="yearly">Yearly</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <input type="hidden" name="start_date" class="input start_date"> 
                                     <input type="hidden" name="end_date" class="input end_date"> 
@@ -129,7 +141,7 @@
                                         <label>Extend to</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="date" name="end_date" class="input end_date"> 
+                                                <input type="date" name="extend_end_date" class="input end_date"> 
                                                 <div class="expiry_info" style="font-size:12px;margin-top:3px"></div>
                                             </div> 
                                         </div> 

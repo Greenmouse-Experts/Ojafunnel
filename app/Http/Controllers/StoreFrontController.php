@@ -370,6 +370,8 @@ class StoreFrontController extends Controller
 
     protected function checkoutPaymentWithoutPromotion(Request $request, $product_id)
     {
+        return $request->all();
+        
         // dd($request->amountToPay, $request->couponID);
 
         $store = Store::where('name', $request->storename)->first();

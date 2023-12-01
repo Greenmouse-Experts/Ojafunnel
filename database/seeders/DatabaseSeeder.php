@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\PaymentGateway;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,6 +27,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(CountrySeeder::class);
         // $this->call(LanguageSeeder::class);
         // $this->call(AdminSeeder::class);
-        $this->call(SiteFeaturesSeeder::class);
+        // $this->call(SiteFeaturesSeeder::class);
+        $this->call(PaymentGatewaySeeder::class);
     }
 }

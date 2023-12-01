@@ -32,6 +32,11 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="col-sm-3">
+                            <div class="mt-lg-4">
+                                <button data-bs-toggle="modal" data-bs-target="#send" class="btn btn-primary d-block">Send Newsletter</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,4 +122,66 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="send" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Editt">
+                        <form method="POST" action="{{route('send.newsletter')}}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="form">
+                                <p class="mt-n4"><b>Broadcast</b></p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label>Subject</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" placeholder="Enter subject" name="subject" class="input" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>Message</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <textarea id="editor" class="input" name="message"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <label>Attachment</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="file" placeholder="Attachment" rows="20" name="attachment" class="input"> 
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                    <div class="col-lg-12 mb-4">
+                                        <div class="boding">
+                                            <button type="submit">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    /* Add some basic styling for the editor */
+    #editor {
+        width: 100%;
+        height: 200px;
+        padding: 10px;
+    }
+</style>
 @endsection

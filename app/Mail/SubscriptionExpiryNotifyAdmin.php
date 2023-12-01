@@ -24,7 +24,7 @@ class SubscriptionExpiryNotifyAdmin extends Mailable
     public function __construct($user, $messages)
     {
         $this->user = $user;
-        $this->message = $messages;
+        $this->messages = $messages;
     }
 
     /**

@@ -49,6 +49,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::post('/renew-extend', [App\Http\Controllers\Admin\AdminController::class, 'renew_extend'])->name('renewExtend'); //
             Route::post('/react-feature', [App\Http\Controllers\Admin\AdminController::class, 'react_feature']); //
 
+            Route::post('/send-newsletter', [App\Http\Controllers\Admin\AdminController::class, 'sendNewsletter'])->name('send.newsletter');
+            Route::get('/download-attachment/{filename}', [App\Http\Controllers\Admin\AdminController::class, 'download'])->name('download.attachment');
 
             // Email Marketing
             Route::get('/email-marketing/validate-email', [App\Http\Controllers\Admin\AdminController::class, 'validate_email'])->name('validate-email'); //
@@ -194,6 +196,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/integration/disable/{id}', [App\Http\Controllers\Admin\AdminController::class, 'integration_disable'])->name('admin.integration.disable');
             Route::post('/integration/delete/{id}', [App\Http\Controllers\Admin\AdminController::class, 'integration_delete'])->name('admin.integration.delete');
 
+            Route::get('/payment/gateway', [App\Http\Controllers\Admin\AdminController::class, 'payment_gateway'])->name('admin.payment.gateway');
+            Route::get('/view/payment/gateway/{id}', [App\Http\Controllers\Admin\AdminController::class, 'viewPaymentGateway'])->name('viewPaymentGateway');
+            Route::post('/update/payment/gateway', [App\Http\Controllers\Admin\AdminController::class, 'updatePaymentGateway'])->name('updatePaymentGateway');
         }
     );
 });
