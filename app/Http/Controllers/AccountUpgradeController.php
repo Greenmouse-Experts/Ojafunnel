@@ -64,7 +64,6 @@ class AccountUpgradeController extends Controller
 
     public function upgrade_account($amount)
     {
-
         $amount = Crypt::decrypt($amount);
 
         $user = User::findorfail(Auth::user()->id);

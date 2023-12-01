@@ -42,6 +42,8 @@ Route::patch('update-cart', [App\Http\Controllers\StoreFrontController::class, '
 Route::delete('remove-from-cart', [App\Http\Controllers\StoreFrontController::class, 'remove'])->name('remove.from.cart');
 Route::get('generatePdf', [App\Http\Controllers\ShopFrontController::class, 'Pdf'])->name('generate.pdf');
 
+Route::get('/retrieve/payment/{name}', [App\Http\Controllers\StoreFrontController::class, 'retrievePayment'])->name('retrievePayment');
+
 // Shop
 Route::get('/course/shop/{shopname}', [App\Http\Controllers\ShopFrontController::class, 'shopFront'])->name('user.shops.link');
 Route::get('/add/course/cart/{id}', [App\Http\Controllers\ShopFrontController::class, 'addCourseToCart'])->name('add.course.to.cart');

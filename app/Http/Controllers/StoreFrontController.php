@@ -6,6 +6,7 @@ use App\Mail\StoreFrontMail;
 use App\Models\OjafunnelNotification;
 use App\Models\OrderItem;
 use App\Models\OrderUser;
+use App\Models\PaymentGateway;
 use App\Models\Store;
 use App\Models\StoreCoupon;
 use App\Models\StoreOrder;
@@ -148,6 +149,8 @@ class StoreFrontController extends Controller
 
     protected function checkoutPaymentWithPromotion(Request $request, $promotion_id, $product_id)
     {
+        return $request->all();
+
         $store = Store::where('name', $request->storename)->first();
         $cart = session()->get('cart');
 
@@ -370,8 +373,6 @@ class StoreFrontController extends Controller
 
     protected function checkoutPaymentWithoutPromotion(Request $request, $product_id)
     {
-        return $request->all();
-        
         // dd($request->amountToPay, $request->couponID);
 
         $store = Store::where('name', $request->storename)->first();
@@ -517,5 +518,14 @@ class StoreFrontController extends Controller
             'success' => false,
             'message' => "Coupon code doesn't exist or it has expired.",
         ]);
+    }
+
+    public function retrievePayment($name)
+    {
+        // Fetch PaymentGateway details from the database
+        $paymentGateway = PaymentGateway::where('name', $name)->first();
+
+        // You can return a view or JSON response based on your needs
+        return response()->json($paymentGateway);
     }
 }

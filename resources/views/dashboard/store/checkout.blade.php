@@ -382,6 +382,7 @@
   <script src="{{URL::asset('dash/assets/libs/metismenu/metisMenu.min.js')}}"></script>
   <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
   <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
+  <script src="https://checkout.flutterwave.com/v3.js"></script>
 
   <script>
     var token = $('#txt_token1').val();
@@ -431,17 +432,58 @@
     })
 
     $("#makePayment").click(function() {
-        console.log($('#paymemtOptions').val());
-
-        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '' || $('#paymemtOptions').val() == '') {
-            alert('Please fill the asterisks field to continue');
-            $('#error').html('Please fill the asterisks field to continue');
+        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '' || !$('input[name="paymentOptions"]:checked').val()) {
+            alert('Please fill in the required fields to continue');
+            $('#error').html('Please fill in the required fields to continue');
         } else {
-            if($('#paymemtOptions').val() == 'Flutterwave' || $('#paymemtOptions').val() == 'Stripe' || $('#paymemtOptions').val() == 'Paypal')
-            {
+            var selectedPaymentOption = $('input[name="paymentOptions"]:checked').val();
+
+            if (selectedPaymentOption == 'Stripe' || selectedPaymentOption == 'Paypal') {
                 // Your conditions are met, trigger the form submission
                 $('#checkoutForm').submit();
-            } else {
+            } else if (selectedPaymentOption == 'Flutterwave') {
+                $.ajax({
+                    method: 'GET',
+                    url: '/retrieve/payment/' + 'Flutterwave', // Replace with your actual backend endpoint
+                    success: function(response) {
+                        // Get the base URL of the current page
+                        var baseUrl = window.location.origin;
+
+                        // Configure FlutterwaveCheckout
+                        FlutterwaveCheckout({
+                            public_key: response.FLW_PUBLIC_KEY,
+                            tx_ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+                            amount: document.getElementById("AmountToPay").value, // Amount in cents (e.g., $50.00 is 5000 cents)
+                            currency: 'NGN',
+                            payment_options: "card",
+                            customer: {
+                                email: $('#email').val(), // Replace with your user's email
+                            },
+                            customizations: {
+                                title: 'Product Purchase',
+                                description: 'Purchased Products',
+                                logo: baseUrl + '/dash/assets/images/Logo-fav.png', // Replace 'your-logo.png' with the actual path to your logo in the public folder
+                            },
+                            callback: function(response) {
+                                console.log(response);
+                                // Handle the response after successful payment
+                                alert('Payment successful!');
+                                $( "#checkoutForm" ).submit();
+                            },
+                            onclose: function() {
+                                console.log('Payment closed');
+                                // Handle actions when the payment modal is closed
+                            }
+                        });
+
+                        // Trigger the Flutterwave Checkout modal
+                        // handler.open();
+                    },
+                    error: function(error) {
+                        console.error("Error fetching payment details:", error);
+                    }
+                });
+            } else if (selectedPaymentOption == 'Paystack') {
                 var handler = PaystackPop.setup({
                     key: 'pk_test_77297b93cbc01f078d572fed5e2d58f4f7b518d7',
                     email: $('#email').val(),
@@ -459,6 +501,9 @@
                     }
                 });
                 handler.openIframe();
+            } else {
+                // Handle other payment gateways or show an error message
+                alert('Unsupported payment option');
             }
         }
     })
