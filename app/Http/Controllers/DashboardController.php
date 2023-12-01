@@ -1209,6 +1209,8 @@ class DashboardController extends Controller
     {
         $whatsapp_campaigns = WaCampaigns::where('user_id', Auth::user()->id)->get();
 
+        // return $whatsapp_campaigns;
+
         return view('dashboard.whatsappAutomation', [
             'username' => $username,
             'whatsapp_campaigns' => $whatsapp_campaigns
@@ -1549,6 +1551,9 @@ class DashboardController extends Controller
                         $waCaimpagn->start_time = $request->start_time;
                         $waCaimpagn->next_due_date = $request->start_date;
                         $waCaimpagn->frequency_cycle = $request->frequency_cycle;
+
+                        // notify every newly added contact
+                        $wa_campaign->notify_every_newcontact = (isset($request->notify_every_newcontact)) ? true : false;
 
                         $waCaimpagn->save();
 
@@ -2017,12 +2022,13 @@ class DashboardController extends Controller
 
     public function editWAbroadcast(Request $request, $username)
     {
-        $request->validate(['name' => 'required']);
+        $request->validate(['name' => 'required', 'template1_message' => 'required']);
 
         $whatsapp_campaign = WaCampaigns::find($request->id);
 
         $whatsapp_campaign->update([
-            'name' => $request->name
+            'name' => $request->name,
+            'template1_message' => $request->template1_message
         ]);
 
         return back()->with([

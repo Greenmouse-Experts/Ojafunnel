@@ -239,6 +239,9 @@ Route::prefix('{username}')->group(function () {
 
                     Route::post('/whatsapp-automation/campaign/edit', [App\Http\Controllers\DashboardController::class, 'editWAbroadcast'])->name('user.wa.campaign.edit');
                     Route::post('/whatsapp-automation/campaign/delete', [App\Http\Controllers\DashboardController::class, 'deleteWAbroadcast'])->name('user.wa.campaign.delete');
+
+                    // Automation Scheduled Messages
+
                 }
             );
             Route::prefix('/ecommerce')->group(

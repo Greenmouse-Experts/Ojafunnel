@@ -65,7 +65,7 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <select name="whatsapp_account" class="bg-light w-100 py-2 rounded px-2 fs-6">
-                                                        <option value="">Choose from conneted WA Account list</option> 
+                                                        <option value="">Choose from conneted WA Account list</option>
                                                         @forelse ($whatsapp_numbers as $whatsapp_number)
                                                             @php
                                                                 $wa_account_val = $whatsapp_number['id'] . '-' . $whatsapp_number['phone_number'] . '-' . $whatsapp_number['status'] . '-' . $whatsapp_number['full_jwt_session'];
@@ -78,7 +78,7 @@
                                                                 <option value="{{ $whatsapp_number['id'] }}-{{ $whatsapp_number['phone_number'] }}-{{ $whatsapp_number['status'] }}-{{ $whatsapp_number['full_jwt_session'] }}">
                                                                     {{ $whatsapp_number['phone_number'] }} ({{ $whatsapp_number['status'] }})
                                                                 </option>
-                                                            @endif 
+                                                            @endif
                                                         @empty
                                                             <option value="" disabled>No WA account found</option>
                                                         @endforelse
@@ -95,11 +95,11 @@
                                                 @if($contact_lists->isEmpty())
                                                     <option value="">No Contact List</option>
                                                 @else
-                                                @foreach($contact_lists as $contact_list)   
-                                                    <option value="{{$contact_list->id}}" 
+                                                @foreach($contact_lists as $contact_list)
+                                                    <option value="{{$contact_list->id}}"
                                                         {{ old('contact_list') == $contact_list->id ? "selected" : "" }}>
                                                         {{$contact_list->name}}
-                                                    </option> 
+                                                    </option>
                                                 @endforeach
                                                 @endif
                                             </select>
@@ -109,7 +109,7 @@
                                         <label>Message Template :</label>
                                         <div class="col-md-12 mb-4">
                                             <select class="bg-light w-100 py-2 rounded px-2 fs-6" id="template" name="template">
-                                                <option value="">Choose from template</option> 
+                                                <option value="">Choose from template</option>
                                                 <option value="template1" {{ old('template') == 'template1' ? "selected" : "" }}>
                                                     Template 1 (Text)
                                                 </option>
@@ -135,7 +135,7 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
 
                                     <div id="template2" style="display: none;">
@@ -150,7 +150,7 @@
                                                 </div>
                                             </div>
                                         </div>
-    
+
                                         <div class="col-lg-12">
                                             <p>
                                                 Upload Attachment :
@@ -171,7 +171,7 @@
                                                         class="mt-4 w-100" />
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
 
                                     <div id="template3" style="display: none;">
@@ -223,8 +223,8 @@
                                                     <input type="text" placeholder="Enter phone CTA" name="template3_phone_cta" class="input" value="{{ old('template3_phone_cta') }}">
                                                 </div>
                                             </div>
-                                        </div> 
-                                    </div> 
+                                        </div>
+                                    </div>
 
                                     <div class="col-12 mb-4">
                                         <div class="row">
@@ -285,6 +285,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-12 mt-5">
+                                                <label>Notify Every new members</label>
+                                                <select name="notify_every_newcontact">
+                                                    <option value="false">No</option>
+                                                    <option value="true">Yes</option>
+                                                </select>
+                                            </div>
                                             <div id="end_period" class="col-md-12" style="display: none;">
                                                 <div class="row">
                                                     <div class="col-md-12 mt-5" >
@@ -307,7 +314,7 @@
                                                         <button class="btn px-3" style="color: #714091; border:1px solid #714091; background:#fff;">
                                                             Cancel
                                                         </button>
-                                                    </a> 
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -318,7 +325,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     {{-- <div class="modal fade" id="chooseIntegrationGateways" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
@@ -503,43 +510,43 @@
         if (event.target.value === 'template1') {
             template1.style.display = 'block';
             template2.style.display = 'none';
-            template3.style.display = 'none'; 
+            template3.style.display = 'none';
         } else if (event.target.value === 'template2') {
             template1.style.display = 'none';
             template2.style.display = 'block';
-            template3.style.display = 'none'; 
+            template3.style.display = 'none';
         } else if (event.target.value === 'template3') {
             template1.style.display = 'none';
             template2.style.display = 'none';
-            template3.style.display = 'block'; 
+            template3.style.display = 'block';
         } else {
             template1.style.display = 'none';
             template2.style.display = 'none';
-            template3.style.display = 'none'; 
+            template3.style.display = 'none';
         }
     });
 
     function templateToggle() {
-        const template = document.getElementById('template')  
+        const template = document.getElementById('template')
 
         if (template.value === 'template1') {
             template1.style.display = 'block';
             template2.style.display = 'none';
-            template3.style.display = 'none'; 
+            template3.style.display = 'none';
         } else if (template.value === 'template2') {
             template1.style.display = 'none';
             template2.style.display = 'block';
-            template3.style.display = 'none'; 
+            template3.style.display = 'none';
         } else if (template.value === 'template3') {
             template1.style.display = 'none';
             template2.style.display = 'none';
-            template3.style.display = 'block'; 
+            template3.style.display = 'block';
         } else {
             template1.style.display = 'none';
             template2.style.display = 'none';
-            template3.style.display = 'none'; 
+            template3.style.display = 'none';
         }
-    } 
+    }
 
     function scheduleToggle() {
         let schedule = document.getElementById('message_timing_schedule');
@@ -549,18 +556,18 @@
         }
     }
 
-    function frquencyToggle() { 
+    function frquencyToggle() {
        let selectFrenquncy = document.getElementById('selectFrenquncy')
 
        if(selectFrenquncy.value == 'daily' || selectFrenquncy.value == 'weekly' || selectFrenquncy.value == 'monthly' || selectFrenquncy.value == 'yearly' || selectFrenquncy.value == 'custom') {
         document.getElementById('end_period').style.display = 'block'
-       } 
+       }
 
        if(selectFrenquncy.value == 'custom'){
-            document.getElementById('frq_custom').style.display = 'block'; 
+            document.getElementById('frq_custom').style.display = 'block';
        }
     }
-    
+
     frquencyToggle()
     scheduleToggle()
     templateToggle()
