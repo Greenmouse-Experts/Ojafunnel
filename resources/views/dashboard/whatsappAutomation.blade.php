@@ -136,14 +136,14 @@
                                         <!-- <th scope="col">Opens</th> -->
                                         {{-- <th scope="col">Unsubscribed</th> --}}
                                     </tr>
-                                </thead>  
+                                </thead>
                                 <tbody>
                                     @forelse ($whatsapp_campaigns as $whatsapp_campaign)
                                         <tr>
                                             <th scope="row">{{$whatsapp_campaign->id}}</th>
                                             <th scope="row" class="text-capitalize">{{$whatsapp_campaign->name}}</th>
                                             <td>
-                                                <p class='text-bold-600'> {{$whatsapp_campaign->whatsapp_account}} </p> 
+                                                <p class='text-bold-600'> {{$whatsapp_campaign->whatsapp_account}} </p>
                                             </td>
                                             <td>
                                                 {{ count($whatsapp_campaign->wa_queues) }}
@@ -156,45 +156,45 @@
                                             </td>
                                             <td>
                                                 @if ($whatsapp_campaign->template == 'template1')
-                                                    {{ 'Template 1 (Text) '}}  
-                                                @endif 
+                                                    {{ 'Template 1 (Text) '}}
+                                                @endif
 
                                                 @if ($whatsapp_campaign->template == 'template2')
-                                                    {{ 'Template 2 (Text & File) '}}  
-                                                @endif 
+                                                    {{ 'Template 2 (Text & File) '}}
+                                                @endif
 
                                                 @if ($whatsapp_campaign->template == 'template3')
-                                                    {{ 'Template 3 (Header, Text, Footer, Link, & Call) '}}  
-                                                @endif 
+                                                    {{ 'Template 3 (Header, Text, Footer, Link, & Call) '}}
+                                                @endif
                                             </td>
-                                            <td>   
+                                            <td>
                                                 @if ($whatsapp_campaign->message_timing == 'Immediately')
                                                     @if (count($whatsapp_campaign->wa_queues->where('status', 'Waiting')) > 0)
                                                         <span class="badge bg-info font-size-10">{{ 'Ongoing' }}</span>
                                                     @else
                                                         <span class="badge bg-success font-size-10">{{ 'Completed' }}</span>
-                                                    @endif 
+                                                    @endif
                                                 @else
                                                     <span class="badge bg-success font-size-10">{{ 'Scheduled' }}</span>
-                                                @endif  
+                                                @endif
                                             </td>
                                             <td> {{$whatsapp_campaign->created_at->toDayDateTimeString()}} </td>
                                             <td>
-                                                <div class="dropdown dropstart"> 
-                                                    <ul class="list-unstyled hstack gap-1 mb-0"> 
+                                                <div class="dropdown dropstart">
+                                                    <ul class="list-unstyled hstack gap-1 mb-0">
                                                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="Overview">
                                                             <a href="{{ route('user.whatsapp.automation.campaign', ['username' => Auth::user()->id, 'campaign_id' => $whatsapp_campaign->id]) }}" class="btn btn-sm btn-soft-info"><i class="mdi mdi-eye-outline"></i></a>
                                                         </li>
                                                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                                             <a href="#edit-{{ $whatsapp_campaign->id }}" data-bs-toggle="modal" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-pencil-outline"></i></a>
-                                                        </li>  
+                                                        </li>
                                                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                                             <a href="#delete-{{ $whatsapp_campaign->id }}" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                            </td> 
-                                            
+                                            </td>
+
                                             {{-- modal --}}
                                             <div class="modal fade" id="edit-{{ $whatsapp_campaign->id }}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
@@ -213,7 +213,12 @@
                                                                                 <label for="Name">Campaign name</label>
                                                                                 <input type="hidden" name="id" value="{{ $whatsapp_campaign->id }}">
                                                                                 <input type="text" name="name" value="{{ $whatsapp_campaign->name }}" placeholder="Enter your Campaign name"/>
-                                                                            </div>   
+                                                                            </div>
+
+                                                                            <div class="col-lg-12 mb-4">
+                                                                                <label for="Name">Campaign Message</label>
+                                                                                <textarea type="text" name="template1_message">{{ $whatsapp_campaign->template1_message }}</textarea>
+                                                                            </div>
                                                                             <div class="text-end mt-2">
                                                                                 <a href="#" class="text-decoration-none">
                                                                                     <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
@@ -241,7 +246,7 @@
                                                         <div class="modal-body">
                                                             <div class="Editt">
                                                                 <form action="{{ route('user.wa.campaign.delete', ['username' => Auth::user()->username ]) }}" method="POST">
-                                                                    @csrf 
+                                                                    @csrf
                                                                     <div class="form">
                                                                         <div class="row">
                                                                             <h3 style="text-align: center; margin-bottom: 15%;" >Are you sure you want to delete this campaign?</h3>
@@ -274,16 +279,16 @@
                                         </tr>
                                     @empty
                                         No whatsapp automation yet!
-                                    @endforelse 
-                                </tbody> 
+                                    @endforelse
+                                </tbody>
                             </table>
                         </div>
                     </div>
-                </div> 
+                </div>
                 <div class="col-lg-2"></div>
             </div>
         </div>
-    </div> 
+    </div>
 <style>
     .btn-list{
         border: 0;
