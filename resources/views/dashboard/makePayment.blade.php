@@ -6,21 +6,21 @@
     var current_currency;
     var multiplier = 1;
 
-    if(currency == "USD"){
-        current_currency = 'USD';
-        multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('USD')}}");
-        tamount  = '{{$price}}' * multiplier;
-    } else if(currency == "GBP") {
-        current_currency = 'GBP';
-        multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('GBP')}}");
-        tamount  = '{{$price}}' * multiplier;
-    } else if(currency == "₦") {
-        current_currency = 'NGN';
-        tamount = 1 * Number.parseInt('{{$price}}');
-    } else {
-        current_currency = currency;
-        tamount = 1 * Number.parseInt('{{$price}}');
-    }
+    // if(currency == "USD"){
+    //     current_currency = 'USD';
+    //     multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('USD')}}");
+    //     tamount  = '{{$price}}' * multiplier;
+    // } else if(currency == "GBP") {
+    //     current_currency = 'GBP';
+    //     multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('GBP')}}");
+    //     tamount  = '{{$price}}' * multiplier;
+    // } else if(currency == "₦") {
+    //     current_currency = 'NGN';
+    //     tamount = 1 * Number.parseInt('{{$price}}');
+    // } else {
+    //     current_currency = currency;
+    //     tamount = 1 * Number.parseInt('{{$price}}');
+    // }
 
     function paySubscriptionWithPaystack(){
         $('#stripePayment').hide();
@@ -133,6 +133,7 @@
                             </h1>
                             @endforeach
                         @endif
+                        @if($currency == 'USD' || $currency == 'GBP')
                         <div class="form" style="display: none;" id="stripePayment">
                             <h5 class="mt-3 mb-3 font-size-15">For Stripe Payment</h5>
                             <div class="row">
@@ -145,18 +146,19 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                         <div class="row">
                             @foreach(App\Models\PaymentGateway::latest()->where('status', 'Active')->get() as $payment)
                                 <div class="col-12">
-                                    @if($payment->name == 'Paystack')
+                                    @if($payment->name == 'Paystack' && $currency == 'NGN')
                                         <button type="button">
                                             PAY WITH PAYSTACK
                                         </button>
-                                    @elseif($payment->name == 'Flutterwave')
+                                    @elseif(($payment->name == 'Flutterwave') && ($currency == 'NGN' || $currency == 'USD' || $currency == 'GBP'))
                                         <button type="button">
                                             PAY WITH FLUTTERWAVE
                                         </button>
-                                    @elseif($payment->name == 'Stripe')
+                                    @elseif(($payment->name == 'Stripe') && ($currency == 'USD' || $currency == 'GBP'))
                                         <form action="{{ route('user.upgrade.account.with.stripe', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post" id="checkoutForm">
                                             @csrf
                                             <button type="submit">

@@ -225,25 +225,25 @@ class AccountUpgradeController extends Controller
         $baseCurrency = CurrencyRate::getBaseCur('USD');
         $multiplier = 1;
 
-        if($currency == "USD"){
-            $current_currency = 'USD';
-            $baseCurrency = \App\Models\CurrencyRate::getBaseCur('USD');
-            $multiplier = (int) $baseCurrency;
-            $tamount  = $price * $multiplier;
-        } else if($currency == "GBP") {
-            $current_currency = 'GBP';
-            $baseCurrency = \App\Models\CurrencyRate::getBaseCur('GBP');
-            $multiplier = (int) $baseCurrency;
-            $tamount  = $price * $multiplier;
-        } else if($currency == "NGN") {
-            $current_currency = 'NGN';
-            $tamount = 1 * $price;
-        } else {
-            $current_currency = $currency;
-            $tamount = 1 * $price;
-        }
+        // if($currency == "USD"){
+        //     $current_currency = 'USD';
+        //     $baseCurrency = \App\Models\CurrencyRate::getBaseCur('USD');
+        //     $multiplier = (int) $baseCurrency;
+        //     $tamount  = $price * $multiplier;
+        // } else if($currency == "GBP") {
+        //     $current_currency = 'GBP';
+        //     $baseCurrency = \App\Models\CurrencyRate::getBaseCur('GBP');
+        //     $multiplier = (int) $baseCurrency;
+        //     $tamount  = $price * $multiplier;
+        // } else if($currency == "NGN") {
+        //     $current_currency = 'NGN';
+        //     $tamount = 1 * $price;
+        // } else {
+        //     $current_currency = $currency;
+        //     $tamount = 1 * $price;
+        // }
 
-        if($tamount <= 0)
+        if($price <= 0)
         {
             return back()->with([
                 'type' => 'danger',
@@ -258,8 +258,8 @@ class AccountUpgradeController extends Controller
             $stripe = new StripeClient($paymentGateway->STRIPE_SECRET);
 
             $stripe->paymentIntents->create([
-                'amount' => $tamount * 100,
-                'currency' => $current_currency,
+                'amount' => $price * 100,
+                'currency' => $currency,
                 'payment_method' => $request->payment_method,
                 'description' => 'Product payment with stripe',
                 'confirm' => true,
