@@ -169,15 +169,14 @@
                                 </div>
                             @endforeach
                             <div class="col-12">
-                                <form action="{{ route('user.upgrade.account.with.balance', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post">
+                                <form action="{{ route('user.upgrade.account.with.balance', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post" id="walletForm">
                                     @csrf
-                                    <button type="submit">
+                                    <button type="button" class="payment-button" data-action="wallet">
                                         PAY WITH WALLET BALANCE
                                     </button>
                                 </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-lg-8"></div>
@@ -189,6 +188,15 @@
 <!-- END layout-wrapper -->
 <script src="https://js.stripe.com/v3/"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.payment-button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var action = this.getAttribute('data-action');
+                document.getElementById('walletForm').submit(); // Submit the wallet form
+            });
+        });
+    });
+
     $.ajax({
         method: 'GET',
         url: '/retrieve/payment/' + 'Stripe', // Replace with your actual backend endpoint
