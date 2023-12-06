@@ -15,8 +15,11 @@ use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Models\OjafunnelNotification;
+use App\Models\PaymentGateway;
 use Illuminate\Support\Facades\Crypt;
 use Stripe;
+use Stripe\Exception\CardException;
+use Stripe\StripeClient;
 
 
 
@@ -58,6 +61,9 @@ class ShopFrontController extends Controller
         ];
 
         session()->put('cart', $cart);
+
+        // return $cart;
+
         return redirect()->back()->with('success', 'Course added to cart successfully!');
     }
 
@@ -183,6 +189,8 @@ class ShopFrontController extends Controller
 
     public function checkoutPaymentWithPromotion(Request $request, $promotion_id, $course_id)
     {
+        // return $request->all();
+
         $shop = Shop::where('name', $request->shopname)->first();
 
         $cart = session()->get('cart');
@@ -193,6 +201,32 @@ class ShopFrontController extends Controller
 
         foreach ($cart as $item) {
             $totalAmount += $item['price'];
+        }
+
+        if($request->paymentOptions == 'Stripe')
+        {
+            // Fetch PaymentGateway details from the database
+            $paymentGateway = PaymentGateway::where('name', 'Stripe')->first();
+
+            try {
+                $stripe = new StripeClient($paymentGateway->STRIPE_SECRET);
+
+                $stripe->paymentIntents->create([
+                    'amount' => $totalAmount * 100,
+                    'currency' => 'usd',
+                    'payment_method' => $request->payment_method,
+                    'description' => 'Product payment with stripe',
+                    'confirm' => true,
+                    'receipt_email' => $request->email,
+                    'automatic_payment_methods[enabled]' => true,
+                    'automatic_payment_methods[allow_redirects]' => 'never'
+                ]);
+            } catch (CardException $th) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => "There was a problem processing your payment."
+                ]);
+            }
         }
 
         $enroll = Enrollment::create([
@@ -329,6 +363,32 @@ class ShopFrontController extends Controller
 
         foreach ($cart as $item) {
             $totalAmount += $item['price'];
+        }
+
+        if($request->paymentOptions == 'Stripe')
+        {
+            // Fetch PaymentGateway details from the database
+            $paymentGateway = PaymentGateway::where('name', 'Stripe')->first();
+
+            try {
+                $stripe = new StripeClient($paymentGateway->STRIPE_SECRET);
+
+                $stripe->paymentIntents->create([
+                    'amount' => $totalAmount * 100,
+                    'currency' => 'usd',
+                    'payment_method' => $request->payment_method,
+                    'description' => 'Product payment with stripe',
+                    'confirm' => true,
+                    'receipt_email' => $request->email,
+                    'automatic_payment_methods[enabled]' => true,
+                    'automatic_payment_methods[allow_redirects]' => 'never'
+                ]);
+            } catch (CardException $th) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => "There was a problem processing your payment."
+                ]);
+            }
         }
 
         // dd($request->name, $request->email, $request->phoneNo, $request->address, $request->state, $request->country);

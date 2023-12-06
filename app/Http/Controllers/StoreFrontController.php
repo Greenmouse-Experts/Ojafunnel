@@ -19,9 +19,38 @@ use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use Exception;
+use Stripe;
+use Stripe\Exception\CardException;
+use Stripe\StripeClient;
+use Omnipay\Omnipay;
+use Omnipay\Common\CreditCard;
 
 class StoreFrontController extends Controller
 {
+    private $gateway;
+
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // Fetch PaymentGateway details from the database
+        $paymentGateway = PaymentGateway::where('name', 'Paypal')->first();
+
+        $this->gateway = Omnipay::create('PayPal_Rest');
+        $this->gateway->setClientId($paymentGateway->PAYPAL_CLIENT_ID);
+        $this->gateway->setSecret($paymentGateway->PAYPAL_CLIENT_SECRET);
+        if($paymentGateway->PAYPAL_MODE == 'sandbox')
+        {
+            $this->gateway->setTestMode(true);
+        } else {
+            $this->gateway->setTestMode(false);
+        }
+    }
+
     public function storeFront(Request $request)
     {
         $store = Store::latest()->where('name', $request->storename)->first();
@@ -149,7 +178,80 @@ class StoreFrontController extends Controller
 
     protected function checkoutPaymentWithPromotion(Request $request, $promotion_id, $product_id)
     {
-        return $request->all();
+        // return $request->all();
+
+        if($request->paymentOptions == 'Paypal')
+        {
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone_no' => $request->phoneNo,
+                'address' => $request->address,
+                'state' => $request->state,
+                'country' => $request->country,
+                'cart' => session()->get('cart'),
+                'storename' => $request->storename,
+                'storename' => $request->amountToPay,
+                'couponID' => $request->couponID
+            ];
+
+            // Fetch PaymentGateway details from the database
+            $paymentGateway = PaymentGateway::where('name', 'Paypal')->first();
+
+            // try {
+                $response = $this->gateway->purchase(array(
+                    'amount' => $request->amountToPay,
+                    'description' => $data,
+                    'currency' => $paymentGateway->PAYPAL_CURRENCY,
+                    'returnUrl' => route('success.payment'),
+                    'cancelUrl' => route('cancel.payment')
+                ))->send();
+
+                return  $response->redirect();
+
+                if ($response->isRedirect()) {
+                    $response->redirect();
+                }
+                else {
+                    return back()->with(
+                        'danger',
+                        $response->getMessage()
+                    );
+                }
+            // } catch (\Throwable $th) {
+            //     return back()->with(
+            //         'danger',
+            //         $th->getMessage()
+            //     );
+            // }
+
+        }
+
+        if($request->paymentOptions == 'Stripe')
+        {
+            // Fetch PaymentGateway details from the database
+            $paymentGateway = PaymentGateway::where('name', 'Stripe')->first();
+
+            try {
+                $stripe = new StripeClient($paymentGateway->STRIPE_SECRET);
+
+                $stripe->paymentIntents->create([
+                    'amount' => $request->amountToPay * 100,
+                    'currency' => 'usd',
+                    'payment_method' => $request->payment_method,
+                    'description' => 'Product payment with stripe',
+                    'confirm' => true,
+                    'receipt_email' => $request->email,
+                    'automatic_payment_methods[enabled]' => true,
+                    'automatic_payment_methods[allow_redirects]' => 'never'
+                ]);
+            } catch (CardException $th) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => "There was a problem processing your payment."
+                ]);
+            }
+        }
 
         $store = Store::where('name', $request->storename)->first();
         $cart = session()->get('cart');
@@ -373,7 +475,31 @@ class StoreFrontController extends Controller
 
     protected function checkoutPaymentWithoutPromotion(Request $request, $product_id)
     {
-        // dd($request->amountToPay, $request->couponID);
+        if($request->paymentOptions == 'Stripe')
+        {
+            // Fetch PaymentGateway details from the database
+            $paymentGateway = PaymentGateway::where('name', 'Stripe')->first();
+
+            try {
+                $stripe = new StripeClient($paymentGateway->STRIPE_SECRET);
+
+                $stripe->paymentIntents->create([
+                    'amount' => $request->amountToPay * 100,
+                    'currency' => 'usd',
+                    'payment_method' => $request->payment_method,
+                    'description' => 'Product payment with stripe',
+                    'confirm' => true,
+                    'receipt_email' => $request->email,
+                    'automatic_payment_methods[enabled]' => true,
+                    'automatic_payment_methods[allow_redirects]' => 'never'
+                ]);
+            } catch (CardException $th) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => "There was a problem processing your payment."
+                ]);
+            }
+        }
 
         $store = Store::where('name', $request->storename)->first();
         $cart = session()->get('cart');
@@ -527,5 +653,55 @@ class StoreFrontController extends Controller
 
         // You can return a view or JSON response based on your needs
         return response()->json($paymentGateway);
+    }
+
+    public function paymentSuccess(Request $request)
+    {
+        if ($request->input('paymentId') && $request->input('PayerID')) {
+            $transaction = $this->gateway->completePurchase(array(
+                'payer_id' => $request->input('PayerID'),
+                'transactionReference' => $request->input('paymentId')
+            ));
+
+            $response = $transaction->send();
+
+            if ($response->isSuccessful()) {
+
+                $arr = $response->getData();
+
+                return $arr;
+
+                // $training = Training::find($arr['transactions'][0]['description']);
+
+                // $training->update([
+                //     'status' => 'Paid'
+                // ]);
+
+                return back()->with(
+                    'success',
+                    'Thank you, Your training application has been successfully submitted.'
+                );
+            }
+            else{
+                return back()->with(
+                    'danger',
+                    $response->getMessage()
+                );
+            }
+        }
+        else{
+            return back()->with(
+                'danger',
+                'Payment declined!!'
+            );
+        }
+    }
+
+    public function paymentCancel()
+    {
+        return back()->with(
+            'danger',
+            'User declined the payment!'
+        );
     }
 }

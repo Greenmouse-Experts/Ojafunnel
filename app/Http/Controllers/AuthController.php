@@ -608,24 +608,7 @@ class AuthController extends Controller
 
     public function text()
     {
-        $client = new \GuzzleHttp\Client();
-
-        $response = $client->request('POST', 'https://api.smslive247.com/api/v4/sms', [
-        'body' => '{
-            "senderID":"Ojaa",
-            "messageText":"Welcome home",
-            "mobileNumber":"+2348161215848",
-            "route":"web"
-        }',
-        'headers' => [
-            'Authorization' => 'MA-d1081d4c-4068-465b-b7d9-6a3e91963748',
-            'accept' => 'application/json',
-            'content-type' => 'application/*+json',
-        ],
-        ]);
-
-
-        return $response;
+        return view('test');
     }
 
     public function copyText(Request $request)

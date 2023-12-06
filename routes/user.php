@@ -60,6 +60,7 @@ Route::prefix('user')->group(function () {
     // Account Upgrade
     Route::get('/upgrade/account/confirm/{plan_id}/{response}/{price}/{currency}', [App\Http\Controllers\AccountUpgradeController::class, 'upgrade_account_confirm'])->name('user.upgrade.account.confirm');
     Route::post('/upgrade/account-with-wallet/confirm/{plan_id}/{price}/{currency}', [App\Http\Controllers\AccountUpgradeController::class, 'upgrade_account_with_balance'])->name('user.upgrade.account.with.balance');
+    Route::post('/upgrade/account-with-stripe/confirm/{plan_id}/{price}/{currency}', [App\Http\Controllers\AccountUpgradeController::class, 'upgrade_account_with_stripe'])->name('user.upgrade.account.with.stripe');
 
     // Funding Account
     Route::get('/transaction/confirm/{response}/{amount}', [App\Http\Controllers\TransactionController::class, 'transaction_confirm'])->name('user.transaction.confirm');

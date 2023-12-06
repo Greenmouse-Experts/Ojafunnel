@@ -74,6 +74,8 @@
 
     <link rel='stylesheet' href="{{ asset('assets/css/sweetalert2.min.css') }}">
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
 
     <script>
         window.setTimeout(function() {

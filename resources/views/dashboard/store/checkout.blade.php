@@ -217,33 +217,12 @@
                                                         </div>
                                                     </div>
                                                     @endforeach
-                                                    {{-- <h5 class="mt-3 mb-3 font-size-15">For card Payment</h5> --}}
-                                                    <div class="form">
-                                                        <div class="row">
-                                                            {{-- <div class="col-lg-6 mb-4">
-                                                                <label for="Name">Name on card</label>
-                                                                <input type="text" name="name" placeholder="Enter card name" required />
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <label for="Name">Card Number</label>
-                                                                <input type="email" name="name" placeholder="0000 0000 0000 0000" required />
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <label for="Name">Expiry Date</label>
-                                                                <input type="date" name="name" placeholder="Enter expiry date" required />
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <label for="Name">CVV Code</label>
-                                                                <input type="date" name="name" placeholder="Enter cvv code" required />
-                                                            </div> --}}
-                                                            <div class="text-end mt-2">
-                                                                <a type="button" class="text-decoration-none">
-                                                                    <button type="button" class="btn px-4 py-1" id="activeconfirm" style="color: #714091; border: 1px solid #714091">
-                                                                        Next
-                                                                    </button>
-                                                                </a>
-                                                            </div>
-                                                        </div>
+                                                    <div class="text-end mt-2">
+                                                        <a type="button" class="text-decoration-none">
+                                                            <button type="button" class="btn px-4 py-1" id="activeconfirm" style="color: #714091; border: 1px solid #714091">
+                                                                Next
+                                                            </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -309,7 +288,27 @@
                                                                 </div>
                                                             </div>
                                                         </form>
-                                                        <div class="row mt-4">
+                                                        <div class="form" style="display: none;" id="stripePayment">
+                                                            <h5 class="mt-3 mb-3 font-size-15">For Stripe Payment</h5>
+                                                            <div class="row">
+                                                                <div class="col-12 mb-4">
+                                                                    <label for="Name">Name on card</label>
+                                                                    <input type="text" name="cardName" id="card-name" placeholder="Enter card name" required />
+                                                                </div>
+                                                                <div class="col-lg-6 mb-4">
+                                                                    <div id="card"></div>
+                                                                </div>
+                                                                <div class="row mt-4">
+                                                                    <div class="col-sm-6">
+                                                                        <button type="submit" class="btn btn-success text-white d-none d-sm-inline-block">
+                                                                            PLACE ORDER
+                                                                        </button>
+                                                                    </div> <!-- end col -->
+                                                                    <!-- end col -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-4" style="display: none;" id="paystackPayment">
                                                             <div class="col-sm-6">
                                                                 <button type="button" id="makePayment" class="btn btn-success text-white d-none d-sm-inline-block">
                                                                     PLACE ORDER
@@ -317,7 +316,6 @@
                                                             </div> <!-- end col -->
                                                             <!-- end col -->
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -355,7 +353,6 @@
         </div>
     </div>
 
-
   <footer class="footer">
     <div class="container">
       <div class="row">
@@ -374,7 +371,6 @@
   <input type="hidden" value="{{ csrf_token() }}" id="txt_token1">
   <input type="hidden" value="{{ url('/') }}/" id="site_url">
 
-
   <!-- JAVASCRIPT -->
   <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
@@ -382,9 +378,36 @@
   <script src="{{URL::asset('dash/assets/libs/metismenu/metisMenu.min.js')}}"></script>
   <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
   <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <script src="https://checkout.flutterwave.com/v3.js"></script>
 
   <script>
+    $(document).ready(function () {
+        // $('#paystackPayment').show();
+        // Handle radio button change event
+        $('input[name="paymentOptions"]').change(function () {
+            // Check if the selected option is Stripe
+            if ($(this).val() === 'Stripe') {
+                $('#stripePayment').show();
+                $('#paystackPayment').hide();
+            } else if ($(this).val() === 'Flutterwave') {
+                $('#stripePayment').hide();
+                $('#paystackPayment').show();
+            } else if ($(this).val() === 'Paypal') {
+                $('#stripePayment').hide();
+                $('#paystackPayment').show();
+            } else {
+                $('#stripePayment').hide();
+                $('#paystackPayment').show();
+            }
+        });
+
+        // Handle initial state
+        if ($('input[name="paymentOptions"]:checked').val() === 'Stripe') {
+            $('#stripePayment').show();
+        }
+    });
+
     var token = $('#txt_token1').val();
     var site_url = $('#site_url').val();
 
@@ -437,10 +460,13 @@
             $('#error').html('Please fill in the required fields to continue');
         } else {
             var selectedPaymentOption = $('input[name="paymentOptions"]:checked').val();
+            var checkoutForm = document.getElementById('checkoutForm');
 
-            if (selectedPaymentOption == 'Stripe' || selectedPaymentOption == 'Paypal') {
-                // Your conditions are met, trigger the form submission
-                $('#checkoutForm').submit();
+            if (selectedPaymentOption == 'Paypal') {
+                // Prevent the default form submission
+                event.preventDefault();
+                // Your conditions are met, trigger the form submission asynchronously
+                // checkoutForm.submit();
             } else if (selectedPaymentOption == 'Flutterwave') {
                 $.ajax({
                     method: 'GET',
@@ -475,32 +501,38 @@
                                 // Handle actions when the payment modal is closed
                             }
                         });
-
-                        // Trigger the Flutterwave Checkout modal
-                        // handler.open();
                     },
                     error: function(error) {
                         console.error("Error fetching payment details:", error);
                     }
                 });
             } else if (selectedPaymentOption == 'Paystack') {
-                var handler = PaystackPop.setup({
-                    key: 'pk_test_77297b93cbc01f078d572fed5e2d58f4f7b518d7',
-                    email: $('#email').val(),
-                    amount: document.getElementById("AmountToPay").value * 100,
-                    ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                    callback: function(response){
-                        // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
-                        // url = url.replace(':response', response.reference);
-                        // url = url.replace(':amount', document.getElementById("amount").value);
-                        // document.location.href=url;
-                        $( "#checkoutForm" ).submit();
+                $.ajax({
+                    method: 'GET',
+                    url: '/retrieve/payment/' + 'Paystack', // Replace with your actual backend endpoint
+                    success: function(response) {
+                        var handler = PaystackPop.setup({
+                            key: response.PAYSTACK_PUBLIC_KEY,
+                            email: $('#email').val(),
+                            amount: document.getElementById("AmountToPay").value * 100,
+                            ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                            callback: function(response){
+                                // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
+                                // url = url.replace(':response', response.reference);
+                                // url = url.replace(':amount', document.getElementById("amount").value);
+                                // document.location.href=url;
+                                $( "#checkoutForm" ).submit();
+                            },
+                            onClose: function(){
+                                alert('window closed');
+                            }
+                        });
+                        handler.openIframe();
                     },
-                    onClose: function(){
-                        alert('window closed');
+                    error: function(error) {
+                        console.error("Error fetching payment details:", error);
                     }
                 });
-                handler.openIframe();
             } else {
                 // Handle other payment gateways or show an error message
                 alert('Unsupported payment option');
@@ -551,6 +583,54 @@
                     }
                 }
             });
+        }
+    });
+
+    $.ajax({
+        method: 'GET',
+        url: '/retrieve/payment/' + 'Stripe', // Replace with your actual backend endpoint
+        success: function(response) {
+            let stripe = Stripe(response.STRIPE_KEY);
+            const elements = stripe.elements();
+            const cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        fontSize: '16px'
+                    }
+                }
+            });
+
+            const checkoutForm = document.getElementById('checkoutForm');
+            const cardName = document.getElementById('card-name');
+            cardElement.mount('#card');
+
+            checkoutForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const { paymentMethod, error } = await stripe.createPaymentMethod({
+                    type: 'card',
+                    card: cardElement,
+                    billing_details: {
+                        name: cardName.value
+                    }
+                });
+
+                if (error) {
+                    console.log('error');
+                } else {
+                    let input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', 'payment_method');
+                    input.setAttribute('value', paymentMethod.id);
+                    checkoutForm.appendChild(input);
+
+                    // Directly submit the form
+                    checkoutForm.submit();
+                }
+            });
+        },
+        error: function(error) {
+            console.error("Error fetching payment details:", error);
         }
     });
 </script>

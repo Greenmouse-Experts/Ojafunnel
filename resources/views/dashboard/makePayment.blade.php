@@ -1,23 +1,92 @@
 @extends('layouts.dashboard-frontend')
 <!-- place below the html form -->
 <script>
-  function paySubscriptionWithPaystack(){
-    var handler = PaystackPop.setup({
-      key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
-      email: '{{Auth::user()->email}}',
-      amount: '{{$price}}' * 100,
-      ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-      callback: function(response){
-        let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ":response", Crypt::encrypt($price), Crypt::encrypt($currency)]) }}';
-        url = url.replace(':response', response.reference);
-        window.location.href=url;
-      },
-      onClose: function(){
-          alert('window closed');
-      }
-    });
-    handler.openIframe();
-  }
+    var currency = '{{$currency}}';
+    var tamount = '{{$price}}';
+    var current_currency;
+    var multiplier = 1;
+
+    if(currency == "$"){
+        current_currency = 'USD';
+        multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('USD')}}");
+        tamount  = '{{$price}}' * multiplier;
+    } else if(currency == "£") {
+        current_currency = 'GBP';
+        multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('GBP')}}");
+        tamount  = '{{$price}}' * multiplier;
+    } else if(currency == "₦") {
+        current_currency = 'NGN';
+        tamount = 1 * Number.parseInt('{{$price}}');
+    }
+
+    function paySubscriptionWithPaystack(){
+        $('#stripePayment').hide();
+        $.ajax({
+            method: 'GET',
+            url: '/retrieve/payment/' + 'Paystack', // Replace with your actual backend endpoint
+            success: function(response) {
+                var handler = PaystackPop.setup({
+                    key: response.PAYSTACK_PUBLIC_KEY,
+                    email: '{{Auth::user()->email}}',
+                    amount: tamount * 100,
+                    ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                    callback: function(response){
+                        let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ":response", Crypt::encrypt($price), Crypt::encrypt($currency)]) }}';
+                        url = url.replace(':response', response.reference);
+                        window.location.href=url;
+                    },
+                    onClose: function(){
+                        alert('window closed');
+                    }
+                });
+                handler.openIframe();
+            }
+        });
+    }
+
+    function paySubscriptionWithFlutterwave()
+    {
+        $('#stripePayment').hide();
+
+        $.ajax({
+            method: 'GET',
+            url: '/retrieve/payment/' + 'Flutterwave', // Replace with your actual backend endpoint
+            success: function(response) {
+                // Get the base URL of the current page
+                var baseUrl = window.location.origin;
+                // Configure FlutterwaveCheckout
+                FlutterwaveCheckout({
+                    public_key: response.FLW_PUBLIC_KEY,
+                    tx_ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+                    amount: tamount, // Amount in cents (e.g., $50.00 is 5000 cents)
+                    currency: current_currency,
+                    payment_options: "card",
+                    customer: {
+                        email: $('#email').val(), // Replace with your user's email
+                    },
+                    customizations: {
+                        title: 'Top Up',
+                        description: 'Top Up',
+                        logo: baseUrl + '/dash/assets/images/Logo-fav.png', // Replace 'your-logo.png' with the actual path to your logo in the public folder
+                    },
+                    callback: function(response) {
+                        console.log(response);
+                        let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ":response", Crypt::encrypt($price), Crypt::encrypt($currency)]) }}';
+                        url = url.replace(':response', response.reference);
+                        window.location.href=url;
+                    },
+                    onclose: function() {
+                        console.log('Payment closed');
+                        // Handle actions when the payment modal is closed
+                    }
+                });
+            },
+                error: function(error) {
+                console.error("Error fetching payment details:", error);
+            }
+        });
+    }
+
 </script>
 
 @section('page-content')
@@ -46,19 +115,44 @@
                 <div class="col-lg-8">
                     <div class="annoyed">
                         @if ($plan->description != "")
-                            @foreach(explode(',', $plan->description) as $info) 
+                            @foreach(explode(',', $plan->description) as $info)
                             <h1>
                                 <i class="bi bi-check2">{{$info}}</i>
                             </h1>
                             @endforeach
                         @endif
+                        <div class="form" style="display: none;" id="stripePayment">
+                            <h5 class="mt-3 mb-3 font-size-15">For Stripe Payment</h5>
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <label for="Name">Name on card</label>
+                                    <input type="text" name="cardName" id="card-name" placeholder="Enter card name" required />
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <div id="card"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <button type="button" onclick="paySubscriptionWithPaystack()">
-                                    PAY
+                                    PAY WITH PAYSTACK
                                 </button>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-12">
+                                <button type="button" onclick="paySubscriptionWithFlutterwave()">
+                                    PAY WITH FLUTTERWAVE
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <form action="{{ route('user.upgrade.account.with.stripe', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post" id="checkoutForm">
+                                    @csrf
+                                    <button type="submit">
+                                        PAY WITH STRIPE
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-12">
                                 <form action="{{ route('user.upgrade.account.with.balance', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post">
                                     @csrf
                                     <button type="submit">
@@ -67,7 +161,7 @@
                                 </form>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div class="col-lg-8"></div>
@@ -77,4 +171,58 @@
     <!-- End Page-content -->
 </div>
 <!-- END layout-wrapper -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    $.ajax({
+        method: 'GET',
+        url: '/retrieve/payment/' + 'Stripe', // Replace with your actual backend endpoint
+        success: function(response) {
+            $('#stripePayment').show();
+            let stripe = Stripe(response.STRIPE_KEY);
+            const elements = stripe.elements();
+            const cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        fontSize: '16px'
+                    }
+                }
+            });
+
+            const checkoutForm = document.getElementById('checkoutForm');
+            const cardName = document.getElementById('card-name');
+            cardElement.mount('#card');
+
+            // Define the submit handler
+            checkoutForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const { paymentMethod, error } = await stripe.createPaymentMethod({
+                    type: 'card',
+                    card: cardElement,
+                    billing_details: {
+                        name: cardName.value
+                    }
+                });
+
+                if (error) {
+                    console.log('error');
+                } else {
+                    // Directly submit the form
+                    let input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', 'payment_method');
+                    input.setAttribute('value', paymentMethod.id);
+                    checkoutForm.appendChild(input);
+
+                    // Directly submit the form
+                    checkoutForm.submit();
+                }
+            });
+        },
+        error: function(error) {
+            console.error("Error fetching payment details:", error);
+        }
+    });
+
+</script>
 @endsection

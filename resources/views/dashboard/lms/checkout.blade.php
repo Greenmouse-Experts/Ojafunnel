@@ -184,100 +184,23 @@
                                                     <div>
                                                         <h4 class="card-title">Payment information</h4>
                                                         <p class="card-title-desc">Select payment below</p>
-                                                        <div>
-                                                            <div class="form-check form-check-inline font-size-16">
-                                                                <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" checked>
-                                                                <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Paystack</label>
-                                                            </div>
-                                                        </div>
+                                                        @foreach(App\Models\PaymentGateway::latest()->where('status', 'Active')->get() as $payment)
                                                         <div class="mt-3">
                                                             <div class="form-check form-check-inline font-size-16">
-                                                                <input class="form-check-input" type="radio" name="paymentOption" id="paymentoptionsRadio1" checked>
-                                                                <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><i class="fab fa-cc-mastercard me-1 font-size-20 align-top"></i> Flutterwave</label>
+                                                                <input class="form-check-input" type="radio" name="paymentOptions" id="paymemtOptions" value="{{$payment->name}}">
+                                                                <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><img src="{{URL::asset($payment->logo)}}" alt="{{$payment->name}}" class="me-1 font-size-20 align-top" width="15"/> {{$payment->name}}</label>
                                                             </div>
                                                         </div>
-                                                        {{-- <h5 class="mt-3 mb-3 font-size-15">For card Payment</h5> --}}
-                                                        <div class="form">
-                                                            <div class="row">
-                                                                {{-- <div class="col-lg-6 mb-4">
-                                                                <label for="Name">Name on card</label>
-                                                                <input type="text" name="name" placeholder="Enter card name" required />
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <label for="Name">Card Number</label>
-                                                                <input type="email" name="name" placeholder="0000 0000 0000 0000" required />
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <label for="Name">Expiry Date</label>
-                                                                <input type="date" name="name" placeholder="Enter expiry date" required />
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <label for="Name">CVV Code</label>
-                                                                <input type="date" name="name" placeholder="Enter cvv code" required />
-                                                            </div> --}}
-                                                                <div class="text-end mt-2">
-                                                                    <a type="button" class="text-decoration-none">
-                                                                        <button type="button" class="btn px-4 py-1" id="activeconfirm" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
-                                                                            Next
-                                                                        </button>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
+                                                        @endforeach
+                                                        <div class="text-end mt-2">
+                                                            <a type="button" class="text-decoration-none">
+                                                                <button type="button" class="btn px-4 py-1" id="activeconfirm" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
+                                                                    Next
+                                                                </button>
+                                                            </a>
+                                                        </div>
                                                         </div>
                                                     </div>
-
-                                                    <!-- <div class="stripe_div">
-                                                        <div class="panel panel-default credit-card-box">
-                                                            <div class="row display-tr text-center mt-n4">
-                                                                <div class="display-td">
-                                                                    <img class="img-responsive" src="{{ asset('images/stripe.png') }}" style="width:110px;height:auto">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="panel-body mt-n1">
-                                                                <form role="form" action="#" method="post" action="{{ route('stripe.post') }}"  class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
-
-                                                                    @csrf
-                                                                    <input type="hidden" id="txtFinalAmt" name="txtFinalAmt" value="100">
-
-                                                                    <div class="row">
-                                                                        <div class="mb-3 col-md-12 required">
-                                                                            <label for="card-name" class="form-label">Name on Card <span class="text-danger">*</span></label>
-                                                                            <input type="text" class="form-control" id="card-name" name="card-name" placeholder="Enter your names on card" style="text-transform: capitalize;">
-                                                                        </div>
-
-                                                                        <div class="mb-3 col-md-12 required">
-                                                                            <label for="card-number" class="form-label">Card Number <span class="text-danger">*</span></label>
-                                                                            <input autocomplete='off' type="number" class="form-control card-number" id="card-number" placeholder="Enter your card number" name="card-number">
-                                                                        </div>
-
-                                                                        <div class="mb-3 col-sm-4 pe-sm-2 required">
-                                                                            <label for="cvc" class="form-label">CVC <span class="text-danger">*</span></label>
-                                                                            <input autocomplete='off' type="number" class="form-control card-cvc" id="cvc" placeholder="ex. 311" size='4' name="cvc">
-                                                                        </div>
-
-                                                                        <div class="mb-3 col-sm-4 col-6 pe-2 required">
-                                                                            <label for="card-expiry-month" class="form-label">Exp Month <span class="text-danger">*</span></label>
-                                                                            <input autocomplete='off' type="number" class="form-control card-expiry-month" id="card-expiry-month" placeholder="MM" size='2' name="card-expiry-month">
-                                                                        </div>
-
-                                                                        <div class="mb-3 col-sm-4 col-6 ps-2 required">
-                                                                            <label for="card-expiry-year" class="form-label">Exp Year <span class="text-danger">*</span></label>
-                                                                            <input autocomplete='off' type="number" class="form-control card-expiry-year" id="card-expiry-year" placeholder="YYYY" size='4' name="card-expiry-year">
-                                                                        </div>
-
-                                                                        <input type='hidden' autocomplete='off' class='stripeToken' name='stripeToken' />
-
-                                                                        <div class="col-md-12 mt-4 text-center">
-                                                                            <button class="btn btn-primary pe-6 ps-6 cmdPayNow" type="submit">Pay Now ($0.00)</button>
-
-                                                                            <button class="btn btn-primary ms-2 pe-4 ps-4 cmdBack1" type="button">Back</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div> -->
                                                 </div>
 
 
@@ -323,7 +246,27 @@
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                            <div class="row mt-4">
+                                                            <div class="form" style="display: none;" id="stripePayment">
+                                                                <h5 class="mt-3 mb-3 font-size-15">For Stripe Payment</h5>
+                                                                <div class="row">
+                                                                    <div class="col-12 mb-4">
+                                                                        <label for="Name">Name on card</label>
+                                                                        <input type="text" name="cardName" id="card-name" placeholder="Enter card name" required />
+                                                                    </div>
+                                                                    <div class="col-lg-6 mb-4">
+                                                                        <div id="card"></div>
+                                                                    </div>
+                                                                    <div class="row mt-4">
+                                                                        <div class="col-sm-6">
+                                                                            <button type="submit" class="btn d-none d-sm-inline-block" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
+                                                                                PLACE ORDER
+                                                                            </button>
+                                                                        </div> <!-- end col -->
+                                                                        <!-- end col -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mt-4" style="display: none;" id="paystackPayment">
                                                                 <div class="col-sm-6">
                                                                     <button type="button" id="makePayment" class="btn d-none d-sm-inline-block" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
                                                                         PLACE ORDER
@@ -331,7 +274,6 @@
                                                                 </div> <!-- end col -->
                                                                 <!-- end col -->
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -369,9 +311,6 @@
         </div>
     </div>
 
-
-
-
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -397,16 +336,37 @@
     <script src="{{URL::asset('dash/assets/libs/metismenu/metisMenu.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
-
-
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
 
     <script src="{{ asset('assets/js/jscripts.js') }}"></script>
 
-
-
-
     <script>
+        $(document).ready(function () {
+            // $('#paystackPayment').show();
+            // Handle radio button change event
+            $('input[name="paymentOptions"]').change(function () {
+                // Check if the selected option is Stripe
+                if ($(this).val() === 'Stripe') {
+                    $('#stripePayment').show();
+                    $('#paystackPayment').hide();
+                } else if ($(this).val() === 'Flutterwave') {
+                    $('#stripePayment').hide();
+                    $('#paystackPayment').show();
+                } else if ($(this).val() === 'Paypal') {
+                    $('#stripePayment').hide();
+                    $('#paystackPayment').show();
+                } else {
+                    $('#stripePayment').hide();
+                    $('#paystackPayment').show();
+                }
+            });
+
+            // Handle initial state
+            if ($('input[name="paymentOptions"]:checked').val() === 'Stripe') {
+                $('#stripePayment').show();
+            }
+        });
         var token = $('#txt_token1').val();
         var site_url = $('#site_url').val();
 
@@ -450,49 +410,155 @@
             }
         })
 
-
-
         $("#makePayment").click(function() {
-            if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '') {
-                $('#error').html('Please fill the asterisks field to continue');
-            }
-            var currency = document.getElementById("curr").value;
-            var tamount = document.getElementById("totalAmount").value;
-            if(currency != "NGN") {
-                var multiplier = 1;
-                if(currency == "USD"){
-                    multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('USD')}}");
-                    tamount  = tamount * multiplier;
-                }
-
-                if(currency != "GBP") {
-                    multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('GBP')}}");
-                    tamount  = tamount * multiplier;
-                }
-
+            if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '' || !$('input[name="paymentOptions"]:checked').val()) {
+                alert('Please fill in the required fields to continue');
+                $('#error').html('Please fill in the required fields to continue');
+            } else {
+                var selectedPaymentOption = $('input[name="paymentOptions"]:checked').val();
+                var checkoutForm = document.getElementById('checkoutForm');
+                var currency = document.getElementById("curr").value;
+                var tamount = document.getElementById("totalAmount").value;
                 if(currency != "NGN") {
-                    tamount = 1 * Number.parseInt(tamount);
+                    var multiplier = 1;
+                    if(currency == "USD"){
+                        multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('USD')}}");
+                        tamount  = tamount * multiplier;
+                    }
+
+                    if(currency != "GBP") {
+                        multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('GBP')}}");
+                        tamount  = tamount * multiplier;
+                    }
+
+                    if(currency != "NGN") {
+                        tamount = 1 * Number.parseInt(tamount);
+                    }
+                }
+
+                if (selectedPaymentOption == 'Paypal') {
+                    // Prevent the default form submission
+                    event.preventDefault();
+                    // Your conditions are met, trigger the form submission asynchronously
+                    // checkoutForm.submit();
+                } else if (selectedPaymentOption == 'Flutterwave') {
+                    $.ajax({
+                        method: 'GET',
+                        url: '/retrieve/payment/' + 'Flutterwave', // Replace with your actual backend endpoint
+                        success: function(response) {
+                            // Get the base URL of the current page
+                            var baseUrl = window.location.origin;
+
+                            // Configure FlutterwaveCheckout
+                            FlutterwaveCheckout({
+                                public_key: response.FLW_PUBLIC_KEY,
+                                tx_ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+                                amount: tamount, // Amount in cents (e.g., $50.00 is 5000 cents)
+                                currency: 'NGN',
+                                payment_options: "card",
+                                customer: {
+                                    email: $('#email').val(), // Replace with your user's email
+                                },
+                                customizations: {
+                                    title: 'Product Purchase',
+                                    description: 'Purchased Products',
+                                    logo: baseUrl + '/dash/assets/images/Logo-fav.png', // Replace 'your-logo.png' with the actual path to your logo in the public folder
+                                },
+                                callback: function(response) {
+                                    console.log(response);
+                                    // Handle the response after successful payment
+                                    alert('Payment successful!');
+                                    $( "#checkoutForm" ).submit();
+                                },
+                                onclose: function() {
+                                    console.log('Payment closed');
+                                    // Handle actions when the payment modal is closed
+                                }
+                            });
+                        },
+                        error: function(error) {
+                            console.error("Error fetching payment details:", error);
+                        }
+                    });
+                } else if (selectedPaymentOption == 'Paystack') {
+                    $.ajax({
+                        method: 'GET',
+                        url: '/retrieve/payment/' + 'Paystack', // Replace with your actual backend endpoint
+                        success: function(response) {
+                            var handler = PaystackPop.setup({
+                                key: response.PAYSTACK_PUBLIC_KEY,
+                                email: $('#email').val(),
+                                amount: tamount * 100,
+                                ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                                callback: function(response) {
+                                    // alert(JSON.stringify(response))
+                                    // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
+                                    // url = url.replace(':response', response.reference);
+                                    // url = url.replace(':amount', document.getElementById("amount").value);
+                                    // document.location.href=url;
+                                    $("#checkoutForm").submit();
+                                },
+                                onClose: function() {
+                                    alert('window closed');
+                                }
+                            });
+                            handler.openIframe();
+                        }
+                    });
+                } else {
+                    // Handle other payment gateways or show an error message
+                    alert('Unsupported payment option');
                 }
             }
-            var handler = PaystackPop.setup({
-                key: 'pk_test_77297b93cbc01f078d572fed5e2d58f4f7b518d7',
-                email: $('#email').val(),
-                amount: tamount * 100,
-                ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                callback: function(response) {
-                    // alert(JSON.stringify(response))
-                    // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
-                    // url = url.replace(':response', response.reference);
-                    // url = url.replace(':amount', document.getElementById("amount").value);
-                    // document.location.href=url;
-                    $("#checkoutForm").submit();
-                },
-                onClose: function() {
-                    alert('window closed');
-                }
-            });
-            handler.openIframe();
         })
+
+        $.ajax({
+            method: 'GET',
+            url: '/retrieve/payment/' + 'Stripe', // Replace with your actual backend endpoint
+            success: function(response) {
+                let stripe = Stripe(response.STRIPE_KEY);
+                const elements = stripe.elements();
+                const cardElement = elements.create('card', {
+                    style: {
+                        base: {
+                            fontSize: '16px'
+                        }
+                    }
+                });
+
+                const checkoutForm = document.getElementById('checkoutForm');
+                const cardName = document.getElementById('card-name');
+                cardElement.mount('#card');
+
+                checkoutForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const { paymentMethod, error } = await stripe.createPaymentMethod({
+                        type: 'card',
+                        card: cardElement,
+                        billing_details: {
+                            name: cardName.value
+                        }
+                    });
+
+                    if (error) {
+                        console.log('error');
+                    } else {
+                        let input = document.createElement('input');
+                        input.setAttribute('type', 'hidden');
+                        input.setAttribute('name', 'payment_method');
+                        input.setAttribute('value', paymentMethod.id);
+                        checkoutForm.appendChild(input);
+
+                        // Directly submit the form
+                        checkoutForm.submit();
+                    }
+                });
+            },
+            error: function(error) {
+                console.error("Error fetching payment details:", error);
+            }
+        });
     </script>
     <!-- Code injected by live-server -->
 </body>
@@ -516,42 +582,15 @@
     }
 
     .dropdown button.btn-info {
-
         /* float:right;
-    padding-right: 30px; */
-        color: {
-                {
-                $shop->color
-            }
-        }
-
-        ;
-
-        background: {
-                {
-                $shop->theme
-            }
-        }
-
-        ;
+        padding-right: 30px; */
+        color: {{$shop->color}};
+        background: {{$shop->theme}};
     }
 
     .btn-success {
-        color: {
-                {
-                $shop->color
-            }
-        }
-
-        !important;
-
-        background: {
-                {
-                $shop->theme
-            }
-        }
-
-        !important;
+        color: {{$shop->color}} !important;
+        background: {{$shop->theme}}!important;
     }
 
     .btn {
@@ -593,13 +632,7 @@
     }
 
     span.text-info {
-        color: {
-                {
-                $shop->theme
-            }
-        }
-
-        !important;
+        color: {{$shop->theme}}!important;
     }
 
     .cart-detail .price {
@@ -618,21 +651,8 @@
     }
 
     .checkout .btn-primary {
-        color: {
-                {
-                $shop->color
-            }
-        }
-
-        ;
-
-        background: {
-                {
-                $shop->theme
-            }
-        }
-
-        ;
+        color: {{$shop->color}};
+        background: {{$shop->theme}};
     }
 
     .dropdown-menu:before {

@@ -17,7 +17,7 @@
         <script type="text/javascript">
             window.setTimeout(function() {
                 $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function(){
-                    $(this).remove(); 
+                    $(this).remove();
                 });
             }, 8000);
         </script>
@@ -124,7 +124,7 @@
         });
     </script>
     <script>
-            // Script for Show/Hide Password 
+            // Script for Show/Hide Password
             $(".toggle-password").click(function() {
             $(this).toggleClass("fa-eye fa-eye-slash");
             input = $(this).parent().find("input");

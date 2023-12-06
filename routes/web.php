@@ -12,6 +12,7 @@ use App\Http\Controllers\EmailMarketingController;
 
 Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamScore']);
 Route::get('/text', [AuthController::class, 'text']);
+Route::post('/t', [AuthController::class, 't'])->name("stripe.store");
 
 Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');
     Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');
@@ -433,10 +434,5 @@ Route::post('/page/builder/save/page', [App\Http\Controllers\PageController::cla
 // Funnel Builder
 Route::post('/funnel/builder/save/page/{page}', [App\Http\Controllers\PageController::class, 'funnel_builder_save_page'])->name('user.funnel.builder.save.page');
 
-Route::get('payment', [PayPalController::class, 'okpay'])->name('ok.pay');
-// Paypal Payment
-Route::prefix('paypal')->group(function () {
-    Route::post('payment', [PayPalController::class, 'payment'])->name('payment');
-    Route::any('paymentSuccess', [PayPalController::class, 'paymentSuccess'])->name('paymentSuccess');
-    Route::any('paymentFail', [PayPalController::class, 'paymentFail'])->name('paymentFail');
-});
+Route::get('/paypal/payment/success', [App\Http\Controllers\StoreFrontController::class, 'paymentSuccess'])->name('success.payment');
+Route::get('/paypal/payment/cancel', [App\Http\Controllers\StoreFrontController::class, 'paymentCancel'])->name('cancel.payment');

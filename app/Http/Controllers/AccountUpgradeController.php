@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CurrencyRate;
 use App\Models\OjafunnelNotification;
 use App\Models\OjaPlan;
 use App\Models\OjaPlanInterval;
 use App\Models\OjaSubscription;
+use App\Models\PaymentGateway;
 use App\Models\Plan;
 use App\Models\Transaction;
 use App\Models\User;
@@ -14,6 +16,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
+use Stripe;
+use Stripe\Exception\CardException;
+use Stripe\StripeClient;
 
 class AccountUpgradeController extends Controller
 {
@@ -144,6 +149,123 @@ class AccountUpgradeController extends Controller
         $planId = Crypt::decrypt($plan_id);
         $price = Crypt::decrypt($price);
         $currency = Crypt::decrypt($currency);
+
+        if($price > Auth::user()->wallet)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Account wallet balance is low, top-up your wallet and try again.'
+            ]);
+        }
+
+        // dd($planId, number_format($price), $currency);
+
+        $plan = OjaPlan::find($planId);
+        $planInterval = OjaPlanInterval::where('plan_id', $plan->id)->where('price', $price)->where('currency', $currency)->first();
+
+        // return (now()->addMonth()->subDays(3)->toDateString());
+
+        if($planInterval->type == 'monthly')
+        {
+            $date = now()->addMonth();
+            $expiryNotice = now()->addMonth()->subDays(7)->toDateString();
+        }
+        if($planInterval->type == 'yearly')
+        {
+            $date = now()->addYear()->toDateString();
+            $expiryNotice = now()->addYear()->subDays(7)->toDateString();
+        }
+
+        OjaSubscription::create([
+            'user_id' => Auth::user()->id,
+            'plan_id' => $plan->id,
+            // 'plan_interval' =>
+            'status' => 'Active',
+            'ends_at' => $date,
+            'started_at' => now(),
+            'amount' => $planInterval->price,
+            'currency' => $planInterval->currency,
+            'expiry_notify_at' => $expiryNotice
+        ]);
+
+        $user = User::find(Auth::user()->id);
+
+        $user->update([
+            'plan' => $plan->id,
+            'wallet' => $user->wallet - $planInterval->price
+        ]);
+
+        Transaction::create([
+            'user_id' => $user->id,
+            'amount' => $planInterval->price,
+            'reference' => config('app.name'),
+            'status' => 'Account Upgrade.'
+        ]);
+
+        OjafunnelNotification::create([
+            'to' => Auth::user()->id,
+            'title' => config('app.name'),
+            'body' => 'Your '.config('app.name').' account has been upgraded successfully.'
+        ]);
+
+        $currentUser = User::where('id', Auth::user()->id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+        $this->fcm('Your '.config('app.name').' account has been upgraded successfully.', $currentUser);
+
+        return redirect()->route('user.upgrade', Auth::user()->username)->with([
+            'type' => 'success',
+            'message' => 'Account upgrade completed successfully.'
+        ]);
+    }
+
+    public function upgrade_account_with_stripe(Request $request, $plan_id, $price, $currency)
+    {
+        $planId = Crypt::decrypt($plan_id);
+        $price = Crypt::decrypt($price);
+        $currency = Crypt::decrypt($currency);
+        $baseCurrency = CurrencyRate::getBaseCur('USD');
+        $multiplier = 1;
+
+         return $currency;
+
+        if($currency == "$"){
+            $current_currency = 'USD';
+            $baseCurrency = \App\Models\CurrencyRate::getBaseCur('USD');
+            $multiplier = (int) $baseCurrency;
+            $tamount  = $price * $multiplier;
+        } else if($currency == "£") {
+            $current_currency = 'GBP';
+            $baseCurrency = \App\Models\CurrencyRate::getBaseCur('GBP');
+            $multiplier = (int) $baseCurrency;
+            $tamount  = $price * $multiplier;
+        } else if($currency == "₦") {
+            $current_currency = 'NGN';
+            $tamount = 1 * $price;
+        }
+
+        // Fetch PaymentGateway details from the database
+        $paymentGateway = PaymentGateway::where('name', 'Stripe')->first();
+
+        try {
+            $stripe = new StripeClient($paymentGateway->STRIPE_SECRET);
+
+            $stripe->paymentIntents->create([
+                'amount' => $tamount * 100,
+                'currency' => $current_currency,
+                'payment_method' => $request->payment_method,
+                'description' => 'Product payment with stripe',
+                'confirm' => true,
+                'receipt_email' => Auth::user()->email,
+                'automatic_payment_methods[enabled]' => true,
+                'automatic_payment_methods[allow_redirects]' => 'never'
+            ]);
+        } catch (CardException $th) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "There was a problem processing your payment."
+            ]);
+        }
+
+
 
         if($price > Auth::user()->wallet)
         {

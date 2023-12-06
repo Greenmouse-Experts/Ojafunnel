@@ -79,16 +79,16 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
                                             <a href="
-                                                @if($isvalid) 
-                                                    {{ 
+                                                @if($isvalid)
+                                                    {{
                                                         route('course.cart', [
-                                                            'shopname' => $shop->name, 
-                                                            'promotion_id' => Request::get('promotion_id'), 
+                                                            'shopname' => $shop->name,
+                                                            'promotion_id' => Request::get('promotion_id'),
                                                             'course_id' => Request::get('course_id')
-                                                        ]) 
-                                                    }} 
-                                                @else 
-                                                    {{ route('course.cart', ['shopname' => $shop->name]) }} 
+                                                        ])
+                                                    }}
+                                                @else
+                                                    {{ route('course.cart', ['shopname' => $shop->name]) }}
                                                 @endif
                                             " style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" class="btn btn-primary btn-block">View all</a>
                                         </div>
