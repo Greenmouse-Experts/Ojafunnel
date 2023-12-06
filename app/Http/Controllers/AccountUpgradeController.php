@@ -274,16 +274,6 @@ class AccountUpgradeController extends Controller
             ]);
         }
 
-
-
-        if($price > Auth::user()->wallet)
-        {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'Account wallet balance is low, top-up your wallet and try again.'
-            ]);
-        }
-
         // dd($planId, number_format($price), $currency);
 
         $plan = OjaPlan::find($planId);
@@ -316,15 +306,10 @@ class AccountUpgradeController extends Controller
 
         $user = User::find(Auth::user()->id);
 
-        $user->update([
-            'plan' => $plan->id,
-            'wallet' => $user->wallet - $planInterval->price
-        ]);
-
         Transaction::create([
             'user_id' => $user->id,
             'amount' => $planInterval->price,
-            'reference' => config('app.name'),
+            'reference' => config('app.name').'with stripe',
             'status' => 'Account Upgrade.'
         ]);
 
