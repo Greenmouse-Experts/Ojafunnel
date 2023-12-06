@@ -225,21 +225,30 @@ class AccountUpgradeController extends Controller
         $baseCurrency = CurrencyRate::getBaseCur('USD');
         $multiplier = 1;
 
-         return $currency;
-
-        if($currency == "$"){
+        if($currency == "USD"){
             $current_currency = 'USD';
             $baseCurrency = \App\Models\CurrencyRate::getBaseCur('USD');
             $multiplier = (int) $baseCurrency;
             $tamount  = $price * $multiplier;
-        } else if($currency == "£") {
+        } else if($currency == "GBP") {
             $current_currency = 'GBP';
             $baseCurrency = \App\Models\CurrencyRate::getBaseCur('GBP');
             $multiplier = (int) $baseCurrency;
             $tamount  = $price * $multiplier;
-        } else if($currency == "₦") {
+        } else if($currency == "NGN") {
             $current_currency = 'NGN';
             $tamount = 1 * $price;
+        } else {
+            $current_currency = $currency;
+            $tamount = 1 * $price;
+        }
+
+        if($tamount <= 0)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Please try again and if error persist, contact".config('app.name')." Administrator"
+            ]);
         }
 
         // Fetch PaymentGateway details from the database

@@ -6,16 +6,19 @@
     var current_currency;
     var multiplier = 1;
 
-    if(currency == "$"){
+    if(currency == "USD"){
         current_currency = 'USD';
         multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('USD')}}");
         tamount  = '{{$price}}' * multiplier;
-    } else if(currency == "£") {
+    } else if(currency == "GBP") {
         current_currency = 'GBP';
         multiplier = Number.parseInt("{{ \App\Models\CurrencyRate::getBaseCur('GBP')}}");
         tamount  = '{{$price}}' * multiplier;
     } else if(currency == "₦") {
         current_currency = 'NGN';
+        tamount = 1 * Number.parseInt('{{$price}}');
+    } else {
+        current_currency = currency;
         tamount = 1 * Number.parseInt('{{$price}}');
     }
 
@@ -25,21 +28,26 @@
             method: 'GET',
             url: '/retrieve/payment/' + 'Paystack', // Replace with your actual backend endpoint
             success: function(response) {
-                var handler = PaystackPop.setup({
-                    key: response.PAYSTACK_PUBLIC_KEY,
-                    email: '{{Auth::user()->email}}',
-                    amount: tamount * 100,
-                    ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                    callback: function(response){
-                        let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ":response", Crypt::encrypt($price), Crypt::encrypt($currency)]) }}';
-                        url = url.replace(':response', response.reference);
-                        window.location.href=url;
-                    },
-                    onClose: function(){
-                        alert('window closed');
-                    }
-                });
-                handler.openIframe();
+                if(tamount <= 0)
+                {
+                    alert('Please try again and if error persist, contact Administrator');
+                } else {
+                    var handler = PaystackPop.setup({
+                        key: response.PAYSTACK_PUBLIC_KEY,
+                        email: '{{Auth::user()->email}}',
+                        amount: tamount * 100,
+                        ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                        callback: function(response){
+                            let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ":response", Crypt::encrypt($price), Crypt::encrypt($currency)]) }}';
+                            url = url.replace(':response', response.reference);
+                            window.location.href=url;
+                        },
+                        onClose: function(){
+                            alert('window closed');
+                        }
+                    });
+                    handler.openIframe();
+                }
             }
         });
     }
@@ -52,41 +60,45 @@
             method: 'GET',
             url: '/retrieve/payment/' + 'Flutterwave', // Replace with your actual backend endpoint
             success: function(response) {
-                // Get the base URL of the current page
-                var baseUrl = window.location.origin;
-                // Configure FlutterwaveCheckout
-                FlutterwaveCheckout({
-                    public_key: response.FLW_PUBLIC_KEY,
-                    tx_ref: ''+Math.floor((Math.random() * 1000000000) + 1),
-                    amount: tamount, // Amount in cents (e.g., $50.00 is 5000 cents)
-                    currency: current_currency,
-                    payment_options: "card",
-                    customer: {
-                        email: $('#email').val(), // Replace with your user's email
-                    },
-                    customizations: {
-                        title: 'Top Up',
-                        description: 'Top Up',
-                        logo: baseUrl + '/dash/assets/images/Logo-fav.png', // Replace 'your-logo.png' with the actual path to your logo in the public folder
-                    },
-                    callback: function(response) {
-                        console.log(response);
-                        let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ":response", Crypt::encrypt($price), Crypt::encrypt($currency)]) }}';
-                        url = url.replace(':response', response.reference);
-                        window.location.href=url;
-                    },
-                    onclose: function() {
-                        console.log('Payment closed');
-                        // Handle actions when the payment modal is closed
-                    }
-                });
+                if(tamount <= 0)
+                {
+                    alert('Please try again and if error persist, contact Administrator');
+                } else {
+                    // Get the base URL of the current page
+                    var baseUrl = window.location.origin;
+                    // Configure FlutterwaveCheckout
+                    FlutterwaveCheckout({
+                        public_key: response.FLW_PUBLIC_KEY,
+                        tx_ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+                        amount: tamount, // Amount in cents (e.g., $50.00 is 5000 cents)
+                        currency: current_currency,
+                        payment_options: "card",
+                        customer: {
+                            email: $('#email').val(), // Replace with your user's email
+                        },
+                        customizations: {
+                            title: 'Top Up',
+                            description: 'Top Up',
+                            logo: baseUrl + '/dash/assets/images/Logo-fav.png', // Replace 'your-logo.png' with the actual path to your logo in the public folder
+                        },
+                        callback: function(response) {
+                            console.log(response);
+                            let url = '{{ route("user.upgrade.account.confirm", [Crypt::encrypt($plan->id), ":response", Crypt::encrypt($price), Crypt::encrypt($currency)]) }}';
+                            url = url.replace(':response', response.reference);
+                            window.location.href=url;
+                        },
+                        onclose: function() {
+                            console.log('Payment closed');
+                            // Handle actions when the payment modal is closed
+                        }
+                    });
+                }
             },
                 error: function(error) {
                 console.error("Error fetching payment details:", error);
             }
         });
     }
-
 </script>
 
 @section('page-content')
@@ -134,24 +146,26 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12">
-                                <button type="button" onclick="paySubscriptionWithPaystack()">
-                                    PAY WITH PAYSTACK
-                                </button>
-                            </div>
-                            <div class="col-12">
-                                <button type="button" onclick="paySubscriptionWithFlutterwave()">
-                                    PAY WITH FLUTTERWAVE
-                                </button>
-                            </div>
-                            <div class="col-12">
-                                <form action="{{ route('user.upgrade.account.with.stripe', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post" id="checkoutForm">
-                                    @csrf
-                                    <button type="submit">
-                                        PAY WITH STRIPE
-                                    </button>
-                                </form>
-                            </div>
+                            @foreach(App\Models\PaymentGateway::latest()->where('status', 'Active')->get() as $payment)
+                                <div class="col-12">
+                                    @if($payment->name == 'Paystack')
+                                        <button type="button">
+                                            PAY WITH PAYSTACK
+                                        </button>
+                                    @elseif($payment->name == 'Flutterwave')
+                                        <button type="button">
+                                            PAY WITH FLUTTERWAVE
+                                        </button>
+                                    @elseif($payment->name == 'Stripe')
+                                        <form action="{{ route('user.upgrade.account.with.stripe', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post" id="checkoutForm">
+                                            @csrf
+                                            <button type="submit">
+                                                PAY WITH STRIPE
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @endforeach
                             <div class="col-12">
                                 <form action="{{ route('user.upgrade.account.with.balance', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post">
                                     @csrf
