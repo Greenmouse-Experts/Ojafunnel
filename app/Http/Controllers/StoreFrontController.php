@@ -99,10 +99,10 @@ class StoreFrontController extends Controller
         // Get user's IP address
         $ip = $request->ip();
 
-        return $ip;
-
         // Get location data based on IP
         $location = Location::get($ip);
+
+          return $location;
 
         // Access the currency code from the location data
         $currencyCode = $location->currency->code;
