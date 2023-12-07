@@ -206,6 +206,8 @@ class StoreController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
+            'currency' => 'required',
+            'currency_sign' => 'required',
             'image' => 'required|image',
             'quantity' => 'required',
             'level1_comm' => 'required',
@@ -271,10 +273,23 @@ class StoreController extends Controller
 
     public function updateProduct(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'currency' => 'required',
+            'currency_sign' => 'required',
+            'quantity' => 'required',
+            'level1_comm' => 'required',
+            'level2_comm' => 'required',
+        ]);
+
         $sp = StoreProduct::findOrFail($request->id);
         $sp->name = $request->name;
         $sp->description = $request->description;
         $sp->price = $request->price;
+        $sp->currency = $request->currency;
+        $sp->currency_sign = $request->currency_sign;
         $sp->quantity = $request->quantity;
         $sp->level1_comm = $request->level1_comm;
         $sp->level2_comm = $request->level2_comm;
@@ -319,6 +334,8 @@ class StoreController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
+            'currency' => 'required',
+            'currency_sign' => 'required',
             'image' => 'required|image',
             'quantity' => 'required',
             'level1_comm' => 'required',
@@ -381,6 +398,8 @@ class StoreController extends Controller
             $sp->link = $response;
             $sp->description = $request->description;
             $sp->price = $request->price;
+            $sp->currency = $request->currency;
+            $sp->currency_sign = $request->currency_sign;
             $sp->quantity = $request->quantity;
             $sp->level1_comm = $request->level1_comm;
             $sp->level2_comm = $request->level2_comm;
@@ -411,14 +430,29 @@ class StoreController extends Controller
 
     public function updateDigitalProduct(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'currency' => 'required',
+            'currency_sign' => 'required',
+            'quantity' => 'required',
+            'level1_comm' => 'required',
+            'level2_comm' => 'required',
+            'content_type' => 'required',
+        ]);
+
         $sp = StoreProduct::findOrFail($request->id);
         $sp->name = $request->name;
         $sp->content_type = $request->content_type;
         $sp->description = $request->description;
         $sp->price = $request->price;
+        $sp->currency = $request->currency;
+        $sp->currency_sign = $request->currency_sign;
         $sp->quantity = $request->quantity;
         $sp->level1_comm = $request->level1_comm;
         $sp->level2_comm = $request->level2_comm;
+
         if ($request->file('image')) {
             $image = $request->file('image')->store(
                 'uploads/storeProduct/' . Auth::user()->username,

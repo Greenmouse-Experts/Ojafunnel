@@ -75,7 +75,7 @@
                             @php $total += $details['price'] * $details['quantity'] @endphp
                         @endforeach
                         <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                            <p>Total: <span class="text-info">$ {{ $total }}</span></p>
+                            <p>Total: <span class="text-info">{{ $total }}</span></p>
                         </div>
                     </div>
                     @if(session('cart'))
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                     <p>{{ $details['name'] }}</p>
-                                    <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
+                                    <span class="price text-info"> {{$details['currency_sign']}}{{ $details['price'] }}</span> <span class="count"> Quantity:{{ $details['quantity'] }}</span>
                                 </div>
                             </div>
                         @endforeach
@@ -156,7 +156,7 @@
                                                             <h5 class="font-size-14 text-wrap" style="width: 330px;"><a href="#" class="text-dark">{{ $details['description'] }}</a></h5>
                                                         </td>
                                                         <td>
-                                                            ₦ <span id="price">{{ $details['price'] }}</span>
+                                                            {{$details['currency_sign']}}<span id="price">{{ $details['price'] }}</span>
                                                         </td>
                                                         <td style="display: flex; flex-direction: row">
                                                             <!-- <button class="btn btn-danger" style="margin-right: 10px;font-size: 18px;">-</button> -->
@@ -166,15 +166,15 @@
                                                             </div> -->
                                                              <!-- <button class="btn btn-success">+</button> -->
                                                              <div class="me-3" style="width: 80px; margin-top: 10px">
-                                                                <input type="number" class="form-control quantity" 
+                                                                <input type="number" class="form-control quantity"
                                                                     data-item-id="{{ $details['id'] }}"
-                                                                    data-avail-quantity="{{ $details['rmQuan'] }}" 
+                                                                    data-avail-quantity="{{ $details['rmQuan'] }}"
                                                                     value="{{ $details['quantity'] }}">
                                                                 <small style="font-size: 63%">Available: {{ $details['rmQuan'] }}</small>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            ₦ <span id="tcost">{{ $details['price'] * $details['quantity'] }}</span>
+                                                            {{$details['currency_sign']}}<span id="tcost">{{ $details['price'] * $details['quantity'] }}</span>
                                                         </td>
                                                         <td>
                                                             <a href="javascript(0);" class="action-icon text-danger remove-from-cart"> <i class="mdi mdi-trash-can font-size-18"></i></a>
@@ -185,7 +185,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="7" class="text-end"><h3>Total ₦ {{ $total }}</h3></td>
+                                            <td colspan="7" class="text-end"><h3>Total {{ $total }}</h3></td>
                                         </tr>
                                     </tfoot>
                                 </table>

@@ -87,7 +87,7 @@
                           @endif
                         @endforeach
                         <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                            <p>Total: <span class="text-info"># {{ $total }}</span></p>
+                            <p>Total: <span class="text-info">{{ $total }}</span></p>
                         </div>
                     </div>
                     @if(session('cart'))
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                     <p>{{ isset($details['name']) ? $details['name'] : '' }}</p>
-                                    <span class="price text-info"> NGN{{ $details['price'] ? number_format($details['price']) : 0 }}</span> <span class="count"> Quantity:{{ isset($details['quantity']) ? $details['quantity'] : 1 }}</span>
+                                    <span class="price text-info"> {{$details['currency_sign']}}{{ $details['price'] ? number_format($details['price']) : 0 }}</span> <span class="count"> Quantity:{{ isset($details['quantity']) ? $details['quantity'] : 1 }}</span>
                                 </div>
                             </div>
                         @endforeach
@@ -179,14 +179,14 @@
                               <p class="font-500">{{$item->name}}</p>
 
                               @if (@$timeRemaining <= 0)
-                                <p class="dynamic_price">NGN{{number_format($item->price, 2)}}</p>
+                                <p class="dynamic_price">{{$item->currency}}{{number_format($item->price, 2)}}</p>
                                 @if ($item->price >= 1)
                                     <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
                                 @else
                                     <button disabled>Out of Stock</button>
                                 @endif
                               @else
-                                <p class="dynamic_price">NGN{{number_format($item->new_price, 2)}} <span style="text-decoration:line-through;color:red;opacity:0.6;margin-left:4px;font-size:12px">NGN{{number_format($item->price, 2)}}</span></p>
+                                <p class="dynamic_price">{{$item->currency}}{{number_format($item->new_price, 2)}} <span style="text-decoration:line-through;color:red;opacity:0.6;margin-left:4px;font-size:12px">NGN{{number_format($item->price, 2)}}</span></p>
                                 @if ($item->new_price >= 1)
                                     <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
                                 @else

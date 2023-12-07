@@ -25,6 +25,7 @@ use Stripe\Exception\CardException;
 use Stripe\StripeClient;
 use Omnipay\Omnipay;
 use Omnipay\Common\CreditCard;
+use Stevebauman\Location\Facades\Location;
 
 class StoreFrontController extends Controller
 {
@@ -95,6 +96,19 @@ class StoreFrontController extends Controller
 
     public function checkout(Request $request)
     {
+        // Get user's IP address
+        $ip = $request->ip();
+
+        return $ip;
+
+        // Get location data based on IP
+        $location = Location::get($ip);
+
+        // Access the currency code from the location data
+        $currencyCode = $location->currency->code;
+
+
+
         $store = Store::latest()->where('name', $request->storename)->first();
         $products = StoreProduct::latest()->where('store_id', $store->id)->get();
         return view('dashboard.store.checkout', compact('store', 'products'));
@@ -118,6 +132,8 @@ class StoreFrontController extends Controller
                 "quantity" => 1,
                 'rmQuan' => $product->quantity,
                 "price" => $timeRemaining > 0 ? $product->new_price : $product->price,
+                "currency" => $product->currency,
+                "currency_sign" => $product->currency_sign,
                 "description" => $product->description,
                 "image" => $product->image,
                 "timeRemaining" => $timeRemaining,
