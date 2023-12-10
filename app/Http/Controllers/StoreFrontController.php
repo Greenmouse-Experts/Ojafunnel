@@ -102,13 +102,7 @@ class StoreFrontController extends Controller
         // Get location data based on IP
         $location = Location::get($ip);
 
-          return $location;
-
-        // Access the currency code from the location data
-        $currencyCode = $location->currency->code;
-
-
-
+        // return $location;
         $store = Store::latest()->where('name', $request->storename)->first();
         $products = StoreProduct::latest()->where('store_id', $store->id)->get();
         return view('dashboard.store.checkout', compact('store', 'products'));

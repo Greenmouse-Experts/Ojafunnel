@@ -90,6 +90,7 @@ class CMSController extends Controller
                     'language' => $request->language,
                     'level' => $request->level,
                     'currency' => $request->currency,
+                    'currency_sign' => $request->currency_sign,
                     'price' => $price,
                     'image' => '/storage/course_photo/' . $filename,
                 ]);
@@ -109,6 +110,7 @@ class CMSController extends Controller
                 'image' => $request->image,
                 'level' => $request->level,
                 'currency' => $request->currency,
+                'currency_sign' => $request->currency_sign,
                 'price' => $price
             ]);
 

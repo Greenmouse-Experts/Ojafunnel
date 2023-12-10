@@ -12,7 +12,6 @@ use App\Http\Controllers\EmailMarketingController;
 
 Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamScore']);
 Route::get('/text', [AuthController::class, 'text']);
-Route::post('/t', [AuthController::class, 't'])->name("stripe.store");
 
 Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');
     Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');

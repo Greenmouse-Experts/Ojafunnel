@@ -250,8 +250,8 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-sm-1"></div>
-                                                <div class="col-sm-9">
+                                                <!-- <div class="col-sm-1"></div> -->
+                                                <div class="col-12">
                                                     <div class="Editt">
                                                         <form id="submit-button" name="submitbutton" method="post" action="{{route('user.save.course', Crypt::encrypt($course->id))}}" enctype="multipart/form-data">
                                                             @csrf
@@ -307,9 +307,15 @@
                                                                             <option value="">-- Select Currency --</option>
                                                                             <option value="USD">USD</option>
                                                                             <option value="NGN">NGN</option>
+                                                                            <option value="GBP">GBP</option>
+                                                                            <option value="EUR">EUR</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="col-lg-10 mb-4">
+                                                                    <div class="col-lg-6 mb-4">
+                                                                        <label for="Name">Currency Sign</label>
+                                                                        <input type="text" name="currency_sign" value="{{$course->currency_sign}}" placeholder="Enter Currency Sign" />
+                                                                    </div>
+                                                                    <div class="col-lg-4 mb-4">
                                                                         <label for="Name">Pricing</label>
                                                                         <input type="number" name="price" value="{{$course->price}}" placeholder="Enter Price" />
                                                                     </div>
@@ -329,7 +335,7 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-1"></div>
+                                                <!-- <div class="col-sm-1"></div> -->
                                             </div>
                                         </div>
                                     </div>

@@ -185,6 +185,16 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
+                                            <td colspan="6" class="text-end">
+                                                <label for="Name">Currency</label>
+                                                <select name="currency">
+                                                    <option value="">-- Select Currency --</option>
+                                                    <option value="USD">USD</option>
+                                                    <option value="NGN">NGN</option>
+                                                    <option value="GBP">GBP</option>
+                                                    <option value="EUR">EUR</option>
+                                                </select>
+                                            </td>
                                             <td colspan="7" class="text-end"><h3>Total {{ $total }}</h3></td>
                                         </tr>
                                     </tfoot>
