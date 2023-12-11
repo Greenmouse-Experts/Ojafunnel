@@ -17,9 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('primary_currency')->nullable();
             $table->string('secondary_currency')->nullable();
-            $table->string('fx_symbol')->nullable();
-            $table->string('fx_symbol')->nullable();
-            $table->string('fx_symbol')->nullable();
+            $table->string('fx_amount')->default('1');
+            $table->string('fiat')->nullable();
             $table->timestamps();
         });
     }

@@ -199,6 +199,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/payment/gateway', [App\Http\Controllers\Admin\AdminController::class, 'payment_gateway'])->name('admin.payment.gateway');
             Route::get('/view/payment/gateway/{id}', [App\Http\Controllers\Admin\AdminController::class, 'viewPaymentGateway'])->name('viewPaymentGateway');
             Route::post('/update/payment/gateway', [App\Http\Controllers\Admin\AdminController::class, 'updatePaymentGateway'])->name('updatePaymentGateway');
+
+            Route::get('/general/exchange/rate', [App\Http\Controllers\Admin\AdminController::class, 'general_exchange_rate'])->name('admin.general.exchange.rate');
+            Route::post('/general/exchange/rate/add', [App\Http\Controllers\Admin\AdminController::class, 'add_general_exchange_rate'])->name('admin.add.general.exchange.rate');
         }
     );
 });

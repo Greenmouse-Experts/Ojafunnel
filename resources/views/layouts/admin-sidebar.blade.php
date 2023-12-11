@@ -216,7 +216,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('general')}}" key="t-full-calendar">General</a></li>
                         <li><a href="{{route('admin.payment.gateway')}}" key="t-full-calendar">Payment Gateway</a></li>
-                        <li><a href="{{route('system.xrate')}}" key="t-tui-calendar">Exchange Rate</a></li>
+                        <li><a href="{{route('admin.general.exchange.rate')}}" key="t-tui-calendar">General Exchange Rate</a></li>
                     </ul>
                 </li>
             </ul>

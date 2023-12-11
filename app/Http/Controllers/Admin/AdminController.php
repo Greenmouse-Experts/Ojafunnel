@@ -65,6 +65,7 @@ use GuzzleHttp\Client;
 use Aws\Sns\SnsClient;
 use App\Mail\AccountInfoMail;
 use App\Mail\NewsletterMail;
+use App\Models\GeneralExchangeRate;
 use App\Models\OjaSubscription;
 use App\Models\PaymentGateway;
 use App\Models\UpsellPageSubmission;
@@ -1477,7 +1478,7 @@ class AdminController extends Controller
             $dateTime->sub(new DateInterval('P7D'));
             // Get the formatted result
             $notifyresult = $dateTime->format('Y-m-d H:i:s');
-            
+
             $subs = \App\Models\OjaSubscription::where("id", $request->subscription_id)->update([
                 'ends_at' => $result,
                 'expiry_notify_at' => $notifyresult,
@@ -3257,6 +3258,47 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => $gateway->name .' update successful.'
+        ]);
+    }
+
+    public function general_exchange_rate()
+    {
+        $xrates = GeneralExchangeRate::all();
+
+        return view('admin.general_xrate', [
+            'records' => $xrates
+        ]);
+    }
+
+    public function add_general_exchange_rate(Request $request)
+    {
+        $this->validate($request, [
+            'from_currency' => ['required'],
+            'from_amount' => ['required', 'integer'],
+            'to_currency' => ['required'],
+            'to_amount' => ['required', 'integer'],
+        ]);
+
+        $check = GeneralExchangeRate::where(['primary_currency' => $request->from_currency, 'secondary_currency' => $request->to_currency])->exists();
+
+        if($check > 0)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Exchange currency already exist.'
+            ]);
+        }
+
+        GeneralExchangeRate::create([
+            'primary_currency' => $request->from_currency,
+            'fx_amount' => $request->from_amount,
+            'secondary_currency' => $request->to_currency,
+            'fiat' => $request->to_amount,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Rate Added.'
         ]);
     }
 
