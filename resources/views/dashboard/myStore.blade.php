@@ -67,12 +67,26 @@
                                             <label for="Name">Store Description</label>
                                             <textarea name="description" id="" cols="30" rows="10" placeholder="Enter your shop description" required></textarea>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-8 mb-4">
                                             <label for="Name">Store Name</label>
                                             <input type="text" value=" http://shop.ojafunnel.test/" name="link" id="myInput" class="input mov" readonly required>
                                         </div>
                                         <div class="col-md-1 mt-3 mb-3">
                                             <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction1()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="Name">Store Currency</label>
+                                            <select name="currency" class="input mov" required>
+                                                <option value="">-- Select Currency --</option>
+                                                <option value="USD">USD</option>
+                                                <option value="NGN">NGN</option>
+                                                <option value="GBP">GBP</option>
+                                                <option value="EUR">EUR</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="Name">Store Currency Sign</label>
+                                            <input type="text" name="currency_sign" id="myInput" class="input mov" required>
                                         </div>
                                     </div>
                                 </div>

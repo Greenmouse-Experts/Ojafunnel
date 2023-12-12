@@ -365,7 +365,7 @@
                       Total
                     </td>
                   </tr>
-                
+
                   @foreach ($orderItem as $item)
                   <tr>
                     <td class="item-col item">
@@ -385,7 +385,7 @@
                     <td class="item-col">
                       @if($item->product->type == 'Digital')
                       Digital - <a href="{{$item->product->link}}">Download</a>
-                      @else 
+                      @else
                       Physical
                       @endif
                     </td>
@@ -402,7 +402,7 @@
                       @endif
                     </td>
                     <td class="item-col">
-                        ₦{{number_format($item->quantity*$item->amount, 2)}}
+                        {{$store->currency_sign}}{{number_format($item->quantity*$item->amount, 2)}}
                     </td>
                   </tr>
                   @endforeach
@@ -421,10 +421,10 @@
                       <span class="total-space" style="font-weight: bold; color: #4d4d4d">Total</span>
                     </td>
                     <td class="item-col price" style="text-align: left; border-top: 1px solid #cccccc;">
-                      <span class="total-space">₦{{number_format(json_decode($order->coupon)->amountPaid, 2)}}</span> <br />
-                      <span class="total-space" style="font-weight:bold; color: #4d4d4d">₦{{number_format(json_decode($order->coupon)->amountPaid, 2)}}</span>
+                      <span class="total-space">{{$store->currency_sign}}{{number_format(json_decode($order->coupon)->amountPaid, 2)}}</span> <br />
+                      <span class="total-space" style="font-weight:bold; color: #4d4d4d">{{$store->currency_sign}}{{number_format(json_decode($order->coupon)->amountPaid, 2)}}</span>
                     </td>
-                  </tr>  
+                  </tr>
                 </table>
               </td>
             </tr>

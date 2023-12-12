@@ -77,6 +77,8 @@ class StoreController extends Controller
             $store->theme = $request->theme;
             $store->color = '#fff';
             $store->user_id = \Auth::user()->id;
+            $store->currency = $request->currency;
+            $store->currency_sign = $request->currency_sign;
             $store->save();
         } else {
             if ($request->file('logo')) {
@@ -93,6 +95,8 @@ class StoreController extends Controller
             $store->theme = $request->primaryColor;
             $store->color = '#fff';
             $store->user_id = \Auth::user()->id;
+            $store->currency = $request->currency;
+            $store->currency_sign = $request->currency_sign;
             $store->save();
         }
 
@@ -119,6 +123,8 @@ class StoreController extends Controller
             $store->theme = $request->theme;
             $store->color = '#fff';
             $store->user_id = Auth::user()->id;
+            $store->currency = $request->currency;
+            $store->currency_sign = $request->currency_sign;
             $store->update();
         } else {
             $store = Store::findOrFail($request->id);
@@ -135,6 +141,8 @@ class StoreController extends Controller
             $store->theme = $request->primaryColor;
             $store->color = '#fff';
             $store->user_id = Auth::user()->id;
+            $store->currency = $request->currency;
+            $store->currency_sign = $request->currency_sign;
             $store->update();
         }
 
@@ -172,8 +180,9 @@ class StoreController extends Controller
     {
         $product = StoreProduct::latest()->where('store_id', $request->store_id)->get();
         $store_id = $request->store_id;
+        $store = Store::find($store_id);
 
-        return view('dashboard.AvailableProduct', compact('product', 'store_id', 'username'));
+        return view('dashboard.AvailableProduct', compact('product', 'store_id', 'username', 'store'));
     }
 
     public function sales(Request $request, $username)
@@ -206,8 +215,6 @@ class StoreController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'currency' => 'required',
-            'currency_sign' => 'required',
             'image' => 'required|image',
             'quantity' => 'required',
             'level1_comm' => 'required',
@@ -246,7 +253,7 @@ class StoreController extends Controller
         $sp->store_id = $request->store_id;
         $sp->date_from = $request->from;
         $sp->date_to = $request->to;
-        $sp->new_price = $request->new_price;
+        $sp->new_price = $request->new_price ?? 0;
         $sp->user_id = Auth::user()->id;
         $sp->type = 'Physical';
 
@@ -288,8 +295,6 @@ class StoreController extends Controller
         $sp->name = $request->name;
         $sp->description = $request->description;
         $sp->price = $request->price;
-        $sp->currency = $request->currency;
-        $sp->currency_sign = $request->currency_sign;
         $sp->quantity = $request->quantity;
         $sp->level1_comm = $request->level1_comm;
         $sp->level2_comm = $request->level2_comm;
@@ -334,8 +339,6 @@ class StoreController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'currency' => 'required',
-            'currency_sign' => 'required',
             'image' => 'required|image',
             'quantity' => 'required',
             'level1_comm' => 'required',
@@ -398,8 +401,6 @@ class StoreController extends Controller
             $sp->link = $response;
             $sp->description = $request->description;
             $sp->price = $request->price;
-            $sp->currency = $request->currency;
-            $sp->currency_sign = $request->currency_sign;
             $sp->quantity = $request->quantity;
             $sp->level1_comm = $request->level1_comm;
             $sp->level2_comm = $request->level2_comm;
@@ -434,8 +435,6 @@ class StoreController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'currency' => 'required',
-            'currency_sign' => 'required',
             'quantity' => 'required',
             'level1_comm' => 'required',
             'level2_comm' => 'required',
@@ -447,8 +446,6 @@ class StoreController extends Controller
         $sp->content_type = $request->content_type;
         $sp->description = $request->description;
         $sp->price = $request->price;
-        $sp->currency = $request->currency;
-        $sp->currency_sign = $request->currency_sign;
         $sp->quantity = $request->quantity;
         $sp->level1_comm = $request->level1_comm;
         $sp->level2_comm = $request->level2_comm;
@@ -485,8 +482,6 @@ class StoreController extends Controller
 
             $sp->link = $response;
         }
-
-
 
         // check if level1_comm <= level2_comm... then fail
         if ($request->level1_comm <= $request->level2_comm) return back()->with([

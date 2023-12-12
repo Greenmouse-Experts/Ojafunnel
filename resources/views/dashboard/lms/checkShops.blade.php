@@ -168,6 +168,21 @@
                                                                         <div class="col-md-1 mt-3 mb-3">
                                                                             <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
                                                                         </div>
+                                                                        <div class="col-lg-6">
+                                                                            <label for="Name">Store Currency</label>
+                                                                            <select name="currency" class="input mov" required>
+                                                                                <option value="{{$item->currency}}">{{$item->currency}}</option>
+                                                                                <option value="">-- Select Currency --</option>
+                                                                                <option value="USD">USD</option>
+                                                                                <option value="NGN">NGN</option>
+                                                                                <option value="GBP">GBP</option>
+                                                                                <option value="EUR">EUR</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <label for="Name">Store Currency Sign</label>
+                                                                            <input type="text" value="{{$item->currency_sign}}" name="currency_sign" id="myInput" class="input mov" required>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>

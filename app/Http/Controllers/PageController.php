@@ -22,7 +22,7 @@ use App\Http\Controllers\HomePageController;
 
 
 
-class PageController extends Controller
+class checkoutPageController extends Controller
 {
     use EditorTrait;
 

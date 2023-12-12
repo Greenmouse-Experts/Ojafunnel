@@ -3302,4 +3302,19 @@ class AdminController extends Controller
         ]);
     }
 
+    public function update_general_exchange_rate(Request $request, $id)
+    {
+        $finder = Crypt::decrypt($request->id);
+
+        $rate = GeneralExchangeRate::find($finder)->update([
+            'fx_amount' => $request->from_amount,
+            'fiat' => $request->to_amount,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Rate Updated.'
+        ]);
+    }
+
 }

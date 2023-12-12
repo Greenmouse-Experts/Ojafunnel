@@ -98,7 +98,7 @@
                                                                             @if($integration->type == 'Twilio')
                                                                             <p><b>View Twilio Integrations</b></p>
                                                                             <div class="row">
-                                                                                <div class="col-lg-12">
+                                                                                 <div class="col-lg-12">
                                                                                     <label>SID</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
