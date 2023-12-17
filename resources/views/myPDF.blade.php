@@ -76,7 +76,7 @@
                                     <tbody class="text-center">
                                         <tr>
                                             <td>
-                                               <img style="width: 40px;" src="{{Storage::url($store->logo)}}" alt=""> {{$store->name}}
+                                               <img style="width: 40px;" src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="{{$store->name}}"> {{$store->name}}
                                             </td>
                                             <td class="border-0" style="text-align: right">
                                                 <p><strong>Name: </strong>{{$order->user[0]->name}}</p>
@@ -160,7 +160,7 @@
                                                     <p>0%</p>
                                                 @endif
                                             </td>
-                                            <td>₦{{number_format($item->quantity*$item->amount, 2)}}</td>
+                                            <td>{{$store->currency_sign}}{{number_format($item->quantity*$item->amount, 2)}}</td>
                                         </tr>
                                         @endforeach
                                         <tr>

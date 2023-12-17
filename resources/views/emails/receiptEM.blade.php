@@ -274,7 +274,7 @@
           <tr>
             <td>
               <strong>{{$store->name}}</strong><br />
-              <img style="width: 40px;" src="{{Storage::url($store->logo)}}" alt=""> <br /><br />
+              <img style="width: 40px;" src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="{{$store->name}}"> <br /><br />
             </td>
           </tr>
           <tr>
