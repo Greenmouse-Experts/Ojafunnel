@@ -109,7 +109,7 @@
                                                         <h5 class="font-size-14 text-wrap" style="width: 330px;"><a href="#" class="text-dark">{{ $details['description'] }}</a></h5>
                                                     </td>
                                                     <td>
-                                                        {{ $details['currency'] }}{{ number_format($details['price'], 2) }}
+                                                        {{$shop->currency_sign}}{{ number_format($details['price'], 2) }}
                                                     </td>
                                                     <td>
                                                         <a href="javascript(0);" class="action-icon text-danger remove-from-cart"> <i class="fas fa-trash-can font-size-18"></i></a>
@@ -120,7 +120,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="7" class="text-right"><h4>Total {{ $details['currency'] }}{{ number_format($total, 2) }}</h4></td>
+                                        <td colspan="7" class="text-right"><h4>Total {{$shop->currency_sign}}{{ number_format($total, 2) }}</h4></td>
                                     </tr>
                                 </tfoot>
                                 @endif

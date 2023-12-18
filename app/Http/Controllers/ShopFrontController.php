@@ -74,69 +74,6 @@ class ShopFrontController extends Controller
         return view('dashboard.lms.cart', compact('shop', 'courses'));
     }
 
-
-    public function stripePost(Request $request)
-    {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        Stripe\Charge::create ([
-
-                "amount" => 100 * 100,
-
-                "currency" => "usd",
-
-                "source" => $request->stripeToken,
-
-                "description" => "Test payment from itsolutionstuff.com."
-        ]);
-        Session::flash('success', 'Payment successful!');
-        return back();
-    }
-
-    public function stripe_pay(Request $request){
-        $user = auth('user')->user();
-        //\Cart::clear();
-        try {
-            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-            $response = Stripe\Charge::create ([
-                "amount" => $request->amount * 100,
-                "currency" => "usd",
-                "source" => $request->stripeToken,
-                "description" => "Service payments from Sharreit"
-            ]);
-            if($response){
-
-                return $response;
-            }
-
-            return response()->json([
-                'status' => 'error',
-                'msg' => $response,
-                'data' => ''
-            ],400);
-
-        } catch (ClientException $e) {
-            $response = $e->getResponse();
-            $response_body = json_decode($response->getBody(), true);
-
-            return response()->json([
-                'status' => 'failed',
-                'message' => $response_body['error']['message'],
-                'data' => ''
-            ],400);
-
-        }catch(\Exception $e){
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'An error occured: '.$e->getMessage(),
-            ],400);
-        }
-        return response()->json([
-            'status' => 'failed',
-            'msg' => $response,
-            'data' => ''
-        ],400);
-    }
-
     public function course_checkout(Request $request)
     {
         $shop = Shop::latest()->where('name', $request->shopname)->first();
@@ -213,7 +150,7 @@ class ShopFrontController extends Controller
 
                 $stripe->paymentIntents->create([
                     'amount' => $totalAmount * 100,
-                    'currency' => 'usd',
+                    'currency' => $shop->currency,
                     'payment_method' => $request->payment_method,
                     'description' => 'Product payment with stripe',
                     'confirm' => true,
@@ -285,7 +222,7 @@ class ShopFrontController extends Controller
                 'course_id' => $item['id'],
                 'enrollment_id' => $enroll->id,
                 'order_no' => $enroll->order_no,
-                'payment_method' => 'Paystack',
+                'payment_method' => $request->paymentOptions,
                 'amount' => $item['price'],
                 'description' => $request->name . ' purchase/enroll on a course published in your shop.',
                 'transaction_id' => $trans->id,
@@ -358,7 +295,6 @@ class ShopFrontController extends Controller
         $shop = Shop::where('name', $request->shopname)->first();
 
         $cart = session()->get('cart');
-        // dd($cart);
         $totalAmount = 0;
 
         foreach ($cart as $item) {
@@ -375,7 +311,7 @@ class ShopFrontController extends Controller
 
                 $stripe->paymentIntents->create([
                     'amount' => $totalAmount * 100,
-                    'currency' => 'usd',
+                    'currency' => $shop->currency,
                     'payment_method' => $request->payment_method,
                     'description' => 'Product payment with stripe',
                     'confirm' => true,

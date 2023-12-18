@@ -98,7 +98,7 @@
                                         @php $total += $details['price'] @endphp
                                         @endforeach
                                         <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                                            <p>Total: <span class="text-info">{{ number_format($total, 2) }}</span></p>
+                                            <p>Total: <span class="text-info">{{$shop->currency_sign}}{{ number_format($total, 2) }}</span></p>
                                         </div>
                                     </div>
                                     @if(session('cart'))
@@ -109,7 +109,7 @@
                                         </div>
                                         <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                             <p>{{ isset($details['title']) ? $details['title'] : '' }}</p>
-                                            <span class="price text-info"> {{ isset($details['currency']) ? $details['currency'] : 'NGN' }}{{ $details['price'] ? number_format($details['price'], 2) : '' }}</span>
+                                            <span class="price text-info"> {{$shop->currency_sign}}{{ $details['price'] ? number_format($details['price'], 2) : '' }}</span>
                                         </div>
                                     </div>
                                     @endforeach
@@ -254,7 +254,7 @@
                                         <span class="d-inline-block average-rating">5</span>
                                     </div> -->
                                     <p class="price text-right">
-                                        {{$course->currency}}{{number_format($course->price, 2)}}
+                                    {{$shop->currency_sign}}{{number_format($course->price, 2)}}
                                     </p>
                                     {{-- <button class="btn add-to-cart-btn mobile-cart-btn" item="{{$course->id}}" link="{{ route('add.course.to.cart', $course->id) }}" onclick="add_tocartMobile(this)">
                                         Add To Cart

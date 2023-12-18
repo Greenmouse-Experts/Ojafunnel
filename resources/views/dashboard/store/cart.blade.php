@@ -156,7 +156,7 @@
                                                             <h5 class="font-size-14 text-wrap" style="width: 330px;"><a href="#" class="text-dark">{{ $details['description'] }}</a></h5>
                                                         </td>
                                                         <td>
-                                                            {{$details['currency_sign']}}<span id="price">{{ $details['price'] }}</span>
+                                                            {{$store->currency_sign}}<span id="price">{{ $details['price'] }}</span>
                                                         </td>
                                                         <td style="display: flex; flex-direction: row">
                                                             <!-- <button class="btn btn-danger" style="margin-right: 10px;font-size: 18px;">-</button> -->
@@ -164,8 +164,8 @@
                                                                 <input type="number" id="qty" onkeyup="compute_tcost()" value="{{ $details['quantity'] }}" class="form-control quantity update-cart>
                                                                 <small style="font-size: 63%">Availabe: {{ $details['rmQuan'] }}</small>
                                                             </div> -->
-                                                             <!-- <button class="btn btn-success">+</button> -->
-                                                             <div class="me-3" style="width: 80px; margin-top: 10px">
+                                                            <!-- <button class="btn btn-success">+</button> -->
+                                                            <div class="me-3" style="width: 80px; margin-top: 10px">
                                                                 <input type="number" class="form-control quantity"
                                                                     data-item-id="{{ $details['id'] }}"
                                                                     data-avail-quantity="{{ $details['rmQuan'] }}"
@@ -174,7 +174,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            {{$details['currency_sign']}}<span id="tcost">{{ $details['price'] * $details['quantity'] }}</span>
+                                                            {{$store->currency_sign}}<span id="tcost">{{ $details['price'] * $details['quantity'] }}</span>
                                                         </td>
                                                         <td>
                                                             <a href="javascript(0);" class="action-icon text-danger remove-from-cart"> <i class="mdi mdi-trash-can font-size-18"></i></a>
@@ -185,17 +185,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="6" class="text-end">
-                                                <label for="Name">Currency</label>
-                                                <select name="currency">
-                                                    <option value="">-- Select Currency --</option>
-                                                    <option value="USD">USD</option>
-                                                    <option value="NGN">NGN</option>
-                                                    <option value="GBP">GBP</option>
-                                                    <option value="EUR">EUR</option>
-                                                </select>
-                                            </td>
-                                            <td colspan="7" class="text-end"><h3>Total {{ $total }}</h3></td>
+                                            <td colspan="7" class="text-end"><h3>Total {{$store->currency_sign}}{{number_format($total, 2) }}</h3></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -212,13 +202,13 @@
                                             ]) . '#item-' . Request::get('product_id')
                                         }}
                                     @else
-                                      {{
+                                    {{
                                         route('user.stores.link', [
                                             'storename' => $store->name,
                                             'promotion_id' => Request::get('promotion_id'),
                                             'product_id' => Request::get('product_id')
                                         ])
-                                      }}
+                                    }}
                                     @endif
                                     " class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Continue Shopping</a>
                                 </div> <!-- end col -->

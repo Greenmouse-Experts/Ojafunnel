@@ -300,21 +300,6 @@
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
-                                                                    <div class="col-lg-2 mb-4">
-                                                                        <label for="Name">Currency</label>
-                                                                        <select name="currency">
-                                                                            <option value="{{$course->currency}}">{{$course->currency}}</option>
-                                                                            <option value="">-- Select Currency --</option>
-                                                                            <option value="USD">USD</option>
-                                                                            <option value="NGN">NGN</option>
-                                                                            <option value="GBP">GBP</option>
-                                                                            <option value="EUR">EUR</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-lg-6 mb-4">
-                                                                        <label for="Name">Currency Sign</label>
-                                                                        <input type="text" name="currency_sign" value="{{$course->currency_sign}}" placeholder="Enter Currency Sign" />
-                                                                    </div>
                                                                     <div class="col-lg-4 mb-4">
                                                                         <label for="Name">Pricing</label>
                                                                         <input type="number" name="price" value="{{$course->price}}" placeholder="Enter Price" />

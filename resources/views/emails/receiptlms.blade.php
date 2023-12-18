@@ -384,7 +384,7 @@
                     <td class="item-col price"></td>
                   </tr>
 
-                  @php $currency1 = explode(",", $currency)[0]; @endphp
+                  <!-- @php $currency1 = explode(",", $currency)[0]; @endphp -->
 
                   <tr>
                     <td class="item-col item">
@@ -394,8 +394,8 @@
                       <span class="total-space" style="font-weight: bold; color: #4d4d4d">Total</span>
                     </td>
                     <td class="item-col price" style="text-align: left; border-top: 1px solid #cccccc;">
-                      <span class="total-space">{{ $currency1 }}{{number_format($orderItem->sum('amount'), 2)}}</span> <br />
-                      <span class="total-space" style="font-weight:bold; color: #4d4d4d">{{ $currency1 }}{{number_format($orderItem->sum('amount'), 2)}}</span>
+                      <span class="total-space">{{$shop->currency_sign}}{{number_format($orderItem->sum('amount'), 2)}}</span> <br />
+                      <span class="total-space" style="font-weight:bold; color: #4d4d4d">{{$shop->currency_sign}}{{number_format($orderItem->sum('amount'), 2)}}</span>
                     </td>
                   </tr>
                 </table>

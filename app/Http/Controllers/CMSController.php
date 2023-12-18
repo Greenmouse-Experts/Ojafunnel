@@ -89,8 +89,6 @@ class CMSController extends Controller
                     'description' => $request->course_description,
                     'language' => $request->language,
                     'level' => $request->level,
-                    'currency' => $request->currency,
-                    'currency_sign' => $request->currency_sign,
                     'price' => $price,
                     'image' => '/storage/course_photo/' . $filename,
                 ]);
@@ -109,8 +107,6 @@ class CMSController extends Controller
                 'language' => $request->language,
                 'image' => $request->image,
                 'level' => $request->level,
-                'currency' => $request->currency,
-                'currency_sign' => $request->currency_sign,
                 'price' => $price
             ]);
 
@@ -127,7 +123,6 @@ class CMSController extends Controller
             'course_description' => ['required'],
             'language' => ['required'],
             'level' => ['required'],
-            'currency' => ['required'],
             'price' => ['required'],
         ]);
 
@@ -523,6 +518,8 @@ class CMSController extends Controller
                 'description' => 'required',
                 'link' => 'required',
                 'logo' => 'required|mimes:jpeg,png,jpg',
+                'currency' => 'required',
+                'currency_sign' => 'required',
             ],
             [
                 'name.unique' => 'Shop name has already been taken, please use another one!',
@@ -557,6 +554,8 @@ class CMSController extends Controller
                     'theme' => $request->theme,
                     'color' => '#fff',
                     'user_id' => Auth::user()->id,
+                    'currency' => $request->currency,
+                    'currency_sign' => $request->currency_sign
                 ]);
 
                 return back()->with([
@@ -575,6 +574,8 @@ class CMSController extends Controller
                     'theme' => $request->primaryColor,
                     'color' => '#fff',
                     'user_id' => Auth::user()->id,
+                    'currency' => $request->currency,
+                    'currency_sign' => $request->currency_sign
                 ]);
 
                 return back()->with([
@@ -610,6 +611,8 @@ class CMSController extends Controller
                         'theme' => $request->theme,
                         'color' => '#fff',
                         'user_id' => Auth::user()->id,
+                        'currency' => $request->currency,
+                        'currency_sign' => $request->currency_sign
                     ]);
 
                     return back()->with([
@@ -628,6 +631,8 @@ class CMSController extends Controller
                         'theme' => $request->primaryColor,
                         'color' => '#fff',
                         'user_id' => Auth::user()->id,
+                        'currency' => $request->currency,
+                        'currency_sign' => $request->currency_sign
                     ]);
 
                     return back()->with([
@@ -647,6 +652,8 @@ class CMSController extends Controller
             $request->validate(
                 [
                     'description' => 'required',
+                    'currency' => 'required',
+                    'currency_sign' => 'required',
                 ]
             );
 
@@ -667,6 +674,8 @@ class CMSController extends Controller
                         'logo' => '/storage/courseShopLogo/' . $filename,
                         'theme' => $request->theme,
                         'color' => '#fff',
+                        'currency' => $request->currency,
+                        'currency_sign' => $request->currency_sign
                     ]);
 
                     return back()->with([
@@ -679,6 +688,8 @@ class CMSController extends Controller
                     'description' => $request->description,
                     'theme' => $request->theme,
                     'color' => '#fff',
+                    'currency' => $request->currency,
+                    'currency_sign' => $request->currency_sign
                 ]);
             } else {
                 if (request()->hasFile('logo')) {
@@ -697,6 +708,8 @@ class CMSController extends Controller
                         'logo' => '/storage/courseShopLogo/' . $filename,
                         'theme' => $request->primaryColor,
                         'color' => '#fff',
+                        'currency' => $request->currency,
+                        'currency_sign' => $request->currency_sign
                     ]);
 
                     return back()->with([
@@ -709,6 +722,8 @@ class CMSController extends Controller
                     'description' => $request->description,
                     'theme' => $request->primaryColor,
                     'color' => '#fff',
+                    'currency' => $request->currency,
+                    'currency_sign' => $request->currency_sign
                 ]);
             }
 
@@ -722,6 +737,8 @@ class CMSController extends Controller
                     'name' => 'required|unique:shops|max:255',
                     'description' => 'required',
                     'link' => 'required',
+                    'currency' => 'required',
+                    'currency_sign' => 'required',
                 ],
                 [
                     'name.unique' => 'Shop name has already been taken, please use another one!',
@@ -747,6 +764,8 @@ class CMSController extends Controller
                         'logo' => '/storage/courseShopLogo/' . $filename,
                         'theme' => $request->theme,
                         'color' => '#fff',
+                        'currency' => $request->currency,
+                        'currency_sign' => $request->currency_sign
                     ]);
 
                     return back()->with([
@@ -761,6 +780,8 @@ class CMSController extends Controller
                     'link' => $request->link,
                     'theme' => $request->theme,
                     'color' => '#fff',
+                    'currency' => $request->currency,
+                    'currency_sign' => $request->currency_sign
                 ]);
             } else {
                 if (request()->hasFile('logo')) {
@@ -781,6 +802,8 @@ class CMSController extends Controller
                         'logo' => '/storage/courseShopLogo/' . $filename,
                         'theme' => $request->primaryColor,
                         'color' => '#fff',
+                        'currency' => $request->currency,
+                        'currency_sign' => $request->currency_sign
                     ]);
 
                     return back()->with([
@@ -795,6 +818,8 @@ class CMSController extends Controller
                     'link' => $request->link,
                     'theme' => $request->primaryColor,
                     'color' => '#fff',
+                    'currency' => $request->currency,
+                    'currency_sign' => $request->currency_sign
                 ]);
             }
 

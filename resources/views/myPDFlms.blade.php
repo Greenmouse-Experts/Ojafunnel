@@ -121,9 +121,9 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{\App\Models\Course::find($item->course_id)->title}}</td>
                                             <td><img style="width: 50px" src="{{\App\Models\Course::find($item->course_id)->image ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" srcset=""></td>
-                                            <td class="text-wrap" style="width: 330px;">{{\App\Models\ShopOrder::getCurrency($item->course_id)}}{{$item->amount}}</td>
-                                            <td>{{\App\Models\ShopOrder::getCurrency($item->course_id)}}{{number_format($item->amount)}}</td>
-                                            {{-- <td>{{\App\Models\ShopOrder::getCurrency($item->course_id)}}{{number_format($item->amount, 2)}}</td> --}}
+                                            <td class="text-wrap" style="width: 330px;">{{$shop->currency_sign}}{{$item->amount}}</td>
+                                            <td>{{$shop->currency_sign}}{{number_format($item->amount)}}</td>
+                                            {{-- <td>{{$shop->currency_sign}}{{number_format($item->amount, 2)}}</td> --}}
                                         </tr>
                                         @endforeach
                                         {{-- <tr>
@@ -131,7 +131,7 @@
                                                 <strong>Total:</strong>
                                             </td>
                                             <td class="border-0">
-                                               <b>₦{{number_format($orderItem->sum('amount'), 2)}}</b>
+                                               <b>{{$shop->currency_sign}}{{number_format($orderItem->sum('amount'), 2)}}</b>
                                             </td>
                                         </tr> --}}
                                     </tbody>

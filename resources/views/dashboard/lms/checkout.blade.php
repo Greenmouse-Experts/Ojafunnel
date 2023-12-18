@@ -185,12 +185,28 @@
                                                         <h4 class="card-title">Payment information</h4>
                                                         <p class="card-title-desc">Select payment below</p>
                                                         @foreach(App\Models\PaymentGateway::latest()->where('status', 'Active')->get() as $payment)
-                                                        <div class="mt-3">
-                                                            <div class="form-check form-check-inline font-size-16">
-                                                                <input class="form-check-input" type="radio" name="paymentOptions" id="paymemtOptions" value="{{$payment->name}}">
-                                                                <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><img src="{{URL::asset($payment->logo)}}" alt="{{$payment->name}}" class="me-1 font-size-20 align-top" width="15"/> {{$payment->name}}</label>
+                                                            @if($payment->name == 'Paystack' && $shop->currency == 'NGN')
+                                                            <div class="mt-3">
+                                                                <div class="form-check form-check-inline font-size-16">
+                                                                    <input class="form-check-input" type="radio" name="paymentOptions" id="paymemtOptions" value="{{$payment->name}}">
+                                                                    <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><img src="{{URL::asset($payment->logo)}}" alt="{{$payment->name}}" class="me-1 font-size-20 align-top" width="15"/> {{$payment->name}}</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                            @elseif(($payment->name == 'Flutterwave') && ($shop->currency == 'NGN' || $shop->currency == 'USD' || $shop->currency == 'GBP'))
+                                                            <div class="mt-3">
+                                                                <div class="form-check form-check-inline font-size-16">
+                                                                    <input class="form-check-input" type="radio" name="paymentOptions" id="paymemtOptions" value="{{$payment->name}}">
+                                                                    <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><img src="{{URL::asset($payment->logo)}}" alt="{{$payment->name}}" class="me-1 font-size-20 align-top" width="15"/> {{$payment->name}}</label>
+                                                                </div>
+                                                            </div>
+                                                            @elseif(($payment->name == 'Stripe') && ($shop->currency == 'USD' || $shop->currency == 'GBP' || $shop->currency == 'EUR'))
+                                                            <div class="mt-3">
+                                                                <div class="form-check form-check-inline font-size-16">
+                                                                    <input class="form-check-input" type="radio" name="paymentOptions" id="paymemtOptions" value="{{$payment->name}}">
+                                                                    <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><img src="{{URL::asset($payment->logo)}}" alt="{{$payment->name}}" class="me-1 font-size-20 align-top" width="15"/> {{$payment->name}}</label>
+                                                                </div>
+                                                            </div>
+                                                            @endif
                                                         @endforeach
                                                         <div class="text-end mt-2">
                                                             <a type="button" class="text-decoration-none">
@@ -227,7 +243,7 @@
                                                                             <td>
                                                                                 <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ isset($details['title']) ? $details['title'] : '' }} </a></h5>
                                                                             </td>
-                                                                            <td>{{ isset($details['currency']) ? $details['currency'] : 'NGN' }}{{ number_format($details['price'], 2) }}</td>
+                                                                            <td>{{ $shop->currency_sign }}{{ number_format($details['price'], 2) }}</td>
                                                                         </tr>
                                                                         @endforeach
                                                                         @endif
@@ -238,7 +254,7 @@
                                                                             <td>
                                                                                 <input type="hidden" id="curr" value="{{$details['currency']}}" name="">
 
-                                                                                {{ isset($details) ? $details['currency'] : 'NGN' }}{{ number_format($total, 2) }}
+                                                                                {{ $shop->currency_sign }}{{ number_format($total, 2) }}
 
                                                                                 <input type="hidden" id="totalAmount" value="{{ $total }}" name="">
                                                                             </td>
@@ -453,8 +469,8 @@
                             FlutterwaveCheckout({
                                 public_key: response.FLW_PUBLIC_KEY,
                                 tx_ref: ''+Math.floor((Math.random() * 1000000000) + 1),
-                                amount: tamount, // Amount in cents (e.g., $50.00 is 5000 cents)
-                                currency: 'NGN',
+                                amount: document.getElementById("totalAmount").value, // Amount in cents (e.g., $50.00 is 5000 cents)
+                                currency: '{{$shop->currency}}',
                                 payment_options: "card",
                                 customer: {
                                     email: $('#email').val(), // Replace with your user's email
@@ -488,7 +504,7 @@
                             var handler = PaystackPop.setup({
                                 key: response.PAYSTACK_PUBLIC_KEY,
                                 email: $('#email').val(),
-                                amount: tamount * 100,
+                                amount: document.getElementById("totalAmount").value * 100,
                                 ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
                                 callback: function(response) {
                                     // alert(JSON.stringify(response))

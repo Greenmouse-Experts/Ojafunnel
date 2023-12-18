@@ -188,7 +188,7 @@ class StoreFrontController extends Controller
 
     protected function checkoutPaymentWithPromotion(Request $request, $promotion_id, $product_id)
     {
-        // return $request->all();
+        $store = Store::where('name', $request->storename)->first();
 
         if($request->paymentOptions == 'Paypal')
         {
@@ -247,7 +247,7 @@ class StoreFrontController extends Controller
 
                 $stripe->paymentIntents->create([
                     'amount' => $request->amountToPay * 100,
-                    'currency' => 'usd',
+                    'currency' => $store->currency,
                     'payment_method' => $request->payment_method,
                     'description' => 'Product payment with stripe',
                     'confirm' => true,
@@ -263,7 +263,6 @@ class StoreFrontController extends Controller
             }
         }
 
-        $store = Store::where('name', $request->storename)->first();
         $cart = session()->get('cart');
 
         $promoter = User::where(['promotion_link' => $promotion_id]);
@@ -282,7 +281,7 @@ class StoreFrontController extends Controller
         $order = new StoreOrder();
         $order->store_id = $store->id;
         $order->order_no = Str::random(6);
-        $order->payment_method = 'Paystack';
+        $order->payment_method = $request->paymentOptions;
         $order->quantity = $qty;
         $order->coupon = json_encode([
             'coupon_id' => $request->couponID,
@@ -485,6 +484,8 @@ class StoreFrontController extends Controller
 
     protected function checkoutPaymentWithoutPromotion(Request $request, $product_id)
     {
+        $store = Store::where('name', $request->storename)->first();
+
         if($request->paymentOptions == 'Stripe')
         {
             // Fetch PaymentGateway details from the database
@@ -495,7 +496,7 @@ class StoreFrontController extends Controller
 
                 $stripe->paymentIntents->create([
                     'amount' => $request->amountToPay * 100,
-                    'currency' => 'usd',
+                    'currency' => $store->currency,
                     'payment_method' => $request->payment_method,
                     'description' => 'Product payment with stripe',
                     'confirm' => true,
@@ -511,7 +512,6 @@ class StoreFrontController extends Controller
             }
         }
 
-        $store = Store::where('name', $request->storename)->first();
         $cart = session()->get('cart');
 
         $totalAmount = 0;
@@ -527,7 +527,7 @@ class StoreFrontController extends Controller
         $order = new StoreOrder();
         $order->store_id = $store->id;
         $order->order_no = Str::random(6);
-        $order->payment_method = 'Paystack';
+        $order->payment_method = $request->paymentOptions;
         $order->quantity = $qty;
         $order->coupon = json_encode([
             'coupon_id' => $request->couponID,

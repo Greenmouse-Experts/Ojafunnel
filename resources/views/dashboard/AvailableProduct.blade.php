@@ -118,13 +118,13 @@
                                                 <div class="font-size-14 text-wrap" style="width: 500px;">{{$item->description}}</div>
                                             </td>
                                             <td>
-                                               {{$item->currency_sign}}{{number_format($item->price, 2)}}
+                                               {{$store->currency_sign}}{{number_format($item->price, 2)}}
                                             </td>
                                             <td>
                                                 {{$item->quantity}}
                                             </td>
                                             <td>
-                                                {{$item->currency_sign}}{{number_format($item->new_price)}}
+                                                {{$store->currency_sign}}{{number_format($item->new_price)}}
                                             </td>
                                             <td>
                                                 {{ $item->date_from ? date("D jS, M Y h:ia", strtotime($item->date_from)) : '' }}
@@ -176,14 +176,6 @@
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <label for="Name">Price</label>
                                                                                         <input type="number" name="price" value="{{$item->price}}" placeholder="Enter price" required />
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 mb-4">
-                                                                                        <label for="Name">Currency</label>
-                                                                                        <input type="text" name="currency" value="{{$item->currency}}" placeholder="Enter currency" required />
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 mb-4">
-                                                                                        <label for="Name">Currency Sign</label>
-                                                                                        <input type="text" name="currency_sign" value="{{$item->currency_sign}}" placeholder="Enter currency sign" required />
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <label for="Name">Quantity</label>
@@ -258,14 +250,6 @@
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <label for="Name">Price</label>
                                                                                         <input type="number" name="price" value="{{$item->price}}" placeholder="Enter price" required />
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 mb-4">
-                                                                                        <label for="Name">Currency</label>
-                                                                                        <input type="text" name="currency" value="{{$item->currency}}" placeholder="Enter currency" required />
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 mb-4">
-                                                                                        <label for="Name">Currency Sign</label>
-                                                                                        <input type="text" name="currency_sign" value="{{$item->currency_sign}}" placeholder="Enter currency sign" required />
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <label for="Name">Quantity</label>
@@ -378,14 +362,6 @@
                                     <input type="number" name="price" placeholder="Enter price" required />
                                     <span style="color:red;">Please enter numbers</span>
                                 </div>
-                                <div class="col-lg-6 mb-4">
-                                    <label for="Name">Currency</label>
-                                    <input type="text" name="currency" placeholder="Enter currency" required />
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <label for="Name">Currency Sign</label>
-                                    <input type="text" name="currency_sign" placeholder="Enter currency sign" required />
-                                </div>
                                 <div class="col-lg-3 mb-4 ps-0">
                                     <button type="button" class="btn mt-2 addTimer" style="color:#714091; border:1px solid #714091; padding:13px 10px; background:#ccc;border:1px solid #999">
                                         Add Timer
@@ -481,14 +457,6 @@
                                     <label for="Name">Price</label>
                                     <input type="number" name="price" placeholder="Enter price" required />
                                     <span style="color:red;">Please enter numbers</span>
-                                </div>
-                                <div class="col-lg-12 mb-4">
-                                    <label for="Name">Currency</label>
-                                    <input type="text" name="currency" placeholder="Enter currency" required />
-                                </div>
-                                <div class="col-lg-12 mb-4">
-                                    <label for="Name">Currency Sign</label>
-                                    <input type="text" name="currency_sign" placeholder="Enter currency sign" required />
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="Name">Quantity</label>

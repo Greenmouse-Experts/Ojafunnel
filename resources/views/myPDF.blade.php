@@ -139,15 +139,15 @@
                                                 <p>{{$item->product->description}}</p>
                                             </td>
                                             <td><img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset=""></td>
-                                            <td> 
+                                            <td>
                                                 @if($item->product->type == 'Digital')
                                                 Digital - <a href="{{$item->product->link}}">Download</a>
-                                                @else 
+                                                @else
                                                 Physical
                                                 @endif
                                             </td>
                                             <td>{{$item->quantity}}</td>
-                                            <td>₦{{number_format($item->amount, 2)}}</td>
+                                            <td>{{$store->currency_sign}}{{number_format($item->amount, 2)}}</td>
                                             <td>
                                                 @if ($order['coupon'])
                                                     @php
@@ -168,7 +168,7 @@
                                                 <strong>Total:</strong>
                                             </td>
                                             <td class="border-0">
-                                               <b>₦{{number_format(json_decode($order->coupon)->amountPaid, 2)}}</b>
+                                               <b>{{$store->currency_sign}}{{number_format(json_decode($order->coupon)->amountPaid, 2)}}</b>
                                             </td>
                                         </tr>
                                     </tbody>
