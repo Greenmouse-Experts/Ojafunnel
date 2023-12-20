@@ -2,50 +2,32 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\StoreCampaignJob;
-use Illuminate\Console\Command;
-use App\Enums\SmsCampaignStatus;
-use App\Enums\SmsLogStatus;
-use App\Enums\SmsQueueStatus;
+use App\Models\SeriesSmsCampaign;
 use App\Models\SmsCampaign;
-use App\Models\SmsCampaignList;
-use App\Models\SmsLog;
-use App\Models\SmsQueue;
-use \Carbon\Carbon;
+use Aws\Sns\SnsClient;
+use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
-use Twilio\Rest\Client as twilio;
-use Illuminate\Support\Str;
-use Aws\Sns\SnsClient;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Twilio\Rest\Client as twilio;
 
-class SendSms extends Command
+class SeriesSMS extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'smsCampaign:run';
+    protected $signature = 'smsSeriesCampaign:run';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Run SmS campaign';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $description = 'Run SmS Series Campaign';
 
     /**
      * Execute the console command.
@@ -54,168 +36,53 @@ class SendSms extends Command
      */
     public function handle()
     {
-        $fromDate = Carbon::now()->subDays(3)->toDateTimeString();
-        $toDate   = Carbon::now()->toDateTimeString();
+        $date = Carbon::now();
 
-        $recurring = SmsCampaign::where('schedule_type', 'recurring')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
-        $onetime = SmsCampaign::where('schedule_type', 'onetime')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
+        $current_date = $date->format('Y-m-d');
+        $current_time = $date->format('H:i');
 
-        if ($onetime->count() > 0) {
-            foreach ($onetime as $sms) {
-                if ($sms->schedule_time < Carbon::now()->toDateTimeString()) {
-                    // \Log::info($sms);
+        $series = SmsCampaign::where('schedule_type', 'series')->where('status', 'scheduled')->get();
 
-                    // recurring running
-                    dispatch(new StoreCampaignJob($sms->id));
+        if($series->count() > 0) {
+            foreach($series as $followup) {
+                $ssc = SeriesSmsCampaign::where([
+                    'sms_campaign_id' => $followup->id,
+                    'date' => $current_date,
+                    'time' => $current_time
+                ])->get();
 
-                    $contact = \App\Models\SMSQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
+                // Log::info($ssc);
 
-                    if ($sms->integration == "Multitexter")
+                foreach($ssc as $sms)
+                {
+                    $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
+
+                    if ($smsCampaign->integration == "Multitexter")
                     {
                         $this->sendMessageMultitexter($sms);
                     }
 
-                    if ($sms->integration == "NigeriaBulkSms")
+                    if ($smsCampaign->integration == "NigeriaBulkSms")
                     {
                        $this->sendMessageNigeriaBulkSms($sms);
                     }
 
-                    if($sms->integration == 'Twillio')
+                    if($smsCampaign->integration == 'Twillio')
                     {
                         $this->sendMessageTwilio($sms);
                     }
 
-                    if($sms->integration == 'AWS')
+                    if($smsCampaign->integration == 'AWS')
                     {
                         $this->sendMessageAWS($sms);
                     }
 
-                    if($sms->integration == 'InfoBip')
+                    if($smsCampaign->integration == 'InfoBip')
                     {
                         $this->sendMessageInfoBip($sms);
                     }
-
-                    $sms->status = 'delivered';
-                    $sms->delivery_at = Carbon::now()->toDateTimeString();
-                    $sms->cache = json_encode([
-                        'ContactCount' => $contact->count(),
-                        // 'DeliveredCount' => $sms->readCache('DeliveredCount') + 1,
-                        'DeliveredCount' => $contact->count(),
-                        'FailedDeliveredCount' => 0,
-                        'NotDeliveredCount' => 0,
-                    ]);
-
-                   $sms->update();
                 }
-            }
-        }
 
-        if ($recurring->count() > 0) {
-            foreach ($recurring as $sms) {
-                if ($sms->recurring_end > Carbon::now()->toDateTimeString()) {
-                    //\Log::info([$sms->recurring_end, Carbon::now()->toDateTimeString()]);
-                    // recurring running
-                    dispatch(new StoreCampaignJob($sms->id));
-
-                    if ($sms->frequency_cycle != 'custom') {
-                        $schedule_cycle = $sms::scheduleCycleValues();
-                        $limits = $schedule_cycle[$sms->frequency_cycle];
-                        $frequency_amount = $limits['frequency_amount'];
-                        $frequency_unit = $limits['frequency_unit'];
-                    } else {
-                        $frequency_amount = $sms->frequency_amount;
-                        $frequency_unit = $sms->frequency_unit;
-                    }
-
-                    $contact = \App\Models\SmsQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
-                    // \Log::info($contact);
-                    $schedule_date = $sms->nextScheduleDate($sms->schedule_time, $frequency_unit, $frequency_amount);
-
-                    // $new_camp = $sms->replicate()->fill([
-                    //         'status'        => 'scheduled',
-                    //         'schedule_time' => $schedule_date,
-                    // ]);
-
-                    if ($sms->integration == "Multitexter")
-                    {
-                        $this->sendMessageMultitexter($sms);
-                    }
-
-                    if ($sms->integration == "NigeriaBulkSms")
-                    {
-                       $this->sendMessageNigeriaBulkSms($sms);
-                    }
-
-                    if($sms->integration == 'Twillio')
-                    {
-                        $this->sendMessageTwilio($sms);
-                    }
-
-                    if($sms->integration == 'AWS')
-                    {
-                        $this->sendMessageAWS($sms);
-                    }
-
-                    if($sms->integration == 'InfoBip')
-                    {
-                        $this->sendMessageInfoBip($sms);
-                    }
-
-                    $sms->status = 'scheduled';
-                    $sms->schedule_time = $schedule_date;
-                    $sms->cache = json_encode([
-                        'ContactCount' => $contact->count(),
-                        // 'DeliveredCount' => $sms->readCache('DeliveredCount') + 1,
-                        'DeliveredCount' => $contact->count(),
-                        'FailedDeliveredCount' => 0,
-                        'NotDeliveredCount' => 0,
-                    ]);
-
-                    $sms->update();
-
-                    // if ($data) {
-
-                    //     //insert campaign contact list
-                    //     foreach (SmsCampaignsList::where('campaign_id', $sms->id)->cursor() as $list) {
-                    //         SmsCampaignsList::create([
-                    //                 'campaign_id'     => $new_camp->id,
-                    //                 'contact_list_id' => $list->contact_list_id,
-                    //         ]);
-                    //     }
-
-                    //     //insert campaign recipients
-                    //     foreach (SmsCampaignsRecipients::where('campaign_id', $sms->id)->cursor() as $recipients) {
-                    //         SmsCampaignsRecipients::create([
-                    //                 'campaign_id' => $new_camp->id,
-                    //                 'recipient'   => $recipients->recipient,
-                    //         ]);
-                    //     }
-
-
-                    //     // //insert campaign sender ids
-                    //     // foreach (CampaignsSenderid::where('campaign_id', $sms->id)->cursor() as $sender_ids) {
-                    //     //     CampaignsSenderid::create([
-                    //     //             'campaign_id' => $new_camp->id,
-                    //     //             'sender_id'   => $sender_ids->sender_id,
-                    //     //             'originator'  => $sender_ids->originator,
-                    //     //     ]);
-                    //     // }
-
-
-                    //     // //insert campaign sending servers
-                    //     // foreach (CampaignsSendingServer::where('campaign_id', $sms->id)->cursor() as $servers) {
-                    //     //     CampaignsSendingServer::create([
-                    //     //             'campaign_id'       => $new_camp->id,
-                    //     //             'sending_server_id' => $servers->sending_server_id,
-                    //     //             'fitness'           => $servers->fitness,
-                    //     //     ]);
-                    //     // }
-                    // }
-
-                } else {
-                    //recurring date end
-                    $sms->delivered();
-                }
             }
         }
 
@@ -225,19 +92,20 @@ class SendSms extends Command
     public function sendMessageTwilio($sms)
     {
         $contains = Str::contains($sms->message, '$name');
+        $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
         if($contains)
         {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone', 'name')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
             $d = $contacts->toArray();
 
             $sid = $integration->sid;
             $auth_token = $integration->token;
             $from_number = $integration->from;
-            $sender_name = $sms->sender_name;
+            $sender_name = $smsCampaign->sender_name;
             $recipients = $d;
 
             try {
@@ -264,6 +132,13 @@ class SendSms extends Command
                     );
                 }
 
+                $sms->ContactCount = $sms->ContactCount + $contacts->count();
+                $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
+                $sms->FailedDeliveredCount = 0;
+                $sms->NotDeliveredCount = 0;
+
+                $sms->save();
+
                 return true;
 
             } catch(Exception $e) {
@@ -272,9 +147,9 @@ class SendSms extends Command
 
         } else {
 
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
             $d = $contacts->toArray();
 
@@ -288,7 +163,7 @@ class SendSms extends Command
             $auth_token = $integration->token;
             $from_number = $integration->from;
             $message = $sms->message;
-            $sender_name = $sms->sender_name;
+            $sender_name = $smsCampaign->sender_name;
             $recipients = explode(',', $datum);
 
             try {
@@ -313,28 +188,35 @@ class SendSms extends Command
                     );
                 }
 
+                $sms->ContactCount = $sms->ContactCount + $contacts->count();
+                $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
+                $sms->FailedDeliveredCount = 0;
+                $sms->NotDeliveredCount = 0;
+
+                $sms->save();
+
                 return true;
 
             } catch(Exception $e) {
                 return $e->getMessage();
             }
         }
-
     }
 
     public function sendMessageMultitexter($sms)
     {
         $contains = Str::contains($sms->message, '$name');
+        $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
         if($contains)
         {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone', 'name')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
             $email = $integration->email;
             $password = $integration->password;
-            $sender_name = $sms->sender_name;
+            $sender_name = $smsCampaign->sender_name;
             $api_key = $integration->api_key;
 
             try {
@@ -362,6 +244,12 @@ class SendSms extends Command
                         'headers' => $headers,
                     ]);
                 }
+                $sms->ContactCount = $sms->ContactCount + $contacts->count();
+                $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
+                $sms->FailedDeliveredCount = 0;
+                $sms->NotDeliveredCount = 0;
+
+                $sms->save();
                 // $responseBody = json_decode($response->getBody());
                 $responseBody = true;
             } catch (Exception $e) {
@@ -372,9 +260,9 @@ class SendSms extends Command
 
         } else {
 
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
             $d = $contacts->toArray();
 
@@ -387,7 +275,7 @@ class SendSms extends Command
             $email = $integration->email;
             $password = $integration->password;
             $message = $sms->message;
-            $sender_name = $sms->sender_name;
+            $sender_name = $smsCampaign->sender_name;
             $recipients = $datum;
             $api_key = $integration->api_key;
 
@@ -412,6 +300,13 @@ class SendSms extends Command
                     'headers' => $headers,
                 ]);
 
+                $sms->ContactCount = $sms->ContactCount + $contacts->count();
+                $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
+                $sms->FailedDeliveredCount = 0;
+                $sms->NotDeliveredCount = 0;
+
+                $sms->save();
+
                 $responseBody = true;
             } catch (Exception $e) {
                 $responseBody = $e;
@@ -424,16 +319,17 @@ class SendSms extends Command
     public function sendMessageNigeriaBulkSms($sms)
     {
         $contains = Str::contains($sms->message, '$name');
+        $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
         if($contains)
         {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone', 'name')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
             $username = $integration->username;
             $password = $integration->password;
-            $sender = $sms->sender_name;
+            $sender = $smsCampaign->sender_name;
 
             try {
                 foreach($contacts as $contact)
@@ -466,6 +362,13 @@ class SendSms extends Command
 
                 }
 
+                $sms->ContactCount = $sms->ContactCount + $contacts->count();
+                $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
+                $sms->FailedDeliveredCount = 0;
+                $sms->NotDeliveredCount = 0;
+
+                $sms->save();
+
                 $responseBody = true;
                 // if (isset($result->status) && strtoupper($result->status) == 'OK') {
                 //     // Message sent successfully, do anything here
@@ -484,9 +387,9 @@ class SendSms extends Command
             return $responseBody;
 
         } else {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
             $d = $contacts->toArray();
 
@@ -499,7 +402,7 @@ class SendSms extends Command
             // Initialize variables ( set your variables here )
             $username = $integration->username;
             $password = $integration->password;
-            $sender = $sms->sender_name;
+            $sender = $smsCampaign->sender_name;
             $message = $sms->message;
             $recipients = $datum;
 
@@ -527,6 +430,13 @@ class SendSms extends Command
 
                 $result = json_decode($result);
 
+                $sms->ContactCount = $sms->ContactCount + $contacts->count();
+                $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
+                $sms->FailedDeliveredCount = 0;
+                $sms->NotDeliveredCount = 0;
+
+                $sms->save();
+
                 $responseBody = true;
             } catch (Exception $e) {
                 $responseBody = $e;
@@ -539,16 +449,17 @@ class SendSms extends Command
     public function sendMessageAWS($sms)
     {
         $contains = Str::contains($sms->message, '$name');
+        $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
         if($contains)
         {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone', 'name')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
             $key = $integration->key;
             $secret = $integration->secret;
-            $sender = $sms->sender_name;
+            $sender = $smsCampaign->sender_name;
 
             try {
                 foreach($contacts as $contact)
@@ -584,9 +495,17 @@ class SendSms extends Command
                     ];
 
 
+
                     $result = $SnSclient->publish($args);
                     // return $result;
                 }
+
+                $sms->ContactCount = $sms->ContactCount + $contacts->count();
+                $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
+                $sms->FailedDeliveredCount = 0;
+                $sms->NotDeliveredCount = 0;
+
+                $sms->save();
 
                 $responseBody = true;
             } catch (Exception $e) {
@@ -596,13 +515,13 @@ class SendSms extends Command
             // return $responseBody;
 
         } else {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
             $key = $integration->key;
             $secret = $integration->secret;
-            $sender = $sms->sender_name;
+            $sender = $smsCampaign->sender_name;
             $message = $sms->message;
 
             try {
@@ -641,6 +560,13 @@ class SendSms extends Command
                     // return $result;
                 }
 
+                $sms->ContactCount = $sms->ContactCount + $contacts->count();
+                $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
+                $sms->FailedDeliveredCount = 0;
+                $sms->NotDeliveredCount = 0;
+
+                $sms->save();
+
                 $responseBody = true;
             } catch (Exception $e) {
                 $responseBody = $e;
@@ -653,16 +579,17 @@ class SendSms extends Command
     public function sendMessageInfoBip($sms)
     {
         $contains = Str::contains($sms->message, '$name');
+        $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
         if($contains)
         {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone', 'name')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
             $API_KEY = $integration->api_key;
             $BASE_URL = $integration->api_base_url;
-            $SENDER = $sms->sender_name;
+            $SENDER = $smsCampaign->sender_name;
 
             try {
                 foreach($contacts as $contact)
@@ -709,6 +636,13 @@ class SendSms extends Command
                     curl_close($curl);
                 }
 
+                $sms->ContactCount = $sms->ContactCount + $contacts->count();
+                $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
+                $sms->FailedDeliveredCount = 0;
+                $sms->NotDeliveredCount = 0;
+
+                $sms->save();
+
                 $responseBody = true;
             } catch (Exception $e) {
                 $responseBody = $e;
@@ -717,13 +651,13 @@ class SendSms extends Command
             return $responseBody;
 
         } else {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
+            $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
             $API_KEY = $integration->api_key;
             $BASE_URL = $integration->api_base_url;
-            $SENDER = $sms->sender_name;
+            $SENDER = $smsCampaign->sender_name;
 
             try {
                 foreach($contacts as $contact)
@@ -769,6 +703,13 @@ class SendSms extends Command
 
                     curl_close($curl);
                 }
+
+                $sms->ContactCount = $sms->ContactCount + $contacts->count();
+                $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
+                $sms->FailedDeliveredCount = 0;
+                $sms->NotDeliveredCount = 0;
+
+                $sms->save();
 
                 $responseBody = true;
             } catch (Exception $e) {

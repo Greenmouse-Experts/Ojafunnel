@@ -12,6 +12,7 @@ use App\Console\Commands\WABirthday;
 use App\Console\Commands\SmsBirthday;
 use App\Console\Commands\Subscription;
 use App\Console\Commands\EmailCartReminder;
+use App\Console\Commands\SeriesSMS;
 use App\Console\Commands\SubscriptionReminder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         SendSms::class,
+        SeriesSMS::class,
         SendWABulk::class,
         SmsBirthday::class,
         Subscription::class,
@@ -51,12 +53,12 @@ class Kernel extends ConsoleKernel
         $schedule->command('subscription:cron')->dailyAt('00:30')->withoutOverlapping();
         $schedule->command('subscriptionReminder:cron')->dailyAt('05:30')->withoutOverlapping();
 
-        // run command every minute 
+        // run command every minute
         $schedule->command('sendwabulk:run')->everyMinute()->withoutOverlapping();
         $schedule->command('emailcampaign:run')->everyMinute()->withoutOverlapping();
 
         // run command every day
-        // birthday or anniversary 
+        // birthday or anniversary
         $schedule->command('wabirthday:run')->daily()->withoutOverlapping();
         $schedule->command('emailbirthday:run')->daily()->withoutOverlapping();
         $schedule->command('sms_cart_reminder:run')->daily()->withoutOverlapping();
@@ -64,6 +66,9 @@ class Kernel extends ConsoleKernel
         // ssl
         $schedule->command('generatessl:run')->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command('renewssl:run')->daily()->withoutOverlapping();
+
+        // series
+        $schedule->command('smsSeriesCampaign:run')->everyMinute()->withoutOverlapping();
     }
 
     /**

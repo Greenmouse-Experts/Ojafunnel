@@ -15,6 +15,7 @@ use Twilio\Rest\Client as twilio;
 use GuzzleHttp\Client;
 use App\Library\Tool;
 use App\Models\OjaPlanParameter;
+use App\Models\SeriesSmsCampaign;
 use Illuminate\Support\Str;
 use Aws\Sns\SnsClient;
 
@@ -32,217 +33,6 @@ class SmsAutomationController extends Controller
 
     public function sms_sendmessage_campaign(Request $request)
     {
-        // if ($request->mailinglist_id == null and $request->contacts !== null) {
-        //     //Validate Request
-        //     $this->validate($request, [
-        //         'campaign_name' => ['required', 'string', 'max:255'],
-        //         'sender_name' => ['required', 'string', 'max:255'],
-        //         'message' => ['required', 'string', 'max:255'],
-        //         'contacts' => ['required', 'string', 'max:255'],
-        //         'optout_message' => ['required', 'string', 'max:255'],
-        //         // 'message_timimg' => ['required', 'string', 'max:255'],
-        //         'integration' => ['required', 'string', 'max:255'],
-        //     ]);
-
-        //     if ($request->message_timing == "Schedule") {
-        //         $this->validate($request, [
-        //             'schedule_date' => ['required', 'string', 'max:255'],
-        //             'schedule_time' => ['required', 'string', 'max:255'],
-        //         ]);
-        //     }
-
-        //     if ($request->integration == "Twilio") {
-        //         $message = $this->sendMessageTwilio($request);
-
-        //         dd($message);
-        //     } elseif ($request->integration == "Multitexter") {
-        //         try {
-        //             $file = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $request->contacts));
-
-        //             foreach ($file as $key => $escapedItem) {
-        //                 $contacts = preg_replace('/\s+/', '', $escapedItem);
-        //             }
-
-        //             $data = implode(',', $contacts);
-
-        //             $message = $this->sendMessageMultitexter($request, $data);
-
-        //             SmsAutomation::create([
-        //                 'user_id' => Auth::user()->id,
-        //                 'mailinglist_id' => $request->mailinglist_id,
-        //                 'integration' => $request->integration,
-        //                 'campaign_name' => ucfirst($request->campaign_name),
-        //                 'sms_sent' => count($contacts),
-        //                 'delivered' => count($contacts),
-        //                 'senders_name' => ucfirst($request->sender_name),
-        //                 'message' => $request->message,
-        //                 'contacts' => $request->contacts,
-        //                 'optout_message' => $request->optout_message,
-        //                 'message_timimg' => $request->message_timimg,
-        //                 'schedule_date' => $request->schedule_date,
-        //                 'schedule_time' => $request->schedule_time,
-        //             ]);
-
-        //             return redirect()->route('user.sms.automation', Auth::user()->username)->with([
-        //                 'type' => 'success',
-        //                 'message' => $message->msg
-        //             ]);
-        //         } catch (Exception $e) {
-        //             $data = "Contact format invalid";
-        //         }
-
-        //         return back()->with([
-        //             'type' => 'danger',
-        //             'message' => $data
-        //         ]);
-        //     } elseif ($request->integration == "NigeriaBulkSms") {
-        //         try {
-        //             $file = array_map("str_getcsv", preg_split('/\r*\n+|\r+/', $request->contacts));
-
-        //             foreach ($file as $key => $escapedItem) {
-        //                 $contacts = preg_replace('/\s+/', '', $escapedItem);
-        //             }
-
-        //             $data = implode(',', $contacts);
-
-        //             $message = $this->sendMessageNigeriaBulkSms($request, $data);
-
-        //             if(str_contains($message, 'Message sent'))
-        //             {
-        //                 SmsAutomation::create([
-        //                     'user_id' => Auth::user()->id,
-        //                     'mailinglist_id' => $request->mailinglist_id,
-        //                     'integration' => $request->integration,
-        //                     'campaign_name' => ucfirst($request->campaign_name),
-        //                     'sms_sent' => count($contacts),
-        //                     'delivered' => count($contacts),
-        //                     'senders_name' => ucfirst($request->sender_name),
-        //                     'message' => $request->message,
-        //                     'contacts' => $request->contacts,
-        //                     'optout_message' => $request->optout_message,
-        //                     'message_timimg' => $request->message_timimg,
-        //                     'schedule_date' => $request->schedule_date,
-        //                     'schedule_time' => $request->schedule_time,
-        //                 ]);
-
-        //                 return redirect()->route('user.sms.automation', Auth::user()->username)->with([
-        //                     'type' => 'success',
-        //                     'message' => $message
-        //                 ]);
-        //             } else {
-        //                 return back()->with([
-        //                     'type' => 'danger',
-        //                     'message' => $message
-        //                 ]);
-        //             }
-        //         } catch (Exception $e) {
-        //             $data = "Contact format invalid";
-        //         }
-
-        //         return back()->with([
-        //             'type' => 'danger',
-        //             'message' => $data
-        //         ]);
-        //     } else {
-        //         return back()->with([
-        //             'type' => 'danger',
-        //             'message' => 'Integration service ongoing.'
-        //         ]);
-        //     }
-        // } elseif ($request->contacts == null and $request->mailinglist_id !== null) {
-        //     //Validate Request
-        //     $this->validate($request, [
-        //         'campaign_name' => ['required', 'string', 'max:255'],
-        //         'sender_name' => ['required', 'string', 'max:255'],
-        //         'message' => ['required', 'string', 'max:255'],
-        //         'mailinglist_id' => ['required', 'string', 'max:255'],
-        //         'optout_message' => ['required', 'string', 'max:255'],
-        //         'message_timimg' => ['required', 'string', 'max:255'],
-        //         'integration' => ['required', 'string', 'max:255'],
-        //     ]);
-
-        //     if ($request->message_timing == "Schedule") {
-        //         $this->validate($request, [
-        //             'schedule_date' => ['required', 'string', 'max:255'],
-        //             'schedule_time' => ['required', 'string', 'max:255'],
-        //         ]);
-        //     }
-
-        //     if ($request->integration == "Multitexter") {
-        //         $data = "No Contact";
-
-        //         $message = $this->sendMessageMultitexter($request, $data);
-
-        //         $maillist = Mailinglist::findorfail($request->mailinglist_id);
-
-        //         SmsAutomation::create([
-        //             'user_id' => Auth::user()->id,
-        //             'mailinglist_id' => $request->mailinglist_id,
-        //             'integration' => $request->integration,
-        //             'campaign_name' => ucfirst($request->campaign_name),
-        //             'sms_sent' => $maillist->no_of_contacts,
-        //             'delivered' => $maillist->no_of_contacts,
-        //             'senders_name' => ucfirst($request->sender_name),
-        //             'message' => $request->message,
-        //             'contacts' => $request->contacts,
-        //             'optout_message' => $request->optout_message,
-        //             'message_timimg' => $request->message_timimg,
-        //             'schedule_date' => $request->schedule_date,
-        //             'schedule_time' => $request->schedule_time,
-        //         ]);
-
-        //         return redirect()->route('user.sms.automation', Auth::user()->username)->with([
-        //             'type' => 'success',
-        //             'message' => $message->msg
-        //         ]);
-        //     } elseif ($request->integration == "NigeriaBulkSms") {
-        //         $data = "No Contact";
-
-        //         $message = $this->sendMessageNigeriaBulkSms($request, $data);
-
-        //         $maillist = Mailinglist::findorfail($request->mailinglist_id);
-
-        //         if(str_contains($message, 'Message sent'))
-        //         {
-        //             SmsAutomation::create([
-        //                 'user_id' => Auth::user()->id,
-        //                 'mailinglist_id' => $request->mailinglist_id,
-        //                 'integration' => $request->integration,
-        //                 'campaign_name' => ucfirst($request->campaign_name),
-        //                 'sms_sent' => $maillist->no_of_contacts,
-        //                 'delivered' => $maillist->no_of_contacts,
-        //                 'senders_name' => ucfirst($request->sender_name),
-        //                 'message' => $request->message,
-        //                 'contacts' => $request->contacts,
-        //                 'optout_message' => $request->optout_message,
-        //                 'message_timimg' => $request->message_timimg,
-        //                 'schedule_date' => $request->schedule_date,
-        //                 'schedule_time' => $request->schedule_time,
-        //             ]);
-
-        //             return redirect()->route('user.sms.automation', Auth::user()->username)->with([
-        //                 'type' => 'success',
-        //                 'message' => $message
-        //             ]);
-        //         } else {
-        //             return back()->with([
-        //                 'type' => 'danger',
-        //                 'message' => $message
-        //             ]);
-        //         }
-        //     } else {
-        //         return back()->with([
-        //             'type' => 'danger',
-        //             'message' => 'Integration service ongoing.'
-        //         ]);
-        //     }
-        // } else {
-        //     return back()->with([
-        //         'type' => 'danger',
-        //         'message' => 'Please check your fields and try again!'
-        //     ]);
-        // }
-
         $messages = [
             'mailinglist_id.required' => 'The list field is required.',
             'integration.required' => 'Please activate or add SMS Integration.'
@@ -251,10 +41,7 @@ class SmsAutomationController extends Controller
         $this->validate($request, [
             'campaign_name' => ['required', 'string', 'max:255'],
             'sender_name' => ['required', 'string', 'max:255'],
-            'message' => ['required', 'string'],
             'mailinglist_id' => ['required'],
-            //'optout_message' => ['required', 'string', 'max:255'],
-            // 'message_timimg' => ['required', 'string', 'max:255'],
             'integration' => ['required', 'string', 'max:255'],
         ], $messages);
 
@@ -270,7 +57,10 @@ class SmsAutomationController extends Controller
         $contact = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')
             ->get();
 
-        if ($request->message_timimg == 'Immediately') {
+        if ($request->message_timing == 'Immediately') {
+            $request->validate([
+                'message' => ['required', 'string'],
+            ]);
             if ($request->integration == "Multitexter") {
                 $message = $this->sendMessageMultitexter($request);
 
@@ -442,16 +232,15 @@ class SmsAutomationController extends Controller
                         'message' => $message
                     ]);
                 }
-            }else {
+            } else {
                 return back()->with([
                     'type' => 'danger',
                     'message' => 'Integration service ongoing.'
                 ]);
             }
-        }
-        if ($request->message_timimg == 'Schedule') {
-
+        } elseif ($request->message_timing == 'Schedule') {
             $this->validate($request, [
+                'message' => ['required', 'string'],
                 'schedule_date' => ['required'],
                 'schedule_time' => ['required'],
             ]);
@@ -533,6 +322,43 @@ class SmsAutomationController extends Controller
             ]);
 
             //return new \App\Http\Resources\SmsCampaingResource($new_campaign);
+        } elseif ($request->message_timing == 'Series') {
+            $request->validate([
+                'series_date.*' => 'required|date',
+                'series_time.*' => 'required',
+                'series_message.*' => 'required',
+            ]);
+
+            $new_campaign = SmsCampaign::create([
+                'title' => $request->campaign_name,
+                'user_id' => Auth::user()->id,
+                'maillist_id' => $request->mailinglist_id,
+                'message' => $request->message,
+                'sender_name' => $request->sender_name,
+                'integration' => $request->integration,
+                'receivers' => $contact,
+                'sms_type' => $sms_type,
+                'status' => 'scheduled',
+            ]);
+
+            foreach ($request->input('series_date') as $key => $value) {
+                SeriesSmsCampaign::create([
+                    'sms_campaign_id' => $new_campaign->id,
+                    'user_id' => Auth::user()->id,
+                    'date' => $request->series_date[$key],
+                    'time' => $request->series_time[$key],
+                    'message' => $request->series_message[$key],
+                ]);
+            }
+
+            $new_campaign->schedule_type = 'series';
+
+            $new_campaign->save();
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'SMS Campaign Automation Created.'
+            ]);
         } else {
             return back()->with([
                 'type' => 'danger',
@@ -582,12 +408,12 @@ class SmsAutomationController extends Controller
                         ]
                     );
                 }
-                
+
                 return true;
 
             } catch(Exception $e) {
                 return $e->getMessage();
-            }  
+            }
 
         } else {
 
@@ -631,14 +457,14 @@ class SmsAutomationController extends Controller
                         ]
                     );
                 }
-                
+
                 return true;
 
             } catch(Exception $e) {
                 return $e->getMessage();
-            }  
+            }
         }
-        
+
     }
 
     public function sendMessageMultitexter(Request $request)
@@ -903,7 +729,7 @@ class SmsAutomationController extends Controller
                         "PhoneNumber" => $contact->phone
                     ];
 
-                    
+
                     $result = $SnSclient->publish($args);
                     // return $result;
                 }
@@ -956,7 +782,7 @@ class SmsAutomationController extends Controller
                         "PhoneNumber" => $contact->phone
                     ];
 
-                    
+
                     $result = $SnSclient->publish($args);
                     // return $result;
                 }
@@ -1004,9 +830,9 @@ class SmsAutomationController extends Controller
                           }
                         ]
                     }';
-            
+
                     $curl = curl_init();
-            
+
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
                         CURLOPT_RETURNTRANSFER => true,
@@ -1023,9 +849,9 @@ class SmsAutomationController extends Controller
                             'Accept: application/json'
                         ),
                     ));
-            
+
                     $response = curl_exec($curl);
-            
+
                     curl_close($curl);
                 }
 
@@ -1065,9 +891,9 @@ class SmsAutomationController extends Controller
                           }
                         ]
                     }';
-            
+
                     $curl = curl_init();
-            
+
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
                         CURLOPT_RETURNTRANSFER => true,
@@ -1084,9 +910,9 @@ class SmsAutomationController extends Controller
                             'Accept: application/json'
                         ),
                     ));
-            
+
                     $response = curl_exec($curl);
-            
+
                     curl_close($curl);
                 }
 

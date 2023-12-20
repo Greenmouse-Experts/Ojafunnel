@@ -59,7 +59,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12" id="message">
                                         <label>SMS Message</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
@@ -104,17 +104,48 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 mb-4">
+                                    <div class="col-12">
                                         <div class="row">
-                                            <div class="col-md-4 col-12">
+                                            <div class="col-3">
                                                 Send SMS:
                                             </div>
-                                            <div class="col-md-4 col-6">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timimg" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-4">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
                                             </div>
-                                            <div class="col-md-4 col-6">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timimg" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
+                                            <div class="col-12">
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
                                             </div>
+                                            <div class="col-12">
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Series" style="display: inline-block !important; width: auto;" onclick="show3();" /> Series</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" id="series" style="display: none;">
+                                        <fieldset class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
+                                            <div class="col-md-6 mt-4">
+                                                <label for="Time">Date</label>
+                                                <input type="date" name="series_date[]" />
+                                            </div>
+                                            <div class="col-md-6 mt-4">
+                                                <label for="Time">Time</label>
+                                                <input type="Time" name="series_time[]" />
+                                            </div>
+                                            <div class="col-md-12 mt-5">
+                                                <textarea name="series_message[]" id="series_message" cols="30" rows="5" placeholder="Enter the message you would like to send to the reciepient(s) details below "></textarea>
+                                                <div class="messageCounter" id="series-the-count"><span id="series-characters">0</span></div>
+                                                <span class="text-danger">160 characters length per message</span>
+                                                <p><code>$name</code> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.</p>
+                                            </div>
+                                            <!-- <button class="mb-2 remove-series" style="width: 25%;" type="button">Remove</button> -->
+                                        </fieldset>
+                                        <!-- Additional Rows -->
+                                        <div class="additional-rows"></div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <button class="add-series" type="button">Add More</button>
                                         </div>
                                     </div>
                                     <div class="col-12" id="schedule" style="display: none;">
@@ -164,7 +195,7 @@
                                                         <label for="Time">End Time</label>
                                                         <input type="Time" name="recurring_time" />
                                                     </div>
-                                                </div>              
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +313,6 @@
 </div>
 <!-- END layout-wrapper -->
 
-
 <!-- smsModal -->
 <div class="modal fade" id="smsSuccess" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -306,8 +336,28 @@
     </div>
 </div>
 <!-- end modal -->
-
 <script>
+    function show1() {
+        document.getElementById('message').style.display = 'block';
+        document.getElementById('schedule').style.display = 'none';
+        document.getElementById('series').style.display = 'none';
+        document.getElementById('series_message').value = '';
+    }
+
+    function show2() {
+        document.getElementById('series').style.display = 'none';
+        document.getElementById('series_message').value = '';
+        document.getElementById('schedule').style.display = 'block';
+        document.getElementById('message').style.display = 'block';
+    }
+
+    function show3() {
+        document.getElementById('schedule').style.display = 'none';
+        document.getElementById('message').style.display = 'none';
+        document.getElementById('message').value = '';
+        document.getElementById('series').style.display = 'block';
+    }
+
     function openPreview() {
         // Get the text field
         var copyText = document.getElementById("message").value;
@@ -321,42 +371,76 @@
     }
 
     $('textarea').keyup(function() {
-    
-    var characterCount = $(this).val().length,
+
+        var characterCount = $(this).val().length,
         current = $('#characters'),
         // maximum = $('#maximum'),
         theCount = $('#the-count');
-      
-    current.text(characterCount);
-   
-    
-    /*This isn't entirely necessary, just playin around*/
-    if (characterCount < 70) {
-      current.css('color', '#666');
-    }
-    if (characterCount > 70 && characterCount < 90) {
-      current.css('color', '#6d5555');
-    }
-    if (characterCount > 90 && characterCount < 100) {
-      current.css('color', '#793535');
-    }
-    if (characterCount > 100 && characterCount < 120) {
-      current.css('color', '#841c1c');
-    }
-    if (characterCount > 120 && characterCount < 139) {
-      current.css('color', '#8f0001');
-    }
-    
-    if (characterCount >= 140) {
-    //   maximum.css('color', '#8f0001');
-      current.css('color', '#713F93');
-      theCount.css('font-weight','bold');
-    } else {
-    //   maximum.css('color','#666');
-      theCount.css('font-weight','normal');
-    }
-    
-        
-  });
+
+        current.text(characterCount);
+
+        /*This isn't entirely necessary, just playin around*/
+        if (characterCount < 70) {
+        current.css('color', '#666');
+        }
+        if (characterCount > 70 && characterCount < 90) {
+        current.css('color', '#6d5555');
+        }
+        if (characterCount > 90 && characterCount < 100) {
+        current.css('color', '#793535');
+        }
+        if (characterCount > 100 && characterCount < 120) {
+        current.css('color', '#841c1c');
+        }
+        if (characterCount > 120 && characterCount < 139) {
+        current.css('color', '#8f0001');
+        }
+
+        if (characterCount >= 140) {
+            current.css('color', '#713F93');
+            theCount.css('font-weight','bold');
+        } else {
+            theCount.css('font-weight','normal');
+        }
+    });
+
+    // This code is executed when the key is lifted (keyup) in the "series_message" textarea.
+    $('#series_message').keyup(function() {
+        // Get the length of the text entered in the textarea.
+        var characterCount = $(this).val().length,
+
+        // Select the element with the ID "characters" and the element with the ID "the-count".
+        current = $('#series-characters'),
+        theCount = $('#series-the-count');
+
+        // Update the content of the element with the ID "characters" to display the current character count.
+        current.text(characterCount);
+
+        // Apply different text colors based on character count ranges.
+        if (characterCount < 70) {
+            current.css('color', '#666');
+        }
+        if (characterCount > 70 && characterCount < 90) {
+            current.css('color', '#6d5555');
+        }
+        if (characterCount > 90 && characterCount < 100) {
+            current.css('color', '#793535');
+        }
+        if (characterCount > 100 && characterCount < 120) {
+            current.css('color', '#841c1c');
+        }
+        if (characterCount > 120 && characterCount < 139) {
+            current.css('color', '#8f0001');
+        }
+
+        // If the character count is greater than or equal to 140.
+        if (characterCount >= 140) {
+            current.css('color', '#713F93');
+            theCount.css('font-weight','bold');
+        } else {
+            theCount.css('font-weight','normal');
+        }
+    });
+
 </script>
 @endsection

@@ -21,7 +21,6 @@ return new class extends Migration
 
         // Auxilliary table for whstapp capaigns.
         Schema::table('sms_campaigns_listener', function (Blueprint $table) {
-
             // Contain the list sequence of the scheduled messages in the campaign
             // list ID
             // campaign ID

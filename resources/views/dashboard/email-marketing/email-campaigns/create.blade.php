@@ -51,8 +51,8 @@
                                                 <input type="text" placeholder="Enter campaign subject" name="subject" class="input">
                                             </div>
                                         </div>
-                                    </div> 
-                                    <div class="col-lg-12">
+                                    </div>
+                                    <div class="col-lg-12" id="message">
                                         <label>Email template:</label>
                                         <div class="row">
                                             <div class="row">
@@ -114,16 +114,52 @@
                                         </div>
                                     </div>
                                     <div class="col-12 mb-4">
-                                        <div class="row">
-                                            <div class="col-md-4 col-12">
+                                        <div class="row mb-2">
+                                            <div class="col-12">
                                                 Send Email:
                                             </div>
-                                            <div class="col-md-4 col-6">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
                                                 <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
                                             </div>
-                                            <div class="col-md-4 col-6">
+                                            <div class="col-md-4">
                                                 <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
                                             </div>
+                                            <div class="col-md-4">
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Series" style="display: inline-block !important; width: auto;" onclick="show3();" /> Series</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" id="series" style="display: none;">
+                                        <fieldset class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
+                                            <div class="col-md-6 mt-4">
+                                                <label for="Time">Date</label>
+                                                <input type="date" name="series_date[]" />
+                                            </div>
+                                            <div class="col-md-6 mt-4">
+                                                <label for="Time">Time</label>
+                                                <input type="Time" name="series_time[]" />
+                                            </div>
+                                            <div class="col-md-12 mt-5">
+                                                <select name="series_email_template_id" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadSeriesTemplate()" id="series_email_template_id">
+                                                    <option value="">Choose from email template</option>
+                                                    @forelse ($email_templates as $email_template)
+                                                        <option value="{{ $email_template->id }}">
+                                                            {{  $email_template->name }}
+                                                        </option>
+                                                    @empty
+                                                        {{ 'No email template at the moment. Please add new template' }}
+                                                    @endforelse
+                                                </select>
+                                                <div id="series_email_template_editor"></div>
+                                                <div id="series_email_template_data"></div>
+                                            </div>
+                                        </fieldset>
+                                        <!-- Additional Rows -->
+                                        <div class="additional-rows"></div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <button class="add-series" type="button">Add More</button>
                                         </div>
                                     </div>
                                     <div class="col-12" id="schedule" style="display: none;">
@@ -207,27 +243,70 @@
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
-<script src="http://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js"></script> 
-<script> 
-   async function loadTemplate() { 
-    document.getElementById('email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="editor" name="email_template"></textarea>` 
- 
-    let id = document.getElementById('email_template_id').value
-    let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id)
-    let { data } = await axios.get(endpoint)  
+<script src="http://cdn.ckeditor.com/4.21.0/standard-all/ckeditor.js"></script>
+<script>
+    function show1() {
+        document.getElementById('message').style.display = 'block';
+        document.getElementById('schedule').style.display = 'none';
+        document.getElementById('series').style.display = 'none';
+        // document.getElementById('series_email_template').value = '';
+    }
 
-    if(data.success) {
-        document.getElementById('editor').innerHTML = data.data; 
+    function show2() {
+        document.getElementById('series').style.display = 'none';
+        // document.getElementById('series_email_template').value = '';
+        document.getElementById('schedule').style.display = 'block';
+        document.getElementById('message').style.display = 'block';
+    }
 
-        CKEDITOR.replace('editor', {
-            fullPage: true,
-            extraPlugins: 'docprops',
-            allowedContent: true,
-            height: 320,
-            removeButtons: 'PasteFromWord', 
-            removePlugins: 'sourcearea'
-        });
-    } else document.getElementById('editor').style.display = 'none'; 
-   }
+    function show3() {
+        document.getElementById('schedule').style.display = 'none';
+        document.getElementById('message').style.display = 'none';
+        // document.getElementById('email_template').value = '';
+        document.getElementById('series').style.display = 'block';
+    }
+
+    async function loadTemplate() {
+        document.getElementById('email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="editor" name="email_template"></textarea>`
+
+        let id = document.getElementById('email_template_id').value
+        let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id)
+        let { data } = await axios.get(endpoint)
+
+        if(data.success) {
+            document.getElementById('editor').innerHTML = data.data;
+
+            CKEDITOR.replace('editor', {
+                fullPage: true,
+                extraPlugins: 'docprops',
+                allowedContent: true,
+                height: 320,
+                removeButtons: 'PasteFromWord',
+                removePlugins: 'sourcearea'
+            });
+        } else document.getElementById('editor').style.display = 'none';
+    }
+
+    async function loadSeriesTemplate()
+    {
+        document.getElementById('series_email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="editor" name="series_email_template"></textarea>`
+
+        let id = document.getElementById('series_email_template_id').value
+        let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id)
+        let { data } = await axios.get(endpoint)
+
+        if(data.success) {
+            document.getElementById('editor').innerHTML = data.data;
+
+            CKEDITOR.replace('editor', {
+                fullPage: true,
+                extraPlugins: 'docprops',
+                allowedContent: true,
+                height: 320,
+                removeButtons: 'PasteFromWord',
+                removePlugins: 'sourcearea'
+            });
+        } else document.getElementById('editor').style.display = 'none';
+    }
 </script>
 @endsection

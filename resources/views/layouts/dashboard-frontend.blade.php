@@ -84,14 +84,6 @@
             });
         }, 8000);
 
-        function show1() {
-            document.getElementById('schedule').style.display = 'none';
-        }
-
-        function show2() {
-            document.getElementById('schedule').style.display = 'block';
-        }
-
         function myFunction() {
             var x = document.getElementById("preview");
             if (x.style.display === "none") {
@@ -139,7 +131,6 @@
                 document.querySelector('.whatsapp_automation').style.display = 'none'
             }
         }
-
 
         function frequencyChange(){
             var frq = document.getElementById("selectFrenquncy");
@@ -199,6 +190,51 @@
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>
 
+    <style>
+        .add-series,
+        .remove-series {
+            border: none;
+            background-color: #70418f;
+            border-radius: 7px;
+            padding: 10px;
+            display: block;
+            color: #fff;
+            margin: auto;
+        }
+    </style>
+    <script>
+        // jQuery code
+        $(document).ready(function() {
+            // Add a new row when "Add More" button is clicked
+            $('.add-series').click(function() {
+                var clonedRow = $('.series-row:first').clone();
+                // Clear the values in the cloned row
+                clonedRow.find('input, textarea').val('');
+                // Remove button for the cloned row
+                clonedRow.find('.remove-series').remove();
+                // Append the cloned row to the container
+                $('.additional-rows').append(clonedRow);
+                // Add the "Remove" button to the cloned row
+                $('.additional-rows .row:last').append('<button class="mb-2 remove-series" style="width: 25%;" type="button">Remove</button>');
+                // Show the cloned row
+                clonedRow.show();
+            });
+
+
+            // Remove the corresponding row when "Remove" button is clicked
+            $(document).on('click', '.remove-series', function() {
+                $(this).closest('.series-row').remove();
+            });
+
+            // Update character count when typing in any series message textarea
+            $(document).on('keyup', '.series-message', function() {
+                var characterCount = $(this).val().length;
+                var current = $(this).siblings('.messageCounter').find('.series-characters');
+                current.text(characterCount);
+                // Add your character count styling logic here if needed
+            });
+        });
+    </script>
     <!-- JAVASCRIPT -->
     {{-- <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script> --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> --}}
@@ -207,11 +243,8 @@
     <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
 
-
-
     <!-- apexcharts -->
     <script src="{{URL::asset('dash/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
-
 
     <!-- dashboard init -->
     <script src="{{URL::asset('dash/assets/js/pages/datatables.init.js')}}"></script>
@@ -276,8 +309,7 @@
                 document.body.removeChild(tempTextArea);
             }
         }
-    </script>
-    <script>
+
         // pricing switch button
         let pricingIsYearly = false;
         $('.js-switch-button-period').on('click', function(e) {
