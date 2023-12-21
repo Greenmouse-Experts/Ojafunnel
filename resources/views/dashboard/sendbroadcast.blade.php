@@ -105,7 +105,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12" id="select-template">
                                         <label>Message Template :</label>
                                         <div class="col-md-12 mb-4">
                                             <select class="bg-light w-100 py-2 rounded px-2 fs-6" id="template" name="template">
@@ -231,11 +231,17 @@
                                             <div class="col-md-4 col-12">
                                                 Send WhatsApp:
                                             </div>
-                                            <div class="col-md-4 col-6">
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-md-4 col-4">
                                                 <label style="margin-left: 0px"><input type="radio" name="message_timing" id="message_timing_immediately" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" {{ old('message_timing') == 'Immediately' ? "checked" : "" }} /> Immediately</label>
                                             </div>
-                                            <div class="col-md-4 col-6">
+                                            <div class="col-md-4 col-4">
                                                 <label style="margin-left: 0px"><input type="radio" name="message_timing" id="message_timing_schedule" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" {{ old('message_timing') == 'Schedule' ? "checked" : "" }} /> Schedule</label>
+                                            </div>
+                                            <div class="col-md-4 col-4">
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" id="message_timing_series" value="Series" style="display: inline-block !important; width: auto;" onclick="show3();" {{ old('message_timing') == 'Series' ? "checked" : "" }} /> Series</label>
                                             </div>
                                         </div>
                                     </div>
@@ -306,6 +312,61 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-12" id="series" style="display: none;">
+                                        <fieldset class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
+                                            <div class="col-md-6 mt-4">
+                                                <label for="Time">Date</label>
+                                                <input type="date" name="series_date[]" />
+                                            </div>
+                                            <div class="col-md-6 mt-4">
+                                                <label for="Time">Time</label>
+                                                <input type="Time" name="series_time[]" />
+                                            </div>
+
+                                            {{-- <div class="col-lg-12" id="select-series-template">
+                                                <label>Message Template :</label>
+                                                <div class="col-md-12 mb-4">
+                                                    <select class="bg-light w-100 py-2 rounded px-2 fs-6" id="template" name="template">
+                                                        <option value="">Choose from template</option>
+                                                        <option value="template1" {{ old('template') == 'template1' ? "selected" : "" }}>
+                                                            Template 1 (Text)
+                                                        </option>
+                                                        <option value="template2" {{ old('template') == 'template2' ? "selected" : "" }}>
+                                                            Template 2 (Text & File)
+                                                        </option>
+                                                        <option value="template3" {{ old('template') == 'template3' ? "selected" : "" }}>
+                                                            Template 3 (Header, Text, Footer, Link & Call)
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div> --}}
+
+                                            <!-- templates -->
+                                                <div class="col-lg-12">
+                                                    <label>Message</label>
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-4">
+                                                            <textarea placeholder="Type in your message" name="template1_message[]" id="" cols="30" rows="4">{{ old('template1_message') }}</textarea>
+                                                            <p>
+                                                                <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            <!-- end of templates -->
+
+
+                                            <!-- <button class="mb-2 remove-series" style="width: 25%;" type="button">Remove</button> -->
+                                        </fieldset>
+                                        <!-- Additional Rows -->
+                                        <div class="additional-rows"></div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <button class="add-series" type="button">Add More</button>
+                                        </div>
+                                    </div>
+
                                     <div class="col-lg-12">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -526,6 +587,12 @@
         }
     });
 
+    const addseriesField = document.getElementById('add-series');
+    addseriesField.addEventListener('click',  function handleClick(e) {
+        const seriesFieldSet = document.getElementByClassName('series-row');
+        console.log(seriesFieldSet[0]);
+    });
+
     function templateToggle() {
         const template = document.getElementById('template')
 
@@ -571,5 +638,23 @@
     frquencyToggle()
     scheduleToggle()
     templateToggle()
+
+    function show1() {
+        document.getElementById('schedule').style.display=  'none';
+        document.getElementById('series').style.display = 'none';
+        document.getElementById('select-template').style.display = 'block';
+    }
+
+    function show2() {
+        document.getElementById('schedule').style.display=  'block';
+        document.getElementById('series').style.display = 'none';
+        document.getElementById('select-template').style.display = 'block';
+    }
+
+    function show3() {
+        document.getElementById('schedule').style.display=  'none';
+        document.getElementById('series').style.display = 'block';
+        document.getElementById('select-template').style.display = 'none';
+    }
 </script>
 @endsection

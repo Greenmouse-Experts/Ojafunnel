@@ -1301,7 +1301,7 @@ class DashboardController extends Controller
             'campaign_name' => 'required',
             'whatsapp_account' => 'required',
             'contact_list' => 'required',
-            'template' => 'required',
+            // 'template' => 'required',
         ]);
 
         if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
@@ -2017,6 +2017,63 @@ class DashboardController extends Controller
                     ]);
                 }
             }
+        }
+
+        if ($request->message_timing == 'Series') {
+            // $request->validate([
+            //     'series_date.*' => 'required|date',
+            //     'series_time.*' => 'required',
+            //     'template1_message.*' => 'required',
+            // ]);
+
+            DB::transaction(function () use ($request, $whatsapp_account, $contacts) {
+                // create new row on campaign table
+                $waCaimpagn = new WaCampaigns();
+                $waCaimpagn->name = $request->campaign_name;
+                $waCaimpagn->whatsapp_account = $whatsapp_account[1];
+                $waCaimpagn->user_id = Auth::user()->id;
+                $waCaimpagn->contact_list_id = $request->contact_list;
+                $waCaimpagn->template = 'template1';
+                $waCaimpagn->template1_message = $request->template1_message[0];
+                $waCaimpagn->message_timing = $request->message_timing;
+
+
+                // notify every newly added contact
+                $waCaimpagn->notify_every_newcontact = false; // (isset($request->notify_every_newcontact)) ? true : false;
+
+                $waCaimpagn->save();
+
+                // build each wa queue data based on contacts
+                // $wa_queue = $contacts->map(function ($_contact) use ($waCaimpagn) {
+                //     $timestamp = Carbon::now();
+
+                //     return [
+                //         'wa_campaign_id' => $waCaimpagn->id,
+                //         'phone_number' => $_contact->phone,
+                //         'status' => 'Scheduled',
+                //         'created_at' => $timestamp,
+                //         'updated_at' => $timestamp,
+                //     ];
+                // })->toArray();
+
+                // bulk insert
+                // WaQueues::insert($wa_queue);
+
+                foreach ($request->input('series_date') as $key => $value) {
+                    \App\Models\SeriesWaCampaign::create([
+                        'wa_campaign_id' => $waCaimpagn->id,
+                        'user_id' => Auth::user()->id,
+                        'date' => $request->series_date[$key],
+                        'time' => $request->series_time[$key],
+                        'message' => $request->template1_message[$key],
+                    ]);
+                }
+            });
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'The WA campaign has been scheduled successfully'
+            ]);
         }
     }
 
