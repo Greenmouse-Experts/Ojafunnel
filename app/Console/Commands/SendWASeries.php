@@ -42,7 +42,8 @@ class SendWASeries extends Command
         $current_date = $date->format('Y-m-d');
         $current_time = $date->format('H:i');
 
-        $series = SeriesWaCampaign::where('date', $current_date)->get();
+        $series = SeriesWaCampaign::where('date', $current_date)
+            ->where('time', $current_time)->get();
         foreach($series as $element)
         {
             $_campaign = WaCampaigns::find($element->wa_campaign_id);
