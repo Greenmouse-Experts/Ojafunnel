@@ -8,7 +8,7 @@
     }
     div#social-links ul li {
         display: inline-block;
-    }          
+    }
     div#social-links ul li a {
         padding: 10px;
         /* border: 1px solid #ccc; */
@@ -52,12 +52,14 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- <p class="cash">Explainer Video Here</p> -->
+                            @if(App\Models\ExplainerContent::where('menu', 'Market-Place')->exists())
                             <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
                                 <i class="bi bi-play-btn"></i>
                             </div>
                             <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
                                 <i class="bi bi-card-text"></i>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -143,8 +145,8 @@
                                             <th scope="col">Category</th>
                                             <th scope="col">Subtitle</th>
                                             <th scope="col">Description</th>
-                                            <th scope="col">Commission</th> 
-                                            <th scope="col">Multi Level</th> 
+                                            <th scope="col">Commission</th>
+                                            <th scope="col">Multi Level</th>
                                             <th scope="col">Created</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -198,6 +200,7 @@
     </div>
 </div>
 <!-- end modal -->
+@if(App\Models\ExplainerContent::where('menu', 'Market-Place')->exists())
 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -206,7 +209,7 @@
                     <div class="col-lg-12">
                         <h4 class="card-title mb-3">Explainer Video</h4>
                         <div class="aller">
-                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe src="{{App\Models\ExplainerContent::where('menu', 'Market-Place')->first()->video}}" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -229,7 +232,7 @@
                         <h4 class="card-title mb-3">Text Explainer</h4>
                         <div class="aller">
                             <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, ducimus iste. Consequuntur doloremque voluptatem officia, quos laborum delectus atque distinctio reprehenderit earum iure. Sequi voluptate architecto libero, repellat neque deserunt assumenda sunt in sit ipsam delectus nostrum qui ratione. Laboriosam aliquid obcaecati vitae voluptatum ea minus quidem! Pariatur soluta quasi modi harum aut quas veritatis et. Necessitatibus fuga illo ipsa dicta aut nisi laborum nam at, id eveniet consectetur praesentium enim, cum dignissimos ipsum rem odio. Atque, eaque magni aut incidunt quo laudantium repudiandae quae modi officiis in, iusto suscipit fugiat rem inventore non dolorum adipisci rerum dolorem. Nulla, vero!
+                                {{App\Models\ExplainerContent::where('menu', 'Market-Place')->first()->text}}
                             </p>
                         </div>
                     </div>
@@ -244,6 +247,7 @@
     </div>
 </div>
 <!-- Modal Ends -->
+@endif
 @foreach ($products as $product)
 <!-- SuccessModal -->
 <div class="modal fade" id="onlineStore-{{ $product->id }}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
@@ -324,7 +328,7 @@
                             ->twitter()
                             ->linkedin()
                             ->telegram()
-                            ->whatsapp()        
+                            ->whatsapp()
                             ->reddit();
                             @endphp
                             {!! $shareComponent !!}
@@ -374,8 +378,8 @@
                             <b>Vendor</b>
                         </div>
                         <div class="col-md-8 mt-4">
-                            {{ 
-                                \App\Models\User::where('id', $lm->user_id)->first()->first_name . ' ' . 
+                            {{
+                                \App\Models\User::where('id', $lm->user_id)->first()->first_name . ' ' .
                                 \App\Models\User::where('id', $lm->user_id)->first()->first_name
                             }}
                         </div>
@@ -442,9 +446,9 @@
                                 ->twitter()
                                 ->linkedin()
                                 ->telegram()
-                                ->whatsapp()        
+                                ->whatsapp()
                                 ->reddit();
-                            @endphp 
+                            @endphp
 
                             {!! $shareComponentForLMS !!}
                         </div>

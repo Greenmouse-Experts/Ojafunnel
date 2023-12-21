@@ -9,19 +9,36 @@
         <!-- container-fluid -->
         <div class="container-fluid">
             <!-- start page title -->
-            <div class="row card begin">
-                <div class="col-12 account-head">
-                    <div>
-                        <h4 class="font-500">My Account</h4>
-                        <p>View and edit your details here</p>
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="card">
+                        <div>
+                            <h4 class="font-500">My Account</h4>
+                            <p>View and edit your details here</p>
+                        </div>
+                        <div class="d-flex account-nav">
+                            <p class="ps-0 active">General</p>
+                            <p>
+                                <a href="{{route('user.security', Auth::user()->username)}}" class="text-decoration-none text-dark">Security</a>
+                            </p>
+                        </div>
+                        <div class="acc-border"></div>
                     </div>
-                    <div class="d-flex account-nav">
-                        <p class="ps-0 active">General</p>
-                        <p>
-                            <a href="{{route('user.security', Auth::user()->username)}}" class="text-decoration-none text-dark">Security</a>
-                        </p>
+                </div>
+                <div class="col-lg-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- <p class="cash">Explainer Video Here</p> -->
+                            @if(App\Models\ExplainerContent::where('menu', 'Setting')->exists())
+                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                <i class="bi bi-play-btn"></i>
+                            </div>
+                            <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                <i class="bi bi-card-text"></i>
+                            </div>
+                            @endif
+                        </div>
                     </div>
-                    <div class="acc-border"></div>
                 </div>
             </div>
             <!-- account container form -->
@@ -186,4 +203,52 @@
     </div>
     <!-- end modal -->
 </div>
+@if(App\Models\ExplainerContent::where('menu', 'Setting')->exists())
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
+                        <div class="aller">
+                            <iframe src="{{App\Models\ExplainerContent::where('menu', 'Setting')->first()->video}}" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                            <p>
+                                {{App\Models\ExplainerContent::where('menu', 'Setting')->first()->text}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+@endif
 @endsection

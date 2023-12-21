@@ -93,12 +93,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <p>
-                                            Upload Attachments:
-                                        </p>
-                                    </div>
-                                    <div class="logo-input w-full px-5 py-4 pb-5">
+                                    <div class="logo-input w-full px-5 py-4 pb-5" id="attachment">
+                                        <p>Upload Attachments:</p>
                                         <p>
                                             <b>
                                                 Attach, images, videos, audios or files
@@ -142,7 +138,7 @@
                                                 <input type="Time" name="series_time[]" />
                                             </div>
                                             <div class="col-md-12 mt-5">
-                                                <select name="series_email_template_id" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadSeriesTemplate()" id="series_email_template_id">
+                                                <select name="series_email_template_id[]" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadSeriesTemplate()" id="series_email_template_id">
                                                     <option value="">Choose from email template</option>
                                                     @forelse ($email_templates as $email_template)
                                                         <option value="{{ $email_template->id }}">
@@ -154,6 +150,20 @@
                                                 </select>
                                                 <div id="series_email_template_editor"></div>
                                                 <div id="series_email_template_data"></div>
+                                            </div>
+                                            <div class="col-md-12 mt-3">
+                                                <label>Upload Attachments:</label>
+                                            </div>
+                                            <div class="logo-input w-full px-5 py-4 pb-5">
+                                                <p><b>Attach, images, videos, audios or files</b></p>
+                                                <div class="logo-input2 border-in py-5 px-2">
+                                                    <div class="avatar">
+                                                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664984753/OjaFunnel-Images/Vectoor_rbkrfl.png" alt="">
+                                                    </div>
+                                                    <div class="logo-file">
+                                                        <input type="file" name="series_attachments[]" id="" multiple/>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </fieldset>
                                         <!-- Additional Rows -->
@@ -247,6 +257,7 @@
 <script>
     function show1() {
         document.getElementById('message').style.display = 'block';
+        document.getElementById('attachment').style.display = 'block';
         document.getElementById('schedule').style.display = 'none';
         document.getElementById('series').style.display = 'none';
         // document.getElementById('series_email_template').value = '';
@@ -257,56 +268,122 @@
         // document.getElementById('series_email_template').value = '';
         document.getElementById('schedule').style.display = 'block';
         document.getElementById('message').style.display = 'block';
+        document.getElementById('attachment').style.display = 'block';
     }
 
     function show3() {
         document.getElementById('schedule').style.display = 'none';
         document.getElementById('message').style.display = 'none';
+        document.getElementById('attachment').style.display = 'none';
         // document.getElementById('email_template').value = '';
         document.getElementById('series').style.display = 'block';
     }
 
-    async function loadTemplate() {
-        document.getElementById('email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="editor" name="email_template"></textarea>`
-
-        let id = document.getElementById('email_template_id').value
-        let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id)
-        let { data } = await axios.get(endpoint)
-
-        if(data.success) {
-            document.getElementById('editor').innerHTML = data.data;
-
-            CKEDITOR.replace('editor', {
-                fullPage: true,
-                extraPlugins: 'docprops',
-                allowedContent: true,
-                height: 320,
-                removeButtons: 'PasteFromWord',
-                removePlugins: 'sourcearea'
-            });
-        } else document.getElementById('editor').style.display = 'none';
+    // Function to initialize CKEditor
+    function initializeCKEditor(selector) {
+        CKEDITOR.inline(selector, {
+            fullPage: true,
+            extraPlugins: 'docprops',
+            allowedContent: true,
+            height: 320,
+            removeButtons: 'PasteFromWord',
+            removePlugins: 'sourcearea'
+        });
     }
 
-    async function loadSeriesTemplate()
-    {
-        document.getElementById('series_email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="editor" name="series_email_template"></textarea>`
-
-        let id = document.getElementById('series_email_template_id').value
-        let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id)
-        let { data } = await axios.get(endpoint)
-
-        if(data.success) {
-            document.getElementById('editor').innerHTML = data.data;
-
-            CKEDITOR.replace('editor', {
-                fullPage: true,
-                extraPlugins: 'docprops',
-                allowedContent: true,
-                height: 320,
-                removeButtons: 'PasteFromWord',
-                removePlugins: 'sourcearea'
-            });
-        } else document.getElementById('editor').style.display = 'none';
+    // Function to destroy CKEditor
+    function destroyCKEditor(selector) {
+        if (CKEDITOR.instances[selector]) {
+            CKEDITOR.instances[selector].destroy(true);
+        }
     }
+
+        // Add a new row when "Add More" button is clicked
+        $('.add-series').click(function () {
+            var clonedRow = $('.series-row:first').clone();
+            var rowLength = $('.series-row').length;
+
+            // Set unique IDs for the cloned row
+            var editorId = 'series_editor_' + rowLength;
+            clonedRow.find('textarea').attr('id', editorId);
+            clonedRow.find('.messageCounter span').attr('id', 'series-characters_' + rowLength);
+
+            // Clear the values in the cloned row
+            clonedRow.find('input, textarea').val('');
+            // Remove button for the cloned row
+            clonedRow.find('.remove-series').remove();
+            // Append the cloned row to the container
+            $('.additional-rows').append(clonedRow);
+            // Add the "Remove" button to the cloned row
+            $('.additional-rows .row:last').append('<button class="mb-2 remove-series" style="width: 25%;" type="button">Remove</button>');
+            // Show the cloned row
+            clonedRow.show();
+
+            // Initialize CKEditor for the cloned row
+            initializeCKEditor(editorId);
+        });
+
+        // Remove the corresponding row when "Remove" button is clicked
+        $(document).on('click', '.remove-series', function () {
+            var editorIdToRemove = $(this).closest('.series-row').find('textarea').attr('id');
+            destroyCKEditor(editorIdToRemove);
+            $(this).closest('.series-row').remove();
+        });
+
+        // Initialize CKEditor for the initial row
+        initializeCKEditor('series_editor_0');
+
+        // Update character count when typing in any series message textarea
+        $(document).on('input', '.series-message', function () {
+            var characterCount = $(this).val().length;
+            var current = $(this).siblings('.messageCounter').find('.series-characters');
+            current.text(characterCount);
+            // Add your character count styling logic here if needed
+        });
+    });
+
+    async function loadSeriesTemplate() {
+        // Get a unique editor ID for the current row
+        var rowLength = $('.series-row').length;
+        var editorId = 'series_editor_' + rowLength;
+
+        document.getElementById('series_email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="${editorId}" name="series_email_template[]"></textarea>`;
+
+        let id = document.getElementById('series_email_template_id').value;
+        let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id);
+        let { data } = await axios.get(endpoint);
+
+        if (data.success) {
+            // Destroy and initialize CKEditor for the current textarea
+            destroyCKEditor(editorId);
+            document.getElementById(editorId).innerHTML = data.data;
+            initializeCKEditor(editorId);
+        } else {
+            document.getElementById(editorId).style.display = 'none';
+        }
+    }
+
+    // async function loadSeriesTemplate()
+    // {
+    //     document.getElementById('series_email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="series_editor" name="series_email_template[]"></textarea>`
+
+    //     let id = document.getElementById('series_email_template_id').value
+    //     let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id)
+    //     let { data } = await axios.get(endpoint)
+
+    //     if(data.success) {
+    //         document.getElementById('series_editor').innerHTML = data.data;
+
+    //         CKEDITOR.replace('series_editor', {
+    //             fullPage: true,
+    //             extraPlugins: 'docprops',
+    //             allowedContent: true,
+    //             height: 320,
+    //             removeButtons: 'PasteFromWord',
+    //             removePlugins: 'sourcearea'
+    //         });
+    //     } else document.getElementById('series_editor').style.display = 'none';
+    // }
+
 </script>
 @endsection

@@ -203,6 +203,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/general/exchange/rate', [App\Http\Controllers\Admin\AdminController::class, 'general_exchange_rate'])->name('admin.general.exchange.rate');
             Route::post('/general/exchange/rate/add', [App\Http\Controllers\Admin\AdminController::class, 'add_general_exchange_rate'])->name('admin.add.general.exchange.rate');
             Route::post('/general/exchange/rate/update/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_general_exchange_rate'])->name('admin.update.general.exchange.rate');
+            Route::get('/general/explainer/contents', [App\Http\Controllers\Admin\AdminController::class, 'explainer_contents'])->name('admin.general.explainer.contents');
+            Route::post('/general/update/explainer/content/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_explainer_content'])->name('admin.update.general.explainer.content');
         }
     );
 });

@@ -12,46 +12,44 @@
             <!-- start page title -->
             <div class="row">
                 <div class="col-lg-8 aminn">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 style="color:#000; font-weight:600;">Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}} 👋</h4>
-                            <p>
-                                Start enjoying full control of your business all in
-                                one place
-                            </p>
-                        </div>
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+                        <h4 style="color:#000; font-weight:600;">Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}} 👋</h4>
+                        <p>
+                            Start enjoying full control of your business all in
+                            one place
+                        </p>
                     </div>
                 </div>
                 <div class="col-lg-1 aminn">
                     <div class="card">
                         <div class="card-body">
                             <!-- <p class="cash">Explainer Video Here</p> -->
+                            @if(App\Models\ExplainerContent::where('menu', 'Dashboard')->exists())
                             <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                            <i class="bi bi-play-btn"></i>
+                                <i class="bi bi-play-btn"></i>
                             </div>
                             <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-                            <i class="bi bi-card-text"></i>
+                                <i class="bi bi-card-text"></i>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 aminn">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="all-create" style="text-align:right!important;">
-                                <button type="button" class="px-3 mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display:inline">
-                                    + Create
+                    <div class="card account-head">
+                        <div class="all-create" style="text-align:right!important;">
+                            <button type="button" class="px-3 mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display:inline">
+                                + Create
+                            </button>
+                            @if($users->paid_for_backup == 1)
+                                <button type="button" class="px-3" style="display:inline;opacity:0.4">
+                                    <i class="fa fa-cloud-upload-alt"></i> Data Backedup
                                 </button>
-                                @if($users->paid_for_backup == 1)
-                                    <button type="button" class="px-3" style="display:inline;opacity:0.4">
-                                        <i class="fa fa-cloud-upload-alt"></i> Data Backedup
-                                    </button>
-                                @else
-                                    <button type="button" class="px-3 backup_data" data-bs-toggle="modal" data-bs-target="#backUpData" style="display:inline">
-                                        <i class="fa fa-cloud-upload-alt"></i> Backup my data
-                                    </button>
-                                @endif
-                            </div>
+                            @else
+                                <button type="button" class="px-3 backup_data" data-bs-toggle="modal" data-bs-target="#backUpData" style="display:inline">
+                                    <i class="fa fa-cloud-upload-alt"></i> Backup my data
+                                </button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -316,6 +314,7 @@
     </div>
 </div>
 
+@if(App\Models\ExplainerContent::where('menu', 'Dashboard')->exists())
 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -324,7 +323,7 @@
                     <div class="col-lg-12">
                         <h4 class="card-title mb-3">Explainer Video</h4>
                         <div class="aller">
-                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe src="{{App\Models\ExplainerContent::where('menu', 'Dashboard')->first()->video}}" title="{{App\Models\ExplainerContent::where('menu', 'Dashboard')->first()->menu}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -347,7 +346,7 @@
                         <h4 class="card-title mb-3">Text Explainer</h4>
                         <div class="aller">
                            <p>
-                           Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, ducimus iste. Consequuntur doloremque voluptatem officia, quos laborum delectus atque distinctio reprehenderit earum iure. Sequi voluptate architecto libero, repellat neque deserunt assumenda sunt in sit ipsam delectus nostrum qui ratione. Laboriosam aliquid obcaecati vitae voluptatum ea minus quidem! Pariatur soluta quasi modi harum aut quas veritatis et. Necessitatibus fuga illo ipsa dicta aut nisi laborum nam at, id eveniet consectetur praesentium enim, cum dignissimos ipsum rem odio. Atque, eaque magni aut incidunt quo laudantium repudiandae quae modi officiis in, iusto suscipit fugiat rem inventore non dolorum adipisci rerum dolorem. Nulla, vero!
+                           {{App\Models\ExplainerContent::where('menu', 'Dashboard')->first()->text}}
                            </p>
                         </div>
                     </div>
@@ -362,6 +361,7 @@
     </div>
 </div>
 <!-- Modal Ends -->
+@endif
 
 
 <div class="modal fade" id="backUpData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -393,7 +393,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <input type="hidden" class="pay_amt" value="{{ $admin->backup_amt }}">
                 <input type="hidden" class="user_email" value="{{ $users->email }}">
                 <input type="hidden" class="user_id" value="{{ $users->id }}">
@@ -476,10 +476,10 @@
 </script>
 
 <script>
-    let useTemplate = JSON.parse(localStorage.getItem('use_template')); 
+    let useTemplate = JSON.parse(localStorage.getItem('use_template'));
 
-    if(useTemplate.view == false){   
-        let url = "{{ route('user.page.use_template', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', useTemplate.page_id); 
+    if(useTemplate.view == false){
+        let url = "{{ route('user.page.use_template', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', useTemplate.page_id);
         window.location.assign(url);
     }
 </script>
@@ -531,7 +531,7 @@
 </script>
 
 <!-- sales analysis chart -->
-<script> 
+<script>
     var options = {
         series: [{
             name: "sales",

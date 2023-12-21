@@ -1,5 +1,5 @@
 @extends('layouts.dashboard-frontend')
-  <link href="{{asset('assets/css/components.min.css')}}" rel="stylesheet" type="text/css">	
+  <link href="{{asset('assets/css/components.min.css')}}" rel="stylesheet" type="text/css">
   <script type="text/javascript" src="{{asset('assets/js/echarts.min.js')}}"></script>
 @section('page-content')
 <!-- ============================================================== -->
@@ -22,6 +22,29 @@
                             </ol>
                         </div>
 
+                    </div>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='row align-items-center birthday-contact'>
+                    <div class='col-lg-11 main-text'>
+                        <p class='topic'>Reports & Analysis</p>
+                        <p class='mt-2 p-0'> All your reports and analysis in one place</p>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- <p class="cash">Explainer Video Here</p> -->
+                                @if(App\Models\ExplainerContent::where('menu', 'Report-Analysis')->exists())
+                                <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                    <i class="bi bi-play-btn"></i>
+                                </div>
+                                <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                    <i class="bi bi-card-text"></i>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -191,6 +214,54 @@
     </div>
     <!-- End Page-content -->
 </div>
+@if(App\Models\ExplainerContent::where('menu', 'Report-Analysis')->exists())
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
+                        <div class="aller">
+                            <iframe src="{{App\Models\ExplainerContent::where('menu', 'Report-Analysis')->first()->video}}" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                            <p>
+                                {{App\Models\ExplainerContent::where('menu', 'Report-Analysis')->first()->text}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+@endif
 <script type="text/javascript">
 var bars_basic_element = document.getElementById('bars_basic');
 if (bars_basic_element) {
@@ -199,7 +270,7 @@ if (bars_basic_element) {
         color: ['#713f93'],
         tooltip: {
             trigger: 'axis',
-            axisPointer: {            
+            axisPointer: {
                 type: 'shadow'
             }
         },
@@ -230,7 +301,7 @@ if (bars_basic_element) {
                 barWidth: '20%',
                 data: [
                     '{{$coursePurchase}}',
-                    '{{$referralBonus}}', 
+                    '{{$referralBonus}}',
                     '{{$productPurchase}}',
                     '{{$topUp}}'
                 ]

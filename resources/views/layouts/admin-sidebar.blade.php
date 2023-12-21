@@ -217,6 +217,7 @@
                         <li><a href="{{route('general')}}" key="t-full-calendar">General</a></li>
                         <li><a href="{{route('admin.payment.gateway')}}" key="t-full-calendar">Payment Gateway</a></li>
                         <li><a href="{{route('admin.general.exchange.rate')}}" key="t-tui-calendar">General Exchange Rate</a></li>
+                        <li><a href="{{route('admin.general.explainer.contents')}}" key="t-tui-calendar">Explainer Contents</a></li>
                     </ul>
                 </li>
             </ul>

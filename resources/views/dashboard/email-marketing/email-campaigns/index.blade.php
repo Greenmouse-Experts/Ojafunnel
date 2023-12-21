@@ -24,7 +24,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-lg-8 aminn">
                                 <div class="py-2">
                                     <h4 class="font-500">Email Campaigns</h4>
                                     <p>
@@ -32,8 +32,23 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="">
+                            <div class="col-lg-1 aminn">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- <p class="cash">Explainer Video Here</p> -->
+                                        @if(App\Models\ExplainerContent::where('menu', 'Email-Marketing')->exists())
+                                        <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                            <i class="bi bi-play-btn"></i>
+                                        </div>
+                                        <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                            <i class="bi bi-card-text"></i>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 aminn">
+                                <div class="card account-head">
                                     <div class="all-create">
                                         <a href="{{ route('user.email-marketing.email.campaigns.create', ['username' => Auth::user()->username]) }}">
                                             <button>
@@ -52,61 +67,61 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">View Email Campaigns</h4>
-                            <div class="table-responsive"> 
+                            <div class="table-responsive">
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
-                                            <th>Subject</th> 
-                                            <th>Kit</th>  
-                                            <th>Template</th> 
-                                            <th>List</th> 
+                                            <th>Subject</th>
+                                            <th>Kit</th>
+                                            <th>Template</th>
+                                            <th>List</th>
                                             <th>Replyto Email</th>
                                             <th>Replyto Name</th>
                                             <th>Attachment(s)</th>
                                             <th>Sent</th>
-                                            <th>Bounced</th> 
-                                            <th>Created At</th> 
-                                            <th>Action</th> 
+                                            <th>Bounced</th>
+                                            <th>Created At</th>
+                                            <th>Action</th>
                                         </tr>
-                                    </thead> 
-                                    <tbody> 
+                                    </thead>
+                                    <tbody>
                                         @forelse ($email_campaigns as $email_campaign)
                                             <tr>
                                                 <td>{{ $loop->index + 1}}</td>
                                                 <td>{{ $email_campaign->name }}</td>
-                                                <td>{{ $email_campaign->subject }}</td> 
-                                                <td>  
+                                                <td>{{ $email_campaign->subject }}</td>
+                                                <td>
                                                     @if (App\Models\EmailKit::where('id', $email_campaign->email_kit_id)->exists())
                                                         {{ App\Models\EmailKit::where('id', $email_campaign->email_kit_id)->first()->host }}
                                                     @else
-                                                        <b>{{ 'DELETED' }}</b> 
+                                                        <b>{{ 'DELETED' }}</b>
                                                     @endif
                                                 </td>
-                                                <td>  
+                                                <td>
                                                     @if (App\Models\EmailTemplate::where('id', $email_campaign->email_template_id)->exists())
                                                         {{ App\Models\EmailTemplate::where('id', $email_campaign->email_template_id)->first()->name }}
                                                     @else
-                                                        <b>{{ 'DELETED' }}</b> 
+                                                        <b>{{ 'DELETED' }}</b>
                                                     @endif
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     @if (App\Models\ListManagement::where('id', $email_campaign->list_id)->exists())
                                                         {{ App\Models\ListManagement::where('id', $email_campaign->list_id)->first()->name }}
                                                     @else
-                                                        <b>{{ 'DELETED' }}</b> 
-                                                    @endif 
-                                                </td> 
+                                                        <b>{{ 'DELETED' }}</b>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $email_campaign->replyto_email }}</td>
                                                 <td>{{ $email_campaign->replyto_name }}</td>
                                                 <td>{{ count(json_decode($email_campaign->attachment_paths)) }}</td>
                                                 <td>{{ $email_campaign->sent }}</td>
-                                                <td>{{ $email_campaign->bounced }}</td> 
-                                                <td>{{ $email_campaign->created_at->toDayDateTimeString() }}</td>  
+                                                <td>{{ $email_campaign->bounced }}</td>
+                                                <td>{{ $email_campaign->created_at->toDayDateTimeString() }}</td>
                                                 <td>
-                                                    <div class="dropdown"> 
-                                                        <ul class="list-unstyled hstack gap-1 mb-0"> 
+                                                    <div class="dropdown">
+                                                        <ul class="list-unstyled hstack gap-1 mb-0">
                                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                                                 <a href="{{ route('user.email-marketing.email.campaigns.overview', ['username' => Auth::user()->username, 'id' => $email_campaign->id])}}" class="btn btn-sm btn-soft-info">
                                                                     <i class="mdi mdi-eye-outline"></i>
@@ -157,11 +172,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td> 
+                                                </td>
                                             </tr>
                                         @empty
                                             {{ 'No email campaign at the moment '}}
-                                        @endforelse 
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -172,4 +187,52 @@
         </div>
     </div>
 </div>
+@if(App\Models\ExplainerContent::where('menu', 'Email-Marketing')->exists())
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
+                        <div class="aller">
+                            <iframe src="{{App\Models\ExplainerContent::where('menu', 'Email-Marketing')->first()->video}}" title="{{App\Models\ExplainerContent::where('menu', 'Dashboard')->first()->menu}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                           <p>
+                           {{App\Models\ExplainerContent::where('menu', 'Email-Marketing')->first()->text}}
+                           </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+@endif
 @endsection

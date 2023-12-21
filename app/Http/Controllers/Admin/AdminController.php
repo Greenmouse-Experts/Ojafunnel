@@ -65,6 +65,7 @@ use GuzzleHttp\Client;
 use Aws\Sns\SnsClient;
 use App\Mail\AccountInfoMail;
 use App\Mail\NewsletterMail;
+use App\Models\ExplainerContent;
 use App\Models\GeneralExchangeRate;
 use App\Models\OjaSubscription;
 use App\Models\PaymentGateway;
@@ -3314,6 +3315,53 @@ class AdminController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Rate Updated.'
+        ]);
+    }
+
+    public function explainer_contents()
+    {
+        $explainers = ExplainerContent::latest()->get();
+
+        return view('admin.explainer.index', [
+            'explainers' => $explainers
+        ]);
+    }
+
+    public function update_explainer_content($id, Request $request)
+    {
+        $this->validate($request, [
+            'video' => [
+                'nullable',
+                'mimes:mp4,avi,mov,wmv,flv,webm',
+                'max:20480', // 20 megabytes (20 * 1024 KB)
+            ],
+            'text' => ['required'],
+        ]);
+
+        $finder = Crypt::decrypt($id);
+
+        $explainer = ExplainerContent::find($finder);
+
+        if (request()->hasFile('video')) {
+            $filename = request()->video->getClientOriginalName();
+            if($explainer->video) {
+                Storage::delete(str_replace("storage", "public", $explainer->video));
+            }
+            request()->video->storeAs('explainer_videos', $filename, 'public');
+
+            $explainer->update([
+                'text' => $request->text,
+                'video' => '/storage/explainer_videos/'.$filename,
+            ]);
+        } else {
+            $explainer->update([
+                'text' => $request->text,
+            ]);
+        }
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Updated successfully.'
         ]);
     }
 

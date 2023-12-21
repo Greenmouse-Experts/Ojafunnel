@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-lg-8">
                                 <div class="py-2">
                                     <h4>Payment Methods </h4>
                                     <p>
@@ -32,13 +32,32 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="all-create">
-                                    <a href="#">
-                                        <button type="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                                            Add Payment Method
-                                        </button>
-                                    </a>
+                            <div class="col-lg-1">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- <p class="cash">Explainer Video Here</p> -->
+                                        @if(App\Models\ExplainerContent::where('menu', 'Withdrawal')->exists())
+                                        <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop13">
+                                            <i class="bi bi-play-btn"></i>
+                                        </div>
+                                        <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                            <i class="bi bi-card-text"></i>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="all-create">
+                                            <a href="#">
+                                                <button type="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                                    Add Payment Method
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -348,6 +367,53 @@
     </div>
 </div>
 <!-- Modal Ends -->
+@if(App\Models\ExplainerContent::where('menu', 'Withdrawal')->exists())
+<div class="modal fade" id="staticBackdrop13" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
+                        <div class="aller">
+                            <iframe src="{{App\Models\ExplainerContent::where('menu', 'Withdrawal')->first()->video}}" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                            <p>
+                                {{App\Models\ExplainerContent::where('menu', 'Withdrawal')->first()->text}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 
 <script>
     function showSecret() {
@@ -366,7 +432,7 @@
     }
 
     function hidePublic() {
-        var x = document.getElementById("publicKey");            
+        var x = document.getElementById("publicKey");
         x.type = "password";
     }
 
@@ -376,7 +442,7 @@
     }
 
     function hideRoutingNumber() {
-        var x = document.getElementById("routingNumber");            
+        var x = document.getElementById("routingNumber");
         x.type = "password";
     }
 
@@ -386,7 +452,7 @@
     }
 
     function hideAccountNumber() {
-        var x = document.getElementById("accountNumber");            
+        var x = document.getElementById("accountNumber");
         x.type = "password";
     }
 
@@ -396,7 +462,7 @@
     }
 
     function hideTBA() {
-        var x = document.getElementById("typeBA");            
+        var x = document.getElementById("typeBA");
         x.type = "password";
     }
 </script>

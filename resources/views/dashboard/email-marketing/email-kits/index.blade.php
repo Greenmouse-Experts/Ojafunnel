@@ -19,12 +19,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-lg-8 aminn">
                                 <div class="py-2">
                                     <h4 class="font-500">Email Kits</h4>
                                     <p>
@@ -32,8 +30,23 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="">
+                            <div class="col-lg-1 aminn">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- <p class="cash">Explainer Video Here</p> -->
+                                        @if(App\Models\ExplainerContent::where('menu', 'Email-Marketing')->exists())
+                                        <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                            <i class="bi bi-play-btn"></i>
+                                        </div>
+                                        <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                            <i class="bi bi-card-text"></i>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 aminn">
+                                <div class="card account-head">
                                     <div class="all-create">
                                         <a href="{{ route('user.integration', ['username' => Auth::user()->username]) }}#email">
                                             <button>
@@ -52,7 +65,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">View My Email Kits</h4>
-                            <div class="table-responsive"> 
+                            <div class="table-responsive">
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr>
@@ -73,7 +86,7 @@
                                             <th>Date Created</th>
                                             <th>Action</th>
                                         </tr>
-                                    </thead> 
+                                    </thead>
                                     <tbody>
                                         @forelse ($user_email_integrations as $user_email_integration)
                                             <tr>
@@ -106,10 +119,10 @@
                                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                             <li>
                                                                 <a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit-{{$user_email_integration->id}}">Edit</a>
-                                                            </li> 
+                                                            </li>
                                                             <li>
                                                                 <a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#master-{{$user_email_integration->id}}">Make Master</a>
-                                                            </li> 
+                                                            </li>
                                                             <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$user_email_integration->id}}">Delete</a></li>
                                                         </ul>
                                                     </div>
@@ -129,9 +142,9 @@
                                                                                     <p><b>Email Kit Master</b></p>
                                                                                     <div class="row">
                                                                                         <div class="col-lg-12">
-                                                                                            <p>You are about to make this kit <b>({{$user_email_integration->host}})</b><br>your master kit. Are you sure to continue?.</p> 
+                                                                                            <p>You are about to make this kit <b>({{$user_email_integration->host}})</b><br>your master kit. Are you sure to continue?.</p>
                                                                                             <div class="row">
-                                                                                                <div class="col-md-12 mb-4"> 
+                                                                                                <div class="col-md-12 mb-4">
                                                                                                     <input type="hidden" name="id" value="{{ $user_email_integration->id }}" class="input">
                                                                                                 </div>
                                                                                             </div>
@@ -176,7 +189,7 @@
                                                                                                     <input type="text" placeholder="Your {{$user_email_integration->type}} SMTP Host" name="host" class="input" value="{{$user_email_integration->host}}" required>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </div> 
+                                                                                        </div>
                                                                                         <div class="col-lg-12">
                                                                                             <label>Username</label>
                                                                                             <div class="row">
@@ -197,7 +210,7 @@
                                                                                             <label>Port</label>
                                                                                             <div class="row">
                                                                                                 <div class="col-md-12 mb-4">
-                                                                                                    <input type=numbert" placeholder="Your {{$user_email_integration->type}} SMTP Port" name="port" class="input" value="{{$user_email_integration->port}}"> 
+                                                                                                    <input type=numbert" placeholder="Your {{$user_email_integration->type}} SMTP Port" name="port" class="input" value="{{$user_email_integration->port}}">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -216,7 +229,7 @@
                                                                                                     <input type="text" placeholder="Your {{$user_email_integration->type}} SMTP MAIL FROM" name="from_email" class="input" value="{{$user_email_integration->from_email}}" required>
                                                                                                     <span style="color: green">Must be the verified domain on {{$user_email_integration->type}}</span>
                                                                                                 </div>
-                                                                                            </div> 
+                                                                                            </div>
                                                                                         </div>
                                                                                         <div class="col-lg-12">
                                                                                             <label>Mail FROM-NAME</label>
@@ -224,15 +237,15 @@
                                                                                                 <div class="col-md-12 mb-4">
                                                                                                     <input type="text" placeholder="Your Brand Name" name="from_name" class="input" value="{{$user_email_integration->from_name}}" required>
                                                                                                 </div>
-                                                                                            </div> 
-                                                                                        </div> 
+                                                                                            </div>
+                                                                                        </div>
                                                                                         <div class="col-lg-12">
                                                                                             <label>Reply-TO Email</label>
                                                                                             <div class="row">
                                                                                                 <div class="col-md-12 mb-4">
                                                                                                     <input type="email" placeholder="Replyto email" name="replyto_email" class="input" value="{{$user_email_integration->replyto_email}}" required>
                                                                                                 </div>
-                                                                                            </div> 
+                                                                                            </div>
                                                                                         </div>
                                                                                         <div class="col-lg-12">
                                                                                             <label>Reply-TO Name</label>
@@ -240,8 +253,8 @@
                                                                                                 <div class="col-md-12 mb-4">
                                                                                                     <input type="text" placeholder="Replyto name" name="replyto_name" class="input" value="{{$user_email_integration->replyto_name}}" required>
                                                                                                 </div>
-                                                                                            </div> 
-                                                                                        </div> 
+                                                                                            </div>
+                                                                                        </div>
                                                                                         <div class="col-lg-12 mb-4">
                                                                                             <div class="boding">
                                                                                                 <button type="submit" class="form-btn">
@@ -305,7 +318,7 @@
                                             </tr>
                                         @empty
                                             {{ 'No email kit / gateway at the moment' }}
-                                        @endforelse 
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -319,7 +332,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">View Admin Email Kits</h4>
-                            <div class="table-responsive"> 
+                            <div class="table-responsive">
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr>
@@ -339,7 +352,7 @@
                                             <th>Master</th>
                                             <th>Date Created</th>
                                         </tr>
-                                    </thead> 
+                                    </thead>
                                     <tbody>
                                         @forelse ($admin_email_integrations as $admin_email_integration)
                                             <tr>
@@ -363,11 +376,11 @@
                                                         {{ 'No' }}
                                                     @endif
                                                 </td>
-                                                <td>{{ $admin_email_integration->created_at->toDayDateTimeString() }}</td> 
+                                                <td>{{ $admin_email_integration->created_at->toDayDateTimeString() }}</td>
                                             </tr>
                                         @empty
                                             {{ 'No email kit / gateway at the moment' }}
-                                        @endforelse 
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -378,4 +391,53 @@
         </div>
     </div>
 </div>
+
+@if(App\Models\ExplainerContent::where('menu', 'Email-Marketing')->exists())
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
+                        <div class="aller">
+                            <iframe src="{{App\Models\ExplainerContent::where('menu', 'Email-Marketing')->first()->video}}" title="{{App\Models\ExplainerContent::where('menu', 'Dashboard')->first()->menu}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                           <p>
+                           {{App\Models\ExplainerContent::where('menu', 'Email-Marketing')->first()->text}}
+                           </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+@endif
 @endsection

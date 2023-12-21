@@ -449,6 +449,7 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns_save(Request $request)
     {
+        return $request->all();
         $request->validate([
             'name' => 'required',
             'subject' => 'required',

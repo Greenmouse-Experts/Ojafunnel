@@ -24,7 +24,30 @@
                     </div>
                 </div>
             </div>
-            <!-- main content -->  
+            <div class='row'>
+                <div class='row align-items-center birthday-contact'>
+                    <div class='col-lg-11 main-text'>
+                        <p class='topic'>Sales Analytics</p>
+                        <p class='mt-2 p-0'> All your sales analytics in one place</p>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- <p class="cash">Explainer Video Here</p> -->
+                                @if(App\Models\ExplainerContent::where('menu', 'Sales-Analytics')->exists())
+                                <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                    <i class="bi bi-play-btn"></i>
+                                </div>
+                                <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                    <i class="bi bi-card-text"></i>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- main content -->
             <div>
                 <div class='analytics-header-boxes'>
                     <div class='analytics-header-box box1'>
@@ -129,6 +152,54 @@
     </div>
     <!-- End Page-content -->
 </div>
+@if(App\Models\ExplainerContent::where('menu', 'Sales-Analytics')->exists())
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
+                        <div class="aller">
+                            <iframe src="{{App\Models\ExplainerContent::where('menu', 'Sales-Analytics')->first()->video}}" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                            <p>
+                                {{App\Models\ExplainerContent::where('menu', 'Sales-Analytics')->first()->text}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+@endif
     <script>
         // total sales chart
         let options1 = {
@@ -173,7 +244,7 @@
                 opacity: 0.35
               }
             },
-        
+
             dataLabels: {
               show: true,
               name: {
@@ -259,7 +330,7 @@
                 opacity: 0.35
               }
             },
-        
+
             dataLabels: {
               show: true,
               name: {
@@ -344,7 +415,7 @@
               opacity: 0.35
             }
           },
-      
+
           dataLabels: {
             show: true,
             name: {
@@ -386,7 +457,7 @@
       var secondChart = new ApexCharts(document.getElementById("chart3"), options3);
       secondChart.render();
     </script>
-    <script> 
+    <script>
       var options = {
         series: [{
         data: ['{{$shopOrderCount}}', '{{$students}}', '{{$storeOrderCount}}']

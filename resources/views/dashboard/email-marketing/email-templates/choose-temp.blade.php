@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="">
-                                    <div class="all-create"> 
+                                    <div class="all-create">
                                     </div>
                                 </div>
                             </div>
@@ -57,11 +57,11 @@
                                                     <button class="btn btn-primary d-block mt-2">
                                                         View Call To Action Template 1
                                                     </button>
-                                                </a>  
+                                                </a>
                                                 <button class="btn btn-primary d-block mt-2" data-bs-toggle="modal" data-bs-target="#template1">
                                                     Use Template
                                                 </button>
-                                            </div> 
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="single-template">
@@ -72,7 +72,7 @@
                                                     <button class="btn btn-primary d-block mt-2">
                                                         View Call To Action Template 2
                                                     </button>
-                                                </a> 
+                                                </a>
                                                 <button class="btn btn-primary d-block mt-2" data-bs-toggle="modal" data-bs-target="#template2">
                                                     Use Template
                                                 </button>
@@ -87,7 +87,7 @@
                                                     <button class="btn btn-primary d-block mt-2">
                                                         View Weekly Digest Template 1
                                                     </button>
-                                                </a> 
+                                                </a>
                                                 <button class="btn btn-primary d-block mt-2" data-bs-toggle="modal" data-bs-target="#template3">
                                                     Use Template
                                                 </button>
@@ -105,7 +105,7 @@
                                                     <button class="btn btn-primary d-block mt-2">
                                                         View Warning Template 1
                                                     </button>
-                                                </a> 
+                                                </a>
                                                 <button class="btn btn-primary d-block mt-2" data-bs-toggle="modal" data-bs-target="#template4">
                                                     Use Template
                                                 </button>
@@ -120,13 +120,13 @@
                                                     <button class="btn btn-primary d-block mt-2">
                                                         View Billing Template 1
                                                     </button>
-                                                </a> 
+                                                </a>
                                                 <button class="btn btn-primary d-block mt-2" data-bs-toggle="modal" data-bs-target="#template5">
                                                     Use Template
                                                 </button>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                                 <p>
                                     <b>
                                         New Email Template
-                                    </b> 
+                                    </b>
                                 </p>
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -164,7 +164,7 @@
                                             </div>
                                         </div>
                                         <input value="{{ $id }}" name="id" hidden>
-                                    </div> 
+                                    </div>
                                     <div class="col-lg-12 mb-4">
                                         <div class="boding">
                                             <button type="submit">

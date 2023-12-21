@@ -370,6 +370,38 @@
         }
     }
 
+    // jQuery code
+    $(document).ready(function() {
+        // Add a new row when "Add More" button is clicked
+        $('.add-series').click(function() {
+            var clonedRow = $('.series-row:first').clone();
+            // Clear the values in the cloned row
+            clonedRow.find('input, textarea').val('');
+            // Remove button for the cloned row
+            clonedRow.find('.remove-series').remove();
+            // Append the cloned row to the container
+            $('.additional-rows').append(clonedRow);
+            // Add the "Remove" button to the cloned row
+            $('.additional-rows .row:last').append('<button class="mb-2 remove-series" style="width: 25%;" type="button">Remove</button>');
+            // Show the cloned row
+            clonedRow.show();
+        });
+
+
+        // Remove the corresponding row when "Remove" button is clicked
+        $(document).on('click', '.remove-series', function() {
+            $(this).closest('.series-row').remove();
+        });
+
+        // Update character count when typing in any series message textarea
+        $(document).on('keyup', '.series-message', function() {
+            var characterCount = $(this).val().length;
+            var current = $(this).siblings('.messageCounter').find('.series-characters');
+            current.text(characterCount);
+            // Add your character count styling logic here if needed
+        });
+    });
+
     $('textarea').keyup(function() {
 
         var characterCount = $(this).val().length,

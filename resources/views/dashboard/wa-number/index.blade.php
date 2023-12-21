@@ -24,7 +24,7 @@
                 <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-lg-8">
                                 <div class="py-2">
                                     <h4 class="font-500">WA Number</h4>
                                     <p>
@@ -32,14 +32,31 @@
                                     </p>
                                 </div>
                             </div>
+                            <div class="col-lg-1">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- <p class="cash">Explainer Video Here</p> -->
+                                        @if(App\Models\ExplainerContent::where('menu', 'Automation')->exists())
+                                        <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+                                            <i class="bi bi-play-btn"></i>
+                                        </div>
+                                        <div class="here" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                            <i class="bi bi-card-text"></i>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-3">
-                                <div class="">
-                                    <div class="all-create">
-                                        <a href="#">
-                                            <button type="submit" data-bs-toggle="modal" data-bs-target="#addWANumber">
-                                                + Add WA Number
-                                            </button>
-                                        </a>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="all-create">
+                                            <a href="#">
+                                                <button type="submit" data-bs-toggle="modal" data-bs-target="#addWANumber">
+                                                    + Add WA Number
+                                                </button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -259,6 +276,54 @@
         </div>
     </div>
 </div>
+@if(App\Models\ExplainerContent::where('menu', 'Automation')->exists())
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Explainer Video</h4>
+                        <div class="aller">
+                            <iframe src="{{App\Models\ExplainerContent::where('menu', 'Automation')->first()->video}}" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="card-title mb-3">Text Explainer</h4>
+                        <div class="aller">
+                            <p>
+                                {{App\Models\ExplainerContent::where('menu', 'Automation')->first()->text}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+@endif
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
 
 <script>
