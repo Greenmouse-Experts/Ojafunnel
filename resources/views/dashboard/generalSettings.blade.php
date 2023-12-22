@@ -12,17 +12,19 @@
             <div class="row">
                 <div class="col-lg-11">
                     <div class="card">
-                        <div>
-                            <h4 class="font-500">My Account</h4>
-                            <p>View and edit your details here</p>
+                        <div class="card-body">
+                            <div>
+                                <h4 class="font-500">My Account</h4>
+                                <p>View and edit your details here</p>
+                            </div>
+                            <div class="d-flex account-nav">
+                                <p class="ps-0 active">General</p>
+                                <p>
+                                    <a href="{{route('user.security', Auth::user()->username)}}" class="text-decoration-none text-dark">Security</a>
+                                </p>
+                            </div>
+                            <div class="acc-border"></div>
                         </div>
-                        <div class="d-flex account-nav">
-                            <p class="ps-0 active">General</p>
-                            <p>
-                                <a href="{{route('user.security', Auth::user()->username)}}" class="text-decoration-none text-dark">Security</a>
-                            </p>
-                        </div>
-                        <div class="acc-border"></div>
                     </div>
                 </div>
                 <div class="col-lg-1">

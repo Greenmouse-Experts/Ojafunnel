@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\HomePageController;
+use App\Models\SeriesSmsCampaign;
 
 class EmailMarketingController extends Controller
 {
@@ -454,7 +455,7 @@ class EmailMarketingController extends Controller
             'name' => 'required',
             'subject' => 'required',
             'email_template_id' => 'required',
-            'email_template' => 'required',
+            'email_template' => 'nullable',
             'email_list' => 'required',
             'message_timing' => 'required'
         ]);
@@ -634,6 +635,139 @@ class EmailMarketingController extends Controller
                         'message' => 'Error occured while creating template. Try again'
                     ]);
                 }
+
+                $email_campaign = new EmailCampaign();
+                $email_campaign->user_id = Auth::user()->id;
+                $email_campaign->name = $request->name;
+                $email_campaign->subject = $request->subject;
+                $email_campaign->replyto_email = $email_kit->replyto_email;
+                $email_campaign->replyto_name = $email_kit->replyto_name;
+                $email_campaign->email_kit_id = $email_kit->id;
+                $email_campaign->list_id = $mail_list->id;
+                $email_campaign->email_template_id = $email_template->id;
+                $email_campaign->sent = 0;
+                $email_campaign->bounced = 0;
+                $email_campaign->spam_score = 0;
+                $email_campaign->message_timing = $request->message_timing;
+                $email_campaign->start_date = $request->start_date;
+                $email_campaign->start_time = $request->start_time;
+                $email_campaign->slug = $slug;
+                $email_campaign->attachment_paths = json_encode([]);
+                $email_campaign->save();
+
+                if ($request->hasFile('attachments')) {
+                    $attachment_paths = [];
+
+                    foreach ($request->file('attachments') as $key => $attachment) {
+                        $filename = $attachment->getClientOriginalName();
+                        $path = 'email-marketing/' . Auth::user()->username . '/attachment/campaign-' . $email_campaign->id;
+                        $fullpath = $path . '/' . $filename;
+
+                        // store here
+                        $attachment->storeAs($path, $filename, 'public');
+
+                        array_push($attachment_paths, $fullpath);
+                    }
+
+                    $email_campaign->attachment_paths = json_encode($attachment_paths);
+                    $email_campaign->save();
+                }
+
+                $contacts = ListManagementContact::latest()->where('list_management_id', $mail_list->id)->get();
+
+                // build each wa queue data based on contacts
+                $email_campaign_queue = $contacts->map(function ($_contact) use ($email_campaign) {
+                    $timestamp = Carbon::now();
+
+                    return [
+                        'email_campaign_id' => $email_campaign->id,
+                        'recepient' => $_contact->email,
+                        'status' => 'Waiting',
+                        'created_at' => $timestamp,
+                        'updated_at' => $timestamp,
+                    ];
+                })->toArray();
+
+                // bulk insert
+                EmailCampaignQueue::insert($email_campaign_queue);
+            });
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'The email campaign has been scheduled successfully'
+            ]);
+        }
+
+        if($request->message_timing == 'Series')
+        {
+            $request->validate([
+                'series_date.*' => 'required|date',
+                'series_time.*' => 'required',
+                'series_message.*' => 'required',
+                'series_email_template_id.*' => 'required',
+                'series_email_template.*' => 'required',
+                'series_attachments.*' => 'nullable'
+            ]);
+
+            if ($request->series_date < Carbon::now()->format('Y-m-d')) return back()->with([
+                'type' => 'danger',
+                'message' => 'The email campaign schedule start date is invalid'
+            ])->withInput();
+
+            if ($request->series_date == Carbon::now()->format('Y-m-d')) {
+                if ($request->start_time <= Carbon::now()->format('H:i'))  return back()->with([
+                    'type' => 'danger',
+                    'message' => 'The email campaign schedule start time is invalid'
+                ])->withInput();
+            }
+
+            DB::transaction(function () use ($request, $email_kit, $mail_list) {
+                $email_template = EmailTemplate::where('id', $request->email_template_id)->first();
+
+
+                foreach ($request->input('series_date') as $key => $value) {
+                    $slug = $email_template->slug . '-' . substr(sha1(mt_rand()), 10, 15);
+                    $username = Auth::user()->username;
+                    $template = $request->email_template;
+
+                    // replace all variables with correct laravel syntax
+                    $from = ["{{", "}}", "\$name", "\$email"];
+                    $to = ["", "", "{{ \$name }}", "{{ \$email }}"];
+                    $template = str_replace($from, $to, $template);
+
+                    // add Powered by Ojafunnel
+                    $template = str_replace("</body>", $this->getPoweredBy(), $template);
+
+                    // check if folder exist, if not create new
+                    File::ensureDirectoryExists(resource_path("views/emails/email-marketing-templates/$username"));
+
+                    // put template into disk
+                    $disk = resource_path("views/emails/email-marketing-templates/$username/$slug.blade.php");
+
+                    if (!file_put_contents($disk, $template)) {
+                        return back()->with([
+                            'type' => 'danger',
+                            'message' => 'Error occured while creating template. Try again'
+                        ]);
+                    }
+
+                    // SeriesSmsCampaign::create([
+                    //     'sms_campaign_id' => $new_campaign->id,
+                    //     'user_id' => Auth::user()->id,
+                    //     'date' => $request->series_date[$key],
+                    //     'time' => $request->series_time[$key],
+                    //     'message' => $request->series_message[$key],
+                    //     'user_id' => Auth::user()->id,
+                    //     $table->date('date')->nullable();
+                    //     $table->time('time')->nullable();
+                    //     $table->string('email_template_id')->nullable();
+                    //     $table->text('message')->nullable();
+                    //     $table->string('sent');
+                    //     $table->string('bounced');
+                    //     $table->string('spam_score');
+                    // ]);
+                }
+
 
                 $email_campaign = new EmailCampaign();
                 $email_campaign->user_id = Auth::user()->id;

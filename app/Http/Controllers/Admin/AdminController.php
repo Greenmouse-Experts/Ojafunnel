@@ -3322,7 +3322,7 @@ class AdminController extends Controller
     {
         $explainers = ExplainerContent::latest()->get();
 
-        return view('admin.explainer.index', [
+        return view('Admin.explainer.index', [
             'explainers' => $explainers
         ]);
     }

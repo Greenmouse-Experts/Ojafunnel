@@ -281,7 +281,7 @@
 
     // Function to initialize CKEditor
     function initializeCKEditor(selector) {
-        CKEDITOR.inline(selector, {
+        CKEDITOR.replace(selector, {
             fullPage: true,
             extraPlugins: 'docprops',
             allowedContent: true,
@@ -298,6 +298,7 @@
         }
     }
 
+    $(document).ready(function () {
         // Add a new row when "Add More" button is clicked
         $('.add-series').click(function () {
             var clonedRow = $('.series-row:first').clone();
@@ -306,20 +307,24 @@
             // Set unique IDs for the cloned row
             var editorId = 'series_editor_' + rowLength;
             clonedRow.find('textarea').attr('id', editorId);
-            clonedRow.find('.messageCounter span').attr('id', 'series-characters_' + rowLength);
 
             // Clear the values in the cloned row
             clonedRow.find('input, textarea').val('');
+
             // Remove button for the cloned row
             clonedRow.find('.remove-series').remove();
+
             // Append the cloned row to the container
             $('.additional-rows').append(clonedRow);
+
             // Add the "Remove" button to the cloned row
             $('.additional-rows .row:last').append('<button class="mb-2 remove-series" style="width: 25%;" type="button">Remove</button>');
+
             // Show the cloned row
             clonedRow.show();
 
-            // Initialize CKEditor for the cloned row
+            // Destroy CKEditor for the cloned row (if exists) and then initialize
+            destroyCKEditor(editorId);
             initializeCKEditor(editorId);
         });
 
@@ -328,17 +333,6 @@
             var editorIdToRemove = $(this).closest('.series-row').find('textarea').attr('id');
             destroyCKEditor(editorIdToRemove);
             $(this).closest('.series-row').remove();
-        });
-
-        // Initialize CKEditor for the initial row
-        initializeCKEditor('series_editor_0');
-
-        // Update character count when typing in any series message textarea
-        $(document).on('input', '.series-message', function () {
-            var characterCount = $(this).val().length;
-            var current = $(this).siblings('.messageCounter').find('.series-characters');
-            current.text(characterCount);
-            // Add your character count styling logic here if needed
         });
     });
 
@@ -354,36 +348,41 @@
         let { data } = await axios.get(endpoint);
 
         if (data.success) {
-            // Destroy and initialize CKEditor for the current textarea
-            destroyCKEditor(editorId);
-            document.getElementById(editorId).innerHTML = data.data;
+            console.log(editorId);
+            // Initialize CKEditor for the new textarea
+            // destroyCKEditor(editorId);
             initializeCKEditor(editorId);
+            // Set the content for the CKEditor instance when it's ready
+            CKEDITOR.instances[editorId].on('instanceReady', function (event) {
+                // Set the data when the CKEditor instance is ready
+                event.editor.setData(data.data);
+            });
         } else {
+            // If there is no data, hide the textarea
             document.getElementById(editorId).style.display = 'none';
         }
     }
 
-    // async function loadSeriesTemplate()
-    // {
-    //     document.getElementById('series_email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="series_editor" name="series_email_template[]"></textarea>`
+    async function loadTemplate() {
+        document.getElementById('email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="editor" name="email_template"></textarea>`
 
-    //     let id = document.getElementById('series_email_template_id').value
-    //     let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id)
-    //     let { data } = await axios.get(endpoint)
+        let id = document.getElementById('email_template_id').value
+        let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id)
+        let { data } = await axios.get(endpoint)
 
-    //     if(data.success) {
-    //         document.getElementById('series_editor').innerHTML = data.data;
+        if(data.success) {
+            document.getElementById('editor').innerHTML = data.data;
 
-    //         CKEDITOR.replace('series_editor', {
-    //             fullPage: true,
-    //             extraPlugins: 'docprops',
-    //             allowedContent: true,
-    //             height: 320,
-    //             removeButtons: 'PasteFromWord',
-    //             removePlugins: 'sourcearea'
-    //         });
-    //     } else document.getElementById('series_editor').style.display = 'none';
-    // }
+            CKEDITOR.replace('editor', {
+                fullPage: true,
+                extraPlugins: 'docprops',
+                allowedContent: true,
+                height: 320,
+                removeButtons: 'PasteFromWord',
+                removePlugins: 'sourcearea'
+            });
+        } else document.getElementById('editor').style.display = 'none';
+    }
 
 </script>
 @endsection
