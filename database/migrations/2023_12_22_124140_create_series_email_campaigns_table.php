@@ -20,7 +20,8 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->time('time')->nullable();
             $table->string('email_template_id')->nullable();
-            $table->text('message')->nullable();
+            $table->text('attachment_paths')->nullable();
+            $table->text('slug')->nullable();
             $table->string('sent');
             $table->string('bounced');
             $table->string('spam_score');

@@ -17,7 +17,7 @@
                                 <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
                                 <li class="breadcrumb-item active">Page Builder</li>
                             </ol>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body"> 
+                        <div class="card-body">
                             <form method="POST" action="{{route('user.page.create_use_template', ['username' => Auth::user()->username])}}">
                                 {{ csrf_field() }}
                                 <div class="form">
@@ -75,7 +75,7 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
                                                     <input type="text" value="@if (env('APP_ENV') == 'local') {{ $page->file_location }} @else @if($page->name == 'index.html') {{ 'https://' . $page->slug . '-page.ojafunnel.com' . '/' }} @else {{ 'https://' . $page->slug . '-page.ojafunnel.com' . '/' . explode('.', $page->name)[0] }} @endif  @endif" class="input" readonly>
-                                                    <input type="hidden" name="selected_page" value="{{ $page->id }}" class="input"> 
+                                                    <input type="hidden" name="selected_page" value="{{ $page->id }}" class="input">
                                                 </div>
                                             </div>
                                         </div>
@@ -91,10 +91,10 @@
                                             <label>Sub Domain</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <input type="text" placeholder="e.g Tola Cake And Pasteries" id="subdomain" name="file_folder" class="input" required> 
+                                                    <input type="text" placeholder="e.g Tola Cake And Pasteries" id="subdomain" name="file_folder" class="input" required>
                                                     <small id="generateSubDomain"></small>
-                                                </div> 
-                                            </div> 
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <label>Page Name</label>
@@ -118,7 +118,7 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
 
@@ -126,7 +126,7 @@
 </div>
 </div>
 </div>
-<!-- END layout-wrapper --> 
+<!-- END layout-wrapper -->
 <style>
     .pageName {
         background: #556ee6;
@@ -143,14 +143,14 @@
     let pagetext = document.getElementById('generatePage');
 
     subdomain.addEventListener('input', (event) => {
-        if('{{ env('APP_URL') }}'.startsWith('https')) 
+        if('{{ env('APP_URL') }}'.startsWith('https'))
             subdomaintext.innerText = `https://${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-page'}.ojafunnel.com`
 
         subdomain.value = event.target.value.replace(/\s+/g, ' ')
     })
 
     pagename.addEventListener('input', (event) => {
-        if('{{ env('APP_URL') }}'.startsWith('https')) 
+        if('{{ env('APP_URL') }}'.startsWith('https'))
             pagetext.innerText = `${subdomaintext.innerText}/${event.target.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase()}`
 
         pagename.value = event.target.value.replace(/\s+/g, ' ')
@@ -164,7 +164,7 @@
                     <div class="col-lg-12">
                         <h4 class="card-title mb-3">Explainer Video</h4>
                         <div class="aller">
-                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Explainer Video" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>

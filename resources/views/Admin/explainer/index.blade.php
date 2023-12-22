@@ -78,7 +78,7 @@
                                                 {{$explainer->text}}
                                             </td>
                                             <td>
-                                                <iframe src="{{ $explainer->video }}" title="{{App\Models\ExplainerContent::where('menu', 'Dashboard')->first()->menu}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                                <iframe src="{{ $explainer->video }}" title="{{App\Models\ExplainerContent::where('menu', 'Dashboard')->first()->menu}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                             </td>
                                             <td>
                                                 {{ \Carbon\Carbon::parse($explainer->created_at)->isoFormat('llll') }}

@@ -46,13 +46,13 @@
                             </div>
                         </div>
                     </div>
-                </div> 
-            </div> 
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-3">Add Custom Domain</h4> 
+                            <h4 class="card-title mb-3">Add Custom Domain</h4>
                             <div class="row">
                                 <div class="col-lg-1">
                                    <span style="font-size:25px; font-weight: bold;">
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-lg-11">
                                     <p>
-                                        Go to your domain DNS settings and create <b>A Record</b> pointing your root domain or sub domain to <b>45.79.102.122</b> 
+                                        Go to your domain DNS settings and create <b>A Record</b> pointing your root domain or sub domain to <b>45.79.102.122</b>
                                     </p>
                                     <p>
                                         <span>e.g</span><br>
@@ -76,7 +76,7 @@
                                         2.
                                    </span>
                                 </div>
-                                <div class="col-lg-11"> 
+                                <div class="col-lg-11">
                                     <div class="row">
                                         <div class="">
                                             <form method="POST" action="{{ route('user.save.custom.domain', ['username' => Auth::user()->username]) }}">
@@ -87,7 +87,7 @@
                                                     </p>
                                                     <div class="row">
                                                         <input type="hidden" name="id" value="{{ $funnel->id }}">
-                                                        <input type="hidden" name="request_type" value="{{ $domain ? 'update' : 'save' }}"> 
+                                                        <input type="hidden" name="request_type" value="{{ $domain ? 'update' : 'save' }}">
                                                         <div class="col-lg-12">
                                                             <label>Sub Domain</label>
                                                             <div class="row">
@@ -96,14 +96,14 @@
                                                                     <small id="generateSubDomain"></small>
                                                                 </div>
                                                             </div>
-                                                        </div> 
+                                                        </div>
                                                         <div class="col-lg-12">
                                                             <label>Domain</label>
                                                             <div class="row">
                                                                 <div class="col-md-12 mb-4">
-                                                                    <input type="text" placeholder="Enter your domain name e.g example.com or funnel.example.com" name="domain" class="input" value="{{ $domain ? $domain->domain : null }}" required> 
+                                                                    <input type="text" placeholder="Enter your domain name e.g example.com or funnel.example.com" name="domain" class="input" value="{{ $domain ? $domain->domain : null }}" required>
                                                                     <small>
-                                                                        NB: Enter domain name <b>without</b> protocol <b>(https:// or http://)</b> 
+                                                                        NB: Enter domain name <b>without</b> protocol <b>(https:// or http://)</b>
                                                                     </small>
                                                                 </div>
                                                             </div>
@@ -111,7 +111,7 @@
                                                         <div class="col-lg-12 mb-4">
                                                             <div class="boding">
                                                                 <button type="submit">
-                                                                    {{ $domain ? 'Update Custom Domain' : 'Add Custom Domain' }} 
+                                                                    {{ $domain ? 'Update Custom Domain' : 'Add Custom Domain' }}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -126,34 +126,34 @@
                     </div>
                 </div>
             </div>
-            <!-- end page title --> 
+            <!-- end page title -->
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-3">Custom Domain</h4> 
+                            <h4 class="card-title mb-3">Custom Domain</h4>
                             <div class="row">
                                 <div>
                                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                         <thead>
-                                            <tr> 
+                                            <tr>
                                                 <th scope="col">Domain</th>
-                                                <th scope="col">Status</th> 
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Actions</th>
-                                            </tr> 
-                                        </thead> 
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                             @if ($domain)
                                                 <tr>
                                                     <td> {{ $domain->domain }} </td>
                                                     <td> {{ $domain->status }} </td>
-                                                    <td> 
+                                                    <td>
                                                         <button class="btn btn-danger" type="button"  data-bs-toggle="modal" data-bs-target="#remove">
                                                             Remove
-                                                        </button> 
+                                                        </button>
                                                     </td>
                                                 </tr>
-                                            @endif 
+                                            @endif
                                         </tbody>
                                     </table>
                                     @if ($domain)
@@ -197,9 +197,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @endif 
+                                    @endif
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,7 +210,7 @@
     <!-- End Page-content -->
 </div>
 <!-- END layout-wrapper -->
- 
+
 <!-- end modal -->
 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -220,7 +220,7 @@
                     <div class="col-lg-12">
                         <h4 class="card-title mb-3">Explainer Video</h4>
                         <div class="aller">
-                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Explainer Video" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -258,11 +258,11 @@
     </div>
 </div>
 <script>
-    let subdomain = document.getElementById('subdomain'); 
-    let subdomaintext = document.getElementById('generateSubDomain'); 
+    let subdomain = document.getElementById('subdomain');
+    let subdomaintext = document.getElementById('generateSubDomain');
 
-    if('{{ env('APP_URL') }}'.startsWith('https')) 
-            subdomaintext.innerText = `https://${subdomain.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-funnel'}.ojafunnel.com` 
+    if('{{ env('APP_URL') }}'.startsWith('https'))
+            subdomaintext.innerText = `https://${subdomain.value.replace(/\s+/g, ' ').split(' ').join('-').toLowerCase() + '-funnel'}.ojafunnel.com`
 </script>
 <!-- Modal Ends -->
 @endsection

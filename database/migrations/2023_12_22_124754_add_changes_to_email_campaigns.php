@@ -13,8 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('email_campaign', function (Blueprint $table) {
-            $table->longText('message')->nullable()->change();
+        Schema::table('email_campaigns', function (Blueprint $table) {
             $table->string('user_id')->nullable()->change();
             $table->string('name')->nullable()->change();
             $table->string('subject')->nullable()->change();
@@ -27,6 +26,8 @@ return new class extends Migration
             $table->string('bounced')->nullable()->change();
             $table->string('spam_score')->nullable()->change();
             $table->string('message_timing')->nullable()->change();
+            $table->string('attachment_paths')->nullable()->change();
+            $table->string('slug')->nullable()->change();
         });
     }
 
@@ -37,7 +38,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('email_campaign', function (Blueprint $table) {
+        Schema::table('email_campaigns', function (Blueprint $table) {
             //
         });
     }

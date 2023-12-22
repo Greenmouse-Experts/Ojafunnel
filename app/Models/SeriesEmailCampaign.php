@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class SeriesEmailCampaign extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
 }

@@ -53,7 +53,7 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
                 <div class="card" style="padding:10px !important">
-                    <iframe  src="https://www.youtube.com/embed/9xwazD5SyVg" title="Dummy Video For YouTube API Test" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe  src="https://www.youtube.com/embed/9xwazD5SyVg" title="Explainer Video" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
             </div>
             <div class="col-lg-1"></div>

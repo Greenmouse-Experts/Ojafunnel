@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\HomePageController;
+use App\Models\SeriesEmailCampaign;
 use App\Models\SeriesSmsCampaign;
 
 class EmailMarketingController extends Controller
@@ -450,11 +451,11 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns_save(Request $request)
     {
-        return $request->all();
+        // return $request->all();
         $request->validate([
             'name' => 'required',
             'subject' => 'required',
-            'email_template_id' => 'required',
+            'email_template_id' => 'nullable',
             'email_template' => 'nullable',
             'email_list' => 'required',
             'message_timing' => 'required'
@@ -722,13 +723,25 @@ class EmailMarketingController extends Controller
             }
 
             DB::transaction(function () use ($request, $email_kit, $mail_list) {
-                $email_template = EmailTemplate::where('id', $request->email_template_id)->first();
-
+                $email_campaign = new EmailCampaign();
+                $email_campaign->user_id = Auth::user()->id;
+                $email_campaign->name = $request->name;
+                $email_campaign->subject = $request->subject;
+                $email_campaign->replyto_email = $email_kit->replyto_email;
+                $email_campaign->replyto_name = $email_kit->replyto_name;
+                $email_campaign->email_kit_id = $email_kit->id;
+                $email_campaign->list_id = $mail_list->id;
+                $email_campaign->sent = 0;
+                $email_campaign->bounced = 0;
+                $email_campaign->spam_score = 0;
+                $email_campaign->message_timing = $request->message_timing;
+                $email_campaign->save();
 
                 foreach ($request->input('series_date') as $key => $value) {
+                    $email_template = EmailTemplate::where('id', $request->series_email_template_id[$key])->first();
                     $slug = $email_template->slug . '-' . substr(sha1(mt_rand()), 10, 15);
                     $username = Auth::user()->username;
-                    $template = $request->email_template;
+                    $template = $request->series_email_template[$key];
 
                     // replace all variables with correct laravel syntax
                     $from = ["{{", "}}", "\$name", "\$email"];
@@ -751,47 +764,40 @@ class EmailMarketingController extends Controller
                         ]);
                     }
 
-                    // SeriesSmsCampaign::create([
-                    //     'sms_campaign_id' => $new_campaign->id,
+                    // $seriesEC = SeriesEmailCampaign::create([
+                    //     'email_campaign_id' => $email_campaign->id,
                     //     'user_id' => Auth::user()->id,
                     //     'date' => $request->series_date[$key],
                     //     'time' => $request->series_time[$key],
-                    //     'message' => $request->series_message[$key],
-                    //     'user_id' => Auth::user()->id,
-                    //     $table->date('date')->nullable();
-                    //     $table->time('time')->nullable();
-                    //     $table->string('email_template_id')->nullable();
-                    //     $table->text('message')->nullable();
-                    //     $table->string('sent');
-                    //     $table->string('bounced');
-                    //     $table->string('spam_score');
+                    //     'email_template_id' => $email_template->id,
+                    //     'attachment_paths' => json_encode([]),
+                    //     'sent' => 0,
+                    //     'bounced' => 0,
+                    //     'spam_score' => 0
                     // ]);
+
+                    $seriesEC = new SeriesEmailCampaign();
+                    $seriesEC->email_campaign_id = $email_campaign->id;
+                    $seriesEC->user_id = Auth::user()->id;
+                    $seriesEC->date = $request->series_date[$key];
+                    $seriesEC->time = $request->series_time[$key];
+                    $seriesEC->email_template_id = $email_template->id;
+                    $seriesEC->attachment_paths = json_encode([]);
+                    $seriesEC->slug = $slug;
+                    $seriesEC->sent = 0;
+                    $seriesEC->bounced = 0;
+                    $seriesEC->spam_score = 0;
+                    $seriesEC->save();
+
                 }
 
 
-                $email_campaign = new EmailCampaign();
-                $email_campaign->user_id = Auth::user()->id;
-                $email_campaign->name = $request->name;
-                $email_campaign->subject = $request->subject;
-                $email_campaign->replyto_email = $email_kit->replyto_email;
-                $email_campaign->replyto_name = $email_kit->replyto_name;
-                $email_campaign->email_kit_id = $email_kit->id;
-                $email_campaign->list_id = $mail_list->id;
-                $email_campaign->email_template_id = $email_template->id;
-                $email_campaign->sent = 0;
-                $email_campaign->bounced = 0;
-                $email_campaign->spam_score = 0;
-                $email_campaign->message_timing = $request->message_timing;
-                $email_campaign->start_date = $request->start_date;
-                $email_campaign->start_time = $request->start_time;
-                $email_campaign->slug = $slug;
-                $email_campaign->attachment_paths = json_encode([]);
-                $email_campaign->save();
-
-                if ($request->hasFile('attachments')) {
+                if ($request->hasFile("series_attachments[$key]")) {
                     $attachment_paths = [];
 
-                    foreach ($request->file('attachments') as $key => $attachment) {
+                    $attachment = $request->file("series_attachments[$key]");
+
+                    // foreach ($request->file("series_attachments[$key]") as $attachment) {
                         $filename = $attachment->getClientOriginalName();
                         $path = 'email-marketing/' . Auth::user()->username . '/attachment/campaign-' . $email_campaign->id;
                         $fullpath = $path . '/' . $filename;
@@ -800,29 +806,11 @@ class EmailMarketingController extends Controller
                         $attachment->storeAs($path, $filename, 'public');
 
                         array_push($attachment_paths, $fullpath);
-                    }
+                    // }
 
-                    $email_campaign->attachment_paths = json_encode($attachment_paths);
-                    $email_campaign->save();
+                    $seriesEC->attachment_paths = json_encode($attachment_paths);
+                    $seriesEC->save();
                 }
-
-                $contacts = ListManagementContact::latest()->where('list_management_id', $mail_list->id)->get();
-
-                // build each wa queue data based on contacts
-                $email_campaign_queue = $contacts->map(function ($_contact) use ($email_campaign) {
-                    $timestamp = Carbon::now();
-
-                    return [
-                        'email_campaign_id' => $email_campaign->id,
-                        'recepient' => $_contact->email,
-                        'status' => 'Waiting',
-                        'created_at' => $timestamp,
-                        'updated_at' => $timestamp,
-                    ];
-                })->toArray();
-
-                // bulk insert
-                EmailCampaignQueue::insert($email_campaign_queue);
             });
 
             return back()->with([
