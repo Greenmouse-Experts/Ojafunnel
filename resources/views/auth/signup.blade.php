@@ -94,16 +94,6 @@
                                     </div>
                                 </div>
                                 <!--Phone Number-->
-                                <!-- <div class="col-lg-12">
-                                    <label>Phone Number</label>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-4">
-                                            <i class="bi bi-phone"></i>
-                                            <input type="tel" placeholder="Enter your Phone Number" name="phone_number"  id="phone_number" value="{{ old('phone_number') }}" class="input" required>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!--Phone Number-->
                                 <div class="col-lg-12">
                                     <label>Phone Number</label>
                                     <div class="row">

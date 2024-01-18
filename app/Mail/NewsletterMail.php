@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class NewsletterMail extends Mailable
 {
     use Queueable, SerializesModels;
-    
+
     public $subject;
     public $message;
     public $attachment;
@@ -51,7 +51,7 @@ class NewsletterMail extends Mailable
 
     public function build()
     {
-        $mail = $this->markdown('emails.newsletter')
+    $mail = $this->markdown('emails.newsletter')
             ->with('message', $this->message);
 
         if ($this->attachment) {
@@ -59,10 +59,10 @@ class NewsletterMail extends Mailable
 
             // Store the file in the storage disk
             $filePath = $this->attachment->storeAs('attachment', $filename, 'public');
-    
+
             // Get the absolute path of the stored file
             $absolutePath = storage_path('app/public/' . $filePath);
-    
+
             // Attach the file to the email using the absolute path
             $mail->attach($absolutePath, [
                 'as' => $filename,
