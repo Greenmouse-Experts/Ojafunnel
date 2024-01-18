@@ -78,7 +78,10 @@
                                                 {{$explainer->text}}
                                             </td>
                                             <td>
-                                                <iframe src="{{ $explainer->video }}" title="{{App\Models\ExplainerContent::where('menu', 'Dashboard')->first()->menu}}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                                <video id="explainerVideo" controls controlsList="nodownload" width="100%" height="200">
+                                                    <source src="{{ $explainer->video }}" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
                                             </td>
                                             <td>
                                                 {{ \Carbon\Carbon::parse($explainer->created_at)->isoFormat('llll') }}
