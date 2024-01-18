@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\Storage;
 use Dotlogics\Grapesjs\App\Traits\EditorTrait;
 use App\Http\Controllers\HomePageController;
 
+// checkout
 
-
-class checkoutPageController extends Controller
+class PageController extends Controller
 {
     use EditorTrait;
 
