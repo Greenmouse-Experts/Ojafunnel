@@ -316,7 +316,10 @@
                     <div class="col-lg-12">
                         <h4 class="card-title mb-3">Explainer Video</h4>
                         <div class="aller">
-                            <iframe src="{{App\Models\ExplainerContent::where('menu', 'Ecommerce')->first()->video}}" title="Explainer Video" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <video id="explainerVideo" controls controlsList="nodownload" width="100%" height="400">
+                                <source src="{{App\Models\ExplainerContent::where('menu', 'Ecommerce')->first()->video}}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
                     </div>
                 </div>

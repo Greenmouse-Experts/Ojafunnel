@@ -211,6 +211,7 @@
 <!-- END layout-wrapper -->
 
 <!-- end modal -->
+@if(App\Models\ExplainerContent::where('menu', 'Page-Builder')->exists())
 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -219,7 +220,10 @@
                     <div class="col-lg-12">
                         <h4 class="card-title mb-3">Explainer Video</h4>
                         <div class="aller">
-                            <iframe src="https://www.youtube.com/embed/9xwazD5SyVg" title="Explainer Video" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <video id="explainerVideo" controls controlsList="nodownload" width="100%" height="400">
+                                <source src="{{App\Models\ExplainerContent::where('menu', 'Page-Builder')->first()->video}}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
                     </div>
                 </div>
@@ -242,7 +246,7 @@
                         <h4 class="card-title mb-3">Text Explainer</h4>
                         <div class="aller">
                             <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, ducimus iste. Consequuntur doloremque voluptatem officia, quos laborum delectus atque distinctio reprehenderit earum iure. Sequi voluptate architecto libero, repellat neque deserunt assumenda sunt in sit ipsam delectus nostrum qui ratione. Laboriosam aliquid obcaecati vitae voluptatum ea minus quidem! Pariatur soluta quasi modi harum aut quas veritatis et. Necessitatibus fuga illo ipsa dicta aut nisi laborum nam at, id eveniet consectetur praesentium enim, cum dignissimos ipsum rem odio. Atque, eaque magni aut incidunt quo laudantium repudiandae quae modi officiis in, iusto suscipit fugiat rem inventore non dolorum adipisci rerum dolorem. Nulla, vero!
+                                {{App\Models\ExplainerContent::where('menu', 'Page-Builder')->first()->text}}
                             </p>
                         </div>
                     </div>
@@ -256,6 +260,7 @@
         </div>
     </div>
 </div>
+@endif
 <script>
     let subdomain = document.getElementById('subdomain');
     let subdomaintext = document.getElementById('generateSubDomain');

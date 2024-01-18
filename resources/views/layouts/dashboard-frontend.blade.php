@@ -316,6 +316,15 @@
                 });
             });
         });
+
+        function stopVideo() {
+            var video = document.getElementById("explainerVideo");
+            video.pause();
+        }
+
+        $('#staticBackdrop1').on('hidden.bs.modal', function (e) {
+            stopVideo();
+        });
     </script>
 </body>
 </html>
