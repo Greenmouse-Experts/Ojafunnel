@@ -53,10 +53,12 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
                 <div class="card" style="padding:10px !important">
+                    @if($demo)
                     <video id="explainerVideo" controls controlsList="nodownload" width="100%" height="500">
                         <source src="{{ $demo->video }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                    @endif
                 </div>
             </div>
             <div class="col-lg-1"></div>
