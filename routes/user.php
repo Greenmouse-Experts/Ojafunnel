@@ -141,4 +141,7 @@ Route::prefix('user')->group(function () {
     Route::post('/my-store/delete/coupon/{id}', [App\Http\Controllers\StoreController::class, 'storeDeleteCoupon'])->name('user.store.delete.coupon');
 
     Route::post('/my-store/check/coupon', [App\Http\Controllers\StoreFrontController::class, 'checkCoupon'])->name('user.store.check.coupon');
+
 });
+Route::get('/unsubscribe/confirm/{email}', [App\Http\Controllers\HomePageController::class, 'confirmUnsubscribe'])->name('user.subscribe.confirm');
+Route::post('/unsubscribe/confirm', [App\Http\Controllers\HomePageController::class, 'unsubscribe'])->name('unsubscribe.confirm');

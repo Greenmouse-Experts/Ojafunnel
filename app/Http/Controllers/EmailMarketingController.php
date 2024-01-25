@@ -352,7 +352,6 @@ class EmailMarketingController extends Controller
         ]);
     }
 
-
     public function broadcast_message(Request $request)
     {
         $user_id = Auth::user()->id;
@@ -376,7 +375,6 @@ class EmailMarketingController extends Controller
         $data['tags'] = $arrs;
         return view('dashboard.broadcast', $data);
     }
-
 
     public function email_campaigns_delete(Request $request)
     {
@@ -464,7 +462,7 @@ class EmailMarketingController extends Controller
         $email_kit = EmailKit::where(['account_id' => Auth::user()->id, 'is_admin' => false, 'master' => true]);
         $email_template = EmailTemplate::where('id', $request->email_template_id)->first();
         $mail_list = ListManagement::where('id', $request->email_list)->first();
-        $mail_list_management = ListManagementContact::where('list_management_id', $mail_list->id)->get()->count();
+        $mail_list_management = ListManagementContact::where(['list_management_id' => $mail_list->id, 'subscribe' => true])->get()->count();
 
         // return $mail_list_management;
         if (!$email_kit->exists()) {
@@ -485,10 +483,11 @@ class EmailMarketingController extends Controller
                 $slug = $email_template->slug . '-' . substr(sha1(mt_rand()), 10, 15);
                 $username = Auth::user()->username;
                 $template = $request->email_template;
+                $list_id = $mail_list->id;
 
                 // replace all variables with correct laravel syntax
-                $from = ["{{", "}}", "\$name", "\$email"];
-                $to = ["", "", "{{ \$name }}", "{{ \$email }}"];
+                $from = ["{{", "}}", "\$name", "\$email", "\$list_id"];
+                $to = ["", "", "{{ \$name }}", "{{ \$email }}", "{{ \$list_id }}"];
                 $template = str_replace($from, $to, $template);
 
                 // add Powered by Ojafunnel
@@ -542,7 +541,7 @@ class EmailMarketingController extends Controller
                     $email_campaign->save();
                 }
 
-                $contacts = ListManagementContact::latest()->where('list_management_id', $mail_list->id)->get();
+                $contacts = ListManagementContact::latest()->where(['list_management_id' => $mail_list->id, 'subscribe' => true])->get();
 
                 // build each wa queue data based on contacts
                 $email_campaign_queue = $contacts->map(function ($_contact) use ($email_campaign) {
@@ -674,7 +673,7 @@ class EmailMarketingController extends Controller
                     $email_campaign->save();
                 }
 
-                $contacts = ListManagementContact::latest()->where('list_management_id', $mail_list->id)->get();
+                $contacts = ListManagementContact::latest()->where(['list_management_id' => $mail_list->id, 'subscribe' => true])->get();
 
                 // build each wa queue data based on contacts
                 $email_campaign_queue = $contacts->map(function ($_contact) use ($email_campaign) {
@@ -854,4 +853,6 @@ class EmailMarketingController extends Controller
                 </body>
             ';
     }
+
+
 }

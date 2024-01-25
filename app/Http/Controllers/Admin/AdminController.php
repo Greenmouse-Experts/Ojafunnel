@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
+use App\Models\DemoVideo;
 use App\Models\Faq;
 use App\Models\Page;
 use App\Models\Shop;
@@ -3363,6 +3364,61 @@ class AdminController extends Controller
             'type' => 'success',
             'message' => 'Updated successfully.'
         ]);
+    }
+
+    public function demoVideo()
+    {
+        $demo = DemoVideo::latest()->get();
+
+        return view('Admin.explainer.demo', [
+            'demo' => $demo
+        ]);
+    }
+
+    public function updateDemoVideo(Request $request)
+    {
+        $this->validate($request, [
+            'video' => [
+                'nullable',
+                'mimes:mp4',
+                'max:30720', // 30 megabytes (30 * 1024 KB)
+            ],
+        ]);
+
+        $demo = DemoVideo::first();
+
+        if($demo)
+        {
+            $filename = request()->video->getClientOriginalName();
+
+            if($demo->video) {
+                Storage::delete(str_replace("storage", "public", $demo->video));
+            }
+
+            request()->video->storeAs('demo_videos', $filename, 'public');
+
+            $demo->update([
+                'video' => '/storage/demo_videos/'.$filename,
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Updated successfully.'
+            ]);
+        }
+
+        $filename = request()->video->getClientOriginalName();
+        request()->video->storeAs('demo_videos', $filename, 'public');
+
+        DemoVideo::create([
+            'video' => '/storage/demo_videos/'.$filename,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Updated successfully.'
+        ]);
+
     }
 
 }

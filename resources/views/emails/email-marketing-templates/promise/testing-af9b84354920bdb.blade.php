@@ -95,7 +95,7 @@
        }
 	</style>
 </head>
-<body data-gr-ext-installed="" data-new-gr-c-s-check-loaded="14.1125.0" style="background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
+<body data-gr-ext-installed="" data-new-gr-c-s-check-loaded="14.1152.0" style="background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
 <p><span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">This is preheader text. Some clients will show this text as a preview.</span></p>
 
 <table bgcolor="#f6f6f6" border="0" cellpadding="0" cellspacing="0" class="body" role="presentation" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;" width="100%">
@@ -151,7 +151,7 @@
 				<tbody>
 					<tr>
 						<td align="center" class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;" valign="top"><span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">Company Inc, 3 Abbey Road, San Francisco CA 94102</span><br />
-						Don&#39;t like these emails? <a href="http://i.imgur.com/CScmqnj.gif" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.</td>
+						Don&#39;t like these emails? <a href="http://127.0.0.1:8000/unsubscribe/confirm/{{ $email }}" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>.</td>
 					</tr>
 				</tbody>
 			</table>

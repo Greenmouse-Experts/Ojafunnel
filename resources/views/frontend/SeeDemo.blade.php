@@ -53,7 +53,10 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
                 <div class="card" style="padding:10px !important">
-                    <iframe  src="https://www.youtube.com/embed/9xwazD5SyVg" title="Explainer Video" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <video id="explainerVideo" controls controlsList="nodownload" width="100%" height="500">
+                        <source src="{{ $demo->video }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
             <div class="col-lg-1"></div>

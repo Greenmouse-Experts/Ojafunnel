@@ -115,7 +115,7 @@
                                                 </td>
                                                 <td>{{ $email_campaign->replyto_email }}</td>
                                                 <td>{{ $email_campaign->replyto_name }}</td>
-                                                <td>{{ count(json_decode($email_campaign->attachment_paths)) }}</td>
+                                                <td>{{ $email_campaign->attachment_paths ? count(json_decode($email_campaign->attachment_paths)) : 'null' }}</td>
                                                 <td>{{ $email_campaign->sent }}</td>
                                                 <td>{{ $email_campaign->bounced }}</td>
                                                 <td>{{ $email_campaign->created_at->toDayDateTimeString() }}</td>

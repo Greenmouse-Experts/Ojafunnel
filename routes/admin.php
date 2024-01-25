@@ -150,6 +150,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             // Save FCM Token
             Route::post('/save-token', [AdminController::class, 'saveToken'])->name('admin.save.token');
 
+            // Demo Video
+            Route::get('/demo-video', [AdminController::class, 'demoVideo'])->name('admin.demo.video');
+            Route::post('/update/demo-video', [AdminController::class, 'updateDemoVideo'])->name('admin.update.demo.video');
+
             // Payouts
             Route::get('/pending/payouts', [App\Http\Controllers\Admin\AdminController::class, 'pending_payouts'])->name('pending.payouts');
             Route::post('/process/payouts/{id}', [App\Http\Controllers\Admin\AdminController::class, 'process_payouts'])->name('process.payouts');

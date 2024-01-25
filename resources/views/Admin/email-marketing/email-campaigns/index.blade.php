@@ -52,61 +52,61 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">View Email Campaigns</h4>
-                            <div class="table-responsive"> 
+                            <div class="table-responsive">
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
-                                            <th>Subject</th> 
-                                            <th>Kit</th>  
-                                            <th>Template</th> 
-                                            <th>List</th> 
+                                            <th>Subject</th>
+                                            <th>Kit</th>
+                                            <th>Template</th>
+                                            <th>List</th>
                                             <th>Replyto Email</th>
                                             <th>Replyto Name</th>
                                             <th>Attachment(s)</th>
                                             <th>Sent</th>
-                                            <th>Bounced</th> 
-                                            <th>Created At</th> 
+                                            <th>Bounced</th>
+                                            <th>Created At</th>
                                         </tr>
-                                    </thead> 
-                                    <tbody> 
+                                    </thead>
+                                    <tbody>
                                         @forelse ($email_campaigns as $email_campaign)
                                             <tr>
                                                 <td>{{ $loop->index + 1}}</td>
                                                 <td>{{ $email_campaign->name }}</td>
-                                                <td>{{ $email_campaign->subject }}</td> 
+                                                <td>{{ $email_campaign->subject }}</td>
                                                 <td>
                                                     @if (App\Models\EmailKit::where('id', $email_campaign->email_kit_id)->exists())
                                                         {{ App\Models\EmailKit::where('id', $email_campaign->email_kit_id)->first()->host }}
                                                     @else
-                                                        <b>{{ 'DELETED' }}</b> 
+                                                        <b>{{ 'DELETED' }}</b>
                                                     @endif
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     @if (App\Models\EmailTemplate::where('id', $email_campaign->email_template_id)->exists())
                                                         {{ App\Models\EmailTemplate::where('id', $email_campaign->email_template_id)->first()->name }}
                                                     @else
-                                                        <b>{{ 'DELETED' }}</b> 
+                                                        <b>{{ 'DELETED' }}</b>
                                                     @endif
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     @if (App\Models\ListManagement::where('id', $email_campaign->list_id)->exists())
                                                         {{ App\Models\ListManagement::where('id', $email_campaign->list_id)->first()->name }}
                                                     @else
-                                                        <b>{{ 'DELETED' }}</b> 
-                                                    @endif 
-                                                </td> 
+                                                        <b>{{ 'DELETED' }}</b>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $email_campaign->replyto_email }}</td>
                                                 <td>{{ $email_campaign->replyto_name }}</td>
-                                                <td>{{ count(json_decode($email_campaign->attachment_paths)) }}</td>
+                                                <td>{{ $email_campaign->attachment_paths ? count(json_decode($email_campaign->attachment_paths)) : 'null' }}</td>
                                                 <td>{{ $email_campaign->sent }}</td>
-                                                <td>{{ $email_campaign->bounced }}</td> 
-                                                <td>{{ $email_campaign->created_at->toDayDateTimeString() }}</td>   
+                                                <td>{{ $email_campaign->bounced }}</td>
+                                                <td>{{ $email_campaign->created_at->toDayDateTimeString() }}</td>
                                             </tr>
                                         @empty
                                             {{ 'No email campaign at the moment '}}
-                                        @endforelse 
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>

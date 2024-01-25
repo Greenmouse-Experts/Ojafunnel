@@ -110,7 +110,7 @@ class AdminController extends Controller
         public function add_category(Request $request)
         {
 
-            
+
             return view('admin.lms.courses');
         }
 

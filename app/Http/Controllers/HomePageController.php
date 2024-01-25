@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\ContactUs;
 use App\Models\Customer;
+use App\Models\DemoVideo;
+use App\Models\ListManagementContact;
 use App\Models\Newsletter;
 use App\Models\OjafunnelNotification;
 use App\Models\OjaPlan;
@@ -325,7 +327,11 @@ class HomePageController extends Controller
     // See Demo
     public function demo()
     {
-        return view('frontend.SeeDemo');
+        $demo = DemoVideo::first();
+
+        return view('frontend.SeeDemo', [
+            'demo' => $demo
+        ]);
     }
     public function test()
     {
@@ -849,6 +855,37 @@ class HomePageController extends Controller
         return back()->with([
             'type' => 'success',
             'message' => 'Form submitted successfully, we will get back to you shortly.'
+        ]);
+    }
+
+    public function confirmUnsubscribe($email)
+    {
+        return view('frontend.confirmUnsubscribe', compact('email'));
+    }
+
+    public function unsubscribe(Request $request)
+    {
+        // Find the subscriber by email
+        $subscriber = ListManagementContact::where('email', $request->email)->get();
+
+        if ($subscriber->count() > 0) {
+            foreach($subscriber as $sub)
+            {
+                // Update the subscription status (you might have a 'subscribed' field)
+                $sub->update([
+                    'subscribe' => false
+                ]);
+            }
+
+            return redirect()->route('index')->with([
+                'type' => 'success',
+                'message' => 'You have been unsubscribed successfully.'
+            ]);
+        }
+
+        return redirect()->route('index')->with([
+            'type' => 'danger',
+            'message' => 'Subscriber not found.'
         ]);
     }
 }
