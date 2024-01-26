@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\WaQueues;
 use App\Models\WaCampaigns;
 use App\Models\SeriesWaCampaign;
+use App\Models\CandidateWASeries;
 use App\Models\WhatsappNumber;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -14,21 +15,21 @@ use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
 
-class SendWASeries extends Command
+class SendWASeriesLater extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sendwaseries:run';
+    protected $signature = 'sendwaserieslater:run';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command checks for due whatsapp series and send';
+    protected $description = 'This command checks for due whatsapp series for later joined list and send';
 
     /**
      * Execute the console command.
@@ -43,11 +44,10 @@ class SendWASeries extends Command
         $current_time = $date->format('H:i:s');
 
 
-        $series = SeriesWaCampaign::where('date', "$current_date")
+        $series = CandidateWASeries::where('date', "$current_date")
             // ->where('time', $current_time)
             ->get();
             
-
         foreach($series as $element)
         {
             $_campaign = WaCampaigns::find($element->wa_campaign_id);
@@ -69,7 +69,8 @@ class SendWASeries extends Command
                         'full_jwt_session' => $whatsapp_number->full_jwt_session,
                         'template1_message' => $_campaign->template1_message,
                         'wa_campaign_id' => $_campaign->id,
-                        'series_id' => $element->id
+                        'series_id' => $element->id,
+                        'later' => 1
                     ])->onQueue('waTemplate1')->delay($delay);
 
 
@@ -77,49 +78,6 @@ class SendWASeries extends Command
                 }
             }
 
-            // template 2
-            if ($_campaign->template == 'template2') {
-                // dispatch job and delay
-                foreach ($chunks as $key => $_chunk) {
-                    // dispatch job
-                    ProcessTemplate2BulkWAMessages::dispatch($_chunk, [
-                        'whatsapp_account' => $whatsapp_number->phone_number,
-                        'full_jwt_session' => $whatsapp_number->full_jwt_session,
-                        'template2_message' => $_campaign->template2_message,
-                        'template2_file' => $_campaign->template2_file,
-                        'wa_campaign_id' => $_campaign->id
-                    ])->onQueue('waTemplate2')->delay($delay);
-
-                    $delay += mt_rand(10, 20);
-                }
-            }
-
-            // template 3
-            if ($_campaign->template == 'template3') {
-                // dispatch job and delay
-                foreach ($chunks as $key => $_chunk) {
-                    // dispatch job
-                    ProcessTemplate3BulkWAMessages::dispatch($_chunk, [
-                        'whatsapp_account' => $whatsapp_number->phone_number,
-                        'full_jwt_session' => $whatsapp_number->full_jwt_session,
-                        'template3_header' => $_campaign->template3_header,
-                        'template3_message' => $_campaign->template3_message,
-                        'template3_footer' => $_campaign->template3_footer,
-                        'template3_link_url' => $_campaign->template3_link_url,
-                        'template3_link_cta' => $_campaign->template3_link_cta,
-                        'template3_phone_number' => $_campaign->template3_phone_number,
-                        'template3_phone_cta' => $_campaign->template3_phone_cta,
-                        'wa_campaign_id' => $_campaign->id
-                    ])->afterCommit()->onQueue('waTemplate3')->delay($delay);
-
-                    $delay += mt_rand(10, 20);
-                }
-            }
-
-            // update the campaign queue to waiting
-            // WaQueues::where(['wa_campaign_id' => $_campaign->id])->update([
-            //     'status' => 'Waiting'
-            // ]);
         }
 
 

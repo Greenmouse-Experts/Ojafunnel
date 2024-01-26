@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\WaQueues;
 use App\Mail\WADisconnected;
 use App\Models\WaCampaigns;
+use App\Models\SeriesWaCampaign;
+use App\Models\CandidateWASeries;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
@@ -52,6 +54,16 @@ class ProcessTemplate1BulkWAMessages implements ShouldQueue
             $msg = $this->data['template1_message'];
             $wa_campaign_id = $this->data['wa_campaign_id'];
 
+            $series_id = null;
+
+            if( (array_key_exists('series_id', $this->data)) ) {
+                $series_id = $this->data['series_id'];
+            }
+
+            $later = false;
+            if( (array_key_exists('later', $this->data)) ) {
+                $later = true;
+            }
 
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $full_jwt_session[1]
@@ -75,7 +87,7 @@ class ProcessTemplate1BulkWAMessages implements ShouldQueue
                     Mail::to($user->email)->send(new WADisconnected($campaign));
                 } else {
                     // start sending
-                    $this->contacts->map(function ($_contact) use ($whatsapp_account, $full_jwt_session, $msg, $wa_campaign_id) {
+                    $this->contacts->map(function ($_contact) use ($whatsapp_account, $full_jwt_session, $msg, $wa_campaign_id, $series_id) {
                         
                         
 
@@ -159,6 +171,30 @@ class ProcessTemplate1BulkWAMessages implements ShouldQueue
 
                                     $queue->save();
                                 }
+
+                                // update deliveredCount in the series compaign Table.
+                                if(!is_null($series_id)) {
+
+                                    $series = SeriesWaCampaign::find($series_id);
+                                    $last_count = (int) $series->DeliveredCount;
+                                    $next_count =  $last_count + 1;
+                                    SeriesWaCampaign::where(['id' => $series_id])
+                                        ->update([
+                                            'DeliveredCount' => $next_count
+                                        ]);
+
+                                }
+
+                                if($later) {
+                                    $series = CandidateWASeries::find($series_id);
+                                    $last_count = (int) $series->DeliveredCount;
+                                    $next_count =  $last_count + 1;
+                                    CandidateWASeries::where(['id' => $series_id])
+                                        ->update([
+                                            'delivered_count' => 1
+                                        ]);
+                                }
+                                
                             }
                         }
 
