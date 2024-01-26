@@ -45,7 +45,7 @@ class SendWASeriesLater extends Command
 
 
         $series = CandidateWASeries::where('date', "$current_date")
-            // ->where('time', $current_time)
+            ->where('time', $current_time)
             ->get();
             
         foreach($series as $element)

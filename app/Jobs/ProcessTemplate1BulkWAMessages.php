@@ -65,6 +65,7 @@ class ProcessTemplate1BulkWAMessages implements ShouldQueue
                 $later = true;
             }
 
+
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $full_jwt_session[1]
             ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account . '/check-connection-session');
@@ -185,13 +186,16 @@ class ProcessTemplate1BulkWAMessages implements ShouldQueue
 
                                 }
 
-                                if($later) {
+                                
+                                if((array_key_exists('later', $this->data))) {
+                                    
                                     $series = CandidateWASeries::find($series_id);
                                     $last_count = (int) $series->DeliveredCount;
                                     $next_count =  $last_count + 1;
                                     CandidateWASeries::where(['id' => $series_id])
                                         ->update([
-                                            'delivered_count' => 1
+                                            'delivered_count' => 1,
+                                            'status' => 'Sent'
                                         ]);
                                 }
                                 
