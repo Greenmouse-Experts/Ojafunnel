@@ -40,10 +40,14 @@ class SendWASeries extends Command
         $date = Carbon::now();
 
         $current_date = $date->format('Y-m-d');
-        $current_time = $date->format('H:i');
+        $current_time = $date->format('H:i:s');
 
-        $series = SeriesWaCampaign::where('date', $current_date)
-            ->where('time', $current_time)->get();
+
+        $series = SeriesWaCampaign::where('date', "$current_date")
+            // ->where('time', $current_time)
+            ->get();
+            
+
         foreach($series as $element)
         {
             $_campaign = WaCampaigns::find($element->wa_campaign_id);
@@ -66,6 +70,7 @@ class SendWASeries extends Command
                         'template1_message' => $_campaign->template1_message,
                         'wa_campaign_id' => $_campaign->id
                     ])->onQueue('waTemplate1')->delay($delay);
+
 
                     $delay += mt_rand(10, 20);
                 }
