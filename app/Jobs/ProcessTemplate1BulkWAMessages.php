@@ -52,10 +52,12 @@ class ProcessTemplate1BulkWAMessages implements ShouldQueue
             $msg = $this->data['template1_message'];
             $wa_campaign_id = $this->data['wa_campaign_id'];
 
+
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $full_jwt_session[1]
             ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_account . '/check-connection-session');
             $res = $response->json();
+
 
             // check connection
             if (array_key_exists('status', $res) && array_key_exists('message', $res)) {
@@ -74,9 +76,13 @@ class ProcessTemplate1BulkWAMessages implements ShouldQueue
                 } else {
                     // start sending
                     $this->contacts->map(function ($_contact) use ($whatsapp_account, $full_jwt_session, $msg, $wa_campaign_id) {
+                        
+                        
+
                         $contact = strpos($_contact->phone, '+') === 0
                             ? substr($_contact->phone, 1) . "@c.us"
                             : $_contact->phone  . "@c.us";
+
 
                         $response = Http::withHeaders([
                             'Authorization' => 'Bearer ' . $full_jwt_session[1]
@@ -101,6 +107,7 @@ class ProcessTemplate1BulkWAMessages implements ShouldQueue
                                         'status' => 'Invalid'
                                     ]);
                                 } else {
+                                    echo $_contact->phone;
                                     // when user adds new contact while launch schedule/immediate campaign
                                     $queue = new WaQueues();
                                     $queue->wa_campaign_id = $wa_campaign_id;
