@@ -1220,8 +1220,24 @@ class DashboardController extends Controller
     public function whatsapp_automation_campaign(Request $request, $username)
     {
         $wa_campaign = WaCampaigns::find($request->campaign_id);
-        $wa_queues = WaQueues::where('wa_campaign_id', $request->campaign_id)->orderBy('updated_at', 'DESC')->get();
+        $wa_queues = [];
 
+        if($wa_campaign->message_timing == "Series") {
+            $wa_queues = \App\Models\SeriesWaCampaign::where([
+                'wa_campaign_id' => $wa_campaign->id,
+            ])->get()
+            ->map(function ($item, $k) {
+                if($item->DeliveredCount > 0) {
+                    $item->status = "Sent";
+                } else {
+                    $item->status = "Waiting";
+                }
+
+                return $item;
+            });
+        } else {
+            $wa_queues = WaQueues::where('wa_campaign_id', $request->campaign_id)->orderBy('updated_at', 'DESC')->get();
+        }
         return view('dashboard.whatsappAutomationOverview', [
             'username' => $username,
             'wa_campaign' => $wa_campaign,
@@ -1316,14 +1332,18 @@ class DashboardController extends Controller
 
         $whatsapp_account = explode('-', $request->whatsapp_account);
 
-        if ($whatsapp_account[2] != "Connected") return back()->with([
-            'type' => 'danger',
-            'message' => 'The WA account is not connected. Connect and try again'
-        ])->withInput();
+        // if ($whatsapp_account[2] != "Connected") return back()->with([
+        //     'type' => 'danger',
+        //     'message' => 'The WA account is not connected. Connect and try again'
+        // ])->withInput();
+
+
 
         // get contact list
         // $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
         $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->get();
+
+        // return $request->all();
 
         if ($request->message_timing == 'Immediately') {
             if ($request->template == 'template1') {
@@ -2060,12 +2080,14 @@ class DashboardController extends Controller
                 // WaQueues::insert($wa_queue);
 
                 foreach ($request->input('series_date') as $key => $value) {
+
                     \App\Models\SeriesWaCampaign::create([
                         'wa_campaign_id' => $waCaimpagn->id,
                         'user_id' => Auth::user()->id,
                         'date' => $request->series_date[$key],
                         'time' => $request->series_time[$key],
                         'message' => $request->template1_message[$key],
+                        'ContactCount' => sizeof($contacts)
                     ]);
                 }
             });

@@ -105,126 +105,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12" id="select-template">
-                                        <label>Message Template :</label>
-                                        <div class="col-md-12 mb-4">
-                                            <select class="bg-light w-100 py-2 rounded px-2 fs-6" id="template" name="template">
-                                                <option value="">Choose from template</option>
-                                                <option value="template1" {{ old('template') == 'template1' ? "selected" : "" }}>
-                                                    Template 1 (Text)
-                                                </option>
-                                                <option value="template2" {{ old('template') == 'template2' ? "selected" : "" }}>
-                                                    Template 2 (Text & File)
-                                                </option>
-                                                <option value="template3" {{ old('template') == 'template3' ? "selected" : "" }}>
-                                                    Template 3 (Header, Text, Footer, Link & Call)
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Template 1 -->
-                                    <div id="template1" style="display: none;">
-                                        <div class="col-lg-12">
-                                            <label>Message</label>
-                                            <div class="row">
-                                                <div class="col-md-12 mb-4">
-                                                    <textarea placeholder="Type in your message" name="template1_message" id="" cols="30" rows="4">{{ old('template1_message') }}</textarea>
-                                                    <p>
-                                                        <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="template2" style="display: none;">
-                                        <div class="col-lg-12">
-                                            <label>Message</label>
-                                            <div class="row">
-                                                <div class="col-md-12 mb-4">
-                                                    <textarea placeholder="Type in your message" name="template2_message" id="" cols="30" rows="4">{{ old('template2_message') }}</textarea>
-                                                    <p>
-                                                        <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            <p>
-                                                Upload Attachment :
-                                            </p>
-                                        </div>
-                                        <div class="logo-input w-full px-5 py-4 pb-5">
-                                            <p>
-                                                <b>
-                                                    Attach, images, videos, audios or files
-                                                </b>
-                                            </p>
-                                            <div class="logo-input2 border-in py-5 px-2">
-                                                    <div class="avatar">
-                                                        <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664984753/OjaFunnel-Images/Vectoor_rbkrfl.png" alt="">
-                                                    </div>
-                                                <div class="logo-file">
-                                                    <input type="file" accept="image" name="template2_file" id=""
-                                                        class="mt-4 w-100" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="template3" style="display: none;">
-                                        <div class="col-lg-12">
-                                            <label>Header</label>
-                                            <div class="row">
-                                                <div class="col-md-12 mb-4">
-                                                    <input type="text" placeholder="Enter message header" name="template3_header" class="input" value="{{ old('template3_header') }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 mb-4">
-                                            <label>Message</label>
-                                            <div class="row">
-                                                <div class="col-md-12 mb-4">
-                                                    <textarea placeholder="Type in your message" name="template3_message" id="" cols="30" rows="4">{{ old('template3_message') }}</textarea>
-                                                    <p>
-                                                        <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <label>Footer</label>
-                                            <div class="row">
-                                                <div class="col-md-12 mb-4">
-                                                    <input type="text" placeholder="Enter message footer" name="template3_footer" class="input" value="{{ old('template3_footer') }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <label>Link</label>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-4">
-                                                    <input type="text" placeholder="Enter link url" name="template3_link_url" class="input" value="{{ old('template3_link_url') }}">
-                                                </div>
-                                                <div class="col-md-6 mb-4">
-                                                    <input type="text" placeholder="Enter link CTA" name="template3_link_cta" class="input" value="{{ old('template3_link_cta') }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <label>Phone</label>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-4">
-                                                    <input type="text" placeholder="Enter phone number" name="template3_phone_number" class="input" value="{{ old('template3_phone_number') }}">
-                                                </div>
-                                                <div class="col-md-6 mb-4">
-                                                    <input type="text" placeholder="Enter phone CTA" name="template3_phone_cta" class="input" value="{{ old('template3_phone_cta') }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div class="col-12 mb-4">
                                         <div class="row">
@@ -245,7 +125,146 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    {{-- Immediately --}}
+                                    <div id="immediately" style="display: none">
+                                        <div class="col-lg-12" id="select-template">
+                                            <label>Message Template :</label>
+                                            <div class="col-md-12 mb-4">
+                                                <select class="bg-light w-100 py-2 rounded px-2 fs-6" id="template" name="template">
+                                                    <option value="">Choose from template</option>
+                                                    <option value="template1" {{ old('template') == 'template1' ? "selected" : "" }}>
+                                                        Template 1 (Text)
+                                                    </option>
+                                                    <option value="template2" {{ old('template') == 'template2' ? "selected" : "" }}>
+                                                        Template 2 (Text & File)
+                                                    </option>
+                                                    <option value="template3" {{ old('template') == 'template3' ? "selected" : "" }}>
+                                                        Template 3 (Header, Text, Footer, Link & Call)
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Template 1 -->
+                                        <div id="template1" style="display: none;">
+                                            <div class="col-lg-12">
+                                                <label>Message</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <textarea placeholder="Type in your message" name="template1_message" id="" cols="30" rows="4">{{ old('template1_message') }}</textarea>
+                                                        <p>
+                                                            <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="template2" style="display: none;">
+                                            <div class="col-lg-12">
+                                                <label>Message</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <textarea placeholder="Type in your message" name="template2_message" id="" cols="30" rows="4">{{ old('template2_message') }}</textarea>
+                                                        <p>
+                                                            <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                <p>
+                                                    Upload Attachment :
+                                                </p>
+                                            </div>
+                                            <div class="logo-input w-full px-5 py-4 pb-5">
+                                                <p>
+                                                    <b>
+                                                        Attach, images, videos, audios or files
+                                                    </b>
+                                                </p>
+                                                <div class="logo-input2 border-in py-5 px-2">
+                                                        <div class="avatar">
+                                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664984753/OjaFunnel-Images/Vectoor_rbkrfl.png" alt="">
+                                                        </div>
+                                                    <div class="logo-file">
+                                                        <input type="file" accept="image" name="template2_file" id=""
+                                                            class="mt-4 w-100" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="template3" style="display: none;">
+                                            <div class="col-lg-12">
+                                                <label>Header</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <input type="text" placeholder="Enter message header" name="template3_header" class="input" value="{{ old('template3_header') }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 mb-4">
+                                                <label>Message</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <textarea placeholder="Type in your message" name="template3_message" id="" cols="30" rows="4">{{ old('template3_message') }}</textarea>
+                                                        <p>
+                                                            <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label>Footer</label>
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <input type="text" placeholder="Enter message footer" name="template3_footer" class="input" value="{{ old('template3_footer') }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label>Link</label>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4">
+                                                        <input type="text" placeholder="Enter link url" name="template3_link_url" class="input" value="{{ old('template3_link_url') }}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <input type="text" placeholder="Enter link CTA" name="template3_link_cta" class="input" value="{{ old('template3_link_cta') }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <label>Phone</label>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4">
+                                                        <input type="text" placeholder="Enter phone number" name="template3_phone_number" class="input" value="{{ old('template3_phone_number') }}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <input type="text" placeholder="Enter phone CTA" name="template3_phone_cta" class="input" value="{{ old('template3_phone_cta') }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+
+                                    {{-- Schedule --}}
                                     <div class="col-12" id="schedule" style="display: none;">
+                                        <div class="col-lg-12">
+                                            <label>Message</label>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <textarea placeholder="Type in your message" name="template1_message" id="" cols="30" rows="4">{{ old('template1_message') }}</textarea>
+                                                    <p>
+                                                        <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-6 mt-4">
                                                 <label for="Time">Start Date</label>
@@ -313,8 +332,9 @@
                                         </div>
                                     </div>
 
+                                    {{-- Series --}}
                                     <div class="col-12" id="series" style="display: none;">
-                                        <fieldset class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
+                                        <fieldset id="series-container" class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
                                             <div class="col-md-6 mt-4">
                                                 <label for="Time">Date</label>
                                                 <input type="date" name="series_date[]" />
@@ -587,10 +607,49 @@
         }
     });
 
+
+
     const addseriesField = document.getElementById('add-series');
-    addseriesField.addEventListener('click',  function handleClick(e) {
-        const seriesFieldSet = document.getElementByClassName('series-row');
-        console.log(seriesFieldSet[0]);
+    // addseriesField.addEventListener('click',  function handleClick(e) {
+    //     console.log(e);
+    //     const seriesFieldSet = document.getElementByClassName('series-row');
+    //     console.log(seriesFieldSet[0]);
+    // });
+
+    // addseriesField.addEventListener('click', function() {
+    //     const form = document.getElementById('series-container');
+    //     document.getElementById('additional-rows').appendChild(form);
+    // });
+
+    $(document).ready(function() {
+        // Add a new row when "Add More" button is clicked
+        $('.add-series').click(function() {
+            var clonedRow = $('.series-row:first').clone();
+            // Clear the values in the cloned row
+            clonedRow.find('input, textarea').val('');
+            // Remove button for the cloned row
+            clonedRow.find('.remove-series').remove();
+            // Append the cloned row to the container
+            $('.additional-rows').append(clonedRow);
+            // Add the "Remove" button to the cloned row
+            $('.additional-rows .row:last').append('<button class="mb-2 remove-series" style="width: 25%;" type="button">Remove</button>');
+            // Show the cloned row
+            clonedRow.show();
+        });
+
+
+        // Remove the corresponding row when "Remove" button is clicked
+        $(document).on('click', '.remove-series', function() {
+            $(this).closest('.series-row').remove();
+        });
+
+        // Update character count when typing in any series message textarea
+        $(document).on('keyup', '.series-message', function() {
+            var characterCount = $(this).val().length;
+            var current = $(this).siblings('.messageCounter').find('.series-characters');
+            current.text(characterCount);
+            // Add your character count styling logic here if needed
+        });
     });
 
     function templateToggle() {
@@ -642,19 +701,19 @@
     function show1() {
         document.getElementById('schedule').style.display=  'none';
         document.getElementById('series').style.display = 'none';
-        document.getElementById('select-template').style.display = 'block';
+        document.getElementById('immediately').style.display = 'block';
     }
 
     function show2() {
         document.getElementById('schedule').style.display=  'block';
         document.getElementById('series').style.display = 'none';
-        document.getElementById('select-template').style.display = 'block';
+        document.getElementById('immediately').style.display = 'none';
     }
 
     function show3() {
         document.getElementById('schedule').style.display=  'none';
         document.getElementById('series').style.display = 'block';
-        document.getElementById('select-template').style.display = 'none';
+        document.getElementById('immediately').style.display = 'none';
     }
 </script>
 @endsection

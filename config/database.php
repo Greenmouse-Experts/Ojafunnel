@@ -2,6 +2,18 @@
 
 use Illuminate\Support\Str;
 
+// dd(
+//     [
+//         env('DB_HOST'),
+//         env('DB_PORT'),
+//         env('DATABASE_URL'),
+//         env('DB_DATABASE'),
+//         env('DB_USERNAME'),
+//         env('DB_PASSWORD'),
+//         env('DB_SOCKET', ''),
+//         env('DB_SSLMODE', 'prefer')
+//     ]);
+
 return [
 
     /*
