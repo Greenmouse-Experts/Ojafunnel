@@ -115,8 +115,8 @@
                                         }
                                     @endphp
 
-                                    <a href="https://wa.me/{{ urlencode($formattedPhoneNumber) }}" target="_blank" class="text-body fw-bold">
-                                        {{ $formattedPhoneNumber }} <i class="fab fa-whatsapp"></i>
+                                    <a href="https://wa.me/{{ urlencode($whatsapp->phone_number) }}" target="_blank" class="text-body fw-bold">
+                                        {{ $whatsapp->phone_number }} <i class="fab fa-whatsapp"></i>
                                     </a>
                                 </td>
                             </tr>
