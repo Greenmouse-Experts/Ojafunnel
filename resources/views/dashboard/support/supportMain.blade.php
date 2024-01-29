@@ -103,7 +103,21 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>
-                                    <a href="https://wa.me/{{$whatsapp->phone_number}}" target="_blank" class="text-body fw-bold">{{$whatsapp->phone_number}} <i class="fab fa-whatsapp"></i></a>
+                                    @php
+                                        $phoneNumber = $whatsapp->phone_number;
+
+                                        // Check if the phone number starts with "0"
+                                        if (Str::startsWith($phoneNumber, '0')) {
+                                            // Replace the first "0" with "+234"
+                                            $formattedPhoneNumber = '+234' . Str::substr($phoneNumber, 1);
+                                        } else {
+                                            $formattedPhoneNumber = $phoneNumber;
+                                        }
+                                    @endphp
+
+                                    <a href="https://wa.me/{{ urlencode($formattedPhoneNumber) }}" target="_blank" class="text-body fw-bold">
+                                        {{ $formattedPhoneNumber }} <i class="fab fa-whatsapp"></i>
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach
