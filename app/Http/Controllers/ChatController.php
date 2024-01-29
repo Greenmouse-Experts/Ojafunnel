@@ -9,6 +9,7 @@ use App\Models\Admin;
 use App\Models\Chat;
 use App\Models\Message;
 use App\Models\MessageUser;
+use App\Models\OjafunnelNotification;
 use App\Models\PersonalChatroom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -91,6 +92,12 @@ class ChatController extends Controller
 
             $sendMessage = Message::create($data);
 
+            OjafunnelNotification::create([
+                'admin_id' => $admin->id,
+                'title' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
+                'body' => $request->message
+            ]);
+
             $this->fcm('Message from '.Auth::user()->first_name.' '.Auth::user()->last_name.': '.$request->message, $admin);
 
             if($sendMessage){
@@ -107,6 +114,12 @@ class ChatController extends Controller
             ];
 
             $sendMessage = Message::create($data);
+
+            OjafunnelNotification::create([
+                'admin_id' => $admin->id,
+                'title' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
+                'body' => $request->message
+            ]);
 
             $this->fcm('Message from '.Auth::user()->first_name.' '.Auth::user()->last_name.': '.$request->message, $admin);
 

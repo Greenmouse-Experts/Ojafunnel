@@ -45,6 +45,7 @@ class HomePageController extends Controller
         $site_features = \App\Models\SiteFeature::where('features', $page_name)->where('status', 'disabled')->first();
         return $site_features;
     }
+    
     public function user_site_features_settings($page_name){
         $feature_access = explode(",", Auth::user()->feature_access);
         $user_site_features = \App\Models\SiteFeature::whereIN('id', $feature_access)->pluck('id')->toArray();

@@ -237,10 +237,9 @@ class CMSController extends Controller
                     'lesson_video' => [
                         'required',
                         File::types(['mp3', 'mp4'])
-                            ->max(100 * 1024),
+                            ->max(100 * 1024 * 1024), // 100 megabytes
                     ],
                 ]);
-
                 // return $request->lesson_video;
 
                 $file = request()->lesson_video->getClientOriginalName();
