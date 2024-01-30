@@ -1338,14 +1338,14 @@ class DashboardController extends Controller
         ])->withInput();
 
 
-        
+
 
         // get contact list
         // $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
         $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->get();
-        
+
         if ($request->message_timing == 'Immediately') {
-            
+
             if ($request->template == 'template1') {
                 // for data integrity and consistency
                 DB::transaction(function () use ($request, $whatsapp_account, $contacts) {
@@ -1583,7 +1583,7 @@ class DashboardController extends Controller
                         $waCaimpagn->frequency_cycle = $request->frequency_cycle;
 
                         // notify every newly added contact
-                        $wa_campaign->notify_every_newcontact = (isset($request->notify_every_newcontact)) ? true : false;
+                        $waCaimpagn->notify_every_newcontact = (isset($request->notify_every_newcontact)) ? true : false;
 
                         $waCaimpagn->save();
 
