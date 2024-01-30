@@ -1320,12 +1320,12 @@ class DashboardController extends Controller
             // 'template' => 'required',
         ]);
 
-        if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'Upgrade to enjoy more access'
-            ])->withInput();
-        }
+        // if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
+        //     return back()->with([
+        //         'type' => 'danger',
+        //         'message' => 'Upgrade to enjoy more access'
+        //     ])->withInput();
+        // }
 
         $this->template_validate($request);
         $request->validate(['message_timing' => 'required']);
@@ -1338,14 +1338,14 @@ class DashboardController extends Controller
         // ])->withInput();
 
 
+        
 
         // get contact list
         // $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
         $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->get();
-
-        // return $request->all();
-
+        
         if ($request->message_timing == 'Immediately') {
+            
             if ($request->template == 'template1') {
                 // for data integrity and consistency
                 DB::transaction(function () use ($request, $whatsapp_account, $contacts) {
@@ -1356,8 +1356,9 @@ class DashboardController extends Controller
                     $waCaimpagn->user_id = Auth::user()->id;
                     $waCaimpagn->contact_list_id = $request->contact_list;
                     $waCaimpagn->template = $request->template;
-                    $waCaimpagn->template1_message = $request->template1_message;
+                    $waCaimpagn->template1_message = $request->template1_msg; //template1_message
                     $waCaimpagn->message_timing = $request->message_timing;
+                    $waCaimpagn->notify_every_newcontact = false;
                     $waCaimpagn->save();
 
                     // build each wa queue data based on contacts
@@ -1391,6 +1392,7 @@ class DashboardController extends Controller
                             'wa_campaign_id' => $waCaimpagn->id
                         ])->afterCommit()->onQueue('waTemplate1')->delay($delay);
 
+
                         $delay += mt_rand(10, 20);
                     }
                 });
@@ -1412,6 +1414,8 @@ class DashboardController extends Controller
                     $waCaimpagn->contact_list_id = $request->contact_list;
                     $waCaimpagn->template = $request->template;
                     $waCaimpagn->template2_message = $request->template2_message;
+
+                    $waCaimpagn->notify_every_newcontact = false;
 
                     // filename
                     $file = $request->file('template2_file');
