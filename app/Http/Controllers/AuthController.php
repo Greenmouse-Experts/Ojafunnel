@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Aws\Sns\SnsClient;      //// Import this package
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
