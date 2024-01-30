@@ -233,27 +233,45 @@ class CMSController extends Controller
 
         if ($request->content_type == 'Video') {
             try {
+                // $this->validate($request, [
+                //     'lesson_video' => [
+                //         'required',
+                //         File::types(['mp3', 'mp4'])
+                //             ->max(100 * 1024),
+                //     ],
+                // ]);
+
                 $this->validate($request, [
                     'lesson_video' => [
                         'required',
-                        File::types(['mp3', 'mp4'])
-                            ->max(100 * 1024 * 1024), // 100 megabytes
+                        'file',
+                        'mimes:mp3,mp4',
+                        'max:100000', // 100 MB in kilobytes
                     ],
                 ]);
-                // return $request->lesson_video;
 
                 $file = request()->lesson_video->getClientOriginalName();
 
                 $filename = pathinfo($file, PATHINFO_FILENAME);
 
-                $response = cloudinary()->uploadFile(
-                    $request->file('lesson_video')->getRealPath(),
-                    [
-                        'folder' => config('app.name'),
-                        "public_id" => $filename,
-                        "use_filename" => TRUE
-                    ]
-                )->getSecurePath();
+                try {
+                    $response = cloudinary()->uploadFile(
+                        $request->file('lesson_video')->getRealPath(),
+                        [
+                            'folder' => config('app.name'),
+                            "public_id" => $filename,
+                            "use_filename" => TRUE
+                        ]
+                    )->getSecurePath();
+
+                    return $response;
+                } catch (\Exception $e) {
+                    // Handle the error appropriately
+                    return back()->with([
+                        'type' => 'danger',
+                        'message' => $e->getMessage()
+                    ]);
+                }
 
                 $lesson = Lesson::create([
                     'section_id' => $section->id,
