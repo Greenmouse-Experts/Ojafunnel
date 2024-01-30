@@ -16,6 +16,7 @@ use App\Console\Commands\SeriesSMS;
 use App\Console\Commands\SubscriptionReminder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -69,6 +70,11 @@ class Kernel extends ConsoleKernel
 
         // series
         $schedule->command('smsSeriesCampaign:run')->everyMinute()->withoutOverlapping();
+
+        // Log a message indicating the cron job is working
+        $schedule->call(function () {
+            Log::info('Cron job is working!');
+        })->everyMinute();
     }
 
     /**
