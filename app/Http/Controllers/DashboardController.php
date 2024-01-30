@@ -1320,22 +1320,22 @@ class DashboardController extends Controller
             // 'template' => 'required',
         ]);
 
-        // if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
-        //     return back()->with([
-        //         'type' => 'danger',
-        //         'message' => 'Upgrade to enjoy more access'
-        //     ])->withInput();
-        // }
+        if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Upgrade to enjoy more access'
+            ])->withInput();
+        }
 
         $this->template_validate($request);
         $request->validate(['message_timing' => 'required']);
 
         $whatsapp_account = explode('-', $request->whatsapp_account);
 
-        // if ($whatsapp_account[2] != "Connected") return back()->with([
-        //     'type' => 'danger',
-        //     'message' => 'The WA account is not connected. Connect and try again'
-        // ])->withInput();
+        if ($whatsapp_account[2] != "Connected") return back()->with([
+            'type' => 'danger',
+            'message' => 'The WA account is not connected. Connect and try again'
+        ])->withInput();
 
 
         
