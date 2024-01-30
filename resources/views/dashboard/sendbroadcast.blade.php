@@ -152,7 +152,7 @@
                                                 <label>Message</label>
                                                 <div class="row">
                                                     <div class="col-md-12 mb-4">
-                                                        <textarea placeholder="Type in your message" name="template1_message" id="" cols="30" rows="4">{{ old('template1_message') }}</textarea>
+                                                        <textarea placeholder="Type in your message" name="template1_msg" id="" cols="30" rows="4">{{ !is_array(old('template1_message')) ? old('template1_message') : '' }}</textarea>
                                                         <p>
                                                             <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
                                                         </p>
@@ -166,7 +166,7 @@
                                                 <label>Message</label>
                                                 <div class="row">
                                                     <div class="col-md-12 mb-4">
-                                                        <textarea placeholder="Type in your message" name="template2_message" id="" cols="30" rows="4">{{ old('template2_message') }}</textarea>
+                                                        <textarea placeholder="Type in your message" name="template2_message" id="" cols="30" rows="4">{{ @old('template2_message') }}</textarea>
                                                         <p>
                                                             <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
                                                         </p>
@@ -202,7 +202,7 @@
                                                 <label>Header</label>
                                                 <div class="row">
                                                     <div class="col-md-12 mb-4">
-                                                        <input type="text" placeholder="Enter message header" name="template3_header" class="input" value="{{ old('template3_header') }}">
+                                                        <input type="text" placeholder="Enter message header" name="template3_header" class="input" value="{{ @old('template3_header') }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -258,7 +258,7 @@
                                             <label>Message</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <textarea placeholder="Type in your message" name="template1_message" id="" cols="30" rows="4">{{ old('template1_message') }}</textarea>
+                                                    <textarea placeholder="Type in your message" name="template1_message" id="" cols="30" rows="4">{{ (!is_array(old('template1_message') )) ? old('template1_message') : ''}}</textarea>
                                                     <p>
                                                         <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
                                                     </p>
@@ -367,7 +367,7 @@
                                                     <label>Message</label>
                                                     <div class="row">
                                                         <div class="col-md-12 mb-4">
-                                                            <textarea placeholder="Type in your message" name="template1_message[]" id="" cols="30" rows="4">{{ old('template1_message') }}</textarea>
+                                                            <textarea placeholder="Type in your message" name="template1_message[]" id="" cols="30" rows="4">{{ (!is_array(old('template1_message') )) ? old('template1_message') : '' }}</textarea>
                                                             <p>
                                                                 <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
                                                             </p>

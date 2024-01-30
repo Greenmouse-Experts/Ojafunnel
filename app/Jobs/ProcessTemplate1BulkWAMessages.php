@@ -109,6 +109,8 @@ class ProcessTemplate1BulkWAMessages implements ShouldQueue
 
                         $data = $response->json();
 
+                        Log::info("sent");
+
                         if (array_key_exists('message', $data)) {
                             // invalid 
                             if (str_ends_with($data['message'], 'não existe.')) {
