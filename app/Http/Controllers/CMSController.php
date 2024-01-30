@@ -264,7 +264,6 @@ class CMSController extends Controller
                         ]
                     )->getSecurePath();
 
-                    return $response;
                 } catch (\Exception $e) {
                     // Handle the error appropriately
                     return back()->with([
