@@ -68,7 +68,7 @@ class SendSms extends Command
                     // recurring running
                     dispatch(new StoreCampaignJob($sms->id));
 
-                    $contact = \App\Models\SMSQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
+                    $contact = SMSQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
 
                     if ($sms->integration == "Multitexter")
                     {
@@ -127,7 +127,7 @@ class SendSms extends Command
                         $frequency_unit = $sms->frequency_unit;
                     }
 
-                    $contact = \App\Models\SmsQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
+                    $contact = SmsQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
                     // \Log::info($contact);
                     $schedule_date = $sms->nextScheduleDate($sms->schedule_time, $frequency_unit, $frequency_amount);
 
