@@ -1320,12 +1320,12 @@ class DashboardController extends Controller
             // 'template' => 'required',
         ]);
 
-        if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'Upgrade to enjoy more access'
-            ])->withInput();
-        }
+        // if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
+        //     return back()->with([
+        //         'type' => 'danger',
+        //         'message' => 'Upgrade to enjoy more access'
+        //     ])->withInput();
+        // }
 
         $this->template_validate($request);
         $request->validate(['message_timing' => 'required']);
@@ -1385,13 +1385,19 @@ class DashboardController extends Controller
                     // dispatch job and delay
                     foreach ($chunks as $key => $_chunk) {
                         // dispatch job
+
+                        // dd([
+                        //     'whatsapp_account' => $whatsapp_account[1],
+                        //     'full_jwt_session' => $whatsapp_account[3],
+                        //     'template1_message' => $request->template1_message,
+                        //     'wa_campaign_id' => $waCaimpagn->id
+                        // ]);
                         ProcessTemplate1BulkWAMessages::dispatch($_chunk, [
                             'whatsapp_account' => $whatsapp_account[1],
                             'full_jwt_session' => $whatsapp_account[3],
-                            'template1_message' => $request->template1_message,
+                            'template1_message' => $request->template1_msg,
                             'wa_campaign_id' => $waCaimpagn->id
                         ])->afterCommit()->onQueue('waTemplate1')->delay($delay);
-
 
                         $delay += mt_rand(10, 20);
                     }
