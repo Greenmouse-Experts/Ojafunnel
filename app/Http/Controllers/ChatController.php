@@ -84,6 +84,7 @@ class ChatController extends Controller
         if($messageUser->sender_id == Auth::user()->id)
         {
             $admin = Admin::where('id', $messageUser->reciever_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $adminProfile = Admin::where('id', $messageUser->reciever_id)->first();
 
             $data = [
                 'message_users_id' => $request->convo_id,
@@ -93,7 +94,7 @@ class ChatController extends Controller
             $sendMessage = Message::create($data);
 
             OjafunnelNotification::create([
-                'admin_id' => $admin->id,
+                'admin_id' => $adminProfile->id,
                 'title' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
                 'body' => $request->message
             ]);
@@ -107,6 +108,7 @@ class ChatController extends Controller
             }
         } else {
             $admin = Admin::where('id', $messageUser->sender_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $adminProfile = Admin::where('id', $messageUser->sender_id)->first();
 
             $data = [
                 'message_users_id' => $request->convo_id,
@@ -116,7 +118,7 @@ class ChatController extends Controller
             $sendMessage = Message::create($data);
 
             OjafunnelNotification::create([
-                'admin_id' => $admin->id,
+                'admin_id' => $adminProfile->id,
                 'title' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
                 'body' => $request->message
             ]);
