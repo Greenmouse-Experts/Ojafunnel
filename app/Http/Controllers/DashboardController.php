@@ -1563,7 +1563,55 @@ class DashboardController extends Controller
                 ])->withInput();
             }
 
+            
+
             if ($request->frequency_cycle == 'onetime') {
+                if ($request->template == null) {
+                    // for data integrity and consistency
+                    DB::transaction(function () use ($request, $whatsapp_account, $contacts) {
+                        // create new row on campaign table
+                        $waCaimpagn = new WaCampaigns();
+                        $waCaimpagn->name = $request->campaign_name;
+                        $waCaimpagn->whatsapp_account = $whatsapp_account[1];
+                        $waCaimpagn->user_id = Auth::user()->id;
+                        $waCaimpagn->contact_list_id = $request->contact_list;
+                        $waCaimpagn->template = 'template1';
+                        $waCaimpagn->template1_message = $request->template1_msg;
+                        $waCaimpagn->message_timing = $request->message_timing;
+                        // frequency
+                        $waCaimpagn->start_date = $request->start_date;
+                        $waCaimpagn->start_time = $request->start_time;
+                        $waCaimpagn->next_due_date = $request->start_date;
+                        $waCaimpagn->frequency_cycle = $request->frequency_cycle;
+
+                        // notify every newly added contact
+                        $waCaimpagn->notify_every_newcontact = false; //(isset($request->notify_every_newcontact)) ? true : false;
+
+                        $waCaimpagn->save();
+
+                        // build each wa queue data based on contacts
+                        $wa_queue = $contacts->map(function ($_contact) use ($waCaimpagn) {
+                            $timestamp = Carbon::now();
+
+                            return [
+                                'wa_campaign_id' => $waCaimpagn->id,
+                                'phone_number' => $_contact->phone,
+                                'status' => 'Scheduled',
+                                'created_at' => $timestamp,
+                                'updated_at' => $timestamp,
+                            ];
+                        })->toArray();
+
+                        // bulk insert
+                        WaQueues::insert($wa_queue);
+                    });
+
+                    return back()->with([
+                        'type' => 'success',
+                        'message' => 'The WA campaign has been scheduled successfully'
+                    ]);
+                }
+
                 if ($request->template == 'template1') {
                     // for data integrity and consistency
                     DB::transaction(function () use ($request, $whatsapp_account, $contacts) {
