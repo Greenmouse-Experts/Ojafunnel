@@ -8,6 +8,8 @@ use App\Console\Commands\RenewSSL;
 use App\Console\Commands\SendEmailCampaign;
 use App\Console\Commands\SendSms;
 use App\Console\Commands\SendWABulk;
+use App\Console\Commands\SendWASeries;
+use App\Console\Commands\SendWASeriesLater;
 use App\Console\Commands\WABirthday;
 use App\Console\Commands\SmsBirthday;
 use App\Console\Commands\Subscription;
@@ -29,6 +31,8 @@ class Kernel extends ConsoleKernel
         SendSms::class,
         SeriesSMS::class,
         SendWABulk::class,
+        SendWASeries::class,
+        SendWASeriesLater::class,
         SmsBirthday::class,
         Subscription::class,
         SubscriptionReminder::class,
@@ -70,6 +74,8 @@ class Kernel extends ConsoleKernel
 
         // series
         $schedule->command('smsSeriesCampaign:run')->everyMinute()->withoutOverlapping();
+        $schedule->command('sendwaseries:run')->everyMinute()->withoutOverlapping();
+        $schedule->command('sendwaserieslater:run')->everyMinute()->withoutOverlapping();
 
         // Log a message indicating the cron job is working
         // $schedule->call(function () {
