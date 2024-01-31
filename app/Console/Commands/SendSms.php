@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use App\Enums\SmsCampaignStatus;
 use App\Enums\SmsLogStatus;
 use App\Enums\SmsQueueStatus;
+use App\Models\Integration;
 use App\Models\SmsCampaign;
 use App\Models\SmsCampaignList;
 use App\Models\SmsLog;
@@ -63,7 +64,7 @@ class SendSms extends Command
         if ($onetime->count() > 0) {
             foreach ($onetime as $sms) {
                 if ($sms->schedule_time < Carbon::now()->toDateTimeString()) {
-                    // \Log::info($sms);
+                    Log::info($sms);
 
                     // recurring running
                     dispatch(new StoreCampaignJob($sms->id));
@@ -486,7 +487,7 @@ class SendSms extends Command
         } else {
             $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+            $integration = Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 
             $d = $contacts->toArray();
 
