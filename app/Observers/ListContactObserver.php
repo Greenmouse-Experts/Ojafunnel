@@ -18,12 +18,13 @@ class ListContactObserver
      */
     public function created(ListManagementContact $listManagementContact)
     {
+        /*
         // check if list_mgt_id is tied to any wa campaign;
         $campaign = WaCampaigns::where('contact_list_id', $listManagementContact->list_management_id)
             ->orderBy('id', 'DESC') // Filter the last campaign ran
             ->first();
 
-        if(!is_null($campaign)) {return;}
+        if(is_null($campaign)) {return;}
 
         // with the following detail @ hand; you can proceed to restart a fresh series campaign
         // for the newly added candidate.
@@ -75,7 +76,7 @@ class ListContactObserver
             
 
             $index++;
-        }
+        } */
     }
 
     /**
