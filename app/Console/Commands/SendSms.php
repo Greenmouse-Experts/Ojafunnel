@@ -64,7 +64,7 @@ class SendSms extends Command
         if ($onetime->count() > 0) {
             foreach ($onetime as $sms) {
                 if ($sms->schedule_time < Carbon::now()->toDateTimeString()) {
-                    Log::info($sms);
+                    // Log::info($sms);
 
                     // recurring running
                     dispatch(new StoreCampaignJob($sms->id));
