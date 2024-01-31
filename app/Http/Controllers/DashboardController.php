@@ -1563,7 +1563,7 @@ class DashboardController extends Controller
                 ])->withInput();
             }
 
-            
+
 
             if ($request->frequency_cycle == 'onetime') {
                 if ($request->template == null) {

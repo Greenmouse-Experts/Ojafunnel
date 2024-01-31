@@ -448,8 +448,6 @@ class IntegrationController extends Controller
     {
         $idFinder = Crypt::decrypt($id);
 
-        dd($idFinder);
-
         $integration = Integration::findorfail($idFinder);
 
         $allIntegration = Integration::where('user_id', Auth::user()->id)->where('status', 'Active')->get();

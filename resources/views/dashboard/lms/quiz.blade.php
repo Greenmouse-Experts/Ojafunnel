@@ -21,8 +21,8 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-     <!-- style Css -->
-     <link href="{{URL::asset('dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
+    <!-- style Css -->
+    <link href="{{URL::asset('dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{URL::asset('dash/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
@@ -31,11 +31,12 @@
 
 
 </head>
+
 <body>
     <input type="hidden" value="{{ csrf_token() }}" id="txt_token">
     <input type="hidden" value="{{ url('/') }}/" id="site_url">
 
-<section class="menu-area">
+    <section class="menu-area">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -70,80 +71,80 @@
         </div>
     </section>
 </body>
-    <!-- container-fluid -->
-    <div class="container">
-        <div class="row">
-            <div class="col-12 mt-4">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+<!-- container-fluid -->
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-4">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
 
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0" style="color:#333">
-                            <li class="breadcrumb-item"><a style="color:#555!important" href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
-                            <li class="breadcrumb-item active" style="color:#333"><a style="color:#007bff!important" href="{{route('create-quiz', [Auth::user()->username, $quiz_id])}}">Create Quiz</a></li>
-                            <!-- <li class="breadcrumb-item active" style="color:#333"><a style="color:#007bff!important" href="{{url('create-quiz/388338')}}">Create Quiz</a></li> -->
-                        </ol>
-                    </div>
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0" style="color:#333">
+                        <li class="breadcrumb-item"><a style="color:#555!important" href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
+                        <li class="breadcrumb-item active" style="color:#333"><a style="color:#007bff!important" href="{{route('create-quiz', [Auth::user()->username, $quiz_id])}}">Create Quiz</a></li>
+                        <!-- <li class="breadcrumb-item active" style="color:#333"><a style="color:#007bff!important" href="{{url('create-quiz/388338')}}">Create Quiz</a></li> -->
+                    </ol>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table align-middle mb-0 table-nowrap">
-                                <thead class="tread">
-                                    <tr class="font-500">
-                                        <th scope="col">Quiz Title</th>
-                                        <th scope="col">Session</th>
-                                        <th scope="col">Course</th>
-                                        <th scope="col">Students</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if(count($lmss) > 0)
-                                        @foreach($lmss as $lms)
-                                            <tr class="table-{{ $lms->id }}">
-                                                <td>
-                                                    <h5 class="font-size-14 text-truncate"><a href="{{ $quiz_id }}/create-quiz-{{ $lms->session }}" class="text-dark">{{ ucwords($lms->quiz_title) }} ({{ $lms->counts }} questions)</a></h5>
-                                                </td>
-                                                <td>
-                                                    <div class="font-size-14">{{ $lms->session }}</div>
-                                                </td>
-                                                <td class="font-size-14">
-                                                    {{ $lms->course_title }}
-                                                </td>
-                                                <td class="font-size-14">
-                                                    <div>{{ $lms->students }} students wrote the test</div>
-                                                    <div class="mt-2"><a href="{{ $quiz_id }}/view-scores/{{ $lms->session }}/" style="font-size:13px">view Students scores</a></div>
-                                                </td>
-                                                <td class="font-size-14">
-                                                    {{ $lms->created_at }}
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('create-quiz1', ['id' => $quiz_id, 'session' => 'enter-quiz-'.$lms->session, 'username' => Auth::user()->username]) }}" title="View Quiz" class="action-icon text-primary mr-2"> <i class="fa fa-eye font-size-18"></i></a>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0 table-nowrap">
+                            <thead class="tread">
+                                <tr class="font-500">
+                                    <th scope="col">Quiz Title</th>
+                                    <th scope="col">Session</th>
+                                    <th scope="col">Course</th>
+                                    <th scope="col">Students</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(count($lmss) > 0)
+                                @foreach($lmss as $lms)
+                                <tr class="table-{{ $lms->id }}">
+                                    <td>
+                                        <h5 class="font-size-14 text-truncate"><a href="{{ $quiz_id }}/create-quiz-{{ $lms->session }}" class="text-dark">{{ ucwords($lms->quiz_title) }} ({{ $lms->counts }} questions)</a></h5>
+                                    </td>
+                                    <td>
+                                        <div class="font-size-14">{{ $lms->session }}</div>
+                                    </td>
+                                    <td class="font-size-14">
+                                        {{ $lms->course_title }}
+                                    </td>
+                                    <td class="font-size-14">
+                                        <div>{{ $lms->students }} students wrote the test</div>
+                                        <div class="mt-2"><a href="{{ $quiz_id }}/view-scores/{{ $lms->session }}/" style="font-size:13px">view Students scores</a></div>
+                                    </td>
+                                    <td class="font-size-14">
+                                        {{ $lms->created_at }}
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('create-quiz1', ['id' => $quiz_id, 'session' => 'enter-quiz-'.$lms->session, 'username' => Auth::user()->username]) }}" title="View Quiz" class="action-icon text-primary mr-2"> <i class="fa fa-eye font-size-18"></i></a>
 
-                                                    <a href="javascript:;" title="Delete" class="action-icon text-danger deteleQuizSession" ids="{{ $lms->id }}"> <i class="fa fa-trash font-size-18"></i></a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td style="text-align:center" colspan="5">
-                                                No quiz session found here
-                                            </td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
+                                        <a href="javascript:;" title="Delete" class="action-icon text-danger deteleQuizSession" ids="{{ $lms->id }}"> <i class="fa fa-trash font-size-18"></i></a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td style="text-align:center" colspan="5">
+                                        No quiz session found here
+                                    </td>
+                                </tr>
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 <div class="modal fade" id="CartDelete" tabindex="-1" aria-labelledby="CartDeleteLabel" aria-hidden="true">
