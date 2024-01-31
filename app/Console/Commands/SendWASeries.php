@@ -44,7 +44,7 @@ class SendWASeries extends Command
 
 
         $series = SeriesWaCampaign::where('date', "$current_date")
-            // ->where('time', $current_time)
+            ->where('time', $current_time)
             ->get();
             
 
