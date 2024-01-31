@@ -16,6 +16,7 @@ class LmsQuiz extends Model
         'course_id',
         'session',
         'quiz_title',
+        'time_per_question',
         'description',
     ];
 }

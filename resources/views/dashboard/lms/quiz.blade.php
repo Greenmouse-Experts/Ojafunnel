@@ -96,6 +96,7 @@
                             <thead class="tread">
                                 <tr class="font-500">
                                     <th scope="col">Quiz Title</th>
+                                    <th scope="col">Time Per Question</th>
                                     <th scope="col">Session</th>
                                     <th scope="col">Course</th>
                                     <th scope="col">Students</th>
@@ -109,6 +110,9 @@
                                 <tr class="table-{{ $lms->id }}">
                                     <td>
                                         <h5 class="font-size-14 text-truncate"><a href="{{ $quiz_id }}/create-quiz-{{ $lms->session }}" class="text-dark">{{ ucwords($lms->quiz_title) }} ({{ $lms->counts }} questions)</a></h5>
+                                    </td>
+                                    <td>
+                                        {{$lms->time_per_question}} seconds
                                     </td>
                                     <td>
                                         <div class="font-size-14">{{ $lms->session }}</div>

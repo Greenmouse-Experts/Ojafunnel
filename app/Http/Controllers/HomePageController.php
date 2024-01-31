@@ -45,7 +45,7 @@ class HomePageController extends Controller
         $site_features = \App\Models\SiteFeature::where('features', $page_name)->where('status', 'disabled')->first();
         return $site_features;
     }
-    
+
     public function user_site_features_settings($page_name){
         $feature_access = explode(",", Auth::user()->feature_access);
         $user_site_features = \App\Models\SiteFeature::whereIN('id', $feature_access)->pluck('id')->toArray();
@@ -426,7 +426,7 @@ class HomePageController extends Controller
         $auth_details = \App\Models\Enrollment::whereRaw("md5(email) = '$user_email' AND md5(order_no) = '$user_order_no'")->first();
         $data['auths'] = 0;
 
-        if(!$auth_details){
+        if (!$auth_details) {
             return view('frontend.access_course', $data);
         }
 
@@ -435,16 +435,24 @@ class HomePageController extends Controller
 
         $questions = \App\Models\Quiz::where('course_id', $quiz->course_id)->get();
 
-        if(sizeof($questions) > 0) {
+        if (sizeof($questions) > 0) {
             $submittedIndex = $request->sindex ?? 0;
             $data['index'] = $submittedIndex;
             $data['raw'] = sizeof($questions);
 
-            $data['question'] = $questions[$submittedIndex];
+            // Check if the submitted index is valid
+            if ($submittedIndex >= 0 && $submittedIndex < sizeof($questions)) {
+                $data['question'] = $questions[$submittedIndex];
+            } else {
+                // Invalid index, redirect or handle appropriately
+                return redirect()->back();
+            }
         } else {
+            // No questions found, handle appropriately
             return redirect()->back();
         }
 
+        // Render the view
         return view('frontend.view_course_quiz', $data);
     }
 
@@ -453,39 +461,46 @@ class HomePageController extends Controller
         $user_email = session()->get('email');
         $user_order_no = session()->get('order_no');
         $auth_details = \App\Models\Enrollment::whereRaw("md5(email) = '$user_email' AND md5(order_no) = '$user_order_no'")->first();
-        $data['auths'] = 0;
 
-        if(!$auth_details){
-            return view('frontend.access_course', $data);
+        // Early return
+        if (!$auth_details) {
+            return view('frontend.access_course', ['auths' => 0]);
         }
 
         $quiz = \App\Models\LmsQuiz::where('id', $quizId)->first();
         $questions = \App\Models\Quiz::where('course_id', $quiz->course_id)->get();
-        $question = \App\Models\Quiz::where('session', $quiz->session)->first();
+        $attendedQuestion = \App\Models\Quiz::find($request->input('question_id'));
 
         $next = $request->next;
-        $question_id = $request->question_id;
         $answer = $request->ans;
 
-        $attendedQuestion = $question;
         $indexSize = sizeof($questions) - 1;
 
         $status = "Wrong";
 
-        if($attendedQuestion->ans == $answer)
-        {
+        if ($attendedQuestion->ans == $answer) {
             $status = "Pass";
         }
 
+        // Check if the user has already submitted an answer for this question
         $alreadySubmitted = \App\Models\QuizSubmission::where([
             'course_id' => $attendedQuestion->course_id,
             'quiz_id' => $quiz->id,
-            'course_id' => $quiz->course_id,
             'session' => $quiz->session,
             'question_id' => $attendedQuestion->id,
+            'candidate' => session()->get('email'),
+            'order_no' => $auth_details->order_no,
         ])->first();
 
-        if(!$alreadySubmitted) {
+        if ($alreadySubmitted) {
+            // Update the existing submission
+            $alreadySubmitted->update([
+                'submitted' => $answer,
+                'status' => $status,
+                'answer' => $attendedQuestion->ans,
+            ]);
+        } else {
+            // Create a new submission
             \App\Models\QuizSubmission::create([
                 'course_id' => $attendedQuestion->course_id,
                 'quiz_id' => $quiz->id,
@@ -495,19 +510,17 @@ class HomePageController extends Controller
                 'submitted' => $answer,
                 'answer' => $attendedQuestion->ans,
                 'status' => $status,
-                'candidate' => session()->get('email')
+                'candidate' => session()->get('email'),
+                'order_no' => $auth_details->order_no,
             ]);
         }
 
-        if($indexSize > $next) {
-            $next = $next + 1;
+        // Redirect to the next question or result page
+        if ($next < $indexSize) {
+            $next += 1;
             return redirect()->route('access_course_quiz', ['quizId' => $quizId, 'sessionId' => $sessionId, 'sindex' => $next]);
         } else {
-            // redirect to result page.
-            return redirect()->route('course_quiz_result', [
-                'quizId' => $quizId,
-                'sessionId' => $sessionId
-            ]);
+            return redirect()->route('course_quiz_result', ['quizId' => $quizId, 'sessionId' => $sessionId]);
         }
     }
 
@@ -526,6 +539,8 @@ class HomePageController extends Controller
         $questions = \App\Models\Quiz::where('course_id', $quiz->course_id)->get();
         $question = \App\Models\Quiz::where('session', $quiz->session)->first();
 
+        $totalScore = $questions->sum('score');
+
         $questions = \App\Models\QuizSubmission::where([
             'course_id' => $question->course_id,
             'quiz_id' => $quiz->id,
@@ -534,7 +549,28 @@ class HomePageController extends Controller
             ->get();
 
 
-        return view('frontend.quiz_result')->with(['questions' => $questions]);
+        $passCount = 0;
+        $passScore = 0;
+
+        foreach ($questions as $submission) {
+            // Assuming $submission->question has the associated Quiz model
+            $quizModel = $submission->question;
+
+            // Compare the submitted answer to the correct answer based on the score
+            if ($submission->submitted === $quizModel->ans) {
+                $passCount++;
+                // Add the score to the total for pass submissions
+                $passScore += $quizModel->score;
+            }
+        }
+
+        $wrongCount = count($questions) - $passCount;
+
+        return view('frontend.quiz_result')->with([
+            'questions' => $questions,
+            'passScore' => $passScore,
+            'totalScore' => $totalScore
+        ]);
     }
 
     public function access_auth_course(Request $request)

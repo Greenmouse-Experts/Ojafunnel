@@ -2528,6 +2528,7 @@ class DashboardController extends Controller
     public function add_quiz_session(Request $request)
     {
         $rules = [
+            'time_per_question' => 'nullable|integer|min:1',
             'quiz_title'      => 'required',
             'description'     => 'required',
         ];
@@ -2544,6 +2545,7 @@ class DashboardController extends Controller
             'session' => $request->quiz_session,
             'quiz_title' => $request->quiz_title,
             'description' => $request->description,
+            'time_per_question' => $request->time_per_question,
         ]);
 
         if($created){
@@ -2568,6 +2570,7 @@ class DashboardController extends Controller
             'option_a'      => 'required',
             'option_b'      => 'required',
             'ans'           => 'required',
+            'score'         => 'required'
         ];
         $validator = \Validator::make($request->all(), $rules)->stopOnFirstFailure(true);
         if($validator->fails()){
@@ -2584,6 +2587,7 @@ class DashboardController extends Controller
         $option_d = $request->option_d;
         $ans = $request->ans;
         $quiz_each_id = $request->quiz_each_id;
+        $score = $request->score;
 
         $submitted = false;
 
@@ -2610,6 +2614,7 @@ class DashboardController extends Controller
                         'option3'     => isset($option_c[$index]) ? $option_c[$index] : '',
                         'option4'     => isset($option_d[$index]) ? $option_d[$index] : '',
                         'ans'         => $ans[$index],
+                        'score'       => $score[$index],
                     ]);
                     if(!$quizz){
                         \App\Models\Quiz::create([
@@ -2622,6 +2627,7 @@ class DashboardController extends Controller
                             'option3'     => isset($option_c[$index]) ? $option_c[$index] : '',
                             'option4'     => isset($option_d[$index]) ? $option_d[$index] : '',
                             'ans'         => $ans[$index],
+                            'score'       => $score[$index],
                         ]);
                     }
                 }else{
@@ -2635,6 +2641,7 @@ class DashboardController extends Controller
                         'option3'     => isset($option_c[$index]) ? $option_c[$index] : '',
                         'option4'     => isset($option_d[$index]) ? $option_d[$index] : '',
                         'ans'         => $ans[$index],
+                        'score'       => $score[$index],
                     ]);
                 }
                 $submitted = true;

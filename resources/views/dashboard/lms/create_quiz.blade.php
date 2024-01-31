@@ -1,9 +1,9 @@
 <head>
     <meta charset="utf-8" />
-    <title>Oja Funnel | Shop</title>
+    <title>Oja Funnel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta content="title" name="Oja Funnel | shopFront" />
-    <meta content="description" name=" | Oja Funnel | Shop" />
+    <meta content="title" name="Oja Funnel" />
+    <meta content="description" name="Oja Funnel" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="" />
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.webui-popover.min.css') }}">
@@ -102,6 +102,10 @@
                                             <input type="hidden" name="course_id" class="course_id" value="{{ $quiz_id }}" />
                                         </div>
                                         <div class="col-lg-12 mb-2">
+                                            <label for="Name">Time Per Question (In Seconds)</label>
+                                            <input type="number" name="time_per_question" id="time_per_question" style="background:#F8F8FB" value="" required />
+                                        </div>
+                                        <div class="col-lg-12 mb-2">
                                             <label for="Name">Quiz Description/Instructions</label>
                                             <textarea name="description" id="" style="height:9em!important" placeholder="Enter your quiz description or instructions" required></textarea>
                                         </div>
@@ -169,6 +173,10 @@
                                                         <option value="d" {{ $selected4 }}>D</option>
                                                     </select>
                                                 </div>
+                                                <div class="col-12 mb-2">
+                                                    <label for="Name">Score</label>
+                                                    <input type="text" name="score[]" class="reset" placeholder="Enter score" value="{{ $quiz->score }}" required/>
+                                                </div>
                                             </div>
                                             <input type="hidden" name="quiz_each_id[]" class="quiz_each_id" value="{{ $quiz->id }}" />
 
@@ -206,6 +214,10 @@
                                                     <option value="c">C</option>
                                                     <option value="d">D</option>
                                                 </select>
+                                            </div>
+                                            <div class="col-12 mb-2">
+                                                <label for="Name">Score</label>
+                                                <input type="text" name="score[]" class="reset" placeholder="Enter score" required/>
                                             </div>
                                         </div>
 
@@ -311,6 +323,10 @@
                         <option value="c">C</option>
                         <option value="d">D</option>
                     </select>
+                </div>
+                <div class="col-12 mb-2">
+                    <label for="Name">Score</label>
+                    <input type="text" name="score[]" class="reset" placeholder="Enter score" required/>
                 </div>
             </div>
             `;

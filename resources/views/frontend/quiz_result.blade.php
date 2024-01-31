@@ -47,7 +47,7 @@
                             <div class="card-body">
                                 <div style="display: flex; flex-direction:row; justify-content:space-between">
                                     <h4 class="card-title mb-4">Quiz Result</h4>
-                                    {{-- <span>{{$index}} of {{$raw}}</span> --}}
+                                    <span style="font-weight: bolder;">Score: <span class="text-success">{{$passScore}}</span> / {{$totalScore}}</span>
                                 </div>
 
                                 <div class="table-responsive">
@@ -57,6 +57,7 @@
                                                 <th scope="col">Question</th>
                                                 <th scope="col">Submitted</th>
                                                 <th scope="col">Answer</th>
+                                                <th scope="col">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -64,6 +65,9 @@
                                             <tr>
                                                 <td>
                                                     {{$q->question->questions}}
+                                                </td>
+                                                <td>
+                                                    {{$q->submitted}}
                                                 </td>
                                                 <td>
                                                     {{$q->answer}}

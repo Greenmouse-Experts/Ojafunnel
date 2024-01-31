@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('lms_quizzes', function (Blueprint $table) {
-            $table->integer('time_per_question')->nullable();
+        Schema::table('quizzes', function (Blueprint $table) {
+            $table->integer('score')->default(0);
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('lms_quizzes', function (Blueprint $table) {
-            $table->dropColumn('quiz_time');
+        Schema::table('quizzes', function (Blueprint $table) {
+            $table->dropColumn('score');
         });
     }
 };
