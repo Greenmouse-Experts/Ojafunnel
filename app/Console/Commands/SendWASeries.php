@@ -48,6 +48,8 @@ class SendWASeries extends Command
             ->where('time', $current_time)
             ->get();
             
+        $count = 1;
+
 
         foreach($series as $element)
         {
@@ -55,6 +57,7 @@ class SendWASeries extends Command
             $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
+            
             // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts->chunk(10);
@@ -68,7 +71,7 @@ class SendWASeries extends Command
                     ProcessTemplate1BulkWAMessages::dispatch($_chunk, [
                         'whatsapp_account' => $whatsapp_number->phone_number,
                         'full_jwt_session' => $whatsapp_number->full_jwt_session,
-                        'template1_message' => $_campaign->template1_message,
+                        'template1_message' => $element->message, //$_campaign->template1_message,
                         'wa_campaign_id' => $_campaign->id,
                         'series_id' => $element->id
                     ])->onQueue('waTemplate1')->delay($delay);
