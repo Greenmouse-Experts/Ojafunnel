@@ -236,6 +236,7 @@ Route::prefix('{username}')->group(function () {
 
                     Route::get('/whatsapp-automation', [App\Http\Controllers\DashboardController::class, 'whatsapp_automation'])->name('user.whatsapp.automation');
                     Route::get('/whatsapp-automation/campaign/{campaign_id}/overview', [App\Http\Controllers\DashboardController::class, 'whatsapp_automation_campaign'])->name('user.whatsapp.automation.campaign');
+                    Route::post('/whatsapp-automation/edit/{series_id}', [App\Http\Controllers\DashboardController::class, 'editseriesmessage'])->name('user.whatsapp.series.edit');
                     Route::get('/whatsapp-automation/sendbroadcast', [App\Http\Controllers\DashboardController::class, 'sendbroadcast'])->name('user.send.broadcast');
 
                     Route::post('/whatsapp-automation/sendbroadcast/create', [App\Http\Controllers\DashboardController::class, 'sendbroadcastcreate'])->name('user.send.broadcast.create');

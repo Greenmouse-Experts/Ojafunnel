@@ -117,12 +117,17 @@
                                                 @if ($wa_campaign->template == 'template3')
                                                     {{ 'Template 3 (Header, Text, Footer, Link, & Call) '}}  
                                                 @endif 
+
+                                                @if(isset($wa_queue->message))
+                                                    <br ><small>{{$wa_queue->message}}</small>
+                                                @endif
+
                                             </th>
                                             <td>
                                                 <p class='text-bold-600'> {{$wa_campaign->whatsapp_account}} </p> 
                                             </td>
                                             <td>
-                                                {{ $wa_queue->phone_number }}
+                                                {{ $wa_queue->phone_number ?? $wa_campaign->whatsapp_account }}
                                             </td>
                                             <td>
                                                 @if ($wa_queue->status == 'Sent')
@@ -144,7 +149,45 @@
                                                 @if ($wa_queue->status == 'Disconnected')
                                                     <span class="badge bg-danger font-size-10">{{ $wa_queue->status }}</span>
                                                 @endif 
+
+                                                @if(isset($wa_queue->type))
+                                                    <br />
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editmessage">Edit Message</a>
+                                                @endif
                                             </td> 
+
+                                            @if(isset($wa_queue->type))
+                                            <div class="modal fade" id="editmessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <form method="POST" action="{{ route('user.whatsapp.series.edit', ['username' => Auth::user()->username, 'series_id' => $wa_queue->id]) }}">
+                                                                @csrf
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <h4 class="card-title mb-3">Edit Series Message</h4>
+                                                                        <div class="aller">
+                                                                        <textarea class="form-control" name="message">{{$wa_queue->message}}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 mt-2">
+                                                                        <input type="submit" value="Save Changes" class="btn btn-success" />
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                Close
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
                                         </tr>
                                     @empty
                                         No whatsapp automation Overview yet!
