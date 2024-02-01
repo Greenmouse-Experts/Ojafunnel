@@ -91,12 +91,16 @@ Route::prefix('user')->group(function () {
     Route::post('/crm/update/shop/{id}', [App\Http\Controllers\CMSController::class, 'update_shop'])->name('user.shop.update');
     Route::post('/crm/delete/shop/{id}', [App\Http\Controllers\CMSController::class, 'delete_shop'])->name('user.shop.delete');
 
+    Route::post('/crm/update/quiz/{quiz_id}', [App\Http\Controllers\CMSController::class, 'update_quiz'])->name('user.update.quiz');
+    Route::get('/crm/delete/question/{question_id}', [App\Http\Controllers\CMSController::class, 'delete_question'])->name('user.delete.question');
+
     // Email
     Route::post('/user/send/message/admin', [OjafunnelNotificationController::class, 'user_send_message'])->name('user.send.message');
     Route::post('/user/reply/email-support/{id}', [OjafunnelNotificationController::class, 'reply_email_support'])->name('user.replyEmailSupport');
     Route::get('/user/get/all/notifications', [OjafunnelNotificationController::class, 'get_all_notifications']);
     Route::get('/user/get/all/unread/notifications', [OjafunnelNotificationController::class, 'get_all_unread_notifications']);
     Route::get('/user/count/unread/notifications', [OjafunnelNotificationController::class, 'count_unread_notifications']);
+
 
     // SMS & WhatsApp Automation
     Route::post('/sms-automation/delete/{id}', [App\Http\Controllers\DashboardController::class, 'delete_sms_campaign'])->name('user.delete.sms.campaign');

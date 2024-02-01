@@ -69,10 +69,18 @@
                                                     </td>
                                                     <td>
                                                         <ul style="list-style: none">
+                                                            @if($question->option1)
                                                             <li class="mt-3"><input type="radio" name="ans" value="{{$question->option1}}" /> {{$question->option1}}</li>
+                                                            @endif
+                                                            @if($question->option2)
                                                             <li class="mt-3"><input type="radio" name="ans" value="{{$question->option2}}" /> {{$question->option2}}</li>
+                                                            @endif
+                                                            @if($question->option3)
                                                             <li class="mt-3"><input type="radio" name="ans" value="{{$question->option3}}" /> {{$question->option3}}</li>
+                                                            @endif
+                                                            @if($question->option4)
                                                             <li class="mt-3"><input type="radio" name="ans" value="{{$question->option4}}" /> {{$question->option4}}</li>
+                                                            @endif
                                                         </ul>
                                                     </td>
                                                 </tr>

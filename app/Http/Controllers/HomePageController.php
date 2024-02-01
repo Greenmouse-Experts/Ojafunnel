@@ -433,7 +433,7 @@ class HomePageController extends Controller
         $quiz = \App\Models\LmsQuiz::where('id', $quizId)->first();
         $data['quiz'] = $quiz;
 
-        $questions = \App\Models\Quiz::where('course_id', $quiz->course_id)->get();
+        $questions = \App\Models\Quiz::where(['course_id' => $quiz->course_id, 'session' => $quiz->session])->get();
 
         if (sizeof($questions) > 0) {
             $submittedIndex = $request->sindex ?? 0;
@@ -468,7 +468,7 @@ class HomePageController extends Controller
         }
 
         $quiz = \App\Models\LmsQuiz::where('id', $quizId)->first();
-        $questions = \App\Models\Quiz::where('course_id', $quiz->course_id)->get();
+        $questions = \App\Models\Quiz::where(['course_id' => $quiz->course_id, 'session' => $quiz->session])->get();
         $attendedQuestion = \App\Models\Quiz::find($request->input('question_id'));
 
         $next = $request->next;
@@ -488,7 +488,7 @@ class HomePageController extends Controller
             'quiz_id' => $quiz->id,
             'session' => $quiz->session,
             'question_id' => $attendedQuestion->id,
-            'candidate' => session()->get('email'),
+            'candidate' => $auth_details->email,
             'order_no' => $auth_details->order_no,
         ])->first();
 
@@ -510,7 +510,7 @@ class HomePageController extends Controller
                 'submitted' => $answer,
                 'answer' => $attendedQuestion->ans,
                 'status' => $status,
-                'candidate' => session()->get('email'),
+                'candidate' => $auth_details->email,
                 'order_no' => $auth_details->order_no,
             ]);
         }
@@ -536,7 +536,7 @@ class HomePageController extends Controller
         }
 
         $quiz = \App\Models\LmsQuiz::where('id', $quizId)->first();
-        $questions = \App\Models\Quiz::where('course_id', $quiz->course_id)->get();
+        $questions = \App\Models\Quiz::where(['course_id' => $quiz->course_id, 'session' => $quiz->session])->get();
         $question = \App\Models\Quiz::where('session', $quiz->session)->first();
 
         $totalScore = $questions->sum('score');

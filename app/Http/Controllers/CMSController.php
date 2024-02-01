@@ -8,7 +8,9 @@ use App\Models\Coupon;
 use App\Models\Course;
 use App\Models\Learn;
 use App\Models\Lesson;
+use App\Models\LmsQuiz;
 use App\Models\OjaPlanParameter;
+use App\Models\Quiz;
 use App\Models\Requirement;
 use App\Models\Section;
 use App\Models\Shop;
@@ -446,7 +448,6 @@ class CMSController extends Controller
         ]);
     }
 
-
     public function save_coupon($id, Request $request)
     {
         //Validate Request
@@ -860,5 +861,42 @@ class CMSController extends Controller
             'type' => 'success',
             'message' => 'Shop deleted successfully'
         ]);
+    }
+
+    public function update_quiz($quiz_id, Request $request)
+    {
+        $finder = decrypt($quiz_id);
+
+        $this->validate($request, [
+            'time_per_question' => 'nullable|integer|min:1',
+            'quiz_title'      => 'required',
+            'description'     => 'required',
+        ]);
+
+        $quiz = LmsQuiz::find($finder);
+
+        $quiz->update([
+            'time_per_question' => $request->time_per_question,
+            'quiz_title' => $request->quiz_title,
+            'description' => $request->description
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' =>  'Quiz updated successfully.'
+        ]);
+    }
+
+    public function delete_question($question_id)
+    {
+        $finder = decrypt($question_id);
+
+        Quiz::find($finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' =>  'Quiz deleted successfully.'
+        ]);
+
     }
 }

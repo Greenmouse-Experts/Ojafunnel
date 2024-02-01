@@ -6,6 +6,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailMarketingController;
+use App\Http\Controllers\ListManagementController;
 
 \DB::raw("SET GLOBAL super_read_only = 0");
 \DB::raw("SET GLOBAL read_only = 0");
@@ -14,7 +15,7 @@ Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamS
 Route::get('/text', [AuthController::class, 'text']);
 
 Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');
-    Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');
+Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');
 
 Route::post('store-cart-details-tmp', [App\Http\Controllers\HomePageController::class, 'store_cart_details_tmp']);
 Route::get('access-course', [App\Http\Controllers\HomePageController::class, 'access_course'])->name('access_course');

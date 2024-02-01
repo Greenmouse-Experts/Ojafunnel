@@ -54,6 +54,9 @@ use App\Models\Domain;
 use App\Mail\BroadcastEmail;
 use Illuminate\Routing\Redirector;
 use App\Http\Controllers\HomePageController;
+use App\Models\Quiz;
+use App\Models\QuizAnswer;
+use App\Models\QuizSubmission;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -2480,11 +2483,12 @@ class DashboardController extends Controller
     public function view_scores($username, Request $request)
     {
         $quiz_id = $request->id;
-        $lmss = \App\Models\QuizAnswer::where('course_id', $quiz_id)->where('sessions', $request->session)->get();
+        $lmss = \App\Models\QuizSubmission::where('course_id', $quiz_id)->where('session', $request->session)->get();
 
         foreach($lmss as $lms){
-            $users = User::where('id', "$lms->user_id")->first();
-            $lms->names = ucwords("$users->first_name $users->last_name");
+            // $users = User::where('id', "$lms->user_id")->first();
+            // $lms->names = ucwords("$users->first_name $users->last_name");
+            $lms->email = $lms->candidate;
             $lms->course_title = Course::where('id', $quiz_id)->value('title');
             $lms->counts = \App\Models\Quiz::where('session', $lms->session)->where('course_id', $quiz_id)->where('user_id', Auth::user()->id)->count();
             $lms->quiz_titles = \App\Models\LmsQuiz::where('course_id', $quiz_id)->where('session', $request->session)->where('user_id', Auth::user()->id)->value('quiz_title');
@@ -2684,8 +2688,32 @@ class DashboardController extends Controller
         }
         if($request->ids != ""){
             $lmss = \App\Models\LmsQuiz::where('id', $request->ids)->first();
-            \App\Models\Quiz::where('user_id', $lmss->user_id)->where('session', $lmss->session)->delete();
-            \App\Models\QuizAnswer::where('user_id', $lmss->user_id)->where('sessions', $lmss->session)->delete();
+            $quizs = Quiz::where('user_id', $lmss->user_id)->where('session', $lmss->session)->get();
+            $quizSubmissions = QuizSubmission::where('quiz_id', $lmss->id)->get();
+            if($quizSubmissions->count() > 0)
+            {
+                foreach($quizSubmissions as $quiz)
+                {
+                    $quiz->delete();
+                }
+            }
+            if($quizs->count() > 0)
+            {
+                foreach($quizs as $quiz)
+                {
+                    $quiz->delete();
+                }
+            }
+            $quizAnswers = QuizAnswer::where('user_id', $lmss->user_id)->where('sessions', $lmss->session)->get();
+            if($quizAnswers->count() > 0)
+            {
+                foreach($quizAnswers as $quiz)
+                {
+                    $quiz->delete();
+                }
+            }
+
+
             $deleted = $lmss->delete();
 
             if($deleted){
@@ -2701,8 +2729,6 @@ class DashboardController extends Controller
                 'data' => ''
             ],200);
         }
-
-
     }
 
 
