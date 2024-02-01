@@ -1222,15 +1222,19 @@ class DashboardController extends Controller
         $wa_campaign = WaCampaigns::find($request->campaign_id);
         $wa_queues = [];
 
+
         if($wa_campaign->message_timing == "Series") {
             $wa_queues = \App\Models\SeriesWaCampaign::where([
                 'wa_campaign_id' => $wa_campaign->id,
             ])->get()
-            ->map(function ($item, $k) {
+            ->map(function ($item, $k) use( $wa_campaign ) {
+                $item->type = 'Series';
                 if($item->DeliveredCount > 0) {
                     $item->status = "Sent";
+                    // $item->message = $wa_campaign[$wa_campaign->template . "_message"];
                 } else {
                     $item->status = "Waiting";
+                    // $item->message = $wa_campaign[$wa_campaign->template . "_message"];
                 }
 
                 return $item;
@@ -1238,11 +1242,43 @@ class DashboardController extends Controller
         } else {
             $wa_queues = WaQueues::where('wa_campaign_id', $request->campaign_id)->orderBy('updated_at', 'DESC')->get();
         }
+
+
         return view('dashboard.whatsappAutomationOverview', [
             'username' => $username,
             'wa_campaign' => $wa_campaign,
             'wa_queues' => $wa_queues,
         ]);
+    }
+
+    public function editseriesmessage($username, $series_id, Request $request)
+    {
+        $series = \App\Models\SeriesWaCampaign::find($series_id);
+
+        if(!$series)
+        {
+            return redirect()->back();
+        }
+
+        if($series->template == 'template1' ) {
+            $series->template1_message = $request->message;
+        }
+
+        if($series->template == 'template2' ) {
+            $series->template2_message = $request->message;
+        }
+
+        if($series->template == 'template3' ) {
+            $series->template3_message = $request->message;
+        }
+
+        $series->message = $request->message;
+
+        $series->save();
+
+        $request->session()->flash('success', 'Message updated successfully.');
+
+        return redirect()->back();
     }
 
     public function sendbroadcast($username)
@@ -1320,12 +1356,12 @@ class DashboardController extends Controller
             // 'template' => 'required',
         ]);
 
-        // if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
-        //     return back()->with([
-        //         'type' => 'danger',
-        //         'message' => 'Upgrade to enjoy more access'
-        //     ])->withInput();
-        // }
+        if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Upgrade to enjoy more access'
+            ])->withInput();
+        }
 
         $this->template_validate($request);
         $request->validate(['message_timing' => 'required']);
