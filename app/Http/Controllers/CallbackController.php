@@ -141,12 +141,10 @@ class CallbackController extends Controller
         // Opt - In Pages
         if($page->type == "optin_page")
         {
-            $list = ListManagement::where(['uid' => $page->id])->first();
-            // Check for existing List
-            if($list) {
+            if(isset($page->list_id)) {
                 ListManagementContact::create([
                     'uid' => Str::uuid(),
-                    'list_management_id' => $list->id,
+                    'list_management_id' => $page->list_id,
                     'name' => $request->name,
                     'email' => $request->email,
                     'address_1' => $request->address,
@@ -155,39 +153,57 @@ class CallbackController extends Controller
                     'state' => $request->state ?? "N/A",
                     'zip' => $request->zip ?? "N/A",
                     'phone' => $request->phone,
-                    'date_of_birth' => $request->date_of_birth ?? null,
-                    'anniv_date' => $request->anniv_date ?? null,
                     'subscribe' => true
                 ]);
             }
-            else {
-                // Save Data to List Mgt
-                $list = ListManagement::create([
-                    'uid' => $page->id,
-                    'user_id' => $page->user_id,
-                    'name' => $page->title,
-                    'display_name' => $page->title . " (Opt-In Page)",
-                    'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
-                    'description' => "Opt-In Page"
-                ]);
 
-                // Add Contact to List
-                ListManagementContact::create([
-                    'uid' => Str::uuid(),
-                    'list_management_id' => $list->id,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'address_1' => $request->address,
-                    'address_2' => $request->address_2 ?? "N/A",
-                    'country' => $request->country ?? "N/A",
-                    'state' => $request->state ?? "N/A",
-                    'zip' => $request->zip ?? "N/A",
-                    'phone' => $request->phone,
-                    // 'date_of_birth' => $request->date_of_birth ?? "N/A",
-                    // 'anniv_date' => $request->anniv_date ?? "N/A",
-                    'subscribe' => true
-                ]);
-            }
+            // $list = ListManagement::where(['uid' => $page->id])->first();
+            // // Check for existing List
+            // if($list) {
+            //     ListManagementContact::create([
+            //         'uid' => Str::uuid(),
+            //         'list_management_id' => $list->id,
+            //         'name' => $request->name,
+            //         'email' => $request->email,
+            //         'address_1' => $request->address,
+            //         'address_2' => $request->address_2 ?? "N/A",
+            //         'country' => $request->country ?? "N/A",
+            //         'state' => $request->state ?? "N/A",
+            //         'zip' => $request->zip ?? "N/A",
+            //         'phone' => $request->phone,
+            //         'date_of_birth' => $request->date_of_birth ?? null,
+            //         'anniv_date' => $request->anniv_date ?? null,
+            //         'subscribe' => true
+            //     ]);
+            // }
+            // else {
+            //     // Save Data to List Mgt
+            //     $list = ListManagement::create([
+            //         'uid' => $page->id,
+            //         'user_id' => $page->user_id,
+            //         'name' => $page->title,
+            //         'display_name' => $page->title . " (Opt-In Page)",
+            //         'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
+            //         'description' => "Opt-In Page"
+            //     ]);
+
+            //     // Add Contact to List
+            //     ListManagementContact::create([
+            //         'uid' => Str::uuid(),
+            //         'list_management_id' => $list->id,
+            //         'name' => $request->name,
+            //         'email' => $request->email,
+            //         'address_1' => $request->address,
+            //         'address_2' => $request->address_2 ?? "N/A",
+            //         'country' => $request->country ?? "N/A",
+            //         'state' => $request->state ?? "N/A",
+            //         'zip' => $request->zip ?? "N/A",
+            //         'phone' => $request->phone,
+            //         // 'date_of_birth' => $request->date_of_birth ?? "N/A",
+            //         // 'anniv_date' => $request->anniv_date ?? "N/A",
+            //         'subscribe' => true
+            //     ]);
+            // }
 
             // Notify Page Owner about entry made.
             $bundle = [
@@ -208,42 +224,58 @@ class CallbackController extends Controller
             $list = ListManagement::where(['uid' => $page->id])->first();
             $list_contact = null;
 
-            // Check for existing List
-            if($list) {
+            if(isset($page->list_id)) {
                 $list_contact = ListManagementContact::create([
                     'uid' => Str::uuid(),
-                    'list_management_id' => $list->id,
+                    'list_management_id' => $page->list_id,
                     'name' => $request->name,
                     'email' => $request->email,
+                    'address_1' => $request->address,
+                    'address_2' => $request->address_2 ?? "N/A",
+                    'country' => $request->country ?? "N/A",
+                    'state' => $request->state ?? "N/A",
+                    'zip' => $request->zip ?? "N/A",
                     'phone' => $request->phone,
                     'subscribe' => true
                 ]);
             }
-            else {
-                // Save Data to List Mgt
-                $list = ListManagement::create([
-                    'uid' => $page->id,
-                    'user_id' => $page->user_id,
-                    'name' => $page->title,
-                    'display_name' => $page->title . " (Upsell Page)",
-                    'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
-                    'description' => "Upsell Page"
-                ]);
 
-                // Add Contact to List
-                $list_contact = ListManagementContact::create([
-                    'uid' => Str::uuid(),
-                    'list_management_id' => $list->id,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'subscribe' => true
-                ]);
-            }
+            // Check for existing List
+            // if($list) {
+            //     $list_contact = ListManagementContact::create([
+            //         'uid' => Str::uuid(),
+            //         'list_management_id' => $list->id,
+            //         'name' => $request->name,
+            //         'email' => $request->email,
+            //         'phone' => $request->phone,
+            //         'subscribe' => true
+            //     ]);
+            // }
+            // else {
+            //     // Save Data to List Mgt
+            //     $list = ListManagement::create([
+            //         'uid' => $page->id,
+            //         'user_id' => $page->user_id,
+            //         'name' => $page->title,
+            //         'display_name' => $page->title . " (Upsell Page)",
+            //         'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
+            //         'description' => "Upsell Page"
+            //     ]);
+
+            //     // Add Contact to List
+            //     $list_contact = ListManagementContact::create([
+            //         'uid' => Str::uuid(),
+            //         'list_management_id' => $list->id,
+            //         'name' => $request->name,
+            //         'email' => $request->email,
+            //         'phone' => $request->phone,
+            //         'subscribe' => true
+            //     ]);
+            // }
 
             $submission = new \App\Models\UpsellPageSubmission;
             $submission->page_id = $upsell_page->page_id;
-            $submission->list_id = $list->id;
+            $submission->list_id = $page->list_id;
             $submission->list_contact_id = $list_contact->id;
             $submission->payment_link = 'N/A';
             $submission->save();
@@ -273,42 +305,58 @@ class CallbackController extends Controller
             $list = ListManagement::where(['uid' => $page->id])->first();
             $list_contact = null;
 
-            // Check for existing List
-            if($list) {
+            if(isset($page->list_id)) {
                 $list_contact = ListManagementContact::create([
                     'uid' => Str::uuid(),
-                    'list_management_id' => $list->id,
+                    'list_management_id' => $page->list_id,
                     'name' => $request->name,
                     'email' => $request->email,
+                    'address_1' => $request->address,
+                    'address_2' => $request->address_2 ?? "N/A",
+                    'country' => $request->country ?? "N/A",
+                    'state' => $request->state ?? "N/A",
+                    'zip' => $request->zip ?? "N/A",
                     'phone' => $request->phone,
                     'subscribe' => true
                 ]);
             }
-            else {
-                // Save Data to List Mgt
-                $list = ListManagement::create([
-                    'uid' => $page->id,
-                    'user_id' => $page->user_id,
-                    'name' => $page->title,
-                    'display_name' => $page->title . " (Dynamic Timer Product Page)",
-                    'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
-                    'description' => "Dynamic Timer Product Page"
-                ]);
 
-                // Add Contact to List
-                $list_contact = ListManagementContact::create([
-                    'uid' => Str::uuid(),
-                    'list_management_id' => $list->id,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'subscribe' => true
-                ]);
-            }
+            // Check for existing List
+            // if($list) {
+            //     $list_contact = ListManagementContact::create([
+            //         'uid' => Str::uuid(),
+            //         'list_management_id' => $list->id,
+            //         'name' => $request->name,
+            //         'email' => $request->email,
+            //         'phone' => $request->phone,
+            //         'subscribe' => true
+            //     ]);
+            // }
+            // else {
+            //     // Save Data to List Mgt
+            //     $list = ListManagement::create([
+            //         'uid' => $page->id,
+            //         'user_id' => $page->user_id,
+            //         'name' => $page->title,
+            //         'display_name' => $page->title . " (Dynamic Timer Product Page)",
+            //         'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
+            //         'description' => "Dynamic Timer Product Page"
+            //     ]);
+
+            //     // Add Contact to List
+            //     $list_contact = ListManagementContact::create([
+            //         'uid' => Str::uuid(),
+            //         'list_management_id' => $list->id,
+            //         'name' => $request->name,
+            //         'email' => $request->email,
+            //         'phone' => $request->phone,
+            //         'subscribe' => true
+            //     ]);
+            // }
 
             $submission = new \App\Models\DynamicTimerPageSubmission;
             $submission->page_id = $upsell_page->page_id;
-            $submission->list_id = $list->id;
+            $submission->list_id = $page->list_id;
             $submission->list_contact_id = $list_contact->id;
             $submission->payment_link = 'N/A';
             $submission->save();
@@ -339,38 +387,54 @@ class CallbackController extends Controller
             $list = ListManagement::where(['uid' => $page->id])->first();
             $list_contact = null;
 
-            // Check for existing List
-            if($list) {
+            if(isset($page->list_id)) {
                 $list_contact = ListManagementContact::create([
                     'uid' => Str::uuid(),
-                    'list_management_id' => $list->id,
+                    'list_management_id' => $page->list_id,
                     'name' => $request->name,
                     'email' => $request->email,
+                    'address_1' => $request->address,
+                    'address_2' => $request->address_2 ?? "N/A",
+                    'country' => $request->country ?? "N/A",
+                    'state' => $request->state ?? "N/A",
+                    'zip' => $request->zip ?? "N/A",
                     'phone' => $request->phone,
                     'subscribe' => true
                 ]);
             }
-            else {
-                // Save Data to List Mgt
-                $list = ListManagement::create([
-                    'uid' => $page->id,
-                    'user_id' => $page->user_id,
-                    'name' => $page->title,
-                    'display_name' => $page->title . " (Upsell with Bump Page)",
-                    'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
-                    'description' => "Upsell with Bump Page"
-                ]);
 
-                // Add Contact to List
-                $list_contact = ListManagementContact::create([
-                    'uid' => Str::uuid(),
-                    'list_management_id' => $list->id,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'subscribe' => true
-                ]);
-            }
+            // Check for existing List
+            // if($list) {
+            //     $list_contact = ListManagementContact::create([
+            //         'uid' => Str::uuid(),
+            //         'list_management_id' => $list->id,
+            //         'name' => $request->name,
+            //         'email' => $request->email,
+            //         'phone' => $request->phone,
+            //         'subscribe' => true
+            //     ]);
+            // }
+            // else {
+            //     // Save Data to List Mgt
+            //     $list = ListManagement::create([
+            //         'uid' => $page->id,
+            //         'user_id' => $page->user_id,
+            //         'name' => $page->title,
+            //         'display_name' => $page->title . " (Upsell with Bump Page)",
+            //         'slug' => Str::slug($page->slug).mt_rand(1000, 9999),
+            //         'description' => "Upsell with Bump Page"
+            //     ]);
+
+            //     // Add Contact to List
+            //     $list_contact = ListManagementContact::create([
+            //         'uid' => Str::uuid(),
+            //         'list_management_id' => $list->id,
+            //         'name' => $request->name,
+            //         'email' => $request->email,
+            //         'phone' => $request->phone,
+            //         'subscribe' => true
+            //     ]);
+            // }
 
             // Notify Page Owner about entry made.
             $bundle = [
@@ -391,7 +455,7 @@ class CallbackController extends Controller
             $submission = new \App\Models\BumpsellSubmission;
             $submission->page_id = $bumpsell_page->page_id;
             $submission->bumpsell_products_id = $bumpsell_page->id;
-            $submission->list_id = $list->id;
+            $submission->list_id = $page->list_id;
             $submission->list_contact_id = $list_contact->id;
             $submission->payment_link = 'N/A';
             $submission->amount = $total;

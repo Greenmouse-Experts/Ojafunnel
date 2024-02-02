@@ -476,6 +476,8 @@
                                         </div>
                                     </div>
 
+                                    
+
                                     <div class="col-lg-12">
                                         <label>Page Type</label>
                                         <div class="row">
@@ -488,6 +490,21 @@
                                                     <option value="upsell_bump_page">Order Bump/Upsell Page</option>
                                                     <option value="questionaire_page">Quiz Page</option>
                                                     <option value="dynamic_timer_page">Dynamic Timer for Product Page</option>
+                                                </select>
+                                                <small id="generatePage"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <label>List Management</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <select name="list_id" id="list_id" class="input" required style="height: 50px;">
+                                                    <option>--Select List --</option>
+                                                    @foreach (\App\Models\ListManagement::where(['user_id' => Auth::user()->id, 'status' => 1])->get() as $item)
+                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <small id="generatePage"></small>
                                             </div>
