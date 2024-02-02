@@ -635,22 +635,22 @@ class AdminController extends Controller
 
     public function chat_support()
     {
-        // $data = [];
+        $data = [];
 
-        // $users = User::get();
+        $users = User::get();
 
-        // foreach($users as $user)
-        // {
+        foreach($users as $user)
+        {
 
-        //     $id1 = MessageUser::where('sender_id', $user->id)->where('reciever_id', Auth::guard('admin')->user()->id)->pluck('id');
-        //     $id2 = MessageUser::where('reciever_id', Auth::guard('admin')->user()->id)->where('sender_id', $user->id)->pluck('id');
+            $id1 = MessageUser::where('sender_id', $user->id)->where('reciever_id', Auth::guard('admin')->user()->id)->pluck('id');
+            $id2 = MessageUser::where('reciever_id', Auth::guard('admin')->user()->id)->where('sender_id', $user->id)->pluck('id');
 
-        // $data['unread'] = $id1;
-        // }
+        $data['unread'] = $id1;
+        }
 
-        // $allMessages[] = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
+        $allMessages[] = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
 
-        // return $id2;
+        return $id2;
 
         return view('Admin.support.chatSupport');
     }

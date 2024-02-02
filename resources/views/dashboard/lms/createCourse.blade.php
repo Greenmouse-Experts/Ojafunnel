@@ -24,13 +24,20 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-11">
+                <div class="col-lg-9">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="font-60">Create Course</h4>
                             <p>
                                 Connect the tools that power your business with our courses
                             </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="{{route('user.create.course.start', Auth::user()->username)}}" class="btn" style="background-color: #714091;color:#fff;">New Course <i class="bi bi-arrow-right-circle"></i></a>
                         </div>
                     </div>
                 </div>
