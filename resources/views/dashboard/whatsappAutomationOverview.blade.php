@@ -161,12 +161,12 @@
 
                                                 @if(isset($wa_queue->type))
                                                     <br />
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editmessage">Edit Message</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editmessage_{{$wa_queue->id}}">Edit Message</a>
                                                 @endif
                                             </td> 
 
                                             @if(isset($wa_queue->type))
-                                            <div class="modal fade" id="editmessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+                                            <div class="modal fade" id="editmessage_{{$wa_queue->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-body">
