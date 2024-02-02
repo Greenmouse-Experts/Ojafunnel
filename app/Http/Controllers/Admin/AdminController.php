@@ -641,6 +641,11 @@ class AdminController extends Controller
         $userWithMessageUser = [];
 
         foreach ($users as $user) {
+            // Skip the authenticated user
+            if ($user->id == $authenticatedUserId) {
+                continue;
+            }
+
             $messageUser = MessageUser::where(function ($query) use ($user, $authenticatedUserId) {
                 $query->where('sender_id', $authenticatedUserId)
                     ->where('reciever_id', $user->id);
@@ -653,11 +658,21 @@ class AdminController extends Controller
                 ->where('read_at', null)
                 ->count();
 
+            $lastMessage = Message::where(['message_users_id' => $user->id, 'read_at' => null])
+                ->latest() // Order by the latest messages first
+                ->first();
+
             $userWithMessageUser[] = [
                 'user' => $user,
                 'unreadCount' => $unreadCount,
+                'lastMessage' => $lastMessage
             ];
         }
+
+        // Sort the array based on the timestamp of the latest message
+        $userWithMessageUser = collect($userWithMessageUser)->sortByDesc(function ($user) {
+            return optional($user['lastMessage'])->created_at;
+        })->values()->all();
 
         return view('Admin.support.chatSupport', [
             'userWithMessageUser' => $userWithMessageUser
@@ -734,6 +749,18 @@ class AdminController extends Controller
 
         $allMessages = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
 
+        foreach ($allMessages as $message) {
+            // Check if the message user ID is not equal to the authenticated user's ID or the sender's ID
+            if ($message->message_users_id !== Auth::guard('admin')->user()->id) {
+                // Check if the message has not been read
+                if ($message->read_at == null) {
+                    // Update the read_at field
+                    $message->update([
+                        'read_at' => now()
+                    ]);
+                }
+            }
+        }
         // foreach($allMessages as $row){
         //     if($id1[0]==$row['message_users_id']){$boxType = "p-2 recieverBox ml-auto";}else{$boxType = "float-left p-2 mb-2 senderBox";}
         //     echo "<div class='p-2 d-flex'>";

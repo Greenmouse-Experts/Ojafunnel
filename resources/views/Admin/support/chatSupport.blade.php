@@ -56,31 +56,37 @@
                                         <h5 class="font-size-14 mb-3">Chat</h5>
                                         <ul class="list-unstyled chat-list" data-simplebar style="max-height: 410px;">
                                             @foreach($userWithMessageUser as $user)
-                                            <li class="active">
-                                                <a href="javascript: void(0);" onclick="openChatBox({{$user['user']}},{{Auth::guard('admin')->user()->id}});">
-                                                    <div class="d-flex">
-                                                        <div class="flex-shrink-0 align-self-center me-3">
-                                                            <i class="mdi mdi-circle font-size-10" style="color: #723f93;"></i>
-                                                        </div>
-                                                        <div class="flex-shrink-0 align-self-center me-3">
-                                                            <span class="rounded-circle avatar-xs" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">
-                                                                {{ ucfirst(substr($user['user']['first_name'], 0, 1)) }} {{ ucfirst(substr($user['user']['last_name'], 0, 1)) }}
-                                                            </span>
-                                                        </div>
+                                                <li class="active">
+                                                    <a href="javascript: void(0);" onclick="openChatBox({{$user['user']}},{{Auth::guard('admin')->user()->id}});">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 align-self-center me-3">
+                                                                <i class="mdi mdi-circle font-size-10" style="color: #723f93;"></i>
+                                                            </div>
+                                                            <div class="flex-shrink-0 align-self-center me-3">
+                                                                <span class="rounded-circle avatar-xs" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">
+                                                                    {{ ucfirst(substr($user['user']['first_name'], 0, 1)) }} {{ ucfirst(substr($user['user']['last_name'], 0, 1)) }}
+                                                                </span>
+                                                            </div>
 
-                                                        <div class="flex-grow-1 overflow-hidden">
-                                                            <h5 id="{{ $user['user']['first_name'] }} {{ $user['user']['last_name'] }}" class="text-truncate font-size-14 mb-1">
-                                                                {{ $user['user']['first_name'] }} {{ $user['user']['last_name'] }}
-                                                            </h5>
-                                                            <p class="text-truncate text-success mb-0">Online</p>
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                <h5 id="{{ $user['user']['first_name'] }} {{ $user['user']['last_name'] }}" class="text-truncate font-size-14 mb-1">
+                                                                    {{ $user['user']['first_name'] }} {{ $user['user']['last_name'] }}
+                                                                </h5>
+                                                                @if($user['lastMessage'] && $user['lastMessage']['message'])
+                                                                    <p class="text-truncate mb-0" style="width: 150px;">{{ $user['lastMessage']['message']}}</p>
+                                                                @endif
+                                                            </div>
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                @if($user['lastMessage'] && $user['lastMessage']['created_at'])
+                                                                    <h5 class="font-size-12 mb-1">{{$user['lastMessage']['created_at']->diffForHumans()}}</h5>
+                                                                @endif
+                                                                @if($user['unreadCount'])
+                                                                    <p class="badge bg-success rounded-pill">{{ $user['unreadCount']}}</p>
+                                                                @endif
+                                                            </div>
                                                         </div>
-                                                        <div class="flex-grow-1 overflow-hidden">
-                                                            <h5 class="font-size-12 mb-1">yes</h5>
-                                                            <p class="badge bg-success rounded-pill">yes</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </li>
+                                                    </a>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>

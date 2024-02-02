@@ -59,25 +59,38 @@
                                     <div>
                                         <h5 class="font-size-14 mb-3">Chat</h5>
                                         <ul class="list-unstyled chat-list" data-simplebar style="max-height: 410px;">
-                                            @foreach(App\Models\Admin::get() as $admin)
-                                            <li class="active">
-                                                <a href="javascript: void(0);" onclick="openChatBox({{$admin}},{{Auth::user()->id}});">
-                                                    <div class="d-flex">
-                                                        <div class="flex-shrink-0 align-self-center me-3">
-                                                            <i class="mdi mdi-circle font-size-10" style="color: #723f93;"></i>
-                                                        </div>
-                                                        <div class="flex-shrink-0 align-self-center me-3">
-                                                            <span class="rounded-circle avatar-xs" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">{{ ucfirst(substr($admin->name, 0, 1)) }}</span>
-                                                        </div>
+                                            @foreach($userWithMessageUser as $admin)
+                                                <li class="active">
+                                                    <a href="javascript: void(0);" onclick="openChatBox({{$admin['admin']}},{{Auth::user()->id}});">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 align-self-center me-3">
+                                                                <i class="mdi mdi-circle font-size-10" style="color: #723f93;"></i>
+                                                            </div>
+                                                            <div class="flex-shrink-0 align-self-center me-3">
+                                                                <span class="rounded-circle avatar-xs" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">
+                                                                    {{ ucfirst(substr($admin['admin']['first_name'], 0, 1)) }} {{ ucfirst(substr($admin['admin']['last_name'], 0, 1)) }}
+                                                                </span>
+                                                            </div>
 
-                                                        <div class="flex-grow-1 overflow-hidden">
-                                                            <h5 id="{{ $admin->name }}" class="text-truncate font-size-14 mb-1">{{$admin->name}}</h5>
-                                                            <p class="text-truncate text-success mb-0">Online</p>
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                <h5 id="{{ $admin['admin']['first_name'] }} {{ $admin['admin']['last_name'] }}" class="text-truncate font-size-14 mb-1">
+                                                                    {{ $admin['admin']['first_name'] }} {{ $admin['admin']['last_name'] }}
+                                                                </h5>
+                                                                @if($admin['lastMessage'] && $admin['lastMessage']['message'])
+                                                                    <p class="text-truncate mb-0" style="width: 150px;">{{ $admin['lastMessage']['message']}}</p>
+                                                                @endif
+                                                            </div>
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                @if($admin['lastMessage'] && $admin['lastMessage']['created_at'])
+                                                                    <h5 class="font-size-12 mb-1">{{$admin['lastMessage']['created_at']->diffForHumans()}}</h5>
+                                                                @endif
+                                                                @if($admin['unreadCount'])
+                                                                    <p class="badge bg-success rounded-pill">{{ $admin['unreadCount']}}</p>
+                                                                @endif
+                                                            </div>
                                                         </div>
-                                                        <!-- <div class="font-size-11">05 min</div> -->
-                                                    </div>
-                                                </a>
-                                            </li>
+                                                    </a>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -160,7 +173,8 @@
         $('#active_card').show();
         var who = document.getElementById('chatWithName');
         var inputWhoId = document.getElementById('convo_id');
-        who.innerHTML = user.name;
+        who.innerHTML = user.first_name + ' ' + user.last_name;
+        var name = user.first_name + ' ' + user.last_name;
 
         //Check if the conversation exist in database. Create if not
         $.ajax({
@@ -172,7 +186,7 @@
             success: function(response) {
                 // console.log(response);
                 inputWhoId.value = response;
-                loadMessagesOfThisConvo(user.name);
+                loadMessagesOfThisConvo(name);
             },
             error: function(response) {
                 console.log(error);
@@ -242,7 +256,7 @@
                     scrollPaubos();
                     retrieveMessages();
                 }
-                
+
             });
         }
 
@@ -280,7 +294,7 @@
                         var messageContent = '<li class="last-chat mt-3"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">'+ name +'</div><p>' + response[i].message + '</p><p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>'+ formattedTime(response[i].created_at) +'</p></div></div>';
 
                         $('#messageThread').append(messageContent);
-                        
+
                         lastMessageId = response[i].id + 1;
 
                         // Update the read_at timestamp of the retrieved message

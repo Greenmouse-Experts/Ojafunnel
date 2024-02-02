@@ -93,11 +93,11 @@ class ChatController extends Controller
 
             $sendMessage = Message::create($data);
 
-            OjafunnelNotification::create([
-                'admin_id' => $adminProfile->id,
-                'title' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
-                'body' => $request->message
-            ]);
+            // OjafunnelNotification::create([
+            //     'admin_id' => $adminProfile->id,
+            //     'title' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
+            //     'body' => $request->message
+            // ]);
 
             $this->fcm('Message from '.Auth::user()->first_name.' '.Auth::user()->last_name.': '.$request->message, $admin);
 
@@ -117,11 +117,11 @@ class ChatController extends Controller
 
             $sendMessage = Message::create($data);
 
-            OjafunnelNotification::create([
-                'admin_id' => $adminProfile->id,
-                'title' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
-                'body' => $request->message
-            ]);
+            // OjafunnelNotification::create([
+            //     'admin_id' => $adminProfile->id,
+            //     'title' => Auth::user()->first_name . ' ' . Auth::user()->last_name,
+            //     'body' => $request->message
+            // ]);
 
             $this->fcm('Message from '.Auth::user()->first_name.' '.Auth::user()->last_name.': '.$request->message, $admin);
 
@@ -142,6 +142,19 @@ class ChatController extends Controller
         $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id',$reciever)->pluck('id');
 
         $allMessages = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
+
+        foreach ($allMessages as $message) {
+            // Check if the message user ID is not equal to the authenticated user's ID or the sender's ID
+            if ($message->message_users_id !== Auth::user()->id) {
+                // Check if the message has not been read
+                if ($message->read_at == null) {
+                    // Update the read_at field
+                    $message->update([
+                        'read_at' => now()
+                    ]);
+                }
+            }
+        }
 
         // foreach($allMessages as $row){
         //     if($id1[0]==$row['message_users_id']){$boxType = "p-2 recieverBox ml-auto";}else{$boxType = "float-left p-2 mb-2 senderBox";}

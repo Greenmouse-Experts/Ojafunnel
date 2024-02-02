@@ -54,9 +54,12 @@ use App\Models\Domain;
 use App\Mail\BroadcastEmail;
 use Illuminate\Routing\Redirector;
 use App\Http\Controllers\HomePageController;
+use App\Models\Message as ModelsMessage;
+use App\Models\MessageUser;
 use App\Models\Quiz;
 use App\Models\QuizAnswer;
 use App\Models\QuizSubmission;
+use AWS\CRT\HTTP\Message;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -3083,8 +3086,51 @@ class DashboardController extends Controller
 
     public function support_chat($username)
     {
+        $users = User::where('user_type', 'Administrator')->get();
+        $authenticatedUserId = Auth::user()->id;
+
+        $userWithMessageUser = [];
+
+        foreach ($users as $user) {
+            // Skip the authenticated user
+            if ($user->id == $authenticatedUserId) {
+                continue;
+            }
+
+            $messageUser = MessageUser::where(function ($query) use ($user, $authenticatedUserId) {
+                $query->where('sender_id', $authenticatedUserId)
+                    ->where('reciever_id', $user->id);
+            })->orWhere(function ($query) use ($user, $authenticatedUserId) {
+                $query->where('reciever_id', $authenticatedUserId)
+                    ->where('sender_id', $user->id);
+            })->first();
+
+            $unreadCount = ModelsMessage::where('message_users_id', $user->id)
+                ->where('read_at', null)
+                ->count();
+
+            $lastMessage = ModelsMessage::where(['message_users_id' => $user->id, 'read_at' => null])
+                ->latest() // Order by the latest messages first
+                ->first();
+
+            $userWithMessageUser[] = [
+                'admin' => $user,
+                'unreadCount' => $unreadCount,
+                'lastMessage' => $lastMessage
+            ];
+        }
+
+        // Sort the array based on the timestamp of the latest message
+        $userWithMessageUser = collect($userWithMessageUser)->sortByDesc(function ($user) {
+            return optional($user['lastMessage'])->created_at;
+        })->values()->all();
+
+
+        // return $userWithMessageUser;
+
         return view('dashboard.support.chat', [
             'username' => $username,
+            'userWithMessageUser' => $userWithMessageUser
         ]);
     }
 
