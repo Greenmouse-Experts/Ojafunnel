@@ -52,30 +52,34 @@
                             @if ($wa_campaign->message_timing == 'Immediately') 
                                 <p><b>Message Timing:</b> Immediate Campaign</p>
                             @else
-                                <p><b>Message Timing:</b> Scheduled Campaign</p>
-                                @if ($wa_campaign->frequency_cycle == 'onetime')
-                                    <p><b>Schedule Cycle:</b> {{ strtoupper($wa_campaign->frequency_cycle) }}</p>
-                                    <p><b>Start Date:</b> {{ date('d \of M Y', strtotime($wa_campaign->start_date)) }}</p>
-                                    <p><b>Start Time:</b> {{ date('H : i A', strtotime($wa_campaign->start_time)) }}</p>
-                                @elseif ($wa_campaign->frequency_cycle == 'daily' || $wa_campaign->frequency_cycle == 'weekly' || $wa_campaign->frequency_cycle == 'monthly' || $wa_campaign->frequency_cycle == 'yearly')
-                                    <p><b>Schedule Cycle:</b> {{ strtoupper($wa_campaign->frequency_cycle) }}</p>
-                                    <p><b>Start Date:</b> {{ date('d \of M Y', strtotime($wa_campaign->start_date)) }}</p>
-                                    <p><b>Start Time:</b> {{ date('H : i A', strtotime($wa_campaign->start_time)) }}</p>
-                                    <p>
-                                        <b>Next Campaign Date & Time:</b> {{ date('d \of M Y', strtotime($wa_campaign->start_date)) . 'at' . date('H : i A', strtotime($wa_campaign->start_time)) }}
-                                    </p>
-                                    <p><b>End Date:</b> {{ date('d \of M Y', strtotime($wa_campaign->end_date)) }}</p>
+                                <p><b>Message Timing:</b> Scheduled Campaign ({{$wa_campaign->message_timing}})</p>
+                                @if($wa_campaign->message_timing == 'Series')
+
                                 @else
-                                    <p><b>Schedule Cycle:</b> {{ strtoupper($wa_campaign->frequency_cycle) }}</p>
-                                    <p><b>Frequency amount:</b> {{ $wa_campaign->frequency_amount }}</p>
-                                    <p><b>Frequency unit:</b> {{ $wa_campaign->frequency_unit }}</p>
-                                    <p><b>Start Date:</b> {{ date('d \of M Y', strtotime($wa_campaign->start_date)) }}</p>
-                                    <p><b>Start Time:</b> {{ date('H : i A', strtotime($wa_campaign->start_time)) }}</p>
-                                    <p>
-                                        <b>Next Campaign Date & Time:</b> {{ date('d \of M Y', strtotime($wa_campaign->start_date)) . 'at' . date('H : i A', strtotime($wa_campaign->start_time)) }}
-                                    </p>
-                                    <p><b>End Date:</b> {{ date('d \of M Y', strtotime($wa_campaign->end_date)) }}</p>
-                                @endif 
+                                    @if ($wa_campaign->frequency_cycle == 'onetime')
+                                        <p><b>Schedule Cycle:</b> {{ strtoupper($wa_campaign->frequency_cycle) }}</p>
+                                        <p><b>Start Date:</b> {{ date('d \of M Y', strtotime($wa_campaign->start_date)) }}</p>
+                                        <p><b>Start Time:</b> {{ date('H : i A', strtotime($wa_campaign->start_time)) }}</p>
+                                    @elseif ($wa_campaign->frequency_cycle == 'daily' || $wa_campaign->frequency_cycle == 'weekly' || $wa_campaign->frequency_cycle == 'monthly' || $wa_campaign->frequency_cycle == 'yearly')
+                                        <p><b>Schedule Cycle:</b> {{ strtoupper($wa_campaign->frequency_cycle) }}</p>
+                                        <p><b>Start Date:</b> {{ date('d \of M Y', strtotime($wa_campaign->start_date)) }}</p>
+                                        <p><b>Start Time:</b> {{ date('H : i A', strtotime($wa_campaign->start_time)) }}</p>
+                                        <p>
+                                            <b>Next Campaign Date & Time:</b> {{ date('d \of M Y', strtotime($wa_campaign->start_date)) . 'at' . date('H : i A', strtotime($wa_campaign->start_time)) }}
+                                        </p>
+                                        <p><b>End Date:</b> {{ date('d \of M Y', strtotime($wa_campaign->end_date)) }}</p>
+                                    @else
+                                        <p><b>Schedule Cycle:</b> {{ strtoupper($wa_campaign->frequency_cycle) }}</p>
+                                        <p><b>Frequency amount:</b> {{ $wa_campaign->frequency_amount }}</p>
+                                        <p><b>Frequency unit:</b> {{ $wa_campaign->frequency_unit }}</p>
+                                        <p><b>Start Date:</b> {{ date('d \of M Y', strtotime($wa_campaign->start_date)) }}</p>
+                                        <p><b>Start Time:</b> {{ date('H : i A', strtotime($wa_campaign->start_time)) }}</p>
+                                        <p>
+                                            <b>Next Campaign Date & Time:</b> {{ date('d \of M Y', strtotime($wa_campaign->start_date)) . 'at' . date('H : i A', strtotime($wa_campaign->start_time)) }}
+                                        </p>
+                                        <p><b>End Date:</b> {{ date('d \of M Y', strtotime($wa_campaign->end_date)) }}</p>
+                                    @endif 
+                                @endif
                             @endif 
                         </div> 
                     </div>
@@ -104,7 +108,12 @@
                                     @forelse ($wa_queues as $wa_queue)
                                         <tr>
                                             <th scope="row">{{$wa_queue->id}}</th>
-                                            <th scope="row" class="text-capitalize">{{$wa_campaign->name}}</th>
+                                            <th scope="row" class="text-capitalize">{{$wa_campaign->name}}
+                                                @if($wa_campaign->message_timing == 'Series')
+                                                    <br/>
+                                                    <small>{{$wa_queue->date}} {{$wa_queue->time}}</small>
+                                                @endif
+                                            </th>
                                             <th scope="row" class="text-capitalize">
                                                 @if ($wa_campaign->template == 'template1')
                                                 {{ 'Template 1 (Text) '}}  
@@ -152,12 +161,12 @@
 
                                                 @if(isset($wa_queue->type))
                                                     <br />
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editmessage">Edit Message</a>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editmessage_{{$wa_queue->id}}">Edit Message</a>
                                                 @endif
                                             </td> 
 
                                             @if(isset($wa_queue->type))
-                                            <div class="modal fade" id="editmessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+                                            <div class="modal fade" id="editmessage_{{$wa_queue->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-body">
