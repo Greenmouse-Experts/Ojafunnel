@@ -66,14 +66,14 @@
                         <a class="navbar-brand" href="{{$shop->link}}">
                             {{$shop->name}}
                         </a>
-                        <form class="inline-form mt-3" style="width: 80%;">
+                        <!-- <form class="inline-form mt-3" style="width: 80%;">
                             <div class="input-group search-box mobile-search">
                                 <input type="text" name='search_string' class="form-control" placeholder="Search for courses">
                                 <div class="input-group-append">
                                     <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>
-                        </form>
+                        </form> -->
                         <div class="cart-box menu-icon-box" id="cart_items">
                         </div>
                         <div class="d-flex align-items-center justify-content-between">
