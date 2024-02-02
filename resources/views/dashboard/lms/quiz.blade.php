@@ -28,7 +28,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table align-middle mb-0 table-nowrap">
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr class="font-500">
                                             <th scope="col">Quiz Title</th>

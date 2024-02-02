@@ -2527,24 +2527,57 @@ class DashboardController extends Controller
 
     public function view_scores($username, Request $request)
     {
-        $quiz_id = $request->id;
-        $lmss = \App\Models\QuizSubmission::where('course_id', $quiz_id)->where('session', $request->session)->get();
+        $quiz = \App\Models\LmsQuiz::where('session', $request->session)->first();
+        $questions = \App\Models\Quiz::where(['course_id' => $quiz->course_id, 'session' => $quiz->session])->get();
+        $question = \App\Models\Quiz::where('session', $quiz->session)->first();
+        $totalScore = $questions->sum('score');
 
-        foreach($lmss as $lms){
-            // $users = User::where('id', "$lms->user_id")->first();
-            // $lms->names = ucwords("$users->first_name $users->last_name");
-            $lms->email = $lms->candidate;
-            $lms->course_title = Course::where('id', $quiz_id)->value('title');
-            $lms->counts = \App\Models\Quiz::where('session', $lms->session)->where('course_id', $quiz_id)->where('user_id', Auth::user()->id)->count();
-            $lms->quiz_titles = \App\Models\LmsQuiz::where('course_id', $quiz_id)->where('session', $request->session)->where('user_id', Auth::user()->id)->value('quiz_title');
+        $questions = \App\Models\QuizSubmission::where([
+            'course_id' => $question->course_id,
+            'quiz_id' => $quiz->id,
+            'session' => $quiz->session
+        ])->with(['course', 'quiz', 'question'])->get();
+
+        $studentResults = [];
+
+        foreach ($questions as $submission) {
+            $email = $submission->candidate;
+
+            if (!isset($studentResults[$email])) {
+                $studentResults[$email] = [
+                    'student' => $submission,
+                    'passScore' => 0,
+                    'totalScore' => $totalScore
+                ];
+            }
+
+            // Assuming $submission->question has the associated Quiz model
+            $quizModel = $submission->question;
+
+            // Compare the submitted answer to the correct answer based on the score
+            if ($submission->submitted === $quizModel->ans) {
+                // Add the score to the total for pass submissions
+                $studentResults[$email]['passScore'] += $quizModel->score;
+            }
         }
+
+        // $lmss = \App\Models\QuizSubmission::where('course_id', $quiz_id)->where('session', $request->session)->get();
+
+        // foreach($lmss as $lms){
+        //     // $users = User::where('id', "$lms->user_id")->first();
+        //     // $lms->names = ucwords("$users->first_name $users->last_name");
+        //     $lms->email = $lms->candidate;
+        //     $lms->course_title = Course::where('id', $quiz_id)->value('title');
+        //     $lms->counts = \App\Models\Quiz::where('session', $lms->session)->where('course_id', $quiz_id)->where('user_id', Auth::user()->id)->count();
+        //     $lms->quiz = \App\Models\Quiz::where('session', $lms->session)->where('course_id', $quiz_id)->where('user_id', Auth::user()->id)->get();
+        //     $lms->quiz_titles = \App\Models\LmsQuiz::where('course_id', $quiz_id)->where('session', $request->session)->where('user_id', Auth::user()->id)->value('quiz_title');
+        // }
 
         // return $lmss;
 
         return view('dashboard.lms.quiz_scores_page', [
             'username' => $username,
-            'lmss' => $lmss,
-            'quiz_id' => $quiz_id
+            'studentResults' => $studentResults
         ]);
     }
 
@@ -2566,10 +2599,7 @@ class DashboardController extends Controller
 
         return view('dashboard.lms.create_quiz', [
             'username' => $username,
-            'quiz_id' => $quiz_id,
-            'quiz_sessions' => $quiz_sessions,
-            'sessions' => $sessions,
-            'quizzes' => $quizzes,
+            'studentResults' => $studentResults
         ]);
     }
 

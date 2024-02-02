@@ -544,7 +544,8 @@ class HomePageController extends Controller
         $questions = \App\Models\QuizSubmission::where([
             'course_id' => $question->course_id,
             'quiz_id' => $quiz->id,
-            'session' => $quiz->session])
+            'session' => $quiz->session,
+            'candidate' => $auth_details->email])
             ->with(['course', 'quiz', 'question'])
             ->get();
 

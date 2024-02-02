@@ -15,7 +15,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0" style="color:#333">
                                 <li class="breadcrumb-item"><a style="color:#555!important" href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
-                                <li class="breadcrumb-item active" style="color:#333"><a style="color:#007bff!important" href="{{route('create-quiz', [Auth::user()->username, $quiz_id])}}">Create Quiz</a></li>
+                                <li class="breadcrumb-item active" style="color:#333"><a style="color:#007bff!important" href="{{route('user.create.course', Auth::user()->username)}}">View Courses</a></li>
                                 <!-- <li class="breadcrumb-item active" style="color:#333"><a style="color:#007bff!important" href="{{url('create-quiz/388338')}}">Create Quiz</a></li> -->
                             </ol>
                         </div>
@@ -28,55 +28,22 @@
                     <div class="card mt-4">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table align-middle mb-0 table-nowrap">
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr class="font-500">
                                             <th scope="col">Students</th>
-                                            <th scope="col">Quiz Title</th>
                                             <th scope="col">Scores</th>
                                             <th scope="col">Date</th>
-                                            <!-- <th scope="col">Action</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if(count($lmss) > 0)
-                                        @foreach($lmss as $lms)
-                                        @php
-                                        if($lms->scores <= 3) $status="<font style='color:red'>(Failed)</font>" ; else if($lms->scores <= 5) $status="<font style='color:orange'>(Passed)</font>" ; else if($lms->scores > 5) $status = "<font style='color:green'>(Excellent)</font>";
-
-                                                @endphp
-                                                <tr class="table-{{ $lms->id }}">
-                                                    <td class="font-size-14">
-                                                        {{ $lms->email }}
-                                                    </td>
-                                                    <td>
-                                                        <h5 class="font-size-14 text-truncate"><a class="text-dark">{{ ucwords($lms->quiz_titles) }} ({{ $lms->course_title }})</a></h5>
-                                                    </td>
-                                                    <td>
-                                                        @if($lms->status == "Pass")
-                                                        <span class="badge badge-pill badge-soft-success" style="background: greenyellow">{{$lms->status}}</span>
-                                                        @else
-                                                        <span class="badge badge-pill badge-soft-danger" style="background: red">{{$lms->status}}</span>
-                                                        @endif
-                                                    </td>
-
-                                                    <td class="font-size-14">
-                                                        {{ $lms->created_at }}
-                                                    </td>
-                                                    <!-- <td>
-                                                            <a href="{{ $quiz_id }}/create-quiz-{{ $lms->session }}" title="View Quiz" class="action-icon text-primary mr-2"> <i class="fa fa-eye font-size-18"></i></a>
-
-                                                            <a href="javascript:;" title="Delete" class="action-icon text-danger deteleQuizSession" ids="{{ $lms->id }}"> <i class="fa fa-trash font-size-18"></i></a>
-                                                        </td> -->
-                                                </tr>
-                                                @endforeach
-                                                @else
-                                                <tr>
-                                                    <td style="text-align:center" colspan="5">
-                                                        No students yet!
-                                                    </td>
-                                                </tr>
-                                                @endif
+                                        @foreach($studentResults as $email => $result)
+                                            <tr>
+                                                <td>{{ $email }}</td>
+                                                <td>{{ $result['passScore'] }} / {{ $result['totalScore'] }}</td>
+                                                <td>{{ $result['student']['created_at']->toDayDateTimeString() }}</td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
