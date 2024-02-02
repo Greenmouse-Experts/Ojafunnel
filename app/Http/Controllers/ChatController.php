@@ -145,7 +145,7 @@ class ChatController extends Controller
 
         foreach ($allMessages as $message) {
             // Check if the message user ID is not equal to the authenticated user's ID or the sender's ID
-            if ($message->message_users_id !== Auth::user()->id) {
+            if ($message->message_users_id <> Auth::user()->id) {
                 // Check if the message has not been read
                 if ($message->read_at == null) {
                     // Update the read_at field

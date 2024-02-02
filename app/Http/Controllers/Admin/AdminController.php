@@ -635,17 +635,12 @@ class AdminController extends Controller
 
     public function chat_support()
     {
-        $users = User::get();
+        $users = User::where('user_type', 'User')->get();
         $authenticatedUserId = Auth::guard('admin')->user()->id;
 
         $userWithMessageUser = [];
 
         foreach ($users as $user) {
-            // Skip the authenticated user
-            if ($user->id == $authenticatedUserId) {
-                continue;
-            }
-
             $messageUser = MessageUser::where(function ($query) use ($user, $authenticatedUserId) {
                 $query->where('sender_id', $authenticatedUserId)
                     ->where('reciever_id', $user->id);
@@ -654,8 +649,7 @@ class AdminController extends Controller
                     ->where('sender_id', $user->id);
             })->first();
 
-            $unreadCount = Message::where('message_users_id', $user->id)
-                ->where('read_at', null)
+            $unreadCount = Message::where(['message_users_id' => $user->id, 'read_at' => null])
                 ->count();
 
             $lastMessage = Message::where(['message_users_id' => $user->id, 'read_at' => null])
@@ -673,6 +667,8 @@ class AdminController extends Controller
         $userWithMessageUser = collect($userWithMessageUser)->sortByDesc(function ($user) {
             return optional($user['lastMessage'])->created_at;
         })->values()->all();
+
+        // return $userWithMessageUser;
 
         return view('Admin.support.chatSupport', [
             'userWithMessageUser' => $userWithMessageUser
@@ -751,7 +747,7 @@ class AdminController extends Controller
 
         foreach ($allMessages as $message) {
             // Check if the message user ID is not equal to the authenticated user's ID or the sender's ID
-            if ($message->message_users_id !== Auth::guard('admin')->user()->id) {
+            if ($message->message_users_id <> Auth::guard('admin')->user()->id) {
                 // Check if the message has not been read
                 if ($message->read_at == null) {
                     // Update the read_at field

@@ -3128,11 +3128,6 @@ class DashboardController extends Controller
         $userWithMessageUser = [];
 
         foreach ($users as $user) {
-            // Skip the authenticated user
-            if ($user->id == $authenticatedUserId) {
-                continue;
-            }
-
             $messageUser = MessageUser::where(function ($query) use ($user, $authenticatedUserId) {
                 $query->where('sender_id', $authenticatedUserId)
                     ->where('reciever_id', $user->id);
