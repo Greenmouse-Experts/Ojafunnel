@@ -262,7 +262,8 @@ class PageController extends Controller
                 'type' => $request->page_type,
                 'folder' => $request->file_folder,
                 'file_location' => config('app.url') . '/pageBuilder/' . $res[1] . '/' . $file,
-                'slug' => $res[1]
+                'slug' => $res[1],
+                'list_id' => $request->list_id
             ]);
 
             if($request->page_type != "blank") {
