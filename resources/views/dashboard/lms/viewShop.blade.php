@@ -66,14 +66,15 @@
                         <a class="navbar-brand" href="{{$shop->link}}">
                             {{$shop->name}}
                         </a>
-                        <!-- <form class="inline-form mt-3" style="width: 80%;">
+                        <form class="inline-form mt-3" method="get" action="{{route('user.shops.link', $shop->name)}}" style="width: 80%;">
+                            @csrf
                             <div class="input-group search-box mobile-search">
                                 <input type="text" name='search_string' class="form-control" placeholder="Search for courses">
                                 <div class="input-group-append">
                                     <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>
-                        </form> -->
+                        </form>
                         <div class="cart-box menu-icon-box" id="cart_items">
                         </div>
                         <div class="d-flex align-items-center justify-content-between">
@@ -155,14 +156,14 @@
                 <div class="home-banner-wrap">
                         <h2>Best place for learning</h2>
                         <p>Learn from any topic, choose from category</p>
-                        <form class="" action="" method="post">
+                        <!-- <form class="" action="" method="post">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search_string" placeholder="what do you want to learn?">
                                 <div class="input-group-append">
                                     <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>
-                        </form>
+                        </form> -->
                     </div>
                 </div>
             </div>
@@ -210,9 +211,9 @@
                     </div>
                 @endif
                 <div class="col-lg-12">
-                    <h2 class="course-carousel-title mb-4">All Courses Found {{\App\Models\Course::where('user_id', $shop->user_id)->where('approved', true)->get()->count()}}</h2>
+                    <h2 class="course-carousel-title mb-4">All Courses Found {{$courses->count()}}</h2>
                 </div>
-                @forelse(\App\Models\Course::where('user_id', $shop->user_id)->where('approved', true)->get() as $course)
+                @forelse($courses as $course)
                 <div class="col-lg-4 desktop-list" id="item-{{ $course->id }}">
                     <div class="course-box-wrap">
                         <a class="has-popover" href="

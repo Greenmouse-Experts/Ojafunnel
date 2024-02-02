@@ -28,7 +28,24 @@ class ShopFrontController extends Controller
     public function shopFront(Request $request)
     {
         $shop = Shop::latest()->where('name', $request->shopname)->first();
-        $courses = Course::latest()->where('user_id', $shop->user_id)->get();
+
+        if($request->has('search_string'))
+        {
+            $searchTerm = $request->search_string;
+
+            $courses = Course::latest()
+            ->where('user_id', $shop->user_id)->where('approved', true)
+            ->where(function ($query) use ($searchTerm) {
+                $query->where('title', 'like', "%$searchTerm%")
+                    ->orWhere('subtitle', 'like', "%$searchTerm%");
+            })
+            ->get();
+
+           
+        } else {
+            $courses = Course::latest()->where('user_id', $shop->user_id)->where('approved', true)->get();
+        }
+
 
         $isvalid = false;
 

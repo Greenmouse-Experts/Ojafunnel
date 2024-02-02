@@ -47,13 +47,15 @@
           </a>
         </div>
         <div class="col-4">
-          <form class="app-search d-none d-lg-block" method="get" action="">
-
-            <div class="position-relative">
-              <input type="text" class="form-control" name="query" placeholder="Search...">
-              <span class="bx bx-search-alt"></span>
-            </div>
-          </form>
+            <form class="app-search d-none d-lg-block" method="get" action="{{route('user.stores.link', $store->name)}}">
+                @csrf
+                <div class="input-group search-box mobile-search">
+                    <input type="text" name='search_string' class="form-control" placeholder="Search for courses">
+                    <div class="input-group-append">
+                        <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="col-3 d-flex align-items-center justify-content-between">
           <div>
