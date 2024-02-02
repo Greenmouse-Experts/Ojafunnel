@@ -1240,6 +1240,12 @@ class DashboardController extends Controller
                     // $item->message = $wa_campaign[$wa_campaign->template . "_message"];
                 }
 
+                $dt = date_create($item->date);
+                $item->date = date_format($dt, 'd M, Y');
+
+                $tt = date_create($item->time);
+                $item->time = date_format($tt, 'h:iA');
+
                 return $item;
             });
         } else {

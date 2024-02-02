@@ -231,10 +231,10 @@ class CallbackController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'address_1' => $request->address,
-                    'address_2' => $request->address_2 ?? "N/A",
-                    'country' => $request->country ?? "N/A",
-                    'state' => $request->state ?? "N/A",
-                    'zip' => $request->zip ?? "N/A",
+                    'address_2' => $request->address_2 ?? "",
+                    'country' => $request->country ?? "",
+                    'state' => $request->state ?? "",
+                    'zip' => $request->zip ?? "",
                     'phone' => $request->phone,
                     'subscribe' => true
                 ]);
@@ -312,10 +312,10 @@ class CallbackController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'address_1' => $request->address,
-                    'address_2' => $request->address_2 ?? "N/A",
-                    'country' => $request->country ?? "N/A",
-                    'state' => $request->state ?? "N/A",
-                    'zip' => $request->zip ?? "N/A",
+                    'address_2' => $request->address_2 ?? "",
+                    'country' => $request->country ?? "",
+                    'state' => $request->state ?? "",
+                    'zip' => $request->zip ?? "",
                     'phone' => $request->phone,
                     'subscribe' => true
                 ]);
@@ -394,10 +394,10 @@ class CallbackController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'address_1' => $request->address,
-                    'address_2' => $request->address_2 ?? "N/A",
-                    'country' => $request->country ?? "N/A",
-                    'state' => $request->state ?? "N/A",
-                    'zip' => $request->zip ?? "N/A",
+                    'address_2' => $request->address_2 ?? "",
+                    'country' => $request->country ?? "",
+                    'state' => $request->state ?? "",
+                    'zip' => $request->zip ?? "",
                     'phone' => $request->phone,
                     'subscribe' => true
                 ]);
