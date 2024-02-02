@@ -635,24 +635,33 @@ class AdminController extends Controller
 
     public function chat_support()
     {
-        $data = [];
-
         $users = User::get();
+        $authenticatedUserId = Auth::guard('admin')->user()->id;
 
-        foreach($users as $user)
-        {
+        $userWithMessageUser = [];
 
-            $id1 = MessageUser::where('sender_id', $user->id)->where('reciever_id', Auth::guard('admin')->user()->id)->pluck('id');
-            $id2 = MessageUser::where('reciever_id', Auth::guard('admin')->user()->id)->where('sender_id', $user->id)->pluck('id');
+        foreach ($users as $user) {
+            $messageUser = MessageUser::where(function ($query) use ($user, $authenticatedUserId) {
+                $query->where('sender_id', $authenticatedUserId)
+                    ->where('reciever_id', $user->id);
+            })->orWhere(function ($query) use ($user, $authenticatedUserId) {
+                $query->where('reciever_id', $authenticatedUserId)
+                    ->where('sender_id', $user->id);
+            })->first();
 
-        $data['unread'] = $id1;
+            $unreadCount = Message::where('message_users_id', $user->id)
+                ->where('read_at', null)
+                ->count();
+
+            $userWithMessageUser[] = [
+                'user' => $user,
+                'unreadCount' => $unreadCount,
+            ];
         }
 
-        $allMessages[] = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
-
-        return $id2;
-
-        return view('Admin.support.chatSupport');
+        return view('Admin.support.chatSupport', [
+            'userWithMessageUser' => $userWithMessageUser
+        ]);
     }
 
     public function check($recieverId)

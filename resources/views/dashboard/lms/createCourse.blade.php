@@ -91,7 +91,7 @@
                                                         <div class="mb-5">
                                                             <span>{{$course->title}}</span>
                                                         </div>
-                                                        <div>
+                                                        <div style="white-space: normal;">
                                                             {{$course->description}}
                                                         </div>
                                                         <div class="flex-end">
