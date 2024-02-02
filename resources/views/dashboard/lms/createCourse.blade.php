@@ -52,101 +52,101 @@
             </div>
             <section class="category-course-list-area">
                 <div class="row">
-                    <div class="col card account-head">
-                        <div class="card-body border-bottom mb-4">
-                            <div class="d-flex align-items-center">
-                                <div class="col-lg-4">
-                                    <input type="search" class="form-control" id="searchInput" placeholder="Search for Courses ...">
-                                </div>
-                                <div class="col-lg-6"></div>
-                                <div class="col-lg-2">
-                                    <div class="flex-shrink-0">
-                                        <a href="{{route('user.create.course.start', Auth::user()->username)}}" class="btn" style="background-color: #714091;color:#fff;">New Course <i class="bi bi-arrow-right-circle"></i></a>
-                                    </div>
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                        <thead class="tread">
+                                            <tr>
+                                                <th>Course Thumbnail</th>
+                                                <th>Course Details</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach(\App\Models\Course::where('user_id', Auth::user()->id)->get() as $course)
+                                            <tr>
+                                                <td>
+                                                    <div class="course-image">
+                                                        <a href="{{route('user.course.content', [Auth::user()->username, Crypt::encrypt($course->id)])}}">
+                                                            @if($course->image)
+                                                            <img src="{{$course->image}}" alt="{{$course->title}}" style="    max-width: 100%; width: 600px;">
+                                                            <!-- <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%"> -->
+                                                            @else
+                                                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%">
+                                                            @endif
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="course-details-container">
+                                                        <div class="mb-5">
+                                                            <span>{{$course->title}}</span>
+                                                        </div>
+                                                        <div>
+                                                            {{$course->description}}
+                                                        </div>
+                                                        <div class="flex-end">
+                                                            <span class="">
+                                                                <i class="fas fa-play-circle"></i>
+                                                                {{App\Models\Lesson::where('course_id', $course->id)->get()->count()}} Lessons
+                                                            </span>
+                                                            <!-- <span class="">
+                                                                <i class="far fa-clock"></i>
+                                                                3 hours
+                                                            </span> -->
+                                                            <span class="">
+                                                                <i class="fas fa-closed-captioning"></i>{{$course->language}}
+                                                            </span>
+                                                            <span class="">
+                                                                <i class="fas fa-play-circle"></i>@if($course->published == false)
+                                                                Unpublish
+                                                                @else
+                                                                Published
+                                                                @endif
+                                                            </span>
+                                                            <span class="">
+                                                                @if($course->approved == false)
+                                                                <i class="bi bi-eye-slash-fill"></i>
+                                                                <span class="badge badge-pill badge-soft-danger text-danger font-size-11">Inactive</span>
+                                                                @else
+                                                                <i class="bi bi-check2-all"></i>
+                                                                <span class="badge badge-pill badge-soft-success text-success font-size-11">Active</span>
+                                                                @endif
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="course-price-rating mb-3" style="display:grid;align-items:space-between;min-height:148px">
+                                                        <div>
+                                                            <a href="{{route('user.view.course.details', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View Course Details</u></strong></a>
+                                                        </div>
+
+                                                        <div>
+                                                            <a href="{{route('view-quiz', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View / Create Quiz</u></strong></a>
+                                                        </div>
+
+                                                        <div>
+                                                            <!-- <a href="{{route('view-scores', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View User Scores</u></strong></a> -->
+                                                        </div>
+
+                                                        <div class="course-price">
+                                                            <span class="current-price">{{number_format($course->price, 2)}}</span>
+                                                        </div>
+
+                                                        <div class="mt-5">
+                                                            <a href="javascript:;" ids="{{ $course->id }}" class="block deleteCourse" style="color:red"><strong>Delete Course</strong></a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </div>
-                        <div class="category-course-list">
-                            <ul>
-                                @foreach(\App\Models\Course::where('user_id', Auth::user()->id)->get() as $course)
-                                <li class="table-{{ $course->id }}">
-                                    <div class="course-box-2">
-                                        <div class="course-image">
-                                            <a href="{{route('user.course.content', [Auth::user()->username, Crypt::encrypt($course->id)])}}">
-                                                @if($course->image)
-                                                <img src="{{$course->image}}" alt="{{$course->title}}" style="    max-width: 100%; width: 600px;">
-                                                <!-- <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%"> -->
-                                                @else
-                                                <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1675677866/OjaFunnel-Images/learning_tkmdue.jpg" alt="" width="100%">
-                                                @endif
-                                            </a>
-                                        </div>
-                                        <div class="course-details">
-                                            <a href="" class="course-title">{{$course->title}}</a>
-                                            <a href="" class="course-instructor">
-                                                <span class="instructor-name">{{Auth::user()->name}}</span>
-                                            </a>
-                                            <div class="course-subtitle">
-                                               {{$course->description}}
-                                            </div>
-                                            <div class="course-meta">
-                                                <span class="">
-                                                    <i class="fas fa-play-circle"></i>
-                                                    {{App\Models\Lesson::where('course_id', $course->id)->get()->count()}} Lessons
-                                                </span>
-                                                <!-- <span class="">
-                                                    <i class="far fa-clock"></i>
-                                                    3 hours
-                                                </span> -->
-                                                <span class="">
-                                                    <i class="fas fa-closed-captioning"></i>{{$course->language}}
-                                                </span>
-                                                <span class="">
-                                                    <i class="fas fa-play-circle"></i>@if($course->published == false)
-                                                    Unpublish
-                                                    @else
-                                                    Published
-                                                    @endif
-                                                </span>
-                                                <span class="">
-                                                    @if($course->approved == false)
-                                                    <i class="bi bi-eye-slash-fill"></i>
-                                                    <span class="badge badge-pill badge-soft-danger text-danger font-size-11">Inactive</span>
-                                                    @else
-                                                    <i class="bi bi-check2-all"></i>
-                                                    <span class="badge badge-pill badge-soft-success text-success font-size-11">Active</span>
-                                                    @endif
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="float-end" style="float:right">
-
-                                        </div>
-                                        <div class="course-price-rating mb-3" style="display:grid;align-items:space-between;min-height:148px">
-                                            <div>
-                                                <a href="{{route('user.view.course.details', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View Course Details</u></strong></a>
-                                            </div>
-
-                                            <div>
-                                                <a href="{{route('view-quiz', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View / Create Quiz</u></strong></a>
-                                            </div>
-
-                                            <div>
-                                                <!-- <a href="{{route('view-scores', [Auth::user()->username, $course->id])}}" class="block"><strong><u>View User Scores</u></strong></a> -->
-                                            </div>
-
-                                            <div class="course-price">
-                                                <span class="current-price">{{number_format($course->price, 2)}}</span>
-                                            </div>
-
-                                            <div class="mt-5">
-                                                <a href="javascript:;" ids="{{ $course->id }}" class="block deleteCourse" style="color:red"><strong>Delete Course</strong></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                @endforeach
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -209,6 +209,16 @@
 @endif
 @endsection
 <style>
+    .course-details-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 10px; /* Adjust the padding as needed */
+    }
+
+    .course-details-container > * {
+        margin-bottom: 10px;
+    }
     .rating i {
         color: #dedfe0;
     }
