@@ -5,8 +5,10 @@ namespace App\Console\Commands;
 use App\Jobs\ProcessEmailCampaign;
 use App\Models\EmailCampaign;
 use App\Models\EmailKit;
+use App\Models\SeriesEmailCampaign as SeriesEmailCampaignModel;
 use App\Models\ListManagementContact;
 use App\Models\User;
+use App\Mail\EmailCampaignMail;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -40,9 +42,9 @@ class SeriesEmailCampaign extends Command
         $current_date = $date->format('Y-m-d');
         $current_time = $date->format('H:i');
 
-        $series_email_campaigns = SeriesEmailCampaign::where([
+        $series_email_campaigns = SeriesEmailCampaignModel::where([
             'date' => $current_date,
-            'time' => $current_time,
+            // 'time' => $current_time,
         ])->get();
 
         Log::info($series_email_campaigns);
@@ -56,12 +58,14 @@ class SeriesEmailCampaign extends Command
 
             // divide into 500 chunks and
             // delay each job between 10  - 20 sec in the queue
-            $chunks = $contacts->chunk(500);
+            // $chunks = $contacts->chunk(500);
+            $chunks = $contacts;
             $delay = mt_rand(10, 20);
 
             // dispatch job and delay
-            foreach ($chunks as $key => $_chunk) {
+            foreach ($chunks as $_chunk) {
                 // dispatch job
+                
                 // ProcessEmailCampaign::dispatch([
                 //     'smtp_host'    => $email_kit->host,
                 //     'smtp_port'    => $email_kit->port,
@@ -75,7 +79,8 @@ class SeriesEmailCampaign extends Command
                 //     'user' => $user
                 // ])->afterCommit()->onQueue('emailCampaign')->delay($delay);
 
-                // $mailable = new EmailCampaign($_campaign, $email_kit, $_chunk, $user);
+                // $mailable = new EmailCampaignMail($_campaign, $email_kit, $_chunk, $user);
+                // Mail::to($_chunk->email)->send($mailable);
 
                 // // send email
                 // @$mailer->to($_chunk->email)->send($mailable);
@@ -93,7 +98,7 @@ class SeriesEmailCampaign extends Command
                 ]);
 
                 // Send email using Laravel Mail facade
-                $trigger = new EmailCampaign($_campaign, $email_kit, $_chunk, $user);
+                $trigger = new EmailCampaignMail($_campaign, $email_kit, $_chunk, $user);
 
                 Mail::to($_chunk->email)->send($trigger);
 
