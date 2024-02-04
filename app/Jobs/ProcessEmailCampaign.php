@@ -80,6 +80,7 @@ class ProcessEmailCampaign implements ShouldQueue
                     'sent' => $_email_kit->first()->sent + 1
                 ]);
             });
+
         } catch (\Throwable $th) {
             Log::info($th);
 

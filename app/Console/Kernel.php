@@ -16,6 +16,7 @@ use App\Console\Commands\Subscription;
 use App\Console\Commands\EmailCartReminder;
 use App\Console\Commands\SeriesSMS;
 use App\Console\Commands\SubscriptionReminder;
+use App\Console\Commands\SeriesEmailCampaign;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
@@ -42,6 +43,7 @@ class Kernel extends ConsoleKernel
         SendEmailCampaign::class,
         GenerateSSL::class,
         RenewSSL::class,
+        SeriesEmailCampaign::class,
     ];
 
     /**
@@ -76,6 +78,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('smsSeriesCampaign:run')->everyMinute()->withoutOverlapping();
         $schedule->command('sendwaseries:run')->everyMinute()->withoutOverlapping();
         $schedule->command('sendwaserieslater:run')->everyMinute()->withoutOverlapping();
+        $schedule->command('seriesEmailcampaign:run')->everyMinute()->withoutOverlapping();
 
         // Log a message indicating the cron job is working
         $schedule->call(function () {

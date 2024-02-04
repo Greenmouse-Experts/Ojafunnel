@@ -42,12 +42,19 @@ class EmailCampaignMail extends Mailable
      */
     public function envelope()
     {
+        $subject = $this->email_campaign->subject;
+
+        if(!isset($this->email_campaign->subject)) {
+            $campaign = \App\Models\EmailCampaign::find($this->email_campaign->email_campaign_id);
+            $subject = $campaign->subject;
+        }
+
         return new Envelope(
             from: new Address($this->email_kit->from_email, $this->email_kit->from_name),
             replyTo: [
                 new Address($this->email_kit->replyto_email, $this->email_kit->replyto_name),
             ],
-            subject: $this->email_campaign->subject,
+            subject: $subject,
         );
     }
 
