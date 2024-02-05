@@ -354,12 +354,13 @@
         //document.getElementById('series_email_template_editor')
         document.getElementsByClassName(nextIdattr)[0].innerHTML = `<textarea class="mt-2" cols="80" id="${editorId}" name="series_email_template[]"></textarea>`;
 
-        let id = document.getElementById('series_email_template_id').value;
+        let id = e.value; //document.getElementById('series_email_template_id').value;
         let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id);
         let { data } = await axios.get(endpoint);
 
         if (data.success) {
-            console.log(editorId);
+            console.log('sending response to:', editorId);
+
             // Initialize CKEditor for the new textarea
             // destroyCKEditor(editorId);
             initializeCKEditor(editorId);
