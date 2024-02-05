@@ -668,7 +668,7 @@ class AdminController extends Controller
             return optional($user['lastMessage'])->created_at;
         })->values()->all();
 
-        // return $userWithMessageUser;
+        return $userWithMessageUser;
         if (request()->ajax()) {
             return response()->json([
                 'userWithMessageUser' => $userWithMessageUser,
