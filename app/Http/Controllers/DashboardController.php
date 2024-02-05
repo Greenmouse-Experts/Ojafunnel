@@ -3120,6 +3120,56 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function chatTheSupport()
+    {
+        $users = User::where('user_type', 'Administrator')->get();
+        $authenticatedUserId = Auth::user()->id;
+
+        $userWithMessageUser = [];
+
+        foreach ($users as $user) {
+            $messageUser = MessageUser::where(function ($query) use ($user, $authenticatedUserId) {
+                $query->where('sender_id', $authenticatedUserId)
+                    ->where('reciever_id', $user->id);
+            })->orWhere(function ($query) use ($user, $authenticatedUserId) {
+                $query->where('reciever_id', $authenticatedUserId)
+                    ->where('sender_id', $user->id);
+            })->first();
+
+            // Initialize variables
+            $unreadCount = 0;
+            $lastMessage = null;
+
+            if ($messageUser) {
+                $unreadCount = ModelsMessage::where(['message_users_id' => $messageUser->id, 'user_id' => $user->id])
+                    ->where('read_at', null)
+                    ->count();
+
+                $lastMessage = ModelsMessage::where(['message_users_id' => $user->id, 'user_id' => $user->id,  'read_at' => null])
+                    ->latest() // Order by the latest messages first
+                    ->first();
+            }
+
+            $userWithMessageUser[] = [
+                'admin' => $user,
+                'unreadCount' => $unreadCount,
+                'lastMessage' => $lastMessage
+            ];
+        }
+
+        // Sort the array based on the timestamp of the latest message
+        $userWithMessageUser = collect($userWithMessageUser)->sortByDesc(function ($user) {
+            return optional($user['lastMessage'])->created_at;
+        })->values()->all();
+
+
+        // return $userWithMessageUser;
+
+        return response()->json([
+            'userWithMessageUser' => $userWithMessageUser,
+        ]);
+    }
+
     public function support_chat($username)
     {
         $users = User::where('user_type', 'Administrator')->get();
@@ -3136,13 +3186,19 @@ class DashboardController extends Controller
                     ->where('sender_id', $user->id);
             })->first();
 
-            $unreadCount = ModelsMessage::where('message_users_id', $user->id)
-                ->where('read_at', null)
-                ->count();
+            // Initialize variables
+            $unreadCount = 0;
+            $lastMessage = null;
 
-            $lastMessage = ModelsMessage::where(['message_users_id' => $user->id, 'read_at' => null])
-                ->latest() // Order by the latest messages first
-                ->first();
+            if ($messageUser) {
+                $unreadCount = ModelsMessage::where(['message_users_id' => $messageUser->id, 'user_id' => $user->id])
+                    ->where('read_at', null)
+                    ->count();
+
+                $lastMessage = ModelsMessage::where(['message_users_id' => $user->id, 'user_id' => $user->id,  'read_at' => null])
+                    ->latest() // Order by the latest messages first
+                    ->first();
+            }
 
             $userWithMessageUser[] = [
                 'admin' => $user,

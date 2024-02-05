@@ -649,13 +649,22 @@ class AdminController extends Controller
                     ->where('sender_id', $user->id);
             })->first();
 
-            $unreadCount = Message::where(['message_users_id' => $user->id, 'read_at' => null])
-                ->count();
+            // Initialize variables
+            $unreadCount = 0;
+            $lastMessage = null;
 
-            $lastMessage = Message::where(['message_users_id' => $user->id, 'read_at' => null])
-                ->latest() // Order by the latest messages first
-                ->first();
+            // Check if $messageUser is not null before fetching unreadCount and lastMessage
+            if ($messageUser) {
+                $unreadCount = Message::where(['message_users_id' => $messageUser->id, 'user_id' => $user->id])
+                    ->where('read_at', null)
+                    ->count();
 
+                $lastMessage = Message::where(['message_users_id' => $messageUser->id, 'user_id' => $user->id,  'read_at' => null])
+                    ->latest() // Order by the latest messages first
+                    ->first();
+            }
+
+            // Add the user to the array
             $userWithMessageUser[] = [
                 'user' => $user,
                 'unreadCount' => $unreadCount,
@@ -668,7 +677,6 @@ class AdminController extends Controller
             return optional($user['lastMessage'])->created_at;
         })->values()->all();
 
-        return $userWithMessageUser;
         if (request()->ajax()) {
             return response()->json([
                 'userWithMessageUser' => $userWithMessageUser,
@@ -684,20 +692,22 @@ class AdminController extends Controller
     {
         $senderId = Auth::guard('admin')->user()->id;
 
+        $checkExist = MessageUser::where(function ($query) use ($recieverId, $senderId) {
+            $query->where('sender_id', $senderId)
+                ->where('reciever_id', $recieverId);
+        })->orWhere(function ($query) use ($recieverId, $senderId) {
+            $query->where('reciever_id', $senderId)
+                ->where('sender_id', $recieverId);
+        })->first();
+
         $data = [
             'sender_id' => $senderId,
             'reciever_id' => $recieverId
         ];
-        $data2 = [
-            'sender_id' => $recieverId,
-            'reciever_id' => $senderId
-        ];
-
-        $checkExist = MessageUser::where('sender_id', $senderId)->where('reciever_id', $recieverId)->first();
 
         if (!$checkExist) {
             $createConvo = MessageUser::create($data);
-            $createConvo2 = MessageUser::create($data2);
+            // $createConvo2 = MessageUser::create($data2);
             return $createConvo->id;
         } else {
             return $checkExist->id;
@@ -713,6 +723,7 @@ class AdminController extends Controller
 
             $sendMessage = Message::create([
                 'message_users_id' => $messageUser->id,
+                'user_id' => Auth::guard('admin')->user()->id,
                 'message' => $request->message
             ]);
 
@@ -728,6 +739,7 @@ class AdminController extends Controller
 
             $sendMessage = Message::create([
                 'message_users_id' => $messageUser->id,
+                'user_id' => Auth::guard('admin')->user()->id,
                 'message' => $request->message
             ]);
 
@@ -745,14 +757,19 @@ class AdminController extends Controller
     {
         $boxType = "";
 
-        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id', $reciever)->pluck('id');
-        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id', $reciever)->pluck('id');
+        $checkExist = MessageUser::where(function ($query) use ($reciever, $sender) {
+            $query->where('sender_id', $sender)
+                ->where('reciever_id', $reciever);
+        })->orWhere(function ($query) use ($reciever, $sender) {
+            $query->where('reciever_id', $sender)
+                ->where('sender_id', $reciever);
+        })->first();
 
-        $allMessages = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
+        $allMessages = Message::where('message_users_id', $checkExist->id)->orderBy('id', 'asc')->get();
 
         foreach ($allMessages as $message) {
             // Check if the message user ID is not equal to the authenticated user's ID or the sender's ID
-            if ($message->message_users_id <> Auth::guard('admin')->user()->id) {
+            if ($message->user_id <> Auth::guard('admin')->user()->id) {
                 // Check if the message has not been read
                 if ($message->read_at == null) {
                     // Update the read_at field
@@ -770,16 +787,34 @@ class AdminController extends Controller
         //     echo "</div>";
         //     echo "</div>";
         // }
-        $tobePassed = [$allMessages, $id1];
+        $tobePassed = [$allMessages, Auth::guard('admin')->user()->id];
         return $tobePassed;
     }
 
     public function retrieveNew($reciever, $sender, $lastId)
     {
-        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id', $reciever)->pluck('id');
-        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id', $reciever)->pluck('id');
+        $checkExist = MessageUser::where(function ($query) use ($reciever, $sender) {
+            $query->where('sender_id', $sender)
+                ->where('reciever_id', $reciever);
+        })->orWhere(function ($query) use ($reciever, $sender) {
+            $query->where('reciever_id', $sender)
+                ->where('sender_id', $reciever);
+        })->first();
 
-        $allMessages = Message::where('id', '>=', $lastId)->where('message_users_id', $id2)->orderBy('id', 'asc')->get();
+        $allMessages = Message::where('id', '>=', $lastId)->where(['message_users_id' => $checkExist->id, 'user_id' => $reciever])->orderBy('id', 'asc')->get();
+
+        foreach ($allMessages as $message) {
+            // Check if the message user ID is not equal to the authenticated user's ID or the sender's ID
+            if ($message->user_id <> Auth::guard('admin')->user()->id) {
+                // Check if the message has not been read
+                if ($message->read_at == null) {
+                    // Update the read_at field
+                    $message->update([
+                        'read_at' => now()
+                    ]);
+                }
+            }
+        }
 
         return $allMessages;
     }

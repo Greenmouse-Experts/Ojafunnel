@@ -1,6 +1,9 @@
 @extends('layouts.dashboard-frontend')
 
 @section('page-content')
+
+<!-- Add this to your HTML -->
+<input type="hidden" id="userID" value="{{ Auth::user()->id }}">
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -58,7 +61,7 @@
                                 <div class="tab-pane show active" id="chat">
                                     <div>
                                         <h5 class="font-size-14 mb-3">Chat</h5>
-                                        <ul class="list-unstyled chat-list" data-simplebar style="max-height: 410px;">
+                                        <ul id="chat-list-container" class="list-unstyled chat-list" data-simplebar style="max-height: 410px;">
                                             @foreach($userWithMessageUser as $admin)
                                                 <li class="active">
                                                     <a href="javascript: void(0);" onclick="openChatBox({{$admin['admin']}},{{Auth::user()->id}});">
@@ -151,8 +154,100 @@
     </div>
     <!-- End Page-content -->
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        updateChatList();
+        // // Refresh chat list every 5 seconds (adjust the interval as needed)
+        setInterval(updateChatList, 5000);
+
+        $(document).on('click', '.open-chat', function () {
+            try {
+                var admin = $(this).data('admin');
+                var userId = $(this).data('user');
+                openChatBox(admin, userId);
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+                // You can add additional error handling or simply ignore the error
+            }
+        });
+    });
+
+    function ucfirst(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function updateChatList() {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'GET',
+            url: '/support/chat',
+            success: function (data) {
+                // Access the admin user ID from the data attribute
+                var UserId = $('#userID').val();
+
+                console.log(data);
+
+                // Update userWithMessageUser data
+                userWithMessageUser = data.userWithMessageUser;
+
+                // Clear the existing chat list container
+                $('#chat-list-container').empty();
+
+                // Build the updated chat list HTML
+                var chatListHtml = '<ul class="list-unstyled chat-list" data-simplebar style="max-height: 410px;">';
+
+                $.each(userWithMessageUser, function (index, admin) {
+                    chatListHtml += '<li class="active">';
+                    chatListHtml += '<a href="javascript:void(0);" class="open-chat" data-admin=\'' + JSON.stringify(admin['admin']) + '\' data-user="' + UserId + '">';
+                    chatListHtml += '<div class="d-flex">';
+                    chatListHtml += '<div class="flex-shrink-0 align-self-center me-3">';
+                    chatListHtml += '<i class="mdi mdi-circle font-size-10" style="color: #723f93;"></i>';
+                    chatListHtml += '</div>';
+                    chatListHtml += '<div class="flex-shrink-0 align-self-center me-3">';
+                    chatListHtml += '<span class="rounded-circle avatar-xs" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">';
+                    chatListHtml += ucfirst(admin['admin']['first_name'].charAt(0)) + ' ' + ucfirst(admin['admin']['last_name'].charAt(0));
+                    chatListHtml += '</span>';
+                    chatListHtml += '</div>';
+                    chatListHtml += '<div class="flex-grow-1 overflow-hidden">';
+                    chatListHtml += '<h5 id="' + admin['admin']['first_name'] + ' ' + admin['admin']['last_name'] + '" class="text-truncate font-size-14 mb-1">';
+                    chatListHtml += admin['admin']['first_name'] + ' ' + admin['admin']['last_name'];
+                    chatListHtml += '</h5>';
+                    if (admin['lastMessage'] && admin['lastMessage']['message']) {
+                        chatListHtml += '<p class="text-truncate mb-0" style="width: 150px;">' + admin['lastMessage']['message'] + '</p>';
+                    }
+                    chatListHtml += '</div>';
+                    chatListHtml += '<div class="flex-grow-1 overflow-hidden">';
+                    if (admin['lastMessage'] && admin['lastMessage']['created_at']) {
+                        // Format the date using Moment.js
+                        var formattedDate = moment(admin['lastMessage']['created_at']).format('YYYY-MM-DD HH:mm:ss');
+                        chatListHtml += '<h5 class="font-size-12 mb-1">' + moment(formattedDate).fromNow() + '</h5>';
+                    }
+
+                    if (admin['unreadCount']) {
+                        chatListHtml += '<p class="badge bg-success rounded-pill">' + admin['unreadCount'] + '</p>';
+                    }
+                    chatListHtml += '</div>';
+                    chatListHtml += '</div>';
+                    chatListHtml += '</a>';
+                    chatListHtml += '</li>';
+                });
+
+                chatListHtml += '</ul>';
+
+                // Update the HTML content of the chat list container
+                $('#chat-list-container').html(chatListHtml);
+            },
+            error: function () {
+                // Handle errors if any
+                console.error('Error fetching updated chat data');
+            }
+        });
+    }
+
     var lastMessageId = 0;
     // auto scroll down chatbox when sending a message
     function scrollPaubos() {
@@ -221,7 +316,7 @@
                     $('#messageThread').html('');
                     // console.log(response);
                     while (response[0][i] != null) {
-                        var isUserMessage = response[1][0] == response[0][i].message_users_id;
+                        var isUserMessage = response[1] == response[0][i].user_id;
                         var isMessageRead = response[0][i].read_at !== null;
 
                         if (isUserMessage) {
@@ -288,25 +383,33 @@
                     //console.log(lastMessageId);
                     var shouldScroll = isScrolledToBottom(); // Check if user is already at the bottom before new messages are added
 
-                    while (i < response.length) {
+                    for (i = 0; i < response.length; i++) {
                     // Check if response[i] is defined
-                    if (response[i]) {
-                        var messageContent = '<li class="last-chat mt-3"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">'+ name +'</div><p>' + response[i].message + '</p><p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>'+ formattedTime(response[i].created_at) +'</p></div></div>';
+                        if (response[i]) {
+                            var isRead = response[i].read_at !== null;
+                            var messageContent = '<li class="last-chat mt-3">' +
+                                '<div class="conversation-list">' +
+                                '<div class="ctext-wrap">' +
+                                '<div class="conversation-name">'+ name +'</div>' +
+                                '<p>' + response[i].message + '</p>' +
+                                '<p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>' + formattedTime(response[i].created_at) + '</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</li>';
 
-                        $('#messageThread').append(messageContent);
+                            $('#messageThread').append(messageContent);
 
-                        lastMessageId = response[i].id + 1;
+                            lastMessageId = response[i].id + 1;
 
-                        // Update the read_at timestamp of the retrieved message
-                        markMessageAsRead(response[i].id);
+                            // Update the read_at timestamp of the retrieved message
+                            // markMessageAsRead(response[i].id);
 
-                        if (shouldScroll) {
-                            scrollPaubos(); // Scroll to the bottom only if the user was already at the bottom
+                            if (shouldScroll) {
+                                scrollPaubos(); // Scroll to the bottom only if the user was already at the bottom
+                            }
                         }
-                    }
 
-                    i++;
-                }
+                    }
 
                 },
                 complete: function() {

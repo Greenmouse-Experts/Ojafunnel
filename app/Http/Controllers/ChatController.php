@@ -57,22 +57,23 @@ class ChatController extends Controller
     {
         $senderId = Auth::user()->id;
 
+        $checkExist = MessageUser::where(function ($query) use ($recieverId, $senderId) {
+            $query->where('sender_id', $senderId)
+                ->where('reciever_id', $recieverId);
+        })->orWhere(function ($query) use ($recieverId, $senderId) {
+            $query->where('reciever_id', $senderId)
+                ->where('sender_id', $recieverId);
+        })->first();
+
         $data = [
             'sender_id' => $senderId,
             'reciever_id' => $recieverId
         ];
-        $data2 = [
-            'sender_id' => $recieverId,
-            'reciever_id' => $senderId
-        ];
 
-        $checkExist = MessageUser::where('sender_id', $senderId)->where('reciever_id', $recieverId)->first();
-
-        if(!$checkExist){
+        if (!$checkExist) {
             $createConvo = MessageUser::create($data);
-            $createConvo2 = MessageUser::create($data2);
             return $createConvo->id;
-        }else{
+        } else {
             return $checkExist->id;
         }
     }
@@ -88,6 +89,7 @@ class ChatController extends Controller
 
             $data = [
                 'message_users_id' => $request->convo_id,
+                'user_id' => Auth::user()->id,
                 'message' => $request->message
             ];
 
@@ -112,6 +114,7 @@ class ChatController extends Controller
 
             $data = [
                 'message_users_id' => $request->convo_id,
+                'user_id' => Auth::user()->id,
                 'message' => $request->message
             ];
 
@@ -138,14 +141,19 @@ class ChatController extends Controller
     {
         $boxType = "";
 
-        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id',$reciever)->pluck('id');
-        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id',$reciever)->pluck('id');
+        $checkExist = MessageUser::where(function ($query) use ($reciever, $sender) {
+            $query->where('sender_id', $sender)
+                ->where('reciever_id', $reciever);
+        })->orWhere(function ($query) use ($reciever, $sender) {
+            $query->where('reciever_id', $sender)
+                ->where('sender_id', $reciever);
+        })->first();
 
-        $allMessages = Message::where('message_users_id', $id1)->orWhere('message_users_id', $id2)->orderBy('id', 'asc')->get();
+        $allMessages = Message::where('message_users_id', $checkExist->id)->orderBy('id', 'asc')->get();
 
         foreach ($allMessages as $message) {
             // Check if the message user ID is not equal to the authenticated user's ID or the sender's ID
-            if ($message->message_users_id <> Auth::user()->id) {
+            if ($message->user_id <> Auth::user()->id) {
                 // Check if the message has not been read
                 if ($message->read_at == null) {
                     // Update the read_at field
@@ -164,7 +172,7 @@ class ChatController extends Controller
         //     echo "</div>";
         //     echo "</div>";
         // }
-        $tobePassed = [$allMessages, $id1];
+        $tobePassed = [$allMessages, Auth::user()->id];
         return $tobePassed;
     }
 
@@ -184,13 +192,29 @@ class ChatController extends Controller
 
     public function retrieveNew($reciever, $sender, $lastId)
     {
-        $id1 = MessageUser::where('sender_id', $sender)->where('reciever_id',$reciever)->pluck('id');
-        $id2 = MessageUser::where('reciever_id', $sender)->where('sender_id',$reciever)->pluck('id');
+        $checkExist = MessageUser::where(function ($query) use ($reciever, $sender) {
+            $query->where('sender_id', $sender)
+                ->where('reciever_id', $reciever);
+        })->orWhere(function ($query) use ($reciever, $sender) {
+            $query->where('reciever_id', $sender)
+                ->where('sender_id', $reciever);
+        })->first();
 
-        $allMessages = Message::where('id','>=',$lastId)->where('message_users_id', $id2)->orderBy('id', 'asc')->get();
+        $allMessages = Message::where('id', '>=', $lastId)->where(['message_users_id' => $checkExist->id, 'user_id' => $reciever])->orderBy('id', 'asc')->get();
+
+        foreach ($allMessages as $message) {
+            // Check if the message user ID is not equal to the authenticated user's ID or the sender's ID
+            if ($message->user_id <> Auth::user()->id) {
+                // Check if the message has not been read
+                if ($message->read_at == null) {
+                    // Update the read_at field
+                    $message->update([
+                        'read_at' => now()
+                    ]);
+                }
+            }
+        }
 
         return $allMessages;
     }
-
-
 }

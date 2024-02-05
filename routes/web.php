@@ -414,6 +414,7 @@ Route::prefix('{username}')->group(function () {
     );
 });
 
+Route::get('/support/chat', [App\Http\Controllers\DashboardController::class, 'chatTheSupport']);
 
 // Save FCM Token
 Route::post('/save-token', [DashboardController::class, 'saveToken'])->name('save.token');

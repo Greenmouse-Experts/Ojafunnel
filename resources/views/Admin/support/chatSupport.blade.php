@@ -188,8 +188,6 @@
                 // Access the admin user ID from the data attribute
                 var adminUserId = $('#adminUserId').val();
 
-                console.log(data);
-
                 // Update userWithMessageUser data
                 userWithMessageUser = data.userWithMessageUser;
 
@@ -297,33 +295,32 @@
                 url: '/admin/page/support/loadMessage/' + user.id + '/' + authUser,
                 success: function(response) {
                     $('#messageThread').html('');
-                    // console.log(response);
                     while (response[0][i] != null) {
-                        var isUserMessage = response[1][0] == response[0][i].message_users_id;
+                        var isUserMessage = response[1] == response[0][i].user_id; // Check if the message is sent by the authenticated user
                         var isMessageRead = response[0][i].read_at !== null;
 
                         if (isUserMessage) {
                             $('#messageThread').append(
                                 '<li class="right">' +
-                                    '<div class="conversation-list">' +
-                                        '<div class="ctext-wrap">' +
-                                            '<div class="conversation-name">You</div>' +
-                                            '<p>' + response[0][i].message + '</p>' +
-                                            (isMessageRead ? '<i class="bx bx-check-double read-icon" style="color: green;"></i>' : '<p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>') + formattedTime(response[0][i].created_at) + '</p>' +
-                                        '</div>' +
-                                    '</div>' +
+                                '<div class="conversation-list">' +
+                                '<div class="ctext-wrap">' +
+                                '<div class="conversation-name">You</div>' +
+                                '<p>' + response[0][i].message + '</p>' +
+                                (isMessageRead ? '<i class="bx bx-check-double read-icon" style="color: green;"></i>' : '<p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>') + formattedTime(response[0][i].created_at) + '</p>' +
+                                '</div>' +
+                                '</div>' +
                                 '</li>'
                             );
                         } else {
                             $('#messageThread').append(
                                 '<li class="last-chat mt-3">' +
-                                    '<div class="conversation-list">' +
-                                        '<div class="ctext-wrap">' +
-                                            '<div class="conversation-name">' + name + '</div>' +
-                                            '<p>' + response[0][i].message + '</p>' +
-                                            '<p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>' + formattedTime(response[0][i].created_at) + '</p>' +
-                                        '</div>' +
-                                    '</div>' +
+                                '<div class="conversation-list">' +
+                                '<div class="ctext-wrap">' +
+                                '<div class="conversation-name">' + name + '</div>' +
+                                '<p>' + response[0][i].message + '</p>' +
+                                '<p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>' + formattedTime(response[0][i].created_at) + '</p>' +
+                                '</div>' +
+                                '</div>' +
                                 '</li>'
                             );
                         }
@@ -365,34 +362,35 @@
                     //console.log(lastMessageId);
                     var shouldScroll = isScrolledToBottom(); // Check if user is already at the bottom before new messages are added
 
-                    while (i < response.length) {
+                    for (i = 0; i < response.length; i++) {
                     // Check if response[i] is defined
-                    if (response[i]) {
-                        var isRead = response[i].read_at !== null;
-                        var messageContent = '<li class="last-chat mt-3"><div class="conversation-list"><div class="ctext-wrap"><div class="conversation-name">'+ name +'</div><p>' + response[i].message + '</p><p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>'+ formattedTime(response[i].created_at) +'</p></div></div>';
+                        if (response[i]) {
+                            var isRead = response[i].read_at !== null;
+                            var messageContent = '<li class="last-chat mt-3">' +
+                                '<div class="conversation-list">' +
+                                '<div class="ctext-wrap">' +
+                                '<div class="conversation-name">'+ name +'</div>' +
+                                '<p>' + response[i].message + '</p>' +
+                                '<p class="chat-time mb-0"><i class="bx bx-time-five align-middle me-1"></i>' + formattedTime(response[i].created_at) + '</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</li>';
 
-                        // Check if the message has been read and append a read receipt
-                        if (isRead) {
-                            messageContent += '<p class="read-receipt">Read</p>';
+                            $('#messageThread').append(messageContent);
+
+                            lastMessageId = response[i].id + 1;
+
+                            // Update the read_at timestamp of the retrieved message
+                            // markMessageAsRead(response[i].id);
+
+                            if (shouldScroll) {
+                                scrollPaubos(); // Scroll to the bottom only if the user was already at the bottom
+                            }
                         }
 
-                        messageContent += '</li>';
-
-                        $('#messageThread').append(messageContent);
-
-                        lastMessageId = response[i].id + 1;
-
-                        // Update the read_at timestamp of the retrieved message
-                        markMessageAsRead(response[i].id);
-
-                        if (shouldScroll) {
-                            scrollPaubos(); // Scroll to the bottom only if the user was already at the bottom
-                        }
                     }
 
-                    i++;
-                }
-            },
+                },
                 complete: function() {
                     retrieveMessages();
                 }
@@ -408,7 +406,6 @@
 
     // Function to mark a message as read
     function markMessageAsRead(messageId) {
-        console.log(messageId);
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -417,7 +414,7 @@
             url: '/admin/page/support/markMessageAsRead/' + messageId,
             success: function(response) {
                 // Handle success if needed
-                console.log(response);
+                // console.log(response);
             },
             error: function(error) {
                 console.error(error);
