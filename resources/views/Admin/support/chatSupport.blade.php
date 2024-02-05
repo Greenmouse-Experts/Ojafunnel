@@ -188,6 +188,8 @@
                 // Access the admin user ID from the data attribute
                 var adminUserId = $('#adminUserId').val();
 
+                console.log(data);
+
                 // Update userWithMessageUser data
                 userWithMessageUser = data.userWithMessageUser;
 
