@@ -44,7 +44,7 @@ class SeriesEmailCampaign extends Command
 
         $series_email_campaigns = SeriesEmailCampaignModel::where([
             'date' => $current_date,
-            // 'time' => $current_time,
+            'time' => $current_time,
         ])->get();
 
         Log::info($series_email_campaigns);
