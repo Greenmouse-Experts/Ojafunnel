@@ -52,6 +52,25 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-12 mb-4">
+                                        <div class="row mb-2">
+                                            <div class="col-12">
+                                                Send Email:
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Series" style="display: inline-block !important; width: auto;" onclick="show3();" /> Series</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-lg-12" id="message">
                                         <label>Email template:</label>
                                         <div class="row">
@@ -109,24 +128,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 mb-4">
-                                        <div class="row mb-2">
-                                            <div class="col-12">
-                                                Send Email:
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Immediately" style="display: inline-block !important; width: auto;" onclick="show1();" /> Immediately</label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Schedule" style="display: inline-block !important; width: auto;" onclick="show2();" /> Schedule</label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label style="margin-left: 0px"><input type="radio" name="message_timing" value="Series" style="display: inline-block !important; width: auto;" onclick="show3();" /> Series</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                   
                                     <div class="col-12" id="series" style="display: none;">
                                         <fieldset class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
                                             <div class="col-md-6 mt-4">
@@ -138,7 +140,7 @@
                                                 <input type="Time" name="series_time[]" />
                                             </div>
                                             <div class="col-md-12 mt-5">
-                                                <select name="series_email_template_id[]" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadSeriesTemplate()" id="series_email_template_id">
+                                                <select name="series_email_template_id[]" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadSeriesTemplate(this)" id="series_email_template_id">
                                                     <option value="">Choose from email template</option>
                                                     @forelse ($email_templates as $email_template)
                                                         <option value="{{ $email_template->id }}">
@@ -148,8 +150,8 @@
                                                         {{ 'No email template at the moment. Please add new template' }}
                                                     @endforelse
                                                 </select>
-                                                <div id="series_email_template_editor"></div>
-                                                <div id="series_email_template_data"></div>
+                                                <div xid="series_email_template_editor" class="series_email_template_editor"></div>
+                                                <div xid="series_email_template_data"></div>
                                             </div>
                                             <div class="col-md-12 mt-3">
                                                 <label>Upload Attachments:</label>
@@ -336,12 +338,21 @@
         });
     });
 
-    async function loadSeriesTemplate() {
+    async function loadSeriesTemplate(e) {
         // Get a unique editor ID for the current row
         var rowLength = $('.series-row').length;
         var editorId = 'series_editor_' + rowLength;
 
-        document.getElementById('series_email_template_editor').innerHTML = `<textarea class="mt-2" cols="80" id="${editorId}" name="series_email_template[]"></textarea>`;
+        let next = e.nextElementSibling;
+
+        const nextIdattr = next.getAttribute('class') + '_' + rowLength;
+        next.setAttribute('class', nextIdattr);
+
+        editorId = nextIdattr;
+        
+
+        //document.getElementById('series_email_template_editor')
+        document.getElementsByClassName(nextIdattr)[0].innerHTML = `<textarea class="mt-2" cols="80" id="${editorId}" name="series_email_template[]"></textarea>`;
 
         let id = document.getElementById('series_email_template_id').value;
         let endpoint = "{{ route('user.email-marketing.email.campaigns.template_content', ['username' => Auth::user()->username, 'id' => '?']) }}".replace('?', id);
