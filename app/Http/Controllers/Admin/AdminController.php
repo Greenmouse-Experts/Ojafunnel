@@ -669,10 +669,15 @@ class AdminController extends Controller
         })->values()->all();
 
         // return $userWithMessageUser;
-
-        return view('Admin.support.chatSupport', [
-            'userWithMessageUser' => $userWithMessageUser
-        ]);
+        if (request()->ajax()) {
+            return response()->json([
+                'userWithMessageUser' => $userWithMessageUser,
+            ]);
+        } else {
+            return view('Admin.support.chatSupport', [
+                'userWithMessageUser' => $userWithMessageUser
+            ]);
+        }
     }
 
     public function check($recieverId)

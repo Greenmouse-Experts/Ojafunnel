@@ -13,7 +13,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <!-- Bootstrap Css -->
     <link href="{{URL::asset('admin/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -36,7 +36,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    
+
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
     <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 
@@ -106,21 +106,17 @@
     <!-- END layout-wrapper -->
 
     <!-- Right bar overlay-->
-    <div class="rightbar-overlay"></div> 
-    
+    <div class="rightbar-overlay"></div>
 
-    
-    
 
-    
+
+
+
+
     <!-- JAVASCRIPT -->
     <script src="{{URL::asset('admin/assets/libs/jquery/jquery.min.js')}}"></script>
     <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
-
-    
-    
-    
-    <script type="text/javascript" src="{{ URL::asset('core/bootstrap/js/bootstrap.bundle.min.js') }}"></script> 
+    <script type="text/javascript" src="{{ URL::asset('core/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{URL::asset('admin/assets/libs/metismenu/metisMenu.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/simplebar/simplebar.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/node-waves/waves.min.js')}}"></script>
@@ -168,10 +164,10 @@
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js')}}"></script>
-    <script src="{{ asset('assets/js/amcharts.js') }}"></script> 
-    <script src="{{ asset('assets/js/pie.js') }}"></script> 
+    <script src="{{ asset('assets/js/amcharts.js') }}"></script>
+    <script src="{{ asset('assets/js/pie.js') }}"></script>
     <script src="{{ asset('assets/js/light.js') }}"></script>
-    
+
     <script>
         // Initialize the CKEditor on the textarea
         ClassicEditor
@@ -199,12 +195,12 @@
                 document.body.removeChild(tempTextArea);
             }
         }
-        
+
         $(document).ready(function(){
             // setTimeout(function(){
                 $('.select2').select2();
             // },4000);
-        });    
+        });
 
         // pricing switch button
         let pricingIsYearly = false;
@@ -324,8 +320,8 @@
         }
     </script>
 
-    
-    
+
+
 </body>
 
 </html>

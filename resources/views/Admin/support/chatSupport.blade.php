@@ -1,6 +1,9 @@
 @extends('layouts.admin-frontend')
 
 @section('page-content')
+<!-- Add this to your HTML -->
+<input type="hidden" id="adminUserId" value="{{ Auth::guard('admin')->user()->id }}">
+
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -13,6 +16,7 @@
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
                         <h4 class="mb-sm-0 font-size-18">Chat Support</h4>
+
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
@@ -54,7 +58,7 @@
                                 <div class="tab-pane show active" id="chat">
                                     <div>
                                         <h5 class="font-size-14 mb-3">Chat</h5>
-                                        <ul class="list-unstyled chat-list" data-simplebar style="max-height: 410px;">
+                                        <ul id="chat-list-container" class="list-unstyled chat-list" data-simplebar style="max-height: 410px;">
                                             @foreach($userWithMessageUser as $user)
                                                 <li class="active">
                                                     <a href="javascript: void(0);" onclick="openChatBox({{$user['user']}},{{Auth::guard('admin')->user()->id}});">
@@ -148,8 +152,99 @@
     </div>
     <!-- End Page-content -->
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateChatList();
+        // // Refresh chat list every 5 seconds (adjust the interval as needed)
+        setInterval(updateChatList, 5000);
+
+        $(document).on('click', '.open-chat', function () {
+            try {
+                var user = $(this).data('user');
+                var adminUserId = $(this).data('admin');
+                openChatBox(user, adminUserId);
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+                // You can add additional error handling or simply ignore the error
+            }
+        });
+    });
+
+    function ucfirst(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function updateChatList() {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'GET',
+            url: '/admin/page/chat-support',
+            success: function (data) {
+                // Access the admin user ID from the data attribute
+                var adminUserId = $('#adminUserId').val();
+
+                // Update userWithMessageUser data
+                userWithMessageUser = data.userWithMessageUser;
+
+                // Clear the existing chat list container
+                $('#chat-list-container').empty();
+
+                // Build the updated chat list HTML
+                var chatListHtml = '<ul class="list-unstyled chat-list" data-simplebar style="max-height: 410px;">';
+
+                $.each(userWithMessageUser, function (index, user) {
+                    chatListHtml += '<li class="active">';
+                    chatListHtml += '<a href="javascript:void(0);" class="open-chat" data-user=\'' + JSON.stringify(user['user']) + '\' data-admin="' + adminUserId + '">';
+                    chatListHtml += '<div class="d-flex">';
+                    chatListHtml += '<div class="flex-shrink-0 align-self-center me-3">';
+                    chatListHtml += '<i class="mdi mdi-circle font-size-10" style="color: #723f93;"></i>';
+                    chatListHtml += '</div>';
+                    chatListHtml += '<div class="flex-shrink-0 align-self-center me-3">';
+                    chatListHtml += '<span class="rounded-circle avatar-xs" style="vertical-align: middle; align-items: center; background: #713f93; color: #fff; display: flex; justify-content: center;">';
+                    chatListHtml += ucfirst(user['user']['first_name'].charAt(0)) + ' ' + ucfirst(user['user']['last_name'].charAt(0));
+                    chatListHtml += '</span>';
+                    chatListHtml += '</div>';
+                    chatListHtml += '<div class="flex-grow-1 overflow-hidden">';
+                    chatListHtml += '<h5 id="' + user['user']['first_name'] + ' ' + user['user']['last_name'] + '" class="text-truncate font-size-14 mb-1">';
+                    chatListHtml += user['user']['first_name'] + ' ' + user['user']['last_name'];
+                    chatListHtml += '</h5>';
+                    if (user['lastMessage'] && user['lastMessage']['message']) {
+                        chatListHtml += '<p class="text-truncate mb-0" style="width: 150px;">' + user['lastMessage']['message'] + '</p>';
+                    }
+                    chatListHtml += '</div>';
+                    chatListHtml += '<div class="flex-grow-1 overflow-hidden">';
+                    if (user['lastMessage'] && user['lastMessage']['created_at']) {
+                        // Format the date using Moment.js
+                        var formattedDate = moment(user['lastMessage']['created_at']).format('YYYY-MM-DD HH:mm:ss');
+                        chatListHtml += '<h5 class="font-size-12 mb-1">' + moment(formattedDate).fromNow() + '</h5>';
+                    }
+
+                    if (user['unreadCount']) {
+                        chatListHtml += '<p class="badge bg-success rounded-pill">' + user['unreadCount'] + '</p>';
+                    }
+                    chatListHtml += '</div>';
+                    chatListHtml += '</div>';
+                    chatListHtml += '</a>';
+                    chatListHtml += '</li>';
+                });
+
+                chatListHtml += '</ul>';
+
+                // Update the HTML content of the chat list container
+                $('#chat-list-container').html(chatListHtml);
+            },
+            error: function () {
+                // Handle errors if any
+                console.error('Error fetching updated chat data');
+            }
+        });
+    }
+
     var lastMessageId = 0;
     // auto scroll down chatbox when sending a message
     function scrollPaubos() {
