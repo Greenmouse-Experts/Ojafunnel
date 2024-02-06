@@ -66,7 +66,7 @@ class Kernel extends ConsoleKernel
 
         // run command every day
         // birthday or anniversary
-        $schedule->command('wabirthday:run')->daily()->withoutOverlapping();
+        $schedule->command('wabirthday:run')->everyMinute()->withoutOverlapping();
         $schedule->command('emailbirthday:run')->everyMinute()->withoutOverlapping();
         $schedule->command('sms_cart_reminder:run')->daily()->withoutOverlapping();
 
