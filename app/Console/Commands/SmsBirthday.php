@@ -56,7 +56,7 @@ class SmsBirthday extends Command
 
                 if ($ba->automation == 'SMS & WhatsApp Automation') {
                     $integration = Integration::find($ba->integration);
-                    // \Log::info($integration->type);
+                    \Log::info($integration->type);
                     if ($integration->type == "Multitexter") {
                         $d = $birthdayContactList->toArray();
                         //  \Log::info($d);
