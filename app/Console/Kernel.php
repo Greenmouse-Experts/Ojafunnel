@@ -83,7 +83,7 @@ class Kernel extends ConsoleKernel
         // Log a message indicating the cron job is working
         $schedule->call(function () {
             Log::info('Cron job is working!');
-        })->everyMinute();
+        })->everyMinute()->withoutOverlapping();
     }
 
     /**
