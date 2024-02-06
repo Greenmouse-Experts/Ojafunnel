@@ -594,7 +594,7 @@ class SendSms extends Command
                 $responseBody = $e;
             }
 
-            // return $responseBody;
+            return $responseBody;
 
         } else {
             $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();

@@ -6,6 +6,7 @@ use App\Models\BirthdayAutomation;
 use App\Models\BirthdayContact;
 use App\Models\Integration;
 use App\Models\ListManagementContact;
+use Aws\Sns\SnsClient;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
@@ -47,8 +48,9 @@ class SmsBirthday extends Command
             if ($ba->sms_type == 'birthday') {
                 $birthdayContactList = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('date_of_birth', '=', date('m'))->whereDay('date_of_birth', '=', date('d'))->select('phone')->get();
                 // \Log::info($birthdayContactList);
+                $birthdayContactLists = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('date_of_birth', '=', date('m'))->whereDay('date_of_birth', '=', date('d'))->select('phone', 'name')->get();
 
-                if ($birthdayContactList->isEmpty()) {
+                if ($birthdayContactList->isEmpty() || $birthdayContactLists->isEmpty()) {
                     return;
                 }
 
@@ -195,13 +197,126 @@ class SmsBirthday extends Command
                             $responseBody = $e->getMessage();
                         }
                     }
+
+                    if($integration->type == 'InfoBip')
+                    {
+                        $API_KEY = $integration->api_key;
+                        $BASE_URL = $integration->api_base_url;
+                        $SENDER = $ba->sender_name;;
+
+                        try {
+                            foreach($birthdayContactLists as $contact)
+                            {
+                                $RECIPIENT = $contact->phone;
+
+                                $MESSAGE = str_replace('$name', $contact->name, $ba->message);
+
+                                $data_json = '{
+                                    "messages": [
+                                      {
+                                        "destinations": [
+                                          {
+                                            "to": "'.$RECIPIENT.'"
+                                          }
+                                        ],
+                                        "from": "'.$SENDER.'",
+                                        "text": "'.$MESSAGE.'"
+                                      }
+                                    ]
+                                }';
+
+                                $curl = curl_init();
+
+                                curl_setopt_array($curl, array(
+                                    CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
+                                    CURLOPT_RETURNTRANSFER => true,
+                                    CURLOPT_ENCODING => '',
+                                    CURLOPT_MAXREDIRS => 10,
+                                    CURLOPT_TIMEOUT => 0,
+                                    CURLOPT_FOLLOWLOCATION => true,
+                                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                    CURLOPT_CUSTOMREQUEST => 'POST',
+                                    CURLOPT_POSTFIELDS => $data_json,
+                                    CURLOPT_HTTPHEADER => array(
+                                        'Authorization: App '.$API_KEY,
+                                        'Content-Type: application/json',
+                                        'Accept: application/json'
+                                    ),
+                                ));
+
+                                $response = curl_exec($curl);
+
+                                curl_close($curl);
+                            }
+
+                            $responseBody = true;
+                        } catch (Exception $e) {
+                            $responseBody = $e;
+                        }
+
+                        return $responseBody;
+                    }
+
+                    if($integration->type == 'AWS')
+                    {
+                        $key = $integration->key;
+                        $secret = $integration->secret;
+                        $sender = $ba->sender_name;
+
+                        try {
+                            foreach($birthdayContactLists as $contact)
+                            {
+                                $messageContent = str_replace('$name', $contact->name, $ba->message);
+
+                                // Required variables to initialize SNS Client Object
+                                $params = [
+                                    'credentials' => [
+                                        'key' => $key,
+                                        'secret' => $secret
+                                    ],
+                                    'region' => 'us-east-1',
+                                    'version' => 'latest'
+                                ];
+
+                                $SnSclient = new SnsClient($params);
+
+                                // Basic Configuration of messages like SMS type, message, and phone number
+                                $args = [
+                                    'MessageAttributes' => [
+                                        'AWS.SNS.SMS.SenderID' => [
+                                            'DataType' => 'String',
+                                            'StringValue'=> $sender
+                                        ],
+                                        'AWS.SNS.SMS.SMSType' => [
+                                            'DataType' => 'String',
+                                            'StringValue'=> 'Transactional'
+                                        ]
+                                    ],
+                                    "Message" => $messageContent,
+                                    "PhoneNumber" => $contact->phone
+                                ];
+
+
+                                $result = $SnSclient->publish($args);
+                                // return $result;
+                            }
+
+                            $responseBody = true;
+                        } catch (Exception $e) {
+                            $responseBody = $e;
+                        }
+
+                        return $responseBody;
+                    }
                 }
             }
 
             if ($ba->sms_type == 'anniversary') {
                 $birthdayContactList = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('anniversary', '=', date('m'))->whereDay('anniversary', '=', date('d'))->select('phone')->get();
 
-                if ($birthdayContactList->isEmpty()) {
+                $birthdayContactLists = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('anniversary', '=', date('m'))->whereDay('anniversary', '=', date('d'))->select('phone', 'name')->get();
+
+                if ($birthdayContactList->isEmpty() || $birthdayContactLists->isEmpty()) {
                     return;
                 }
 
@@ -348,7 +463,119 @@ class SmsBirthday extends Command
                             $responseBody = $e->getMessage();
                         }
                     }
+
+                    if($integration->type == 'InfoBip')
+                    {
+                        $API_KEY = $integration->api_key;
+                        $BASE_URL = $integration->api_base_url;
+                        $SENDER = $ba->sender_name;;
+
+                        try {
+                            foreach($birthdayContactLists as $contact)
+                            {
+                                $RECIPIENT = $contact->phone;
+
+                                $MESSAGE = str_replace('$name', $contact->name, $ba->message);
+
+                                $data_json = '{
+                                    "messages": [
+                                      {
+                                        "destinations": [
+                                          {
+                                            "to": "'.$RECIPIENT.'"
+                                          }
+                                        ],
+                                        "from": "'.$SENDER.'",
+                                        "text": "'.$MESSAGE.'"
+                                      }
+                                    ]
+                                }';
+
+                                $curl = curl_init();
+
+                                curl_setopt_array($curl, array(
+                                    CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
+                                    CURLOPT_RETURNTRANSFER => true,
+                                    CURLOPT_ENCODING => '',
+                                    CURLOPT_MAXREDIRS => 10,
+                                    CURLOPT_TIMEOUT => 0,
+                                    CURLOPT_FOLLOWLOCATION => true,
+                                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                    CURLOPT_CUSTOMREQUEST => 'POST',
+                                    CURLOPT_POSTFIELDS => $data_json,
+                                    CURLOPT_HTTPHEADER => array(
+                                        'Authorization: App '.$API_KEY,
+                                        'Content-Type: application/json',
+                                        'Accept: application/json'
+                                    ),
+                                ));
+
+                                $response = curl_exec($curl);
+
+                                curl_close($curl);
+                            }
+
+                            $responseBody = true;
+                        } catch (Exception $e) {
+                            $responseBody = $e;
+                        }
+
+                        return $responseBody;
+                    }
+
+                    if($integration->type == 'AWS')
+                    {
+                        $key = $integration->key;
+                        $secret = $integration->secret;
+                        $sender = $ba->sender_name;
+
+                        try {
+                            foreach($birthdayContactLists as $contact)
+                            {
+                                $messageContent = str_replace('$name', $contact->name, $ba->message);
+
+                                // Required variables to initialize SNS Client Object
+                                $params = [
+                                    'credentials' => [
+                                        'key' => $key,
+                                        'secret' => $secret
+                                    ],
+                                    'region' => 'us-east-1',
+                                    'version' => 'latest'
+                                ];
+
+                                $SnSclient = new SnsClient($params);
+
+                                // Basic Configuration of messages like SMS type, message, and phone number
+                                $args = [
+                                    'MessageAttributes' => [
+                                        'AWS.SNS.SMS.SenderID' => [
+                                            'DataType' => 'String',
+                                            'StringValue'=> $sender
+                                        ],
+                                        'AWS.SNS.SMS.SMSType' => [
+                                            'DataType' => 'String',
+                                            'StringValue'=> 'Transactional'
+                                        ]
+                                    ],
+                                    "Message" => $messageContent,
+                                    "PhoneNumber" => $contact->phone
+                                ];
+
+
+                                $result = $SnSclient->publish($args);
+                                // return $result;
+                            }
+
+                            $responseBody = true;
+                        } catch (Exception $e) {
+                            $responseBody = $e;
+                        }
+
+                        return $responseBody;
+                    }
                 }
+
             }
         }
 
