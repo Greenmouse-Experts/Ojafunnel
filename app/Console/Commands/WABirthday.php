@@ -42,9 +42,9 @@ class WABirthday extends Command
             'action' => 'Play'
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
-        Log::info($birthday_automation);
+        // Log::info($birthday_automation);
 
-        $birthday_automation->map(function ($_campaign) use ($date) {
+        $birthday_automation->map(function ($_campaign) use ($date, $current_date) {
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->sender_id])->first();
 
             $current_day = $date->format('d');
@@ -53,7 +53,11 @@ class WABirthday extends Command
             if ($_campaign->sms_type == 'birthday') {
                 $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id])
                     ->whereMonth('date_of_birth', $current_month)
-                    ->whereDay('date_of_birth', $current_day)->get();
+                    ->whereDay('date_of_birth', $current_day)
+                    // ->where('date_of_birth', $current_date)
+                    ->get();
+
+                    // Log::info($current_date);
 
                 // divide into 10 chunks and 
                 // delay each job between 10  - 20 sec in the queue
