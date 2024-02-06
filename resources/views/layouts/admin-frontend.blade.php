@@ -115,7 +115,7 @@
 
     <!-- JAVASCRIPT -->
     <script src="{{URL::asset('admin/assets/libs/jquery/jquery.min.js')}}"></script>
-    <script src="{{ asset('assets/js/jscripts.js') }}"></script> 
+    <script src="{{ asset('assets/js/jscripts.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('core/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{URL::asset('admin/assets/libs/metismenu/metisMenu.min.js')}}"></script>
     <script src="{{URL::asset('admin/assets/libs/simplebar/simplebar.min.js')}}"></script>

@@ -55,6 +55,10 @@ class SmsBirthday extends Command
                 }
 
                 if ($ba->automation == 'SMS & WhatsApp Automation') {
+
+                    \Log::info('SMS Automation');
+
+
                     $integration = Integration::find($ba->integration);
                     // \Log::info($integration->type);
                     if ($integration->type == "Multitexter") {
