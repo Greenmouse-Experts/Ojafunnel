@@ -222,22 +222,25 @@ class CallbackController extends Controller
         {
             $upsell_page = \App\Models\UpsellPageProduct::where(['page_id' => $page->id])->first();
             $list = ListManagement::where(['uid' => $page->id])->first();
-            $list_contact = null;
+            $list_contact = ListManagementContact::where(['email' => $request->email])->first();
 
             if(isset($page->list_id)) {
-                $list_contact = ListManagementContact::create([
-                    'uid' => Str::uuid(),
-                    'list_management_id' => $page->list_id,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'address_1' => $request->address,
-                    'address_2' => $request->address_2 ?? "",
-                    'country' => $request->country ?? "",
-                    'state' => $request->state ?? "",
-                    'zip' => $request->zip ?? "",
-                    'phone' => $request->phone,
-                    'subscribe' => true
-                ]);
+                if(!$list_contact)
+                {
+                    $list_contact = ListManagementContact::create([
+                        'uid' => Str::uuid(),
+                        'list_management_id' => $page->list_id,
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'address_1' => $request->address,
+                        'address_2' => $request->address_2 ?? "",
+                        'country' => $request->country ?? "",
+                        'state' => $request->state ?? "",
+                        'zip' => $request->zip ?? "",
+                        'phone' => $request->phone,
+                        'subscribe' => true
+                    ]);
+                }
             }
 
             // Check for existing List
@@ -303,22 +306,25 @@ class CallbackController extends Controller
         {
             $upsell_page = \App\Models\DynamicTimerProductPage::where(['page_id' => $page->id])->first();
             $list = ListManagement::where(['uid' => $page->id])->first();
-            $list_contact = null;
+            $list_contact = ListManagementContact::where(['email' => $request->email])->first();
 
             if(isset($page->list_id)) {
-                $list_contact = ListManagementContact::create([
-                    'uid' => Str::uuid(),
-                    'list_management_id' => $page->list_id,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'address_1' => $request->address,
-                    'address_2' => $request->address_2 ?? "",
-                    'country' => $request->country ?? "",
-                    'state' => $request->state ?? "",
-                    'zip' => $request->zip ?? "",
-                    'phone' => $request->phone,
-                    'subscribe' => true
-                ]);
+                if(!$list_contact)
+                {
+                    $list_contact = ListManagementContact::create([
+                        'uid' => Str::uuid(),
+                        'list_management_id' => $page->list_id,
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'address_1' => $request->address,
+                        'address_2' => $request->address_2 ?? "",
+                        'country' => $request->country ?? "",
+                        'state' => $request->state ?? "",
+                        'zip' => $request->zip ?? "",
+                        'phone' => $request->phone,
+                        'subscribe' => true
+                    ]);
+                }
             }
 
             // Check for existing List
@@ -385,22 +391,25 @@ class CallbackController extends Controller
         {
             $bumpsell_page = \App\Models\BumpsellProduct::where(['page_id' => $page->id])->first();
             $list = ListManagement::where(['uid' => $page->id])->first();
-            $list_contact = null;
+            $list_contact = ListManagementContact::where(['email' => $request->email])->first();
 
             if(isset($page->list_id)) {
-                $list_contact = ListManagementContact::create([
-                    'uid' => Str::uuid(),
-                    'list_management_id' => $page->list_id,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'address_1' => $request->address,
-                    'address_2' => $request->address_2 ?? "",
-                    'country' => $request->country ?? "",
-                    'state' => $request->state ?? "",
-                    'zip' => $request->zip ?? "",
-                    'phone' => $request->phone,
-                    'subscribe' => true
-                ]);
+                if(!$list_contact)
+                {
+                    $list_contact = ListManagementContact::create([
+                        'uid' => Str::uuid(),
+                        'list_management_id' => $page->list_id,
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'address_1' => $request->address,
+                        'address_2' => $request->address_2 ?? "",
+                        'country' => $request->country ?? "",
+                        'state' => $request->state ?? "",
+                        'zip' => $request->zip ?? "",
+                        'phone' => $request->phone,
+                        'subscribe' => true
+                    ]);
+                }
             }
 
             // Check for existing List
