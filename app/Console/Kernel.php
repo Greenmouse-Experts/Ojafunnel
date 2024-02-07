@@ -81,9 +81,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('seriesEmailcampaign:run')->everyMinute()->withoutOverlapping();
 
         // Log a message indicating the cron job is working
-        // $schedule->call(function () {
-        //     Log::info('Cron job is working!');
-        // })->everyMinute()->withoutOverlapping();
+        $schedule->call(function () {
+            Log::info('Cron job is working!');
+        })->everyMinute();
     }
 
     /**

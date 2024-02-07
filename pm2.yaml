@@ -71,10 +71,10 @@ apps:
       - queue:work
       - --queue=sslRenewal
 
-  - name: schedule
-    script: artisan
-    exec_mode: fork
-    interpreter: php
-    instances: 1
-    args:
-      - schedule:work
+  # - name: schedule
+  #   script: artisan
+  #   exec_mode: fork
+  #   interpreter: php
+  #   instances: 1
+  #   args:
+  #     - schedule:work
