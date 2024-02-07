@@ -43,7 +43,7 @@ class EmailBirthday extends Command
             'action' => 'Play'
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
-        // Log::info($birthday_automation);
+        Log::info($birthday_automation);
 
         $birthday_automation->map(function ($_campaign) use ($date) {
             $email_kit = EmailKit::where('id', $_campaign->email_kit_id)->first();
