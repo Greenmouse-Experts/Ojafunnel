@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Twilio\Rest\Client as twilio;
 
 class SmsBirthday extends Command
@@ -47,7 +48,7 @@ class SmsBirthday extends Command
         foreach ($birthday as $key => $ba) {
             if ($ba->sms_type == 'birthday') {
                 $birthdayContactList = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('date_of_birth', '=', date('m'))->whereDay('date_of_birth', '=', date('d'))->select('phone')->get();
-                // \Log::info($birthdayContactList);
+                // Log::info($birthdayContactList);
                 $birthdayContactLists = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('date_of_birth', '=', date('m'))->whereDay('date_of_birth', '=', date('d'))->select('phone', 'name')->get();
 
                 if ($birthdayContactList->isEmpty() || $birthdayContactLists->isEmpty()) {
@@ -56,7 +57,7 @@ class SmsBirthday extends Command
 
                 if ($ba->automation == 'SMS & WhatsApp Automation') {
                     $integration = Integration::find($ba->integration);
-                    \Log::info($integration->type);
+                    Log::info($integration->type);
                     if ($integration->type == "Multitexter") {
                         $d = $birthdayContactList->toArray();
                         //  \Log::info($d);
