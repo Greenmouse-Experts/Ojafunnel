@@ -26,50 +26,50 @@ apps:
       - queue:work
       - --queue=waTemplate3
 
-  - name: waBirthday
-    script: artisan
-    exec_mode: fork
-    interpreter: php
-    instances: 1
-    args:
-      - queue:work
-      - --queue=waBirthday
+  # - name: waBirthday
+  #   script: artisan
+  #   exec_mode: fork
+  #   interpreter: php
+  #   instances: 1
+  #   args:
+  #     - queue:work
+  #     - --queue=waBirthday
 
-  - name: emailBirthday
-    script: artisan
-    exec_mode: fork
-    interpreter: php
-    instances: 1
-    args:
-      - queue:work
-      - --queue=emailBirthday
+  # - name: emailBirthday
+  #   script: artisan
+  #   exec_mode: fork
+  #   interpreter: php
+  #   instances: 1
+  #   args:
+  #     - queue:work
+  #     - --queue=emailBirthday
 
-  - name: emailCampaign
-    script: artisan
-    exec_mode: fork
-    interpreter: php
-    instances: 1
-    args:
-      - queue:work
-      - --queue=emailCampaign
+  # - name: emailCampaign
+  #   script: artisan
+  #   exec_mode: fork
+  #   interpreter: php
+  #   instances: 1
+  #   args:
+  #     - queue:work
+  #     - --queue=emailCampaign
 
-  - name: sslGeneration
-    script: artisan
-    exec_mode: fork
-    interpreter: php
-    instances: 1
-    args:
-      - queue:work
-      - --queue=sslGeneration
+  # - name: sslGeneration
+  #   script: artisan
+  #   exec_mode: fork
+  #   interpreter: php
+  #   instances: 1
+  #   args:
+  #     - queue:work
+  #     - --queue=sslGeneration
 
-  - name: sslRenewal
-    script: artisan
-    exec_mode: fork
-    interpreter: php
-    instances: 1
-    args:
-      - queue:work
-      - --queue=sslRenewal
+  # - name: sslRenewal
+  #   script: artisan
+  #   exec_mode: fork
+  #   interpreter: php
+  #   instances: 1
+  #   args:
+  #     - queue:work
+  #     - --queue=sslRenewal
 
   # - name: schedule
   #   script: artisan

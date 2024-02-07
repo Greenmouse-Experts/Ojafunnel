@@ -57,7 +57,6 @@ class EmailBirthday extends Command
                     ->whereMonth('date_of_birth', $current_month)
                     ->whereDay('date_of_birth', $current_day)->get();
 
-
                 Log::info($lists);
                 // divide into 500 chunks and
                 // delay each job between 10  - 20 sec in the queue
