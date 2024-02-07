@@ -54,7 +54,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('inspire')->hourly();
         $schedule->command('smsCampaign:run')->everyMinute()->withoutOverlapping();
         $schedule->command('smsBirthday:cron')->everyMinute()->withoutOverlapping();
         $schedule->command('subscription:cron')->dailyAt('00:30')->withoutOverlapping();
@@ -66,8 +66,8 @@ class Kernel extends ConsoleKernel
 
         // run command every day
         // birthday or anniversary
-        $schedule->command('wabirthday:run')->daily()->withoutOverlapping();
-        $schedule->command('emailbirthday:run')->daily()->withoutOverlapping();
+        $schedule->command('wabirthday:run')->everyMinute()->withoutOverlapping();
+        $schedule->command('emailbirthday:run')->everyMinute()->withoutOverlapping();
         $schedule->command('sms_cart_reminder:run')->daily()->withoutOverlapping();
 
         // ssl
