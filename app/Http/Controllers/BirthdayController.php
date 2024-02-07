@@ -247,6 +247,8 @@ class BirthdayController extends Controller
                 //
                 $contact = ListManagement::findOrFail($request->birthday_list_id)->get();
 
+                // return $automation;
+
                 // for data integrity and consistency
                 DB::transaction(function () use ($request, $email_kit, $contact, $automation) {
                     $emAutomation = new BirthdayAutomation();
