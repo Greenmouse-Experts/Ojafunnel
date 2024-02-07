@@ -41,7 +41,7 @@ class EmailBirthday extends Command
         $birthday_automation = BirthdayAutomation::where([
             'automation' => '"email automation"',
             'action' => 'Play'
-        ])->whereDate('start_date', '<=', Carbon::today()->toDateString())->whereDate('end_date', '>=', Carbon::today()->toDateString())->get();
+        ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
         Log::info($birthday_automation);
 
