@@ -62,8 +62,6 @@ class SeriesEmailCampaign extends Command
             $chunks = $contacts;
             $delay = mt_rand(10, 20);
 
-            Log::info($chunks);
-
             // dispatch job and delay
             foreach ($chunks as $_chunk) {
                 // dispatch job

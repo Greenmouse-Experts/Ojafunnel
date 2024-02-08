@@ -783,9 +783,7 @@ class EmailMarketingController extends Controller
                     $seriesEC->bounced = 0;
                     $seriesEC->spam_score = 0;
                     $seriesEC->save();
-
                 }
-
 
                 if ($request->hasFile("series_attachments[$key]")) {
                     $attachment_paths = [];
