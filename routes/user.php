@@ -136,6 +136,7 @@ Route::prefix('user')->group(function () {
     Route::post('/list/management/contact/update/{id}', [ListManagementController::class, 'update_contact'])->name('user.update.contact');
     Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');
     Route::post('/list/management/contact/unsub/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');
+    Route::post('/list/management/contact/sub/{id}', [ListManagementController::class, 'sub_contact'])->name('sub_contact');
     Route::get('/list/management/upload/contact/list/{id}', [ListManagementController::class, 'upload_contact_list'])->name('user.upload.contact.list');
     Route::post('/list/management/upload/contact/{id}', [ListManagementController::class, 'upload_contact'])->name('user.upload.contact');
 

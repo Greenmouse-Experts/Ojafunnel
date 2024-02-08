@@ -154,7 +154,7 @@
                                                 <span class="badge badge-pill badge-soft-danger font-size-11">Unsubscribed</span>
                                                 @endif
                                             </td>
-                                            
+
                                             <td>
                                                 @php $tags = explode(", ", $list1->tags); @endphp
 
@@ -172,7 +172,11 @@
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                         <li><a class="dropdown-item" href="{{route('user.edit.contact', Crypt::encrypt($list1->id))}}" style="cursor: pointer;">View/Edit</a></li>
+                                                        @if($list1->subscribe == true)
                                                         <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#unsubscribe-{{$list1->id}}">Unsubscribe</a></li>
+                                                        @else
+                                                        <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#subscribe-{{$list1->id}}">Subscribe</a></li>
+                                                        @endif
                                                         <li><a class="dropdown-item" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#delete-{{$list1->id}}">Delete</a></li>
                                                     </ul>
                                                 </div>
@@ -236,6 +240,40 @@
                                                                                         <div class="boding">
                                                                                             <button type="submit" class="form-btn">
                                                                                                 I understand this consquences, UnSubscribe
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal fade" id="subscribe-{{$list1->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content pb-3">
+                                                            <div class="modal-header border-bottom-0">
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body ">
+                                                                <div class="row">
+                                                                    <div class="Editt">
+                                                                        <form method="POST" action="{{ url('user/list/management/contact/sub/'.Crypt::encrypt($list1->id)) }}">
+                                                                            @csrf
+                                                                            <div class="form">
+                                                                                <p><b>Subscribe to this list?</b></p>
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12">
+                                                                                        <p>Are you sure, you want to subscribe this contact to this list?</p>
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
+                                                                                        <div class="boding">
+                                                                                            <button type="submit" class="form-btn">
+                                                                                                Subscribe
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>

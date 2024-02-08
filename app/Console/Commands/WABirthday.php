@@ -44,7 +44,7 @@ class WABirthday extends Command
 
         $currentDate = Carbon::today()->toDateString();
 
-        $birthday_automation = BirthdayAutomation::where('automation', '"whatsapp automation"')
+        $birthday_automation = BirthdayAutomation::where('automation', 'whatsapp automation')
             ->where('action', 'Play')
             ->whereDate('start_date', '<=', $currentDate)
             ->whereDate('end_date', '>=', $currentDate)

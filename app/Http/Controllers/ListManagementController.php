@@ -310,11 +310,11 @@ class ListManagementController extends Controller
 
             $index = 0;
 
-            foreach ($wa_series as $item) 
+            foreach ($wa_series as $item)
             {
                 $now = Carbon::now();
 
-                if($index == 0) 
+                if($index == 0)
                 {
                     // add 1hr to kick time
                     $date = Carbon::parse($now)->addHour();
@@ -347,7 +347,7 @@ class ListManagementController extends Controller
                         'status' => 'Waiting'
                     ]);
                 }
-                
+
 
                 $index++;
             }
@@ -425,12 +425,31 @@ class ListManagementController extends Controller
 
     public function unsub_contact($id)
     {
-        // $finder = Crypt::decrypt($id);
-        // ListManagementContact::find($finder)->delete();
+        $finder = Crypt::decrypt($id);
+        $list = ListManagementContact::find($finder);
+
+        $list->update([
+            'subscribe' => false
+        ]);
 
         return back()->with([
             'type' => 'success',
             'message' => 'Unsubscribed successfully!'
+        ]);
+    }
+
+    public function sub_contact($id)
+    {
+        $finder = Crypt::decrypt($id);
+        $list = ListManagementContact::find($finder);
+
+        $list->update([
+            'subscribe' => true
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'subscribed successfully!'
         ]);
     }
 
