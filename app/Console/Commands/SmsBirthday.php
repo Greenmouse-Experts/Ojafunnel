@@ -37,8 +37,13 @@ class SmsBirthday extends Command
      */
     public function handle()
     {
-        $birthday = BirthdayAutomation::where('action', 'Play')->where('start_date', '<=', Carbon::today()->toDateString())
-            ->where('end_date', '>=', Carbon::today()->toDateString())
+        $date = Carbon::now();
+        $currentDate = Carbon::today()->toDateString();
+
+        $birthday = BirthdayAutomation::where('automation', '"SMS & WhatsApp Automation"')
+            ->where('action', 'Play')
+            ->whereDate('start_date', '<=', $currentDate)
+            ->whereDate('end_date', '>=', $currentDate)
             ->get();
 
         if ($birthday->isEmpty()) {

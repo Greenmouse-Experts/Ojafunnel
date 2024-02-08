@@ -39,7 +39,7 @@ class EmailBirthday extends Command
         $current_date = $date->format('Y-m-d');
         $currentDate = Carbon::today()->toDateString();
 
-        $birthday_automation = BirthdayAutomation::where('automation', 'email automation')
+        $birthday_automation = BirthdayAutomation::where('automation', '"email automation"')
             ->where('action', 'Play')
             ->whereDate('start_date', '<=', $currentDate)
             ->whereDate('end_date', '>=', $currentDate)
