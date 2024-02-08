@@ -50,7 +50,7 @@ class SmsBirthday extends Command
             return Command::SUCCESS;
         }
 
-        // Log::info($birthday);
+        Log::info($birthday);
 
         foreach ($birthday as $key => $ba) {
             if ($ba->sms_type == 'birthday') {
