@@ -50,6 +50,8 @@ class SmsBirthday extends Command
             return Command::SUCCESS;
         }
 
+        Log::info($birthday);
+
         foreach ($birthday as $key => $ba) {
             if ($ba->sms_type == 'birthday') {
                 $birthdayContactList = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('date_of_birth', '=', date('m'))->whereDay('date_of_birth', '=', date('d'))->select('phone')->get();
