@@ -40,7 +40,7 @@ class SmsBirthday extends Command
         $date = Carbon::now();
         $currentDate = Carbon::today()->toDateString();
 
-        $birthday = BirthdayAutomation::where('automation', '"SMS & WhatsApp Automation"')
+        $birthday = BirthdayAutomation::where('automation', 'SMS & WhatsApp Automation')
             ->where('action', 'Play')
             ->whereDate('start_date', '<=', $currentDate)
             ->whereDate('end_date', '>=', $currentDate)
