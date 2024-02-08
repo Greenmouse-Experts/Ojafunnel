@@ -70,8 +70,9 @@
                                     <label>Sender Name</label>
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
-                                            <input type="text" placeholder="Enter the message title" name="sender_name" class="input"
+                                            <input type="text" placeholder="Enter the message title" name="sender_name" class="input" maxlength="11"
                                                 required>
+                                                <p><span class="text-danger">Note:</span> The sender name must not be greater than 11 characters.</p>
                                         </div>
                                     </div>
                                 </div>

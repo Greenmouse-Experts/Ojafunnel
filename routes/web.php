@@ -7,9 +7,11 @@ use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailMarketingController;
 use App\Http\Controllers\ListManagementController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
-\DB::raw("SET GLOBAL super_read_only = 0");
-\DB::raw("SET GLOBAL read_only = 0");
+DB::raw("SET GLOBAL super_read_only = 0");
+DB::raw("SET GLOBAL read_only = 0");
 
 Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamScore']);
 Route::get('/text', [AuthController::class, 'text']);
@@ -60,7 +62,7 @@ Route::get('assets/{dirname}/{basename}', [
         $dirname = \App\Library\StringHelper::base64UrlDecode($dirname);
         $absPath = storage_path(join_paths($dirname, $basename));
 
-        if (\File::exists($absPath)) {
+        if (File::exists($absPath)) {
             $mimetype = \App\Library\File::getFileType($absPath);
             return response()->file($absPath, array('Content-Type' => $mimetype));
         } else {
@@ -69,10 +71,10 @@ Route::get('assets/{dirname}/{basename}', [
     }
 ])->name('public_assets');
 
-Route::get('p/{message_id}/open', [\App\Controller\Mail\CampaignController::class, 'open'])->name('openTrackingUrl');
-Route::get('p/{url}/click/{message_id?}', [\App\Controller\Mail\CampaignController::class, 'click'])->name('clickTrackingUrl');
-Route::get('c/{subscriber}/unsubscribe/{message_id?}', [\App\Controller\Mail\CampaignController::class, 'unsubscribe'])->name('unsubscribeUrl');
-Route::get('campaigns/{message_id}/web-view', [\App\Controller\Mail\CampaignController::class, 'webView'])->name('webViewerUrl');
+// Route::get('p/{message_id}/open', [\App\Controller\Mail\CampaignController::class, 'open'])->name('openTrackingUrl');
+// Route::get('p/{url}/click/{message_id?}', [\App\Controller\Mail\CampaignController::class, 'click'])->name('clickTrackingUrl');
+// Route::get('c/{subscriber}/unsubscribe/{message_id?}', [\App\Controller\Mail\CampaignController::class, 'unsubscribe'])->name('unsubscribeUrl');
+// Route::get('campaigns/{message_id}/web-view', [\App\Controller\Mail\CampaignController::class, 'webView'])->name('webViewerUrl');
 
 Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('index');
 Route::post('/newsletter/subscribe', [App\Http\Controllers\HomePageController::class, 'subscribe_newsletter'])->name('subscribe.newsletter');

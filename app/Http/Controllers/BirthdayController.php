@@ -198,6 +198,15 @@ class BirthdayController extends Controller
             }
 
             if ($automation == 'SMS & WhatsApp Automation') {
+                if (strlen($request->sender_name) > 11) {
+                    // Handle the error: Input exceeds maximum length
+                    return back()->with([
+                        'type' => 'danger',
+                        'message' => 'Input exceeds maximum length of 11 characters.'
+                    ]);
+                    // You may redirect back to the form with an error message, or handle it according to your application logic
+                }
+
                 $contact = ListManagementContact::where('list_management_id', $request->birthday_list_id)->select('phone')->get();
                 $bm = new BirthdayAutomation();
                 $bm->user_id = Auth::user()->id;
