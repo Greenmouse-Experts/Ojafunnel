@@ -36,13 +36,13 @@ class WABirthday extends Command
     {
         $date = Carbon::now();
         $current_date = $date->format('Y-m-d');
+        $currentDate = Carbon::today()->toDateString();
 
-        $birthday_automation = BirthdayAutomation::where([
-            'automation' => '"whatsapp automation"',
-            'action' => 'Play'
-        ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
-
-        // Log::info($birthday_automation);
+        $birthday_automation = BirthdayAutomation::where('automation', 'email automation')
+            ->where('action', 'Play')
+            ->whereDate('start_date', '<=', $currentDate)
+            ->whereDate('end_date', '>=', $currentDate)
+            ->get();
 
         $birthday_automation->map(function ($_campaign) use ($date, $current_date) {
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->sender_id])->first();
@@ -59,7 +59,7 @@ class WABirthday extends Command
 
                     // Log::info($current_date);
 
-                // divide into 10 chunks and 
+                // divide into 10 chunks and
                 // delay each job between 10  - 20 sec in the queue
                 $chunks = $lists->chunk(10);
                 $delay = mt_rand(10, 20);
@@ -79,13 +79,13 @@ class WABirthday extends Command
                 }
             }
 
-            
+
             if ($_campaign->sms_type == 'anniversary') {
                 $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id])
                     ->whereMonth('anniv_date', $current_month)
                     ->whereDay('anniv_date', $current_day)->get();
 
-                // divide into 10 chunks and 
+                // divide into 10 chunks and
                 // delay each job between 10  - 20 sec in the queue
                 $chunks = $lists->chunk(10);
                 $delay = mt_rand(10, 20);
