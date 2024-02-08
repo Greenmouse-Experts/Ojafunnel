@@ -40,11 +40,13 @@ class SmsBirthday extends Command
         $date = Carbon::now();
         $currentDate = Carbon::today()->toDateString();
 
-        $birthday = BirthdayAutomation::where('automation', 'SMS & WhatsApp Automation')
+        $birthday = BirthdayAutomation::where('automation', '"SMS & WhatsApp Automation"')
             ->where('action', 'Play')
             ->whereDate('start_date', '<=', $currentDate)
             ->whereDate('end_date', '>=', $currentDate)
             ->get();
+
+        Log::info($birthday);
 
         if ($birthday->isEmpty()) {
             return Command::SUCCESS;
@@ -92,9 +94,13 @@ class SmsBirthday extends Command
                                 'headers' => $headers,
                             ]);
 
-                            $responseBody = json_decode($response->getBody());
+                            // Log the response status code and body
+                            $statusCode = $response->getStatusCode();
+                            $responseBody = $response->getBody()->getContents();
+                            Log::info("Multitexter SMS sent. Status Code: $statusCode, Response: $responseBody");
                         } catch (Exception $e) {
-                            $responseBody = $e;
+                            // Log the exception
+                            Log::error("Error sending Multitexter SMS: " . $e->getMessage());
                         }
                     }
                 }
