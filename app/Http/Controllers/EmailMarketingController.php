@@ -380,15 +380,11 @@ class EmailMarketingController extends Controller
     {
         $email_campaign = EmailCampaign::find($request->id);
 
-        if (count($email_campaign->email_campaign_queues->where('status', 'Waiting')) > 0) {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'The email campaign can\'t be deleted during execution.'
-            ]);
+        // if (count($email_campaign->email_campaign_queues->where('status', 'Waiting')) > 0) {
+        if (count($email_campaign->email_campaign_queues) > 0) {
+            // delete all related wa_queues
+            $email_campaign->email_campaign_queues()->delete();
         }
-
-        // delete all related wa_queues
-        $email_campaign->email_campaign_queues()->delete();
 
         // delete campaign
         $email_campaign->delete();

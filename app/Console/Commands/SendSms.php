@@ -225,183 +225,75 @@ class SendSms extends Command
 
     public function sendMessageTwilio($sms)
     {
-        $contains = Str::contains($sms->message, '$name');
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
 
-        if($contains)
-        {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+        $d = $contacts->toArray();
 
-            $d = $contacts->toArray();
+        $sid = $integration->sid;
+        $auth_token = $integration->token;
+        $from_number = $integration->from;
+        $sender_name = $sms->sender_name;
+        $recipients = $d;
 
-            $sid = $integration->sid;
-            $auth_token = $integration->token;
-            $from_number = $integration->from;
-            $sender_name = $sms->sender_name;
-            $recipients = $d;
+        try {
+            $sid = $sid; // Your Account SID from www.twilio.com/console
+            $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+            $from_number = $from_number; // Valid Twilio number
 
-            try {
-                $sid = $sid; // Your Account SID from www.twilio.com/console
-                $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
-                $from_number = $from_number; // Valid Twilio number
+            $client = new twilio($sid, $auth_token);
 
-                $client = new twilio($sid, $auth_token);
+            $count = 0;
 
-                $count = 0;
+            foreach( $recipients as $value )
+            {
+                $messageContent = str_replace('$name', $value['name'], $sms->message);
 
-                foreach( $recipients as $value )
-                {
-                    $messageContent = str_replace('$name', $value['name'], $sms->message);
+                $count++;
 
-                    $count++;
-
-                    $client->messages->create(
-                        $value['phone'],
-                        [
-                            'from' => $from_number,
-                            'body' => $messageContent,
-                        ]
-                    );
-                }
-
-                return true;
-
-            } catch(Exception $e) {
-                return $e->getMessage();
+                $client->messages->create(
+                    $value['phone'],
+                    [
+                        'from' => $from_number,
+                        'body' => $messageContent,
+                    ]
+                );
             }
 
-        } else {
+            return true;
 
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
-
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
-
-            $d = $contacts->toArray();
-
-            foreach ($d as $val) {
-                $str = implode(',', $val);
-                $data[] = $str;
-            }
-            $datum = implode(',', $data);
-
-            $sid = $integration->sid;
-            $auth_token = $integration->token;
-            $from_number = $integration->from;
-            $message = $sms->message;
-            $sender_name = $sms->sender_name;
-            $recipients = explode(',', $datum);
-
-            try {
-                $sid = $sid; // Your Account SID from www.twilio.com/console
-                $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
-                $from_number = $from_number; // Valid Twilio number
-
-                $client = new twilio($sid, $auth_token);
-
-                $count = 0;
-
-                foreach( $recipients as $number )
-                {
-                    $count++;
-
-                    $client->messages->create(
-                        $number,
-                        [
-                            'from' => $from_number,
-                            'body' => $message,
-                        ]
-                    );
-                }
-
-                return true;
-
-            } catch(Exception $e) {
-                return $e->getMessage();
-            }
+        } catch(Exception $e) {
+            return $e->getMessage();
         }
 
     }
 
     public function sendMessageMultitexter($sms)
     {
-        $contains = Str::contains($sms->message, '$name');
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
 
-        if($contains)
-        {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+        $email = $integration->email;
+        $password = $integration->password;
+        $sender_name = $sms->sender_name;
+        $api_key = $integration->api_key;
 
-            $email = $integration->email;
-            $password = $integration->password;
-            $sender_name = $sms->sender_name;
-            $api_key = $integration->api_key;
-
-            try {
-                foreach($contacts as $contact)
-                {
-                    $client = new Client(); //GuzzleHttp\Client
-                    $url = "https://app.multitexter.com/v2/app/sms";
-
-                    $messageContent = str_replace('$name', $contact->name, $sms->message);
-
-                    $params = [
-                        "email" => $email,
-                        "password" => $password,
-                        "sender_name" => $sender_name,
-                        "message" => $messageContent,
-                        "recipients" => $contact->phone
-                    ];
-
-                    $headers = [
-                        'Authorization' => 'Bearer ' . $api_key
-                    ];
-
-                    $client->request('POST', $url, [
-                        'json' => $params,
-                        'headers' => $headers,
-                    ]);
-                }
-                // $responseBody = json_decode($response->getBody());
-                $responseBody = true;
-            } catch (Exception $e) {
-                $responseBody = $e;
-            }
-
-            return $responseBody;
-
-        } else {
-
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
-
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
-
-            $d = $contacts->toArray();
-
-            foreach ($d as $val) {
-                $str = implode(',', $val);
-                $data[] = $str;
-            }
-            $datum = implode(',', $data);
-
-            $email = $integration->email;
-            $password = $integration->password;
-            $message = $sms->message;
-            $sender_name = $sms->sender_name;
-            $recipients = $datum;
-            $api_key = $integration->api_key;
-
-            try {
+        try {
+            foreach($contacts as $contact)
+            {
                 $client = new Client(); //GuzzleHttp\Client
                 $url = "https://app.multitexter.com/v2/app/sms";
+
+                $messageContent = str_replace('$name', $contact->name, $sms->message);
 
                 $params = [
                     "email" => $email,
                     "password" => $password,
                     "sender_name" => $sender_name,
-                    "message" => $message,
-                    "recipients" => $recipients
+                    "message" => $messageContent,
+                    "recipients" => $contact->phone
                 ];
 
                 $headers = [
@@ -412,113 +304,46 @@ class SendSms extends Command
                     'json' => $params,
                     'headers' => $headers,
                 ]);
-
-                $responseBody = true;
-            } catch (Exception $e) {
-                $responseBody = $e;
             }
-
-            return $responseBody;
+            // $responseBody = json_decode($response->getBody());
+            $responseBody = true;
+        } catch (Exception $e) {
+            $responseBody = $e;
         }
+
+        return $responseBody;
     }
 
     public function sendMessageNigeriaBulkSms($sms)
     {
-        $contains = Str::contains($sms->message, '$name');
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
 
-        if($contains)
-        {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+        $username = $integration->username;
+        $password = $integration->password;
+        $sender = $sms->sender_name;
 
-            $username = $integration->username;
-            $password = $integration->password;
-            $sender = $sms->sender_name;
+        try {
+            foreach($contacts as $contact)
+            {
+                $messageContent = str_replace('$name', $contact->name, $sms->message);
 
-            try {
-                foreach($contacts as $contact)
-                {
-                    $messageContent = str_replace('$name', $contact->name, $sms->message);
-
-                    // Separate multiple numbers by comma
-                    $mobiles = $contact->phone;
-
-                    // Set your domain's API URL
-                    $api_url = 'http://portal.nigeriabulksms.com/api/';
-
-                    //Create the message data
-                    $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $messageContent, 'mobiles' => $mobiles);
-
-                    //URL encode the message data
-                    $data = http_build_query($data);
-
-                    //Send the message
-                    $ch = curl_init(); // Initialize a cURL connection
-
-                    curl_setopt($ch, CURLOPT_URL, $api_url);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch, CURLOPT_POST, true);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
-                    $result = curl_exec($ch);
-
-                    $result = json_decode($result);
-
-                }
-
-                $responseBody = true;
-                // if (isset($result->status) && strtoupper($result->status) == 'OK') {
-                //     // Message sent successfully, do anything here
-                //     return 'Message sent at N' . $result->price;
-                // } else if (isset($result->error)) {
-                //     // Message failed, check reason.
-                //     return 'Message failed - error: ' . $result->error;
-                // } else {
-                //     // Could not determine the message response.
-                //     return 'Unable to process request';
-                // }
-            } catch (Exception $e) {
-                $responseBody = $e;
-            }
-
-            return $responseBody;
-
-        } else {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
-
-            $integration = Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
-
-            $d = $contacts->toArray();
-
-            foreach ($d as $val) {
-                $str = implode(',', $val);
-                $data[] = $str;
-            }
-            $datum = implode(',', $data);
-
-            // Initialize variables ( set your variables here )
-            $username = $integration->username;
-            $password = $integration->password;
-            $sender = $sms->sender_name;
-            $message = $sms->message;
-            $recipients = $datum;
-
-            try {
                 // Separate multiple numbers by comma
-                $mobiles = $recipients;
+                $mobiles = $contact->phone;
 
                 // Set your domain's API URL
                 $api_url = 'http://portal.nigeriabulksms.com/api/';
 
                 //Create the message data
-                $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $message, 'mobiles' => $mobiles);
+                $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $messageContent, 'mobiles' => $mobiles);
 
                 //URL encode the message data
                 $data = http_build_query($data);
 
                 //Send the message
                 $ch = curl_init(); // Initialize a cURL connection
+
                 curl_setopt($ch, CURLOPT_URL, $api_url);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($ch, CURLOPT_POST, true);
@@ -528,255 +353,142 @@ class SendSms extends Command
 
                 $result = json_decode($result);
 
-                $responseBody = true;
-            } catch (Exception $e) {
-                $responseBody = $e;
             }
 
-            return $responseBody;
+            $responseBody = true;
+            // if (isset($result->status) && strtoupper($result->status) == 'OK') {
+            //     // Message sent successfully, do anything here
+            //     return 'Message sent at N' . $result->price;
+            // } else if (isset($result->error)) {
+            //     // Message failed, check reason.
+            //     return 'Message failed - error: ' . $result->error;
+            // } else {
+            //     // Could not determine the message response.
+            //     return 'Unable to process request';
+            // }
+        } catch (Exception $e) {
+            $responseBody = $e;
         }
+
+        return $responseBody;
     }
 
     public function sendMessageAWS($sms)
     {
-        $contains = Str::contains($sms->message, '$name');
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
 
-        if($contains)
-        {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+        $key = $integration->key;
+        $secret = $integration->secret;
+        $sender = $sms->sender_name;
 
-            $key = $integration->key;
-            $secret = $integration->secret;
-            $sender = $sms->sender_name;
+        try {
+            foreach($contacts as $contact)
+            {
+                $messageContent = str_replace('$name', $contact->name, $sms->message);
 
-            try {
-                foreach($contacts as $contact)
-                {
-                    $messageContent = str_replace('$name', $contact->name, $sms->message);
+                // Required variables to initialize SNS Client Object
+                $params = [
+                    'credentials' => [
+                        'key' => $key,
+                        'secret' => $secret
+                    ],
+                    'region' => 'us-east-1',
+                    'version' => 'latest'
+                ];
 
-                    // Required variables to initialize SNS Client Object
-                    $params = [
-                        'credentials' => [
-                            'key' => $key,
-                            'secret' => $secret
+                $SnSclient = new SnsClient($params);
+
+                // Basic Configuration of messages like SMS type, message, and phone number
+                $args = [
+                    'MessageAttributes' => [
+                        'AWS.SNS.SMS.SenderID' => [
+                            'DataType' => 'String',
+                            'StringValue'=> $sender
                         ],
-                        'region' => 'us-east-1',
-                        'version' => 'latest'
-                    ];
-
-                    $SnSclient = new SnsClient($params);
-
-                    // Basic Configuration of messages like SMS type, message, and phone number
-                    $args = [
-                        'MessageAttributes' => [
-                            'AWS.SNS.SMS.SenderID' => [
-                                'DataType' => 'String',
-                                'StringValue'=> $sender
-                            ],
-                            'AWS.SNS.SMS.SMSType' => [
-                                'DataType' => 'String',
-                                'StringValue'=> 'Transactional'
-                            ]
-                        ],
-                        "Message" => $messageContent,
-                        "PhoneNumber" => $contact->phone
-                    ];
+                        'AWS.SNS.SMS.SMSType' => [
+                            'DataType' => 'String',
+                            'StringValue'=> 'Transactional'
+                        ]
+                    ],
+                    "Message" => $messageContent,
+                    "PhoneNumber" => $contact->phone
+                ];
 
 
-                    $result = $SnSclient->publish($args);
-                    // return $result;
-                }
-
-                $responseBody = true;
-            } catch (Exception $e) {
-                $responseBody = $e;
+                $result = $SnSclient->publish($args);
+                // return $result;
             }
 
-            return $responseBody;
-
-        } else {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
-
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
-
-            $key = $integration->key;
-            $secret = $integration->secret;
-            $sender = $sms->sender_name;
-            $message = $sms->message;
-
-            try {
-                foreach($contacts as $contact)
-                {
-                    // Required variables to initialize SNS Client Object
-                    $params = [
-                        'credentials' => [
-                            'key' => $key,
-                            'secret' => $secret
-                        ],
-                        'region' => 'us-east-1',
-                        'version' => 'latest'
-                    ];
-
-                    $SnSclient = new SnsClient($params);
-
-                    // Basic Configuration of messages like SMS type, message, and phone number
-                    $args = [
-                        'MessageAttributes' => [
-                            'AWS.SNS.SMS.SenderID' => [
-                                'DataType' => 'String',
-                                'StringValue'=> $sender
-                            ],
-                            'AWS.SNS.SMS.SMSType' => [
-                                'DataType' => 'String',
-                                'StringValue'=> 'Transactional'
-                            ]
-                        ],
-                        "Message" => $message,
-                        "PhoneNumber" => $contact->phone
-                    ];
-
-
-                    $result = $SnSclient->publish($args);
-                    // return $result;
-                }
-
-                $responseBody = true;
-            } catch (Exception $e) {
-                $responseBody = $e;
-            }
-
-            return $responseBody;
+            $responseBody = true;
+        } catch (Exception $e) {
+            $responseBody = $e;
         }
+
+        return $responseBody;
     }
 
     public function sendMessageInfoBip($sms)
     {
-        $contains = Str::contains($sms->message, '$name');
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
 
-        if($contains)
-        {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+        $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
+        $API_KEY = $integration->api_key;
+        $BASE_URL = $integration->api_base_url;
+        $SENDER = $sms->sender_name;
 
-            $API_KEY = $integration->api_key;
-            $BASE_URL = $integration->api_base_url;
-            $SENDER = $sms->sender_name;
+        try {
+            foreach($contacts as $contact)
+            {
+                $RECIPIENT = $contact->phone;
 
-            try {
-                foreach($contacts as $contact)
-                {
-                    $RECIPIENT = $contact->phone;
+                $MESSAGE = str_replace('$name', $contact->name, $sms->message);
 
-                    $MESSAGE = str_replace('$name', $contact->name, $sms->message);
+                $data_json = '{
+                    "messages": [
+                        {
+                        "destinations": [
+                            {
+                            "to": "'.$RECIPIENT.'"
+                            }
+                        ],
+                        "from": "'.$SENDER.'",
+                        "text": "'.$MESSAGE.'"
+                        }
+                    ]
+                }';
 
-                    $data_json = '{
-                        "messages": [
-                          {
-                            "destinations": [
-                              {
-                                "to": "'.$RECIPIENT.'"
-                              }
-                            ],
-                            "from": "'.$SENDER.'",
-                            "text": "'.$MESSAGE.'"
-                          }
-                        ]
-                    }';
+                $curl = curl_init();
 
-                    $curl = curl_init();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => $data_json,
+                    CURLOPT_HTTPHEADER => array(
+                        'Authorization: App '.$API_KEY,
+                        'Content-Type: application/json',
+                        'Accept: application/json'
+                    ),
+                ));
 
-                    curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_ENCODING => '',
-                        CURLOPT_MAXREDIRS => 10,
-                        CURLOPT_TIMEOUT => 0,
-                        CURLOPT_FOLLOWLOCATION => true,
-                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                        CURLOPT_CUSTOMREQUEST => 'POST',
-                        CURLOPT_POSTFIELDS => $data_json,
-                        CURLOPT_HTTPHEADER => array(
-                            'Authorization: App '.$API_KEY,
-                            'Content-Type: application/json',
-                            'Accept: application/json'
-                        ),
-                    ));
+                $response = curl_exec($curl);
 
-                    $response = curl_exec($curl);
-
-                    curl_close($curl);
-                }
-
-                $responseBody = true;
-            } catch (Exception $e) {
-                $responseBody = $e;
+                curl_close($curl);
             }
 
-            return $responseBody;
-
-        } else {
-            $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone')->get();
-
-            $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
-
-            $API_KEY = $integration->api_key;
-            $BASE_URL = $integration->api_base_url;
-            $SENDER = $sms->sender_name;
-
-            try {
-                foreach($contacts as $contact)
-                {
-                    $RECIPIENT = $contact->phone;
-
-                    $MESSAGE = $sms->message;
-
-                    $data_json = '{
-                        "messages": [
-                          {
-                            "destinations": [
-                              {
-                                "to": "'.$RECIPIENT.'"
-                              }
-                            ],
-                            "from": "'.$SENDER.'",
-                            "text": "'.$MESSAGE.'"
-                          }
-                        ]
-                    }';
-
-                    $curl = curl_init();
-
-                    curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_ENCODING => '',
-                        CURLOPT_MAXREDIRS => 10,
-                        CURLOPT_TIMEOUT => 0,
-                        CURLOPT_FOLLOWLOCATION => true,
-                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                        CURLOPT_CUSTOMREQUEST => 'POST',
-                        CURLOPT_POSTFIELDS => $data_json,
-                        CURLOPT_HTTPHEADER => array(
-                            'Authorization: App '.$API_KEY,
-                            'Content-Type: application/json',
-                            'Accept: application/json'
-                        ),
-                    ));
-
-                    $response = curl_exec($curl);
-
-                    curl_close($curl);
-                }
-
-                $responseBody = true;
-            } catch (Exception $e) {
-                $responseBody = $e;
-            }
-
-            return $responseBody;
+            $responseBody = true;
+        } catch (Exception $e) {
+            $responseBody = $e;
         }
+
+        return $responseBody;
     }
 }
