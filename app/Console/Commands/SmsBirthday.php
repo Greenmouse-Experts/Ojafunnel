@@ -50,8 +50,6 @@ class SmsBirthday extends Command
             return Command::SUCCESS;
         }
 
-        Log::info($birthday);
-
         foreach ($birthday as $key => $ba) {
             if ($ba->sms_type == 'birthday') {
                 $birthdayContactList = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->whereMonth('date_of_birth', '=', date('m'))->whereDay('date_of_birth', '=', date('d'))->select('phone')->get();
@@ -63,18 +61,15 @@ class SmsBirthday extends Command
                 }
 
                 $integration = Integration::find($ba->integration);
-                // Log::info($integration->type);
+
                 if ($integration->type == "Multitexter") {
                     $d = $birthdayContactList->toArray();
-                    //  \Log::info($d);
 
                     foreach ($d as $val) {
                         $str = implode(',', $val);
                         $data[] = $str;
                     }
                     $datum = implode(',', $data);
-
-                    // \Log::info($datum);
 
                     $email = $integration->email;
                     $password = $integration->password;
@@ -109,7 +104,7 @@ class SmsBirthday extends Command
                         $responseBody = $e;
                     }
 
-                    // return $responseBody;
+                    Log::info($responseBody);
                 }
 
                 if ($integration->type == "NigeriaBulkSms") {
