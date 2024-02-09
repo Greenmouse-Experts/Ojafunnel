@@ -70,6 +70,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <p><b><spam class="text-danger font-weight-bold">Note:</spam> Contacts exceeding 10, to ensure smooth delivery and avoid overriding, please allocate sufficient time spacing between each email sending.</b></p>
 
                                     <div class="col-lg-12" id="message">
                                         <label>Email template:</label>
@@ -128,7 +129,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="col-12" id="series" style="display: none;">
                                         <fieldset class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
                                             <div class="col-md-6 mt-4">
@@ -349,7 +350,7 @@
         next.setAttribute('class', nextIdattr);
 
         editorId = nextIdattr;
-        
+
 
         //document.getElementById('series_email_template_editor')
         document.getElementsByClassName(nextIdattr)[0].innerHTML = `<textarea class="mt-2" cols="80" id="${editorId}" name="series_email_template[]"></textarea>`;
