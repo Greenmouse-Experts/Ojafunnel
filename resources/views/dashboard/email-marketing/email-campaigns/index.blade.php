@@ -102,6 +102,15 @@
                                                 <td>
                                                     @if (App\Models\EmailTemplate::where('id', $email_campaign->email_template_id)->exists())
                                                         {{ App\Models\EmailTemplate::where('id', $email_campaign->email_template_id)->first()->name }}
+                                                    @elseif($email_campaign->message_timing == 'Series')
+                                                        @if (App\Models\SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)->exists())
+                                                            @foreach(App\Models\SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)->get() as $index => $template)
+                                                            {{ $index + 1 }}. {{ App\Models\EmailTemplate::where('id', $template->email_template_id)->first()->name }}
+                                                            <br>
+                                                            @endforeach
+                                                        @else
+                                                        <b>{{ 'DELETED' }}</b>
+                                                        @endif
                                                     @else
                                                         <b>{{ 'DELETED' }}</b>
                                                     @endif

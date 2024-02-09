@@ -3,20 +3,20 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Attachment;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Queue\SerializesModels;
 
-class EmailCampaignMail extends Mailable
+class EmailSeriesCampaign extends Mailable
 {
     use Queueable, SerializesModels;
 
     //
+    public $series_email_campaign;
     public $email_campaign;
     public $email_kit;
     public $contact;
@@ -29,6 +29,7 @@ class EmailCampaignMail extends Mailable
      */
     public function __construct($seriesEmailCampaign, $email_campaign, $email_kit, $contact, $user)
     {
+        $this->series_email_campaign = $seriesEmailCampaign;
         $this->email_campaign = $email_campaign;
         $this->email_kit = $email_kit;
         $this->contact = $contact;
@@ -66,7 +67,7 @@ class EmailCampaignMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.email-marketing-templates.' . $this->user->username . '.' . $this->email_campaign->slug,
+            view: 'emails.email-marketing-templates.' . $this->user->username . '.' . $this->series_email_campaign->slug,
             with: [
                 'name' => $this->contact->name,
                 'email' => $this->contact->email,
@@ -84,14 +85,12 @@ class EmailCampaignMail extends Mailable
         $paths = json_decode($this->email_campaign->attachment_paths);
         $_attachments = [];
 
-            if ($paths && is_array($paths)) {
-                for ($i = 0; $i < count($paths); $i++) {
-                    array_push($_attachments, Attachment::fromStorage('public/' . $paths[$i]));
-                }
+        if ($paths && is_array($paths)) {
+            foreach ($paths as $path) {
+                $_attachments[] = Attachment::fromStorage('public/' . $path);
             }
+        }
 
         return $_attachments;
     }
-
-
 }

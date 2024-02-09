@@ -848,5 +848,4 @@ class EmailMarketingController extends Controller
             ';
     }
 
-
 }

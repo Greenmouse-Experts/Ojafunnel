@@ -9,6 +9,7 @@ use App\Models\SeriesEmailCampaign as SeriesEmailCampaignModel;
 use App\Models\ListManagementContact;
 use App\Models\User;
 use App\Mail\EmailCampaignMail;
+use App\Mail\EmailSeriesCampaign;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -37,78 +38,116 @@ class SeriesEmailCampaign extends Command
      */
     public function handle()
     {
-        $date = Carbon::now();
+        // $date = Carbon::now();
 
-        $current_date = $date->format('Y-m-d');
-        $current_time = $date->format('H:i');
+        // $current_date = $date->format('Y-m-d');
+        // $current_time = $date->format('H:i');
 
-        $series_email_campaigns = SeriesEmailCampaignModel::where([
-            'date' => $current_date,
-            'time' => $current_time,
-        ])->get();
+        // $series_email_campaigns = SeriesEmailCampaignModel::where([
+        //     'date' => $current_date,
+        //     'time' => $current_time,
+        // ])->get();
 
-        Log::info($series_email_campaigns);
+        // Log::info($series_email_campaigns);
 
-        $series_email_campaigns->map(function ($_campaign) {
-            $emailCampaign = EmailCampaign::find($_campaign->email_campaign_id);
-            $email_kit = EmailKit::where('id', $emailCampaign->email_kit_id)->first();
-            $user = User::where('id', $_campaign->user_id)->first();
+        // $series_email_campaigns->map(function ($_campaign) {
+        //     $emailCampaign = EmailCampaign::find($_campaign->email_campaign_id);
+        //     $email_kit = EmailKit::where('id', $emailCampaign->email_kit_id)->first();
+        //     $user = User::where('id', $_campaign->user_id)->first();
 
-            $contacts = ListManagementContact::latest()->where('list_management_id', $emailCampaign->list_id)->get();
+        //     $contacts = ListManagementContact::latest()->where('list_management_id', $emailCampaign->list_id)->get();
 
-            // divide into 500 chunks and
-            // delay each job between 10  - 20 sec in the queue
-            // $chunks = $contacts->chunk(500);
-            $chunks = $contacts;
+        //     // divide into 500 chunks and
+        //     // delay each job between 10  - 20 sec in the queue
+        //     // $chunks = $contacts->chunk(500);
+        //     $chunks = $contacts;
+        //     $delay = mt_rand(10, 20);
+
+        //     // dispatch job and delay
+        //     foreach ($chunks as $_chunk) {
+        //         // dispatch job
+
+        //         // ProcessEmailCampaign::dispatch([
+        //         //     'smtp_host'    => $email_kit->host,
+        //         //     'smtp_port'    => $email_kit->port,
+        //         //     'smtp_username'  => $email_kit->username,
+        //         //     'smtp_password'  => $email_kit->password,
+        //         //     'from_email'    => $email_kit->from_email,
+        //         //     'from_name'    => $email_kit->from_name,
+        //         // ],  $_chunk, [
+        //         //     'email_campaign' => $_campaign,
+        //         //     'email_kit' => $email_kit,
+        //         //     'user' => $user
+        //         // ])->afterCommit()->onQueue('emailCampaign')->delay($delay);
+
+        //         // $mailable = new EmailCampaignMail($_campaign, $email_kit, $_chunk, $user);
+        //         // Mail::to($_chunk->email)->send($mailable);
+
+        //         // // send email
+        //         // @$mailer->to($_chunk->email)->send($mailable);
+
+        //         // $delay += mt_rand(10, 20);
+
+        //         // Dynamically set mail configuration
+        //         config([
+        //             'mail.host' => $email_kit->host,
+        //             'mail.port' => $email_kit->port,
+        //             'mail.username' => $email_kit->username,
+        //             'mail.password' => $email_kit->password,
+        //             'mail.from.address' => $email_kit->from_email,
+        //             'mail.from.name' => $email_kit->from_name,
+        //         ]);
+
+        //         // Send email using Laravel Mail facade
+        //         $trigger = new EmailCampaignMail($_campaign, $email_kit, $_chunk, $user);
+
+        //         Mail::to($_chunk->email)->send($trigger);
+
+        //         // Introduce a delay if necessary
+        //         sleep($delay);
+
+        //         $delay += mt_rand(10, 20);
+        //     }
+        // });
+
+        $currentDate = Carbon::now()->format('Y-m-d');
+        $currentTime = Carbon::now()->format('H:i');
+
+        $seriesEmailCampaigns = SeriesEmailCampaignModel::where('date', $currentDate)
+            ->where('time', $currentTime)
+            ->get();
+
+        $seriesEmailCampaigns->each(function ($seriesEmailCampaign) {
+            $emailCampaign = EmailCampaign::find($seriesEmailCampaign->email_campaign_id);
+            $emailKit = EmailKit::find($emailCampaign->email_kit_id);
+            $user = User::find($seriesEmailCampaign->user_id);
+
+            $contacts = ListManagementContact::where('list_management_id', $emailCampaign->list_id)
+                ->latest()
+                ->get();
+
             $delay = mt_rand(10, 20);
 
-            // dispatch job and delay
-            foreach ($chunks as $_chunk) {
-                // dispatch job
-
-                // ProcessEmailCampaign::dispatch([
-                //     'smtp_host'    => $email_kit->host,
-                //     'smtp_port'    => $email_kit->port,
-                //     'smtp_username'  => $email_kit->username,
-                //     'smtp_password'  => $email_kit->password,
-                //     'from_email'    => $email_kit->from_email,
-                //     'from_name'    => $email_kit->from_name,
-                // ],  $_chunk, [
-                //     'email_campaign' => $_campaign,
-                //     'email_kit' => $email_kit,
-                //     'user' => $user
-                // ])->afterCommit()->onQueue('emailCampaign')->delay($delay);
-
-                // $mailable = new EmailCampaignMail($_campaign, $email_kit, $_chunk, $user);
-                // Mail::to($_chunk->email)->send($mailable);
-
-                // // send email
-                // @$mailer->to($_chunk->email)->send($mailable);
-
-                // $delay += mt_rand(10, 20);
-
+            $contacts->each(function ($contact) use ($seriesEmailCampaign, $emailCampaign, $emailKit, $user, $delay) {
                 // Dynamically set mail configuration
                 config([
-                    'mail.host' => $email_kit->host,
-                    'mail.port' => $email_kit->port,
-                    'mail.username' => $email_kit->username,
-                    'mail.password' => $email_kit->password,
-                    'mail.from.address' => $email_kit->from_email,
-                    'mail.from.name' => $email_kit->from_name,
+                    'mail.host' => $emailKit->host,
+                    'mail.port' => $emailKit->port,
+                    'mail.username' => $emailKit->username,
+                    'mail.password' => $emailKit->password,
+                    'mail.from.address' => $emailKit->from_email,
+                    'mail.from.name' => $emailKit->from_name,
                 ]);
 
                 // Send email using Laravel Mail facade
-                $trigger = new EmailCampaignMail($_campaign, $email_kit, $_chunk, $user);
-
-                Mail::to($_chunk->email)->send($trigger);
+                $email = new EmailSeriesCampaign($seriesEmailCampaign, $emailCampaign, $emailKit, $contact, $user);
+                Mail::to($contact->email)->send($email);
 
                 // Introduce a delay if necessary
                 sleep($delay);
-
-                $delay += mt_rand(10, 20);
-            }
+            });
         });
 
-        return Command::SUCCESS;
+        Log::info('Series email campaigns scheduled successfully.');
     }
 }
