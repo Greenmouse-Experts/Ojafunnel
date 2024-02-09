@@ -46,11 +46,13 @@ class SmsBirthday extends Command
             ->whereDate('end_date', '>=', $currentDate)
             ->get();
 
-        Log::info($birthday);
+        // Log::info($birthday);
 
         if ($birthday->isEmpty()) {
             return Command::SUCCESS;
         }
+
+        $delay = mt_rand(10, 20);
 
         foreach ($birthday as $key => $ba) {
             if ($ba->sms_type == 'birthday') {
@@ -102,6 +104,9 @@ class SmsBirthday extends Command
                             // Log the exception
                             Log::error("Error sending Multitexter SMS: " . $e->getMessage());
                         }
+
+                        // Introduce a delay if necessary
+                        sleep($delay);
                     }
                 }
 
@@ -148,6 +153,9 @@ class SmsBirthday extends Command
                         } catch (Exception $e) {
                             $responseBody = $e;
                         }
+
+                        // Introduce a delay if necessary
+                        sleep($delay);
                     }
                 }
 
