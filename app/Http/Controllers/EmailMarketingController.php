@@ -386,6 +386,17 @@ class EmailMarketingController extends Controller
             $email_campaign->email_campaign_queues()->delete();
         }
 
+        if($email_campaign->message_timing == 'Series')
+        {
+            if (SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)->exists())
+            {
+                foreach(SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)->get() as $index => $template)
+                {
+                    $template->delete();
+                }
+            }
+        }
+
         // delete campaign
         $email_campaign->delete();
 
