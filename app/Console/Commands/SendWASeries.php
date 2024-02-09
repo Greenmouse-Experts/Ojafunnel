@@ -47,17 +47,17 @@ class SendWASeries extends Command
         $series = SeriesWaCampaign::where('date', "$current_date")
             ->where('time', $current_time)
             ->get();
-            
+
         $count = 1;
 
 
         foreach($series as $element)
         {
             $_campaign = WaCampaigns::find($element->wa_campaign_id);
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
-            
+
             // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts->chunk(10);
@@ -151,7 +151,7 @@ class SendWASeries extends Command
 
 
         $onetime->map(function ($_campaign) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
             // divide into 10 chunks and

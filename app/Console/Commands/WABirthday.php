@@ -59,7 +59,7 @@ class WABirthday extends Command
             $current_month = $date->format('m');
 
             if ($_campaign->sms_type == 'birthday') {
-                $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id])
+                $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id])->where('subscribe', true)
                     ->whereMonth('date_of_birth', $current_month)
                     ->whereDay('date_of_birth', $current_day)
                     // ->where('date_of_birth', $current_date)
@@ -89,7 +89,7 @@ class WABirthday extends Command
 
 
             if ($_campaign->sms_type == 'anniversary') {
-                $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id])
+                $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id])->where('subscribe', true)
                     ->whereMonth('anniv_date', $current_month)
                     ->whereDay('anniv_date', $current_day)->get();
 

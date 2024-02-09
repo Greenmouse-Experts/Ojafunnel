@@ -93,7 +93,7 @@ class SeriesSMS extends Command
     {
         $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone', 'name')->get();
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->where('subscribe', true)->select('phone', 'name')->get();
 
         $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
@@ -147,7 +147,7 @@ class SeriesSMS extends Command
     {
         $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone', 'name')->get();
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->where('subscribe', true)->select('phone', 'name')->get();
 
         $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
@@ -200,7 +200,7 @@ class SeriesSMS extends Command
     {
         $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone', 'name')->get();
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->where('subscribe', true)->select('phone', 'name')->get();
 
         $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
@@ -268,7 +268,7 @@ class SeriesSMS extends Command
     {
         $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone', 'name')->get();
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->where('subscribe', true)->select('phone', 'name')->get();
 
         $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
@@ -335,7 +335,7 @@ class SeriesSMS extends Command
     {
         $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->select('phone', 'name')->get();
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $smsCampaign->maillist_id)->where('subscribe', true)->select('phone', 'name')->get();
 
         $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 

@@ -84,7 +84,7 @@ class EmailBirthday extends Command
             }
 
             if ($_campaign->sms_type == 'anniversary') {
-                $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id])
+                $lists = ListManagementContact::where(['list_management_id' => $_campaign->birthday_contact_list_id, 'subscribe' => true])
                     ->whereMonth('anniv_date', $current_month)
                     ->whereDay('anniv_date', $current_day)->get();
 

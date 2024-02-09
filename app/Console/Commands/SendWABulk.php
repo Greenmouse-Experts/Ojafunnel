@@ -61,13 +61,13 @@ class SendWABulk extends Command
             'start_time' => $current_time,
             'next_due_date' => $current_date,
         ])->get();
-        
+
 
         $onetime->map(function ($_campaign) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
-            // divide into 10 chunks and 
+            // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts->chunk(10);
             $delay = mt_rand(10, 20);
@@ -92,7 +92,7 @@ class SendWABulk extends Command
             if ($_campaign->template == 'template2') {
                 // dispatch job and delay
                 foreach ($chunks as $key => $_chunk) {
-                    // dispatch job 
+                    // dispatch job
                     ProcessTemplate2BulkWAMessages::dispatch($_chunk, [
                         'whatsapp_account' => $whatsapp_number->phone_number,
                         'full_jwt_session' => $whatsapp_number->full_jwt_session,
@@ -149,10 +149,10 @@ class SendWABulk extends Command
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
         $daily->map(function ($_campaign) use ($date) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
-            // divide into 10 chunks and 
+            // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts->chunk(10);
             $delay = mt_rand(10, 20);
@@ -177,7 +177,7 @@ class SendWABulk extends Command
             if ($_campaign->template == 'template2') {
                 // dispatch job and delay
                 foreach ($chunks as $key => $_chunk) {
-                    // dispatch job 
+                    // dispatch job
                     ProcessTemplate2BulkWAMessages::dispatch($_chunk, [
                         'whatsapp_account' => $whatsapp_number->phone_number,
                         'full_jwt_session' => $whatsapp_number->full_jwt_session,
@@ -239,10 +239,10 @@ class SendWABulk extends Command
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
         $weekly->map(function ($_campaign) use ($date) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
-            // divide into 10 chunks and 
+            // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts->chunk(10);
             $delay = mt_rand(10, 20);
@@ -267,7 +267,7 @@ class SendWABulk extends Command
             if ($_campaign->template == 'template2') {
                 // dispatch job and delay
                 foreach ($chunks as $key => $_chunk) {
-                    // dispatch job 
+                    // dispatch job
                     ProcessTemplate2BulkWAMessages::dispatch($_chunk, [
                         'whatsapp_account' => $whatsapp_number->phone_number,
                         'full_jwt_session' => $whatsapp_number->full_jwt_session,
@@ -329,10 +329,10 @@ class SendWABulk extends Command
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
         $monthly->map(function ($_campaign) use ($date) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
-            // divide into 10 chunks and 
+            // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts->chunk(10);
             $delay = mt_rand(10, 20);
@@ -357,7 +357,7 @@ class SendWABulk extends Command
             if ($_campaign->template == 'template2') {
                 // dispatch job and delay
                 foreach ($chunks as $key => $_chunk) {
-                    // dispatch job 
+                    // dispatch job
                     ProcessTemplate2BulkWAMessages::dispatch($_chunk, [
                         'whatsapp_account' => $whatsapp_number->phone_number,
                         'full_jwt_session' => $whatsapp_number->full_jwt_session,
@@ -419,10 +419,10 @@ class SendWABulk extends Command
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
         $monthly->map(function ($_campaign) use ($date) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
-            // divide into 10 chunks and 
+            // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts->chunk(10);
             $delay = mt_rand(10, 20);
@@ -447,7 +447,7 @@ class SendWABulk extends Command
             if ($_campaign->template == 'template2') {
                 // dispatch job and delay
                 foreach ($chunks as $key => $_chunk) {
-                    // dispatch job 
+                    // dispatch job
                     ProcessTemplate2BulkWAMessages::dispatch($_chunk, [
                         'whatsapp_account' => $whatsapp_number->phone_number,
                         'full_jwt_session' => $whatsapp_number->full_jwt_session,
@@ -509,10 +509,10 @@ class SendWABulk extends Command
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
         $custom->map(function ($_campaign) use ($date) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
-            // divide into 10 chunks and 
+            // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts->chunk(10);
             $delay = mt_rand(10, 20);
@@ -537,7 +537,7 @@ class SendWABulk extends Command
             if ($_campaign->template == 'template2') {
                 // dispatch job and delay
                 foreach ($chunks as $key => $_chunk) {
-                    // dispatch job 
+                    // dispatch job
                     ProcessTemplate2BulkWAMessages::dispatch($_chunk, [
                         'whatsapp_account' => $whatsapp_number->phone_number,
                         'full_jwt_session' => $whatsapp_number->full_jwt_session,
@@ -578,7 +578,7 @@ class SendWABulk extends Command
             ]);
 
             // update next_due_date
-            // 
+            //
             if ($_campaign->frequency_unit == 'day') {
                 WaCampaigns::where(['id' => $_campaign->id])->update([
                     'next_due_date' => $date->addDays($_campaign->frequency_amount)->format('Y-m-d')

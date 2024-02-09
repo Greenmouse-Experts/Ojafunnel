@@ -51,7 +51,7 @@ class SeriesEmailCampaign extends Command
             $emailKit = EmailKit::find($emailCampaign->email_kit_id);
             $user = User::find($seriesEmailCampaign->user_id);
 
-            $contacts = ListManagementContact::where('list_management_id', $emailCampaign->list_id)
+            $contacts = ListManagementContact::where('list_management_id', $emailCampaign->list_id)->where('subscribe', true)
                 ->latest()
                 ->get();
 

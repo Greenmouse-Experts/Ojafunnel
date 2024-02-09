@@ -225,7 +225,7 @@ class SendSms extends Command
 
     public function sendMessageTwilio($sms)
     {
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->where('subscribe', true)->select('phone', 'name')->get();
 
         $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 
@@ -271,7 +271,7 @@ class SendSms extends Command
 
     public function sendMessageMultitexter($sms)
     {
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->where('subscribe', true)->select('phone', 'name')->get();
 
         $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 
@@ -316,7 +316,7 @@ class SendSms extends Command
 
     public function sendMessageNigeriaBulkSms($sms)
     {
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->where('subscribe', true)->select('phone', 'name')->get();
 
         $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 
@@ -375,7 +375,7 @@ class SendSms extends Command
 
     public function sendMessageAWS($sms)
     {
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->where('subscribe', true)->select('phone', 'name')->get();
 
         $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 
@@ -431,7 +431,7 @@ class SendSms extends Command
 
     public function sendMessageInfoBip($sms)
     {
-        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->select('phone', 'name')->get();
+        $contacts = \App\Models\ListManagementContact::where('list_management_id', $sms->maillist_id)->where('subscribe', true)->select('phone', 'name')->get();
 
         $integration = \App\Models\Integration::where('user_id', $sms->user_id)->where('type', $sms->integration)->first();
 

@@ -27,7 +27,7 @@ class SendEmailCampaign extends Command
      * @var string
      */
     protected $description = 'This command checks for due email campaign and send';
-    
+
 
     /**
      * Execute the console command.
@@ -52,16 +52,16 @@ class SendEmailCampaign extends Command
             $email_kit = EmailKit::where('id', $_campaign->email_kit_id)->first();
             $user = User::where('id', $_campaign->user_id)->first();
 
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->list_id)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->list_id)->where('subscribe', true)->get();
 
-            // divide into 500 chunks and 
+            // divide into 500 chunks and
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts->chunk(500);
             $delay = mt_rand(10, 20);
 
             // dispatch job and delay
             foreach ($chunks as $key => $_chunk) {
-                // dispatch job 
+                // dispatch job
                 ProcessEmailCampaign::dispatch([
                     'smtp_host'    => $email_kit->host,
                     'smtp_port'    => $email_kit->port,

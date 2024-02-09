@@ -12,8 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Exception;
 use GuzzleHttp\Client;
-
-
+use Illuminate\Support\Facades\DB;
 
 class SubscriptionReminder extends Command
 {
@@ -37,7 +36,7 @@ class SubscriptionReminder extends Command
      * @return int
      */
 
-    
+
     public function sendMessageMultitexter($data, $allDataPhones)
     {
         $contacts = User::whereNotNull('phone_number')->pluck('phone_number')->toArray();
@@ -122,7 +121,7 @@ class SubscriptionReminder extends Command
             if(strlen($allDataNames) >= 4){
                 $allDataNames = str_replace("||", "\r\n", $allDataNames);
                 $admin_user = "Admin";
-                $admin_message = "Kindly be notified that the following members' plans have or about to expire in due time<br><b>Names</b><br>$allDataNames";                
+                $admin_message = "Kindly be notified that the following members' plans have or about to expire in due time<br><b>Names</b><br>$allDataNames";
                 Mail::to(env('ADMIN_EMAIL'))->send(new SubscriptionExpiryNotifyAdmin($admin_user, $admin_message));
             }
         // send admin email
@@ -130,7 +129,7 @@ class SubscriptionReminder extends Command
 
         //// delete non-active users above admin setting months
         $months_nonactive_user = (int)Admin::find(1)->months_nonactive_user;
-        
+
         $delete_users = \App\Models\OjaSubscription::where('status', 'Active')->whereDate('expiry_notify_at', '<=', now()->subMonth($months_nonactive_user))->where('subscription_reminder', '<', 5)->whereRaw("user_id IN (SELECT id FROM users WHERE paid_for_backup=1)")->get();
         if(count($delete_users) > 0){
             foreach($delete_users as $delete_user){
