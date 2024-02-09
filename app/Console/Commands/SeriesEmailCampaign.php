@@ -10,6 +10,7 @@ use App\Models\ListManagementContact;
 use App\Models\User;
 use App\Mail\EmailCampaignMail;
 use App\Mail\EmailSeriesCampaign;
+use App\Mailers\CustomMailer;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -128,20 +129,24 @@ class SeriesEmailCampaign extends Command
 
             $delay = mt_rand(10, 20);
 
-            $contacts->each(function ($contact) use ($seriesEmailCampaign, $emailCampaign, $emailKit, $user, $delay) {
-                // Dynamically set mail configuration
-                config([
-                    'mail.host' => $emailKit->host,
-                    'mail.port' => $emailKit->port,
-                    'mail.username' => $emailKit->username,
-                    'mail.password' => $emailKit->password,
-                    'mail.from.address' => $emailKit->from_email,
-                    'mail.from.name' => $emailKit->from_name,
-                ]);
+            // Dynamically set mail configuration
+            $configuration = [
+                'smtp_host' => $emailKit->host,
+                'smtp_port' => $emailKit->port,
+                'smtp_username' => $emailKit->username,
+                'smtp_password' => $emailKit->password,
+                'from_email' => $emailKit->from_email,
+                'from_name' => $emailKit->from_name,
+            ];
 
-                // Send email using Laravel Mail facade
+            $mailer = app()->makeWith('user.mailer', $configuration);
+
+            $contacts->each(function ($contact) use ($seriesEmailCampaign, $emailCampaign, $emailKit, $user, $delay, $mailer) {
+                // Build the message instance
                 $email = new EmailSeriesCampaign($seriesEmailCampaign, $emailCampaign, $emailKit, $contact, $user);
-                Mail::to($contact->email)->send($email);
+
+                // Send email using the retrieved mailer instance
+                $mailer->to($contact->email)->send($email);
 
                 // Introduce a delay if necessary
                 sleep($delay);

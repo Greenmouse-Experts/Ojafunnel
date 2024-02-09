@@ -27,7 +27,7 @@ class EmailCampaignMail extends Mailable
      *
      * @return void
      */
-    public function __construct($seriesEmailCampaign, $email_campaign, $email_kit, $contact, $user)
+    public function __construct($email_campaign, $email_kit, $contact, $user)
     {
         $this->email_campaign = $email_campaign;
         $this->email_kit = $email_kit;
