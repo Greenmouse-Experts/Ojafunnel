@@ -7,11 +7,24 @@ use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailMarketingController;
 use App\Http\Controllers\ListManagementController;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 DB::raw("SET GLOBAL super_read_only = 0");
 DB::raw("SET GLOBAL read_only = 0");
+
+Route::get('/getDates', function () {
+    $dates = [];
+
+    $currentDate = Carbon::now();
+
+    for ($i = 0; $i < 1000; $i++) {
+        $dates[] = $currentDate->copy()->addDays($i)->toDateString();
+    }
+
+    return response()->json($dates);
+});
 
 Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamScore']);
 Route::get('/text', [AuthController::class, 'text']);

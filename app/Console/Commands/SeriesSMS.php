@@ -48,45 +48,108 @@ class SeriesSMS extends Command
                 $ssc = SeriesSmsCampaign::where([
                     'sms_campaign_id' => $followup->id,
                     'date' => $current_date,
-                    'time' => $current_time
                 ])->get();
-
-                // Log::info($ssc);
 
                 foreach($ssc as $sms)
                 {
                     $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
-                    if ($smsCampaign->integration == "Multitexter")
-                    {
-                        $this->sendMessageMultitexter($sms);
-                    }
-
-                    if ($smsCampaign->integration == "NigeriaBulkSms")
-                    {
-                       $this->sendMessageNigeriaBulkSms($sms);
-                    }
-
-                    if($smsCampaign->integration == 'Twillio')
-                    {
-                        $this->sendMessageTwilio($sms);
-                    }
-
-                    if($smsCampaign->integration == 'AWS')
-                    {
-                        $this->sendMessageAWS($sms);
-                    }
-
-                    if($smsCampaign->integration == 'InfoBip')
-                    {
-                        $this->sendMessageInfoBip($sms);
+                    // Check integration type and send SMS
+                    switch ($smsCampaign->integration) {
+                        case 'Multitexter':
+                            $this->sendMessageMultitexter($sms);
+                            break;
+                        case 'NigeriaBulkSms':
+                            $this->sendMessageNigeriaBulkSms($sms);
+                            break;
+                        case 'Twilio':
+                            $this->sendMessageTwilio($sms);
+                            break;
+                        case 'AWS':
+                            $this->sendMessageAWS($sms);
+                            break;
+                        case 'InfoBip':
+                            $this->sendMessageInfoBip($sms);
+                            break;
                     }
                 }
 
+                $smsSeries = SeriesSmsCampaign::where('sms_campaign_id', $followup->id)->get();
+
+                foreach ($smsSeries as $sms) {
+                    // Retrieve new contacts created after the SMS series was created
+                    $newContacts = \App\Models\ListManagementContact::where('list_management_id', $sms->sms_campaign_id)
+                        ->where('created_at', '>=', $sms->date) // Adjusted here
+                        ->where('subscribe', true)
+                        ->select('phone', 'name', 'created_at')
+                        ->get();
+
+                    foreach ($newContacts as $contact) {
+                        $daysDifference = now()->diffInDays($sms->date); // Adjusted here
+                        $daysDifference = $contact->created_at->diffInDays($smsSeries[0]->date); // Calculate difference in days from the first day of the SMS series
+                        $indexToSend = min($daysDifference, count($smsSeries) - 1); // Ensure the index doesn't exceed the number of SMS series available
+                        $smsForDay = SeriesSmsCampaign::where([
+                            'sms_campaign_id' => $sms->sms_campaign_id,
+                            'day' => $indexToSend,
+                        ])->first();
+
+                        if ($smsForDay) {
+                            $this->sendSmsToContact($followup, $contact, $smsForDay);
+                        }
+                    }
+                }
             }
         }
 
         return Command::SUCCESS;
+    }
+
+    private function sendSmsToContact($smsCampaign, $contact, $sms)
+    {
+        $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
+
+        $email = $integration->email;
+        $password = $integration->password;
+        $sender_name = $smsCampaign->sender_name;
+        $api_key = $integration->api_key;
+
+        try {
+            $client = new Client(); //GuzzleHttp\Client
+            $url = "https://app.multitexter.com/v2/app/sms";
+
+            $messageContent = str_replace('$name', $contact->name, $sms->message);
+
+            $params = [
+                "email" => $email,
+                "password" => $password,
+                "sender_name" => $sender_name,
+                "message" => $messageContent,
+                "recipients" => $contact->phone
+            ];
+
+            $headers = [
+                'Authorization' => 'Bearer ' . $api_key
+            ];
+
+            $response = $client->request('POST', $url, [
+                'json' => $params,
+                'headers' => $headers,
+            ]);
+
+            // $responseBody = json_decode($response->getBody());
+            // Log the response status code and body
+            $statusCode = $response->getStatusCode();
+            $responseBody = $response->getBody()->getContents();
+            // Log::info("Multitexter SMS sent. Status Code: $statusCode, Response: $responseBody");
+            $sms->DeliveredCount = $sms->DeliveredCount + 1;
+        } catch (Exception $e) {
+            $sms->FailedDeliveredCount = $sms->FailedDeliveredCount + 1;
+            // Log the exception
+            // Log::error("Error sending Multitexter SMS: " . $e->getMessage());
+        }
+        $sms->ContactCount = $sms->ContactCount + $contact->count();
+        $sms->NotDeliveredCount = 0;
+        $sms->save();
     }
 
     public function sendMessageTwilio($sms)
@@ -156,9 +219,9 @@ class SeriesSMS extends Command
         $sender_name = $smsCampaign->sender_name;
         $api_key = $integration->api_key;
 
-        try {
-            foreach($contacts as $contact)
-            {
+        foreach($contacts as $contact)
+        {
+            try {
                 $client = new Client(); //GuzzleHttp\Client
                 $url = "https://app.multitexter.com/v2/app/sms";
 
@@ -176,24 +239,26 @@ class SeriesSMS extends Command
                     'Authorization' => 'Bearer ' . $api_key
                 ];
 
-                $client->request('POST', $url, [
+                $response = $client->request('POST', $url, [
                     'json' => $params,
                     'headers' => $headers,
                 ]);
+
+                // $responseBody = json_decode($response->getBody());
+                // Log the response status code and body
+                $statusCode = $response->getStatusCode();
+                $responseBody = $response->getBody()->getContents();
+                Log::info("Multitexter SMS sent. Status Code: $statusCode, Response: $responseBody");
+                $sms->DeliveredCount = $sms->DeliveredCount + 1;
+            } catch (Exception $e) {
+                $sms->FailedDeliveredCount = $sms->FailedDeliveredCount + 1;
+                // Log the exception
+                Log::error("Error sending Multitexter SMS: " . $e->getMessage());
             }
-            $sms->ContactCount = $sms->ContactCount + $contacts->count();
-            $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
-            $sms->FailedDeliveredCount = 0;
-            $sms->NotDeliveredCount = 0;
-
-            $sms->save();
-            // $responseBody = json_decode($response->getBody());
-            $responseBody = true;
-        } catch (Exception $e) {
-            $responseBody = $e;
         }
-
-        return $responseBody;
+        $sms->ContactCount = $sms->ContactCount + $contact->count();
+        $sms->NotDeliveredCount = 0;
+        $sms->save();
     }
 
     public function sendMessageNigeriaBulkSms($sms)
@@ -208,60 +273,57 @@ class SeriesSMS extends Command
         $password = $integration->password;
         $sender = $smsCampaign->sender_name;
 
-        try {
-            foreach($contacts as $contact)
-            {
-                $messageContent = str_replace('$name', $contact->name, $sms->message);
+        foreach($contacts as $contact)
+        {
+            try {
+            $messageContent = str_replace('$name', $contact->name, $sms->message);
 
-                // Separate multiple numbers by comma
-                $mobiles = $contact->phone;
+            // Separate multiple numbers by comma
+            $mobiles = $contact->phone;
 
-                // Set your domain's API URL
-                $api_url = 'http://portal.nigeriabulksms.com/api/';
+            // Set your domain's API URL
+            $api_url = 'http://portal.nigeriabulksms.com/api/';
 
-                //Create the message data
-                $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $messageContent, 'mobiles' => $mobiles);
+            //Create the message data
+            $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $messageContent, 'mobiles' => $mobiles);
 
-                //URL encode the message data
-                $data = http_build_query($data);
+            //URL encode the message data
+            $data = http_build_query($data);
 
-                //Send the message
-                $ch = curl_init(); // Initialize a cURL connection
+            //Send the message
+            $ch = curl_init(); // Initialize a cURL connection
 
-                curl_setopt($ch, CURLOPT_URL, $api_url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_URL, $api_url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-                $result = curl_exec($ch);
+            $result = curl_exec($ch);
 
-                $result = json_decode($result);
+            $result = json_decode($result);
 
+            if (isset($result->status) && strtoupper($result->status) == 'OK') {
+                // Message sent successfully, do anything here
+                // return 'Message sent at N' . $result->price;
+                $sms->DeliveredCount = $sms->DeliveredCount + 1;
+            } else if (isset($result->error)) {
+                // Message failed, check reason.
+                // return 'Message failed - error: ' . $result->error;
+                $sms->FailedDeliveredCount =  $sms->FailedDeliveredCount + 1;
+            } else {
+                // Could not determine the message response.
+                return 'Unable to process request';
+                $sms->NotDeliveredCount = $sms->NotDeliveredCount + 1;
             }
 
-            $sms->ContactCount = $sms->ContactCount + $contacts->count();
-            $sms->DeliveredCount = $sms->DeliveredCount + $contacts->count();
-            $sms->FailedDeliveredCount = 0;
-            $sms->NotDeliveredCount = 0;
+            } catch (Exception $e) {
+                // $responseBody = $e;
+                $sms->NotDeliveredCount = $sms->NotDeliveredCount + 1;
+            }
 
-            $sms->save();
-
-            $responseBody = true;
-            // if (isset($result->status) && strtoupper($result->status) == 'OK') {
-            //     // Message sent successfully, do anything here
-            //     return 'Message sent at N' . $result->price;
-            // } else if (isset($result->error)) {
-            //     // Message failed, check reason.
-            //     return 'Message failed - error: ' . $result->error;
-            // } else {
-            //     // Could not determine the message response.
-            //     return 'Unable to process request';
-            // }
-        } catch (Exception $e) {
-            $responseBody = $e;
         }
-
-        return $responseBody;
+        $sms->ContactCount = $sms->ContactCount + $contacts->count();
+        $sms->save();
     }
 
     public function sendMessageAWS($sms)

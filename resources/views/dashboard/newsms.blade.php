@@ -131,12 +131,8 @@
                                     <div class="col-12" id="series" style="display: none;">
                                         <fieldset class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
                                             <div class="col-md-6 mt-4">
-                                                <label for="Time">Date</label>
-                                                <input type="date" name="series_date[]" />
-                                            </div>
-                                            <div class="col-md-6 mt-4">
-                                                <label for="Time">Time</label>
-                                                <input type="Time" name="series_time[]" />
+                                                <label for="datesSelect">Series</label>
+                                                <select id="datesSelect" name="date[]"></select>
                                             </div>
                                             <div class="col-md-12 mt-5">
                                                 <textarea name="series_message[]" id="series_message" cols="30" rows="5" placeholder="Enter the message you would like to send to the reciepient(s) details below "></textarea>
@@ -376,6 +372,25 @@
 
     // jQuery code
     $(document).ready(function() {
+        // Populate select box with options
+        $.ajax({
+            url: '/getDates',
+            type: 'GET',
+            success: function(response) {
+                var select = $('#datesSelect');
+                $.each(response, function(index, value) {
+                    var dayNumber = index + 1;
+                    select.append('<option value="' + value + '-' + dayNumber + '">' + 'Day ' + dayNumber + '</option>');
+                });
+
+                // Trigger change event on select box to update the input box with the selected day number
+                select.trigger('change');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+
         // Add a new row when "Add More" button is clicked
         $('.add-series').click(function() {
             var clonedRow = $('.series-row:first').clone();

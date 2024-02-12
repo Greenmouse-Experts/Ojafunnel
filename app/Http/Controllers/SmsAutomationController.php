@@ -333,8 +333,7 @@ class SmsAutomationController extends Controller
             //return new \App\Http\Resources\SmsCampaingResource($new_campaign);
         } elseif ($request->message_timing == 'Series') {
             $request->validate([
-                'series_date.*' => 'required|date',
-                'series_time.*' => 'required',
+                'date.*' => 'required|date',
                 'series_message.*' => 'required',
             ]);
 
@@ -350,12 +349,15 @@ class SmsAutomationController extends Controller
                 'status' => 'scheduled',
             ]);
 
-            foreach ($request->input('series_date') as $key => $value) {
+            foreach ($request->input('date') as $key => $value) {
+
+                $dayNumber = explode('-', $value)[3];
+
                 SeriesSmsCampaign::create([
                     'sms_campaign_id' => $new_campaign->id,
                     'user_id' => Auth::user()->id,
-                    'date' => $request->series_date[$key],
-                    'time' => $request->series_time[$key],
+                    'date' => $request->date[$key],
+                    'day' => $dayNumber,
                     'message' => $request->series_message[$key],
                 ]);
             }

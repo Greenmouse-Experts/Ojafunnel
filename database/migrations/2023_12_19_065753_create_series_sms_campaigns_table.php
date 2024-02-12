@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('sms_campaign_id')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('date')->nullable();
-            $table->time('time')->nullable();
+            $table->text('day')->nullable();
             $table->text('message')->nullable();
             $table->double('ContactCount')->nullable();
             $table->double('DeliveredCount')->nullable();
