@@ -1368,12 +1368,12 @@ class DashboardController extends Controller
             // 'template' => 'required',
         ]);
 
-        if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'Upgrade to enjoy more access'
-            ])->withInput();
-        }
+        // if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
+        //     return back()->with([
+        //         'type' => 'danger',
+        //         'message' => 'Upgrade to enjoy more access'
+        //     ])->withInput();
+        // }
 
         $this->template_validate($request);
         $request->validate(['message_timing' => 'required']);
@@ -2146,11 +2146,12 @@ class DashboardController extends Controller
         }
 
         if ($request->message_timing == 'Series') {
-            // $request->validate([
-            //     'series_date.*' => 'required|date',
-            //     'series_time.*' => 'required',
-            //     'template1_message.*' => 'required',
-            // ]);
+            $request->validate([
+                'series_date.*' => 'required|date',
+                'series_time.*' => 'required',
+                'template1_message.*' => 'required',
+            ]);
+
 
             DB::transaction(function () use ($request, $whatsapp_account, $contacts) {
                 // create new row on campaign table
@@ -2185,13 +2186,35 @@ class DashboardController extends Controller
                 // bulk insert
                 // WaQueues::insert($wa_queue);
 
-                foreach ($request->input('series_date') as $key => $value) {
+                foreach ($request->input('days') as $key => $value) {
+
+                    $selected_day = (int) $request->days[$key];
+                    $new_date = null;
+                    $new_time = null;
+
+                    if($selected_day == 1)
+                    {
+                        $new_date = date('Y-m-d');
+                        $new_time = Carbon::now()->addHours(1)->format('H:i');
+                    } else {
+                        $last_record = \App\Models\SeriesWaCampaign::where(['wa_campaign_id' => $waCaimpagn->id, 'user_id' => Auth::user()->id])
+                            ->orderBy('id', 'ASC')
+                            ->first();
+
+                        $dt = Carbon::parse($last_record->date);
+                        $addDay = $selected_day;
+                        if($addDay > 1) {
+                            $addDay = $addDay - 1; // Avoid padding more days after day 1.
+                        } 
+                        $new_date = $dt->addDays($addDay)->format('Y-m-d');
+                        $new_time = $last_record->time;
+                    }
 
                     \App\Models\SeriesWaCampaign::create([
                         'wa_campaign_id' => $waCaimpagn->id,
                         'user_id' => Auth::user()->id,
-                        'date' => $request->series_date[$key],
-                        'time' => $request->series_time[$key],
+                        'date' => $new_date,
+                        'time' => $new_time,
                         'message' => $request->template1_message[$key],
                         'ContactCount' => sizeof($contacts)
                     ]);
