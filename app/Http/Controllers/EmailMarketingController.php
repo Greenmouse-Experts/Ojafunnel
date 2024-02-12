@@ -708,25 +708,25 @@ class EmailMarketingController extends Controller
         if($request->message_timing == 'Series')
         {
             $request->validate([
-                'series_date.*' => 'required|date',
-                'series_time.*' => 'required',
+                // 'series_date.*' => 'required|date',
+                // 'series_time.*' => 'required',
                 'series_message.*' => 'required',
                 'series_email_template_id.*' => 'required',
                 'series_email_template.*' => 'required',
                 'series_attachments.*' => 'nullable'
             ]);
 
-            if ($request->series_date < Carbon::now()->format('Y-m-d')) return back()->with([
-                'type' => 'danger',
-                'message' => 'The email campaign schedule start date is invalid'
-            ])->withInput();
+            // if ($request->series_date < Carbon::now()->format('Y-m-d')) return back()->with([
+            //     'type' => 'danger',
+            //     'message' => 'The email campaign schedule start date is invalid'
+            // ])->withInput();
 
-            if ($request->series_date == Carbon::now()->format('Y-m-d')) {
-                if ($request->start_time <= Carbon::now()->format('H:i'))  return back()->with([
-                    'type' => 'danger',
-                    'message' => 'The email campaign schedule start time is invalid'
-                ])->withInput();
-            }
+            // if ($request->series_date == Carbon::now()->format('Y-m-d')) {
+            //     if ($request->start_time <= Carbon::now()->format('H:i'))  return back()->with([
+            //         'type' => 'danger',
+            //         'message' => 'The email campaign schedule start time is invalid'
+            //     ])->withInput();
+            // }
 
             DB::transaction(function () use ($request, $email_kit, $mail_list) {
                 $email_campaign = new EmailCampaign();
@@ -743,7 +743,7 @@ class EmailMarketingController extends Controller
                 $email_campaign->message_timing = $request->message_timing;
                 $email_campaign->save();
 
-                foreach ($request->input('series_date') as $key => $value) {
+                foreach ($request->input('days') as $key => $value) { // series_date
                     $email_template = EmailTemplate::where('id', $request->series_email_template_id[$key])->first();
                     $slug = $email_template->slug . '-' . substr(sha1(mt_rand()), 10, 15);
                     $username = Auth::user()->username;
@@ -782,11 +782,33 @@ class EmailMarketingController extends Controller
                     //     'spam_score' => 0
                     // ]);
 
+                    $selected_day = (int) $request->days[$key];
+                    $new_date = null;
+                    $new_time = null;
+
+                    if($selected_day == 1)
+                    {
+                        $new_date = date('Y-m-d');
+                        $new_time = Carbon::now()->addHours(1)->format('H:i');
+                    } else {
+                        $last_record = SeriesEmailCampaign::where(['email_campaign_id' => $email_campaign->id, 'user_id' => Auth::user()->id])
+                            ->orderBy('id', 'ASC')
+                            ->first();
+
+                        $dt = Carbon::parse($last_record->date);
+                        $addDay = $selected_day;
+                        if($addDay > 1) {
+                            $addDay = $addDay - 1; // Avoid padding more days after day 1.
+                        } 
+                        $new_date = $dt->addDays($addDay)->format('Y-m-d');
+                        $new_time = $last_record->time;
+                    }
+
                     $seriesEC = new SeriesEmailCampaign();
                     $seriesEC->email_campaign_id = $email_campaign->id;
                     $seriesEC->user_id = Auth::user()->id;
-                    $seriesEC->date = $request->series_date[$key];
-                    $seriesEC->time = $request->series_time[$key];
+                    $seriesEC->date = $new_date; //$request->series_date[$key];
+                    $seriesEC->time = $new_time; //$request->series_time[$key];
                     $seriesEC->email_template_id = $email_template->id;
                     $seriesEC->attachment_paths = json_encode([]);
                     $seriesEC->slug = $slug;
