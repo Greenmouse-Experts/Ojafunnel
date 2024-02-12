@@ -85,13 +85,15 @@ class SeriesSMS extends Command
                         ->get();
 
                     foreach ($newContacts as $contact) {
-                        $daysDifference = now()->diffInDays($sms->date); // Adjusted here
                         $daysDifference = $contact->created_at->diffInDays($smsSeries[0]->date); // Calculate difference in days from the first day of the SMS series
-                        $indexToSend = min($daysDifference, count($smsSeries) - 1); // Ensure the index doesn't exceed the number of SMS series available
-                        $smsForDay = SeriesSmsCampaign::where([
-                            'sms_campaign_id' => $sms->sms_campaign_id,
-                            'day' => $indexToSend,
-                        ])->first();
+                        // $indexToSend = min($daysDifference, count($smsSeries) - 1); // Ensure the index doesn't exceed the number of SMS series available
+                        // $smsForDay = SeriesSmsCampaign::where([
+                        //     'sms_campaign_id' => $sms->sms_campaign_id,
+                        //     'day' => $indexToSend,
+                        // ])->first();
+
+                        $indexToSend = min($daysDifference, count($smsSeries)) - 1;
+                        $smsForDay = $smsSeries[$indexToSend - 1];
 
                         if ($smsForDay) {
                             $this->sendSmsToContact($followup, $contact, $smsForDay);
@@ -108,48 +110,246 @@ class SeriesSMS extends Command
     {
         $integration = \App\Models\Integration::where('user_id', $smsCampaign->user_id)->where('type', $smsCampaign->integration)->first();
 
-        $email = $integration->email;
-        $password = $integration->password;
-        $sender_name = $smsCampaign->sender_name;
-        $api_key = $integration->api_key;
+        // Check integration type and send SMS
+        switch ($smsCampaign->integration) {
+            case 'Multitexter':
+                $email = $integration->email;
+                $password = $integration->password;
+                $sender_name = $smsCampaign->sender_name;
+                $api_key = $integration->api_key;
 
-        try {
-            $client = new Client(); //GuzzleHttp\Client
-            $url = "https://app.multitexter.com/v2/app/sms";
+                try {
+                    $client = new Client(); //GuzzleHttp\Client
+                    $url = "https://app.multitexter.com/v2/app/sms";
 
-            $messageContent = str_replace('$name', $contact->name, $sms->message);
+                    $messageContent = str_replace('$name', $contact->name, $sms->message);
 
-            $params = [
-                "email" => $email,
-                "password" => $password,
-                "sender_name" => $sender_name,
-                "message" => $messageContent,
-                "recipients" => $contact->phone
-            ];
+                    $params = [
+                        "email" => $email,
+                        "password" => $password,
+                        "sender_name" => $sender_name,
+                        "message" => $messageContent,
+                        "recipients" => $contact->phone
+                    ];
 
-            $headers = [
-                'Authorization' => 'Bearer ' . $api_key
-            ];
+                    $headers = [
+                        'Authorization' => 'Bearer ' . $api_key
+                    ];
 
-            $response = $client->request('POST', $url, [
-                'json' => $params,
-                'headers' => $headers,
-            ]);
+                    $response = $client->request('POST', $url, [
+                        'json' => $params,
+                        'headers' => $headers,
+                    ]);
 
-            // $responseBody = json_decode($response->getBody());
-            // Log the response status code and body
-            $statusCode = $response->getStatusCode();
-            $responseBody = $response->getBody()->getContents();
-            // Log::info("Multitexter SMS sent. Status Code: $statusCode, Response: $responseBody");
-            $sms->DeliveredCount = $sms->DeliveredCount + 1;
-        } catch (Exception $e) {
-            $sms->FailedDeliveredCount = $sms->FailedDeliveredCount + 1;
-            // Log the exception
-            // Log::error("Error sending Multitexter SMS: " . $e->getMessage());
+                    // $responseBody = json_decode($response->getBody());
+                    // Log the response status code and body
+                    $statusCode = $response->getStatusCode();
+                    $responseBody = $response->getBody()->getContents();
+                    // Log::info("Multitexter SMS sent. Status Code: $statusCode, Response: $responseBody");
+                    $sms->DeliveredCount = $sms->DeliveredCount + 1;
+                } catch (Exception $e) {
+                    $sms->FailedDeliveredCount = $sms->FailedDeliveredCount + 1;
+                    // Log the exception
+                    // Log::error("Error sending Multitexter SMS: " . $e->getMessage());
+                }
+                $sms->ContactCount = $sms->ContactCount + $contact->count();
+                $sms->NotDeliveredCount = 0;
+                $sms->save();
+                break;
+            case 'NigeriaBulkSms':
+                $username = $integration->username;
+                $password = $integration->password;
+                $sender = $smsCampaign->sender_name;
+                try {
+                    $messageContent = str_replace('$name', $contact->name, $sms->message);
+
+                    // Separate multiple numbers by comma
+                    $mobiles = $contact->phone;
+
+                    // Set your domain's API URL
+                    $api_url = 'http://portal.nigeriabulksms.com/api/';
+
+                    //Create the message data
+                    $data = array('username' => $username, 'password' => $password, 'sender' => $sender, 'message' => $messageContent, 'mobiles' => $mobiles);
+
+                    //URL encode the message data
+                    $data = http_build_query($data);
+
+                    //Send the message
+                    $ch = curl_init(); // Initialize a cURL connection
+
+                    curl_setopt($ch, CURLOPT_URL, $api_url);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_POST, true);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+                    $result = curl_exec($ch);
+
+                    $result = json_decode($result);
+
+                    if (isset($result->status) && strtoupper($result->status) == 'OK') {
+                        // Message sent successfully, do anything here
+                        // return 'Message sent at N' . $result->price;
+                        $sms->DeliveredCount = $sms->DeliveredCount + 1;
+                    } else if (isset($result->error)) {
+                        // Message failed, check reason.
+                        // return 'Message failed - error: ' . $result->error;
+                        $sms->FailedDeliveredCount =  $sms->FailedDeliveredCount + 1;
+                    } else {
+                        // Could not determine the message response.
+                        return 'Unable to process request';
+                        $sms->NotDeliveredCount = $sms->NotDeliveredCount + 1;
+                    }
+
+                } catch (Exception $e) {
+                    // $responseBody = $e;
+                    $sms->NotDeliveredCount = $sms->NotDeliveredCount + 1;
+                }
+
+                $sms->ContactCount = $sms->ContactCount + $contact->count();
+                $sms->save();
+                break;
+            case 'Twilio':
+                $sid = $integration->sid;
+                $auth_token = $integration->token;
+                $from_number = $integration->from;
+                $sender_name = $smsCampaign->sender_name;
+
+                try {
+                    $sid = $sid; // Your Account SID from www.twilio.com/console
+                    $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
+                    $from_number = $from_number; // Valid Twilio number
+
+                    $client = new twilio($sid, $auth_token);
+
+                    $messageContent = str_replace('$name', $contact->name, $sms->message);
+
+                    $client->messages->create(
+                        $contact->phone,
+                        [
+                            'from' => $from_number,
+                            'body' => $messageContent,
+                        ]
+                    );
+                    $sms->ContactCount = $sms->ContactCount + $contact->count();
+                    $sms->DeliveredCount = $sms->DeliveredCount + 1;
+                    $sms->NotDeliveredCount = 0;
+
+
+                } catch(Exception $e) {
+                    $sms->FailedDeliveredCount = $sms->FailedDeliveredCount + 1;
+                    // return $e->getMessage()
+                }
+                $sms->save();
+                break;
+            case 'AWS':
+                $key = $integration->key;
+                $secret = $integration->secret;
+                $sender = $smsCampaign->sender_name;
+
+                try {
+                    $messageContent = str_replace('$name', $contact->name, $sms->message);
+
+                    // Required variables to initialize SNS Client Object
+                    $params = [
+                        'credentials' => [
+                            'key' => $key,
+                            'secret' => $secret
+                        ],
+                        'region' => 'us-east-1',
+                        'version' => 'latest'
+                    ];
+
+                    $SnSclient = new SnsClient($params);
+
+                    // Basic Configuration of messages like SMS type, message, and phone number
+                    $args = [
+                        'MessageAttributes' => [
+                            'AWS.SNS.SMS.SenderID' => [
+                                'DataType' => 'String',
+                                'StringValue'=> $sender
+                            ],
+                            'AWS.SNS.SMS.SMSType' => [
+                                'DataType' => 'String',
+                                'StringValue'=> 'Transactional'
+                            ]
+                        ],
+                        "Message" => $messageContent,
+                        "PhoneNumber" => $contact->phone
+                    ];
+
+                    $result = $SnSclient->publish($args);
+                    // return $result;
+
+                    $sms->ContactCount = $sms->ContactCount + $contact->count();
+                    $sms->DeliveredCount = $sms->DeliveredCount + 1;
+                    $sms->NotDeliveredCount = 0;
+
+                } catch (Exception $e) {
+                    $sms->FailedDeliveredCount = $sms->FailedDeliveredCount + 1;
+                    // $responseBody = $e;
+                }
+                $sms->save();
+                break;
+            case 'InfoBip':
+                $API_KEY = $integration->api_key;
+                $BASE_URL = $integration->api_base_url;
+                $SENDER = $smsCampaign->sender_name;
+
+                try {
+                    $RECIPIENT = $contact->phone;
+
+                    $MESSAGE = str_replace('$name', $contact->name, $sms->message);
+
+                    $data_json = '{
+                        "messages": [
+                            {
+                            "destinations": [
+                                {
+                                "to": "'.$RECIPIENT.'"
+                                }
+                            ],
+                            "from": "'.$SENDER.'",
+                            "text": "'.$MESSAGE.'"
+                            }
+                        ]
+                    }';
+
+                    $curl = curl_init();
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => 'https://'.$BASE_URL.'/sms/2/text/advanced',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => $data_json,
+                        CURLOPT_HTTPHEADER => array(
+                            'Authorization: App '.$API_KEY,
+                            'Content-Type: application/json',
+                            'Accept: application/json'
+                        ),
+                    ));
+
+                    $response = curl_exec($curl);
+
+                    curl_close($curl);
+
+                    $sms->ContactCount = $sms->ContactCount + $contact->count();
+                    $sms->DeliveredCount = $sms->DeliveredCount + 1;
+                    $sms->NotDeliveredCount = 0;
+
+                } catch (Exception $e) {
+                    $sms->FailedDeliveredCount =  $sms->FailedDeliveredCount + 1;
+                    // $responseBody = $e;
+                }
+
+                $sms->save();
+                break;
         }
-        $sms->ContactCount = $sms->ContactCount + $contact->count();
-        $sms->NotDeliveredCount = 0;
-        $sms->save();
     }
 
     public function sendMessageTwilio($sms)
