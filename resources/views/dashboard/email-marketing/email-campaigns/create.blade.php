@@ -132,13 +132,21 @@
 
                                     <div class="col-12" id="series" style="display: none;">
                                         <fieldset class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
-                                            <div class="col-md-6 mt-4">
+                                            {{-- <div class="col-md-6 mt-4">
                                                 <label for="Time">Date</label>
                                                 <input type="date" name="series_date[]" />
                                             </div>
                                             <div class="col-md-6 mt-4">
                                                 <label for="Time">Time</label>
                                                 <input type="Time" name="series_time[]" />
+                                            </div> --}}
+                                            <div class="col-md-12 mt-4">
+                                                <label for="days">Select Day</label>
+                                                <select class="bg-light w-100 py-2 rounded px-2 fs-6" name="days[]">
+                                                    @for($i=1; $i<29; $i++)
+                                                        <option value="{{$i}}"> Day {{$i}} </option>
+                                                    @endfor
+                                                </select>
                                             </div>
                                             <div class="col-md-12 mt-5">
                                                 <select name="series_email_template_id[]" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadSeriesTemplate(this)" id="series_email_template_id">
