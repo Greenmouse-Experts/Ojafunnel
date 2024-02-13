@@ -152,13 +152,25 @@
                                         <p class='text-muted'>Created at: {{$campaign->created_at->toDayDateTimeString()}}</p>
                                     </td>
                                     <td>
+                                        @if($campaign->readCache('ContactCount') == null)
+                                        {{App\Models\SeriesSmsCampaign::where('sms_campaign_id', $campaign->id)->get()->sum('ContactCount')}}
+                                        @else
                                         {{ $campaign->readCache('ContactCount') }}
+                                        @endif
                                     </td>
                                     <td>
+                                        @if($campaign->readCache('DeliveredCount') == null)
+                                        {{App\Models\SeriesSmsCampaign::where('sms_campaign_id', $campaign->id)->get()->sum('DeliveredCount')}}
+                                        @else
                                         {{ $campaign->readCache('DeliveredCount') }}
+                                        @endif
                                     </td>
                                     <td>
+                                        @if($campaign->readCache('FailedDeliveredCount') == null)
+                                        {{App\Models\SeriesSmsCampaign::where('sms_campaign_id', $campaign->id)->get()->sum('FailedDeliveredCount')}}
+                                        @else
                                         {{ $campaign->readCache('FailedDeliveredCount') }}
+                                        @endif
                                     </td>
                                     <td>
                                         <sapn class="Type">{!!$campaign->getCampaignType()!!}</sapn>
