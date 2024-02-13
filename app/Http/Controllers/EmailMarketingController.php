@@ -799,7 +799,7 @@ class EmailMarketingController extends Controller
                         $addDay = $selected_day;
                         if($addDay > 1) {
                             $addDay = $addDay - 1; // Avoid padding more days after day 1.
-                        } 
+                        }
                         $new_date = $dt->addDays($addDay)->format('Y-m-d');
                         $new_time = $last_record->time;
                     }
