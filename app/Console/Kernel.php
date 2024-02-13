@@ -74,10 +74,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('renewssl:run')->daily()->withoutOverlapping();
 
         // Run series campaigns every minute
-        $schedule->command('smsSeriesCampaign:run')->daily()->withoutOverlapping();
-        $schedule->command('sendwaseries:run')->daily()->withoutOverlapping();
-        $schedule->command('sendwaserieslater:run')->daily()->withoutOverlapping();
-        $schedule->command('seriesEmailcampaign:run')->daily()->withoutOverlapping();
+        $schedule->command('smsSeriesCampaign:run')->everyFourMinutes()->withoutOverlapping();
+        $schedule->command('sendwaseries:run')->everyFourMinutes()->withoutOverlapping();
+        $schedule->command('sendwaserieslater:run')->everyFourMinutes()->withoutOverlapping();
+        $schedule->command('seriesEmailcampaign:run')->everyFourMinutes()->withoutOverlapping();
 
         // Log a message indicating the cron job is working
         // $schedule->call(function () {
