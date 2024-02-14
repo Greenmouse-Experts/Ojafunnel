@@ -2195,7 +2195,7 @@ class DashboardController extends Controller
                     if($selected_day == 1)
                     {
                         $new_date = date('Y-m-d');
-                        $new_time = Carbon::now()->addHours(1)->format('H:i');
+                        $new_time = Carbon::now()->addHours(1)->format('H') . ":00:00";
                     } else {
                         $last_record = \App\Models\SeriesWaCampaign::where(['wa_campaign_id' => $waCaimpagn->id, 'user_id' => Auth::user()->id])
                             ->orderBy('id', 'ASC')

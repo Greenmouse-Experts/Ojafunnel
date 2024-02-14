@@ -789,7 +789,7 @@ class EmailMarketingController extends Controller
                     if($selected_day == 1)
                     {
                         $new_date = date('Y-m-d');
-                        $new_time = Carbon::now()->addHours(1)->format('H:i');
+                        $new_time = Carbon::now()->addHours(1)->format('H') . ":00:00";
                     } else {
                         $last_record = SeriesEmailCampaign::where(['email_campaign_id' => $email_campaign->id, 'user_id' => Auth::user()->id])
                             ->orderBy('id', 'ASC')

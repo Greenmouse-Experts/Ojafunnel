@@ -41,8 +41,8 @@ class SendWASeriesLater extends Command
         $date = Carbon::now();
 
         $current_date = $date->format('Y-m-d');
-        $current_time = $date->format('H:i:s');
-
+        $current_time = $date->format('H');
+        $current_time = "$current_time:00:00";
 
         $series = CandidateWASeries::where('date', "$current_date")
             ->where('time', $current_time)

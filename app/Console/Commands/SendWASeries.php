@@ -40,8 +40,10 @@ class SendWASeries extends Command
         $date = Carbon::now();
 
         $current_date = $date->format('Y-m-d');
-        $current_time = $date->format('H:i');
-        $current_time = "$current_time:00";
+        $current_time = $date->format('H');
+        $current_time = "$current_time:00:00";
+
+        echo $current_time;
 
 
         $series = SeriesWaCampaign::where('date', "$current_date")
