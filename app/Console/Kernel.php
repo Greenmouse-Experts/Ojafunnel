@@ -74,7 +74,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('renewssl:run')->daily()->withoutOverlapping();
 
         // Run series campaigns every minute
-        $schedule->command('smsSeriesCampaign:run')->everyFourMinutes()->withoutOverlapping();
+        $schedule->command('smsSeriesCampaign:run')->daily()->withoutOverlapping();
         $schedule->command('sendwaseries:run')->hourly()->withoutOverlapping();
         $schedule->command('sendwaserieslater:run')->hourly()->withoutOverlapping();
         $schedule->command('seriesEmailcampaign:run')->hourly()->withoutOverlapping();
