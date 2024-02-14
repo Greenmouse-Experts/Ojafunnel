@@ -40,7 +40,7 @@ class SeriesEmailCampaign extends Command
     public function handle()
     {
         $currentDate = Carbon::now()->format('Y-m-d');
-        $currentTime = Carbon::now()->format('H:i');
+        $currentTime = Carbon::now()->format('H') . ":00:00";
 
         $seriesEmailCampaigns = SeriesEmailCampaignModel::where('date', $currentDate)
             ->where('time', $currentTime)
