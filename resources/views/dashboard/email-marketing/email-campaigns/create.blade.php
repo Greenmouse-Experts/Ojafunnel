@@ -143,7 +143,7 @@
                                             <div class="col-md-12 mt-4">
                                                 <label for="days">Select Day</label>
                                                 <select class="bg-light w-100 py-2 rounded px-2 fs-6" name="days[]">
-                                                    @for($i=1; $i<29; $i++)
+                                                    @for($i=1; $i<1001; $i++)
                                                         <option value="{{$i}}"> Day {{$i}} </option>
                                                     @endfor
                                                 </select>
