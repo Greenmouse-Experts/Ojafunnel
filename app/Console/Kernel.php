@@ -14,6 +14,7 @@ use App\Console\Commands\WABirthday;
 use App\Console\Commands\SmsBirthday;
 use App\Console\Commands\Subscription;
 use App\Console\Commands\EmailCartReminder;
+use App\Console\Commands\SendScheduledSeriesSms;
 use App\Console\Commands\SeriesSMS;
 use App\Console\Commands\SubscriptionReminder;
 use App\Console\Commands\SeriesEmailCampaign;
@@ -44,6 +45,7 @@ class Kernel extends ConsoleKernel
         GenerateSSL::class,
         RenewSSL::class,
         SeriesEmailCampaign::class,
+        SendScheduledSeriesSms::class,
     ];
 
     /**
@@ -74,10 +76,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('renewssl:run')->daily()->withoutOverlapping();
 
         // Run series campaigns every minute
-        $schedule->command('smsSeriesCampaign:run')->daily()->withoutOverlapping();
+        $schedule->command('smsSeriesCampaign:run')->hourly()->withoutOverlapping();
         $schedule->command('sendwaseries:run')->hourly()->withoutOverlapping();
         $schedule->command('sendwaserieslater:run')->hourly()->withoutOverlapping();
         $schedule->command('seriesEmailcampaign:run')->hourly()->withoutOverlapping();
+        $schedule->command('send:scheduled-series-sms')->everyMinute()->withoutOverlapping();
 
         // Log a message indicating the cron job is working
         // $schedule->call(function () {

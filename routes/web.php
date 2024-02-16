@@ -17,10 +17,30 @@ DB::raw("SET GLOBAL read_only = 0");
 Route::get('/getDates', function () {
     $dates = [];
 
-    $currentDate = Carbon::now();
+    // Get the current date and time
+    $currentDateTime = now();
 
     for ($i = 0; $i < 1000; $i++) {
-        $dates[] = $currentDate->copy()->addDays($i)->toDateString();
+        // Add an hour to the current date
+        $date = $currentDateTime->copy()->addDays($i);
+
+        // Format the date with the hour
+        $formattedDateTime = $date->addHours(1)->format('Y-m-d H:00:00');
+
+        // If the current date is today, add the immediate join time
+        if ($i === 0) {
+            $immediateJoinTime = $currentDateTime->format('Y-m-d');
+            $dates[] = $immediateJoinTime;
+        }
+
+        // If the current date is today, add the same-day joined time
+        if ($i === 0) {
+            $samedayJoinedTime = $currentDateTime->format('Y-m-d');
+            $dates[] = $samedayJoinedTime;
+        }
+
+        // Add the formatted date and hour to the array
+        $dates[] = $formattedDateTime;
     }
 
     return response()->json($dates);
@@ -237,6 +257,7 @@ Route::prefix('{username}')->group(function () {
                     Route::post('/automation/contact_list_delete/{list_id}', [App\Http\Controllers\DashboardController::class, 'contact_list_delete'])->name('user.automation.contact_list_delete');
                     Route::get('/automation/add_contact/{list_id}', [App\Http\Controllers\DashboardController::class, 'add_contact_to_list'])->name('user.automation.contact_add');
                     Route::post('/automation/add_contact/{list_id}', [App\Http\Controllers\DashboardController::class, 'add_contact_to_list'])->name('user.automation.contact_add');
+                    Route::post('/automation/view/series/{sms_id}', [App\Http\Controllers\DashboardController::class, 'add_contact_to_list'])->name('user.automation.contact_add');
                     Route::post('/automation/update_contact/{contact_id}', [App\Http\Controllers\DashboardController::class, 'update_contact_num'])->name('user.automation.contact_num_update');
                     Route::post('/automation/delete_contact/{contact_id}', [App\Http\Controllers\DashboardController::class, 'delete_contact_num'])->name('user.automation.contact_num_delete');
 

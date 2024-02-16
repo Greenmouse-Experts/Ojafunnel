@@ -39,66 +39,65 @@ class SeriesSMS extends Command
         $date = Carbon::now();
 
         $current_date = $date->format('Y-m-d');
-        $current_time = $date->format('H:i');
+        $current_time = $date->format('H') . ":00:00";
 
-        $series = SmsCampaign::where('schedule_type', 'series')->where('status', 'scheduled')->get();
+        $ssc = SeriesSmsCampaign::where(['action' => 'Play'])
+            ->where(function ($query) use ($current_date, $current_time) {
+                $query->where('date', 'LIKE', $current_date . ' ' . $current_time)
+                    ->orWhere('date', 'LIKE', $current_date . ' ' . $current_time . '%');
+            })->get();
 
-        if($series->count() > 0) {
-            foreach($series as $followup) {
-                $ssc = SeriesSmsCampaign::where([
-                    'sms_campaign_id' => $followup->id,
-                    'date' => $current_date,
-                ])->get();
+        foreach($ssc as $sms)
+        {
+            $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
 
-                foreach($ssc as $sms)
-                {
-                    $smsCampaign = SmsCampaign::find($sms->sms_campaign_id);
+            // Check integration type and send SMS
+            switch ($smsCampaign->integration) {
+                case 'Multitexter':
+                    $this->sendMessageMultitexter($sms);
+                    break;
+                case 'NigeriaBulkSms':
+                    $this->sendMessageNigeriaBulkSms($sms);
+                    break;
+                case 'Twilio':
+                    $this->sendMessageTwilio($sms);
+                    break;
+                case 'AWS':
+                    $this->sendMessageAWS($sms);
+                    break;
+                case 'InfoBip':
+                    $this->sendMessageInfoBip($sms);
+                    break;
+            }
+        }
 
-                    // Check integration type and send SMS
-                    switch ($smsCampaign->integration) {
-                        case 'Multitexter':
-                            $this->sendMessageMultitexter($sms);
-                            break;
-                        case 'NigeriaBulkSms':
-                            $this->sendMessageNigeriaBulkSms($sms);
-                            break;
-                        case 'Twilio':
-                            $this->sendMessageTwilio($sms);
-                            break;
-                        case 'AWS':
-                            $this->sendMessageAWS($sms);
-                            break;
-                        case 'InfoBip':
-                            $this->sendMessageInfoBip($sms);
-                            break;
+        $smsSeries = SeriesSmsCampaign::where(['action' => 'Play'])->get();
+
+        foreach ($smsSeries as $sms) {
+            $followup = SmsCampaign::find($sms->sms_campaign_id);
+
+            // Retrieve new contacts created after the SMS series was created
+            $newContacts = \App\Models\ListManagementContact::where('list_management_id', $sms->sms_campaign_id)
+                ->where('created_at', '>=', $sms->date)
+                ->where('subscribe', true)
+                ->select('phone', 'name', 'created_at')
+                ->get();
+
+            foreach ($newContacts as $newContact) {
+                $smsDate = Carbon::parse($sms->date);
+
+                // Calculate the difference in days between the SMS date and the new contact's creation date
+                $daysDifference = $smsDate->diffInDays($newContact->created_at);
+
+                // If the new contact was created after the SMS date, send the corresponding message
+                if ($daysDifference > 0) { // Adjust the condition as needed
+                    // Send the message for the corresponding day
+                    $smsForDay = $smsSeries[$daysDifference - 1];
+                    if ($smsForDay) {
+                        $this->sendSmsToContact($followup, $newContact, $smsForDay);
                     }
-                }
-
-                $smsSeries = SeriesSmsCampaign::where('sms_campaign_id', $followup->id)->get();
-
-                foreach ($smsSeries as $sms) {
-                    // Retrieve new contacts created after the SMS series was created
-                    $newContacts = \App\Models\ListManagementContact::where('list_management_id', $sms->sms_campaign_id)
-                        ->where('created_at', '>=', $sms->date) // Adjusted here
-                        ->where('subscribe', true)
-                        ->select('phone', 'name', 'created_at')
-                        ->get();
-
-                    foreach ($newContacts as $contact) {
-                        $daysDifference = $contact->created_at->diffInDays($smsSeries[0]->date); // Calculate difference in days from the first day of the SMS series
-                        // $indexToSend = min($daysDifference, count($smsSeries) - 1); // Ensure the index doesn't exceed the number of SMS series available
-                        // $smsForDay = SeriesSmsCampaign::where([
-                        //     'sms_campaign_id' => $sms->sms_campaign_id,
-                        //     'day' => $indexToSend,
-                        // ])->first();
-
-                        $indexToSend = min($daysDifference, count($smsSeries)) - 1;
-                        $smsForDay = $smsSeries[$indexToSend - 1];
-
-                        if ($smsForDay) {
-                            $this->sendSmsToContact($followup, $contact, $smsForDay);
-                        }
-                    }
+                    // Log or handle the message sending process
+                    // Log::info("{$sms->message} sent to {$newContact->name} at {$newContact->phone} for day {$daysDifference}");
                 }
             }
         }
@@ -193,11 +192,10 @@ class SeriesSMS extends Command
                         $sms->DeliveredCount = $sms->DeliveredCount + 1;
                     } else if (isset($result->error)) {
                         // Message failed, check reason.
-                        // return 'Message failed - error: ' . $result->error;
+                        // Log::info('Message failed - error: ' . $result->error);
                         $sms->FailedDeliveredCount =  $sms->FailedDeliveredCount + 1;
                     } else {
                         // Could not determine the message response.
-                        return 'Unable to process request';
                         $sms->NotDeliveredCount = $sms->NotDeliveredCount + 1;
                     }
 

@@ -31,6 +31,7 @@ class SmsAutomationController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
+
     public function sms_sendmessage_campaign(Request $request)
     {
         $messages = [
@@ -333,7 +334,7 @@ class SmsAutomationController extends Controller
             //return new \App\Http\Resources\SmsCampaingResource($new_campaign);
         } elseif ($request->message_timing == 'Series') {
             $request->validate([
-                'date.*' => 'required|date',
+                'date.*' => 'required|string',
                 'series_message.*' => 'required',
             ]);
 
@@ -350,16 +351,33 @@ class SmsAutomationController extends Controller
             ]);
 
             foreach ($request->input('date') as $key => $value) {
+                $series_sms = new SeriesSmsCampaign();
+                $series_sms->sms_campaign_id = $new_campaign->id;
+                $series_sms->user_id = Auth::user()->id;
+                $series_sms->message = $request->series_message[$key];
 
-                $dayNumber = explode('-', $value)[3];
+                // Split the string by space to separate date/time and the rest
+                $parts = explode(' ', $value);
 
-                SeriesSmsCampaign::create([
-                    'sms_campaign_id' => $new_campaign->id,
-                    'user_id' => Auth::user()->id,
-                    'date' => $request->date[$key],
-                    'day' => $dayNumber,
-                    'message' => $request->series_message[$key],
-                ]);
+                // Extract date and time from the first part
+                $part1 = $parts[0]; // "2024-02-15"
+                $part2 = $parts[1];
+
+                if($part2 == 'ij')
+                {
+                    $series_sms->date = now();
+                    $series_sms->day = 'Immediately Joined';
+                } elseif($part2 == 'sdj'){
+                    $series_sms->date = $part1;
+                    $series_sms->day = 'Same Day Joined';
+                } else {
+                    $dateWithoutTimezone = preg_replace('/-\d+$/', '', $value);
+                    $series_sms->date = $dateWithoutTimezone;
+                    preg_match('/-(\d+)$/', $value, $matches);
+                    $dayNumber = $matches[1];
+                    $series_sms->day = $dayNumber;
+                }
+                $series_sms->save();
             }
 
             $new_campaign->schedule_type = 'series';
@@ -376,6 +394,83 @@ class SmsAutomationController extends Controller
                 'message' => 'Invalid sms type'
             ]);
         }
+    }
+
+    public function view_series_sms($sms_id)
+    {
+        $finder = decrypt($sms_id);
+
+        $series = SeriesSmsCampaign::latest()->where('sms_campaign_id', $finder)->with('campaign')->get();
+
+        return view('dashboard.sms.view_series', [
+            'series' => $series
+        ]);
+    }
+
+    public function update_series_sms($series_id, Request $request)
+    {
+        $finder = decrypt($series_id);
+
+        $series = SeriesSmsCampaign::find($finder);
+
+        $dateWithoutTimezone = substr($request->date, 0, -2);
+
+        $dayNumber = explode('-', $request->date)[3];
+
+        $series->update([
+            'date' => $dateWithoutTimezone,
+            'day' => $dayNumber,
+            'message' => $request->message,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Sms series updated successfully.'
+        ]);
+    }
+
+    public function action_series_sms($series_id)
+    {
+        $series = SeriesSmsCampaign::find(decrypt($series_id));
+
+        $newAction = ($series->action == 'Play') ? 'Pause' : 'Play';
+
+        $series->update([
+            'action' => $newAction
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'SMS series ' . ($newAction == 'Pause' ? 'paused' : 'played') . ' successfully.'
+        ]);
+    }
+
+    public function delete_series_sms($series_id)
+    {
+        $series = SeriesSmsCampaign::find(decrypt($series_id));
+
+        $series->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Sms series deleted successfully.'
+        ]);
+    }
+
+    public function action_sms($sms_id)
+    {
+        $sms = SmsCampaign::find(decrypt($sms_id));
+
+        $newAction = ($sms->action == 'Play') ? 'Pause' : 'Play';
+
+        $sms->update([
+            'action' => $newAction
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'SMS campaign ' . ($newAction == 'Pause' ? 'paused' : 'played') . ' successfully.'
+        ]);
     }
 
     public function sendMessageTwilio(Request $request)

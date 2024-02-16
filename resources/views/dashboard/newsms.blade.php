@@ -130,7 +130,7 @@
                                     <p><b><spam class="text-danger font-weight-bold">Note:</spam> Contacts exceeding 10, to ensure smooth delivery and avoid overriding, please allocate sufficient time spacing between each sms sending.</b></p>
                                     <div class="col-12" id="series" style="display: none;">
                                         <fieldset class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
-                                            <div class="col-md-6 mt-4">
+                                            <div class="col-md-12 mt-4">
                                                 <label for="datesSelect">Series</label>
                                                 <select id="datesSelect" name="date[]"></select>
                                             </div>
@@ -378,11 +378,15 @@
             type: 'GET',
             success: function(response) {
                 var select = $('#datesSelect');
-                $.each(response, function(index, value) {
-                    var dayNumber = index + 1;
-                    select.append('<option value="' + value + '-' + dayNumber + '">' + 'Day ' + dayNumber + '</option>');
-                });
-
+                // Add "Immediately Joined" option
+                select.append('<option value="' + response[0] + ' ij">Immediately Joined</option>');
+                // Add "Same Day Joined" option
+                select.append('<option value="' + response[1] + ' sdj">Same Day Joined</option>');
+                // Add the rest of the days
+                for (var i = 2; i < response.length; i++) {
+                    var dayNumber = i - 1; // Adjust day number to start from 1
+                    select.append('<option value="' + response[i] + '-' + dayNumber + '">Day ' + dayNumber + '</option>');
+                }
                 // Trigger change event on select box to update the input box with the selected day number
                 select.trigger('change');
             },
@@ -390,6 +394,7 @@
                 console.error(xhr.responseText);
             }
         });
+
 
         // Add a new row when "Add More" button is clicked
         $('.add-series').click(function() {

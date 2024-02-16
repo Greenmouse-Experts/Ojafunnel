@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sms_campaign_id')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->date('date')->nullable();
+            $table->datetime('date')->nullable();
             $table->text('day')->nullable();
             $table->text('message')->nullable();
             $table->double('ContactCount')->nullable();
             $table->double('DeliveredCount')->nullable();
             $table->double('FailedDeliveredCount')->nullable();
             $table->double('NotDeliveredCount')->nullable();
+            $table->string('action')->default('Play');
             $table->timestamps();
         });
     }

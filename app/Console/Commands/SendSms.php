@@ -58,8 +58,8 @@ class SendSms extends Command
         $fromDate = Carbon::now()->subDays(3)->toDateTimeString();
         $toDate   = Carbon::now()->toDateTimeString();
 
-        $recurring = SmsCampaign::where('schedule_type', 'recurring')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
-        $onetime = SmsCampaign::where('schedule_type', 'onetime')->where('status', 'scheduled')->whereBetween('schedule_time', [$fromDate, $toDate])->get();
+        $recurring = SmsCampaign::where('schedule_type', 'recurring')->where(['status' => 'scheduled', 'action' => 'Play'])->whereBetween('schedule_time', [$fromDate, $toDate])->get();
+        $onetime = SmsCampaign::where('schedule_type', 'onetime')->where(['status' => 'scheduled', 'action' => 'Play'])->whereBetween('schedule_time', [$fromDate, $toDate])->get();
 
         if ($onetime->count() > 0) {
             foreach ($onetime as $sms) {

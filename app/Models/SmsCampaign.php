@@ -35,7 +35,8 @@ class SmsCampaign extends Model
     const WORKER_DELAY = 1;
 
     const UPDATED_AT = null;
-    protected $fillable = ['title', 'message', 'receivers', 'user_id', 'maillist_id', 'sender_name', 'optout_message', 'integration', 'schedule_date', 'schedule_time', 'status', 'sms_type'];
+
+    protected $guarded = [];
 
     public function contactList(): HasMany
     {

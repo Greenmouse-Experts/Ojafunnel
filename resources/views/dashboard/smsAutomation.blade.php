@@ -137,8 +137,8 @@
                                     <th scope="col">Failed</th>
                                     <th scope="col">Campaign Type</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Action Status</th>
                                     <th scope="col">Action</th>
-                                    <!-- <th scope="col">Opens</th> -->
                                     {{-- <th scope="col">Unsubscribed</th> --}}
                                 </tr>
                             </thead>
@@ -179,24 +179,34 @@
                                         {!!$campaign->getStatus()!!}
                                     </td>
                                     <td>
+                                        @if($campaign->action == 'Play')
+                                        <span class="bg-success p-2" style="color: #fff;">{{$campaign->action}}</span>
+                                        @endif
+                                        @if($campaign->action == 'Pause')
+                                        <span class="bg-danger p-2" style="color: #fff;">{{$campaign->action}}</span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         <div class="dropdown dropstart">
                                             <button class="btn-list dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
                                             Options
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <!-- <li>
-                                                    <a class="dropdown-item" href="#">
-                                                        Overview
+                                                @if($campaign->schedule_type == 'series')
+                                                <li>
+                                                    <a class="dropdown-item" href="{{route('user.automation.view.series', Crypt::encrypt($campaign->id))}}">
+                                                        Series Overview
                                                     </a>
-                                                </li> -->
+                                                </li>
+                                                @endif
                                                 <li>
                                                     <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#edit-{{$campaign->id}}">
                                                         Edit
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" type="button" >
-                                                        Pause
+                                                    <a class="dropdown-item" href="{{ route('user.automation.action.sms', Crypt::encrypt($campaign->id))}}" type="button" >
+                                                       @if($campaign->action == 'Play') Pause @else Play @endif
                                                     </a>
                                                 </li>
                                                 <li>
