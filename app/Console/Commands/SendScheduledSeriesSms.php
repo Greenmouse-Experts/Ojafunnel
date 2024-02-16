@@ -46,7 +46,7 @@ class SendScheduledSeriesSms extends Command
             $followup = SmsCampaign::find($sms->sms_campaign_id);
 
             // Retrieve new contacts created after the SMS series was created
-            $newContacts = ListManagementContact::where('list_management_id', $sms->sms_campaign_id)
+            $newContacts = ListManagementContact::where('list_management_id', $followup->maillist_id)
                     ->where('created_at', '>=', $campaignDate->subMinutes(15))
                     ->where('subscribe', true)
                     ->select('id', 'phone', 'name', 'created_at')
@@ -65,9 +65,12 @@ class SendScheduledSeriesSms extends Command
 
         foreach($smsSeriesSMJ as $sms)
         {
+            $campaignDate = Carbon::parse($sms->date);
+            $followup = SmsCampaign::find($sms->sms_campaign_id);
+
             // Retrieve new contacts created on the same day as the SMS campaign
-            $newContacts = ListManagementContact::where('list_management_id', $sms->sms_campaign_id)
-                ->whereDate('created_at', $campaignDate->toDateString()) // Filter for contacts created on the same day
+            $newContacts = ListManagementContact::where('list_management_id', $followup->maillist_id)
+                ->whereDate('created_at', $campaignDate->toDateString()) // Convert campaignDate to UTC timezone
                 ->where('subscribe', true)
                 ->select('id', 'phone', 'name', 'created_at')
                 ->get();

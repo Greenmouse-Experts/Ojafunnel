@@ -64,7 +64,7 @@ class SmsAutomationController extends Controller
 
         $sms_type = $request->sms_type;
 
-        $contact = \App\Models\ListManagementContact::where('list_management_id', $request->mailinglist_id)->select('phone')
+        $contact = \App\Models\ListManagementContact::where(['list_management_id' => $request->mailinglist_id, 'subscribe' => true])->select('phone')
             ->get();
 
         if ($request->message_timing == 'Immediately') {
@@ -413,15 +413,38 @@ class SmsAutomationController extends Controller
 
         $series = SeriesSmsCampaign::find($finder);
 
-        $dateWithoutTimezone = substr($request->date, 0, -2);
+        // Split the string by space to separate date/time and the rest
+        $parts = explode(' ', $request->date);
 
-        $dayNumber = explode('-', $request->date)[3];
+        // Extract date and time from the first part
+        $part1 = $parts[0]; // "2024-02-15"
+        $part2 = $parts[1];
 
-        $series->update([
-            'date' => $dateWithoutTimezone,
-            'day' => $dayNumber,
-            'message' => $request->message,
-        ]);
+        if($part2 == 'ij')
+        {
+            $series->update([
+                'date' => now(),
+                'day' => 'Immediately Joined',
+                'message' => $request->message,
+            ]);
+        } elseif($part2 == 'sdj'){
+            $series->update([
+                'date' => $part1,
+                'day' => 'Same Day Joined',
+                'message' => $request->message,
+            ]);
+        } else {
+            $dateWithoutTimezone = preg_replace('/-\d+$/', '', $request->date);
+
+            preg_match('/-(\d+)$/', $request->date, $matches);
+            $dayNumber = $matches[1];
+
+            $series->update([
+                'date' => $dateWithoutTimezone,
+                'day' => $dayNumber,
+                'message' => $request->message,
+            ]);
+        }
 
         return back()->with([
             'type' => 'success',

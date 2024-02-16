@@ -85,7 +85,7 @@
                                         <p class='text-muted'>Created at: {{$campaign->campaign->created_at->toDayDateTimeString()}}</p>
                                     </td>
                                     <td>
-                                        Day {{$campaign->day}}
+                                        {{$campaign->day}}
                                     </td>
                                     <td>
                                         {{$campaign->message}}
@@ -318,9 +318,16 @@
                     // Get the select element using the generated ID
                     var select = $('#' + selectId);
                     select.empty(); // Clear existing options
-                    $.each(response, function(index, value) {
-                        var dayNumber = index + 1;
-                        var option = $('<option></option>').val(value + '-' + dayNumber).text('Day ' + dayNumber);
+
+                    // Add "Immediately Joined" option
+                    select.append('<option value="' + response[0] + ' ij">Immediately Joined</option>');
+                    // Add "Same Day Joined" option
+                    select.append('<option value="' + response[1] + ' sdj">Same Day Joined</option>');
+
+                    // Loop through the rest of the days
+                    for (var i = 2; i < response.length; i++) {
+                        var dayNumber = i - 1; // Adjust day number to start from 1
+                        var option = $('<option></option>').val(response[i] + '-' + dayNumber).text('Day ' + dayNumber);
 
                         // Check if the dayNumber matches the campaign's day value
                         if (dayNumber == campaignDay) {
@@ -328,7 +335,8 @@
                         }
 
                         select.append(option);
-                    });
+                    }
+
                     // Trigger change event on select box to update the input box with the selected day number
                     select.trigger('change');
                 },

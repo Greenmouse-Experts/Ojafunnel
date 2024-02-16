@@ -59,6 +59,7 @@ use App\Models\MessageUser;
 use App\Models\Quiz;
 use App\Models\QuizAnswer;
 use App\Models\QuizSubmission;
+use App\Models\SeriesSmsCampaign;
 use AWS\CRT\HTTP\Message;
 use Illuminate\Support\Facades\Mail;
 
@@ -1020,6 +1021,17 @@ class DashboardController extends Controller
 
         foreach ($smsQueue as $sms) {
             $sms->delete();
+        }
+
+        if($smsAutomations->schedule_type == 'series')
+        {
+            if(SeriesSmsCampaign::where('sms_campaign_id', $smsAutomations->id)->exists())
+            {
+                foreach(SeriesSmsCampaign::where('sms_campaign_id', $smsAutomations->id)->get() as $series)
+                {
+                    $series->delete();
+                }
+            }
         }
 
         $smsAutomations->delete();
@@ -2205,7 +2217,7 @@ class DashboardController extends Controller
                         $addDay = $selected_day;
                         if($addDay > 1) {
                             $addDay = $addDay - 1; // Avoid padding more days after day 1.
-                        } 
+                        }
                         $new_date = $dt->addDays($addDay)->format('Y-m-d');
                         $new_time = $last_record->time;
                     }

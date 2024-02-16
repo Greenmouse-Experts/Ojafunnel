@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ListManagementContact;
 use App\Models\SeriesSmsCampaign;
 use App\Models\SmsCampaign;
 use Aws\Sns\SnsClient;
@@ -77,7 +78,7 @@ class SeriesSMS extends Command
             $followup = SmsCampaign::find($sms->sms_campaign_id);
 
             // Retrieve new contacts created after the SMS series was created
-            $newContacts = \App\Models\ListManagementContact::where('list_management_id', $sms->sms_campaign_id)
+            $newContacts = ListManagementContact::where('list_management_id', $followup->maillist_id)
                 ->where('created_at', '>=', $sms->date)
                 ->where('subscribe', true)
                 ->select('phone', 'name', 'created_at')
