@@ -132,14 +132,6 @@
 
                                     <div class="col-12" id="series" style="display: none;">
                                         <fieldset class="row series-row mb-2" style="border: 1px solid #cdd1dc;">
-                                            {{-- <div class="col-md-6 mt-4">
-                                                <label for="Time">Date</label>
-                                                <input type="date" name="series_date[]" />
-                                            </div>
-                                            <div class="col-md-6 mt-4">
-                                                <label for="Time">Time</label>
-                                                <input type="Time" name="series_time[]" />
-                                            </div> --}}
                                             <div class="col-md-12 mt-4">
                                                 <label for="days">Select Day</label>
                                                 <select id="datesSelect" name="date[]"></select>

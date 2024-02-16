@@ -727,6 +727,14 @@ class EmailMarketingController extends Controller
             //     ])->withInput();
             // }
 
+            // if ($request->hasFile("series_attachments")) {
+            //     return true;
+            // } else {
+            //     return false;
+            // }
+
+            // return false;
+
             DB::transaction(function () use ($request, $email_kit, $mail_list) {
                 $email_campaign = new EmailCampaign();
                 $email_campaign->user_id = Auth::user()->id;
@@ -769,18 +777,6 @@ class EmailMarketingController extends Controller
                         ]);
                     }
 
-                    // $seriesEC = SeriesEmailCampaign::create([
-                    //     'email_campaign_id' => $email_campaign->id,
-                    //     'user_id' => Auth::user()->id,
-                    //     'date' => $request->series_date[$key],
-                    //     'time' => $request->series_time[$key],
-                    //     'email_template_id' => $email_template->id,
-                    //     'attachment_paths' => json_encode([]),
-                    //     'sent' => 0,
-                    //     'bounced' => 0,
-                    //     'spam_score' => 0
-                    // ]);
-
                     $seriesEC = new SeriesEmailCampaign();
                     $seriesEC->email_campaign_id = $email_campaign->id;
                     $seriesEC->email_template_id = $email_template->id;
@@ -813,26 +809,25 @@ class EmailMarketingController extends Controller
                         $seriesEC->day = $dayNumber;
                     }
 
-                    $seriesEC->save();
-                }
+                    if ($request->hasFile("series_attachments[$key]")) {
 
-                if ($request->hasFile("series_attachments[$key]")) {
-                    $attachment_paths = [];
+                        $attachment_paths = [];
 
-                    $attachment = $request->file("series_attachments[$key]");
+                        $attachment = $request->file("series_attachments[$key]");
 
-                    // foreach ($request->file("series_attachments[$key]") as $attachment) {
-                        $filename = $attachment->getClientOriginalName();
-                        $path = 'email-marketing/' . Auth::user()->username . '/attachment/campaign-' . $email_campaign->id;
-                        $fullpath = $path . '/' . $filename;
+                        foreach ($request->file("series_attachments[$key]") as $attachment) {
+                            $filename = $attachment->getClientOriginalName();
+                            $path = 'email-marketing/' . Auth::user()->username . '/attachment/campaign-' . $email_campaign->id;
+                            $fullpath = $path . '/' . $filename;
 
-                        // store here
-                        $attachment->storeAs($path, $filename, 'public');
+                            // store here
+                            $attachment->storeAs($path, $filename, 'public');
 
-                        array_push($attachment_paths, $fullpath);
-                    // }
+                            array_push($attachment_paths, $fullpath);
+                        }
 
-                    $seriesEC->attachment_paths = json_encode($attachment_paths);
+                        $seriesEC->attachment_paths = json_encode($attachment_paths);
+                    }
                     $seriesEC->save();
                 }
             });
