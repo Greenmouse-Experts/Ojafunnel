@@ -17,14 +17,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('email_campaign_id')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->date('date')->nullable();
-            $table->time('time')->nullable();
+            $table->datetime('date')->nullable();
+            $table->text('day')->nullable();
             $table->string('email_template_id')->nullable();
             $table->text('attachment_paths')->nullable();
             $table->text('slug')->nullable();
             $table->string('sent');
             $table->string('bounced');
             $table->string('spam_score');
+            $table->string('action')->default('Play');
             $table->timestamps();
         });
     }

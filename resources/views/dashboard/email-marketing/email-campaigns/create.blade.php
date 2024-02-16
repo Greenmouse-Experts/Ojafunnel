@@ -142,11 +142,7 @@
                                             </div> --}}
                                             <div class="col-md-12 mt-4">
                                                 <label for="days">Select Day</label>
-                                                <select class="bg-light w-100 py-2 rounded px-2 fs-6" name="days[]">
-                                                    @for($i=1; $i<1001; $i++)
-                                                        <option value="{{$i}}"> Day {{$i}} </option>
-                                                    @endfor
-                                                </select>
+                                                <select id="datesSelect" name="date[]"></select>
                                             </div>
                                             <div class="col-md-12 mt-5">
                                                 <select name="series_email_template_id[]" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadSeriesTemplate(this)" id="series_email_template_id">
@@ -310,6 +306,30 @@
     }
 
     $(document).ready(function () {
+        // Populate select box with options
+        $.ajax({
+            url: '/getDates',
+            type: 'GET',
+            success: function(response) {
+                var select = $('#datesSelect');
+                // Add "Immediately Joined" option
+                select.append('<option value="' + response[0] + ' ij">Immediately Joined</option>');
+                // Add "Same Day Joined" option
+                select.append('<option value="' + response[1] + ' sdj">Same Day Joined</option>');
+                // Add the rest of the days
+                for (var i = 2; i < response.length; i++) {
+                    var dayNumber = i - 1; // Adjust day number to start from 1
+                    select.append('<option value="' + response[i] + '-' + dayNumber + '">Day ' + dayNumber + '</option>');
+                }
+                // Trigger change event on select box to update the input box with the selected day number
+                select.trigger('change');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+
+
         // Add a new row when "Add More" button is clicked
         $('.add-series').click(function () {
             var clonedRow = $('.series-row:first').clone();
