@@ -2200,36 +2200,88 @@ class DashboardController extends Controller
 
                 foreach ($request->input('days') as $key => $value) {
 
-                    $selected_day = (int) $request->days[$key];
+                    $selected_day = $request->days[$key];
                     $new_date = null;
                     $new_time = null;
 
-                    if($selected_day == 1)
+                    if($selected_day == 'immediately_joined')
                     {
-                        $new_date = date('Y-m-d');
-                        $new_time = Carbon::now()->addHours(1)->format('H') . ":00:00";
-                    } else {
                         $last_record = \App\Models\SeriesWaCampaign::where(['wa_campaign_id' => $waCaimpagn->id, 'user_id' => Auth::user()->id])
-                            ->orderBy('id', 'ASC')
-                            ->first();
-
-                        $dt = Carbon::parse($last_record->date);
-                        $addDay = $selected_day;
-                        if($addDay > 1) {
-                            $addDay = $addDay - 1; // Avoid padding more days after day 1.
+                                ->orderBy('id', 'ASC')
+                                ->first();
+                        if(!$last_record) {
+                            $new_date = date('Y-m-d');
+                            $new_time = Carbon::now()->addHours(1)->format('H') . ":00:00";
+                        }else {
+                            $dt = Carbon::parse($last_record->date);
+                            $new_date = $dt->addDays(1)->format('Y-m-d');
+                            $new_time = $last_record->time;
                         }
-                        $new_date = $dt->addDays($addDay)->format('Y-m-d');
-                        $new_time = $last_record->time;
+
+                        \App\Models\SeriesWaCampaign::create([
+                            'wa_campaign_id' => $waCaimpagn->id,
+                            'user_id' => Auth::user()->id,
+                            'date' => $new_date,
+                            'time' => $new_time,
+                            'message' => $request->template1_message[$key],
+                            'ContactCount' => sizeof($contacts),
+                            'type' => $selected_day
+                        ]);
+                    }
+                    elseif($selected_day == 'sameday_joined')
+                    {
+                        $last_record = \App\Models\SeriesWaCampaign::where(['wa_campaign_id' => $waCaimpagn->id, 'user_id' => Auth::user()->id])
+                                ->orderBy('id', 'ASC')
+                                ->first();
+                        if(!$last_record) {
+                            $new_date = date('Y-m-d');
+                            $new_time = Carbon::now()->addHours(1)->format('H') . ":00:00";
+                        }else {
+                            $dt = Carbon::parse($last_record->date);
+                            $new_date = $dt->addDays(1)->format('Y-m-d');
+                            $new_time = $last_record->time;
+                        }
+                        
+
+                        \App\Models\SeriesWaCampaign::create([
+                            'wa_campaign_id' => $waCaimpagn->id,
+                            'user_id' => Auth::user()->id,
+                            'date' => $new_date,
+                            'time' => $new_time,
+                            'message' => $request->template1_message[$key],
+                            'ContactCount' => sizeof($contacts),
+                            'type' => $selected_day
+                        ]);
+                    }
+                    else {
+                        if($selected_day == 1)
+                        {
+                            $new_date = date('Y-m-d');
+                            $new_time = Carbon::now()->addHours(1)->format('H') . ":00:00";
+                        } else {
+                            $last_record = \App\Models\SeriesWaCampaign::where(['wa_campaign_id' => $waCaimpagn->id, 'user_id' => Auth::user()->id])
+                                ->orderBy('id', 'ASC')
+                                ->first();
+
+                            $dt = Carbon::parse($last_record->date);
+                            $addDay = $selected_day;
+                            if($addDay > 1) {
+                                $addDay = $addDay - 1; // Avoid padding more days after day 1.
+                            }
+                            $new_date = $dt->addDays($addDay)->format('Y-m-d');
+                            $new_time = $last_record->time;
+                        }
+
+                        \App\Models\SeriesWaCampaign::create([
+                            'wa_campaign_id' => $waCaimpagn->id,
+                            'user_id' => Auth::user()->id,
+                            'date' => $new_date,
+                            'time' => $new_time,
+                            'message' => $request->template1_message[$key],
+                            'ContactCount' => sizeof($contacts)
+                        ]);
                     }
 
-                    \App\Models\SeriesWaCampaign::create([
-                        'wa_campaign_id' => $waCaimpagn->id,
-                        'user_id' => Auth::user()->id,
-                        'date' => $new_date,
-                        'time' => $new_time,
-                        'message' => $request->template1_message[$key],
-                        'ContactCount' => sizeof($contacts)
-                    ]);
                 }
             });
 
