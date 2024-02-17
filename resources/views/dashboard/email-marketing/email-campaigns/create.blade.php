@@ -150,6 +150,8 @@
                                                     @endfor
                                                 </select>
                                             </div>
+                                            <select id="datesSelect" name="date[]"></select>
+                                            
                                             <div class="col-md-12 mt-5">
                                                 <select name="series_email_template_id[]" class="bg-light w-100 py-2 rounded px-2 fs-6" onchange="loadSeriesTemplate(this)" id="series_email_template_id">
                                                     <option value="">Choose from email template</option>
