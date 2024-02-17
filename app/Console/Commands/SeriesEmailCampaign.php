@@ -39,12 +39,16 @@ class SeriesEmailCampaign extends Command
      */
     public function handle()
     {
-        $currentDate = Carbon::now()->format('Y-m-d');
-        $currentTime = Carbon::now()->format('H') . ":00:00";
+        $date = Carbon::now();
 
-        $seriesEmailCampaigns = SeriesEmailCampaignModel::where('date', $currentDate)
-            ->where('time', $currentTime)
-            ->get();
+        $current_date = $date->format('Y-m-d');
+        $current_time = $date->format('H') . ":00:00";
+
+        $seriesEmailCampaigns = SeriesEmailCampaignModel::where(['action' => 'Play'])
+            ->where(function ($query) use ($current_date, $current_time) {
+                $query->where('date', 'LIKE', $current_date . ' ' . $current_time)
+                    ->orWhere('date', 'LIKE', $current_date . ' ' . $current_time . '%');
+                })->get();
 
         $seriesEmailCampaigns->each(function ($seriesEmailCampaign) {
             $emailCampaign = EmailCampaign::find($seriesEmailCampaign->email_campaign_id);
