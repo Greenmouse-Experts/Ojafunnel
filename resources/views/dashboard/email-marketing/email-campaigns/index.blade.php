@@ -124,18 +124,68 @@
                                                 </td>
                                                 <td>{{ $email_campaign->replyto_email }}</td>
                                                 <td>{{ $email_campaign->replyto_name }}</td>
-                                                <td>{{ $email_campaign->attachment_paths ? count(json_decode($email_campaign->attachment_paths)) : 'null' }}</td>
-                                                <td>{{ $email_campaign->sent }}</td>
-                                                <td>{{ $email_campaign->bounced }}</td>
+                                                <td>
+                                                    @php
+                                                        // Count attachments for series email campaigns
+                                                        if($email_campaign->message_timing == 'Series')
+                                                        {
+                                                            if(App\Models\SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)->exists())
+                                                            {
+                                                                $seriesAttachmentsCount = App\Models\SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)
+                                                                    ->where('attachment_paths', '<>', '')
+                                                                    ->count();
+
+                                                                // Count attachments for regular email campaigns
+                                                                $regularAttachmentsCount = $email_campaign->attachment_paths ? count(json_decode($email_campaign->attachment_paths)) : 0;
+
+                                                                // Total attachments count
+                                                                $totalAttachmentsCount = $seriesAttachmentsCount + $regularAttachmentsCount;
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    @if($email_campaign->message_timing == 'Series')
+                                                        @if (App\Models\SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)->exists())
+                                                            {{ $totalAttachmentsCount }}
+                                                        @else
+                                                        <b>{{$email_campaign->attachment_paths ? count(json_decode($email_campaign->attachment_paths)) : 0}}</b>
+                                                        @endif
+                                                    @else
+                                                        <b>{{ $email_campaign->attachment_paths ? count(json_decode($email_campaign->attachment_paths)) : 0 }}</b>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($email_campaign->message_timing == 'Series')
+                                                        @if (App\Models\SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)->exists())
+                                                            {{ App\Models\SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)->get()->sum('sent') + $email_campaign->sent }}
+                                                        @else
+                                                        <b>{{ $email_campaign->sent }}</b>
+                                                        @endif
+                                                    @else
+                                                        <b>{{ $email_campaign->sent }}</b>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($email_campaign->message_timing == 'Series')
+                                                        @if (App\Models\SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)->exists())
+                                                            {{ App\Models\SeriesEmailCampaign::where('email_campaign_id', $email_campaign->id)->get()->sum('bounced') + $email_campaign->bounced }}
+                                                        @else
+                                                        <b>{{ $email_campaign->bounced }}</b>
+                                                        @endif
+                                                    @else
+                                                        <b>{{ $email_campaign->bounced }}</b>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $email_campaign->created_at->toDayDateTimeString() }}</td>
                                                 <td>
                                                     <div class="dropdown">
                                                         <ul class="list-unstyled hstack gap-1 mb-0">
+                                                            @if($email_campaign->message_timing == 'Series')
                                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
                                                                 <a href="{{ route('user.email-marketing.email.campaigns.overview', ['username' => Auth::user()->username, 'id' => $email_campaign->id])}}" class="btn btn-sm btn-soft-info">
                                                                     <i class="mdi mdi-eye-outline"></i>
                                                                 </a>
                                                             </li>
+                                                            @endif
                                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                                                 <a href="#delete-{{ $email_campaign->id }}" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i class="mdi mdi-delete-outline"></i></a>
                                                             </li>

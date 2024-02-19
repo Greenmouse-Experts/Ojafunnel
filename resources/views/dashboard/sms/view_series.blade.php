@@ -58,7 +58,7 @@
                 <div class="store-table">
                     <div class="table-head row pt-4">
                         <div class="col-lg-12">
-                            <h4>Campaigns</h4>
+                            <h4>Campaigns Series</h4>
                         </div>
                     </div>
                     <div class="table-body mt-1 table-responsive">

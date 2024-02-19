@@ -408,14 +408,85 @@ class EmailMarketingController extends Controller
 
     public function email_campaigns_overview(Request $request)
     {
-        if($this->home->site_features_settings('Email Marketing') || $this->home->user_site_features_settings('Email Marketing') > 0) return $this->home->redirects();
-
-        $email_campaign = EmailCampaign::latest()->where(['user_id' => Auth::user()->id, 'id' => $request->id])->first();
-        $email_campaign_queues = EmailCampaignQueue::where('email_campaign_id', $email_campaign->id)->get();
+        $series = SeriesEmailCampaign::latest()->where('email_campaign_id', $request->id)->with('campaign')->get();
+        $email_templates = EmailTemplate::where(['user_id' => Auth::user()->id])->get();
 
         return view('dashboard.email-marketing.email-campaigns.overview', [
-            'email_campaign' => $email_campaign,
-            'email_campaign_queues' => $email_campaign_queues
+            'series' => $series,
+            'email_templates' => $email_templates
+        ]);
+    }
+
+    public function update_series_email($series_id, Request $request)
+    {
+        $finder = decrypt($series_id);
+
+        $series = SeriesSmsCampaign::find($finder);
+
+        // Split the string by space to separate date/time and the rest
+        $parts = explode(' ', $request->date);
+
+        // Extract date and time from the first part
+        $part1 = $parts[0]; // "2024-02-15"
+        $part2 = $parts[1];
+
+        if($part2 == 'ij')
+        {
+            $series->update([
+                'date' => now(),
+                'day' => 'Immediately Joined',
+                'message' => $request->message,
+            ]);
+        } elseif($part2 == 'sdj'){
+            $series->update([
+                'date' => $part1,
+                'day' => 'Same Day Joined',
+                'message' => $request->message,
+            ]);
+        } else {
+            $dateWithoutTimezone = preg_replace('/-\d+$/', '', $request->date);
+
+            preg_match('/-(\d+)$/', $request->date, $matches);
+            $dayNumber = $matches[1];
+
+            $series->update([
+                'date' => $dateWithoutTimezone,
+                'day' => $dayNumber,
+                'message' => $request->message,
+            ]);
+        }
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Sms series updated successfully.'
+        ]);
+    }
+
+    public function action_series_email($series_id)
+    {
+        $series = SeriesEmailCampaign::find(decrypt($series_id));
+
+        $newAction = ($series->action == 'Play') ? 'Pause' : 'Play';
+
+        $series->update([
+            'action' => $newAction
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Email series ' . ($newAction == 'Pause' ? 'paused' : 'played') . ' successfully.'
+        ]);
+    }
+
+    public function delete_series_email($series_id)
+    {
+        $series = SeriesEmailCampaign::find(decrypt($series_id));
+
+        $series->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Email series deleted successfully.'
         ]);
     }
 
@@ -727,14 +798,6 @@ class EmailMarketingController extends Controller
             //     ])->withInput();
             // }
 
-            // if ($request->hasFile("series_attachments")) {
-            //     return true;
-            // } else {
-            //     return false;
-            // }
-
-            // return false;
-
             DB::transaction(function () use ($request, $email_kit, $mail_list) {
                 $email_campaign = new EmailCampaign();
                 $email_campaign->user_id = Auth::user()->id;
@@ -808,28 +871,28 @@ class EmailMarketingController extends Controller
                         $dayNumber = $matches[1];
                         $seriesEC->day = $dayNumber;
                     }
-
-                    if ($request->hasFile("series_attachments[$key]")) {
-
-                        $attachment_paths = [];
-
-                        $attachment = $request->file("series_attachments[$key]");
-
-                        foreach ($request->file("series_attachments[$key]") as $attachment) {
-                            $filename = $attachment->getClientOriginalName();
-                            $path = 'email-marketing/' . Auth::user()->username . '/attachment/campaign-' . $email_campaign->id;
-                            $fullpath = $path . '/' . $filename;
-
-                            // store here
-                            $attachment->storeAs($path, $filename, 'public');
-
-                            array_push($attachment_paths, $fullpath);
-                        }
-
-                        $seriesEC->attachment_paths = json_encode($attachment_paths);
-                    }
-                    $seriesEC->save();
                 }
+
+                if ($request->hasFile("series_attachments")) {
+
+                    $attachment_paths = [];
+
+                    $attachment = $request->file("series_attachments");
+
+                    foreach ($request->file("series_attachments") as $attachment) {
+                        $filename = $attachment->getClientOriginalName();
+                        $path = 'email-marketing/' . Auth::user()->username . '/attachment/campaign-' . $email_campaign->id;
+                        $fullpath = $path . '/' . $filename;
+
+                        // store here
+                        $attachment->storeAs($path, $filename, 'public');
+
+                        array_push($attachment_paths, $fullpath);
+                    }
+
+                    $seriesEC->attachment_paths = json_encode($attachment_paths);
+                }
+                $seriesEC->save();
             });
 
             return back()->with([

@@ -155,6 +155,10 @@ Route::prefix('user')->group(function () {
     Route::post('/sms-automation/view/series/update/{series_id}', [App\Http\Controllers\SmsAutomationController::class, 'update_series_sms'])->name('user.automation.update.series');
     Route::post('/sms-automation/view/series/delete/{series_id}', [App\Http\Controllers\SmsAutomationController::class, 'delete_series_sms'])->name('user.automation.delete.series');
 
+    Route::get('/email-automation/view/series/action/{series_id}', [App\Http\Controllers\EmailMarketingController::class, 'action_series_email'])->name('user.email.automation.action.series');
+    Route::post('/email-automation/view/series/update/{series_id}', [App\Http\Controllers\EmailMarketingController::class, 'update_series_email'])->name('user.email.automation.update.series');
+    Route::post('/email-automation/view/series/delete/{series_id}', [App\Http\Controllers\EmailMarketingController::class, 'delete_series_email'])->name('user.email.automation.delete.series');
+
 });
 Route::get('/unsubscribe/confirm/{email}', [App\Http\Controllers\HomePageController::class, 'confirmUnsubscribe'])->name('user.subscribe.confirm');
 Route::post('/unsubscribe/confirm', [App\Http\Controllers\HomePageController::class, 'unsubscribe'])->name('unsubscribe.confirm');

@@ -10,4 +10,9 @@ class SeriesEmailCampaign extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function campaign()
+    {
+        return $this->belongsTo(EmailCampaign::class, 'email_campaign_id', 'id');
+    }
 }
