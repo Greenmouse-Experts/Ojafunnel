@@ -148,13 +148,25 @@
                                                 <p class='text-bold-600'> {{$whatsapp_campaign->whatsapp_account}} </p>
                                             </td>
                                             <td>
+                                                @if($whatsapp_campaign->message_timing == 'Series')
+                                                    {{$whatsapp_campaign->total_contacts}}
+                                                @else
                                                 {{ count($whatsapp_campaign->wa_queues) }}
+                                                @endif
                                             </td>
                                             <td>
+                                                @if($whatsapp_campaign->message_timing == 'Series')
+                                                    {{$whatsapp_campaign->total_delivered}}
+                                                @else
                                                 {{ count($whatsapp_campaign->wa_queues->where('status', 'Sent')) }}
+                                                @endif
                                             </td>
                                             <td>
+                                                @if($whatsapp_campaign->message_timing == 'Series')
+                                                    {{$whatsapp_campaign->total_failed}}
+                                                @else
                                                 {{ count($whatsapp_campaign->wa_queues->where('status', 'Invalid')) }}
+                                                @endif
                                             </td>
                                             <td>
                                                 @if ($whatsapp_campaign->template == 'template1')

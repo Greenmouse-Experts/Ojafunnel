@@ -1225,9 +1225,34 @@ class DashboardController extends Controller
 
     public function whatsapp_automation($username)
     {
-        $whatsapp_campaigns = WaCampaigns::where('user_id', Auth::user()->id)->get();
+        $whatsapp_campaigns = WaCampaigns::where('user_id', Auth::user()->id)
+            ->orderBy('id', 'DESC')
+            ->get()
+            ->map(function($item) {
+                if($item->message_timing == 'Series') {
+                    $campaigns = \App\Models\SeriesWaCampaign::where(['wa_campaign_id' => $item->id])->get();
+                    $item->campaign_size = sizeof($campaigns);
 
-        // return $whatsapp_campaigns;
+                    $contacts_size = 0;
+                    $delivered_size = 0;
+                    $failed_size = 0;
+
+                    if(sizeof($campaigns) > 0)
+                    {
+                        foreach ($campaigns as $campaign) {
+                            $contacts_size += $campaign->ContactCount;
+                            $delivered_size += $campaign->DeliveredCount;
+                            $failed_size += $campaign->FailedDeliveredCount;
+                        }
+                    }
+
+                    $item->total_contacts = $contacts_size;
+                    $item->total_delivered = $delivered_size;
+                    $item->total_failed = $failed_size;
+                }
+
+                return $item;
+            });
 
         return view('dashboard.whatsappAutomation', [
             'username' => $username,
