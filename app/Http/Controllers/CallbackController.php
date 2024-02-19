@@ -141,6 +141,13 @@ class CallbackController extends Controller
         // Opt - In Pages
         if($page->type == "optin_page")
         {
+            // $list = ListManagementContact::where(['list_management_id' => $page->list_id, 'email' => $request->email])->first();
+
+            // if ($list) {
+            //     return redirect()->back()->with('error', 'Email already exists.');
+            // } else {
+            //     return redirect()->back()->with('success', 'Email added successfully.');
+            // }
             if(isset($page->list_id)) {
                 ListManagementContact::create([
                     'uid' => Str::uuid(),
@@ -384,7 +391,6 @@ class CallbackController extends Controller
 
             return redirect($paystack['url']);
         }
-
 
         // Bump sell Pages
         if($page->type == "upsell_bump_page")
