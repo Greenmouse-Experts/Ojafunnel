@@ -2231,23 +2231,23 @@ class DashboardController extends Controller
 
                     if($selected_day == 'immediately_joined')
                     {
-                        $last_record = \App\Models\SeriesWaCampaign::where(['wa_campaign_id' => $waCaimpagn->id, 'user_id' => Auth::user()->id])
-                                ->orderBy('id', 'ASC')
-                                ->first();
-                        if(!$last_record) {
+                        // $last_record = \App\Models\SeriesWaCampaign::where(['wa_campaign_id' => $waCaimpagn->id, 'user_id' => Auth::user()->id])
+                        //         ->orderBy('id', 'ASC')
+                        //         ->first();
+                        // if(!$last_record) {
                             $new_date = date('Y-m-d');
-                            $new_time = Carbon::now()->addHours(1)->format('H') . ":00:00";
-                        }else {
-                            $dt = Carbon::parse($last_record->date);
-                            $new_date = $dt->addDays(1)->format('Y-m-d');
-                            $new_time = $last_record->time;
-                        }
+                            $new_time = Carbon::now()->format('H:i:s');
+                        // }else {
+                        //     $dt = Carbon::parse($last_record->date);
+                        //     $new_date = $dt->addDays(1)->format('Y-m-d');
+                        //     $new_time = $last_record->time;
+                        // }
 
                         \App\Models\SeriesWaCampaign::create([
                             'wa_campaign_id' => $waCaimpagn->id,
                             'user_id' => Auth::user()->id,
                             'date' => $new_date,
-                            'time' => $new_time,
+                            'time' => date("H:i:s"),
                             'message' => $request->template1_message[$key],
                             'ContactCount' => sizeof($contacts),
                             'type' => $selected_day
@@ -2255,18 +2255,18 @@ class DashboardController extends Controller
                     }
                     elseif($selected_day == 'sameday_joined')
                     {
-                        $last_record = \App\Models\SeriesWaCampaign::where(['wa_campaign_id' => $waCaimpagn->id, 'user_id' => Auth::user()->id])
-                                ->orderBy('id', 'ASC')
-                                ->first();
-                        if(!$last_record) {
+                        // $last_record = \App\Models\SeriesWaCampaign::where(['wa_campaign_id' => $waCaimpagn->id, 'user_id' => Auth::user()->id])
+                        //         ->orderBy('id', 'ASC')
+                        //         ->first();
+                        // if(!$last_record) {
                             $new_date = date('Y-m-d');
-                            $new_time = Carbon::now()->addHours(1)->format('H') . ":00:00";
-                        }else {
-                            $dt = Carbon::parse($last_record->date);
-                            $new_date = $dt->addDays(1)->format('Y-m-d');
-                            $new_time = $last_record->time;
-                        }
-                        
+                            $new_time = Carbon::now()->startOfDay()->format('H:i:s');
+                        // }else {
+                        //     $dt = Carbon::parse($last_record->date);
+                        //     $new_date = $dt->addDays(1)->format('Y-m-d');
+                        //     $new_time = $last_record->time;
+                        // }
+
 
                         \App\Models\SeriesWaCampaign::create([
                             'wa_campaign_id' => $waCaimpagn->id,
