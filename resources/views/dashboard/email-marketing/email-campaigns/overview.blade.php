@@ -130,7 +130,7 @@
                                                         <div class="modal-body ">
                                                             <div class="row">
                                                                 <div class="Editt">
-                                                                    <form method="POST" action="{{ route('user.email.automation.update.series', Crypt::encrypt($campaign->id))}}">
+                                                                    <form method="POST" action="{{ route('user.email.automation.update.series', Crypt::encrypt($campaign->id))}}" enctype="multipart/form-data">
                                                                         @csrf
                                                                         <div class="form">
                                                                             <div class="row">

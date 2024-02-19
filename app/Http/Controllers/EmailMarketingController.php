@@ -421,7 +421,39 @@ class EmailMarketingController extends Controller
     {
         $finder = decrypt($series_id);
 
-        $series = SeriesSmsCampaign::find($finder);
+        $request->validate([
+            'date' => 'required',
+            'email_template_id' => 'required',
+            'email_template' => 'required'
+        ]);
+
+        $series = SeriesEmailCampaign::find($finder);
+        $email_template = EmailTemplate::where('id', $request->email_template_id)->first();
+
+        $slug = $email_template->slug . '-' . substr(sha1(mt_rand()), 10, 15);
+        $username = Auth::user()->username;
+        $template = $request->email_template;
+
+        // replace all variables with correct laravel syntax
+        $from = ["{{", "}}", "\$name", "\$email", "\$list_id"];
+        $to = ["", "", "{{ \$name }}", "{{ \$email }}", "{{ \$list_id }}"];
+        $template = str_replace($from, $to, $template);
+
+        // add Powered by Ojafunnel
+        $template = str_replace("</body>", $this->getPoweredBy(), $template);
+
+        // check if folder exist, if not create new
+        File::ensureDirectoryExists(resource_path("views/emails/email-marketing-templates/$username"));
+
+        // put template into disk
+        $disk = resource_path("views/emails/email-marketing-templates/$username/$slug.blade.php");
+
+        if (!file_put_contents($disk, $template)) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Error occured while creating template. Try again'
+            ]);
+        }
 
         // Split the string by space to separate date/time and the rest
         $parts = explode(' ', $request->date);
@@ -432,33 +464,48 @@ class EmailMarketingController extends Controller
 
         if($part2 == 'ij')
         {
-            $series->update([
-                'date' => now(),
-                'day' => 'Immediately Joined',
-                'message' => $request->message,
-            ]);
+            $series->date = now();
+            $series->day = 'Immediately Joined';
+            $series->email_template_id = $email_template->id;
         } elseif($part2 == 'sdj'){
-            $series->update([
-                'date' => $part1,
-                'day' => 'Same Day Joined',
-                'message' => $request->message,
-            ]);
+            $series->date = $part1;
+            $series->day = 'Same Day Joined';
+            $series->email_template_id = $email_template->id;
         } else {
             $dateWithoutTimezone = preg_replace('/-\d+$/', '', $request->date);
 
             preg_match('/-(\d+)$/', $request->date, $matches);
             $dayNumber = $matches[1];
 
-            $series->update([
-                'date' => $dateWithoutTimezone,
-                'day' => $dayNumber,
-                'message' => $request->message,
-            ]);
+            $series->date = $dateWithoutTimezone;
+            $series->day = $dayNumber;
+            $series->message = $request->message;
         }
+
+        if ($request->hasFile("series_attachments")) {
+
+            $attachment_paths = [];
+
+            $attachment = $request->file("series_attachments");
+
+            foreach ($request->file("series_attachments") as $attachment) {
+                $filename = $attachment->getClientOriginalName();
+                $path = 'email-marketing/' . Auth::user()->username . '/attachment/campaign-' . $email_campaign->id;
+                $fullpath = $path . '/' . $filename;
+
+                // store here
+                $attachment->storeAs($path, $filename, 'public');
+
+                array_push($attachment_paths, $fullpath);
+            }
+
+            $series->attachment_paths = json_encode($attachment_paths);
+        }
+        $series->save();
 
         return back()->with([
             'type' => 'success',
-            'message' => 'Sms series updated successfully.'
+            'message' => 'Email series updated successfully.'
         ]);
     }
 
