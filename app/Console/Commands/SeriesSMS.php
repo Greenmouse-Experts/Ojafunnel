@@ -42,7 +42,7 @@ class SeriesSMS extends Command
         $current_date = $date->format('Y-m-d');
         $current_time = $date->format('H') . ":00:00";
 
-        $ssc = SeriesSmsCampaign::where(['action' => 'Play'])
+        $ssc = SeriesSmsCampaign::where(['action' => 'Play'])->where('day', '!==', 'Immediately Joined')->where('day', '!==', 'Same Day Joined')
             ->where(function ($query) use ($current_date, $current_time) {
                 $query->where('date', 'LIKE', $current_date . ' ' . $current_time)
                     ->orWhere('date', 'LIKE', $current_date . ' ' . $current_time . '%');
