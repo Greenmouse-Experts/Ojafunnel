@@ -470,7 +470,7 @@
                                         <label>Page Name</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="e.g Home" id="pagename" name="file_name" class="input" required>
+                                                <input type="text" placeholder="e.g Home" id="pagename" name="file_name" class="input" value="index" required>
                                                 <small id="generatePage"></small>
                                             </div>
                                         </div>
