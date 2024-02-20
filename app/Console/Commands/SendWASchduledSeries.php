@@ -149,7 +149,7 @@ class SendWASchduledSeries extends Command
                 ->select('id', 'phone', 'name', 'created_at')
                 ->get();
 
-            Log::info($_campaign->contact_list_id);
+            Log::info($_campaign);
 
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
