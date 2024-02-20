@@ -40,11 +40,9 @@ class SendWASchduledSeries extends Command
     {
         $date = Carbon::now();
 
-        $seriesIJ = SeriesWaCampaign::where(['type' => 'immediately_joined'])
-            ->get();
+        $seriesIJ = SeriesWaCampaign::where(['type' => 'immediately_joined'])->get();
 
-        $seriesSDJ = SeriesWaCampaign::where(['type' => 'sameday_joined'])
-            ->get();
+        $seriesSDJ = SeriesWaCampaign::where(['type' => 'sameday_joined'])->get();
 
         $count = 1;
 
@@ -151,7 +149,7 @@ class SendWASchduledSeries extends Command
                 ->select('id', 'phone', 'name', 'created_at')
                 ->get();
 
-            Log::info($contacts);
+            Log::info($_campaign->contact_list_id);
 
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
