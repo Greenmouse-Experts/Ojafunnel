@@ -14,6 +14,7 @@ use App\Jobs\ProcessTemplate1BulkWAMessages;
 use App\Jobs\ProcessTemplate2BulkWAMessages;
 use App\Jobs\ProcessTemplate3BulkWAMessages;
 use App\Models\SentWhatsappSeriesMessage;
+use Illuminate\Database\Eloquent\Collection;
 
 class SendWASchduledSeries extends Command
 {
@@ -40,9 +41,9 @@ class SendWASchduledSeries extends Command
     {
         $date = Carbon::now();
 
-        $seriesIJ = SeriesWaCampaign::where(['type' => 'immediately_joined'])->get();
+        $seriesIJ = SeriesWaCampaign::where('type', 'immediately_joined')->get();
 
-        $seriesSDJ = SeriesWaCampaign::where(['type' => 'sameday_joined'])->get();
+        $seriesSDJ = SeriesWaCampaign::where('type', 'sameday_joined')->get();
 
         $count = 1;
 
@@ -70,16 +71,17 @@ class SendWASchduledSeries extends Command
 
             // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
-            $chunks = $contacts->chunk(10);
+            $chunks = $contacts;
             $delay = mt_rand(10, 20);
 
             foreach ($chunks as $key => $_chunk) {
                 // Check if the message has already been sent to this contact
                 if (!$this->messageSent($element, $_chunk, $element->type)) {
                     // Send the Whatsapp message
+                    $contactsCollection = new Collection($contacts);
                     if ($_campaign->template == 'template1') {
                         // dispatch job and delay
-                        ProcessTemplate1BulkWAMessages::dispatch($_chunk, [
+                        ProcessTemplate1BulkWAMessages::dispatch($contactsCollection, [
                             'whatsapp_account' => $whatsapp_number->phone_number,
                             'full_jwt_session' => $whatsapp_number->full_jwt_session,
                             'template1_message' => $element->message, //$_campaign->template1_message,
@@ -87,14 +89,16 @@ class SendWASchduledSeries extends Command
                             'series_id' => $element->id
                         ])->onQueue('waTemplate1')->delay($delay);
 
-
                         $delay += mt_rand(10, 20);
+
+                        // Log or handle the message sending process
+                        $this->logMessageSent($element, $_chunk, $element->type);
                     }
 
                     // template 2
                     if ($_campaign->template == 'template2') {
                         // dispatch job
-                        ProcessTemplate2BulkWAMessages::dispatch($_chunk, [
+                        ProcessTemplate2BulkWAMessages::dispatch($contactsCollection, [
                             'whatsapp_account' => $whatsapp_number->phone_number,
                             'full_jwt_session' => $whatsapp_number->full_jwt_session,
                             'template2_message' => $_campaign->template2_message,
@@ -103,12 +107,15 @@ class SendWASchduledSeries extends Command
                         ])->onQueue('waTemplate2')->delay($delay);
 
                         $delay += mt_rand(10, 20);
+
+                        // Log or handle the message sending process
+                        $this->logMessageSent($element, $_chunk, $element->type);
                     }
 
                     // template 3
                     if ($_campaign->template == 'template3') {
                         // dispatch job
-                        ProcessTemplate3BulkWAMessages::dispatch($_chunk, [
+                        ProcessTemplate3BulkWAMessages::dispatch($contactsCollection, [
                             'whatsapp_account' => $whatsapp_number->phone_number,
                             'full_jwt_session' => $whatsapp_number->full_jwt_session,
                             'template3_header' => $_campaign->template3_header,
@@ -122,10 +129,10 @@ class SendWASchduledSeries extends Command
                         ])->afterCommit()->onQueue('waTemplate3')->delay($delay);
 
                         $delay += mt_rand(10, 20);
-                    }
 
-                    // Log or handle the message sending process
-                    $this->logMessageSent($element, $_chunk, $element->type);
+                        // Log or handle the message sending process
+                        $this->logMessageSent($element, $_chunk, $element->type);
+                    }
                 }
             }
 
@@ -149,22 +156,21 @@ class SendWASchduledSeries extends Command
                 ->select('id', 'phone', 'name', 'created_at')
                 ->get();
 
-            Log::info($_campaign);
-
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
             // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
-            $chunks = $contacts->chunk(10);
+            $chunks = $contacts;
             $delay = mt_rand(10, 20);
 
             foreach ($chunks as $key => $_chunk) {
                 // Check if the message has already been sent to this contact
                 if (!$this->messageSent($element, $_chunk, $element->type)) {
                     // Send the Whatsapp message
+                    $contactsCollection = new Collection($contacts);
                     if ($_campaign->template == 'template1') {
                         // dispatch job
-                        ProcessTemplate1BulkWAMessages::dispatch($_chunk, [
+                        ProcessTemplate1BulkWAMessages::dispatch($contactsCollection, [
                             'whatsapp_account' => $whatsapp_number->phone_number,
                             'full_jwt_session' => $whatsapp_number->full_jwt_session,
                             'template1_message' => $element->message, //$_campaign->template1_message,
@@ -172,14 +178,16 @@ class SendWASchduledSeries extends Command
                             'series_id' => $element->id
                         ])->onQueue('waTemplate1')->delay($delay);
 
-
                         $delay += mt_rand(10, 20);
+
+                        // Log or handle the message sending process
+                        $this->logMessageSent($element, $_chunk, $element->type);
                     }
 
                     // template 2
                     if ($_campaign->template == 'template2') {
                         // dispatch job
-                        ProcessTemplate2BulkWAMessages::dispatch($_chunk, [
+                        ProcessTemplate2BulkWAMessages::dispatch($contactsCollection, [
                             'whatsapp_account' => $whatsapp_number->phone_number,
                             'full_jwt_session' => $whatsapp_number->full_jwt_session,
                             'template2_message' => $_campaign->template2_message,
@@ -188,12 +196,15 @@ class SendWASchduledSeries extends Command
                         ])->onQueue('waTemplate2')->delay($delay);
 
                         $delay += mt_rand(10, 20);
+
+                        // Log or handle the message sending process
+                        $this->logMessageSent($element, $_chunk, $element->type);
                     }
 
                     // template 3
                     if ($_campaign->template == 'template3') {
                         // dispatch job
-                        ProcessTemplate3BulkWAMessages::dispatch($_chunk, [
+                        ProcessTemplate3BulkWAMessages::dispatch($contactsCollection, [
                             'whatsapp_account' => $whatsapp_number->phone_number,
                             'full_jwt_session' => $whatsapp_number->full_jwt_session,
                             'template3_header' => $_campaign->template3_header,
@@ -207,10 +218,10 @@ class SendWASchduledSeries extends Command
                         ])->afterCommit()->onQueue('waTemplate3')->delay($delay);
 
                         $delay += mt_rand(10, 20);
-                    }
 
-                    // Log or handle the message sending process
-                    $this->logMessageSent($element, $_chunk, $element->type);
+                        // Log or handle the message sending process
+                        $this->logMessageSent($element, $_chunk, $element->type);
+                    }
                 }
             }
 

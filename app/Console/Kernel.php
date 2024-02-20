@@ -15,6 +15,7 @@ use App\Console\Commands\SmsBirthday;
 use App\Console\Commands\Subscription;
 use App\Console\Commands\EmailCartReminder;
 use App\Console\Commands\SendScheduledSeriesSms;
+use App\Console\Commands\SendWASchduledSeries;
 use App\Console\Commands\SeriesSMS;
 use App\Console\Commands\SubscriptionReminder;
 use App\Console\Commands\SeriesEmailCampaign;
@@ -46,6 +47,7 @@ class Kernel extends ConsoleKernel
         RenewSSL::class,
         SeriesEmailCampaign::class,
         SendScheduledSeriesSms::class,
+        SendWASchduledSeries::class
     ];
 
     /**
