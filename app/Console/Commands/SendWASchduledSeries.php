@@ -268,7 +268,7 @@ class SendWASchduledSeries extends Command
         ])->get();
 
 
-        Log::info(json_encode($onetime));
+        // Log::info(json_encode($onetime));
 
         $onetime->map(function ($_campaign) {
             $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
