@@ -711,7 +711,7 @@ class DashboardController extends Controller
         }
 
        $channels = $request->channel;
-       $user_emails = \App\Models\ListManagementContact::where('tags', 'like', "%$channels%")->whereNotNull('phone')->pluck('email')->toArray();
+       $user_emails = \App\Models\ListManagementContact::where('tags', 'like', "%$channels%")->whereNotNull('phone')->where('subscribe', true)->pluck('email')->toArray();
 
        $all_emails = "";
        $send_emails = false;
