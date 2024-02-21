@@ -249,7 +249,7 @@
                                             </div>
                                         </div>
 
-                                        
+
                                     </div>
 
                                     {{-- Schedule --}}
@@ -258,7 +258,7 @@
                                             <label>Message</label>
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">
-                                                    <textarea placeholder="Type in your message" name="template1_msg" id="" cols="30" rows="4">{{ (!is_array(old('template1_message') )) ? old('template1_message') : ''}}</textarea>
+                                                    <textarea placeholder="Type in your message" name="template1_msg_series" id="" cols="30" rows="4">{{ (!is_array(old('template1_message') )) ? old('template1_message') : ''}}</textarea>
                                                     <p>
                                                         <b>$name</b> can be used in this message. <b>NB:</b> Name must have been added in the contact list to use this feature.
                                                     </p>
@@ -402,15 +402,6 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="boding">
-                                                    <a href="#">
-                                                        <button class="btn px-3" style="color: #714091; border:1px solid #714091; background:#fff;">
-                                                            Cancel
-                                                        </button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="boding">
                                                     <button type="submit" name="submit">
                                                         Proceed
                                                     </button>
@@ -418,62 +409,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="modal fade" id="chooseIntegrationGateways" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header border-bottom-0">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">
-                                                        Provide Us Your Option For Integration
-                                                    </h5>
-                                                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="Edit">
-                                                            <div class="form">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <div class="row">
-                                                                            @if($integrations->isEmpty())
-                                                                            <div class="col-12">
-                                                                                <div class="circle" style="padding: 20px 20px 20px 2px; text-align: center;">
-                                                                                    No SMS Integration Gateway Added
-                                                                                </div>
-                                                                            </div>
-                                                                            @else
-                                                                            @foreach($integrations as $integration)
-                                                                            <div class="col-md-6">
-                                                                                <div class="circle" style="padding: 20px 20px 20px 20px;">
-                                                                                    {{$integration->type}}
-                                                                                </div>
-                                                                                <div class="zazu">
-                                                                                    <input type="radio" name="integration" value="{{$integration->type}}" style="margin-top: -70px !important;">
-                                                                                </div>
-                                                                            </div>
-                                                                            @endforeach
-                                                                            @endif
-                                                                            <div class="row">
-                                                                                <div class="col-6 text-center">
-                                                                                    <a data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                                                        Cancel
-                                                                                    </a>
-                                                                                </div>
-                                                                                <div class="col-6 text-center">
-                                                                                    <button class="btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
-                                                                                        Send WhatsApp
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
                                     <!-- <div class="col-lg-12">
                                         <div class="row">
                                             <div class="col-md-6"></div>
@@ -501,95 +436,6 @@
 
 <!-- END layout-wrapper -->
 
-<!-- smsModal -->
-<div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="staticBackdropLabel">
-                    Automate Message(s)
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="Edit-level">
-                        <div class="form">
-                            <div class="col-lg-12">
-                                <label>Message 1</label>
-                                <div class="row">
-                                    <div class="col-md-12 mb-4">
-                                        <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <label>When To Send</label>
-                                <div class="row">
-                                    <div class="col-md-12 mb-4">
-                                        <input type="number" value="1" name="name" class="input" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <label>Time (GMT)</label>
-                                <div class="row">
-                                    <div class="col-md-12 mb-4">
-                                        <input type="datetime" placeholder="Hrs/Mins" name="name" class="input" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Edit-level">
-                        <div class="form">
-                            <div class="col-lg-12">
-                                <label>Message 2</label>
-                                <div class="row">
-                                    <div class="col-md-12 mb-4">
-                                        <input type="tel" placeholder="+234 800 000 0000" name="name" class="input" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <label>Message Period</label>
-                                <div class="row">
-                                    <div class="col-md-12 mb-4">
-                                        <input type="number" value="1" name="name" class="input" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <label>Time (GMT)</label>
-                                <div class="row">
-                                    <div class="col-md-12 mb-4">
-                                        <input type="datetime" placeholder="Hrs/Mins" name="name" class="input" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row justify-content-between">
-                                <div class="col-4">
-                                    <a href="#" class="text-decoration-none">
-                                        <button class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                            Cancel
-                                        </button></a>
-                                </div>
-                                <div class="col-8 text-end">
-                                    <a href="#" class="text-decoration-none">
-                                        <button class="btn px-4" style="color: #ffffff; background-color: #714091">
-                                            Start Message Automation
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end modal -->
 <!-- end modal -->
 <script>
     const template = document.getElementById('template');

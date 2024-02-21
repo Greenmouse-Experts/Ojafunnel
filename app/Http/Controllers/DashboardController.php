@@ -1425,7 +1425,7 @@ class DashboardController extends Controller
 
         // get contact list
         // $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
-        $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->whereNotNull('phone')->get();
+        $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->whereNotNull('phone')->where('subscribe', true)->get();
 
         if ($request->message_timing == 'Immediately') {
 
@@ -1631,7 +1631,8 @@ class DashboardController extends Controller
             $request->validate([
                 'start_date' => 'required',
                 'start_time' => 'required',
-                'frequency_cycle' => 'required'
+                'frequency_cycle' => 'required',
+                'template1_msg_series' => 'required'
             ]);
 
             if ($request->start_date < Carbon::now()->format('Y-m-d')) return back()->with([
@@ -1659,7 +1660,7 @@ class DashboardController extends Controller
                         $waCaimpagn->user_id = Auth::user()->id;
                         $waCaimpagn->contact_list_id = $request->contact_list;
                         $waCaimpagn->template = 'template1';
-                        $waCaimpagn->template1_message = $request->template1_msg;
+                        $waCaimpagn->template1_message = $request->template1_msg_series;
                         $waCaimpagn->message_timing = $request->message_timing;
                         // frequency
                         $waCaimpagn->start_date = $request->start_date;
