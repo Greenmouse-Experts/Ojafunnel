@@ -152,13 +152,12 @@
                                         </button></a>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <a href="ecommerce2.html" class="text-decoration-none">
-                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
-                                            Create Shop
-                                        </button>
-                                    </a>
+                                    <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
+                                        Create Shop
+                                    </button>
                                 </div>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -246,30 +245,12 @@
 @endif
 <script>
     $(document).ready(function(){
-
-      $("#shopName").keyup(function(){
-        if(document.getElementById('shopName').value.match(/\s/g)){
-            document.getElementById('shopName').value=document.getElementById('shopName').value.replace(/\s/g,'');
-        }
-        $("#myInput").val("{{config('app.url')}}/course/shop/"+$("#shopName").val());
-      });
+        $("#shopName").keyup(function(){
+            var shopNameValue = $(this).val(); // Get the value from #shopName
+            var sanitizedValue = shopNameValue.replace(/\s+/g, '').toLowerCase(); // Remove spaces from the value
+            $("#myInput").val("{{ config('app.url') }}/course/shop/" + sanitizedValue); // Set the value of #myInput
+        });
     });
-</script>
-<script>
-    function myCopyFunction() {
-        // Get the text field
-        var copyText = document.getElementById("myInput");
-
-        // Select the text field
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); // For mobile devices
-
-        // Copy the text inside the text field
-        navigator.clipboard.writeText(copyText.value);
-
-        // Alert the copied text
-        //alert("Copied the text: " + copyText.value);
-    }
 </script>
 <!-- END layout-wrapper -->
 <script>

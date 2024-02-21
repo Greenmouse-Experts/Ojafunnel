@@ -180,10 +180,10 @@
                                                                         </div>
                                                                         <div class="col-md-8">
                                                                             <label for="Name">Shop Name</label>
-                                                                            <input type="text" value="{{$item->link}}" name="link" id="myInput" class="input mov" readonly>
+                                                                            <input type="text" value="{{$item->link}}" name="link" id="myInput" class="input mov myPut" readonly>
                                                                         </div>
                                                                         <div class="col-md-1 mt-3 mb-3">
-                                                                            <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
+                                                                            <button data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction1()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
                                                                         </div>
                                                                         <div class="col-lg-6">
                                                                             <label for="Name">Store Currency</label>
@@ -198,7 +198,7 @@
                                                                         </div>
                                                                         <div class="col-lg-6">
                                                                             <label for="Name">Store Currency Sign</label>
-                                                                            <input type="text" value="{{$item->currency_sign}}" name="currency_sign" id="myInput" class="input mov" required>
+                                                                            <input type="text" value="{{$item->currency_sign}}" name="currency_sign" class="input mov" required>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -253,19 +253,17 @@
                                                             <!-- buttons -->
                                                             <div class="row hihj justify-content-between mt-5">
                                                                 <div class="col-6">
-                                                                    <a href="#" class="text-decoration-none">
-                                                                        <button type="reset" class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                                                            Cancel
-                                                                        </button></a>
-                                                                </div>
-                                                                <div class="col-6 text-end">
-                                                                    <a href="ecommerce2.html" class="text-decoration-none">
-                                                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
-                                                                            Update Shop
-                                                                        </button>
+                                                                    <a data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                        Cancel
                                                                     </a>
                                                                 </div>
+                                                                <div class="col-6 text-end">
+                                                                    <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
+                                                                        Update Shop
+                                                                    </button>
+                                                                </div>
                                                             </div>
+                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -337,25 +335,17 @@
     </div>
     <!-- Modal Ends -->
     @endif
-  <script>
-      function myCopyFunction() {
-          // Get the text field
-          var copyText = document.getElementById("myInput");
-
-          // Select the text field
-          copyText.select();
-          copyText.setSelectionRange(0, 99999); // For mobile devices
-
-          // Copy the text inside the text field
-          navigator.clipboard.writeText(copyText.value);
-
-          // Alert the copied text
-          //alert("Copied the text: " + copyText.value);
-      }
-  </script>
   <!-- End Page-content -->
 </div>
-
+<script>
+    $(document).ready(function(){
+        $("#shopName").keyup(function(){
+            var shopNameValue = $(this).val(); // Get the value from #shopName
+            var sanitizedValue = shopNameValue.replace(/\s+/g, '').toLowerCase(); // Remove spaces from the value
+            $(".myPut").val("{{ config('app.url') }}/course/shop/" + sanitizedValue); // Set the value of #myInput
+        });
+    });
+</script>
 <style>
     .container2 {
       display: inline;

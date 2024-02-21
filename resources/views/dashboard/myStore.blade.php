@@ -146,17 +146,14 @@
                             <!-- buttons -->
                             <div class="row hihj justify-content-between mt-5">
                                 <div class="col-6">
-                                    <a href="#" class="text-decoration-none">
-                                        <button type="reset" class="btn px-3" style="color: #714091; border: 1px solid #714091">
-                                            Cancel
-                                        </button></a>
+                                    <a data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        Cancel
+                                    </a>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <a href="ecommerce2.html" class="text-decoration-none">
-                                        <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
-                                            Create Store
-                                        </button>
-                                    </a>
+                                    <button type="submit" class="btn px-4" style="color: #ffffff; background-color: #714091">
+                                        Create Store
+                                    </button>
                                 </div>
                             </div>
                     </form>
@@ -196,16 +193,13 @@
 
 <script>
     $(document).ready(function(){
-
-      $("#storeName").keyup(function(){
-        if(document.getElementById('storeName').value.match(/\s/g)){
-            document.getElementById('storeName').value=document.getElementById('storeName').value.replace(/\s/g,'');
-        }
-        $("#myInput").val('http://store.ojafunnel.test/'+$("#storeName").val());
-      });
+        $("#storeName").keyup(function(){
+            var storeNameValue = $(this).val(); // Get the value from #storeName
+            var sanitizedValue = storeNameValue.replace(/\s+/g, '').toLowerCase(); // Remove spaces from the value
+            $("#myInput").val("http://store.ojafunnel.test/" + sanitizedValue); // Set the value of #myInput
+        });
     });
-</script>
-<script>
+
     function myCopyFunction() {
         // Get the text field
         var copyText = document.getElementById("myInput");

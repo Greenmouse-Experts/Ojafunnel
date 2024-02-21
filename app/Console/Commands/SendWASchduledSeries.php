@@ -153,6 +153,7 @@ class SendWASchduledSeries extends Command
                 ->where('list_management_id', $_campaign->contact_list_id)
                 ->where('created_at', '>=', $dateCarbon->toDateString())
                 ->where('subscribe', true)
+                ->whereNotNull('phone')
                 ->select('id', 'phone', 'name', 'created_at')
                 ->get();
 
@@ -253,7 +254,6 @@ class SendWASchduledSeries extends Command
         $current_date = $date->format('Y-m-d');
         $current_time = $date->format('H:i');
 
-
         $onetime = WaCampaigns::where([
             'frequency_cycle' => 'onetime',
             'message_timing' => 'Series',
@@ -261,11 +261,10 @@ class SendWASchduledSeries extends Command
             // 'next_due_date' => $current_date,
         ])->get();
 
-
         // Log::info(json_encode($onetime));
 
         $onetime->map(function ($_campaign) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->whereNotNull('phone')->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
             // divide into 10 chunks and

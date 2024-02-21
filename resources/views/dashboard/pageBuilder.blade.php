@@ -476,14 +476,12 @@
                                         </div>
                                     </div>
 
-                                    
-
                                     <div class="col-lg-12">
                                         <label>Page Type</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <select name="page_type" id="page_options" class="input" required style="height: 50px;" onchange="enableFields()">
-                                                    <option>--Select Page Type--</option>
+                                                    <option value="">--Select Page Type--</option>
                                                     <option value="landing_page">Landing Page</option>
                                                     <option value="optin_page">Opt-In Page</option>
                                                     <option value="upsell_page">Upsell Form Page</option>
@@ -500,8 +498,8 @@
                                         <label>List Management</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <select name="list_id" id="list_id" class="input" required style="height: 50px;">
-                                                    <option>--Select List --</option>
+                                                <select name="list_id" id="list_id" class="input" style="height: 50px;" required>
+                                                    <option value="">--Select List --</option>
                                                     @foreach (\App\Models\ListManagement::where(['user_id' => Auth::user()->id, 'status' => 1])->get() as $item)
                                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                                     @endforeach

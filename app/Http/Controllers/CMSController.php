@@ -43,7 +43,10 @@ class CMSController extends Controller
             'category' => ['required', 'string', 'max:255'],
         ]);
 
-        if (Course::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->courses) {
+        $userCoursesCount = Course::where('user_id', Auth::user()->id)->count();
+        $planCoursesLimit = OjaPlanParameter::find(Auth::user()->plan)->courses;
+
+        if ($userCoursesCount >= $planCoursesLimit) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access'

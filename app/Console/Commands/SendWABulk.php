@@ -239,7 +239,7 @@ class SendWABulk extends Command
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
         $weekly->map(function ($_campaign) use ($date) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->whereNotNull('phone')->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
             // divide into 10 chunks and
@@ -329,7 +329,7 @@ class SendWABulk extends Command
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
         $monthly->map(function ($_campaign) use ($date) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->whereNotNull('phone')->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
             // divide into 10 chunks and
@@ -419,7 +419,7 @@ class SendWABulk extends Command
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
         $monthly->map(function ($_campaign) use ($date) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->whereNotNull('phone')->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
             // divide into 10 chunks and
@@ -509,7 +509,7 @@ class SendWABulk extends Command
         ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
 
         $custom->map(function ($_campaign) use ($date) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->whereNotNull('phone')->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
             // divide into 10 chunks and

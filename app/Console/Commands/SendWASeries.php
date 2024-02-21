@@ -43,9 +43,6 @@ class SendWASeries extends Command
         $current_time = $date->format('H');
         $current_time = "$current_time:00:00";
 
-        echo $current_time;
-
-
         $series = SeriesWaCampaign::where('date', "$current_date")
             ->where('time', $current_time)
             ->where('type', null)
@@ -53,13 +50,15 @@ class SendWASeries extends Command
 
         $count = 1;
 
-
         foreach($series as $element)
         {
             $_campaign = WaCampaigns::find($element->wa_campaign_id);
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
+            $contacts = ListManagementContact::latest()
+                ->where('list_management_id', $_campaign->contact_list_id)
+                ->where('subscribe', true)
+                ->whereNotNull('phone')
+                ->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
-
 
             // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
@@ -140,7 +139,6 @@ class SendWASeries extends Command
         $current_date = $date->format('Y-m-d');
         $current_time = $date->format('H:i');
 
-
         $onetime = WaCampaigns::where([
             'frequency_cycle' => 'onetime',
             'message_timing' => 'Series',
@@ -148,13 +146,14 @@ class SendWASeries extends Command
             // 'next_due_date' => $current_date,
         ])->get();
 
-
-        Log::info(json_encode($onetime));
-
-
+        // Log::info(json_encode($onetime));
 
         $onetime->map(function ($_campaign) {
-            $contacts = ListManagementContact::latest()->where('list_management_id', $_campaign->contact_list_id)->where('subscribe', true)->get();
+            $contacts = ListManagementContact::latest()
+                ->where('list_management_id', $_campaign->contact_list_id)
+                ->where('subscribe', true)
+                ->whereNotNull('phone')
+                ->get();
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->whatsapp_account])->first();
 
             // divide into 10 chunks and
