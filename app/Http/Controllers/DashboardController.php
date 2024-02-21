@@ -711,7 +711,7 @@ class DashboardController extends Controller
         }
 
        $channels = $request->channel;
-       $user_emails = \App\Models\ListManagementContact::where('tags', 'like', "%$channels%")->pluck('email')->toArray();
+       $user_emails = \App\Models\ListManagementContact::where('tags', 'like', "%$channels%")->whereNotNull('phone')->pluck('email')->toArray();
 
        $all_emails = "";
        $send_emails = false;
@@ -1423,11 +1423,9 @@ class DashboardController extends Controller
         ])->withInput();
 
 
-
-
         // get contact list
         // $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
-        $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->get();
+        $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->whereNotNull('phone')->get();
 
         if ($request->message_timing == 'Immediately') {
 
