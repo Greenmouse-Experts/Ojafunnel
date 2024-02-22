@@ -40,13 +40,11 @@ class SmsBirthday extends Command
         $date = Carbon::now();
         $currentDate = Carbon::today()->toDateString();
 
-        $birthday = BirthdayAutomation::where('automation', 'SMS & WhatsApp Automation')
-            ->where('action', 'Play')
-            ->whereDate('start_date', '<=', $currentDate)
-            ->whereDate('end_date', '>=', $currentDate)
-            ->get();
-
-        // Log::info($birthday);
+        $birthday = BirthdayAutomation::where('automation', 'LIKE', '%SMS Automation%')
+                ->where('action', 'Play')
+                ->whereDate('start_date', '<=', $currentDate)
+                ->whereDate('end_date', '>=', $currentDate)
+                ->get();
 
         if ($birthday->isEmpty()) {
             return Command::SUCCESS;

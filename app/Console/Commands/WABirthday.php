@@ -37,20 +37,13 @@ class WABirthday extends Command
         $date = Carbon::now();
         $current_date = $date->format('Y-m-d');
 
-        // $birthday_automation = BirthdayAutomation::where([
-        //     'automation' => '"whatsapp automation"',
-        //     'action' => 'Play'
-        // ])->whereDate('start_date', '<=', $current_date)->whereDate('end_date', '>=', $current_date)->get();
-
         $currentDate = Carbon::today()->toDateString();
 
-        $birthday_automation = BirthdayAutomation::where('automation', 'whatsapp automation')
+        $birthday_automation = BirthdayAutomation::where('automation', 'LIKE', '%whatsapp automation%')
             ->where('action', 'Play')
             ->whereDate('start_date', '<=', $currentDate)
             ->whereDate('end_date', '>=', $currentDate)
             ->get();
-
-        // Log::info($birthday_automation);
 
         $birthday_automation->map(function ($_campaign) use ($date, $current_date) {
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->sender_id])->first();

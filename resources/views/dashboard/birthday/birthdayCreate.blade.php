@@ -151,8 +151,8 @@
                                                 </div>
                                             </div> --}}
                                             <div class='d-flex mt-3 align-items-center'>
-                                                <input type='checkbox' id="sms_select" onchange="smsAuto()" value="SMS & WhatsApp Automation" name="automation[1]" class='w-auto mt-1' />
-                                                <label class='w-auto'>SMS & WhatsApp Automation</label>
+                                                <input type='checkbox' id="sms_select" onchange="smsAuto()" value="SMS Automation" name="automation[1]" class='w-auto mt-1' />
+                                                <label class='w-auto'>SMS Automation</label>
                                             </div>
                                             <div class="sms_automation mt-2" style="display: none">
                                                 <div class="col-lg-12">

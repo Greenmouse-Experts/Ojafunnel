@@ -177,7 +177,8 @@ class BirthdayController extends Controller
                     $waAutomation->end_date = $request->end_date;
                     $waAutomation->save();
 
-                    $contacts = ListManagementContact::latest()->where(['list_management_id' => $contact->first()->id])->get();
+                    $contacts = ListManagementContact::latest()->where(['list_management_id' => $contact->first()->id])->where('subscribe', true)
+                    ->whereNotNull('phone')->get();
 
                     // build each wa queue data based on contacts
                     $queue = $contacts->map(function ($_contact) use ($waAutomation) {
@@ -197,7 +198,7 @@ class BirthdayController extends Controller
                 });
             }
 
-            if ($automation == 'SMS & WhatsApp Automation') {
+            if ($automation == 'SMS Automation') {
                 if (strlen($request->sender_name) > 11) {
                     // Handle the error: Input exceeds maximum length
                     return back()->with([
@@ -207,7 +208,8 @@ class BirthdayController extends Controller
                     // You may redirect back to the form with an error message, or handle it according to your application logic
                 }
 
-                $contact = ListManagementContact::where('list_management_id', $request->birthday_list_id)->select('phone')->get();
+                $contact = ListManagementContact::where('list_management_id', $request->birthday_list_id)->where('subscribe', true)
+                ->whereNotNull('phone')->select('phone')->get();
                 $bm = new BirthdayAutomation();
                 $bm->user_id = Auth::user()->id;
                 $bm->birthday_contact_list_id = $request->birthday_list_id;
@@ -282,7 +284,8 @@ class BirthdayController extends Controller
                     $emAutomation->end_date = $request->end_date;
                     $emAutomation->save();
 
-                    $contacts = ListManagementContact::latest()->where(['list_management_id' => $contact->first()->id])->get();
+                    $contacts = ListManagementContact::latest()->where(['list_management_id' => $contact->first()->id])->where('subscribe', true)
+                    ->whereNotNull('phone')->get();
 
                     // build each wa queue data based on contacts
                     $queue = $contacts->map(function ($_contact) use ($emAutomation) {

@@ -39,7 +39,7 @@ class EmailBirthday extends Command
         $current_date = $date->format('Y-m-d');
         $currentDate = Carbon::today()->toDateString();
 
-        $birthday_automation = BirthdayAutomation::where('automation', 'email automation')
+        $birthday_automation = BirthdayAutomation::where('automation', 'LIKE', '%email automation%')
             ->where('action', 'Play')
             ->whereDate('start_date', '<=', $currentDate)
             ->whereDate('end_date', '>=', $currentDate)
@@ -59,7 +59,6 @@ class EmailBirthday extends Command
                     ->whereMonth('date_of_birth', $current_month)
                     ->whereDay('date_of_birth', $current_day)->get();
 
-                Log::info($lists);
                 // divide into 500 chunks and
                 // delay each job between 10  - 20 sec in the queue
                 $chunks = $lists->chunk(500);

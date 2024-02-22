@@ -26,13 +26,13 @@
             }
 
             h1 {
-            font-family: Arial, sans-serif;
-            font-size: 45px;
-            color: #333;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-        }
+                font-family: Arial, sans-serif;
+                font-size: 45px;
+                color: #333;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                margin-bottom: 20px;
+            }
 
             .footer {
                 position: fixed;
