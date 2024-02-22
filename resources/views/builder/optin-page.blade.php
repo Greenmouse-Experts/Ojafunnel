@@ -61,15 +61,15 @@
                     <form method="POST" action="$action">
                         <div class="form-group">
                             <lable>Full name</lable>
-                            <input type="text" class="form-control" name="name" style="">
+                            <input type="text" class="form-control" name="name" required>
                         </div>
                         <div class="form-group mt-3">
                             <lable>Email addres</lable>
-                            <input type="text" class="form-control" name="email" style="">
+                            <input type="text" class="form-control" name="email" required>
                         </div>
                         <div class="form-group mt-3">
                             <lable>Phone number</lable>
-                            <input type="text" class="form-control" name="phone" style="">
+                            <input type="text" class="form-control" name="phone" required>
                         </div>
                         <div class="form-group mt-3">
                             <button class="btn btn-success">Continue</button>
@@ -87,8 +87,5 @@
         <grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-
-
 </body>
 </html>

@@ -10,7 +10,7 @@ use App\Models\ListManagement;
 use App\Models\ListManagementContact;
 use Illuminate\Support\Str;
 use App\Models\User;
-
+use Illuminate\Support\Facades\URL;
 
 class CallbackController extends Controller
 {
@@ -221,7 +221,7 @@ class CallbackController extends Controller
             $vendor->notify(new \App\Notifications\LeadNotification($bundle));
 
 
-            return view('pages.default.thank_you_page')->with(['route' => \URL::previous()]);
+            return view('pages.default.thank_you_page')->with(['route' => URL::previous()]);
         }
 
         // Upsell Pages

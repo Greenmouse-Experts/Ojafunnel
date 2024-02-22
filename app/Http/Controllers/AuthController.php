@@ -609,7 +609,8 @@ class AuthController extends Controller
 
     public function text()
     {
-        return view('test');
+        return view('pages.default.thank_you_page');
+        // return view('test');
     }
 
     public function copyText(Request $request)
