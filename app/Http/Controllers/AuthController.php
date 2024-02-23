@@ -609,7 +609,7 @@ class AuthController extends Controller
 
     public function text()
     {
-        return view('pages.default.thank_you_page');
+        return view('builder.optin-page');
         // return view('test');
     }
 

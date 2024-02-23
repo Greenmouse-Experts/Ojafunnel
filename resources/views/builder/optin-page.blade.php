@@ -11,6 +11,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
         <style>
             html, body
             {
@@ -35,6 +37,32 @@
                 margin: 5px 0 5px 0;
                 font-size: 0.6rem;
                 font-weight: 300;
+            }
+            .success-message {
+                color: green !important;
+                font-size: 12px !important;
+            }
+            .font-red-mint {
+                color: red !important;
+                font-size: 12px;
+            }
+            .alert-success {
+                color: green !important;
+                font-size: 14px !important;
+            }
+            .text-red, .alert-danger {
+                color: red !important;
+            }
+            .hide {
+                display: none !important;
+            }
+            #valid-msg,  #confirmvalid-msg{
+                color: green !important;
+                font-size: 12px !important;
+            }
+            #error-msg, #confirmerror-msg, #emailError, #confirmEmailError{
+                color: red !important;
+                font-size: 12px !important;
             }
         </style>
         <style id="vvvebjs-styles"></style>
@@ -69,7 +97,9 @@
                         </div>
                         <div class="form-group mt-3">
                             <lable>Phone number</lable>
-                            <input type="text" class="form-control" name="phone" required>
+                            <input type="tel" id="phone" class="form-control" name="phone" required>
+                            <span id="valid-msg" class="help-block hide">✓ Valid</span>
+					        <span id="error-msg" class="help-block hide"></span>
                         </div>
                         <div class="form-group mt-3">
                             <button class="btn btn-success">Continue</button>
@@ -87,5 +117,69 @@
         <grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
+        <script>
+            const input = document.querySelector("#phone");
+            const errorMsg = document.querySelector("#error-msg");
+            const validMsg = document.querySelector("#valid-msg");
+            let validationTimeout;
+
+            // here, the index maps to the error code returned from getValidationError - see readme
+            const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+            // initialise plugin
+            const iti = window.intlTelInput(input, {
+                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js"
+            });
+
+            const updateMessages = () => {
+                clearTimeout(validationTimeout);
+                reset();
+                if (input.value.trim()) {
+                    validationTimeout = setTimeout(() => {
+                        if (iti.isValidNumber()) {
+                            validMsg.classList.remove("hide");
+                        } else {
+                            input.classList.add("error");
+                            const errorCode = iti.getValidationError();
+                            errorMsg.innerHTML = errorMap[errorCode];
+                            errorMsg.classList.remove("hide");
+                        }
+                    }, 300); // Adjust the delay time as needed (in milliseconds)
+                }
+            };
+
+            const reset = () => {
+                input.classList.remove("error");
+                errorMsg.innerHTML = "";
+                errorMsg.classList.add("hide");
+                validMsg.classList.add("hide");
+            };
+
+            // on input: validate with slight delay
+            input.addEventListener('input', updateMessages);
+
+            // on keyup / change flag: reset
+            input.addEventListener('change', reset);
+            input.addEventListener('keyup', reset);
+        </script>
+        <style>
+            .iti {
+                display: block !important;
+            }
+
+            .iti__country-list {
+                z-index: 2000 !important;
+            }
+
+            .iti__country-name {
+                color: #000 !important;
+            }
+
+            .iti__dial-code {
+                color: #000 !important;
+            }
+        </style>
+    </body>
 </html>

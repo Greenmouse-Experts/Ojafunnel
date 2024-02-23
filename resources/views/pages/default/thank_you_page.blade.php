@@ -29,7 +29,7 @@
                 font-family: Arial, sans-serif;
                 font-size: 45px;
                 color: #333;
-                text-transform: uppercase;
+                /* text-transform: uppercase; */
                 letter-spacing: 2px;
                 margin-bottom: 20px;
             }
@@ -59,7 +59,7 @@
     <body data-new-gr-c-s-check-loaded="14.1034.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1116.0">
         <!-- Page Content -->
         <div class="container">
-            <h1> Thank you.</h1>
+            <h1> Thank you for opting in.</h1>
         </div>
 
         <footer class="footer">
