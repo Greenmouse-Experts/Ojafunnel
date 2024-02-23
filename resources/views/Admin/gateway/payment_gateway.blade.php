@@ -48,12 +48,12 @@
                                         @foreach($gateways as $gateway)
                                         <div class="col-md-4">
                                             <div class="circle">
-                                                <img src="{{URL::asset($gateway->logo)}}" draggable="false" alt="{{$gateway->name}}" width="100px">
-                                                <span class="text-dark">{{$gateway->name}}</span>
+                                                <img src="{{ URL::asset($gateway->logo) }}" draggable="false" alt="{{ $gateway->name }}" width="100px">
+                                                <span class="text-dark">{{ $gateway->name }} <span class="badge @if($gateway->status == 'Active') bg-success @else bg-danger @endif rounded-pill">{{$gateway->status}} </span></span>
                                             </div>
-                                            
-                                            <div class="zazu view-details-btn" data-gateway-id="{{$gateway->id}}">
-                                                <input type="radio" name="payment_gateways" value="Twillio">
+
+                                            <div class="zazu view-details-btn" data-gateway-id="{{ $gateway->id }}">
+                                                <input type="radio" name="payment_gateways" value="{{ $gateway->name }}">
                                             </div>
                                         </div>
                                         @endforeach
@@ -126,9 +126,9 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <a data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
-                                        </button>
+                                        </a>
                                     </div>
                                     <div class="col-6 text-end">
                                         <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
@@ -202,9 +202,9 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <a data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
-                                        </button>
+                                        </a>
                                     </div>
                                     <div class="col-6 text-end">
                                         <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
@@ -302,9 +302,9 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <a data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
-                                        </button>
+                                        </a>
                                     </div>
                                     <div class="col-6 text-end">
                                         <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
@@ -378,9 +378,9 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <a data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
-                                        </button>
+                                        </a>
                                     </div>
                                     <div class="col-6 text-end">
                                         <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
@@ -434,7 +434,7 @@
                         $('#flutterwave-modal select.status').val(response.status);
 
                         $('#flutterwave-modal').modal('show');
-                        break; 
+                        break;
                     case 'Paypal':
                         $('#paypal-modal input.id').val(response.id);
                         $('#paypal-modal .name').val(response.name);
