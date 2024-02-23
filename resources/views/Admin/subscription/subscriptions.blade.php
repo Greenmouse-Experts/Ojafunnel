@@ -70,8 +70,8 @@
                                             <td>{{date('D/M/Y', strtotime($sub->started_at))}}</td>
                                             <td>{{date('D/M/Y', strtotime($sub->ends_at))}}</td>
                                             <td>{{App\Models\OjaPlan::find($sub->plan_id)->name}} Plan</td>
-                                            <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->currency_sign}}{{number_format($sub->amount,2)}}</td>
-                                            <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->type}}</td>
+                                            <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->currency_sign ?? ""}}{{number_format($sub->amount,2)}}</td>
+                                            <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->type ?? ""}}</td>
                                             <td>
                                                 @if($sub->status == 'Active')
                                                 <span class="badge bg-success font-size-10">{{$sub->status}}</span>
@@ -133,18 +133,18 @@
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="start_date" class="input start_date"> 
-                                    <input type="hidden" name="end_date" class="input end_date"> 
-                                    <input type="hidden" name="subscription_id" class="input subscription_id"> 
+                                    <input type="hidden" name="start_date" class="input start_date">
+                                    <input type="hidden" name="end_date" class="input end_date">
+                                    <input type="hidden" name="subscription_id" class="input subscription_id">
 
                                     <div class="col-lg-12 ext_div" style="display:none">
                                         <label>Extend to</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="date" name="extend_end_date" class="input end_date"> 
+                                                <input type="date" name="extend_end_date" class="input end_date">
                                                 <div class="expiry_info" style="font-size:12px;margin-top:3px"></div>
-                                            </div> 
-                                        </div> 
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-lg-12 mb-4">
                                         <div class="boding">

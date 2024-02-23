@@ -61,7 +61,7 @@ $('body').on('click', '.validateEmail', function (e) {
   var interval = setInterval(function() {
     myExecutions(emails[counter], token, self);
     counter++;
-    
+
     if (counter === emails.length) {
       clearInterval(interval);
       var datastring='email='+emails[counter]
@@ -73,7 +73,7 @@ $('body').on('click', '.validateEmail', function (e) {
         success : function(data){
         }
       })
-      
+
     }
   }, 2000);
 });
@@ -81,10 +81,10 @@ $('body').on('click', '.validateEmail', function (e) {
 
 $('body').on('click', '.addUsers', function (e) {
   e.preventDefault();
-  var self = this;    
+  var self = this;
   var results = '';
   $(self).attr('disabled', true).css({'opacity': '0.4'});
-  
+
   $.ajax({
     type : "POST",
     url : site_url + "admin/page/add-users",
@@ -102,7 +102,7 @@ $('body').on('click', '.addUsers', function (e) {
         setTimeout(() => {
           location.reload();
         }, 3000);
-      
+
       }else{
         $(self).removeAttr('disabled').css({'opacity': '1'});
         Swal.fire({
@@ -128,7 +128,7 @@ $('body').on('click', '.addUsers', function (e) {
 
 $('body').on('click', '.submitAnswers', function (e) {
   e.preventDefault();
-  var self = this;    
+  var self = this;
   var results = '';
 
   Swal.fire({
@@ -141,7 +141,7 @@ $('body').on('click', '.submitAnswers', function (e) {
     cancelButtonColor: '#999',
     confirmButtonText: 'Yes, proceed'
   }).then((result) => {
-    if (result.isConfirmed) {  
+    if (result.isConfirmed) {
       Swal.fire({
         title: 'Updating...',
         text: "Please wait a second for a response...",
@@ -160,12 +160,12 @@ $('body').on('click', '.submitAnswers', function (e) {
           $.each(data, function(){
             results += this + "<br>";
           });
-    
+
           if(data.status=="success"){
             $(self).removeAttr('disabled').css({'opacity': '1'});
             $(".quiz_questions")[0].reset();
             // window.location.href = "../"; // show ur scores
-    
+
           }else{
             $(self).removeAttr('disabled').css({'opacity': '1'});
             Swal.fire({
@@ -196,13 +196,13 @@ $('body').on('click', '.submitAnswers', function (e) {
 
 $('body').on('click', '.storeSession', function (e) {
   e.preventDefault();
-  var self = this;    
+  var self = this;
   var results = '';
   $(self).attr('disabled', true).css({'opacity': '0.4'});
   var quiz_session = $('.quiz_session').val();
   var course_id = $('.course_id').val();
-  
-  
+
+
   $.ajax({
     type : "POST",
     url : site_url + "add-quiz-session",
@@ -215,7 +215,7 @@ $('body').on('click', '.storeSession', function (e) {
       if(data.status=="success"){
         $(self).removeAttr('disabled').css({'opacity': '1'});
         // Swal.fire("Successful", "Quiz session has been created. You can now add questions and answers", "success");
-        
+
         // $(".questions_form").fadeIn('fast');
         //window.location.href = site_url + 'dashboard/profile/';
         window.location.href = course_id + '/enter-quiz-'+quiz_session;
@@ -244,10 +244,10 @@ $('body').on('click', '.storeSession', function (e) {
 
 $('body').on('click', '.storeQuiz', function (e) {
   e.preventDefault();
-  var self = this;    
+  var self = this;
   var results = '';
   $(self).attr('disabled', true).css({'opacity': '0.4'});
-  
+
   $.ajax({
     type : "POST",
     url : site_url + "submit-quizzes",
@@ -266,7 +266,7 @@ $('body').on('click', '.storeQuiz', function (e) {
           $caption = "added";
         }
         Swal.fire("Successful", `Questions have been ${$caption} to this session`, "success");
-        
+
         $(".questions_form").fadeIn('fast');
 
       }else{
@@ -296,7 +296,7 @@ $('body').on('click', '.saveUpdate', function (e) {
   var self = this;
   var results = '';
   $(self).attr('disabled', true).css({'opacity': '0.4'});
-  
+
   $.ajax({
     type : "POST",
     url : site_url + "admin/page/update-prvdg",
@@ -315,7 +315,7 @@ $('body').on('click', '.saveUpdate', function (e) {
         // setTimeout(() => {
         //   location.reload();
         // }, 3000);
-      
+
       }else{
         $(self).removeAttr('disabled').css({'opacity': '1'});
         Swal.fire({
@@ -339,10 +339,10 @@ $('body').on('click', '.saveUpdate', function (e) {
 
 
 $('body').on('click', '.sendBroadcast', function (e) {
-  var self = this;    
+  var self = this;
   var results = '';
   $(self).attr('disabled', true).css({'opacity': '0.4'});
-  
+
   $.ajax({
     type : "POST",
     url : site_url + "admin/page/send-broadcast",
@@ -356,7 +356,7 @@ $('body').on('click', '.sendBroadcast', function (e) {
         $(self).removeAttr('disabled').css({'opacity': '1'});
         Swal.fire("Successful", "Broadcast sent to their channels", "success");
         $(".form_channel")[0].reset();
-      
+
       }else{
         $(self).removeAttr('disabled').css({'opacity': '1'});
         Swal.fire({
@@ -380,10 +380,10 @@ $('body').on('click', '.sendBroadcast', function (e) {
 
 
 $('body').on('click', '.sendBroadcastUser', function (e) {
-  var self = this;    
+  var self = this;
   var results = '';
   $(self).attr('disabled', true).css({'opacity': '0.4'});
-  
+
   $.ajax({
     type : "POST",
     url : site_url + "send-broadcast",
@@ -397,7 +397,7 @@ $('body').on('click', '.sendBroadcastUser', function (e) {
         $(self).removeAttr('disabled').css({'opacity': '1'});
         Swal.fire("Successful", "Broadcast sent to their channels", "success");
         $(".form_channel")[0].reset();
-      
+
       }else{
         $(self).removeAttr('disabled').css({'opacity': '1'});
         Swal.fire({
@@ -422,7 +422,7 @@ $('body').on('click', '.sendBroadcastUser', function (e) {
 
 $('body').on('click', '.reactFeatures', function (e) {
   e.preventDefault();
-  var self = this;    
+  var self = this;
   var results = '';
   var ids = $(this).attr('ids');
   var status1 = $(this).attr('status');
@@ -446,12 +446,12 @@ $('body').on('click', '.reactFeatures', function (e) {
         confirmButtonColor: '#027937',
         cancelButtonColor: '#d33',
       });
-      
+
       $(self).attr('disabled', true).css({'opacity': '0.4'});
 
       var datastring='id='+ids
       +'&_token='+token;
-      
+
       $.ajax({
         type : "POST",
         url : site_url + "admin/page/react-feature",
@@ -468,7 +468,7 @@ $('body').on('click', '.reactFeatures', function (e) {
             setTimeout(() => {
               location.reload();
             }, 1500);
-          
+
           }else{
             $(self).removeAttr('disabled').css({'opacity': '1'});
             Swal.fire({
@@ -502,10 +502,10 @@ $('body').on('click', '.addTimer', function (e) {
 
 $('body').on('click', '.accessCourse', function (e) {
   e.preventDefault();
-  var self = this;    
+  var self = this;
   var results = '';
   $(self).attr('disabled', true).css({'opacity': '0.4'});
-  
+
   $.ajax({
     type : "POST",
     url : site_url + "get-access-course",
@@ -519,7 +519,7 @@ $('body').on('click', '.accessCourse', function (e) {
         setTimeout(() => {
           location.reload();
         }, 300);
-      
+
       }else{
         $(self).removeAttr('disabled').css({'opacity': '1'});
         Swal.fire({
@@ -553,12 +553,12 @@ $('body').on('click', '.accessCourse', function (e) {
 
 
 $('body').on('click', '.cmdPayNow', function (e) {
-  var self = this;    
+  var self = this;
   var results = '';
   $(self).attr('disabled', true).css({'opacity': '0.4'});
 
   // alert(site_url)
-  
+
   $.ajax({
     type : "POST",
     url : site_url + "stripe",
@@ -573,7 +573,7 @@ $('body').on('click', '.cmdPayNow', function (e) {
         // Swal.fire("Successful", "Broadcast sent to their channels", "success");
         alert('Broadcast sent to their channels')
         // $(".stripe_payment")[0].reset();
-      
+
       }else{
         $(self).removeAttr('disabled').css({'opacity': '1'});
         Swal.fire({
@@ -626,7 +626,7 @@ function stripeResponseHandler_(status, response) {
     data: datastring,
     success:function(data){
       if(data.status == "success"){
-        
+
         $('.cmdPayNow').removeAttr('disabled').css({'opacity': '1'});
 
         $('.payment_form').hide();
@@ -637,7 +637,7 @@ function stripeResponseHandler_(status, response) {
       }else if(data.status == "failed"){
         errorAlertDanger(data.message);
         alertMsg(5000);
-        
+
       }else{
         errorAlertDanger(data.msg);
         alertMsg(5000);
@@ -650,7 +650,7 @@ function stripeResponseHandler_(status, response) {
       alertMsg(5000);
     }
   });
-  
+
 }
 
 
@@ -729,7 +729,7 @@ $('form.require-validation').bind('submit', function(e) {
     }
 });
 
-  
+
 
 /*------------------------------------------
 
@@ -756,7 +756,7 @@ function stripeResponseHandler(status, response) {
     }
 }
 
- 
+
 
 
 
@@ -764,7 +764,7 @@ function stripeResponseHandler(status, response) {
 
 $('body').on('click', '.deleteReqs', function (e) {
   e.preventDefault();
-  var self = this;    
+  var self = this;
   var results = '';
   var ids = $(this).attr('ids');
 
@@ -778,7 +778,7 @@ $('body').on('click', '.deleteReqs', function (e) {
     cancelButtonColor: '#999',
     confirmButtonText: 'Yes, proceed'
   }).then((result) => {
-    if (result.isConfirmed) {  
+    if (result.isConfirmed) {
     Swal.fire({
         title: 'Deleting...',
         text: "Please wait a second for a response...",
@@ -787,7 +787,7 @@ $('body').on('click', '.deleteReqs', function (e) {
         confirmButtonColor: '#027937',
         cancelButtonColor: '#d33',
     });
-    
+
     $(self).attr('disabled', true).css({'opacity': '0.4'});
 
     var datastring='ids='+ids
@@ -801,12 +801,15 @@ $('body').on('click', '.deleteReqs', function (e) {
         $.each(data, function(){
             results += this + "<br>";
         });
-    
+
         if(data.status=="success"){
           $(self).removeAttr('disabled').css({'opacity': '1'});
           $('.table-'+ids).slideUp('fast');
-          Swal.fire("Successful", "Requirement session deleted successfully", "success");
-    
+          Swal.fire("Successful", "Requirement session deleted successfully", "success").then(() => {
+            // Reload the page
+            location.reload();
+         });
+
         }else{
             $(self).removeAttr('disabled').css({'opacity': '1'});
             Swal.fire({
@@ -833,77 +836,81 @@ $('body').on('click', '.deleteReqs', function (e) {
 
 
 $('body').on('click', '.deleteCourse', function (e) {
-  e.preventDefault();
-  var self = this;    
-  var results = '';
-  var ids = $(this).attr('ids');
+    e.preventDefault();
+    var self = this;
+    var results = '';
+    var ids = $(this).attr('ids');
 
-  Swal.fire({
-    title: `Confirm action?`,
-    html: `Deleting this cannot will delete all the contents and quiz that might be associated with it and cannot be undone, proceed?`,
-    icon: 'question',
-    iconHtml: '?',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#999',
-    confirmButtonText: 'Yes, delete'
-  }).then((result) => {
-    if (result.isConfirmed) {  
     Swal.fire({
-        title: 'Updating...',
-        text: "Please wait a second for a response...",
-        icon: 'success',
-        showConfirmButton: false,
-        confirmButtonColor: '#027937',
-        cancelButtonColor: '#d33',
-    });
-    
-    $(self).attr('disabled', true).css({'opacity': '0.4'});
-
-    var datastring='ids='+ids
-    +'&_token='+token;
-
-    $.ajax({
-        type : "POST",
-        url : site_url + "delete-course",
-        data: datastring,
-        success : function(data){
-        $.each(data, function(){
-            results += this + "<br>";
+        title: `Confirm action?`,
+        html: `Deleting this cannot will delete all the contents and quiz that might be associated with it and cannot be undone, proceed?`,
+        icon: 'question',
+        iconHtml: '?',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#999',
+        confirmButtonText: 'Yes, delete'
+    }).then((result) => {
+        if (result.isConfirmed) {
+        Swal.fire({
+            title: 'Updating...',
+            text: "Please wait a second for a response...",
+            icon: 'success',
+            showConfirmButton: false,
+            confirmButtonColor: '#027937',
+            cancelButtonColor: '#d33',
         });
-    
-        if(data.status=="success"){
-          $(self).removeAttr('disabled').css({'opacity': '1'});
-          $('.table-'+ids).slideUp('fast');
-          Swal.fire("Successful", "Quiz session deleted successfully", "success");
-    
-        }else{
+
+        $(self).attr('disabled', true).css({'opacity': '0.4'});
+
+        var datastring='ids='+ids
+        +'&_token='+token;
+
+        $.ajax({
+            type : "POST",
+            url : site_url + "delete-course",
+            data: datastring,
+            success : function(data){
+            $.each(data, function(){
+                results += this + "<br>";
+            });
+
+            if(data.status=="success"){
+                $(self).removeAttr('disabled').css({'opacity': '1'});
+                $('.table-'+ids).slideUp('fast');
+                Swal.fire("Successful", "Course deleted successfully", "success").then(() => {
+                // Reload the page
+                location.reload();
+                });
+
+            }else{
+                $(self).removeAttr('disabled').css({'opacity': '1'});
+                Swal.fire({
+                title: "Error!",
+                html: results,
+                icon: 'error',
+                timer: 4000
+                });
+            }
+            },
+            error : function(data){
             $(self).removeAttr('disabled').css({'opacity': '1'});
             Swal.fire({
-            title: "Error!",
-            html: results,
-            icon: 'error',
-            timer: 4000
+                title: "Error!",
+                text: "Poor Network Connection!",
+                icon: 'error',
+                timer: 4000
             });
-        }
-        },error : function(data){
-        $(self).removeAttr('disabled').css({'opacity': '1'});
-        Swal.fire({
-            title: "Error!",
-            text: "Poor Network Connection!",
-            icon: 'error',
-            timer: 4000
+            }
         });
         }
     });
-    }
-  });
 });
 
 
 $('body').on('click', '.deteleQuizSession', function (e) {
   e.preventDefault();
-  var self = this;    
+  var self = this;
   var results = '';
   var ids = $(this).attr('ids');
 
@@ -917,7 +924,7 @@ $('body').on('click', '.deteleQuizSession', function (e) {
     cancelButtonColor: '#999',
     confirmButtonText: 'Yes, proceed'
   }).then((result) => {
-    if (result.isConfirmed) {  
+    if (result.isConfirmed) {
     Swal.fire({
         title: 'Updating...',
         text: "Please wait a second for a response...",
@@ -926,7 +933,7 @@ $('body').on('click', '.deteleQuizSession', function (e) {
         confirmButtonColor: '#027937',
         cancelButtonColor: '#d33',
     });
-    
+
     $(self).attr('disabled', true).css({'opacity': '0.4'});
 
     var datastring='ids='+ids
@@ -940,12 +947,15 @@ $('body').on('click', '.deteleQuizSession', function (e) {
         $.each(data, function(){
             results += this + "<br>";
         });
-    
+
         if(data.status=="success"){
           $(self).removeAttr('disabled').css({'opacity': '1'});
           $('.table-'+ids).slideUp('fast');
-          Swal.fire("Successful", "Quiz session deleted successfully", "success");
-    
+          Swal.fire("Successful", "Quiz session deleted successfully", "success").then(() => {
+            // Reload the page
+            location.reload();
+            });
+
         }else{
             $(self).removeAttr('disabled').css({'opacity': '1'});
             Swal.fire({
@@ -972,7 +982,7 @@ $('body').on('click', '.deteleQuizSession', function (e) {
 
 $('body').on('click', '.addRenew', function (e) {
   e.preventDefault();
-  var self = this;    
+  var self = this;
   var results = '';
   var sub_type = $('.sub_type').val();
 
@@ -995,9 +1005,9 @@ $('body').on('click', '.addRenew', function (e) {
         confirmButtonColor: '#027937',
         cancelButtonColor: '#d33',
       });
-      
+
       $(self).attr('disabled', true).css({'opacity': '0.4'});
-      
+
       $.ajax({
         type : "POST",
         url : site_url + "admin/page/renew-extend",
@@ -1006,16 +1016,16 @@ $('body').on('click', '.addRenew', function (e) {
           $.each(data, function(){
             results += this + "<br>";
           });
-    
+
           if(data.status=="success"){
             $(self).removeAttr('disabled').css({'opacity': '1'});
             Swal.fire("Successful", data.message, "success");
             $(".form_renew_sub")[0].reset();
-    
+
             setTimeout(() => {
               location.reload();
             }, 3000);
-          
+
           }else{
             $(self).removeAttr('disabled').css({'opacity': '1'});
             Swal.fire({
@@ -1045,7 +1055,7 @@ $('body').on('click', '.renew_sub', function (e) {
   var starts_at = $(this).attr("starts_at");
   var ends_at = $(this).attr("ends_at");
   var subscription_id = $(this).attr("subscription_id");
-  
+
   $('.sub_name').html(`Renew/Extend Subscription for ${fullnames}`);
   $('.expiry_info').html(`Showing the expiry date: ${ends_at}`);
   $('.end_date').val(ends_at);
@@ -1079,7 +1089,7 @@ $('body').on('click', '.assign_prv', function (e) {
 $('body').on('click', '.view_referrals', function (e) {
   var fullnames = $(this).attr("fullnames");
   var user_id = $(this).attr("user_id");
-  
+
   $('.sub_name').html(`People ${fullnames} has referred so far`);
 
   var datastring='user_id='+user_id
@@ -1140,11 +1150,11 @@ $('body').on('click', '.pay_backup', function (e) {
     });
     return;
   }
-  
+
   $(self).attr('disabled', true).css({'opacity': '0.4'});
 
   if(payment_mthd == "deposit"){
-    
+
   }
 
   if(payment_mthd == "paystack"){
@@ -1187,9 +1197,9 @@ function paymentAPI(PAYSKey, user_email, amount, self, user_uuid, token, query, 
                 timeout: 30000, // 30 second timeout
                 success : function(data){
                   if(data.status == "success"){
-  
+
                     Swal.fire("Successful", "Your payment for backup was successful and your backup will now start at the background, thank you!", "success");
-  
+
                     if(query == "buy_backup"){
                       $(".backup_form")[0].reset();
                       $('.close_me').trigger('click');

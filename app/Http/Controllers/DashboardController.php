@@ -54,6 +54,8 @@ use App\Models\Domain;
 use App\Mail\BroadcastEmail;
 use Illuminate\Routing\Redirector;
 use App\Http\Controllers\HomePageController;
+use App\Models\CourseProgress;
+use App\Models\CourseVideoProgress;
 use App\Models\Message as ModelsMessage;
 use App\Models\MessageUser;
 use App\Models\Quiz;
@@ -2940,7 +2942,9 @@ class DashboardController extends Controller
         }
         if($request->ids != ""){
             $course = \App\Models\Course::where('id', $request->ids)->first();
-
+            QuizSubmission::where('course_id', $course->id)->delete();
+            CourseProgress::where('course_id', $course->id)->delete();
+            CourseVideoProgress::where('course_id', $course->id)->delete();
             \App\Models\LmsQuiz::where('course_id', $course->id)->delete();
             \App\Models\Quiz::where('course_id', $course->id)->delete();
             \App\Models\QuizAnswer::where('course_id', $course->id)->delete();
