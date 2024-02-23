@@ -90,7 +90,7 @@
                                             <td>{{date('D/M/Y', strtotime($sub->started_at))}}</td>
                                             <td>{{date('D/M/Y', strtotime($sub->ends_at))}}</td>
                                             <td>{{App\Models\OjaPlan::find($sub->plan_id)->name}} Plan</td>
-                                            <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->currency_sign}}{{number_format($sub->amount,2)}}</td>
+                                            <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->currency_sign ?? ""}}{{number_format($sub->amount,2)}}</td>
                                             <td>{{App\Models\OjaPlanInterval::where('plan_id', $sub->plan_id)->where('price', $sub->amount)->where('currency', $sub->currency)->first()->type}}</td>
                                             <td>
                                                 @if($sub->status == 'Active')
