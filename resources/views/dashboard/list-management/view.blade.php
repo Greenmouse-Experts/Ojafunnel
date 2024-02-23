@@ -126,6 +126,7 @@
                                             <th>Address</th>
                                             <th>Status</th>
                                             <th>Tags</th>
+                                            <th>Joined Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -164,7 +165,7 @@
                                                     @endforeach
                                                 @endif
                                             </td>
-
+                                            <td>{{ $list1->created_at->toDayDateTimeString() }}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
