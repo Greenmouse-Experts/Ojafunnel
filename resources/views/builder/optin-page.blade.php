@@ -130,7 +130,11 @@
 
             // initialise plugin
             const iti = window.intlTelInput(input, {
-                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js"
+                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+                initialCountry: "auto", // Automatically select the user's country
+                separateDialCode: true, // Add a space between the country code and the phone number
+                placeholderNumberType: "MOBILE", // Set the placeholder to match the user's mobile number format
+                nationalMode: false, // Do not automatically switch to national mode
             });
 
             const updateMessages = () => {
@@ -163,6 +167,12 @@
             // on keyup / change flag: reset
             input.addEventListener('change', reset);
             input.addEventListener('keyup', reset);
+
+            // Set the initial value of the input to include the selected country code
+            input.addEventListener('countrychange', () => {
+                const countryCodeValue = iti.getSelectedCountryData().dialCode;
+                input.value = `+${countryCodeValue}`;
+            });
         </script>
         <style>
             .iti {
