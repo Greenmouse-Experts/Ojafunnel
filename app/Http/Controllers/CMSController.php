@@ -552,9 +552,9 @@ class CMSController extends Controller
             ]);
         }
 
-        $shops = Shop::latest()->where('user_id', Auth::user()->id)->get();
+        // $shops = Shop::latest()->where('user_id', Auth::user()->id)->get();
 
-        if ($shops->isEmpty()) {
+        // if ($shops->isEmpty()) {
 
             if ($request->primaryColor == '#000000') {
                 $request->validate(
@@ -602,65 +602,65 @@ class CMSController extends Controller
                     'message' => $request->name . ' shop created successfully'
                 ]);
             }
-        } else {
-            foreach ($shops as $shop) {
-                $user_id[] = $shop->user_id;
-            }
-            if (in_array(Auth::user()->id, $user_id)) {
+        // } else {
+        //     foreach ($shops as $shop) {
+        //         $user_id[] = $shop->user_id;
+        //     }
+        //     if (in_array(Auth::user()->id, $user_id)) {
 
-                return back()->with([
-                    'type' => 'danger',
-                    'message' => 'You already have a shop.'
-                ]);
-            } else {
-                if ($request->primaryColor == '#000000') {
-                    $request->validate(
-                        [
-                            'theme' => 'required'
-                        ]
-                    );
-                    $filename = request()->logo->getClientOriginalName();
-                    request()->logo->storeAs('courseShopLogo', $filename, 'public');
+        //         return back()->with([
+        //             'type' => 'danger',
+        //             'message' => 'You already have a shop.'
+        //         ]);
+        //     } else {
+        //         if ($request->primaryColor == '#000000') {
+        //             $request->validate(
+        //                 [
+        //                     'theme' => 'required'
+        //                 ]
+        //             );
+        //             $filename = request()->logo->getClientOriginalName();
+        //             request()->logo->storeAs('courseShopLogo', $filename, 'public');
 
-                    Shop::create([
-                        'name' => $request->name,
-                        'description' => $request->description,
-                        'link' => $request->link,
-                        'logo' => '/storage/courseShopLogo/' . $filename,
-                        'theme' => $request->theme,
-                        'color' => '#fff',
-                        'user_id' => Auth::user()->id,
-                        'currency' => $request->currency,
-                        'currency_sign' => $request->currency_sign
-                    ]);
+        //             Shop::create([
+        //                 'name' => $request->name,
+        //                 'description' => $request->description,
+        //                 'link' => $request->link,
+        //                 'logo' => '/storage/courseShopLogo/' . $filename,
+        //                 'theme' => $request->theme,
+        //                 'color' => '#fff',
+        //                 'user_id' => Auth::user()->id,
+        //                 'currency' => $request->currency,
+        //                 'currency_sign' => $request->currency_sign
+        //             ]);
 
-                    return back()->with([
-                        'type' => 'success',
-                        'message' => $request->name . ' shop created successfully'
-                    ]);
-                } else {
-                    $filename = request()->logo->getClientOriginalName();
-                    request()->logo->storeAs('courseShopLogo', $filename, 'public');
+        //             return back()->with([
+        //                 'type' => 'success',
+        //                 'message' => $request->name . ' shop created successfully'
+        //             ]);
+        //         } else {
+        //             $filename = request()->logo->getClientOriginalName();
+        //             request()->logo->storeAs('courseShopLogo', $filename, 'public');
 
-                    Shop::create([
-                        'name' => $request->name,
-                        'description' => $request->description,
-                        'link' => $request->link,
-                        'logo' => '/storage/courseShopLogo/' . $filename,
-                        'theme' => $request->primaryColor,
-                        'color' => '#fff',
-                        'user_id' => Auth::user()->id,
-                        'currency' => $request->currency,
-                        'currency_sign' => $request->currency_sign
-                    ]);
+        //             Shop::create([
+        //                 'name' => $request->name,
+        //                 'description' => $request->description,
+        //                 'link' => $request->link,
+        //                 'logo' => '/storage/courseShopLogo/' . $filename,
+        //                 'theme' => $request->primaryColor,
+        //                 'color' => '#fff',
+        //                 'user_id' => Auth::user()->id,
+        //                 'currency' => $request->currency,
+        //                 'currency_sign' => $request->currency_sign
+        //             ]);
 
-                    return back()->with([
-                        'type' => 'success',
-                        'message' => $request->name . ' shop created successfully'
-                    ]);
-                }
-            }
-        }
+        //             return back()->with([
+        //                 'type' => 'success',
+        //                 'message' => $request->name . ' shop created successfully'
+        //             ]);
+        //         }
+        //     }
+        // }
     }
 
     public function update_shop(Request $request)
