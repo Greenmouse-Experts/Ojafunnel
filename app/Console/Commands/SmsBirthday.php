@@ -307,7 +307,7 @@ class SmsBirthday extends Command
             }
 
             if ($ba->sms_type == 'anniversary') {
-                $birthdayContactLists = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->where('subscribe', true)->whereMonth('anniversary', '=', date('m'))->whereDay('anniversary', '=', date('d'))->select('phone', 'name')->get();
+                $birthdayContactLists = ListManagementContact::where('list_management_id', $ba->birthday_contact_list_id)->where('subscribe', true)->whereMonth('anniv_date', '=', date('m'))->whereDay('anniv_date', '=', date('d'))->select('phone', 'name')->get();
 
                 if ($birthdayContactLists->isEmpty()) {
                     return;

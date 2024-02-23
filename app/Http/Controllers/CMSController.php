@@ -249,9 +249,8 @@ class CMSController extends Controller
                 $this->validate($request, [
                     'lesson_video' => [
                         'required',
-                        'file',
-                        'mimes:mp3,mp4',
-                        'max:100000', // 100 MB in kilobytes
+                        'mimes:mp4',
+                        'max:20480',
                     ],
                 ]);
 
