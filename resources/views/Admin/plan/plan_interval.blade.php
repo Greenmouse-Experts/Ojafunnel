@@ -110,7 +110,7 @@
                                                                                                 </div>
                                                                                                 <div class="col-lg-12 mb-4">
                                                                                                     <label for="type">Type</label>
-                                                                                                    <select name="type">
+                                                                                                    <select name="type" required>
                                                                                                         <option value="{{$interval->type}}">{{$interval->type}}</option>
                                                                                                         <option value="">-- Select Type --</option>
                                                                                                         <option value="monthly"> Monthly</option>
@@ -119,7 +119,7 @@
                                                                                                 </div>
                                                                                                 <div class="col-lg-12 mb-4">
                                                                                                     <label for="currency">Currency</label>
-                                                                                                    <select name="currency" id="currency">
+                                                                                                    <select name="currency" id="currency" required>
                                                                                                         <option value="{{$interval->currency}}">{{$interval->currency}}</option>
                                                                                                         <option value="" disabled="">-- Select Currency --</option>
                                                                                                         <option value="NGN">NGN - Naira</option>
@@ -221,7 +221,7 @@
                                         </div>
                                         <div class="col-lg-12 mb-4">
                                             <label for="type">Type</label>
-                                            <select name="type">
+                                            <select name="type" required>
                                                 <option value="">-- Select Type --</option>
                                                 <option value="monthly"> Monthly</option>
                                                 <option value="yearly"> Yearly</option>
@@ -229,7 +229,7 @@
                                         </div>
                                         <div class="col-lg-12 mb-4">
                                             <label for="currency">Currency</label>
-                                            <select name="currency" id="currency">
+                                            <select name="currency" id="currency" required>
                                                 <option value="" disabled="">-- Select Currency --</option>
                                                 <option value="NGN">NGN - Naira</option>
                                                 <option value="USD">USD - US Dollar</option>
