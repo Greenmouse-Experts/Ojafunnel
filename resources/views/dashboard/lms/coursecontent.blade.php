@@ -177,7 +177,7 @@
                                                                                     <label>Title</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input type="text" placeholder="Enter Title" name="lesson_title" class="input">
+                                                                                            <input type="text" placeholder="Enter Title" name="lesson_title" class="input" required>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -193,7 +193,7 @@
                                                                                     <label>Duration (00:00:00)</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <input type="text" placeholder="Enter Duration ( 00:00:00 )" name="lesson_duration" class="input">
+                                                                                            <input type="text" id="lesson_duration" placeholder="Enter Duration (HH:MM:SS)" name="lesson_duration" class="input" required>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -201,9 +201,8 @@
                                                                                     <label>Content Type</label>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12 mb-4">
-                                                                                            <select name="content_type" id="selectBox" onclick="changeFunc()" multiple>
+                                                                                            <select name="content_type" id="selectBox" onclick="changeFunc()" multiple required>
                                                                                                 <option value="Video">Video</option>
-                                                                                                <!-- <option value="Quiz">Quiz</option> -->
                                                                                                 <option value="Youtube">Youtube</option>
                                                                                             </select>
                                                                                         </div>
@@ -225,7 +224,6 @@
                                                                                 </div>
                                                                             </div>
                                                                         </form>
-
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -873,16 +871,23 @@
         $('#createLesson').modal('show');
     });
 
-    // $('select[name=content_type]').on('change', function() {
-    //     if (this.value == 'Video') {
-    //         $("#video").show();
-    //         $("#youtube").hide();
-    //     } else if(this.value == 'Youtube') {
-    //         $("#youtube").show();
-    //         $("#video").hide();
+    // document.getElementById('lesson_duration').addEventListener('input', function () {
+    //     var inputValue = this.value;
+    //     // Validate the input format (HH:MM:SS)
+    //     if (/^([0-9]{2}):([0-5][0-9]):([0-5][0-9])$/.test(inputValue)) {
+    //         // If the input matches the format, split it into hours, minutes, and seconds
+    //         var parts = inputValue.split(':');
+    //         // Convert the parts to numeric values
+    //         var hours = parseInt(parts[0], 10);
+    //         var minutes = parseInt(parts[1], 10);
+    //         var seconds = parseInt(parts[2], 10);
+    //         // Calculate the total duration in seconds
+    //         var totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    //         // Update the input value with the total duration in seconds
+    //         this.value = totalSeconds;
     //     } else {
-    //         $("#video").hide();
-    //         $("#youtube").hide();
+    //         // If the input doesn't match the format, clear the input value
+    //         this.value = '';
     //     }
     // });
 

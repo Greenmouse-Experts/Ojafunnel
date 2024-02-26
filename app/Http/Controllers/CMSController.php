@@ -19,6 +19,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\File;
@@ -230,33 +231,35 @@ class CMSController extends Controller
         //Validate Request
         $this->validate($request, [
             'lesson_title' => ['required', 'string', 'max:255'],
-            'lesson_duration' => ['required', ], //'numeric'
+            'lesson_duration' => ['required', 'regex:/^(?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$/'],
             'content_type' => ['required', 'string', 'max:255'],
+        ], [
+            'lesson_duration.regex' => 'The duration must be in the format HH:MM:SS (e.g., 01:30:00 for 1 hour and 30 minutes).',
         ]);
 
         $section = Section::find($request->section_id);
 
+        // Get the lesson duration string from the request
+        $lessonDuration = $request->lesson_duration;
+        list($hours, $minutes, $seconds) = explode(':', $lessonDuration);
+        $durationInSeconds = ($hours * 3600) + ($minutes * 60) + $seconds;
+
         if ($request->content_type == 'Video') {
             try {
-                // $this->validate($request, [
-                //     'lesson_video' => [
-                //         'required',
-                //         File::types(['mp3', 'mp4'])
-                //             ->max(100 * 1024),
-                //     ],
-                // ]);
-
                 $this->validate($request, [
                     'lesson_video' => [
                         'required',
                         'mimes:mp4',
                         'max:20480',
                     ],
+                ], [
+                    'lesson_video.max' => 'File size should not be greater than 20MB.',
+                    'lesson_video.mimes' => 'File must be of type mp4',
                 ]);
 
                 $file = request()->lesson_video->getClientOriginalName();
 
-                $filename = pathinfo($file, PATHINFO_FILENAME);
+                $filename = pathinfo(preg_replace('/[^\w\d_-]/u', '_', $file), PATHINFO_FILENAME);
 
                 try {
                     $response = cloudinary()->uploadFile(
@@ -269,12 +272,12 @@ class CMSController extends Controller
                     )->getSecurePath();
 
                 } catch (\Exception $e) {
-                    // Handle the error appropriately
                     return back()->with([
                         'type' => 'danger',
                         'message' => $e->getMessage()
                     ]);
                 }
+
 
                 $lesson = Lesson::create([
                     'section_id' => $section->id,
@@ -282,7 +285,7 @@ class CMSController extends Controller
                     'title' => $request->lesson_title,
                     'description' => $request->course_id,
                     'content_type' => $request->content_type,
-                    'duration' => $request->lesson_duration,
+                    'duration' => $durationInSeconds,
                 ]);
 
                 Video::create([
@@ -297,7 +300,7 @@ class CMSController extends Controller
             } catch (Exception $e) {
                 return back()->with([
                     'type' => 'danger',
-                    'message' => 'File size should not be greater than 100MB.'
+                    'message' => $e->getMessage()
                 ]);
             }
         } elseif ($request->content_type == 'Youtube') {
@@ -311,7 +314,7 @@ class CMSController extends Controller
                 'title' => $request->lesson_title,
                 'description' => $request->course_id,
                 'content_type' => $request->content_type,
-                'duration' => $request->lesson_duration,
+                'duration' => $durationInSeconds,
             ]);
 
             Video::create([

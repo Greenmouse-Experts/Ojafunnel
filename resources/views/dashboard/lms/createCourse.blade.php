@@ -72,7 +72,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach(\App\Models\Course::where('user_id', Auth::user()->id)->get() as $course)
+                                            @foreach($courses as $course)
                                             <tr>
                                                 <td>
                                                     <div class="course-image">
@@ -99,10 +99,18 @@
                                                                 <i class="fas fa-play-circle"></i>
                                                                 {{App\Models\Lesson::where('course_id', $course->id)->get()->count()}} Lessons
                                                             </span>
-                                                            <!-- <span class="">
+                                                            <span class="">
                                                                 <i class="far fa-clock"></i>
-                                                                3 hours
-                                                            </span> -->
+                                                                @php
+                                                                    $durationDecimal = App\Models\Lesson::where('course_id', $course->id)->sum('duration') / 3600; // Example duration in hours
+                                                                    $seconds = round($durationDecimal * 3600); // Convert hours to seconds
+                                                                    $hours = floor($seconds / 3600);
+                                                                    $minutes = floor(($seconds / 60) % 60);
+                                                                    $seconds = $seconds % 60;
+                                                                    $durationString = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+                                                                @endphp
+                                                                {{$durationString}}
+                                                            </span>
                                                             <span class="">
                                                                 <i class="fas fa-closed-captioning"></i>{{$course->language}}
                                                             </span>

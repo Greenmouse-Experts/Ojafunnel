@@ -2384,7 +2384,7 @@ class DashboardController extends Controller
             // get contact list
             // $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
             $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->whereNotNull('phone')->where('subscribe', true)->get();
-            
+
             $broadcast = new \App\Models\WhatappBroadcast;
             $broadcast->user_id = auth()->user()->id;
             $broadcast->list_mgt_id = $request->contact_list;
@@ -2453,7 +2453,7 @@ class DashboardController extends Controller
         })->all();
 
         $contact_lists = \App\Models\ListManagement::where(['user_id' => auth()->user()->id])->get();
-        
+
 
         return view('dashboard.whatsappBroadcast-create', [
             'username' => $username,
@@ -2554,8 +2554,10 @@ class DashboardController extends Controller
 
     public function create_course($username)
     {
+        $courses = Course::where('user_id', Auth::user()->id)->get();
         return view('dashboard.lms.createCourse', [
-            'username' => $username
+            'username' => $username,
+            'courses' => $courses
         ]);
     }
 
