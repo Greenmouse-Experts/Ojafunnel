@@ -13,10 +13,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/css/intlTelInput.css" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/js/intlTelInput-jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
     <!-- <script type="text/javascript">
         window.setTimeout(function() {
             $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function() {
@@ -24,6 +23,20 @@
             });
         }, 8000);
     </script> -->
+
+    <style>
+         .hide {
+            display: none !important;
+        }
+        #valid-msg,  #confirmvalid-msg{
+            color: green !important;
+            font-size: 12px !important;
+        }
+        #error-msg, #confirmerror-msg, #emailError, #confirmEmailError{
+            color: red !important;
+            font-size: 12px !important;
+        }
+    </style>
 </head>
 
 <body id="lent">
@@ -100,6 +113,8 @@
                                         <div class="col-md-12 mb-4">
                                             <i class="bi bi-phone"></i>
                                             <input type="tel" placeholder="Enter your Phone Number" name="phone_number" id="phonee" class="input" required>
+                                            <span id="valid-msg" class="help-block hide">✓ Valid</span>
+                                            <span id="error-msg" class="help-block hide"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -223,59 +238,63 @@
             });
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
     <script>
-        var input = document.querySelector("#phonee");
-        var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
-        window.addEventListener("load", function() {
+        const input = document.querySelector("#phonee");
+        const errorMsg = document.querySelector("#error-msg");
+        const validMsg = document.querySelector("#valid-msg");
+        let validationTimeout;
 
-            errorMsg = document.querySelector("#error-msg"),
-                validMsg = document.querySelector("#valid-msg");
-            var iti = window.intlTelInput(input, {
-                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.2/build/js/utils.js"
-            });
-            window.intlTelInput(input, {
-                geoIpLookup: function(callback) {
-                    $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-                        var countryCode = (resp && resp.country) ? resp.country : "";
+        // here, the index maps to the error code returned from getValidationError - see readme
+        const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
 
-                        callback(countryCode);
-                    });
-                },
-                initialCountry: "auto",
-                placeholderNumberType: "MOBILE",
-                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.2/build/js/utils.js",
-            });
-            $(validMsg).addClass("hide");
-            input.addEventListener('blur', function() {
-                reset();
-                if (input.value.trim()) {
+        // initialise plugin
+        const iti = window.intlTelInput(input, {
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+            initialCountry: "auto", // Automatically select the user's country
+            separateDialCode: true, // Add a space between the country code and the phone number
+            placeholderNumberType: "MOBILE", // Set the placeholder to match the user's mobile number format
+            nationalMode: false, // Do not automatically switch to national mode
+        });
+
+        const updateMessages = () => {
+            clearTimeout(validationTimeout);
+            reset();
+            if (input.value.trim()) {
+                validationTimeout = setTimeout(() => {
                     if (iti.isValidNumber()) {
                         validMsg.classList.remove("hide");
                     } else {
                         input.classList.add("error");
-                        var errorCode = iti.getValidationError();
+                        const errorCode = iti.getValidationError();
                         errorMsg.innerHTML = errorMap[errorCode];
                         errorMsg.classList.remove("hide");
                     }
-                }
-            });
+                }, 300); // Adjust the delay time as needed (in milliseconds)
+            }
+        };
 
-            input.addEventListener('change', reset);
-            input.addEventListener('keyup', reset);
-        });
-
-
-        var reset = function() {
+        const reset = () => {
             input.classList.remove("error");
             errorMsg.innerHTML = "";
             errorMsg.classList.add("hide");
             validMsg.classList.add("hide");
         };
-        $(document).ready(function() {
-            // $("#phonee").val("+234");
+
+        // on input: validate with slight delay
+        input.addEventListener('input', updateMessages);
+
+        // on keyup / change flag: reset
+        input.addEventListener('change', reset);
+        input.addEventListener('keyup', reset);
+
+        // Set the initial value of the input to include the selected country code
+        input.addEventListener('countrychange', () => {
+            const countryCodeValue = iti.getSelectedCountryData().dialCode;
+            input.value = `+${countryCodeValue}`;
         });
     </script>
-
     <style>
         .iti {
             display: block !important;
@@ -283,6 +302,14 @@
 
         .iti__country-list {
             z-index: 2000 !important;
+        }
+
+        .iti__country-name {
+            color: #000 !important;
+        }
+
+        .iti__dial-code {
+            color: #000 !important;
         }
     </style>
 </body>

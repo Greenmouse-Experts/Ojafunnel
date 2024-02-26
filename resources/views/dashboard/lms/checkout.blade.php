@@ -29,6 +29,21 @@
 
     <link rel='stylesheet' href="{{ asset('assets/css/sweetalert2.min.css') }}">
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
+    <style>
+        .hide {
+            display: none !important;
+        }
+        #valid-msg,  #confirmvalid-msg{
+            color: green !important;
+            font-size: 12px !important;
+        }
+        #error-msg, #confirmerror-msg, #emailError, #confirmEmailError{
+            color: red !important;
+            font-size: 12px !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -139,16 +154,20 @@
                                                                 <div class="col-lg-6 mb-4">
                                                                     <label for="Name">Phone Number *</label>
                                                                     <input type="tel" name="phoneNo" id="phoneNo" placeholder="Enter your number" required />
+                                                                    <span id="valid-msg" class="help-block hide">✓ Valid</span>
+					                                                <span id="error-msg" class="help-block hide"></span>
                                                                 </div>
                                                                 <div class="col-lg-6 mb-4">
                                                                     <label for="Name">Address *</label>
                                                                     <input type="text" name="address" id="address" placeholder="Enter your address" required />
                                                                 </div>
                                                                 <div class="col-lg-6 mb-4">
+                                                                    <label for="Name">State *</label>
+                                                                    <input type="tel" name="state" id="state" placeholder="Enter your state" required />
+                                                                </div>
+                                                                <div class="col-lg-6 mb-4">
                                                                     <label for="Name">Country *</label>
-                                                                    <!-- <input type="text" name="country" id="country" placeholder="Enter your country" required /> -->
-
-                                                                    <select class="form-control p-15 txt_state" name="txt_state">
+                                                                    <select class="form-control p-15 country" name="country" id="country">
                                                                         <option value="">-Select Country-</option>
                                                                         @if(sizeof($countries) > 0)
                                                                             @foreach($countries as $index => $country)
@@ -162,10 +181,6 @@
                                                                     </select>
                                                                     <!-- stripe/stripe-php -->
                                                                 </div>
-                                                                <div class="col-lg-6 mb-4">
-                                                                    <label for="Name">State *</label>
-                                                                    <input type="tel" name="state" id="state" placeholder="Enter your state" required />
-                                                                </div>
                                                                 <div class="text-end mt-2">
                                                                     <a class="nav-link" class="text-decoration-none">
                                                                         <button type="button" id="activePayment" class="btn px-4 py-1" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
@@ -177,8 +192,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
 
                                                 <div class="tab-pane fade" id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
                                                     <div>
@@ -576,109 +589,180 @@
             }
         });
     </script>
-    <!-- Code injected by live-server -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
+    <script>
+        const input = document.querySelector("#phoneNo");
+        const errorMsg = document.querySelector("#error-msg");
+        const validMsg = document.querySelector("#valid-msg");
+        let validationTimeout;
+
+        // here, the index maps to the error code returned from getValidationError - see readme
+        const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+        // initialise plugin
+        const iti = window.intlTelInput(input, {
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+            initialCountry: "auto", // Automatically select the user's country
+            separateDialCode: true, // Add a space between the country code and the phone number
+            placeholderNumberType: "MOBILE", // Set the placeholder to match the user's mobile number format
+            nationalMode: false, // Do not automatically switch to national mode
+        });
+
+        const updateMessages = () => {
+            clearTimeout(validationTimeout);
+            reset();
+            if (input.value.trim()) {
+                validationTimeout = setTimeout(() => {
+                    if (iti.isValidNumber()) {
+                        validMsg.classList.remove("hide");
+                    } else {
+                        input.classList.add("error");
+                        const errorCode = iti.getValidationError();
+                        errorMsg.innerHTML = errorMap[errorCode];
+                        errorMsg.classList.remove("hide");
+                    }
+                }, 300); // Adjust the delay time as needed (in milliseconds)
+            }
+        };
+
+        const reset = () => {
+            input.classList.remove("error");
+            errorMsg.innerHTML = "";
+            errorMsg.classList.add("hide");
+            validMsg.classList.add("hide");
+        };
+
+        // on input: validate with slight delay
+        input.addEventListener('input', updateMessages);
+
+        // on keyup / change flag: reset
+        input.addEventListener('change', reset);
+        input.addEventListener('keyup', reset);
+
+        // Set the initial value of the input to include the selected country code
+        input.addEventListener('countrychange', () => {
+            const countryCodeValue = iti.getSelectedCountryData().dialCode;
+            input.value = `+${countryCodeValue}`;
+        });
+    </script>
+
+    <style>
+        .iti {
+            display: block !important;
+        }
+
+        .iti__country-list {
+            z-index: 2000 !important;
+        }
+
+        .iti__country-name {
+            color: #000 !important;
+        }
+
+        .iti__dial-code {
+            color: #000 !important;
+        }
+        .thumbnail {
+            position: relative;
+            padding: 0px;
+            margin-bottom: 20px;
+        }
+
+        .thumbnail img {
+            width: 80%;
+        }
+
+        .thumbnail .caption {
+            margin: 7px;
+        }
+
+        .main-section {
+            background-color: #F8F8F8;
+        }
+
+        .dropdown button.btn-info {
+            /* float:right;
+            padding-right: 30px; */
+            color: {{$shop->color}};
+            background: {{$shop->theme}};
+        }
+
+        .btn-success {
+            color: {{$shop->color}} !important;
+            background: {{$shop->theme}}!important;
+        }
+
+        .btn {
+            border: 0px;
+            margin: 10px 0px;
+            box-shadow: none !important;
+        }
+
+        .dropdown .dropdown-menu {
+            padding: 20px;
+            /*top:30px !important;*/
+            width: 350px !important;
+            /*left:-110px !important;*/
+            box-shadow: 0px 4px 7px #a8a7a7;
+        }
+
+        .total-header-section {
+            border-bottom: 1px solid #d2d2d2;
+        }
+
+        .total-section p {
+            margin-bottom: 20px;
+        }
+
+        .cart-detail {
+            padding: 15px 0px;
+        }
+
+        .cart-detail-img img {
+            width: 100%;
+            height: 100%;
+            padding-left: 15px;
+        }
+
+        .cart-detail-product p {
+            margin: 0px;
+            color: #000;
+            font-weight: 500;
+        }
+
+        span.text-info {
+            color: {{$shop->theme}}!important;
+        }
+
+        .cart-detail .price {
+            font-size: 12px;
+            margin-right: 10px;
+            font-weight: 500;
+        }
+
+        .cart-detail .count {
+            color: #C2C2DC;
+        }
+
+        .checkout {
+            border-top: 1px solid #d2d2d2;
+            padding-top: 15px;
+        }
+
+        .checkout .btn-primary {
+            color: {{$shop->color}};
+            background: {{$shop->theme}};
+        }
+
+        .dropdown-menu:before {
+            content: " ";
+            position: absolute;
+            top: -20px;
+            right: 50px;
+            border: 10px solid transparent;
+            border-bottom-color: #fff;
+        }
+    </style>
 </body>
-<style>
-    .thumbnail {
-        position: relative;
-        padding: 0px;
-        margin-bottom: 20px;
-    }
-
-    .thumbnail img {
-        width: 80%;
-    }
-
-    .thumbnail .caption {
-        margin: 7px;
-    }
-
-    .main-section {
-        background-color: #F8F8F8;
-    }
-
-    .dropdown button.btn-info {
-        /* float:right;
-        padding-right: 30px; */
-        color: {{$shop->color}};
-        background: {{$shop->theme}};
-    }
-
-    .btn-success {
-        color: {{$shop->color}} !important;
-        background: {{$shop->theme}}!important;
-    }
-
-    .btn {
-        border: 0px;
-        margin: 10px 0px;
-        box-shadow: none !important;
-    }
-
-    .dropdown .dropdown-menu {
-        padding: 20px;
-        /*top:30px !important;*/
-        width: 350px !important;
-        /*left:-110px !important;*/
-        box-shadow: 0px 4px 7px #a8a7a7;
-    }
-
-    .total-header-section {
-        border-bottom: 1px solid #d2d2d2;
-    }
-
-    .total-section p {
-        margin-bottom: 20px;
-    }
-
-    .cart-detail {
-        padding: 15px 0px;
-    }
-
-    .cart-detail-img img {
-        width: 100%;
-        height: 100%;
-        padding-left: 15px;
-    }
-
-    .cart-detail-product p {
-        margin: 0px;
-        color: #000;
-        font-weight: 500;
-    }
-
-    span.text-info {
-        color: {{$shop->theme}}!important;
-    }
-
-    .cart-detail .price {
-        font-size: 12px;
-        margin-right: 10px;
-        font-weight: 500;
-    }
-
-    .cart-detail .count {
-        color: #C2C2DC;
-    }
-
-    .checkout {
-        border-top: 1px solid #d2d2d2;
-        padding-top: 15px;
-    }
-
-    .checkout .btn-primary {
-        color: {{$shop->color}};
-        background: {{$shop->theme}};
-    }
-
-    .dropdown-menu:before {
-        content: " ";
-        position: absolute;
-        top: -20px;
-        right: 50px;
-        border: 10px solid transparent;
-        border-bottom-color: #fff;
-    }
-</style>
-
 </html>

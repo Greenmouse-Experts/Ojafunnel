@@ -17,6 +17,8 @@
     <link href="{{URL::asset('dash/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- style Css -->
     <link href="{{URL::asset('dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
     <!-- App Css-->
     <!-- Font Css-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,21 +31,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
     <style>
-        .success-message {
-            color: green !important;
-            font-size: 12px !important;
-        }
-        .font-red-mint {
-            color: red !important;
-            font-size: 12px;
-        }
-        .alert-success {
-            color: green !important;
-            font-size: 14px !important;
-        }
-        .text-red, .alert-danger {
-            color: red !important;
-        }
         .hide {
             display: none !important;
         }
@@ -644,33 +631,33 @@
         </div>
     </div>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12 mb-2 mt-5">
-          <div class="text-center text-dark">Copyright ©
-            <script>
-              document.write(new Date().getFullYear())
-            </script> {{config('app.name')}} | All Right Reserved
-          </div>
+    <footer class="footer">
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mb-2 mt-5">
+            <div class="text-center text-dark">Copyright ©
+                <script>
+                document.write(new Date().getFullYear())
+                </script> {{config('app.name')}} | All Right Reserved
+            </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </footer>
-  <!-- Button trigger modal -->
+        </div>
+    </footer>
+    <!-- Button trigger modal -->
 
-  <input type="hidden" value="{{ csrf_token() }}" id="txt_token1">
-  <input type="hidden" value="{{ url('/') }}/" id="site_url">
+    <input type="hidden" value="{{ csrf_token() }}" id="txt_token1">
+    <input type="hidden" value="{{ url('/') }}/" id="site_url">
 
-  <!-- JAVASCRIPT -->
-  <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  <script src="{{URL::asset('dash/assets/libs/metismenu/metisMenu.min.js')}}"></script>
-  <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
-  <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
-  <script src="https://js.stripe.com/v3/"></script>
-  <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <!-- JAVASCRIPT -->
+    <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="{{URL::asset('dash/assets/libs/metismenu/metisMenu.min.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
+    <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
 
     <script>
         $(document).ready(function () {
