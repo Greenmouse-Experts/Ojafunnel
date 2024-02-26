@@ -2356,6 +2356,110 @@ class DashboardController extends Controller
         ]);
     }
 
+
+    public function broadcast_wa_message(Request $request, $username)
+    {
+        $broadcasts = \App\Models\WhatappBroadcast::where(['user_id' => auth()->user()->id])->orderBy('id', 'DESC')->get();
+
+        return view('dashboard.whatsappBroadcast', [
+            'username' => $username,
+            'broadcasts' => $broadcasts
+        ]);
+    }
+
+    public function broadcast_wa_message_create(Request $request, $username)
+    {
+        if($request->method() == 'POST')
+        {
+            $whatsapp_account = explode('-', $request->whatsapp_account);
+
+            if ($whatsapp_account[2] != "Connected") return back()->with([
+                'type' => 'danger',
+                'message' => 'The WA account is not connected. Connect and try again'
+            ])->withInput();
+
+
+            // get contact list
+            // $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->whereNotNull('phone')->where('subscribe', true)->get();
+            
+            $broadcast = new \App\Models\WhatappBroadcast;
+            $broadcast->user_id = auth()->user()->id;
+            $broadcast->list_mgt_id = $request->contact_list;
+            $broadcast->sender_id = $whatsapp_account[1];
+            $broadcast->message = $request->template1_msg_series;
+            $broadcast->date = date('Y-m-d');
+            $broadcast->time = date('h:i:s');
+            $broadcast->ContactCount = sizeof($contacts);
+            $broadcast->save();
+
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Broadcast message sent successfully.'
+            ]);
+        }
+
+        $whatsapp_numbers = WhatsappNumber::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+
+        $_whatsapp_numbers = $whatsapp_numbers->map(function ($whatsapp_number) {
+            $full_jwt_session = explode(':', $whatsapp_number->full_jwt_session);
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $full_jwt_session[1]
+            ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
+            $data = $response->json();
+
+            // re-generate jwt
+            if (array_key_exists('error', $data)) {
+                $response = Http::post(
+                    env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_number->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+                );
+                $data = $response->json();
+
+                // update full_jwt_session
+                $wa_number = WhatsappNumber::find($whatsapp_number->id);
+                $wa_number->update([
+                    'full_jwt_session' => $data['full']
+                ]);
+
+                $full_jwt_session = explode(':', $data['full']);
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $full_jwt_session[1]
+                ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
+
+                $data = $response->json();
+
+                return [
+                    'id' => $whatsapp_number->id,
+                    'phone_number' => $whatsapp_number->phone_number,
+                    'full_jwt_session' => $whatsapp_number->full_jwt_session,
+                    'status' => $data['message'],
+                    'created_at' => $whatsapp_number->created_at,
+                    'updated_at' => $whatsapp_number->updated_at
+                ];
+            }
+
+            return [
+                'id' => $whatsapp_number->id,
+                'phone_number' => $whatsapp_number->phone_number,
+                'full_jwt_session' => $whatsapp_number->full_jwt_session,
+                'status' => $data['message'],
+                'created_at' => $whatsapp_number->created_at,
+                'updated_at' => $whatsapp_number->updated_at
+            ];
+        })->all();
+
+        $contact_lists = \App\Models\ListManagement::where(['user_id' => auth()->user()->id])->get();
+        
+
+        return view('dashboard.whatsappBroadcast-create', [
+            'username' => $username,
+            'whatsapp_numbers' => $_whatsapp_numbers,
+            'contact_lists' => $contact_lists,
+        ]);
+    }
+
     public function template_validate(Request $request)
     {
         // validation for template 1
