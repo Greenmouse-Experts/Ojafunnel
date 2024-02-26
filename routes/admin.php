@@ -209,6 +209,21 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::post('/general/exchange/rate/update/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_general_exchange_rate'])->name('admin.update.general.exchange.rate');
             Route::get('/general/explainer/contents', [App\Http\Controllers\Admin\AdminController::class, 'explainer_contents'])->name('admin.general.explainer.contents');
             Route::post('/general/update/explainer/content/{id}', [App\Http\Controllers\Admin\AdminController::class, 'update_explainer_content'])->name('admin.update.general.explainer.content');
+
+
+            Route::post('/wa-number/generate-qr', [App\Http\Controllers\Admin\AdminController::class, 'generate_wa_qr'])->name('admin.whatsapp.wa-number-generate-qr');
+            Route::post('/wa-number/logout-session', [App\Http\Controllers\Admin\AdminController::class, 'logout_wa_session'])->name('admin.whatsapp.wa-number-logout-session');
+            Route::post('/wa-number/check-session-connection', [App\Http\Controllers\Admin\AdminController::class, 'check_wa_session_connection'])->name('admin.whatsapp.wa-number-check-session-connection');
+            Route::post('/wa-number/create', [App\Http\Controllers\Admin\AdminController::class, 'create_wa_number'])->name('admin.whatsapp.create-wa-number');
+            Route::post('/wa-number/update', [App\Http\Controllers\Admin\AdminController::class, 'update_wa_number'])->name('admin.whatsapp.update-wa-number');
+            Route::post('/wa-number/delete', [App\Http\Controllers\Admin\AdminController::class, 'delete_wa_number'])->name('admin.whatsapp.delete-wa-number');
+
+
+            // Whatsapp Broadcast
+            Route::get('/wa-automation', [App\Http\Controllers\Admin\AdminController::class, 'wa_automation'])->name('admin.wa-automation');
+            Route::get('/wa-automation/broadcast', [App\Http\Controllers\Admin\AdminController::class, 'broadcast_wa_message'])->name('admin.wa-automation.broadcast');
+            Route::get('/wa-automation/broadcast/create', [App\Http\Controllers\Admin\AdminController::class, 'broadcast_wa_message_create'])->name('admin.wa-automation.broadcast.create');
+            Route::post('/wa-automation/broadcast/create', [App\Http\Controllers\Admin\AdminController::class, 'broadcast_wa_message_create'])->name('admin.wa-automation.broadcast.create');
         }
     );
 });

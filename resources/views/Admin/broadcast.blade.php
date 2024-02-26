@@ -41,7 +41,7 @@
                                                 <option value="">-- Select Channel --</option>
                                                 <option value="emails">Email</option>
                                                 <option value="sms">SMS</option>
-                                                <option value="whatsapp" disabled>WhatsApp</option>
+                                                {{-- <option value="whatsapp" disabled>WhatsApp</option> --}}
                                             </select>
                                         </div>
                                     </div>
