@@ -98,10 +98,10 @@ class StoreFrontController extends Controller
     public function checkout(Request $request)
     {
         // Get user's IP address
-        $ip = $request->ip();
+        // $ip = $request->ip();
 
         // Get location data based on IP
-        $location = Location::get($ip);
+        // $location = Location::get($ip);
 
         // return $location;
         $store = Store::latest()->where('name', $request->storename)->first();
@@ -355,7 +355,7 @@ class StoreFrontController extends Controller
 
             // send mail to vendor
             $vendor = User::where('id', $store->user_id)->first();
-            Mail::to($vendor->email)->send(new StoreFrontMail('Store Product Purchase', "Hello $vendor->username, a new product has been purchased in your store with a total amount of $item_price"));
+            Mail::to($vendor->email)->send(new StoreFrontMail('Store Product Purchase', "Hello $vendor->username, a new product has been purchased in your store with a total amount of $store->currency_sign $item_price"));
 
             // add fund to promoter and promoter referral wallet
             if ($item['id'] == $product_id && $promoter->exists()) {
@@ -605,7 +605,8 @@ class StoreFrontController extends Controller
 
         /** Send message to the user */
         Mail::send('emails.receiptEM', $data, function ($m) use ($data) {
-            $m->to($data['email'])->subject(config('app.name'));
+            // Set the subject line to include the store name and order ID
+            $m->to($data['email'])->subject('Receipt for Order: ' . $data['order']->order_no . ' from ' . $data['store']->name);
         });
 
         $data = [

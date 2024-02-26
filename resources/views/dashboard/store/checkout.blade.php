@@ -1,31 +1,61 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <title>{{$store->name}} | Oja Funnel | StoreFront</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta content="title" name="{{$store->name}} | Oja Funnel | StoreFront" />
-  <meta content="description" name="{{$store->description}} | Oja Funnel | StoreFront" />
-  <!-- App favicon -->
-  <link rel="shortcut icon" href="{{Storage::url($store->logo)}}" />
+    <meta charset="utf-8" />
+    <title>{{$store->name}} | Oja Funnel | StoreFront</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="title" name="{{$store->name}} | Oja Funnel | StoreFront" />
+    <meta content="description" name="{{$store->description}} | Oja Funnel | StoreFront" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{Storage::url($store->logo)}}" />
 
-  <!-- App Css-->
-  <link href="{{URL::asset('dash/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
-  <!-- Bootstrap Css -->
-  <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-  <!-- Icons Css -->
-  <link href="{{URL::asset('dash/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-  <!-- style Css -->
-  <link href="{{URL::asset('dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
-  <!-- App Css-->
-  <!-- Font Css-->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <script src="https://js.paystack.co/v1/inline.js"></script>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- App Css-->
+    <link href="{{URL::asset('dash/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap Css -->
+    <link href="{{URL::asset('dash/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{URL::asset('dash/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- style Css -->
+    <link href="{{URL::asset('dash/assets/css/style.css')}}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <!-- Font Css-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
+    <style>
+        .success-message {
+            color: green !important;
+            font-size: 12px !important;
+        }
+        .font-red-mint {
+            color: red !important;
+            font-size: 12px;
+        }
+        .alert-success {
+            color: green !important;
+            font-size: 14px !important;
+        }
+        .text-red, .alert-danger {
+            color: red !important;
+        }
+        .hide {
+            display: none !important;
+        }
+        #valid-msg,  #confirmvalid-msg{
+            color: green !important;
+            font-size: 12px !important;
+        }
+        #error-msg, #confirmerror-msg, #emailError, #confirmEmailError{
+            color: red !important;
+            font-size: 12px !important;
+        }
+    </style>
 </head>
 
 <body class="bg-white">
@@ -180,6 +210,8 @@
                                                                 <div class="col-lg-6 mb-4">
                                                                     <label for="Name">Phone Number *</label>
                                                                     <input type="tel" name="phoneNo" id="phoneNo" placeholder="Enter your number" required />
+                                                                    <span id="valid-msg" class="help-block hide">✓ Valid</span>
+					                                                <span id="error-msg" class="help-block hide"></span>
                                                                 </div>
                                                                 <div class="col-lg-6 mb-4">
                                                                     <label for="Name">Address *</label>
@@ -191,7 +223,250 @@
                                                                 </div>
                                                                 <div class="col-lg-6 mb-4">
                                                                     <label for="Name">Country *</label>
-                                                                    <input type="text" name="country" id="country" placeholder="Enter your country" required />
+                                                                    <select name="country" id="country" required>
+                                                                        <option value="" selected="selected">Select Country</option>
+                                                                        <option value="United States">United States</option>
+                                                                        <option value="United Kingdom">United Kingdom</option>
+                                                                        <option value="Afghanistan">Afghanistan</option>
+                                                                        <option value="Albania">Albania</option>
+                                                                        <option value="Algeria">Algeria</option>
+                                                                        <option value="American Samoa">American Samoa</option>
+                                                                        <option value="Andorra">Andorra</option>
+                                                                        <option value="Angola">Angola</option>
+                                                                        <option value="Anguilla">Anguilla</option>
+                                                                        <option value="Antarctica">Antarctica</option>
+                                                                        <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                                                                        <option value="Argentina">Argentina</option>
+                                                                        <option value="Armenia">Armenia</option>
+                                                                        <option value="Aruba">Aruba</option>
+                                                                        <option value="Australia">Australia</option>
+                                                                        <option value="Austria">Austria</option>
+                                                                        <option value="Azerbaijan">Azerbaijan</option>
+                                                                        <option value="Bahamas">Bahamas</option>
+                                                                        <option value="Bahrain">Bahrain</option>
+                                                                        <option value="Bangladesh">Bangladesh</option>
+                                                                        <option value="Barbados">Barbados</option>
+                                                                        <option value="Belarus">Belarus</option>
+                                                                        <option value="Belgium">Belgium</option>
+                                                                        <option value="Belize">Belize</option>
+                                                                        <option value="Benin">Benin</option>
+                                                                        <option value="Bermuda">Bermuda</option>
+                                                                        <option value="Bhutan">Bhutan</option>
+                                                                        <option value="Bolivia">Bolivia</option>
+                                                                        <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                                                                        <option value="Botswana">Botswana</option>
+                                                                        <option value="Bouvet Island">Bouvet Island</option>
+                                                                        <option value="Brazil">Brazil</option>
+                                                                        <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                                                                        <option value="Brunei Darussalam">Brunei Darussalam</option>
+                                                                        <option value="Bulgaria">Bulgaria</option>
+                                                                        <option value="Burkina Faso">Burkina Faso</option>
+                                                                        <option value="Burundi">Burundi</option>
+                                                                        <option value="Cambodia">Cambodia</option>
+                                                                        <option value="Cameroon">Cameroon</option>
+                                                                        <option value="Canada">Canada</option>
+                                                                        <option value="Cape Verde">Cape Verde</option>
+                                                                        <option value="Cayman Islands">Cayman Islands</option>
+                                                                        <option value="Central African Republic">Central African Republic</option>
+                                                                        <option value="Chad">Chad</option>
+                                                                        <option value="Chile">Chile</option>
+                                                                        <option value="China">China</option>
+                                                                        <option value="Christmas Island">Christmas Island</option>
+                                                                        <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                                                                        <option value="Colombia">Colombia</option>
+                                                                        <option value="Comoros">Comoros</option>
+                                                                        <option value="Congo">Congo</option>
+                                                                        <option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option>
+                                                                        <option value="Cook Islands">Cook Islands</option>
+                                                                        <option value="Costa Rica">Costa Rica</option>
+                                                                        <option value="Cote D'ivoire">Cote D'ivoire</option>
+                                                                        <option value="Croatia">Croatia</option>
+                                                                        <option value="Cuba">Cuba</option>
+                                                                        <option value="Cyprus">Cyprus</option>
+                                                                        <option value="Czech Republic">Czech Republic</option>
+                                                                        <option value="Denmark">Denmark</option>
+                                                                        <option value="Djibouti">Djibouti</option>
+                                                                        <option value="Dominica">Dominica</option>
+                                                                        <option value="Dominican Republic">Dominican Republic</option>
+                                                                        <option value="Ecuador">Ecuador</option>
+                                                                        <option value="Egypt">Egypt</option>
+                                                                        <option value="El Salvador">El Salvador</option>
+                                                                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                                                        <option value="Eritrea">Eritrea</option>
+                                                                        <option value="Estonia">Estonia</option>
+                                                                        <option value="Ethiopia">Ethiopia</option>
+                                                                        <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+                                                                        <option value="Faroe Islands">Faroe Islands</option>
+                                                                        <option value="Fiji">Fiji</option>
+                                                                        <option value="Finland">Finland</option>
+                                                                        <option value="France">France</option>
+                                                                        <option value="French Guiana">French Guiana</option>
+                                                                        <option value="French Polynesia">French Polynesia</option>
+                                                                        <option value="French Southern Territories">French Southern Territories</option>
+                                                                        <option value="Gabon">Gabon</option>
+                                                                        <option value="Gambia">Gambia</option>
+                                                                        <option value="Georgia">Georgia</option>
+                                                                        <option value="Germany">Germany</option>
+                                                                        <option value="Ghana">Ghana</option>
+                                                                        <option value="Gibraltar">Gibraltar</option>
+                                                                        <option value="Greece">Greece</option>
+                                                                        <option value="Greenland">Greenland</option>
+                                                                        <option value="Grenada">Grenada</option>
+                                                                        <option value="Guadeloupe">Guadeloupe</option>
+                                                                        <option value="Guam">Guam</option>
+                                                                        <option value="Guatemala">Guatemala</option>
+                                                                        <option value="Guinea">Guinea</option>
+                                                                        <option value="Guinea-bissau">Guinea-bissau</option>
+                                                                        <option value="Guyana">Guyana</option>
+                                                                        <option value="Haiti">Haiti</option>
+                                                                        <option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</option>
+                                                                        <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
+                                                                        <option value="Honduras">Honduras</option>
+                                                                        <option value="Hong Kong">Hong Kong</option>
+                                                                        <option value="Hungary">Hungary</option>
+                                                                        <option value="Iceland">Iceland</option>
+                                                                        <option value="India">India</option>
+                                                                        <option value="Indonesia">Indonesia</option>
+                                                                        <option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option>
+                                                                        <option value="Iraq">Iraq</option>
+                                                                        <option value="Ireland">Ireland</option>
+                                                                        <option value="Israel">Israel</option>
+                                                                        <option value="Italy">Italy</option>
+                                                                        <option value="Jamaica">Jamaica</option>
+                                                                        <option value="Japan">Japan</option>
+                                                                        <option value="Jordan">Jordan</option>
+                                                                        <option value="Kazakhstan">Kazakhstan</option>
+                                                                        <option value="Kenya">Kenya</option>
+                                                                        <option value="Kiribati">Kiribati</option>
+                                                                        <option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</option>
+                                                                        <option value="Korea, Republic of">Korea, Republic of</option>
+                                                                        <option value="Kuwait">Kuwait</option>
+                                                                        <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                                                        <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                                                                        <option value="Latvia">Latvia</option>
+                                                                        <option value="Lebanon">Lebanon</option>
+                                                                        <option value="Lesotho">Lesotho</option>
+                                                                        <option value="Liberia">Liberia</option>
+                                                                        <option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option>
+                                                                        <option value="Liechtenstein">Liechtenstein</option>
+                                                                        <option value="Lithuania">Lithuania</option>
+                                                                        <option value="Luxembourg">Luxembourg</option>
+                                                                        <option value="Macao">Macao</option>
+                                                                        <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option>
+                                                                        <option value="Madagascar">Madagascar</option>
+                                                                        <option value="Malawi">Malawi</option>
+                                                                        <option value="Malaysia">Malaysia</option>
+                                                                        <option value="Maldives">Maldives</option>
+                                                                        <option value="Mali">Mali</option>
+                                                                        <option value="Malta">Malta</option>
+                                                                        <option value="Marshall Islands">Marshall Islands</option>
+                                                                        <option value="Martinique">Martinique</option>
+                                                                        <option value="Mauritania">Mauritania</option>
+                                                                        <option value="Mauritius">Mauritius</option>
+                                                                        <option value="Mayotte">Mayotte</option>
+                                                                        <option value="Mexico">Mexico</option>
+                                                                        <option value="Micronesia, Federated States of">Micronesia, Federated States of</option>
+                                                                        <option value="Moldova, Republic of">Moldova, Republic of</option>
+                                                                        <option value="Monaco">Monaco</option>
+                                                                        <option value="Mongolia">Mongolia</option>
+                                                                        <option value="Montserrat">Montserrat</option>
+                                                                        <option value="Morocco">Morocco</option>
+                                                                        <option value="Mozambique">Mozambique</option>
+                                                                        <option value="Myanmar">Myanmar</option>
+                                                                        <option value="Namibia">Namibia</option>
+                                                                        <option value="Nauru">Nauru</option>
+                                                                        <option value="Nepal">Nepal</option>
+                                                                        <option value="Netherlands">Netherlands</option>
+                                                                        <option value="Netherlands Antilles">Netherlands Antilles</option>
+                                                                        <option value="New Caledonia">New Caledonia</option>
+                                                                        <option value="New Zealand">New Zealand</option>
+                                                                        <option value="Nicaragua">Nicaragua</option>
+                                                                        <option value="Niger">Niger</option>
+                                                                        <option value="Nigeria">Nigeria</option>
+                                                                        <option value="Niue">Niue</option>
+                                                                        <option value="Norfolk Island">Norfolk Island</option>
+                                                                        <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                                                                        <option value="Norway">Norway</option>
+                                                                        <option value="Oman">Oman</option>
+                                                                        <option value="Pakistan">Pakistan</option>
+                                                                        <option value="Palau">Palau</option>
+                                                                        <option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</option>
+                                                                        <option value="Panama">Panama</option>
+                                                                        <option value="Papua New Guinea">Papua New Guinea</option>
+                                                                        <option value="Paraguay">Paraguay</option>
+                                                                        <option value="Peru">Peru</option>
+                                                                        <option value="Philippines">Philippines</option>
+                                                                        <option value="Pitcairn">Pitcairn</option>
+                                                                        <option value="Poland">Poland</option>
+                                                                        <option value="Portugal">Portugal</option>
+                                                                        <option value="Puerto Rico">Puerto Rico</option>
+                                                                        <option value="Qatar">Qatar</option>
+                                                                        <option value="Reunion">Reunion</option>
+                                                                        <option value="Romania">Romania</option>
+                                                                        <option value="Russian Federation">Russian Federation</option>
+                                                                        <option value="Rwanda">Rwanda</option>
+                                                                        <option value="Saint Helena">Saint Helena</option>
+                                                                        <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                                                                        <option value="Saint Lucia">Saint Lucia</option>
+                                                                        <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                                                                        <option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
+                                                                        <option value="Samoa">Samoa</option>
+                                                                        <option value="San Marino">San Marino</option>
+                                                                        <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                                                                        <option value="Saudi Arabia">Saudi Arabia</option>
+                                                                        <option value="Senegal">Senegal</option>
+                                                                        <option value="Serbia and Montenegro">Serbia and Montenegro</option>
+                                                                        <option value="Seychelles">Seychelles</option>
+                                                                        <option value="Sierra Leone">Sierra Leone</option>
+                                                                        <option value="Singapore">Singapore</option>
+                                                                        <option value="Slovakia">Slovakia</option>
+                                                                        <option value="Slovenia">Slovenia</option>
+                                                                        <option value="Solomon Islands">Solomon Islands</option>
+                                                                        <option value="Somalia">Somalia</option>
+                                                                        <option value="South Africa">South Africa</option>
+                                                                        <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
+                                                                        <option value="Spain">Spain</option>
+                                                                        <option value="Sri Lanka">Sri Lanka</option>
+                                                                        <option value="Sudan">Sudan</option>
+                                                                        <option value="Suriname">Suriname</option>
+                                                                        <option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                                                                        <option value="Swaziland">Swaziland</option>
+                                                                        <option value="Sweden">Sweden</option>
+                                                                        <option value="Switzerland">Switzerland</option>
+                                                                        <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                                                                        <option value="Taiwan, Province of China">Taiwan, Province of China</option>
+                                                                        <option value="Tajikistan">Tajikistan</option>
+                                                                        <option value="Tanzania, United Republic of">Tanzania, United Republic of</option>
+                                                                        <option value="Thailand">Thailand</option>
+                                                                        <option value="Timor-leste">Timor-leste</option>
+                                                                        <option value="Togo">Togo</option>
+                                                                        <option value="Tokelau">Tokelau</option>
+                                                                        <option value="Tonga">Tonga</option>
+                                                                        <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                                                                        <option value="Tunisia">Tunisia</option>
+                                                                        <option value="Turkey">Turkey</option>
+                                                                        <option value="Turkmenistan">Turkmenistan</option>
+                                                                        <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                                                                        <option value="Tuvalu">Tuvalu</option>
+                                                                        <option value="Uganda">Uganda</option>
+                                                                        <option value="Ukraine">Ukraine</option>
+                                                                        <option value="United Arab Emirates">United Arab Emirates</option>
+                                                                        <option value="United Kingdom">United Kingdom</option>
+                                                                        <option value="United States">United States</option>
+                                                                        <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                                                                        <option value="Uruguay">Uruguay</option>
+                                                                        <option value="Uzbekistan">Uzbekistan</option>
+                                                                        <option value="Vanuatu">Vanuatu</option>
+                                                                        <option value="Venezuela">Venezuela</option>
+                                                                        <option value="Viet Nam">Viet Nam</option>
+                                                                        <option value="Virgin Islands, British">Virgin Islands, British</option>
+                                                                        <option value="Virgin Islands, U.S.">Virgin Islands, U.S.</option>
+                                                                        <option value="Wallis and Futuna">Wallis and Futuna</option>
+                                                                        <option value="Western Sahara">Western Sahara</option>
+                                                                        <option value="Yemen">Yemen</option>
+                                                                        <option value="Zambia">Zambia</option>
+                                                                        <option value="Zimbabwe">Zimbabwe</option>
+                                                                    </select>
                                                                 </div>
                                                                 <div class="text-end mt-2">
                                                                     <a class="nav-link" class="text-decoration-none">
@@ -397,343 +672,415 @@
   <script src="https://js.stripe.com/v3/"></script>
   <script src="https://checkout.flutterwave.com/v3.js"></script>
 
-  <script>
-    $(document).ready(function () {
-        // $('#paystackPayment').show();
-        // Handle radio button change event
-        $('input[name="paymentOptions"]').change(function () {
-            // Check if the selected option is Stripe
-            if ($(this).val() === 'Stripe') {
+    <script>
+        $(document).ready(function () {
+            // $('#paystackPayment').show();
+            // Handle radio button change event
+            $('input[name="paymentOptions"]').change(function () {
+                // Check if the selected option is Stripe
+                if ($(this).val() === 'Stripe') {
+                    $('#stripePayment').show();
+                    $('#paystackPayment').hide();
+                } else if ($(this).val() === 'Flutterwave') {
+                    $('#stripePayment').hide();
+                    $('#paystackPayment').show();
+                } else if ($(this).val() === 'Paypal') {
+                    $('#stripePayment').hide();
+                    $('#paystackPayment').show();
+                } else {
+                    $('#stripePayment').hide();
+                    $('#paystackPayment').show();
+                }
+            });
+
+            // Handle initial state
+            if ($('input[name="paymentOptions"]:checked').val() === 'Stripe') {
                 $('#stripePayment').show();
-                $('#paystackPayment').hide();
-            } else if ($(this).val() === 'Flutterwave') {
-                $('#stripePayment').hide();
-                $('#paystackPayment').show();
-            } else if ($(this).val() === 'Paypal') {
-                $('#stripePayment').hide();
-                $('#paystackPayment').show();
-            } else {
-                $('#stripePayment').hide();
-                $('#paystackPayment').show();
             }
         });
 
-        // Handle initial state
-        if ($('input[name="paymentOptions"]:checked').val() === 'Stripe') {
-            $('#stripePayment').show();
-        }
-    });
+        var token = $('#txt_token1').val();
+        var site_url = $('#site_url').val();
 
-    var token = $('#txt_token1').val();
-    var site_url = $('#site_url').val();
+        window.onload=function(){
+            $discount = $('#totalAmount').val() - $('#couponDiscount').val();
+            $('#AmountToPay').val($discount);
+        };
 
-    window.onload=function(){
-        $discount = $('#totalAmount').val() - $('#couponDiscount').val();
-        $('#AmountToPay').val($discount);
-    };
-
-    $("#activePayment").click(function() {
-        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '' || $('#paymemtOptions').val() == '') {
-            $('#error').html('Please fill the asterisks field to continue');
-        } else {
-            if($('.customer_email').val() !== ""){
-                var datastring='customer_email='+$('.customer_email').val()
-                +'&product_id='+$('.product_id').val()
-                +'&product_type=products'
-                +'&_token='+token;
-
-                $.ajax({
-                    type: "POST",
-                    url : site_url + "store-cart-details-tmp", // store users email temporary, delete back if they complete the payment
-                    data: datastring,
-                    cache: false,
-                    timeout: 30000, // 30 second timeout
-                    success : function(data){}
-                });
-            }
-
-            $('#v-pills-shipping-tab').removeClass('active')
-            $('#v-pills-shipping').removeClass('show active')
-            $('#v-pills-payment-tab').addClass('active')
-            $('#v-pills-payment').addClass('show active')
-        }
-    })
-
-    $("#activeconfirm").click(function() {
-        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
-            $('#error').html('Please fill the asterisks field to continue');
-        } else {
-            $('#v-pills-payment-tab').removeClass('active')
-            $('#v-pills-payment').removeClass('show active')
-            $('#v-pills-confir-tab').addClass('active')
-            $('#v-pills-confir').addClass('show active')
-        }
-    })
-
-    $("#makePayment").click(function() {
-        if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '' || !$('input[name="paymentOptions"]:checked').val()) {
-            alert('Please fill in the required fields to continue');
-            $('#error').html('Please fill in the required fields to continue');
-        } else {
-            var selectedPaymentOption = $('input[name="paymentOptions"]:checked').val();
-            var checkoutForm = document.getElementById('checkoutForm');
-
-            if (selectedPaymentOption == 'Paypal') {
-                // Prevent the default form submission
-                event.preventDefault();
-                // Your conditions are met, trigger the form submission asynchronously
-                // checkoutForm.submit();
-            } else if (selectedPaymentOption == 'Flutterwave') {
-                $.ajax({
-                    method: 'GET',
-                    url: '/retrieve/payment/' + 'Flutterwave', // Replace with your actual backend endpoint
-                    success: function(response) {
-                        // Get the base URL of the current page
-                        var baseUrl = window.location.origin;
-
-                        // Configure FlutterwaveCheckout
-                        FlutterwaveCheckout({
-                            public_key: response.FLW_PUBLIC_KEY,
-                            tx_ref: ''+Math.floor((Math.random() * 1000000000) + 1),
-                            amount: document.getElementById("AmountToPay").value, // Amount in cents (e.g., $50.00 is 5000 cents)
-                            currency: '{{$store->currency}}',
-                            payment_options: "card",
-                            customer: {
-                                email: $('#email').val(), // Replace with your user's email
-                            },
-                            customizations: {
-                                title: 'Product Purchase',
-                                description: 'Purchased Products',
-                                logo: baseUrl + '/dash/assets/images/Logo-fav.png', // Replace 'your-logo.png' with the actual path to your logo in the public folder
-                            },
-                            callback: function(response) {
-                                console.log(response);
-                                // Handle the response after successful payment
-                                alert('Payment successful!');
-                                $( "#checkoutForm" ).submit();
-                            },
-                            onclose: function() {
-                                console.log('Payment closed');
-                                // Handle actions when the payment modal is closed
-                            }
-                        });
-                    },
-                    error: function(error) {
-                        console.error("Error fetching payment details:", error);
-                    }
-                });
-            } else if (selectedPaymentOption == 'Paystack') {
-                $.ajax({
-                    method: 'GET',
-                    url: '/retrieve/payment/' + 'Paystack', // Replace with your actual backend endpoint
-                    success: function(response) {
-                        var handler = PaystackPop.setup({
-                            key: response.PAYSTACK_PUBLIC_KEY,
-                            email: $('#email').val(),
-                            amount: document.getElementById("AmountToPay").value * 100,
-                            ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                            callback: function(response){
-                                // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
-                                // url = url.replace(':response', response.reference);
-                                // url = url.replace(':amount', document.getElementById("amount").value);
-                                // document.location.href=url;
-                                $( "#checkoutForm" ).submit();
-                            },
-                            onClose: function(){
-                                alert('window closed');
-                            }
-                        });
-                        handler.openIframe();
-                    },
-                    error: function(error) {
-                        console.error("Error fetching payment details:", error);
-                    }
-                });
+        $("#activePayment").click(function() {
+            if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '' || $('#paymemtOptions').val() == '') {
+                $('#error').html('Please fill the asterisks field to continue');
             } else {
-                // Handle other payment gateways or show an error message
-                alert('Unsupported payment option');
+                if($('.customer_email').val() !== ""){
+                    var datastring='customer_email='+$('.customer_email').val()
+                    +'&product_id='+$('.product_id').val()
+                    +'&product_type=products'
+                    +'&_token='+token;
+
+                    $.ajax({
+                        type: "POST",
+                        url : site_url + "store-cart-details-tmp", // store users email temporary, delete back if they complete the payment
+                        data: datastring,
+                        cache: false,
+                        timeout: 30000, // 30 second timeout
+                        success : function(data){}
+                    });
+                }
+
+                $('#v-pills-shipping-tab').removeClass('active')
+                $('#v-pills-shipping').removeClass('show active')
+                $('#v-pills-payment-tab').addClass('active')
+                $('#v-pills-payment').addClass('show active')
+            }
+        })
+
+        $("#activeconfirm").click(function() {
+            if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '') {
+                $('#error').html('Please fill the asterisks field to continue');
+            } else {
+                $('#v-pills-payment-tab').removeClass('active')
+                $('#v-pills-payment').removeClass('show active')
+                $('#v-pills-confir-tab').addClass('active')
+                $('#v-pills-confir').addClass('show active')
+            }
+        })
+
+        $("#makePayment").click(function() {
+            if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '' || !$('input[name="paymentOptions"]:checked').val()) {
+                alert('Please fill in the required fields to continue');
+                $('#error').html('Please fill in the required fields to continue');
+            } else {
+                var selectedPaymentOption = $('input[name="paymentOptions"]:checked').val();
+                var checkoutForm = document.getElementById('checkoutForm');
+
+                if (selectedPaymentOption == 'Paypal') {
+                    // Prevent the default form submission
+                    event.preventDefault();
+                    // Your conditions are met, trigger the form submission asynchronously
+                    // checkoutForm.submit();
+                } else if (selectedPaymentOption == 'Flutterwave') {
+                    $.ajax({
+                        method: 'GET',
+                        url: '/retrieve/payment/' + 'Flutterwave', // Replace with your actual backend endpoint
+                        success: function(response) {
+                            // Get the base URL of the current page
+                            var baseUrl = window.location.origin;
+
+                            // Configure FlutterwaveCheckout
+                            FlutterwaveCheckout({
+                                public_key: response.FLW_PUBLIC_KEY,
+                                tx_ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+                                amount: document.getElementById("AmountToPay").value, // Amount in cents (e.g., $50.00 is 5000 cents)
+                                currency: '{{$store->currency}}',
+                                payment_options: "card",
+                                customer: {
+                                    email: $('#email').val(), // Replace with your user's email
+                                },
+                                customizations: {
+                                    title: 'Product Purchase',
+                                    description: 'Purchased Products',
+                                    logo: baseUrl + '/dash/assets/images/Logo-fav.png', // Replace 'your-logo.png' with the actual path to your logo in the public folder
+                                },
+                                callback: function(response) {
+                                    console.log(response);
+                                    // Handle the response after successful payment
+                                    alert('Payment successful!');
+                                    $( "#checkoutForm" ).submit();
+                                },
+                                onclose: function() {
+                                    console.log('Payment closed');
+                                    // Handle actions when the payment modal is closed
+                                }
+                            });
+                        },
+                        error: function(error) {
+                            console.error("Error fetching payment details:", error);
+                        }
+                    });
+                } else if (selectedPaymentOption == 'Paystack') {
+                    $.ajax({
+                        method: 'GET',
+                        url: '/retrieve/payment/' + 'Paystack', // Replace with your actual backend endpoint
+                        success: function(response) {
+                            var handler = PaystackPop.setup({
+                                key: response.PAYSTACK_PUBLIC_KEY,
+                                email: $('#email').val(),
+                                amount: document.getElementById("AmountToPay").value * 100,
+                                ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                                callback: function(response){
+                                    // let url = '{{ route("user.transaction.confirm", [':response', ':amount']) }}';
+                                    // url = url.replace(':response', response.reference);
+                                    // url = url.replace(':amount', document.getElementById("amount").value);
+                                    // document.location.href=url;
+                                    $( "#checkoutForm" ).submit();
+                                },
+                                onClose: function(){
+                                    alert('window closed');
+                                }
+                            });
+                            handler.openIframe();
+                        },
+                        error: function(error) {
+                            console.error("Error fetching payment details:", error);
+                        }
+                    });
+                } else {
+                    // Handle other payment gateways or show an error message
+                    alert('Unsupported payment option');
+                }
+            }
+        })
+
+        function myFunction() {
+            var x = document.getElementById("myDIV");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
             }
         }
-    })
 
-    function myFunction() {
-        var x = document.getElementById("myDIV");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
+        $("#submitCoupon").click(function()
+        {
+            if ($('#coupon').val() == '') {
+                $('#couponerror').html('Please fill the coupon field to continue.');
+            } else {
 
-    $("#submitCoupon").click(function()
-    {
-        if ($('#coupon').val() == '') {
-            $('#couponerror').html('Please fill the coupon field to continue.');
-        } else {
-
-            $coupon = $('#coupon').val();
-            $totalAmount = $('#totalAmount').val();
-            $.ajax({
-              url: "{{ route('user.store.check.coupon') }}",
-                method: "post",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    coupon: $coupon,
-                    totalAmount: $totalAmount,
-                },
-                success: function (response) {
-                    if(response['success'] === true)
-                    {
-                        $('#couponerror').hide();
-                        $('#couponsuccess').show();
-                        $('#couponsuccess').html(response['message']);
-                        $('#couponDiscount').val(response['data'])
-                        $('#couponID').val(response['id'])
-                        $discount = $('#totalAmount').val() - response['data'];
-                        $('#AmountToPay').val($discount);
-                        $('#coupon').val('')
-                    } else {
-                        $('#couponsuccess').hide();
-                        $('#couponerror').show();
-                        $('#couponerror').html(response['message']);
+                $coupon = $('#coupon').val();
+                $totalAmount = $('#totalAmount').val();
+                $.ajax({
+                url: "{{ route('user.store.check.coupon') }}",
+                    method: "post",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        coupon: $coupon,
+                        totalAmount: $totalAmount,
+                    },
+                    success: function (response) {
+                        if(response['success'] === true)
+                        {
+                            $('#couponerror').hide();
+                            $('#couponsuccess').show();
+                            $('#couponsuccess').html(response['message']);
+                            $('#couponDiscount').val(response['data'])
+                            $('#couponID').val(response['id'])
+                            $discount = $('#totalAmount').val() - response['data'];
+                            $('#AmountToPay').val($discount);
+                            $('#coupon').val('')
+                        } else {
+                            $('#couponsuccess').hide();
+                            $('#couponerror').show();
+                            $('#couponerror').html(response['message']);
+                        }
                     }
-                }
-            });
-        }
-    });
+                });
+            }
+        });
 
-    $.ajax({
-        method: 'GET',
-        url: '/retrieve/payment/' + 'Stripe', // Replace with your actual backend endpoint
-        success: function(response) {
-            let stripe = Stripe(response.STRIPE_KEY);
-            const elements = stripe.elements();
-            const cardElement = elements.create('card', {
-                style: {
-                    base: {
-                        fontSize: '16px'
-                    }
-                }
-            });
-
-            const checkoutForm = document.getElementById('checkoutForm');
-            const cardName = document.getElementById('card-name');
-            cardElement.mount('#card');
-
-            checkoutForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const { paymentMethod, error } = await stripe.createPaymentMethod({
-                    type: 'card',
-                    card: cardElement,
-                    billing_details: {
-                        name: cardName.value
+        $.ajax({
+            method: 'GET',
+            url: '/retrieve/payment/' + 'Stripe', // Replace with your actual backend endpoint
+            success: function(response) {
+                let stripe = Stripe(response.STRIPE_KEY);
+                const elements = stripe.elements();
+                const cardElement = elements.create('card', {
+                    style: {
+                        base: {
+                            fontSize: '16px'
+                        }
                     }
                 });
 
-                if (error) {
-                    console.log('error');
-                } else {
-                    let input = document.createElement('input');
-                    input.setAttribute('type', 'hidden');
-                    input.setAttribute('name', 'payment_method');
-                    input.setAttribute('value', paymentMethod.id);
-                    checkoutForm.appendChild(input);
+                const checkoutForm = document.getElementById('checkoutForm');
+                const cardName = document.getElementById('card-name');
+                cardElement.mount('#card');
 
-                    // Directly submit the form
-                    checkoutForm.submit();
-                }
-            });
-        },
-        error: function(error) {
-            console.error("Error fetching payment details:", error);
+                checkoutForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const { paymentMethod, error } = await stripe.createPaymentMethod({
+                        type: 'card',
+                        card: cardElement,
+                        billing_details: {
+                            name: cardName.value
+                        }
+                    });
+
+                    if (error) {
+                        console.log('error');
+                    } else {
+                        let input = document.createElement('input');
+                        input.setAttribute('type', 'hidden');
+                        input.setAttribute('name', 'payment_method');
+                        input.setAttribute('value', paymentMethod.id);
+                        checkoutForm.appendChild(input);
+
+                        // Directly submit the form
+                        checkoutForm.submit();
+                    }
+                });
+            },
+            error: function(error) {
+                console.error("Error fetching payment details:", error);
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
+    <script>
+        const input = document.querySelector("#phoneNo");
+        const errorMsg = document.querySelector("#error-msg");
+        const validMsg = document.querySelector("#valid-msg");
+        let validationTimeout;
+
+        // here, the index maps to the error code returned from getValidationError - see readme
+        const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+        // initialise plugin
+        const iti = window.intlTelInput(input, {
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+            initialCountry: "auto", // Automatically select the user's country
+            separateDialCode: true, // Add a space between the country code and the phone number
+            placeholderNumberType: "MOBILE", // Set the placeholder to match the user's mobile number format
+            nationalMode: false, // Do not automatically switch to national mode
+        });
+
+        const updateMessages = () => {
+            clearTimeout(validationTimeout);
+            reset();
+            if (input.value.trim()) {
+                validationTimeout = setTimeout(() => {
+                    if (iti.isValidNumber()) {
+                        validMsg.classList.remove("hide");
+                    } else {
+                        input.classList.add("error");
+                        const errorCode = iti.getValidationError();
+                        errorMsg.innerHTML = errorMap[errorCode];
+                        errorMsg.classList.remove("hide");
+                    }
+                }, 300); // Adjust the delay time as needed (in milliseconds)
+            }
+        };
+
+        const reset = () => {
+            input.classList.remove("error");
+            errorMsg.innerHTML = "";
+            errorMsg.classList.add("hide");
+            validMsg.classList.add("hide");
+        };
+
+        // on input: validate with slight delay
+        input.addEventListener('input', updateMessages);
+
+        // on keyup / change flag: reset
+        input.addEventListener('change', reset);
+        input.addEventListener('keyup', reset);
+
+        // Set the initial value of the input to include the selected country code
+        input.addEventListener('countrychange', () => {
+            const countryCodeValue = iti.getSelectedCountryData().dialCode;
+            input.value = `+${countryCodeValue}`;
+        });
+    </script>
+    <style>
+        .iti {
+            display: block !important;
         }
-    });
-</script>
-</body>
-<style>
-.thumbnail {
-    position: relative;
-    padding: 0px;
-    margin-bottom: 20px;
-}
-.thumbnail img {
-    width: 80%;
-}
-.thumbnail .caption{
-    margin: 7px;
-}
-.main-section{
-    background-color: #F8F8F8;
-}
-.dropdown button.btn-info{
-    /* float:right;
-    padding-right: 30px; */
-    color: {{$store->color}};
-    background: {{$store->theme}};
-}
-.btn-success{
-    color: {{$store->color}} !important;
-    background: {{$store->theme}} !important;
-}
-.btn{
-    border:0px;
-    margin:10px 0px;
-    box-shadow:none !important;
-}
-.dropdown .dropdown-menu{
-    padding:20px;
-    /*top:30px !important;*/
-    width:350px !important;
-    /*left:-110px !important;*/
-    box-shadow:0px 4px 7px #a8a7a7;
-}
-.total-header-section{
-    border-bottom:1px solid #d2d2d2;
-}
-.total-section p{
-    margin-bottom:20px;
-}
-.cart-detail{
-    padding:15px 0px;
-}
-.cart-detail-img img{
-    width:100%;
-    height:100%;
-    padding-left:15px;
-}
-.cart-detail-product p{
-    margin:0px;
-    color:#000;
-    font-weight:500;
-}
 
-span.text-info{
-    color: {{$store->theme}} !important;
-}
-.cart-detail .price{
-    font-size:12px;
-    margin-right:10px;
-    font-weight:500;
-}
-.cart-detail .count{
-    color:#C2C2DC;
-}
-.checkout{
-    border-top:1px solid #d2d2d2;
-    padding-top: 15px;
-}
-.checkout .btn-primary{
-    color: {{$store->color}};
-    background: {{$store->theme}};
-}
-.dropdown-menu:before{
-    content: " ";
-    position:absolute;
-    top:-20px;
-    right:50px;
-    border:10px solid transparent;
-    border-bottom-color:#fff;
-}
-</style>
+        .iti__country-list {
+            z-index: 2000 !important;
+        }
+
+        .iti__country-name {
+            color: #000 !important;
+        }
+
+        .iti__dial-code {
+            color: #000 !important;
+        }
+        .thumbnail {
+            position: relative;
+            padding: 0px;
+            margin-bottom: 20px;
+        }
+        .thumbnail img {
+            width: 80%;
+        }
+        .thumbnail .caption{
+            margin: 7px;
+        }
+        .main-section{
+            background-color: #F8F8F8;
+        }
+        .dropdown button.btn-info{
+            /* float:right;
+            padding-right: 30px; */
+            color: {{$store->color}};
+            background: {{$store->theme}};
+        }
+        .btn-success{
+            color: {{$store->color}} !important;
+            background: {{$store->theme}} !important;
+        }
+        .btn{
+            border:0px;
+            margin:10px 0px;
+            box-shadow:none !important;
+        }
+        .dropdown .dropdown-menu{
+            padding:20px;
+            /*top:30px !important;*/
+            width:350px !important;
+            /*left:-110px !important;*/
+            box-shadow:0px 4px 7px #a8a7a7;
+        }
+        .total-header-section{
+            border-bottom:1px solid #d2d2d2;
+        }
+        .total-section p{
+            margin-bottom:20px;
+        }
+        .cart-detail{
+            padding:15px 0px;
+        }
+        .cart-detail-img img{
+            width:100%;
+            height:100%;
+            padding-left:15px;
+        }
+        .cart-detail-product p{
+            margin:0px;
+            color:#000;
+            font-weight:500;
+        }
+
+        span.text-info{
+            color: {{$store->theme}} !important;
+        }
+        .cart-detail .price{
+            font-size:12px;
+            margin-right:10px;
+            font-weight:500;
+        }
+        .cart-detail .count{
+            color:#C2C2DC;
+        }
+        .checkout{
+            border-top:1px solid #d2d2d2;
+            padding-top: 15px;
+        }
+        .checkout .btn-primary{
+            color: {{$store->color}};
+            background: {{$store->theme}};
+        }
+        .dropdown-menu:before{
+            content: " ";
+            position:absolute;
+            top:-20px;
+            right:50px;
+            border:10px solid transparent;
+            border-bottom-color:#fff;
+        }
+    </style>
+</body>
 </html>
