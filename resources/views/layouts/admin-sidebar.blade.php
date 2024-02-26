@@ -123,8 +123,10 @@
                         <span key="t-chat">Automation</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('admin.wa-automation')}}" key="t-tui-calendar">WA Number</a></li>
                         <li><a href="{{route('smsAutomation')}}"  key="t-tui-calendar">SMS & WhatsApp Automation</a></li>
                         <li><a href="{{route('whatsappAutomation')}}"  key="t-tui-calendar">Whatsapp Automation</a></li>
+                        <li><a href="{{route('admin.wa-automation.broadcast')}}" key="t-tui-chat">Whatsapp Broadcast</a></li>
                     </ul>
                 </li>
                 <li>

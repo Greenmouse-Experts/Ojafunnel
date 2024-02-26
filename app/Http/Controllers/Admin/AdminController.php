@@ -73,6 +73,7 @@ use App\Models\PaymentGateway;
 use App\Models\UpsellPageSubmission;
 use DateInterval;
 use DateTime;
+use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
 {
@@ -3493,4 +3494,271 @@ class AdminController extends Controller
 
     }
 
+    public function wa_automation(Request $request)
+    {
+        $admin_id = Auth::guard('admin')->user()->id;
+
+        $whatsapp_numbers = WhatsappNumber::where('user_id', $admin_id)->orderBy('id', 'DESC')->get();
+
+        $_whatsapp_numbers = $whatsapp_numbers->map(function ($whatsapp_number) {
+            $full_jwt_session = explode(':', $whatsapp_number->full_jwt_session);
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $full_jwt_session[1]
+            ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
+            $data = $response->json();
+
+            // re-generate jwt
+            if (array_key_exists('error', $data)) {
+                $response = Http::post(
+                    env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_number->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+                );
+                $data = $response->json();
+
+                // update full_jwt_session
+                $wa_number = WhatsappNumber::find($whatsapp_number->id);
+                $wa_number->update([
+                    'full_jwt_session' => $data['full']
+                ]);
+
+                $full_jwt_session = explode(':', $data['full']);
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $full_jwt_session[1]
+                ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
+
+                $data = $response->json();
+
+                return [
+                    'id' => $whatsapp_number->id,
+                    'phone_number' => $whatsapp_number->phone_number,
+                    'full_jwt_session' => $whatsapp_number->full_jwt_session,
+                    'status' => $data['message'],
+                    'created_at' => $whatsapp_number->created_at,
+                    'updated_at' => $whatsapp_number->updated_at
+                ];
+            }
+
+            return [
+                'id' => $whatsapp_number->id,
+                'phone_number' => $whatsapp_number->phone_number,
+                'full_jwt_session' => $whatsapp_number->full_jwt_session,
+                'status' => $data['message'],
+                'created_at' => $whatsapp_number->created_at,
+                'updated_at' => $whatsapp_number->updated_at
+            ];
+        })->all();
+
+
+        return view('Admin.automation.broadcast.wa-automation', ['whatsapp_numbers' => $_whatsapp_numbers]);
+    }
+
+    public function generate_wa_qr(Request $request)
+    {
+        $full_jwt_session = explode(':', $request->full_jwt_session);
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $full_jwt_session[1]
+        ])->post(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/start-session');
+        $data = $response->json();
+
+        return response()->json($data, 200);
+    }
+
+    public function logout_wa_session(Request $request)
+    {
+        $full_jwt_session = explode(':', $request->full_jwt_session);
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $full_jwt_session[1]
+        ])->post(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/logout-session');
+        $data = $response->json();
+
+        return response()->json($data, 200);
+    }
+
+    public function check_wa_session_connection(Request $request)
+    {
+        $full_jwt_session = explode(':', $request->full_jwt_session);
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $full_jwt_session[1]
+        ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
+
+        $data = $response->json();
+
+        return response()->json($data, 200);
+    }
+
+    public function create_wa_number(Request $request)
+    {
+        $request->validate([
+            'phone_number' => 'required|unique:whatsapp_numbers'
+        ]);
+
+        // if (WhatsappNumber::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->wa_number) {
+        //     return back()->with([
+        //         'type' => 'danger',
+        //         'message' => 'Upgrade to enjoy more access'
+        //     ]);
+        // }
+
+        $wa_number = new WhatsappNumber();
+        $wa_number->phone_number = $request->phone_number;
+
+        $response = Http::post(
+            env('WA_BASE_ENDPOINT') . '/api/' . $request->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+        );
+        $data = $response->json();
+
+        $wa_number->full_jwt_session = $data['full'];
+        $wa_number->user_id = Auth::guard('admin')->user()->id;
+
+        $wa_number->save();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The WA Number added successfully.'
+        ]);
+    }
+
+    public function update_wa_number(Request $request)
+    {
+        $request->validate([
+            'phone_number' => 'required|unique:whatsapp_numbers'
+        ]);
+
+        $wa_number = WhatsappNumber::find($request->id);
+
+        $response = Http::post(
+            env('WA_BASE_ENDPOINT') . '/api/' . $request->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+        );
+        $data = $response->json();
+
+        $wa_number->update([
+            'phone_number' => $request->phone_number,
+            'full_jwt_session' => $data['full'],
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The WA Number updated successfully.'
+        ]);
+    }
+
+    public function delete_wa_number(Request $request)
+    {
+        $wa_number = WhatsappNumber::find($request->id);
+
+        $wa_number->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The WA Number deleted successfully.'
+        ]);
+    }
+
+    public function broadcast_wa_message(Request $request)
+    {
+        $admin_id = Auth::guard('admin')->user()->id;
+        $broadcasts = \App\Models\WhatappBroadcast::where(['user_id' => $admin_id])->orderBy('id', 'DESC')->get();
+
+        return view('Admin.automation.broadcast.whatsappBroadcast', [
+            'broadcasts' => $broadcasts
+        ]);
+    }
+
+    public function broadcast_wa_message_create(Request $request)
+    {
+
+        $admin_id = Auth::guard('admin')->user()->id;
+
+        if($request->method() == 'POST')
+        {
+            $whatsapp_account = explode('-', $request->whatsapp_account);
+
+            if ($whatsapp_account[2] != "Connected") return back()->with([
+                'type' => 'danger',
+                'message' => 'The WA account is not connected. Connect and try again'
+            ])->withInput();
+
+
+            // get contact list
+            // $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
+            $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->whereNotNull('phone')->where('subscribe', true)->get();
+
+            $broadcast = new \App\Models\WhatappBroadcast;
+            $broadcast->user_id = Auth::guard('admin')->user()->id; //auth()->user()->id;
+            $broadcast->list_mgt_id = $request->contact_list;
+            $broadcast->sender_id = $whatsapp_account[1];
+            $broadcast->message = $request->template1_msg_series;
+            $broadcast->date = date('Y-m-d');
+            $broadcast->time = date('h:i:s');
+            $broadcast->ContactCount = sizeof($contacts);
+            $broadcast->save();
+
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Broadcast message sent successfully.'
+            ]);
+        }
+
+        $whatsapp_numbers = WhatsappNumber::where('user_id', $admin_id)->orderBy('id', 'DESC')->get();
+
+        $_whatsapp_numbers = $whatsapp_numbers->map(function ($whatsapp_number) {
+            $full_jwt_session = explode(':', $whatsapp_number->full_jwt_session);
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $full_jwt_session[1]
+            ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
+            $data = $response->json();
+
+            // re-generate jwt
+            if (array_key_exists('error', $data)) {
+                $response = Http::post(
+                    env('WA_BASE_ENDPOINT') . '/api/' . $whatsapp_number->phone_number . '/8KtworSulXYbbXKej0e9SjlcT3Y3UAeZsLx42Jx1CByXw4Fose/generate-token'
+                );
+                $data = $response->json();
+
+                // update full_jwt_session
+                $wa_number = WhatsappNumber::find($whatsapp_number->id);
+                $wa_number->update([
+                    'full_jwt_session' => $data['full']
+                ]);
+
+                $full_jwt_session = explode(':', $data['full']);
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $full_jwt_session[1]
+                ])->get(env('WA_BASE_ENDPOINT') . '/api/' . $full_jwt_session[0] . '/check-connection-session');
+
+                $data = $response->json();
+
+                return [
+                    'id' => $whatsapp_number->id,
+                    'phone_number' => $whatsapp_number->phone_number,
+                    'full_jwt_session' => $whatsapp_number->full_jwt_session,
+                    'status' => $data['message'],
+                    'created_at' => $whatsapp_number->created_at,
+                    'updated_at' => $whatsapp_number->updated_at
+                ];
+            }
+
+            return [
+                'id' => $whatsapp_number->id,
+                'phone_number' => $whatsapp_number->phone_number,
+                'full_jwt_session' => $whatsapp_number->full_jwt_session,
+                'status' => $data['message'],
+                'created_at' => $whatsapp_number->created_at,
+                'updated_at' => $whatsapp_number->updated_at
+            ];
+        })->all();
+
+        $contact_lists = \App\Models\ListManagement::all();
+
+
+        return view('Admin.automation.broadcast.whatsappBroadcast-create', [
+            'whatsapp_numbers' => $_whatsapp_numbers,
+            'contact_lists' => $contact_lists,
+        ]);
+    }
 }
