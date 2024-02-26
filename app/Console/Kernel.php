@@ -85,6 +85,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('send:scheduled-series-sms')->everyMinute()->withoutOverlapping();
         $schedule->command('sendwascheduledseries:run')->everyMinute()->withoutOverlapping();
         $schedule->command('send:scheduled-series-email')->everyMinute()->withoutOverlapping();
+        $schedule->command('wabroadcast:run')->everyMinute()->withoutOverlapping();
 
         // Log a message indicating the cron job is working
         // $schedule->call(function () {

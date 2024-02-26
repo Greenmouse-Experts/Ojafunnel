@@ -282,6 +282,11 @@ Route::prefix('{username}')->group(function () {
 
                     // Automation Scheduled Messages
 
+                    // Whatsapp Broadcast
+                    Route::get('/whatsapp-automation/broadcast', [App\Http\Controllers\DashboardController::class, 'broadcast_wa_message'])->name('wa-automation.broadcast');
+                    Route::get('/whatsapp-automation/broadcast/create', [App\Http\Controllers\DashboardController::class, 'broadcast_wa_message_create'])->name('wa-automation.broadcast.create');
+                    Route::post('/whatsapp-automation/broadcast/create', [App\Http\Controllers\DashboardController::class, 'broadcast_wa_message_create'])->name('wa-automation.broadcast.create');
+
                 }
             );
             Route::prefix('/ecommerce')->group(

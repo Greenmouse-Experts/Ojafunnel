@@ -87,6 +87,7 @@
                         <li><a href="{{route('user.whatsapp.wa-number', Auth::user()->username)}}" key="t-tui-calendar">WA Number</a></li>
                         <li><a href="{{route('user.sms.automation', Auth::user()->username)}}" key="t-tui-calendar">SMS Automation</a></li>
                         <li><a href="{{route('user.whatsapp.automation', Auth::user()->username)}}" key="t-tui-calendar">Whatsapp Automation</a></li>
+                        <li><a href="{{route('wa-automation.broadcast', Auth::user()->username)}}" key="t-chat">Whatsapp Broadcast</a></li>
                     </ul>
                 </li>
                 <li>
