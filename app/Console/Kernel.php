@@ -59,33 +59,33 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Run SMS campaigns and reminders every minute
-        // $schedule->command('smsCampaign:run')->everyMinute()->withoutOverlapping();
-        // $schedule->command('subscription:cron')->dailyAt('00:30')->withoutOverlapping();
-        // $schedule->command('subscriptionReminder:cron')->dailyAt('05:30')->withoutOverlapping();
+        $schedule->command('smsCampaign:run')->everyMinute()->withoutOverlapping();
+        $schedule->command('subscription:cron')->dailyAt('00:30')->withoutOverlapping();
+        $schedule->command('subscriptionReminder:cron')->dailyAt('05:30')->withoutOverlapping();
 
-        // // Run WhatsApp and email campaigns every minute
-        // $schedule->command('sendwabulk:run')->everyMinute()->withoutOverlapping();
-        // $schedule->command('emailcampaign:run')->everyMinute()->withoutOverlapping();
+        // Run WhatsApp and email campaigns every minute
+        $schedule->command('sendwabulk:run')->everyMinute()->withoutOverlapping();
+        $schedule->command('emailcampaign:run')->everyMinute()->withoutOverlapping();
 
-        // // Run birthday and anniversary campaigns daily
-        // $schedule->command('wabirthday:run')->daily()->withoutOverlapping();
-        // $schedule->command('emailbirthday:run')->daily()->withoutOverlapping();
-        // $schedule->command('smsBirthday:cron')->daily()->withoutOverlapping();
-        // $schedule->command('sms_cart_reminder:run')->daily()->withoutOverlapping();
+        // Run birthday and anniversary campaigns daily
+        $schedule->command('wabirthday:run')->daily()->withoutOverlapping();
+        $schedule->command('emailbirthday:run')->daily()->withoutOverlapping();
+        $schedule->command('smsBirthday:cron')->daily()->withoutOverlapping();
+        $schedule->command('sms_cart_reminder:run')->daily()->withoutOverlapping();
 
-        // // Run SSL generation and renewal every thirty minutes
-        // $schedule->command('generatessl:run')->everyThirtyMinutes()->withoutOverlapping();
-        // $schedule->command('renewssl:run')->daily()->withoutOverlapping();
+        // Run SSL generation and renewal every thirty minutes
+        $schedule->command('generatessl:run')->everyThirtyMinutes()->withoutOverlapping();
+        $schedule->command('renewssl:run')->daily()->withoutOverlapping();
 
-        // // Run series campaigns every minute
-        // $schedule->command('smsSeriesCampaign:run')->hourly()->withoutOverlapping();
-        // $schedule->command('sendwaseries:run')->hourly()->withoutOverlapping();
-        // $schedule->command('sendwaserieslater:run')->hourly()->withoutOverlapping();
-        // $schedule->command('seriesEmailcampaign:run')->hourly()->withoutOverlapping();
-        // $schedule->command('send:scheduled-series-sms')->everyMinute()->withoutOverlapping();
+        // Run series campaigns every minute
+        $schedule->command('smsSeriesCampaign:run')->hourly()->withoutOverlapping();
+        $schedule->command('sendwaseries:run')->hourly()->withoutOverlapping();
+        $schedule->command('sendwaserieslater:run')->hourly()->withoutOverlapping();
+        $schedule->command('seriesEmailcampaign:run')->hourly()->withoutOverlapping();
+        $schedule->command('send:scheduled-series-sms')->everyMinute()->withoutOverlapping();
         $schedule->command('sendwascheduledseries:run')->everyMinute()->withoutOverlapping();
-        // $schedule->command('send:scheduled-series-email')->everyMinute()->withoutOverlapping();
-        // $schedule->command('wabroadcast:run')->everyMinute()->withoutOverlapping();
+        $schedule->command('send:scheduled-series-email')->everyMinute()->withoutOverlapping();
+        $schedule->command('wabroadcast:run')->everyMinute()->withoutOverlapping();
 
         // Log a message indicating the cron job is working
         // $schedule->call(function () {
