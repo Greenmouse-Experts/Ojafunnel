@@ -3686,13 +3686,15 @@ class AdminController extends Controller
             // $contacts = ContactNumber::latest()->where('contact_list_id', $request->contact_list)->get();
             $contacts = ListManagementContact::latest()->where('list_management_id', $request->contact_list)->whereNotNull('phone')->where('subscribe', true)->get();
 
+            $new_time = Carbon::now()->addMinute(2)->format('h:i:s');
+
             $broadcast = new \App\Models\WhatappBroadcast;
             $broadcast->user_id = Auth::guard('admin')->user()->id; //auth()->user()->id;
             $broadcast->list_mgt_id = $request->contact_list;
             $broadcast->sender_id = $whatsapp_account[1];
             $broadcast->message = $request->template1_msg_series;
             $broadcast->date = date('Y-m-d');
-            $broadcast->time = date('h:i:s');
+            $broadcast->time = $new_time; //date('h:i:s');
             $broadcast->ContactCount = sizeof($contacts);
             $broadcast->save();
 
