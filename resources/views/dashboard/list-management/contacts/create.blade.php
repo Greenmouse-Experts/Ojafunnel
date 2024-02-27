@@ -1,6 +1,21 @@
 @extends('layouts.dashboard-frontend')
 
 @section('page-content')
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
+<style>
+    .hide {
+        display: none !important;
+    }
+    #valid-msg,  #confirmvalid-msg{
+        color: green !important;
+        font-size: 12px !important;
+    }
+    #error-msg, #confirmerror-msg, #emailError, #confirmEmailError{
+        color: red !important;
+        font-size: 12px !important;
+    }
+</style>
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
@@ -77,16 +92,18 @@
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
                                     <label for="">State</label>
-                                    <input type="text" name="state" class="form-control"  value="{{old('state')}}" placeholder="Enter State" />
+                                    <input type="text" name="state" class="form-control" value="{{old('state')}}" placeholder="Enter State" />
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Zip</label>
-                                    <input type="text" name="zip" class="form-control"  value="{{old('zip')}}" placeholder="Enter Zip" />
+                                    <input type="text" name="zip" class="form-control" value="{{old('zip')}}" placeholder="Enter Zip" />
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <label for="">Phone Number</label>
-                                <input type="text" name="phone" class="form-control"  value="{{old('phone')}}" id="phonee" placeholder="Enter Phone Number" />
+                                <input type="text" name="phone" class="form-control" value="{{old('phone')}}" id="phonee" placeholder="Enter Phone Number" />
+                                <span id="valid-msg" class="help-block hide">✓ Valid</span>
+					            <span id="error-msg" class="help-block hide"></span>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
@@ -135,65 +152,77 @@
         });
     });
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
 <script>
-    var input = document.querySelector("#phonee");
-    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
-    window.addEventListener("load", function() {
+    const input = document.querySelector("#phonee");
+    const errorMsg = document.querySelector("#error-msg");
+    const validMsg = document.querySelector("#valid-msg");
+    let validationTimeout;
 
-        errorMsg = document.querySelector("#error-msg"),
-            validMsg = document.querySelector("#valid-msg");
-        var iti = window.intlTelInput(input, {
-            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.2/build/js/utils.js"
-        });
-        window.intlTelInput(input, {
-            geoIpLookup: function(callback) {
-                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-                    var countryCode = (resp && resp.country) ? resp.country : "";
-                    callback(countryCode);
-                });
-            },
-            initialCountry: "auto",
-            placeholderNumberType: "MOBILE",
-            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.2/build/js/utils.js",
-        });
-        $(validMsg).addClass("hide");
-        input.addEventListener('blur', function() {
-            reset();
-            if (input.value.trim()) {
+    // here, the index maps to the error code returned from getValidationError - see readme
+    const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+    // initialise plugin
+    const iti = window.intlTelInput(input, {
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+        initialCountry: "auto", // Automatically select the user's country
+        separateDialCode: true, // Add a space between the country code and the phone number
+        placeholderNumberType: "MOBILE", // Set the placeholder to match the user's mobile number format
+        nationalMode: false, // Do not automatically switch to national mode
+    });
+
+    const updateMessages = () => {
+        clearTimeout(validationTimeout);
+        reset();
+        if (input.value.trim()) {
+            validationTimeout = setTimeout(() => {
                 if (iti.isValidNumber()) {
                     validMsg.classList.remove("hide");
                 } else {
                     input.classList.add("error");
-                    var errorCode = iti.getValidationError();
+                    const errorCode = iti.getValidationError();
                     errorMsg.innerHTML = errorMap[errorCode];
                     errorMsg.classList.remove("hide");
                 }
-            }
-        });
+            }, 300); // Adjust the delay time as needed (in milliseconds)
+        }
+    };
 
-        input.addEventListener('change', reset);
-        input.addEventListener('keyup', reset);
-    });
-
-
-    var reset = function() {
+    const reset = () => {
         input.classList.remove("error");
         errorMsg.innerHTML = "";
         errorMsg.classList.add("hide");
         validMsg.classList.add("hide");
     };
-    $(document).ready(function() {
-        $("#phonee").val("+234");
+
+    // on input: validate with slight delay
+    input.addEventListener('input', updateMessages);
+
+    // on keyup / change flag: reset
+    input.addEventListener('change', reset);
+    input.addEventListener('keyup', reset);
+
+    // Set the initial value of the input to include the selected country code
+    input.addEventListener('countrychange', () => {
+        const countryCodeValue = iti.getSelectedCountryData().dialCode;
+        input.value = `+${countryCodeValue}`;
     });
 </script>
-
 <style>
     .iti {
         display: block !important;
     }
+
     .iti__country-list {
         z-index: 2000 !important;
+    }
+
+    .iti__country-name {
+        color: #000 !important;
+    }
+
+    .iti__dial-code {
+        color: #000 !important;
     }
 </style>
 @endsection
