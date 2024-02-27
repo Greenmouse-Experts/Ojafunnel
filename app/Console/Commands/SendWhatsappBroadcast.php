@@ -42,8 +42,11 @@ class SendWhatsappBroadcast extends Command
 
 
         $broadcasts = WhatappBroadcast::where('date', $date)
-            ->where('time', $time)
+            // ->where('time', $time)
+            ->where('DeliveredCount', null)
             ->get();
+
+        // echo json_encode($broadcasts); exit();
 
         $broadcasts->map(function ($_campaign) use ($date, $time) {
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->sender_id])->first();
