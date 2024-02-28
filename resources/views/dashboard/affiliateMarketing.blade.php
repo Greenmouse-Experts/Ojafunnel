@@ -66,7 +66,7 @@ $usr = Auth::user()->id;
                         <div class="card-body">
                             <div class="affliate">
                                 <h2>
-                                    {{$referrals->count()}}
+                                    {{$affiliates->where('level', 1)->count()}}
                                 </h2>
                                 <p>
                                     No of Direct Affiliates

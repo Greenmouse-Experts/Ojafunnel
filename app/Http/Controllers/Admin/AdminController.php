@@ -68,6 +68,7 @@ use App\Mail\AccountInfoMail;
 use App\Mail\NewsletterMail;
 use App\Models\AffiliateBonus;
 use App\Models\AffiliateLevel;
+use App\Models\Affiliates;
 use App\Models\ExplainerContent;
 use App\Models\GeneralExchangeRate;
 use App\Models\OjaSubscription;
@@ -223,24 +224,11 @@ class AdminController extends Controller
 
     public function affiliateList()
     {
-        // $referrals = \App\Models\Referral::select(\DB::raw("user as user_id, COUNT(user) as total_referred"))->whereRaw("referred IN (SELECT id FROM users)")->groupBy("user")->havingRaw("COUNT(user) > 0")->orderBy('total_referred', 'desc')->get();
+        $affiliates = Affiliates::latest()->get();
 
-        // if(count($referrals) > 0){
-        //     foreach($referrals as $referral){
-        //         $customers = User::select('first_name', 'last_name', 'email')->where('id', $referral->user_id)->first();
-        //         $referral->full_names = ucwords($customers->first_name." ".$customers->last_name);
-        //         $referral->email = $customers->email;
-
-        //         $dates = \App\Models\Referral::where('user', $referral->user_id)->value('created_at');
-        //         $referral->dates = date("D jS, M Y h:ia", strtotime($dates));
-        //     }
-        // }
-
-        $referrals = User::get();
-        // return $referrals;
-
-        $data['referrals'] = $referrals;
-        return view('Admin.affiliateList', $data);
+        return view('Admin.affiliateList', [
+            'affiliates' => $affiliates
+        ]);
     }
 
     public function affiliateLevel()
