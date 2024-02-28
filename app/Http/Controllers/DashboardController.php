@@ -63,9 +63,10 @@ use App\Models\Quiz;
 use App\Models\QuizAnswer;
 use App\Models\QuizSubmission;
 use App\Models\SeriesSmsCampaign;
+use App\Models\Withdrawal;
 use AWS\CRT\HTTP\Message;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -200,7 +201,7 @@ class DashboardController extends Controller
         $messages = [
             'required'      => ':attribute field is required',
         ];
-        $validator = \Validator::make($request->all(), $rules, $messages)->setAttributeNames($attributes)->stopOnFirstFailure(true);
+        $validator = Validator::make($request->all(), $rules, $messages)->setAttributeNames($attributes)->stopOnFirstFailure(true);
 
         if($validator->fails()){
             return response()->json([
@@ -2585,8 +2586,11 @@ class DashboardController extends Controller
 
     public function withdrawal($username)
     {
+        $withdrawals = Withdrawal::latest()->where('user_id', Auth::user()->id)->get();
+
         return view('dashboard.withdrawal.withdrawal', [
-            'username' => $username
+            'username' => $username,
+            'withdrawals' => $withdrawals
         ]);
     }
 

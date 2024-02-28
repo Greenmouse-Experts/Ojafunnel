@@ -76,7 +76,7 @@
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{$transaction->created_at->toDayDateTimeString()}}</td>
-                                                    <td>₦{{number_format($transaction->amount, 2)}}</td>
+                                                    <td>{{$transaction->amount}}</td>
                                                     <td>{{$transaction->reference}}</td>
                                                     <td>
                                                         <span class="badge bg-success font-size-10">{{$transaction->status}} <i class="mdi mdi-arrow-up me-1"></i></span>

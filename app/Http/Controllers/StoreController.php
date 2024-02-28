@@ -12,7 +12,6 @@ use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Store;
 use App\Models\StoreCoupon;
-use Auth;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
@@ -20,6 +19,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\File as FacadeFile;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
 {
@@ -65,7 +65,7 @@ class StoreController extends Controller
             $image="";
             if ($request->file('logo')) {
                 $image = $request->file('logo')->store(
-                    'uploads/storeLogo/' . \Auth::user()->username,
+                    'uploads/storeLogo/' . Auth::user()->username,
                     'public'
                 );
             }
@@ -76,14 +76,14 @@ class StoreController extends Controller
             $store->logo = $image;
             $store->theme = $request->theme;
             $store->color = '#fff';
-            $store->user_id = \Auth::user()->id;
+            $store->user_id = Auth::user()->id;
             $store->currency = $request->currency;
-            $store->currency_sign = $request->currency_sign;
+            $store->currency_sign = $request->currency === 'NGN' ? '₦' : '$';
             $store->save();
         } else {
             if ($request->file('logo')) {
                 $image = $request->file('logo')->store(
-                    'uploads/storeLogo/' . \Auth::user()->username,
+                    'uploads/storeLogo/' . Auth::user()->username,
                     'public'
                 );
             }
@@ -94,9 +94,9 @@ class StoreController extends Controller
             $store->logo = $image;
             $store->theme = $request->primaryColor;
             $store->color = '#fff';
-            $store->user_id = \Auth::user()->id;
+            $store->user_id = Auth::user()->id;
             $store->currency = $request->currency;
-            $store->currency_sign = $request->currency_sign;
+            $store->currency_sign = $request->currency === 'NGN' ? '₦' : '$';
             $store->save();
         }
 
@@ -124,7 +124,7 @@ class StoreController extends Controller
             $store->color = '#fff';
             $store->user_id = Auth::user()->id;
             $store->currency = $request->currency;
-            $store->currency_sign = $request->currency_sign;
+            $store->currency_sign = $request->currency === 'NGN' ? '₦' : '$';
             $store->update();
         } else {
             $store = Store::findOrFail($request->id);
@@ -142,7 +142,7 @@ class StoreController extends Controller
             $store->color = '#fff';
             $store->user_id = Auth::user()->id;
             $store->currency = $request->currency;
-            $store->currency_sign = $request->currency_sign;
+            $store->currency_sign = $request->currency === 'NGN' ? '₦' : '$';
             $store->update();
         }
 

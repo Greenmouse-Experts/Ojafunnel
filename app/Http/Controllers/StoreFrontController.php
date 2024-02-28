@@ -336,14 +336,19 @@ class StoreFrontController extends Controller
 
             // add fund to vendor wallet
             $userData = User::findOrFail($store->user_id);
-            $userData->wallet = $userData->wallet + $item_amount;
+            if($store->currency == 'NGN')
+            {
+                $userData->wallet = $userData->wallet + $item_amount;
+            } else {
+                $userData->dollar_wallet = $userData->dollar_wallet + $item_amount;
+            }
             $userData->update();
 
             // VENDOR
             // add record to transaction table for vendor - (plus)
             $trans = new Transaction();
             $trans->user_id = $store->user_id;
-            $trans->amount = $item_price;
+            $trans->amount = $store->currency_sign.''.$item_price;
             $trans->reference = Str::random(8);
             $trans->status = 'Product Purchase';
             $trans->save();
@@ -564,8 +569,12 @@ class StoreFrontController extends Controller
         }
 
         $userData = User::findOrFail($store->user_id);
-
-        $userData->wallet = $userData->wallet + $request->amountToPay;
+        if($store->currency == 'NGN')
+        {
+            $userData->wallet = $userData->wallet + $request->amountToPay;
+        } else {
+            $userData->dollar_wallet = $userData->dollar_wallet + $request->amountToPay;
+        }
         $userData->update();
 
         $user = new OrderUser();
@@ -580,7 +589,7 @@ class StoreFrontController extends Controller
 
         $trans = new Transaction();
         $trans->user_id = $store->user_id;
-        $trans->amount = $request->amountToPay;
+        $trans->amount =  $store->currency_sign.''.$request->amountToPay;
         $trans->reference = Str::random(8);
         $trans->status = 'Product Purchase';
         $trans->save();

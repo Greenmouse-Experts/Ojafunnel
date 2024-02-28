@@ -53,11 +53,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach(App\Models\Withdrawal::latest()->where('status', 'finalized')->get() as $key => $withdraw)
+                                        @foreach($withdrawals as $key => $withdraw)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>
+                                                @if($withdraw->wallet == 'Naira')
                                                 <p class='text-bold-600'> ₦{{number_format($withdraw->amount, 2)}} </p>
+                                                @else
+                                                <p class='text-bold-600'> ${{number_format($withdraw->amount, 2)}} </p>
+                                                @endif
                                             </td>
                                             <td>
                                                 <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary" data-bs-toggle="modal" data-bs-target="#view-{{$withdraw->id}}">View Payment Method</a>
@@ -206,7 +210,7 @@
     }
 
     function hidePublic() {
-        var x = document.getElementById("publicKey");            
+        var x = document.getElementById("publicKey");
         x.type = "password";
     }
 
@@ -216,7 +220,7 @@
     }
 
     function hideRoutingNumber() {
-        var x = document.getElementById("routingNumber");            
+        var x = document.getElementById("routingNumber");
         x.type = "password";
     }
 
@@ -226,7 +230,7 @@
     }
 
     function hideAccountNumber() {
-        var x = document.getElementById("accountNumber");            
+        var x = document.getElementById("accountNumber");
         x.type = "password";
     }
 
@@ -236,7 +240,7 @@
     }
 
     function hideTBA() {
-        var x = document.getElementById("typeBA");            
+        var x = document.getElementById("typeBA");
         x.type = "password";
     }
 </script>

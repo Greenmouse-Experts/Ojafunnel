@@ -41,7 +41,7 @@ class ShopFrontController extends Controller
             })
             ->get();
 
-           
+
         } else {
             $courses = Course::latest()->where('user_id', $shop->user_id)->where('approved', true)->get();
         }
@@ -196,7 +196,7 @@ class ShopFrontController extends Controller
 
         $trans = new Transaction();
         $trans->user_id = $shop->user_id;
-        $trans->amount = $totalAmount;
+        $trans->amount = $shop->currency_sign.''.$totalAmount;
         $trans->reference = 'Payment from ' . $enroll->name . ' with order no: ' . $enroll->order_no;
         $trans->status = 'Course Purchase';
         $trans->save();
@@ -248,7 +248,12 @@ class ShopFrontController extends Controller
 
             // add fund to vendor wallet
             $userData = ModelsUser::findOrFail($shop->user_id);
-            $userData->wallet = $userData->wallet + $item_amount;
+            if($shop->currency == 'NGN')
+            {
+                $userData->wallet = $userData->wallet + $item_amount;
+            } else {
+                $userData->dollar_wallet = $userData->dollar_wallet + $item_amount;
+            }
             $userData->update();
 
             // add fund to promoter and promoter referral wallet
@@ -359,7 +364,7 @@ class ShopFrontController extends Controller
 
         $trans = new Transaction();
         $trans->user_id = $shop->user_id;
-        $trans->amount = $totalAmount;
+        $trans->amount = $shop->currency_sign.''.$totalAmount;
         $trans->reference = 'Payment from ' . $enroll->name . ' with order no: ' . $enroll->order_no;
         $trans->status = 'Course Purchase';
         $trans->save();
@@ -387,9 +392,13 @@ class ShopFrontController extends Controller
             ]);
         }
 
-
         $userData = ModelsUser::findOrFail($shop->user_id);
-        $userData->wallet = $userData->wallet + $totalAmount;
+        if($shop->currency == 'NGN')
+        {
+            $userData->wallet = $userData->wallet + $totalAmount;
+        } else {
+            $userData->dollar_wallet = $userData->dollar_wallet + $totalAmount;
+        }
         $userData->update();
 
         OjafunnelNotification::create([

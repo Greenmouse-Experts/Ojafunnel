@@ -45,7 +45,7 @@ $admin = auth()->guard('admin')->user();
                                         <tr>
                                             <th class="align-middle">S/N</th>
                                             <th class="align-middle">User</th>
-                                            <th class="align-middle">User Balance</th>
+                                            <th class="align-middle">User Balance (Naira and Dollar)</th>
                                             <th class="align-middle">Amount</th>
                                             <th class="align-middle">Payment Method</th>
                                             <th class="align-middle">Description</th>
@@ -55,7 +55,7 @@ $admin = auth()->guard('admin')->user();
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach(App\Models\Withdrawal::latest()->where('status', '!=', 'finalized')->get() as $key => $withdraw)
+                                        @foreach($withdrawals as $key => $withdraw)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>
@@ -63,10 +63,18 @@ $admin = auth()->guard('admin')->user();
                                                 <p class='text-bold-600'> {{ App\Models\User::find($withdraw->user_id)->email }} </p>
                                             </td>
                                             <td>
+                                                @if($withdraw->wallet == 'Naira')
                                                 <p class='text-bold-600'> ₦{{ number_format(App\Models\User::find($withdraw->user_id)->wallet, 2) }} </p>
+                                                @else
+                                                <p class='text-bold-600'> ${{ number_format(App\Models\User::find($withdraw->user_id)->dollar_wallet, 2) }} </p>
+                                                @endif
                                             </td>
                                             <td>
+                                                @if($withdraw->wallet == 'Naira')
                                                 <p class='text-bold-600'> ₦{{number_format($withdraw->amount, 2)}} </p>
+                                                @else
+                                                <p class='text-bold-600'> ${{number_format($withdraw->amount, 2)}} </p>
+                                                @endif
                                             </td>
                                             <td>
                                                 <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary" data-bs-toggle="modal" data-bs-target="#view-{{$withdraw->id}}">View Payment Method</a>
@@ -359,7 +367,7 @@ $admin = auth()->guard('admin')->user();
                 handler.openIframe();
             } else {
                 alert(document.getElementsByClassName("paystack_status")[0].value);
-                
+
                 let url = '{{ route("transaction.confirm", [":id", ":response", ":status", ":description"]) }}';
                     url = url.replace(':id', document.getElementById("paystack_id").value);
                     url = url.replace(':response', 'status');
@@ -367,7 +375,7 @@ $admin = auth()->guard('admin')->user();
                     url = url.replace(':description', document.getElementById("paystack_description").value);
                     document.location.href=url;
             }
-            
+
         }
     }
 
@@ -387,7 +395,7 @@ $admin = auth()->guard('admin')->user();
     }
 
     function hidePublic() {
-        var x = document.getElementById("publicKey");            
+        var x = document.getElementById("publicKey");
         x.type = "password";
     }
 
@@ -397,7 +405,7 @@ $admin = auth()->guard('admin')->user();
     }
 
     function hideRoutingNumber() {
-        var x = document.getElementById("routingNumber");            
+        var x = document.getElementById("routingNumber");
         x.type = "password";
     }
 
@@ -407,7 +415,7 @@ $admin = auth()->guard('admin')->user();
     }
 
     function hideAccountNumber() {
-        var x = document.getElementById("accountNumber");            
+        var x = document.getElementById("accountNumber");
         x.type = "password";
     }
 
@@ -417,7 +425,7 @@ $admin = auth()->guard('admin')->user();
     }
 
     function hideTBA() {
-        var x = document.getElementById("typeBA");            
+        var x = document.getElementById("typeBA");
         x.type = "password";
     }
 </script>

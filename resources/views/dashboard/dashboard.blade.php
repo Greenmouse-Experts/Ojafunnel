@@ -206,7 +206,7 @@
                                                 {{$transaction->created_at->toDayDateTimeString()}}
                                             </td>
                                             <td>
-                                                ₦{{number_format($transaction->amount, 2)}}
+                                                {{$transaction->amount}}
                                             </td>
                                             <td>
                                                 <span class="badge badge-pill badge-soft-success font-size-11">{{$transaction->status}}</span>

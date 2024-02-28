@@ -108,7 +108,7 @@ class TransactionController extends Controller
 
         Transaction::create([
             'user_id' => $user->id,
-            'amount' => $amount,
+            'amount' => '₦'.$amount,
             'reference' => $response,
             'status' => 'Top Up'
         ]);
@@ -527,15 +527,26 @@ class TransactionController extends Controller
     {
         // /Validate Request
         $this->validate($request, [
+            'wallet' => ['required'],
             'amount' => ['required', 'numeric'],
             'payment_method' => ['required'],
         ]);
 
-        if (request()->amount > Auth::user()->wallet) {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'Amount entered is greater than your Wallet Balance!'
-            ]);
+        if($request->wallet == 'Naira')
+        {
+            if (request()->amount > Auth::user()->wallet) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Amount entered is greater than your Naira Wallet Balance!'
+                ]);
+            }
+        } else {
+            if (request()->amount > Auth::user()->dollar_wallet) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Amount entered is greater than your Dollar Wallet Balance!'
+                ]);
+            }
         }
 
         $bank = BankDetail::where('user_id', Auth::user()->id)->get();
@@ -547,15 +558,20 @@ class TransactionController extends Controller
             ]);
         } else {
             $user = User::findorfail(Auth::user()->id);
+            if($request->wallet == 'Naira')
+            {
+                $user->wallet -= $request->amount;
+            } else {
+                $user->dollar_wallet -= $request->amount;
+            }
+            $user->save();
 
             $withdraw = Withdrawal::create([
+                'wallet' => $request->wallet,
                 'user_id' => Auth::user()->id,
                 'payment_method' => $request->payment_method,
                 'amount' => $request->amount
             ]);
-
-            $user->wallet -= $request->amount;
-            $user->save();
 
             $administrator = Admin::latest()->first();
 
@@ -598,7 +614,12 @@ class TransactionController extends Controller
         if ($withdraw->status == 'created') {
             $user = User::find($withdraw->user_id);
 
-            $user->wallet += $withdraw->amount;
+            if($withdraw->wallet == 'Naira')
+            {
+                $user->wallet += $withdraw->amount;
+            } else {
+                $user->dollar_wallet += $withdraw->amount;
+            }
             $user->save();
 
             $withdraw->delete();

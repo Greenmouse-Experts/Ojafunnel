@@ -124,7 +124,7 @@ class AccountUpgradeController extends Controller
 
         Transaction::create([
             'user_id' => $user->id,
-            'amount' => $planInterval->price,
+            'amount' => $planInterval->currency.''.$planInterval->price,
             'reference' => $response,
             'status' => 'Account Upgrade.'
         ]);
@@ -197,7 +197,7 @@ class AccountUpgradeController extends Controller
 
         Transaction::create([
             'user_id' => $user->id,
-            'amount' => $planInterval->price,
+            'amount' => $planInterval->currency.''.$planInterval->price,
             'reference' => config('app.name'),
             'status' => 'Account Upgrade.'
         ]);
@@ -308,7 +308,7 @@ class AccountUpgradeController extends Controller
 
         Transaction::create([
             'user_id' => $user->id,
-            'amount' => $planInterval->price,
+            'amount' => $planInterval->currency.''.$planInterval->price,
             'reference' => config('app.name').'with stripe',
             'status' => 'Account Upgrade.'
         ]);

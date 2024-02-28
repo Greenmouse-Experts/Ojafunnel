@@ -2176,7 +2176,10 @@ class AdminController extends Controller
 
     public function pending_payouts()
     {
-        return view('Admin.payouts.pending_payouts');
+        $withdrawals = Withdrawal::latest()->where('status', '!=', 'finalized')->get();
+        return view('Admin.payouts.pending_payouts',[
+            'withdrawals' => $withdrawals
+        ]);
     }
 
     public function process_payouts($id, Request $request)
@@ -2191,7 +2194,7 @@ class AdminController extends Controller
 
             $transaction = Transaction::create([
                 'user_id' => $payout->user_id,
-                'amount' => $payout->amount,
+                'amount' => $payout->wallet === 'Naira' ? '₦' : '$'.$payout->amount,
                 'reference' => Str::random(6),
                 'status' => 'Withdrawal'
             ]);
@@ -2226,14 +2229,18 @@ class AdminController extends Controller
             $payout->save();
 
             $user = User::find($payout->user_id);
-
-            $user->wallet += $payout->amount;
+            if($payout->wallet == 'Naira')
+            {
+                $user->wallet += $payout->amount;
+            } else {
+                $user->dollar_wallet += $payout->amount;
+            }
             $user->save();
 
             Transaction::create([
                 'user_id' => $payout->user_id,
-                'amount' => $payout->amount,
-                'reference' => 'Withdrawal request of ' . $payout->amount . ' has been refunded',
+                'amount' => $payout->wallet === 'Naira' ? '₦' : '$'.$payout->amount,
+                'reference' => 'Withdrawal request of ' . $payout->wallet === 'Naira' ? '₦' : '$'.$payout->amount . ' has been refunded',
                 'status' => 'Withdraw Refunded'
             ]);
 
@@ -2258,95 +2265,14 @@ class AdminController extends Controller
         ]);
     }
 
-    public function transaction_confirm($id, $response, $status, $description)
-    {
-        $payout = Withdrawal::find($id);
-        $user = User::find($payout->user_id);
-
-        if ($payout->amount > $user->wallet) {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'This user balance is not up to the requested withdrawal amount.'
-            ]);
-        }
-
-        if ($status == 'finalized') {
-            $payout->description = $description;
-            $payout->status = 'finalized';
-
-            $transaction = Transaction::create([
-                'user_id' => $payout->user_id,
-                'amount' => $payout->amount,
-                'reference' => $response,
-                'status' => 'Withdrawal'
-            ]);
-
-            $payout->transaction_id = $transaction->id;
-            $payout->save();
-
-            $user->wallet -= $payout->amount;
-            $user->save();
-
-            Transaction::create([
-                'user_id' => $payout->user_id,
-                'amount' => $payout->amount,
-                'reference' => 'Withdrawal request of ' . $payout->amount . ' has been paid',
-                'status' => 'Withdrawal Paid'
-            ]);
-
-            OjafunnelNotification::create([
-                'to' => $payout->user_id,
-                'title' => config('app.name') . ' Withdrawal Alert',
-                'body' => $description,
-            ]);
-
-            $user = User::where('id', $payout->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
-            $this->fcm('Withdrawal Alert', $user);
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Request processed successfully.',
-            ]);
-        }
-        if ($status == 'refunded') {
-            $payout->description = $description;
-            $payout->status = 'refunded';
-            $payout->save();
-
-            $user->wallet += $payout->amount;
-            $user->save();
-
-            Transaction::create([
-                'user_id' => $payout->user_id,
-                'amount' => $payout->amount,
-                'reference' => 'Withdrawal request of ' . $payout->amount . ' has been refunded',
-                'status' => 'Withdrawal Refunded'
-            ]);
-
-            OjafunnelNotification::create([
-                'to' => $payout->user_id,
-                'title' => config('app.name') . ' Withdrawal Alert',
-                'body' => $description,
-            ]);
-
-            $user = User::where('id', $payout->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
-            $this->fcm('Withdrawal Alert', $user);
-
-            return back()->with([
-                'type' => 'success',
-                'message' => 'Request processed successfully.',
-            ]);
-        }
-
-        return back()->with([
-            'type' => 'danger',
-            'message' => 'Payment can be finalized or refunded.',
-        ]);
-    }
 
     public function finalized_payouts()
     {
-        return view('Admin.payouts.finalized_payouts');
+        $withdrawals = Withdrawal::latest()->where('status', 'finalized')->get();
+
+        return view('Admin.payouts.finalized_payouts', [
+            'withdrawals' => $withdrawals
+        ]);
     }
 
     public function add_plan(Request $request)

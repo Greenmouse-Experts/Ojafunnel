@@ -270,7 +270,7 @@
                                                     {{$item->created_at->format('d M, Y')}}
                                                 </td>
                                                 <td>
-                                                    ₦{{number_format($item->amount, 2)}}
+                                                    {{$item->amount}}
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-pill badge-soft-success font-size-11">{{$item->status}}</span>

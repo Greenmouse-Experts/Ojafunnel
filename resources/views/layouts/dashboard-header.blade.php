@@ -39,14 +39,28 @@
             </div>
         </div>
         <div class="d-flex">
-            <div class="float-end pushing">
+            <div class="float-end pushing" style="margin-right: 1rem;">
                 <div class="dropdown">
-                    <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-wallet me-1"></i> <span class="d-none d-sm-inline-block">Wallet <i class="mdi mdi-chevron-down"></i></span></button>
+                    <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-wallet me-1"></i> <span class="d-none d-sm-inline-block">Naira Wallet <i class="mdi mdi-chevron-down"></i></span></button>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-md">
                         <div class="dropdown-item-text">
                             <div>
                                 <p class="text-muted mb-2">Available Balance</p>
                                 <h5 class="mb-0">₦{{number_format(Auth::user()->wallet, 2)}}</h5> <button data-bs-toggle="modal" data-bs-target="#emailConfirm">Deposit Now</button>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="float-end pushing">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-wallet me-1"></i> <span class="d-none d-sm-inline-block">Dollar Wallet <i class="mdi mdi-chevron-down"></i></span></button>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-md">
+                        <div class="dropdown-item-text">
+                            <div>
+                                <p class="text-muted mb-2">Available Balance</p>
+                                <h5 class="mb-0">${{number_format(Auth::user()->dollar_wallet, 2)}}</h5>
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>

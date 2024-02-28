@@ -541,7 +541,6 @@ class CMSController extends Controller
                 'link' => 'required',
                 'logo' => 'required|mimes:jpeg,png,jpg',
                 'currency' => 'required',
-                'currency_sign' => 'required',
             ],
             [
                 'name.unique' => 'Shop name has already been taken, please use another one!',
@@ -577,7 +576,7 @@ class CMSController extends Controller
                     'color' => '#fff',
                     'user_id' => Auth::user()->id,
                     'currency' => $request->currency,
-                    'currency_sign' => $request->currency_sign
+                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
                 ]);
 
                 return back()->with([
@@ -597,7 +596,7 @@ class CMSController extends Controller
                     'color' => '#fff',
                     'user_id' => Auth::user()->id,
                     'currency' => $request->currency,
-                    'currency_sign' => $request->currency_sign
+                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
                 ]);
 
                 return back()->with([
@@ -634,7 +633,7 @@ class CMSController extends Controller
         //                 'color' => '#fff',
         //                 'user_id' => Auth::user()->id,
         //                 'currency' => $request->currency,
-        //                 'currency_sign' => $request->currency_sign
+        //                 'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
         //             ]);
 
         //             return back()->with([
@@ -654,7 +653,7 @@ class CMSController extends Controller
         //                 'color' => '#fff',
         //                 'user_id' => Auth::user()->id,
         //                 'currency' => $request->currency,
-        //                 'currency_sign' => $request->currency_sign
+        //                 'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
         //             ]);
 
         //             return back()->with([
@@ -675,7 +674,6 @@ class CMSController extends Controller
                 [
                     'description' => 'required',
                     'currency' => 'required',
-                    'currency_sign' => 'required',
                 ]
             );
 
@@ -697,7 +695,7 @@ class CMSController extends Controller
                         'theme' => $request->theme,
                         'color' => '#fff',
                         'currency' => $request->currency,
-                        'currency_sign' => $request->currency_sign
+                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
                     ]);
 
                     return back()->with([
@@ -711,7 +709,7 @@ class CMSController extends Controller
                     'theme' => $request->theme,
                     'color' => '#fff',
                     'currency' => $request->currency,
-                    'currency_sign' => $request->currency_sign
+                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
                 ]);
             } else {
                 if (request()->hasFile('logo')) {
@@ -731,7 +729,7 @@ class CMSController extends Controller
                         'theme' => $request->primaryColor,
                         'color' => '#fff',
                         'currency' => $request->currency,
-                        'currency_sign' => $request->currency_sign
+                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
                     ]);
 
                     return back()->with([
@@ -745,7 +743,7 @@ class CMSController extends Controller
                     'theme' => $request->primaryColor,
                     'color' => '#fff',
                     'currency' => $request->currency,
-                    'currency_sign' => $request->currency_sign
+                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
                 ]);
             }
 
@@ -787,7 +785,7 @@ class CMSController extends Controller
                         'theme' => $request->theme,
                         'color' => '#fff',
                         'currency' => $request->currency,
-                        'currency_sign' => $request->currency_sign
+                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
                     ]);
 
                     return back()->with([
@@ -803,7 +801,7 @@ class CMSController extends Controller
                     'theme' => $request->theme,
                     'color' => '#fff',
                     'currency' => $request->currency,
-                    'currency_sign' => $request->currency_sign
+                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
                 ]);
             } else {
                 if (request()->hasFile('logo')) {
@@ -825,7 +823,7 @@ class CMSController extends Controller
                         'theme' => $request->primaryColor,
                         'color' => '#fff',
                         'currency' => $request->currency,
-                        'currency_sign' => $request->currency_sign
+                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
                     ]);
 
                     return back()->with([
@@ -841,7 +839,7 @@ class CMSController extends Controller
                     'theme' => $request->primaryColor,
                     'color' => '#fff',
                     'currency' => $request->currency,
-                    'currency_sign' => $request->currency_sign
+                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
                 ]);
             }
 

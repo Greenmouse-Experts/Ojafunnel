@@ -61,12 +61,12 @@
             </div>
             <div class="col-xl-12">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="card mini-stats-wid">
                             <div class="card-body">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <p class="text-muted fw-medium">Total Balance</p>
+                                        <p class="text-muted fw-medium">Total Naira Balance</p>
                                         <h4 class="mb-0">₦{{number_format(Auth::user()->wallet, 2)}}</h4>
                                     </div>
                                     <div class="flex-shrink-0 align-self-center">
@@ -80,13 +80,34 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="card mini-stats-wid">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <p class="text-muted fw-medium">Total Dollar Balance</p>
+                                        <h4 class="mb-0">${{number_format(Auth::user()->dollar_wallet, 2)}}</h4>
+                                    </div>
+                                    <div class="flex-shrink-0 align-self-center">
+                                        <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                                            <span class="avatar-title">
+                                                <i class="bx bx-copy-alt font-size-24"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="card mini-stats-wid">
                             <div class="card-body">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
                                         <p class="text-muted fw-medium">Total Withdrawal</p>
-                                        <h4 class="mb-0">₦{{number_format(App\Models\Withdrawal::latest()->where('user_id', Auth::user()->id)->where('status', '!=', 'refunded')->sum('amount'), 2)}}</h4>
+                                        <h4 class="mb-0">₦{{number_format(App\Models\Withdrawal::latest()->where(['user_id' => Auth::user()->id, 'wallet' => 'Naira'])->where('status', '!=', 'refunded')->sum('amount'), 2)}}</h4>
+                                        <br>
+                                        <h4 class="mb-0">${{number_format(App\Models\Withdrawal::latest()->where(['user_id' => Auth::user()->id, 'wallet' => 'Dollar'])->where('status', '!=', 'refunded')->sum('amount'), 2)}}</h4>
                                     </div>
 
                                     <div class="flex-shrink-0 align-self-center">
@@ -122,11 +143,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach(App\Models\Withdrawal::latest()->where('user_id', Auth::user()->id)->get() as $key => $withdraw)
+                                        @foreach($withdrawals as $key => $withdraw)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>
+                                                @if($withdraw->wallet == 'Naira')
                                                 <p class='text-bold-600'> ₦{{number_format($withdraw->amount, 2)}} </p>
+                                                @else
+                                                <p class='text-bold-600'> ${{number_format($withdraw->amount, 2)}} </p>
+                                                @endif
                                             </td>
                                             <td>
                                                 {{ App\Models\BankDetail::find($withdraw->payment_method)->type }} - {{ App\Models\BankDetail::find($withdraw->payment_method)->account_name }} {{ App\Models\BankDetail::find($withdraw->payment_method)->account_number }}
@@ -217,6 +242,14 @@
                                     <h4 class="card-title">Withdrawal Information</h4>
                                     <p class="card-title-desc">Fill all information below to complete your Withdrawal</p>
                                     <div class="row">
+                                        <div class="col-lg-12 mb-4">
+                                            <label for="wallet">Select Wallet</label>
+                                            <select name="wallet" required>
+                                                <option value="">-- Select Wallet --</option>
+                                                <option value="Naira">Naira</option>
+                                                <option value="Dollar">Dollar</option>
+                                            </select>
+                                        </div>
                                         <div class="col-lg-12 mb-4">
                                             <label for="Name">Amount</label>
                                             <input type="text" name="amount" placeholder="Enter amount" required />

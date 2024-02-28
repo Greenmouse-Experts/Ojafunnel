@@ -82,13 +82,19 @@
                                                 <option value="">-- Select Currency --</option>
                                                 <option value="USD">USD</option>
                                                 <option value="NGN">NGN</option>
-                                                <option value="GBP">GBP</option>
-                                                <option value="EUR">EUR</option>
+                                                <!-- <option value="GBP">GBP</option>
+                                                <option value="EUR">EUR</option> -->
                                             </select>
                                         </div>
                                         <div class="col-lg-6">
                                             <label for="Name">Store Currency Sign</label>
-                                            <input type="text" name="currency_sign" id="myInput" class="input mov" required>
+                                            <select name="currency_sign" class="input mov" required>
+                                                <option value="">-- Select Currency --</option>
+                                                <option value="$">$</option>
+                                                <option value="₦">₦</option>
+                                                <!-- <option value="£">£</option>
+                                                <option value="€">€</option> -->
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
