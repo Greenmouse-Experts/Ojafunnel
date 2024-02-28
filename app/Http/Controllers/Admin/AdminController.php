@@ -235,7 +235,7 @@ class AdminController extends Controller
     {
         $levels = AffiliateLevel::latest()->get();
 
-        return view('admin.affiliate.index', [
+        return view('Admin.affiliate.index', [
             'levels' => $levels
         ]);
     }
