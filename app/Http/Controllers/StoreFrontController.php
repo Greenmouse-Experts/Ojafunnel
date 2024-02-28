@@ -492,6 +492,53 @@ class StoreFrontController extends Controller
     {
         $store = Store::where('name', $request->storename)->first();
 
+        if($request->paymentOptions == 'Paypal')
+        {
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone_no' => $request->phoneNo,
+                'address' => $request->address,
+                'state' => $request->state,
+                'country' => $request->country,
+                'cart' => session()->get('cart'),
+                'storename' => $request->storename,
+                'storename' => $request->amountToPay,
+                'couponID' => $request->couponID
+            ];
+
+            // Fetch PaymentGateway details from the database
+            $paymentGateway = PaymentGateway::where('name', 'Paypal')->first();
+
+            // try {
+                $response = $this->gateway->purchase(array(
+                    'amount' => $request->amountToPay,
+                    'description' => $data,
+                    'currency' => $paymentGateway->PAYPAL_CURRENCY,
+                    'returnUrl' => route('success.payment'),
+                    'cancelUrl' => route('cancel.payment')
+                ))->send();
+
+                return  $response->redirect();
+
+                if ($response->isRedirect()) {
+                    $response->redirect();
+                }
+                else {
+                    return back()->with(
+                        'danger',
+                        $response->getMessage()
+                    );
+                }
+            // } catch (\Throwable $th) {
+            //     return back()->with(
+            //         'danger',
+            //         $th->getMessage()
+            //     );
+            // }
+
+        }
+
         if($request->paymentOptions == 'Stripe')
         {
             // Fetch PaymentGateway details from the database
