@@ -707,7 +707,7 @@ class Customer extends Model
 
             $plan = OjaPlan::where('name', 'Free')->first();
 
-            if (!$request->referral_link == null) {
+            if ($request->referral_link) {
                 $request->validate([
                     'referral_link' => 'exists:users,affiliate_link'
                 ]);
@@ -730,11 +730,10 @@ class Customer extends Model
                 $user->customer()->associate($this);
                 $user->save();
 
-                $subscribe_amount = 10000;
                 $array = User::all();
                 $parent = $user->id;
 
-                $this->getAncestors($array, $subscribe_amount, $parent);
+                $this->getAncestors($array, $parent);
             } else {
                 // Customer
                 // $customer = new Customer();
@@ -760,13 +759,12 @@ class Customer extends Model
                 $user->referral_link = $referrer_id;
                 $user->customer()->associate($this);
                 $user->save();
-                
 
-                $referral = new Referral();
-                $referral->fill($request->all());
-                $referral->user = $referrer_id;
-                $referral->referred = $user->id;
-                $referral->save();
+                // $referral = new Referral();
+                // $referral->fill($request->all());
+                // $referral->user = $referrer_id;
+                // $referral->referred = $user->id;
+                // $referral->save();
             }
         });
 
@@ -774,11 +772,9 @@ class Customer extends Model
         return $user;
     }
 
-
     public function adminCreateAccountAndUser($request)
     {
         $user = new User();
-        
 
         DB::transaction(function () use ($request, &$user) {
             $fullname = explode(" ", $request->fullname);
@@ -816,7 +812,7 @@ class Customer extends Model
                 $array = User::all();
                 $parent = $user->id;
 
-                $this->getAncestors($array, $subscribe_amount, $parent);
+                $this->getAncestors($array, $parent);
             } else {
                 // Customer
                 $this->fill($request->all());
@@ -844,21 +840,15 @@ class Customer extends Model
                 $user->save();
             }
 
-            $referral = new Referral();
-            $referral->fill($request->all());
-            $referral->user = $referrer_id;
-            $referral->referred = $user->id;
-            $referral->save();
+            // $referral = new Referral();
+            // $referral->fill($request->all());
+            // $referral->user = $referrer_id;
+            // $referral->referred = $user->id;
+            // $referral->save();
         });
 
         // Important: return the newly created USER
         return $user;
-    }
-
-
-    public function sendingServers()
-    {
-        return $this->hasMany('App\Models\SendingServer');
     }
 
     public function generateAndValidateIfPromotionLinkNotExist()
@@ -885,89 +875,50 @@ class Customer extends Model
         return $random_string;
     }
 
-    function getAncestors($array, $deposit_amount, $parent = 0, $level = 1)
+    function getAncestors($array, $parent = 0, $level = 1)
     {
-        $referedMembers = '';
-        $parent = User::where('id', $parent)->first();
+        $parentUser = User::where('id', $parent)->first();
         foreach ($array as $entry) {
-            if ($entry->id == $parent->referral_link) {
-                if ($level == 1) {
-                    $earnings = 30 * $deposit_amount / 100;
-                    //add earnings to ancestor balance
-                    $user_wallet = User::where('id', $entry->id)->first();
-                    User::where('id', $entry->id)
-                        ->update([
-                            'wallet' => $user_wallet->wallet + $earnings,
-                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
-                        ]);
-                    //create history
-                    Transaction::create([
-                        'user_id' => $entry->id,
-                        'amount' => $earnings,
-                        'reference' => 'referralbonus',
-                        'status' => 'Referral Bonus',
-                    ]);
-                } elseif ($level == 2) {
-                    $earnings = 10 * $deposit_amount / 100;
-                    //add earnings to ancestor balance
-                    $user_wallet = User::where('id', $entry->id)->first();
-                    User::where('id', $entry->id)
-                        ->update([
-                            'wallet' => $user_wallet->wallet + $earnings,
-                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
-                        ]);
-                    //create history
-                    Transaction::create([
-                        'user_id' => $entry->id,
-                        'amount' => $earnings,
-                        'reference' => 'referralbonus',
-                        'status' => 'Referral Bonus',
-                    ]);
-                } elseif ($level == 3) {
-                    $earnings = 5 * $deposit_amount / 100;
-                    //add earnings to ancestor balance
-                    $user_wallet = User::where('id', $entry->id)->first();
-                    User::where('id', $entry->id)
-                        ->update([
-                            'wallet' => $user_wallet->wallet + $earnings,
-                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
-                        ]);
-                    //create history
-                    Transaction::create([
-                        'user_id' => $entry->id,
-                        'amount' => $earnings,
-                        'reference' => 'referralbonus',
-                        'status' => 'Referral Bonus',
-                    ]);
-                } elseif ($level == 4) {
-                    //dd('here4');
-                    $earnings = 5 * $deposit_amount / 100;
-                    //add earnings to ancestor balance
-                    $user_wallet = User::where('id', $entry->id)->first();
-                    User::where('id', $entry->id)
-                        ->update([
-                            'wallet' => $user_wallet->wallet + $earnings,
-                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
-                        ]);
-                    //create history
-                    Transaction::create([
-                        'user_id' => $entry->id,
-                        'amount' => $earnings,
-                        'reference' => 'referralbonus',
-                        'status' => 'Referral Bonus',
-                    ]);
-                }
+            if ($entry->id == $parentUser->referral_link && ($level == 1)) {
+                // Store the affiliate details for level 1
+                \App\Models\Affiliates::create([
+                    'referrer_id' => $entry->id,
+                    'referral_id' => $parentUser->id,
+                    'level' => $level,
+                ]);
 
-                if ($level == 5) {
-                    break;
-                }
+                // Notify user at level 1
+                \App\Models\OjafunnelNotification::create([
+                    'to' => $entry->id,
+                    'title' => config('app.name'),
+                    'body' => 'A user just registered using your referral link.'
+                ]);
 
-                //$referedMembers .= '- ' . $entry->name . '- Level: '. $level. '- Commission: '.$earnings.'<br/>';
-                $referedMembers .= $this->getAncestors($array, $deposit_amount, $entry->id, $level + 1);
+                // Recursively check ancestors for all levels
+                $this->getAncestorsnext($array, $entry->id, $parentUser->id, $level + 1);
             }
         }
+    }
 
-        return $referedMembers;
+    function getAncestorsnext($array, $parent = 0, $referred, $level) {
+        $parentUser = User::where('id', $parent)->first();
+        foreach ($array as $entry) {
+            if ($entry->id == $parentUser->referral_link && ($level == 2)) {
+                // Store the affiliate details for level 2
+                \App\Models\Affiliates::create([
+                    'referrer_id' => $entry->id,
+                    'referral_id' => $referred,
+                    'level' => $level,
+                ]);
+
+                // Notify user at level 2
+                \App\Models\OjafunnelNotification::create([
+                    'to' => $entry->id,
+                    'title' => config('app.name'),
+                    'body' => 'One of your downline onboarded a new user.'
+                ]);
+            }
+        }
     }
 
     public function subAccounts()

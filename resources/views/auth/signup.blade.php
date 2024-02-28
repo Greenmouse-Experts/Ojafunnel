@@ -214,27 +214,15 @@
             });
         });
 
-        // Script for Show/Hide Password
-        $(".toggle-password").click(function() {
-            $(this).toggleClass("fa-eye fa-eye-slash");
-            input = $(this).parent().find("input");
-            if (input.attr("type") == "password") {
-                input.attr("type", "text");
-            } else {
-                input.attr("type", "password");
-            }
-        });
-
         $(document).ready(function() {
-            $("#phonee").intlTelInput({
-                // preferredCountries: ["us", "ca"],
-                preferredCountries: ["ng"],
-                separateDialCode: true,
-                initialCountry: ""
-            }).on('countrychange', function(e, countryData) {
-                // $("#phonee").val('+' + ($("#phonee").intlTelInput("getSelectedCountryData").dialCode));
-                // $("#phonee").val('+234');
-                $("#phonee").val('')
+            $(".toggle-password").click(function() {
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                let input = $(this).parent().find("input"); // Change 'const' to 'let'
+                if (input.attr("type") == "password") {
+                    input.attr("type", "text");
+                } else {
+                    input.attr("type", "password");
+                }
             });
         });
     </script>

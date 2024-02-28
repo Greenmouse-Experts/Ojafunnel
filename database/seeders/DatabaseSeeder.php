@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(AdminSeeder::class);
         // $this->call(SiteFeaturesSeeder::class);
         // $this->call(PaymentGatewaySeeder::class);
-         $this->call(MenuesSeeder::class);
+        //  $this->call(MenuesSeeder::class);
+        $this->call(LevelSeeder::class);
     }
 }

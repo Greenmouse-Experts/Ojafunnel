@@ -66,6 +66,8 @@ use GuzzleHttp\Client;
 use Aws\Sns\SnsClient;
 use App\Mail\AccountInfoMail;
 use App\Mail\NewsletterMail;
+use App\Models\AffiliateBonus;
+use App\Models\AffiliateLevel;
 use App\Models\ExplainerContent;
 use App\Models\GeneralExchangeRate;
 use App\Models\OjaSubscription;
@@ -239,6 +241,63 @@ class AdminController extends Controller
 
         $data['referrals'] = $referrals;
         return view('Admin.affiliateList', $data);
+    }
+
+    public function affiliateLevel()
+    {
+        $levels = AffiliateLevel::latest()->get();
+
+        return view('admin.affiliate.index', [
+            'levels' => $levels
+        ]);
+    }
+
+    public function create_affiliateLevel(Request $request)
+    {
+        $request->validate([
+            'level' => 'required|integer',
+            'bonus_percent' => 'required|numeric',
+        ]);
+
+        AffiliateLevel::create($request->all());
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Affiliate level created successfully'
+        ]);
+
+    }
+
+    public function update_affiliateLevel(Request $request, $id)
+    {
+        $request->validate([
+            'level' => 'required|integer',
+            'bonus_percent' => 'required|numeric',
+        ]);
+
+        $finder = decrypt($id);
+
+        $affiliate = AffiliateLevel::find($finder);
+
+        $affiliate->update($request->all());
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Affiliate level updated successfully'
+        ]);
+    }
+
+    public function delete_affiliateLevel($affiliatelevel)
+    {
+        $finder = decrypt($affiliatelevel);
+
+        AffiliateLevel::find($finder)->delete();
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Affiliate level deleted successfully'
+        ]);
+
     }
 
     public function product()

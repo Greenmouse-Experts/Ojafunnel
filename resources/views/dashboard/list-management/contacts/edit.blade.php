@@ -88,7 +88,7 @@
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Date of Birth</label>
-                                    
+
                                     @php $dob = $contact->date_of_birth !== null ? date("Y-m-d", strtotime($contact->date_of_birth)) : "" @endphp
                                     <input type="date" name="date_of_birth" class="form-control"  value="{{$dob}}" placeholder="Enter Date of Birth" />
                                 </div>

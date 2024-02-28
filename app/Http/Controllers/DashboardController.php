@@ -54,6 +54,7 @@ use App\Models\Domain;
 use App\Mail\BroadcastEmail;
 use Illuminate\Routing\Redirector;
 use App\Http\Controllers\HomePageController;
+use App\Models\Affiliates;
 use App\Models\CourseProgress;
 use App\Models\CourseVideoProgress;
 use App\Models\Message as ModelsMessage;
@@ -3233,8 +3234,11 @@ class DashboardController extends Controller
 
         $referrals = User::where('referral_link', Auth::user()->id)->get();
 
+        $affiliates = Affiliates::latest()->where('referrer_id', Auth::user()->id)->get();
+
         return view('dashboard.affiliateMarketing', [
             'referrals' => $referrals,
+            'affiliates' => $affiliates,
             'username' => $username
         ]);
     }

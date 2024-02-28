@@ -92,20 +92,21 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">Contacts</h4>
-                            <div class="table-responsive"> 
+                            <div class="table-responsive">
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead class="tread">
                                         <tr>
                                             <th>S/N</th>
                                             <th>Name</th>
-                                            <th>Email</th> 
+                                            <th>Email</th>
                                             <th>Address</th>
                                             <th>Status</th>
                                             <th>Tags</th>
+                                            <th>Joined Date</th>
                                             <th>Action</th>
                                         </tr>
-                                    </thead> 
-                                    <tbody> 
+                                    </thead>
+                                    <tbody>
                                         @foreach(App\Models\ListManagementContact::latest()->where('list_management_id', $list->id)->get() as $key => $contact)
                                         <tr>
                                             <td scope="row">{{$loop->iteration}}</td>
@@ -132,6 +133,7 @@
                                                     @endforeach
                                                 @endif
                                             </td>
+                                            <td>{{ $contact->created_at->toDayDateTimeString() }}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

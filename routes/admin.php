@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\OjafunnelNotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +38,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('/vendorlist', [App\Http\Controllers\Admin\AdminController::class, 'vendorlist'])->name('vendorlist');
             Route::get('/trans_details', [App\Http\Controllers\Admin\AdminController::class, 'trans_details'])->name('trans.details');
             Route::get('/affiliateList', [App\Http\Controllers\Admin\AdminController::class, 'affiliateList'])->name('affiliateList');
+
+            // Affiliate
+            Route::get('/affiliateLevel', [App\Http\Controllers\Admin\AdminController::class, 'affiliateLevel'])->name('affiliateLevel');
+            Route::post('/affiliate-levels/create', [AdminController::class, 'create_affiliateLevel'])->name('affiliate-levels.create');
+            Route::post('/affiliate-levels/{id}', [AdminController::class, 'update_affiliateLevel'])->name('affiliate-levels.update');
+            Route::delete('/affiliate-levels/{affiliatelevel}', [AdminController::class, 'delete_affiliateLevel'])->name('affiliate-levels.delete');
 
             Route::post('/add-users', [App\Http\Controllers\Admin\AdminController::class, 'add_users']); //
             Route::post('/update-prvdg', [App\Http\Controllers\Admin\AdminController::class, 'update_prvdg']); //

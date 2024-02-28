@@ -46,6 +46,7 @@
                                             <th>Description</th>
                                             <th>Contact</th>
                                             <th>Status</th>
+                                            <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -77,6 +78,7 @@
                                                 <span class="badge badge-pill badge-soft-danger font-size-11">In-active</span>
                                                 @endif
                                             </td>
+                                            <td>{{ $list->created_at->toDayDateTimeString() }}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

@@ -109,12 +109,29 @@ $usr = Auth::user()->id;
                                             <th>Level</th>
                                             <th>Commission (%)</th>
                                             <th>Referred By</th>
-                                            <th>Status</th>
+                                            <th>Bonus</th>
                                             <th>Joined Date</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="myTable">
-                                        {!! $uc->getdownlines($array,$usr) !!}
+                                    <tbody>
+                                        @foreach($affiliates as $key => $affiliate)
+                                        <tr>
+                                            <th scope="row">{{$loop->iteration}}</th>
+                                            <td>{{App\Models\User::find($affiliate->referral_id)->first_name}} {{App\Models\User::find($affiliate->referral_id)->last_name}}</td>
+                                            <td>
+                                                @if($affiliate->level == 1)
+                                                Direct Referral
+                                                @else
+                                                Indirect Referral
+                                                @endif
+                                            </td>
+                                            <td><a href="javascript: void(0);" class="badge badge-soft-primary font-size-11 m-1">{{$affiliate->level}}</a></td>
+                                            <td>{{App\Models\AffiliateLevel::where('level', $affiliate->level)->first()->bonus_percent}}%</td>
+                                            <td>{{App\Models\User::find(App\Models\User::find($affiliate->referral_id)->referral_link)->first_name}} {{App\Models\User::find(App\Models\User::find($affiliate->referral_id)->referral_link)->last_name}}</td>
+                                            <td>{{number_format($affiliate->bonus, 2)}}</td>
+                                            <td>{{ $affiliate->created_at->toDayDateTimeString() }}</td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

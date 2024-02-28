@@ -81,10 +81,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('affiliateList')}}">
-                        <i class="bi bi-view-list"></i>
-                        <span key="t-dashboards">Affiliate list</span>
+                    <a href="#" class="has-arrow">
+                        <i class="bi bi-bank"></i>
+                        <span key="t-chat">Affiliate</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('affiliateLevel')}}">Level</a></li>
+                        <li><a href="{{route('affiliateList')}}">List</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#" class="has-arrow">

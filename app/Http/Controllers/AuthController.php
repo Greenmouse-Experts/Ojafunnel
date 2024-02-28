@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendCodeResetPassword;
+use App\Models\Affiliates;
 use App\Models\Customer;
 use App\Models\OjafunnelNotification;
 use App\Models\OjaPlan;
@@ -39,14 +40,6 @@ class AuthController extends Controller
         if ($request->isMethod('post')) {
             $user->fill($request->all());
             $rules = $user->registerRules();
-
-            // Captcha check
-            // if (\Acelle\Model\Setting::get('registration_recaptcha') == 'yes') {
-            //     $success = \Acelle\Library\Tool::checkReCaptcha($request);
-            //     if (!$success) {
-            //         $rules['recaptcha_invalid'] = 'required';
-            //     }
-            // }
 
             $this->validate($request, $rules);
 
@@ -94,97 +87,6 @@ class AuthController extends Controller
                 return redirect()->route('login');
             }
         }
-        // $messages = [
-        //     'username.regex' => 'Username must not have space in between',
-        //     // 'password.regex' => 'Password must be more than 8 characters long, should contain at least 1 Uppercase, 1 Lowercase and  1 number',
-        // ];
-
-        // $this->validate($request, [
-        //     'first_name' => ['required', 'string', 'max:255'],
-        //     'last_name' => ['required', 'string', 'max:255'],
-        //     'username' => ['required', 'min:5', 'max:100', 'regex:/^\S*$/u', 'unique:users'],
-        //     'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
-        //     'phone_number' => ['required', 'numeric'],
-        //     'password' => ['required', 'string', 'min:8', 'confirmed'],
-        //     // 'g-recaptcha-response' => 'required|captcha',
-        // ], $messages);
-
-        // if(!$request->referral_link == null)
-        // {
-        //     $this->validate($request, [
-        //         'referral_link' => 'exists:users,affiliate_link'
-        //     ]);
-
-        //     $referrer_id = User::where('affiliate_link', $request->referral_link)->first();
-
-        //     $plan = OjaPlan::where('name', 'Free')->first();
-
-        //     if($plan)
-        //     {
-        //         $user = User::create([
-        //             'user_type' => 'User',
-        //             'affiliate_link' => $this->referrer_id_generate(9),
-        //             'first_name' => $request->first_name,
-        //             'last_name' => $request->last_name,
-        //             'username' => strtolower($request->username),
-        //             'email' => $request->email,
-        //             'phone_number' => $request->phone_number,
-        //             'password' => Hash ::make($request->password),
-        //             'referral_link' => $referrer_id->id,
-        //             'plan' => $plan->id
-        //         ]);
-
-        //         $subscribe_amount = 10000;
-        //         $array = User::all();
-        //         $parent = $user->id;
-
-        //         $this->getAncestors($array, $subscribe_amount, $parent);
-
-        //     } else {
-        //         return back()->with([
-        //             'type' => 'danger',
-        //             'message' => 'Admin yet to add plans! Try again later.'
-        //         ]);
-        //     }
-
-        // } else {
-        //     $plan = OjaPlan::where('name', 'Free')->first();
-
-        //     if($plan)
-        //     {
-        //         $user = User::create([
-        //             'user_type' => 'User',
-        //             'affiliate_link' => $this->referrer_id_generate(7),
-        //             'first_name' => $request->first_name,
-        //             'last_name' => $request->last_name,
-        //             'username' => strtolower($request->username),
-        //             'email' => $request->email,
-        //             'phone_number' => $request->phone_number,
-        //             'password' => Hash ::make($request->password),
-        //             'referral_link' => $request->referral_link,
-        //             'plan' => $plan->id
-        //         ]);
-        //     } else {
-        //         return back()->with([
-        //             'type' => 'danger',
-        //             'message' => 'Admin yet to add plans! Try again later.'
-        //         ]);
-        //     }
-        // }
-
-        // $code = mt_rand(100000, 999999);
-
-        // $user->update([
-        //     'code' => $code
-        // ]);
-
-        // // Send email to user
-        // $user->notify(new SendVerificationCode($user));
-
-        // return redirect()->route('verify.account', Crypt::encrypt($user->email))->with([
-        //     'type' => 'success',
-        //     'message' => 'Registration Successful, Please verify your account!'
-        // ]);
     }
 
     function referrer_id_generate($input, $strength = 9)
@@ -198,111 +100,6 @@ class AuthController extends Controller
         }
 
         return $random_string;
-    }
-
-    function getAncestors($array, $deposit_amount, $parent = 0, $level = 1)
-    {
-        $referedMembers = '';
-        $parent = User::where('id', $parent)->first();
-        foreach ($array as $entry) {
-            if ($entry->id == $parent->referral_link) {
-                if ($level == 1) {
-                    $earnings = 30 * $deposit_amount / 100;
-                    //add earnings to ancestor balance
-                    $user_wallet = User::where('id', $entry->id)->first();
-                    User::where('id', $entry->id)
-                        ->update([
-                            'wallet' => $user_wallet->wallet + $earnings,
-                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
-                        ]);
-                    //create history
-                    Transaction::create([
-                        'user_id' => $entry->id,
-                        'amount' => $earnings,
-                        'reference' => 'referralbonus',
-                        'status' => 'Referral Bonus',
-                    ]);
-                    OjafunnelNotification::create([
-                        'to' => $entry->id,
-                        'title' => config('app.name'),
-                        'body' => 'A user just registered using your referral link.'
-                    ]);
-                } elseif ($level == 2) {
-                    $earnings = 10 * $deposit_amount / 100;
-                    //add earnings to ancestor balance
-                    $user_wallet = User::where('id', $entry->id)->first();
-                    User::where('id', $entry->id)
-                        ->update([
-                            'wallet' => $user_wallet->wallet + $earnings,
-                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
-                        ]);
-                    //create history
-                    Transaction::create([
-                        'user_id' => $entry->id,
-                        'amount' => $earnings,
-                        'reference' => 'referralbonus',
-                        'status' => 'Referral Bonus',
-                    ]);
-                    OjafunnelNotification::create([
-                        'to' => $entry->id,
-                        'title' => config('app.name'),
-                        'body' => 'A user just registered using your referral link.'
-                    ]);
-                } elseif ($level == 3) {
-                    $earnings = 5 * $deposit_amount / 100;
-                    //add earnings to ancestor balance
-                    $user_wallet = User::where('id', $entry->id)->first();
-                    User::where('id', $entry->id)
-                        ->update([
-                            'wallet' => $user_wallet->wallet + $earnings,
-                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
-                        ]);
-                    //create history
-                    Transaction::create([
-                        'user_id' => $entry->id,
-                        'amount' => $earnings,
-                        'reference' => 'referralbonus',
-                        'status' => 'Referral Bonus',
-                    ]);
-                    OjafunnelNotification::create([
-                        'to' => $entry->id,
-                        'title' => config('app.name'),
-                        'body' => 'A user just registered using your referral link.'
-                    ]);
-                } elseif ($level == 4) {
-                    //dd('here4');
-                    $earnings = 5 * $deposit_amount / 100;
-                    //add earnings to ancestor balance
-                    $user_wallet = User::where('id', $entry->id)->first();
-                    User::where('id', $entry->id)
-                        ->update([
-                            'wallet' => $user_wallet->wallet + $earnings,
-                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
-                        ]);
-                    //create history
-                    Transaction::create([
-                        'user_id' => $entry->id,
-                        'amount' => $earnings,
-                        'reference' => 'referralbonus',
-                        'status' => 'Referral Bonus',
-                    ]);
-                    OjafunnelNotification::create([
-                        'to' => $entry->id,
-                        'title' => config('app.name'),
-                        'body' => 'A user just registered using your referral link.'
-                    ]);
-                }
-
-                if ($level == 5) {
-                    break;
-                }
-
-                //$referedMembers .= '- ' . $entry->name . '- Level: '. $level. '- Commission: '.$earnings.'<br/>';
-                $referedMembers .= $this->getAncestors($array, $deposit_amount, $entry->id, $level + 1);
-            }
-        }
-
-        return $referedMembers;
     }
 
     public function verify_account($email)

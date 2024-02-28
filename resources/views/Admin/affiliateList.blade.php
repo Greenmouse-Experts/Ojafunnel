@@ -25,7 +25,7 @@
                     <div class="card account-head">
                         <div class="py-2">
                             <h4 class="font-500">Affiliate Program</h4>
-                            <p>View and edit your mailing list</p>
+                            <p>View and edit your affiliate program</p>
                         </div>
                     </div>
                 </div>
