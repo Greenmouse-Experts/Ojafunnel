@@ -94,7 +94,7 @@
                                             <td><a href="javascript: void(0);" class="badge badge-soft-primary font-size-11 m-1">{{$affiliate->level}}</a></td>
                                             <td>{{App\Models\AffiliateLevel::where('level', $affiliate->level)->first()->bonus_percent}}%</td>
                                             <td>{{App\Models\User::find(App\Models\User::find($affiliate->referral_id)->referral_link)->first_name}} {{App\Models\User::find(App\Models\User::find($affiliate->referral_id)->referral_link)->last_name}}</td>
-                                            <td>{{number_format($affiliate->bonus, 2)}}</td>
+                                            <td>{{$affiliate->bonus}}</td>
                                             <td>{{ $affiliate->created_at->toDayDateTimeString() }}</td>
                                         </tr>
                                         @endforeach

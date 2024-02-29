@@ -122,7 +122,7 @@ class AccountUpgradeController extends Controller
                     $earnings = $level->bonus_percent * $price / 100;
 
                     $affiliate->update([
-                        'bonus' => $earnings
+                        'bonus' => $planInterval->currency_sign.''.$earnings
                     ]);
 
                     $user_wallet = User::find($affiliate->referrer_id);
@@ -238,7 +238,7 @@ class AccountUpgradeController extends Controller
                     $earnings = $level->bonus_percent * $price / 100;
 
                     $affiliate->update([
-                        'bonus' => $earnings
+                        'bonus' => $planInterval->currency_sign.''.$earnings
                     ]);
 
                     $user_wallet = User::find($affiliate->referrer_id);
@@ -370,14 +370,16 @@ class AccountUpgradeController extends Controller
 
                 $level = $levels->where('level', $affiliate->level)->first();
 
+
                 if ($level) {
                     $earnings = $level->bonus_percent * $price / 100;
 
                     $affiliate->update([
-                        'bonus' => $earnings
+                        'bonus' => $planInterval->currency_sign.''.$earnings
                     ]);
 
                     $user_wallet = User::find($affiliate->referrer_id);
+
                     if ($user_wallet) {
                         if($planInterval->currency_sign == '₦')
                         {

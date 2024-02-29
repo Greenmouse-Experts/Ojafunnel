@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('referrer_id')->onDelete('cascade');
             $table->foreignId('referral_id')->onDelete('cascade');
             $table->unsignedInteger('level');
-            $table->decimal('bonus', 10, 2)->nullable();
+            $table->string('bonus')->nullable();
             $table->timestamps();
         });
     }
