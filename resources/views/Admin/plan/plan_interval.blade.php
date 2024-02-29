@@ -124,14 +124,14 @@
                                                                                                         <option value="" disabled="">-- Select Currency --</option>
                                                                                                         <option value="NGN">NGN - Naira</option>
                                                                                                         <option value="USD">USD - US Dollar</option>
-                                                                                                        <option value="INR" >INR - Indian Rupee</option>
+                                                                                                        <!-- <option value="INR" >INR - Indian Rupee</option>
                                                                                                         <option value="EUR">EUR - Euro</option>
                                                                                                         <option value="PKR">PKR - Pakistani Rupee</option>
                                                                                                         <option value="AED">AED - Emirati Dirham</option>
                                                                                                         <option value="BRL">BRL - Brazilian Real</option>
                                                                                                         <option value="MYR">MYR - Malaysian Ringgit</option>
                                                                                                         <option value="SGD">SGD - Singapore Dollar</option>
-                                                                                                        <option value="GBP">GBP - British pound sterling</option>
+                                                                                                        <option value="GBP">GBP - British pound sterling</option> -->
                                                                                                     </select>
                                                                                                 </div>
                                                                                             </div>
@@ -233,14 +233,14 @@
                                                 <option value="" disabled="">-- Select Currency --</option>
                                                 <option value="NGN">NGN - Naira</option>
                                                 <option value="USD">USD - US Dollar</option>
-                                                <option value="INR" >INR - Indian Rupee</option>
+                                                <!-- <option value="INR" >INR - Indian Rupee</option>
                                                 <option value="EUR">EUR - Euro</option>
                                                 <option value="PKR">PKR - Pakistani Rupee</option>
                                                 <option value="AED">AED - Emirati Dirham</option>
                                                 <option value="BRL">BRL - Brazilian Real</option>
                                                 <option value="MYR">MYR - Malaysian Ringgit</option>
                                                 <option value="SGD">SGD - Singapore Dollar</option>
-                                                <option value="GBP">GBP - British pound sterling</option>
+                                                <option value="GBP">GBP - British pound sterling</option> -->
                                             </select>
                                         </div>
                                     </div>
