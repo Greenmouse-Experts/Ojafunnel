@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">     
+                <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
                             <h4 class="font-600">{{$user->username}} Details</h4>
@@ -114,6 +114,14 @@
                                                             <tr>
                                                                 <th scope="row">E-mail :</th>
                                                                 <td>{{$user->email}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Naira Wallet :</th>
+                                                                <td>₦{{number_format($user->wallet, 2)}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Dollar Wallet :</th>
+                                                                <td>${{number_format($user->dollar_wallet, 2)}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row">Mobile :</th>

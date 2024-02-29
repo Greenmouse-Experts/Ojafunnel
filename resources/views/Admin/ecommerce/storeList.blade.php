@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
             <!-- banner -->
             <div class="row">
                 <div class="col-lg-12">

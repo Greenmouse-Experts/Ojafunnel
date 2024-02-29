@@ -57,6 +57,8 @@
                                             <th>User Name </th>
                                             <th>Email</th>
                                             <th>Phone Number</th>
+                                            <th>Naira Wallet</th>
+                                            <th>Dollar Wallet</th>
                                             <th>Priviledges</th>
                                             <th>Status</th>
                                             <th>Date Created</th>
@@ -75,7 +77,8 @@
                                                 <td>
                                                     {{ $user->phone_number != null ? $user->phone_number : "Not Specified"}}
                                                 </td>
-
+                                                <td>₦{{number_format($user->wallet, 2)}}</td>
+                                                <td>${{number_format($user->dollar_wallet, 2)}}</td>
                                                 <td>
                                                     @if(count($user->fts) > 0)
                                                         @php $fts1=""; @endphp
@@ -86,7 +89,7 @@
                                                     @endif
                                                     <div><a href="javascript:;" data-bs-toggle="modal" data-bs-target="#assign_prv" class="assign_prv" user_id="{{ $user->id }}" user_name="{{ucwords($user->first_name.' '.$user->last_name)}}" style="font-size:12px;">Click to assign</a></div>
                                                 </td>
-                                                
+
                                                 <td>
                                                     @if ($user->status == 'active')
                                                         <span class="badge badge-pill badge-soft-success font-size-11">{{ trans('messages.user_status_' . $user->status) }}</span>
@@ -164,9 +167,9 @@
                                         <label>User Email</label>
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <input type="text" placeholder="Enter user email address" name="email" class="input" required> 
-                                            </div> 
-                                        </div> 
+                                                <input type="text" placeholder="Enter user email address" name="email" class="input" required>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <label>User Password</label>
