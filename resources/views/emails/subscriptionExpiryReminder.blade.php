@@ -8,13 +8,13 @@
       /* -------------------------------------
           GLOBAL RESETS
       ------------------------------------- */
-      
+
       /*All the styling goes here*/
-      
+
       img {
         border: none;
         -ms-interpolation-mode: bicubic;
-        max-width: 100%; 
+        max-width: 100%;
       }
 
       body {
@@ -26,7 +26,7 @@
         margin: 0;
         padding: 0;
         -ms-text-size-adjust: 100%;
-        -webkit-text-size-adjust: 100%; 
+        -webkit-text-size-adjust: 100%;
       }
 
       table {
@@ -37,7 +37,7 @@
         table td {
           font-family: sans-serif;
           font-size: 14px;
-          vertical-align: top; 
+          vertical-align: top;
       }
 
       /* -------------------------------------
@@ -46,7 +46,7 @@
 
       .body {
         background-color: #f6f6f6;
-        width: 100%; 
+        width: 100%;
       }
 
       /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
@@ -56,7 +56,7 @@
         /* makes it centered */
         max-width: 580px;
         padding: 10px;
-        width: 580px; 
+        width: 580px;
       }
 
       /* This should also be a block element, so that it will fill 100% of the .container */
@@ -65,7 +65,7 @@
         display: block;
         margin: 0 auto;
         max-width: 580px;
-        padding: 10px; 
+        padding: 10px;
       }
 
       /* -------------------------------------
@@ -74,12 +74,12 @@
       .main {
         background: #ffffff;
         border-radius: 3px;
-        width: 100%; 
+        width: 100%;
       }
 
       .wrapper {
         box-sizing: border-box;
-        padding: 20px; 
+        padding: 20px;
       }
 
       .content-block {
@@ -91,7 +91,7 @@
         clear: both;
         margin-top: 10px;
         text-align: center;
-        width: 100%; 
+        width: 100%;
       }
         .footer td,
         .footer p,
@@ -99,7 +99,7 @@
         .footer a {
           color: #999999;
           font-size: 12px;
-          text-align: center; 
+          text-align: center;
       }
 
       /* -------------------------------------
@@ -114,14 +114,14 @@
         font-weight: 400;
         line-height: 1.4;
         margin: 0;
-        margin-bottom: 30px; 
+        margin-bottom: 30px;
       }
 
       h1 {
         font-size: 35px;
         font-weight: 300;
         text-align: center;
-        text-transform: capitalize; 
+        text-transform: capitalize;
       }
 
       p,
@@ -131,19 +131,19 @@
         font-size: 14px;
         font-weight: normal;
         margin: 0;
-        margin-bottom: 15px; 
+        margin-bottom: 15px;
       }
         p li,
         ul li,
         ol li {
           list-style-position: inside;
-          margin-left: -20px; 
+          margin-left: -20px;
           padding: 5px;
       }
 
       a {
         color: #3498db;
-        text-decoration: underline; 
+        text-decoration: underline;
       }
 
       /* -------------------------------------
@@ -155,12 +155,12 @@
         .btn > tbody > tr > td {
           padding-bottom: 15px; }
         .btn table {
-          width: auto; 
+          width: auto;
       }
         .btn table td {
           background-color: #ffffff;
           border-radius: 5px;
-          text-align: center; 
+          text-align: center;
       }
         .btn a {
           background-color: #ffffff;
@@ -175,52 +175,52 @@
           margin: 0;
           padding: 12px 25px;
           text-decoration: none;
-          text-transform: capitalize; 
+          text-transform: capitalize;
       }
 
       .btn-primary table td {
-        background-color: #551BA6; 
+        background-color: #551BA6;
       }
 
       .btn-primary a {
         background-color: #551BA6;
         border-color: #3498db;
-        color: #ffffff; 
+        color: #ffffff;
       }
 
       /* -------------------------------------
           OTHER STYLES THAT MIGHT BE USEFUL
       ------------------------------------- */
       .last {
-        margin-bottom: 0; 
+        margin-bottom: 0;
       }
 
       .first {
-        margin-top: 0; 
+        margin-top: 0;
       }
 
       .align-center {
-        text-align: center; 
+        text-align: center;
       }
 
       .align-right {
-        text-align: right; 
+        text-align: right;
       }
 
       .align-left {
-        text-align: left; 
+        text-align: left;
       }
 
       .clear {
-        clear: both; 
+        clear: both;
       }
 
       .mt0 {
-        margin-top: 0; 
+        margin-top: 0;
       }
 
       .mb0 {
-        margin-bottom: 0; 
+        margin-bottom: 0;
       }
 
       .preheader {
@@ -233,17 +233,17 @@
         overflow: hidden;
         mso-hide: all;
         visibility: hidden;
-        width: 0; 
+        width: 0;
       }
 
       .powered-by a {
-        text-decoration: none; 
+        text-decoration: none;
       }
 
       hr {
         border: 0;
         border-bottom: 1px solid #f6f6f6;
-        margin: 20px 0; 
+        margin: 20px 0;
       }
 
       /* -------------------------------------
@@ -252,7 +252,7 @@
       @media only screen and (max-width: 620px) {
         table.body h1 {
           font-size: 28px !important;
-          margin-bottom: 10px !important; 
+          margin-bottom: 10px !important;
         }
         table.body p,
         table.body ul,
@@ -260,34 +260,34 @@
         table.body td,
         table.body span,
         table.body a {
-          font-size: 16px !important; 
+          font-size: 16px !important;
         }
         table.body .wrapper,
         table.body .article {
-          padding: 10px !important; 
+          padding: 10px !important;
         }
         table.body .content {
-          padding: 0 !important; 
+          padding: 0 !important;
         }
         table.body .container {
           padding: 0 !important;
-          width: 100% !important; 
+          width: 100% !important;
         }
         table.body .main {
           border-left-width: 0 !important;
           border-radius: 0 !important;
-          border-right-width: 0 !important; 
+          border-right-width: 0 !important;
         }
         table.body .btn table {
-          width: 100% !important; 
+          width: 100% !important;
         }
         table.body .btn a {
-          width: 100% !important; 
+          width: 100% !important;
         }
         table.body .img-responsive {
           height: auto !important;
           max-width: 100% !important;
-          width: auto !important; 
+          width: auto !important;
         }
       }
 
@@ -296,7 +296,7 @@
       ------------------------------------- */
       @media all {
         .ExternalClass {
-          width: 100%; 
+          width: 100%;
         }
         .ExternalClass,
         .ExternalClass p,
@@ -304,7 +304,7 @@
         .ExternalClass font,
         .ExternalClass td,
         .ExternalClass div {
-          line-height: 100%; 
+          line-height: 100%;
         }
         .apple-link a {
           color: inherit !important;
@@ -312,7 +312,7 @@
           font-size: inherit !important;
           font-weight: inherit !important;
           line-height: inherit !important;
-          text-decoration: none !important; 
+          text-decoration: none !important;
         }
         #MessageViewBody a {
           color: inherit;
@@ -323,12 +323,12 @@
           line-height: inherit;
         }
         .btn-primary table td:hover {
-          background-color: #34495e !important; 
+          background-color: #34495e !important;
         }
         .btn-primary a:hover {
           background-color: #34495e !important;
-          border-color: #34495e !important; 
-        } 
+          border-color: #34495e !important;
+        }
       }
 
     </style>
@@ -343,13 +343,13 @@
 
             <!-- START CENTERED WHITE CONTAINER -->
             <table role="presentation" class="main">
-              
+
               <!-- LOGO -->
               <tr>
                 <td  align="center">
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
-                        <td align="center" valign="top" style="padding: 40px 30px 20px 30px; font-size: 20px;"> 
+                        <td align="center" valign="top" style="padding: 40px 30px 20px 30px; font-size: 20px;">
                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" alt="{{config('app.name')}}" width="150px"></a>
                         </td>
                     </tr>
@@ -364,7 +364,7 @@
                       <td>
                         <p>Dear {{ucfirst($user->first_name)}} {{ucfirst($user->last_name)}},</p>
                         <p>This is a subscription notice that your subscription plan -  {{$plan->name}} which was generated on {{date('Y-m-d', strtotime($subscribe->started_at))}} will be due on {{date('Y-m-d', strtotime($subscribe->ends_at))}}.</p>
-                        <p>Kindly resubscribe to aviod been interrupted.</p>
+                        <p>Kindly resubscribe to avoid been interrupted.</p>
                         <p style="font-weight: 700;">NB</p>
                         <p>If you have any issues, our customer support team is available 24/7 to assist you with any issue you may be having.</p>
                         <p>Thanks for choosing {{config('app.name')}}.</p>
@@ -385,7 +385,7 @@
                   <td class="content-block powered-by">
                     <script>
                       document.write(new Date().getFullYear())
-                   </script> © <a href="https://trivhunt.ivavtech.com/">{{config('app.name')}}</a>.
+                   </script> © <a href="https://ojafunnel.com">{{config('app.name')}}</a>.
                   </td>
                 </tr>
               </table>
