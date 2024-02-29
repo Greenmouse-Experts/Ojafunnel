@@ -289,7 +289,7 @@ class StoreFrontController extends Controller
             'percent' => StoreCoupon::find($request->couponID)->discount_percent ?? null,
             'amountPaid' => $request->amountToPay,
         ]);
-        $order->amount = $totalAmount;
+        $order->amount = $store->currency_sign.''.$totalAmount;
         $order->save();
 
         foreach ($cart as $item) {
@@ -325,7 +325,7 @@ class StoreFrontController extends Controller
             $orderItem->store_order_id = $order->id;
             $orderItem->store_product_id = $item['id'];
             $orderItem->quantity = $item['quantity'];
-            $orderItem->amount = $item['price'];
+            $orderItem->amount = $store->currency_sign.''.$item['price'];
             $orderItem->type = $item['id'] == $product_id && $promoter->exists() ? 'Promotion' : 'Normal';
             $orderItem->save();
 
@@ -360,7 +360,7 @@ class StoreFrontController extends Controller
 
             // send mail to vendor
             $vendor = User::where('id', $store->user_id)->first();
-            Mail::to($vendor->email)->send(new StoreFrontMail('Store Product Purchase', "Hello $vendor->username, a new product has been purchased in your store with a total amount of $store->currency_sign $item_price"));
+            Mail::to($vendor->email)->send(new StoreFrontMail('Store Product Purchase', "Hello $vendor->username, a new product has been purchased in your store with a total amount of $store->currency_sign$item_price"));
 
             // add fund to promoter and promoter referral wallet
             if ($item['id'] == $product_id && $promoter->exists()) {
@@ -475,9 +475,6 @@ class StoreFrontController extends Controller
             $m->to($data['email'])->subject(config('app.name'));
         });
 
-        // Send email to user
-        // $user->notify(new SendCodeResetPassword($codeData->code)
-
         $data = [
             'store' => $store,
             'order' => $order
@@ -587,7 +584,7 @@ class StoreFrontController extends Controller
             'percent' => StoreCoupon::find($request->couponID)->discount_percent ?? null,
             'amountPaid' => $request->amountToPay,
         ]);
-        $order->amount = $totalAmount;
+        $order->amount = $store->currency_sign.''.$totalAmount;
         $order->save();
 
         $data = [];
@@ -606,7 +603,7 @@ class StoreFrontController extends Controller
             $orderItem->store_order_id = $order->id;
             $orderItem->store_product_id = $item['id'];
             $orderItem->quantity = $item['quantity'];
-            $orderItem->amount = $item['price'];
+            $orderItem->amount = $store->currency_sign.''.$item['price'];
             $orderItem->type = 'Normal';
             $orderItem->save();
 
@@ -672,7 +669,6 @@ class StoreFrontController extends Controller
         $pdf = PDF::loadView('myPDF', $data);
 
         return view('myPDF', compact('store', 'order'));
-        //return redirect()->back()->with('success', 'Order Completed!');
     }
 
     public function Pdf()

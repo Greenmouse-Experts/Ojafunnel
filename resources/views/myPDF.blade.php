@@ -147,7 +147,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$item->quantity}}</td>
-                                            <td>{{$store->currency_sign}}{{number_format($item->amount, 2)}}</td>
+                                            <td>{{$item->amount}}</td>
                                             <td>
                                                 @if ($order['coupon'])
                                                     @php
@@ -160,7 +160,7 @@
                                                     <p>0%</p>
                                                 @endif
                                             </td>
-                                            <td>{{$store->currency_sign}}{{number_format($item->quantity*$item->amount, 2)}}</td>
+                                            <td>{{$store->currency_sign}}{{$item->quantity * preg_replace('/[^0-9.]/', '', $item->amount)}}</td>
                                         </tr>
                                         @endforeach
                                         <tr>
@@ -195,7 +195,6 @@
         $('#print').css('display', 'none');
         window.print();
         window.location.href='{{route('user.stores.link', $store->name)}}';
-
     });
 </script>
 

@@ -2474,85 +2474,85 @@ class AdminController extends Controller
             ]);
         }
 
-        if ($request->currency == 'EUR') {
-            OjaPlanInterval::create([
-                'plan_id' => $plan->id,
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => '€'
-            ]);
-        }
+        // if ($request->currency == 'EUR') {
+        //     OjaPlanInterval::create([
+        //         'plan_id' => $plan->id,
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => '€'
+        //     ]);
+        // }
 
-        if ($request->currency == 'INR') {
-            OjaPlanInterval::create([
-                'plan_id' => $plan->id,
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => '₹'
-            ]);
-        }
+        // if ($request->currency == 'INR') {
+        //     OjaPlanInterval::create([
+        //         'plan_id' => $plan->id,
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => '₹'
+        //     ]);
+        // }
 
-        if ($request->currency == 'PKR') {
-            OjaPlanInterval::create([
-                'plan_id' => $plan->id,
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => 'PKR'
-            ]);
-        }
+        // if ($request->currency == 'PKR') {
+        //     OjaPlanInterval::create([
+        //         'plan_id' => $plan->id,
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => 'PKR'
+        //     ]);
+        // }
 
-        if ($request->currency == 'AED') {
-            OjaPlanInterval::create([
-                'plan_id' => $plan->id,
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => 'د.إ'
-            ]);
-        }
+        // if ($request->currency == 'AED') {
+        //     OjaPlanInterval::create([
+        //         'plan_id' => $plan->id,
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => 'د.إ'
+        //     ]);
+        // }
 
-        if ($request->currency == 'BRL') {
-            OjaPlanInterval::create([
-                'plan_id' => $plan->id,
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => 'R$'
-            ]);
-        }
+        // if ($request->currency == 'BRL') {
+        //     OjaPlanInterval::create([
+        //         'plan_id' => $plan->id,
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => 'R$'
+        //     ]);
+        // }
 
-        if ($request->currency == 'MYR') {
-            OjaPlanInterval::create([
-                'plan_id' => $plan->id,
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => 'RM'
-            ]);
-        }
+        // if ($request->currency == 'MYR') {
+        //     OjaPlanInterval::create([
+        //         'plan_id' => $plan->id,
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => 'RM'
+        //     ]);
+        // }
 
-        if ($request->currency == 'SGD') {
-            OjaPlanInterval::create([
-                'plan_id' => $plan->id,
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => 'S$'
-            ]);
-        }
+        // if ($request->currency == 'SGD') {
+        //     OjaPlanInterval::create([
+        //         'plan_id' => $plan->id,
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => 'S$'
+        //     ]);
+        // }
 
-        if ($request->currency == 'EUR') {
-            OjaPlanInterval::create([
-                'plan_id' => $plan->id,
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => '£'
-            ]);
-        }
+        // if ($request->currency == 'EUR') {
+        //     OjaPlanInterval::create([
+        //         'plan_id' => $plan->id,
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => '£'
+        //     ]);
+        // }
 
 
         return back()->with([
@@ -2585,77 +2585,77 @@ class AdminController extends Controller
             ]);
         }
 
-        if ($request->currency == 'EUR') {
-            $interval->update([
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => '€'
-            ]);
-        }
+        // if ($request->currency == 'EUR') {
+        //     $interval->update([
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => '€'
+        //     ]);
+        // }
 
-        if ($request->currency == 'INR') {
-            $interval->update([
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => '₹'
-            ]);
-        }
+        // if ($request->currency == 'INR') {
+        //     $interval->update([
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => '₹'
+        //     ]);
+        // }
 
-        if ($request->currency == 'PKR') {
-            $interval->update([
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => 'PKR'
-            ]);
-        }
+        // if ($request->currency == 'PKR') {
+        //     $interval->update([
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => 'PKR'
+        //     ]);
+        // }
 
-        if ($request->currency == 'AED') {
-            $interval->update([
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => 'د.إ'
-            ]);
-        }
+        // if ($request->currency == 'AED') {
+        //     $interval->update([
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => 'د.إ'
+        //     ]);
+        // }
 
-        if ($request->currency == 'BRL') {
-            $interval->update([
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => 'R$'
-            ]);
-        }
+        // if ($request->currency == 'BRL') {
+        //     $interval->update([
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => 'R$'
+        //     ]);
+        // }
 
-        if ($request->currency == 'MYR') {
-            $interval->update([
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => 'RM'
-            ]);
-        }
+        // if ($request->currency == 'MYR') {
+        //     $interval->update([
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => 'RM'
+        //     ]);
+        // }
 
-        if ($request->currency == 'SGD') {
-            $interval->update([
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => 'S$'
-            ]);
-        }
+        // if ($request->currency == 'SGD') {
+        //     $interval->update([
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => 'S$'
+        //     ]);
+        // }
 
-        if ($request->currency == 'EUR') {
-            $interval->update([
-                'price' => $request->price,
-                'type' => $request->type,
-                'currency' => $request->currency,
-                'currency_sign' => '£'
-            ]);
-        }
+        // if ($request->currency == 'EUR') {
+        //     $interval->update([
+        //         'price' => $request->price,
+        //         'type' => $request->type,
+        //         'currency' => $request->currency,
+        //         'currency_sign' => '£'
+        //     ]);
+        // }
 
 
         return back()->with([

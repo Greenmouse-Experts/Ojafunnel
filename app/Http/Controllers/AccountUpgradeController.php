@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AffiliateLevel;
+use App\Models\Affiliates;
 use App\Models\CurrencyRate;
 use App\Models\OjafunnelNotification;
 use App\Models\OjaPlan;
@@ -79,7 +81,6 @@ class AccountUpgradeController extends Controller
         ]);
     }
 
-
     public function upgrade_account_confirm($plan_id, $response, $price, $currency)
     {
         $planId = Crypt::decrypt($plan_id);
@@ -104,6 +105,45 @@ class AccountUpgradeController extends Controller
             $expiryNotice = now()->addYear()->subDays(7)->toDateString();
         }
 
+
+        $levels = AffiliateLevel::all();
+
+        if (Auth::user()->referral_link) {
+            $affiliates = Affiliates::where('referral_id', Auth::user()->id)->get();
+
+            foreach ($affiliates as $affiliate) {
+                if (!empty($affiliate->bonus)) {
+                    continue; // Skip processing if bonus is not empty
+                }
+
+                $level = $levels->where('level', $affiliate->level)->first();
+
+                if ($level) {
+                    $earnings = $level->bonus_percent * $price / 100;
+
+                    $affiliate->update([
+                        'bonus' => $earnings
+                    ]);
+
+                    $user_wallet = User::find($affiliate->referrer_id);
+                    if ($user_wallet) {
+                        if($planInterval->currency_sign == '₦')
+                        {
+                            $user_wallet->update([
+                                'wallet' => $user_wallet->wallet + $earnings,
+                                'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                            ]);
+                        } else {
+                            $user_wallet->update([
+                                'dollar_wallet' => $user_wallet->dollar_wallet + $earnings,
+                                'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+
         OjaSubscription::create([
             'user_id' => Auth::user()->id,
             'plan_id' => $plan->id,
@@ -124,7 +164,7 @@ class AccountUpgradeController extends Controller
 
         Transaction::create([
             'user_id' => $user->id,
-            'amount' => $planInterval->currency.''.$planInterval->price,
+            'amount' => $planInterval->currency_sign.''.$planInterval->price,
             'reference' => $response,
             'status' => 'Account Upgrade.'
         ]);
@@ -149,21 +189,27 @@ class AccountUpgradeController extends Controller
         $planId = Crypt::decrypt($plan_id);
         $price = Crypt::decrypt($price);
         $currency = Crypt::decrypt($currency);
-
-        if($price > Auth::user()->wallet)
-        {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'Account wallet balance is low, top-up your wallet and try again.'
-            ]);
-        }
-
-        // dd($planId, number_format($price), $currency);
-
         $plan = OjaPlan::find($planId);
         $planInterval = OjaPlanInterval::where('plan_id', $plan->id)->where('price', $price)->where('currency', $currency)->first();
 
-        // return (now()->addMonth()->subDays(3)->toDateString());
+        if($planInterval->currency_sign == '₦')
+        {
+            if($price > Auth::user()->wallet)
+            {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Account naira wallet balance is low, top-up your wallet and try again.'
+                ]);
+            }
+        } else {
+            if($price > Auth::user()->dollar_wallet)
+            {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Account dollar wallet balance is low, top-up your wallet and try again.'
+                ]);
+            }
+        }
 
         if($planInterval->type == 'monthly')
         {
@@ -176,10 +222,47 @@ class AccountUpgradeController extends Controller
             $expiryNotice = now()->addYear()->subDays(7)->toDateString();
         }
 
+        $levels = AffiliateLevel::all();
+
+        if (Auth::user()->referral_link) {
+            $affiliates = Affiliates::where('referral_id', Auth::user()->id)->get();
+
+            foreach ($affiliates as $affiliate) {
+                if (!empty($affiliate->bonus)) {
+                    continue; // Skip processing if bonus is not empty
+                }
+
+                $level = $levels->where('level', $affiliate->level)->first();
+
+                if ($level) {
+                    $earnings = $level->bonus_percent * $price / 100;
+
+                    $affiliate->update([
+                        'bonus' => $earnings
+                    ]);
+
+                    $user_wallet = User::find($affiliate->referrer_id);
+                    if ($user_wallet) {
+                        if($planInterval->currency_sign == '₦')
+                        {
+                            $user_wallet->update([
+                                'wallet' => $user_wallet->wallet + $earnings,
+                                'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                            ]);
+                        } else {
+                            $user_wallet->update([
+                                'dollar_wallet' => $user_wallet->dollar_wallet + $earnings,
+                                'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+
         OjaSubscription::create([
             'user_id' => Auth::user()->id,
             'plan_id' => $plan->id,
-            // 'plan_interval' =>
             'status' => 'Active',
             'ends_at' => $date,
             'started_at' => now(),
@@ -189,15 +272,22 @@ class AccountUpgradeController extends Controller
         ]);
 
         $user = User::find(Auth::user()->id);
-
-        $user->update([
-            'plan' => $plan->id,
-            'wallet' => $user->wallet - $planInterval->price
-        ]);
+        if($planInterval->currency_sign == '₦')
+        {
+            $user->update([
+                'plan' => $plan->id,
+                'wallet' => $user->wallet - $planInterval->price
+            ]);
+        } else {
+            $user->update([
+                'plan' => $plan->id,
+                'dollar_wallet' => $user->dollar_wallet - $planInterval->price
+            ]);
+        }
 
         Transaction::create([
             'user_id' => $user->id,
-            'amount' => $planInterval->currency.''.$planInterval->price,
+            'amount' => $planInterval->currency_sign.''.$planInterval->price,
             'reference' => config('app.name'),
             'status' => 'Account Upgrade.'
         ]);
@@ -222,26 +312,6 @@ class AccountUpgradeController extends Controller
         $planId = Crypt::decrypt($plan_id);
         $price = Crypt::decrypt($price);
         $currency = Crypt::decrypt($currency);
-        $baseCurrency = CurrencyRate::getBaseCur('USD');
-        $multiplier = 1;
-
-        // if($currency == "USD"){
-        //     $current_currency = 'USD';
-        //     $baseCurrency = \App\Models\CurrencyRate::getBaseCur('USD');
-        //     $multiplier = (int) $baseCurrency;
-        //     $tamount  = $price * $multiplier;
-        // } else if($currency == "GBP") {
-        //     $current_currency = 'GBP';
-        //     $baseCurrency = \App\Models\CurrencyRate::getBaseCur('GBP');
-        //     $multiplier = (int) $baseCurrency;
-        //     $tamount  = $price * $multiplier;
-        // } else if($currency == "NGN") {
-        //     $current_currency = 'NGN';
-        //     $tamount = 1 * $price;
-        // } else {
-        //     $current_currency = $currency;
-        //     $tamount = 1 * $price;
-        // }
 
         if($price <= 0)
         {
@@ -274,12 +344,8 @@ class AccountUpgradeController extends Controller
             ]);
         }
 
-        // dd($planId, number_format($price), $currency);
-
         $plan = OjaPlan::find($planId);
         $planInterval = OjaPlanInterval::where('plan_id', $plan->id)->where('price', $price)->where('currency', $currency)->first();
-
-        // return (now()->addMonth()->subDays(3)->toDateString());
 
         if($planInterval->type == 'monthly')
         {
@@ -292,10 +358,47 @@ class AccountUpgradeController extends Controller
             $expiryNotice = now()->addYear()->subDays(7)->toDateString();
         }
 
+        $levels = AffiliateLevel::all();
+
+        if (Auth::user()->referral_link) {
+            $affiliates = Affiliates::where('referral_id', Auth::user()->id)->get();
+
+            foreach ($affiliates as $affiliate) {
+                if (!empty($affiliate->bonus)) {
+                    continue; // Skip processing if bonus is not empty
+                }
+
+                $level = $levels->where('level', $affiliate->level)->first();
+
+                if ($level) {
+                    $earnings = $level->bonus_percent * $price / 100;
+
+                    $affiliate->update([
+                        'bonus' => $earnings
+                    ]);
+
+                    $user_wallet = User::find($affiliate->referrer_id);
+                    if ($user_wallet) {
+                        if($planInterval->currency_sign == '₦')
+                        {
+                            $user_wallet->update([
+                                'wallet' => $user_wallet->wallet + $earnings,
+                                'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                            ]);
+                        } else {
+                            $user_wallet->update([
+                                'dollar_wallet' => $user_wallet->dollar_wallet + $earnings,
+                                'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+
         OjaSubscription::create([
             'user_id' => Auth::user()->id,
             'plan_id' => $plan->id,
-            // 'plan_interval' =>
             'status' => 'Active',
             'ends_at' => $date,
             'started_at' => now(),
@@ -305,10 +408,13 @@ class AccountUpgradeController extends Controller
         ]);
 
         $user = User::find(Auth::user()->id);
+        $user->update([
+            'plan' => $plan->id,
+        ]);
 
         Transaction::create([
             'user_id' => $user->id,
-            'amount' => $planInterval->currency.''.$planInterval->price,
+            'amount' => $planInterval->currency_sign.''.$planInterval->price,
             'reference' => config('app.name').'with stripe',
             'status' => 'Account Upgrade.'
         ]);

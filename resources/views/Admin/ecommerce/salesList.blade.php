@@ -64,7 +64,7 @@
                                                 <td>#{{$item->order_no}}</td>
                                                 <td>{{$item->store->name}}</td>
                                                 <td>{{$item->quantity}}</td>
-                                                <td>₦{{number_format($item->amount, 2)}}</td>
+                                                <td>{{$item->amount}}</td>
                                                 <td>{{$item->status}}</td>
                                                 <td>{{$item->created_at->format('d M, Y')}}</td>
                                                 <td>

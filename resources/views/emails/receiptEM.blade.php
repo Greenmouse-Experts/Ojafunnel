@@ -274,7 +274,7 @@
           <tr>
             <td>
               <strong>{{$store->name}}</strong><br />
-              <img style="width: 40px;" src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="{{$store->name}}"> <br /><br />
+              <img style="width: 40px;" src="{{URL::asset(Storage::url($store->logo)) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="{{$store->name}}"> <br /><br />
             </td>
           </tr>
           <tr>
@@ -372,7 +372,7 @@
                       <table cellspacing="0" cellpadding="0" width="100%">
                         <tr>
                           <td class="mobile-hide-img">
-                            <a href=""><img width="110" height="92" src="{{Storage::url($item->product->image)}}" alt="item1"></a>
+                            <a href=""><img width="110" height="92" src="{{URL::asset(Storage::url($item->product->image))}}" alt="item1"></a>
                           </td>
                           <td class="product">
                             <span style="color: #4d4d4d; font-weight:bold;">{{$item->product->name}}</span>
@@ -402,7 +402,7 @@
                       @endif
                     </td>
                     <td class="item-col">
-                        {{$store->currency_sign}}{{number_format($item->quantity*$item->amount, 2)}}
+                    {{$store->currency_sign}}{{$item->quantity * preg_replace('/[^0-9.]/', '', $item->amount)}}
                     </td>
                   </tr>
                   @endforeach
@@ -411,7 +411,6 @@
                     <td class="item-col item mobile-row-padding"></td>
                     <td class="item-col price"></td>
                   </tr>
-
 
                   <tr>
                     <td class="item-col item"></td>

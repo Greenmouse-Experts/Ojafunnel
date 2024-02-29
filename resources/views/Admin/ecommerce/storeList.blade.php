@@ -78,9 +78,6 @@
                                                         <li data-bs-toggle="tooltip" data-bs-placement="top" title="Visit Store">
                                                             <a target="_blank" href="{{route('user.stores.link', $item->name)}}" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
                                                         </li>
-                                                        {{-- <li data-bs-toggle="tooltip" data-bs-placement="top" title="Deactivate">
-                                                            <a href="#" class="btn btn-sm btn-soft-warning"><i class="bi bi-eye-slash-fill"></i></a>
-                                                        </li> --}}
                                                     </ul>
                                                 </td>
                                             </tr>

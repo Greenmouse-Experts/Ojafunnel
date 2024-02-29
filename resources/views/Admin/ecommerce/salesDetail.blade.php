@@ -97,7 +97,7 @@
                                             <th>Price</th>
                                             <th>Qty</th>
                                             <th>Subtotal</th>
-                                            <th>Tax Amount</th>
+                                            <!-- <th>Tax Amount</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,28 +108,16 @@
                                             <td><img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset=""></td>
                                             <td class="text-wrap" style="width: 330px;">{{$item->product->description}}</td>
                                             <td>{{$item->quantity}}</td>
-                                            <td>₦{{$item->amount}}</td>
-                                            <td>₦{{number_format($item->quantity*$item->amount, 2)}}</td>
+                                            <td>{{$item->amount}}</td>
+                                            <!-- <td>{{$item->quantity * preg_replace('/[^0-9.]/', '', $item->amount)}}</td> -->
                                         </tr>
                                         @endforeach
-                                        {{-- <tr>
-                                            <td colspan="6" class="border-0 text-end">
-                                                <strong>Sub Total:</strong>
-                                            </td>
-                                            <td class="border-0">$13.00</td>
-                                        </tr>
                                         <tr>
-                                            <td colspan="6" class="border-0 text-end">
-                                                <strong>Tax (18%):</strong>
-                                            </td>
-                                            <td class="border-0">$13.00</td>
-                                        </tr> --}}
-                                        <tr>
-                                            <td colspan="6" class="border-0 text-end">
+                                            <td colspan="5" class="border-0 text-end">
                                                 <strong>Total:</strong>
                                             </td>
                                             <td class="border-0">
-                                               <b>₦{{number_format($order->amount, )}}</b>
+                                               <b>{{$order->amount}}</b>
                                             </td>
                                         </tr>
                                     </tbody>

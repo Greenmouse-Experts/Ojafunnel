@@ -76,36 +76,6 @@ class TransactionController extends Controller
             'wallet' => $user->wallet + $amount
         ]);
 
-        $levels = AffiliateLevel::all();
-
-        if (Auth::user()->referral_link) {
-            $affiliates = Affiliates::where('referral_id', Auth::user()->id)->get();
-
-            foreach ($affiliates as $affiliate) {
-                if (!empty($affiliate->bonus)) {
-                    continue; // Skip processing if bonus is not empty
-                }
-
-                $level = $levels->where('level', $affiliate->level)->first();
-
-                if ($level) {
-                    $earnings = $level->bonus_percent * $amount / 100;
-
-                    $affiliate->update([
-                        'bonus' => $earnings
-                    ]);
-
-                    $user_wallet = User::find($affiliate->referrer_id);
-                    if ($user_wallet) {
-                        $user_wallet->update([
-                            'wallet' => $user_wallet->wallet + $earnings,
-                            'ref_bonus' => $user_wallet->ref_bonus + $earnings,
-                        ]);
-                    }
-                }
-            }
-        }
-
         Transaction::create([
             'user_id' => $user->id,
             'amount' => '₦'.$amount,
