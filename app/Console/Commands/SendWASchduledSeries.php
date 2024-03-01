@@ -45,6 +45,8 @@ class SendWASchduledSeries extends Command
 
         $seriesSDJ = SeriesWaCampaign::where('type', 'sameday_joined')->get();
 
+        echo json_encode($seriesSDJ);
+
         $count = 1;
 
         foreach($seriesIJ as $element)
