@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger('dollar_wallet')->default(0)->after('wallet')->comment('User dollar wallet balance');
+            $table->string('dollar_wallet')->default(0)->after('wallet')->comment('User dollar wallet balance');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('dollar_wallet');
         });
     }
 };

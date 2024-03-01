@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('affiliate_bonuses');
+        Schema::dropIfExists('affiliate_levels');
     }
 };
