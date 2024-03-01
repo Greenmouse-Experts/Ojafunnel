@@ -143,8 +143,6 @@ class ShopFrontController extends Controller
 
     public function checkoutPaymentWithPromotion(Request $request, $promotion_id, $course_id)
     {
-        // return $request->all();
-
         $shop = Shop::where('name', $request->shopname)->first();
 
         $cart = session()->get('cart');
@@ -256,13 +254,27 @@ class ShopFrontController extends Controller
             }
             $userData->update();
 
+            OjafunnelNotification::create([
+                'to' => $userData->id,
+                'title' => config('app.name'),
+                'body' => $request->name . ' purchase/enroll on a course published in your shop.'
+            ]);
+
             // add fund to promoter and promoter referral wallet
             if ($item['id'] == $course_id && $promoter->exists()) {
                 // level1 fee
-                $promoter->update([
-                    'wallet' => $promoter->first()->wallet + $level1_fee,
-                    'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
-                ]);
+                if($shop->currency == 'NGN')
+                {
+                    $promoter->update([
+                        'wallet' => $promoter->first()->wallet + $level1_fee,
+                        'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
+                    ]);
+                } else {
+                    $promoter->update([
+                        'dollar_wallet' => $promoter->first()->dollar_wallet + $level1_fee,
+                        'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
+                    ]);
+                }
 
                 // notify level 1 here
 
@@ -270,10 +282,18 @@ class ShopFrontController extends Controller
                 if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
                     $user = User::where(['id' => $promoter->first()->referral_link]);
 
-                    $user->update([
-                        'wallet' => $user->first()->wallet + $level2_fee,
-                        'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
-                    ]);
+                    if($shop->currency == 'NGN')
+                    {
+                        $user->update([
+                            'wallet' => $user->first()->wallet + $level2_fee,
+                            'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                        ]);
+                    } else {
+                        $user->update([
+                            'dollar_wallet' => $user->first()->dollar_wallet + $level2_fee,
+                            'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                        ]);
+                    }
 
                     // notify level 2 here
                 }
@@ -281,12 +301,6 @@ class ShopFrontController extends Controller
         }
 
         $userData = ModelsUser::findOrFail($shop->user_id);
-
-        OjafunnelNotification::create([
-            'to' => $userData->id,
-            'title' => config('app.name'),
-            'body' => $request->name . ' purchase/enroll on a course published in your shop.'
-        ]);
 
         session()->forget('cart');
 
@@ -348,8 +362,6 @@ class ShopFrontController extends Controller
                 ]);
             }
         }
-
-        // dd($request->name, $request->email, $request->phoneNo, $request->address, $request->state, $request->country);
 
         $enroll = Enrollment::create([
             'shop_id' => $shop->id,

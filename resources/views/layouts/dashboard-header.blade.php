@@ -46,7 +46,7 @@
                         <div class="dropdown-item-text">
                             <div>
                                 <p class="text-muted mb-2">Available Balance</p>
-                                <h5 class="mb-0">₦{{number_format(Auth::user()->wallet, 2)}}</h5> <button data-bs-toggle="modal" data-bs-target="#emailConfirm">Deposit Now</button>
+                                <h5 class="mb-0">₦{{number_format(Auth::user()->wallet, 2)}}</h5> <button data-bs-toggle="modal" data-bs-target="#nairaPayment">Deposit Now</button>
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
@@ -61,6 +61,7 @@
                             <div>
                                 <p class="text-muted mb-2">Available Balance</p>
                                 <h5 class="mb-0">${{number_format(Auth::user()->dollar_wallet, 2)}}</h5>
+                                <button data-bs-toggle="modal" data-bs-target="#dollarPayment">Deposit Now</button>
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
@@ -179,7 +180,7 @@
 </header>
 
 <!-- email confirm modal -->
-<div class="modal fade" id="emailConfirm" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+<div class="modal fade" id="nairaPayment" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
@@ -224,6 +225,59 @@
 </div>
 <!-- end modal -->
 
+<!-- email confirm modal -->
+<div class="modal fade" id="dollarPayment" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    Provide Us Your Amount Below
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="Edit-level">
+                        <form class="paymentForm" id="dollarPaymentForm" method="post" action="{{route('user.fund.dollar.account')}}">
+                            @csrf
+                            <div class="form">
+                                <div class="col-lg-12 mb-4">
+                                    <label>Amount</label>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <input type="number" placeholder="Enter Your Amount" name="amount" class="input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-4">
+                                    <label for="Name">Name on card</label>
+                                    <input type="text" name="cardName" id="card-name" placeholder="Enter card name" required />
+                                </div>
+                                <div class="col-12 mb-4">
+                                    <div id="card"></div>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <div class="col-6">
+                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                           Fund Wallet
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+
 <script>
     var paymentForm = document.querySelector('.paymentForm');
     paymentForm.addEventListener("submit", payWithPaystack, false);
@@ -245,6 +299,54 @@
             alert('window closed');
         }
         });
-    handler.openIframe();
-  }
+        handler.openIframe();
+    }
+
+    $.ajax({
+        method: 'GET',
+        url: '/retrieve/payment/' + 'Stripe', // Replace with your actual backend endpoint
+        success: function(response) {
+            let stripe = Stripe(response.STRIPE_KEY);
+            const elements = stripe.elements();
+            const cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        fontSize: '16px'
+                    }
+                }
+            });
+
+            const checkoutForm = document.getElementById('dollarPaymentForm');
+            const cardName = document.getElementById('card-name');
+            cardElement.mount('#card');
+
+            checkoutForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const { paymentMethod, error } = await stripe.createPaymentMethod({
+                    type: 'card',
+                    card: cardElement,
+                    billing_details: {
+                        name: cardName.value
+                    }
+                });
+
+                if (error) {
+                    console.log('error');
+                } else {
+                    let input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', 'payment_method');
+                    input.setAttribute('value', paymentMethod.id);
+                    checkoutForm.appendChild(input);
+
+                    // Directly submit the form
+                    checkoutForm.submit();
+                }
+            });
+        },
+        error: function(error) {
+            console.error("Error fetching payment details:", error);
+        }
+    });
 </script>

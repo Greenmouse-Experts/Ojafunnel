@@ -9,6 +9,7 @@ use App\Models\AffiliateLevel;
 use App\Models\Affiliates;
 use App\Models\BankDetail;
 use App\Models\OjafunnelNotification;
+use App\Models\PaymentGateway;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Withdrawal;
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use Stripe\Exception\CardException;
+use Stripe\StripeClient;
 
 class TransactionController extends Controller
 {
@@ -91,6 +94,59 @@ class TransactionController extends Controller
 
         $user = User::where('id', Auth::user()->id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
         $this->fcm('Your ' . config('app.name') . ' account has been funded ₦' . $amount . '.', $user);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Deposited successfully.'
+        ]);
+    }
+
+    public function fundDollarAccount(Request $request)
+    {
+        // Fetch PaymentGateway details from the database
+        $paymentGateway = PaymentGateway::where('name', 'Stripe')->first();
+
+        $user = User::findorfail(Auth::user()->id);
+
+        try {
+            $stripe = new StripeClient($paymentGateway->STRIPE_SECRET);
+
+            $stripe->paymentIntents->create([
+                'amount' => $request->amount * 100,
+                'currency' => 'USD',
+                'payment_method' => $request->payment_method,
+                'description' => 'Product payment with stripe',
+                'confirm' => true,
+                'receipt_email' => $user->email,
+                'automatic_payment_methods[enabled]' => true,
+                'automatic_payment_methods[allow_redirects]' => 'never'
+            ]);
+        } catch (CardException $th) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "There was a problem processing your payment."
+            ]);
+        }
+
+        $user->update([
+            'dollar_wallet' => $user->dollar_wallet + $request->amount
+        ]);
+
+        Transaction::create([
+            'user_id' => $user->id,
+            'amount' => '$'.$request->amount,
+            'reference' => Str::random(8),
+            'status' => 'Top Up'
+        ]);
+
+        OjafunnelNotification::create([
+            'to' => Auth::user()->id,
+            'title' => config('app.name'),
+            'body' => 'Your ' . config('app.name') . ' account has been funded $' . $request->amount . '.'
+        ]);
+
+        $user = User::where('id', Auth::user()->id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+        $this->fcm('Your ' . config('app.name') . ' account has been funded $' . $request->amount . '.', $user);
 
         return back()->with([
             'type' => 'success',
