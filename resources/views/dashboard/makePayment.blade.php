@@ -171,7 +171,7 @@
                             <div class="col-12">
                                 <form action="{{ route('user.upgrade.account.with.balance', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post" id="walletForm">
                                     @csrf
-                                    <button type="button" class="payment-button" data-action="wallet">
+                                    <button type="submit" class="payment-button" data-action="wallet">
                                         Subscribe
                                     </button>
                                 </form>
