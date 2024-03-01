@@ -80,7 +80,7 @@ class Kernel extends ConsoleKernel
         // Run series campaigns every minute
         $schedule->command('smsSeriesCampaign:run')->hourly()->withoutOverlapping();
         $schedule->command('sendwaseries:run')->hourly()->withoutOverlapping();
-        $schedule->command('sendwaserieslater:run')->hourly()->withoutOverlapping();
+        // $schedule->command('sendwaserieslater:run')->hourly()->withoutOverlapping();
         $schedule->command('seriesEmailcampaign:run')->hourly()->withoutOverlapping();
         $schedule->command('send:scheduled-series-sms')->everyMinute()->withoutOverlapping();
         $schedule->command('sendwascheduledseries:run')->everyMinute()->withoutOverlapping();
