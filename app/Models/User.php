@@ -17,7 +17,29 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'user_type',
+        'affiliate_link',
+        'code',
+        'photo',
+        'first_name',
+        'last_name',
+        'username',
+        'email',
+        'phone_number',
+        'referral_link',
+        'plan',
+        'wallet',
+        'ref_bonus',
+        'promotion_link',
+        'promotion_bonus',
+        'password',
+        'status',
+        'fcm_token',
+        'feature_access',
+        'paid_for_backup',
+        'dollar_wallet'
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
