@@ -133,7 +133,7 @@
                             </h1>
                             @endforeach
                         @endif
-                        @if($currency == 'USD' || $currency == 'GBP')
+                        <!-- @if($currency == 'USD' || $currency == 'GBP')
                         <div class="form" style="display: none;" id="stripePayment">
                             <h5 class="mt-3 mb-3 font-size-15">For Stripe Payment</h5>
                             <div class="row">
@@ -146,9 +146,9 @@
                                 </div>
                             </div>
                         </div>
-                        @endif
+                        @endif -->
                         <div class="row">
-                            @foreach(App\Models\PaymentGateway::latest()->where('status', 'Active')->get() as $payment)
+                            <!-- @foreach(App\Models\PaymentGateway::latest()->where('status', 'Active')->get() as $payment)
                                 <div class="col-12">
                                     @if($payment->name == 'Paystack' && $currency == 'NGN')
                                         <button type="button">
@@ -167,12 +167,12 @@
                                         </form>
                                     @endif
                                 </div>
-                            @endforeach
+                            @endforeach -->
                             <div class="col-12">
                                 <form action="{{ route('user.upgrade.account.with.balance', [Crypt::encrypt($plan->id), Crypt::encrypt($price), Crypt::encrypt($currency)]) }}" method="post" id="walletForm">
                                     @csrf
                                     <button type="button" class="payment-button" data-action="wallet">
-                                        PAY WITH WALLET BALANCE
+                                        Subscribe
                                     </button>
                                 </form>
                             </div>
@@ -187,7 +187,7 @@
 </div>
 <!-- END layout-wrapper -->
 <script src="https://js.stripe.com/v3/"></script>
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.payment-button').forEach(function (button) {
             button.addEventListener('click', function () {
@@ -248,5 +248,5 @@
         }
     });
 
-</script>
+</script> -->
 @endsection
