@@ -45,8 +45,6 @@ class SendWASchduledSeries extends Command
 
         $seriesSDJ = SeriesWaCampaign::where('type', 'sameday_joined')->get();
 
-        echo json_encode($seriesSDJ);
-
         $count = 1;
 
         foreach($seriesIJ as $element)
@@ -79,6 +77,7 @@ class SendWASchduledSeries extends Command
             foreach ($chunks as $key => $_chunk) {
                 // Check if the message has already been sent to this contact
                 if (!$this->messageSent($element, $_chunk, $element->type)) {
+                // if (true) {
                     // Send the Whatsapp message
                     $contactsCollection = new Collection($contacts);
                     if ($_campaign->template == 'template1') {
@@ -92,6 +91,7 @@ class SendWASchduledSeries extends Command
                         ])->onQueue('waTemplate1')->delay($delay);
 
                         $delay += mt_rand(10, 20);
+                        
 
                         // Log or handle the message sending process
                         $this->logMessageSent($element, $_chunk, $element->type);
@@ -135,6 +135,8 @@ class SendWASchduledSeries extends Command
                         // Log or handle the message sending process
                         $this->logMessageSent($element, $_chunk, $element->type);
                     }
+
+                    $count++;
                 }
             }
 
@@ -142,6 +144,11 @@ class SendWASchduledSeries extends Command
             // WaQueues::where(['wa_campaign_id' => $_campaign->id])->update([
             //     'status' => 'Waiting'
             // ]);
+
+            print("message sent to $count contacts");
+            
+            SeriesWaCampaign::where(['id' => $element->id,])->update(['DeliveredCount' => $count]);
+            // WaCampaigns::where(['id' => $element->wa_campaign_id])->update(['']);
         }
 
 
@@ -169,6 +176,7 @@ class SendWASchduledSeries extends Command
             foreach ($chunks as $key => $_chunk) {
                 // Check if the message has already been sent to this contact
                 if (!$this->messageSent($element, $_chunk, $element->type)) {
+                // if (true){
                     // Send the Whatsapp message
                     $contactsCollection = new Collection($contacts);
                     if ($_campaign->template == 'template1') {
@@ -232,9 +240,12 @@ class SendWASchduledSeries extends Command
             // WaQueues::where(['wa_campaign_id' => $_campaign->id])->update([
             //     'status' => 'Waiting'
             // ]);
+
+            SeriesWaCampaign::where(['id' => $element->id,])->update(['DeliveredCount' => $count]);
         }
 
 
+        
         return Command::SUCCESS;
     }
 
