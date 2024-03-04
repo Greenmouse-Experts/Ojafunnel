@@ -18,6 +18,7 @@ use App\Models\OjaPlanParameter;
 use App\Models\SeriesSmsCampaign;
 use Illuminate\Support\Str;
 use Aws\Sns\SnsClient;
+use Illuminate\Support\Facades\Log;
 
 class SmsAutomationController extends Controller
 {
@@ -552,9 +553,9 @@ class SmsAutomationController extends Controller
         $sender_name = $request->sender_name;
         $api_key = $integration->api_key;
 
-        try {
-            foreach($contacts as $contact)
-            {
+        foreach($contacts as $contact)
+        {
+            try {
                 $client = new Client(); //GuzzleHttp\Client
                 $url = "https://app.multitexter.com/v2/app/sms";
 
@@ -572,15 +573,18 @@ class SmsAutomationController extends Controller
                     'Authorization' => 'Bearer ' . $api_key
                 ];
 
-                $client->request('POST', $url, [
+                $response = $client->request('POST', $url, [
                     'json' => $params,
                     'headers' => $headers,
                 ]);
+
+                $statusCode = $response->getStatusCode();
+                $responseBody = $response->getBody()->getContents();
+                Log::info("Multitexter SMS sent. Status Code: $statusCode, Response: $responseBody");
+            } catch (Exception $e) {
+                $responseBody = $e->getMessage();
+                Log::error("Error sending Multitexter SMS: " . $e->getMessage());
             }
-            // $responseBody = json_decode($response->getBody());
-            $responseBody = true;
-        } catch (Exception $e) {
-            $responseBody = $e;
         }
 
         return $responseBody;
