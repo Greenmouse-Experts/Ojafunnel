@@ -148,10 +148,11 @@ class SmsBirthday extends Command
                             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
                             $result = curl_exec($ch);
+
+                            $responseBody = true;
                         } catch (Exception $e) {
                             $responseBody = $e;
                         }
-
                         // Introduce a delay if necessary
                         sleep($delay);
                     }
@@ -164,7 +165,8 @@ class SmsBirthday extends Command
                     $from_number = $integration->from;
                     $sender_name = $ba->sender_name;
 
-                    try {
+                    foreach( $birthdayContactLists as $contact )
+                    {
                         $sid = $sid; // Your Account SID from www.twilio.com/console
                         $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
                         $from_number = $from_number; // Valid Twilio number
@@ -173,8 +175,7 @@ class SmsBirthday extends Command
 
                         $count = 0;
 
-                        foreach( $birthdayContactLists as $contact )
-                        {
+                        try {
                             $count++;
 
                             $RECIPIENT = $contact->phone;
@@ -188,9 +189,11 @@ class SmsBirthday extends Command
                                     'body' => $MESSAGE,
                                 ]
                             );
+
+                            $responseBody = true;
+                        } catch(Exception $e) {
+                            $responseBody = $e->getMessage();
                         }
-                    } catch(Exception $e) {
-                        $responseBody = $e->getMessage();
                     }
                 }
 
@@ -200,9 +203,9 @@ class SmsBirthday extends Command
                     $BASE_URL = $integration->api_base_url;
                     $SENDER = $ba->sender_name;;
 
-                    try {
-                        foreach($birthdayContactLists as $contact)
-                        {
+                    foreach($birthdayContactLists as $contact)
+                    {
+                        try {
                             $RECIPIENT = $contact->phone;
 
                             $MESSAGE = str_replace('$name', $contact->name, $ba->message);
@@ -243,14 +246,12 @@ class SmsBirthday extends Command
                             $response = curl_exec($curl);
 
                             curl_close($curl);
+
+                            $responseBody = true;
+                        } catch (Exception $e) {
+                            $responseBody = $e->getMessage();
                         }
-
-                        $responseBody = true;
-                    } catch (Exception $e) {
-                        $responseBody = $e;
                     }
-
-                    return $responseBody;
                 }
 
                 if($integration->type == 'AWS')
@@ -259,9 +260,9 @@ class SmsBirthday extends Command
                     $secret = $integration->secret;
                     $sender = $ba->sender_name;
 
-                    try {
-                        foreach($birthdayContactLists as $contact)
-                        {
+                    foreach($birthdayContactLists as $contact)
+                    {
+                        try {
                             $messageContent = str_replace('$name', $contact->name, $ba->message);
 
                             // Required variables to initialize SNS Client Object
@@ -294,15 +295,12 @@ class SmsBirthday extends Command
 
 
                             $result = $SnSclient->publish($args);
-                            // return $result;
+
+                            $responseBody = true;
+                        } catch (Exception $e) {
+                            $responseBody = $e->getMessage();
                         }
-
-                        $responseBody = true;
-                    } catch (Exception $e) {
-                        $responseBody = $e;
                     }
-
-                    return $responseBody;
                 }
             }
 
@@ -407,7 +405,8 @@ class SmsBirthday extends Command
                     $from_number = $integration->from;
                     $sender_name = $ba->sender_name;
 
-                    try {
+                    foreach( $birthdayContactLists as $contact )
+                    {
                         $sid = $sid; // Your Account SID from www.twilio.com/console
                         $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
                         $from_number = $from_number; // Valid Twilio number
@@ -416,8 +415,7 @@ class SmsBirthday extends Command
 
                         $count = 0;
 
-                        foreach( $birthdayContactLists as $contact )
-                        {
+                        try {
                             $count++;
 
                             $RECIPIENT = $contact->phone;
@@ -431,9 +429,9 @@ class SmsBirthday extends Command
                                     'body' => $MESSAGE,
                                 ]
                             );
+                        } catch(Exception $e) {
+                            $responseBody = $e->getMessage();
                         }
-                    } catch(Exception $e) {
-                        $responseBody = $e->getMessage();
                     }
                 }
 
@@ -443,9 +441,9 @@ class SmsBirthday extends Command
                     $BASE_URL = $integration->api_base_url;
                     $SENDER = $ba->sender_name;;
 
-                    try {
-                        foreach($birthdayContactLists as $contact)
-                        {
+                    foreach($birthdayContactLists as $contact)
+                    {
+                        try {
                             $RECIPIENT = $contact->phone;
 
                             $MESSAGE = str_replace('$name', $contact->name, $ba->message);
@@ -486,14 +484,10 @@ class SmsBirthday extends Command
                             $response = curl_exec($curl);
 
                             curl_close($curl);
+                        } catch (Exception $e) {
+                            $responseBody = $e;
                         }
-
-                        $responseBody = true;
-                    } catch (Exception $e) {
-                        $responseBody = $e;
                     }
-
-                    return $responseBody;
                 }
 
                 if($integration->type == 'AWS')
@@ -502,9 +496,9 @@ class SmsBirthday extends Command
                     $secret = $integration->secret;
                     $sender = $ba->sender_name;
 
-                    try {
-                        foreach($birthdayContactLists as $contact)
-                        {
+                    foreach($birthdayContactLists as $contact)
+                    {
+                        try {
                             $messageContent = str_replace('$name', $contact->name, $ba->message);
 
                             // Required variables to initialize SNS Client Object
@@ -538,14 +532,10 @@ class SmsBirthday extends Command
 
                             $result = $SnSclient->publish($args);
                             // return $result;
+                        } catch (Exception $e) {
+                            $responseBody = $e;
                         }
-
-                        $responseBody = true;
-                    } catch (Exception $e) {
-                        $responseBody = $e;
                     }
-
-                    return $responseBody;
                 }
 
             }

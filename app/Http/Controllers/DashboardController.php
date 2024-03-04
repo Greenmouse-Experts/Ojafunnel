@@ -2341,16 +2341,19 @@ class DashboardController extends Controller
     {
         $whatsapp_campaign = WaCampaigns::find($request->id);
 
-        if (count($whatsapp_campaign->wa_queues->where('status', 'Waiting')) > 0) {
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'The WA campaign can\'t be deleted during execution.'
-            ]);
-        }
+        // if (count($whatsapp_campaign->wa_queues->where('status', 'Waiting')) > 0) {
+        //     return back()->with([
+        //         'type' => 'danger',
+        //         'message' => 'The WA campaign can\'t be deleted during execution.'
+        //     ]);
+        // }
 
         // delete all related wa_queues
         $whatsapp_campaign->wa_queues()->delete();
 
+        // delete all related wa_series
+        $whatsapp_campaign->wa_series()->delete();
+        
         // delete campaign
         $whatsapp_campaign->delete();
 

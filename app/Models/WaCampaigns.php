@@ -38,4 +38,9 @@ class WaCampaigns extends Model
     {
         return $this->hasMany(WaQueues::class, 'wa_campaign_id');
     }
+
+    public function wa_series()
+    {
+        return $this->hasMany(SeriesWaCampaign::class, 'wa_campaign_id');
+    }
 }

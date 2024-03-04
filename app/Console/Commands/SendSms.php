@@ -237,7 +237,8 @@ class SendSms extends Command
         $sender_name = $sms->sender_name;
         $recipients = $d;
 
-        try {
+        foreach( $recipients as $value )
+        {
             $sid = $sid; // Your Account SID from www.twilio.com/console
             $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
             $from_number = $from_number; // Valid Twilio number
@@ -246,7 +247,7 @@ class SendSms extends Command
 
             $count = 0;
 
-            foreach( $recipients as $value )
+            try
             {
                 $messageContent = str_replace('$name', $value['name'], $sms->message);
 
@@ -259,14 +260,13 @@ class SendSms extends Command
                         'body' => $messageContent,
                     ]
                 );
+
+                $responseBody = true;
+            } catch(Exception $e) {
+                $responseBody = $e->getMessage();
             }
-
-            return true;
-
-        } catch(Exception $e) {
-            return $e->getMessage();
         }
-
+        return $responseBody;
     }
 
     public function sendMessageMultitexter($sms)
@@ -280,9 +280,9 @@ class SendSms extends Command
         $sender_name = $sms->sender_name;
         $api_key = $integration->api_key;
 
-        try {
-            foreach($contacts as $contact)
-            {
+        foreach($contacts as $contact)
+        {
+            try {
                 $client = new Client(); //GuzzleHttp\Client
                 $url = "https://app.multitexter.com/v2/app/sms";
 
@@ -304,11 +304,12 @@ class SendSms extends Command
                     'json' => $params,
                     'headers' => $headers,
                 ]);
+
+                // $responseBody = json_decode($response->getBody());
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e;
             }
-            // $responseBody = json_decode($response->getBody());
-            $responseBody = true;
-        } catch (Exception $e) {
-            $responseBody = $e;
         }
 
         return $responseBody;
@@ -324,9 +325,9 @@ class SendSms extends Command
         $password = $integration->password;
         $sender = $sms->sender_name;
 
-        try {
-            foreach($contacts as $contact)
-            {
+        foreach($contacts as $contact)
+        {
+            try {
                 $messageContent = str_replace('$name', $contact->name, $sms->message);
 
                 // Separate multiple numbers by comma
@@ -353,23 +354,22 @@ class SendSms extends Command
 
                 $result = json_decode($result);
 
+                $responseBody = true;
+
+                // if (isset($result->status) && strtoupper($result->status) == 'OK') {
+                //     // Message sent successfully, do anything here
+                //     return 'Message sent at N' . $result->price;
+                // } else if (isset($result->error)) {
+                //     // Message failed, check reason.
+                //     return 'Message failed - error: ' . $result->error;
+                // } else {
+                //     // Could not determine the message response.
+                //     return 'Unable to process request';
+                // }
+            } catch (Exception $e) {
+                $responseBody = $e->getMessage();
             }
-
-            $responseBody = true;
-            // if (isset($result->status) && strtoupper($result->status) == 'OK') {
-            //     // Message sent successfully, do anything here
-            //     return 'Message sent at N' . $result->price;
-            // } else if (isset($result->error)) {
-            //     // Message failed, check reason.
-            //     return 'Message failed - error: ' . $result->error;
-            // } else {
-            //     // Could not determine the message response.
-            //     return 'Unable to process request';
-            // }
-        } catch (Exception $e) {
-            $responseBody = $e;
         }
-
         return $responseBody;
     }
 
@@ -383,9 +383,9 @@ class SendSms extends Command
         $secret = $integration->secret;
         $sender = $sms->sender_name;
 
-        try {
-            foreach($contacts as $contact)
-            {
+        foreach($contacts as $contact)
+        {
+            try {
                 $messageContent = str_replace('$name', $contact->name, $sms->message);
 
                 // Required variables to initialize SNS Client Object
@@ -419,11 +419,10 @@ class SendSms extends Command
 
                 $result = $SnSclient->publish($args);
                 // return $result;
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e;
             }
-
-            $responseBody = true;
-        } catch (Exception $e) {
-            $responseBody = $e;
         }
 
         return $responseBody;
@@ -439,9 +438,9 @@ class SendSms extends Command
         $BASE_URL = $integration->api_base_url;
         $SENDER = $sms->sender_name;
 
-        try {
-            foreach($contacts as $contact)
-            {
+        foreach($contacts as $contact)
+        {
+            try {
                 $RECIPIENT = $contact->phone;
 
                 $MESSAGE = str_replace('$name', $contact->name, $sms->message);
@@ -482,13 +481,13 @@ class SendSms extends Command
                 $response = curl_exec($curl);
 
                 curl_close($curl);
+
+                $responseBody = true;
+
+            } catch (Exception $e) {
+                $responseBody = $e;
             }
-
-            $responseBody = true;
-        } catch (Exception $e) {
-            $responseBody = $e;
         }
-
         return $responseBody;
     }
 }
