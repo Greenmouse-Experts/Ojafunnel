@@ -511,7 +511,8 @@ class SmsAutomationController extends Controller
         $sender_name = $request->sender_name;
         $recipients = $d;
 
-        try {
+        foreach( $recipients as $value )
+        {
             $sid = $sid; // Your Account SID from www.twilio.com/console
             $auth_token = $auth_token; // Your Auth Token from www.twilio.com/console
             $from_number = $from_number; // Valid Twilio number
@@ -520,8 +521,8 @@ class SmsAutomationController extends Controller
 
             $count = 0;
 
-            foreach( $recipients as $value )
-            {
+            try {
+
                 $messageContent = str_replace('$name', $value['name'], $request->message);
 
                 $count++;
@@ -533,13 +534,15 @@ class SmsAutomationController extends Controller
                         'body' => $messageContent,
                     ]
                 );
+
+                $responseBody = true;
+
+            } catch (Exception $e) {
+                $responseBody = $e->getMessage();
             }
-
-            return true;
-
-        } catch(Exception $e) {
-            return $e->getMessage();
         }
+
+        return $responseBody;
     }
 
     public function sendMessageMultitexter(Request $request)
@@ -600,9 +603,9 @@ class SmsAutomationController extends Controller
         $password = $integration->password;
         $sender = $request->sender_name;
 
-        try {
-            foreach($contacts as $contact)
-            {
+        foreach($contacts as $contact)
+        {
+            try {
                 $messageContent = str_replace('$name', $contact->name, $request->message);
 
                 // Separate multiple numbers by comma
@@ -629,21 +632,21 @@ class SmsAutomationController extends Controller
 
                 $result = json_decode($result);
 
-            }
+                // if (isset($result->status) && strtoupper($result->status) == 'OK') {
+                //     // Message sent successfully, do anything here
+                //     return 'Message sent at N' . $result->price;
+                // } else if (isset($result->error)) {
+                //     // Message failed, check reason.
+                //     return 'Message failed - error: ' . $result->error;
+                // } else {
+                //     // Could not determine the message response.
+                //     return 'Unable to process request';
+                // }
 
-            $responseBody = true;
-            // if (isset($result->status) && strtoupper($result->status) == 'OK') {
-            //     // Message sent successfully, do anything here
-            //     return 'Message sent at N' . $result->price;
-            // } else if (isset($result->error)) {
-            //     // Message failed, check reason.
-            //     return 'Message failed - error: ' . $result->error;
-            // } else {
-            //     // Could not determine the message response.
-            //     return 'Unable to process request';
-            // }
-        } catch (Exception $e) {
-            $responseBody = $e;
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e->getMessage();
+            }
         }
 
         return $responseBody;
@@ -659,9 +662,9 @@ class SmsAutomationController extends Controller
         $secret = $integration->secret;
         $sender = $request->sender_name;
 
-        try {
-            foreach($contacts as $contact)
-            {
+        foreach($contacts as $contact)
+        {
+            try {
                 $messageContent = str_replace('$name', $contact->name, $request->message);
 
                 // Required variables to initialize SNS Client Object
@@ -692,14 +695,12 @@ class SmsAutomationController extends Controller
                     "PhoneNumber" => $contact->phone
                 ];
 
-
                 $result = $SnSclient->publish($args);
-                // return $result;
-            }
 
-            $responseBody = true;
-        } catch (Exception $e) {
-            $responseBody = $e;
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e->getMessage();
+            }
         }
 
         return $responseBody;
@@ -715,9 +716,9 @@ class SmsAutomationController extends Controller
         $BASE_URL = $integration->api_base_url;
         $SENDER = $request->sender_name;
 
-        try {
-            foreach($contacts as $contact)
-            {
+        foreach($contacts as $contact)
+        {
+            try {
                 $RECIPIENT = $contact->phone;
 
                 $MESSAGE = str_replace('$name', $contact->name, $request->message);
@@ -758,11 +759,11 @@ class SmsAutomationController extends Controller
                 $response = curl_exec($curl);
 
                 curl_close($curl);
-            }
 
-            $responseBody = true;
-        } catch (Exception $e) {
-            $responseBody = $e;
+                $responseBody = true;
+            } catch (Exception $e) {
+                $responseBody = $e->getMessage();
+            }
         }
 
         return $responseBody;
