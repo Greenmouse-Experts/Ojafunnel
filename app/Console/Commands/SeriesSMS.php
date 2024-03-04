@@ -145,12 +145,12 @@ class SeriesSMS extends Command
                     // Log the response status code and body
                     $statusCode = $response->getStatusCode();
                     $responseBody = $response->getBody()->getContents();
-                    // Log::info("Multitexter SMS sent. Status Code: $statusCode, Response: $responseBody");
+                    Log::info("Multitexter SMS sent. Status Code: $statusCode, Response: $responseBody");
                     $sms->DeliveredCount = $sms->DeliveredCount + 1;
                 } catch (Exception $e) {
                     $sms->FailedDeliveredCount = $sms->FailedDeliveredCount + 1;
                     // Log the exception
-                    // Log::error("Error sending Multitexter SMS: " . $e->getMessage());
+                    Log::error("Error sending Multitexter SMS: " . $e->getMessage());
                 }
                 $sms->ContactCount = $sms->ContactCount + $contact->count();
                 $sms->NotDeliveredCount = 0;

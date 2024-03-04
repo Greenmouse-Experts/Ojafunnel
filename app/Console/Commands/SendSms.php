@@ -55,68 +55,255 @@ class SendSms extends Command
      */
     public function handle()
     {
-        $fromDate = Carbon::now()->subDays(3)->toDateTimeString();
-        $toDate   = Carbon::now()->toDateTimeString();
+        // onetime, daily, weekly, monthly, yearly, and custom handler
+        $this->oneTimeHandler();
+        $this->dailyHandler();
+        $this->monthlyHandler();
+        $this->yearlyHandler();
+        $this->customHandler();
 
-        $recurring = SmsCampaign::where('schedule_type', 'recurring')->where(['status' => 'scheduled', 'action' => 'Play'])->whereBetween('schedule_time', [$fromDate, $toDate])->get();
-        $onetime = SmsCampaign::where('schedule_type', 'onetime')->where(['status' => 'scheduled', 'action' => 'Play'])->whereBetween('schedule_time', [$fromDate, $toDate])->get();
+        return Command::SUCCESS;
+    }
+
+
+    public function oneTimeHandler()
+    {
+        $oneMinuteAgo = Carbon::now()->subMinute();
+        $oneMinuteLater = Carbon::now()->addMinute();
+
+        $onetime = SmsCampaign::where('schedule_type', 'onetime')
+                ->where('status', 'scheduled')
+                ->where('action', 'Play')
+                ->whereBetween('schedule_time', [$oneMinuteAgo, $oneMinuteLater])
+                ->get();
 
         if ($onetime->count() > 0) {
             foreach ($onetime as $sms) {
-                if ($sms->schedule_time < Carbon::now()->toDateTimeString()) {
-                    // Log::info($sms);
+                $contact = SMSQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
 
-                    // recurring running
-                    dispatch(new StoreCampaignJob($sms->id));
-
-                    $contact = SMSQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
-
-                    if ($sms->integration == "Multitexter")
-                    {
-                        $this->sendMessageMultitexter($sms);
-                    }
-
-                    if ($sms->integration == "NigeriaBulkSms")
-                    {
-                       $this->sendMessageNigeriaBulkSms($sms);
-                    }
-
-                    if($sms->integration == 'Twillio')
-                    {
-                        $this->sendMessageTwilio($sms);
-                    }
-
-                    if($sms->integration == 'AWS')
-                    {
-                        $this->sendMessageAWS($sms);
-                    }
-
-                    if($sms->integration == 'InfoBip')
-                    {
-                        $this->sendMessageInfoBip($sms);
-                    }
-
-                    $sms->status = 'delivered';
-                    $sms->delivery_at = Carbon::now()->toDateTimeString();
-                    $sms->cache = json_encode([
-                        'ContactCount' => $contact->count(),
-                        // 'DeliveredCount' => $sms->readCache('DeliveredCount') + 1,
-                        'DeliveredCount' => $contact->count(),
-                        'FailedDeliveredCount' => 0,
-                        'NotDeliveredCount' => 0,
-                    ]);
-
-                   $sms->update();
+                if ($sms->integration == "Multitexter")
+                {
+                    $this->sendMessageMultitexter($sms);
                 }
+
+                if ($sms->integration == "NigeriaBulkSms")
+                {
+                    $this->sendMessageNigeriaBulkSms($sms);
+                }
+
+                if($sms->integration == 'Twillio')
+                {
+                    $this->sendMessageTwilio($sms);
+                }
+
+                if($sms->integration == 'AWS')
+                {
+                    $this->sendMessageAWS($sms);
+                }
+
+                if($sms->integration == 'InfoBip')
+                {
+                    $this->sendMessageInfoBip($sms);
+                }
+
+                $sms->status = 'delivered';
+                $sms->delivery_at = Carbon::now()->toDateTimeString();
+                $sms->cache = json_encode([
+                    'ContactCount' => $sms->readCache('DeliveredCount') + $contact->count(),
+                    'DeliveredCount' => $contact->count(),
+                    'FailedDeliveredCount' => $sms->readCache('DeliveredCount') + 0,
+                    'NotDeliveredCount' => $sms->readCache('DeliveredCount') + 0,
+                ]);
+
+                $sms->update();
             }
         }
+    }
+
+    public function dailyHandler()
+    {
+        $currentDateTime = Carbon::now();
+
+        $daily = SmsCampaign::where([
+            'action' => 'Play',
+            'frequency_cycle' => 'daily',
+            'schedule_type' => 'recurring',
+        ])->whereDate('schedule_time', '<=', $currentDateTime)->whereDate('recurring_end', '>=', $currentDateTime)->get();
+
+        if ($daily->count() > 0) {
+            foreach ($daily as $sms) {
+                $contact = SMSQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
+
+                if ($sms->integration == "Multitexter")
+                {
+                    $this->sendMessageMultitexter($sms);
+                }
+
+                if ($sms->integration == "NigeriaBulkSms")
+                {
+                    $this->sendMessageNigeriaBulkSms($sms);
+                }
+
+                if($sms->integration == 'Twillio')
+                {
+                    $this->sendMessageTwilio($sms);
+                }
+
+                if($sms->integration == 'AWS')
+                {
+                    $this->sendMessageAWS($sms);
+                }
+
+                if($sms->integration == 'InfoBip')
+                {
+                    $this->sendMessageInfoBip($sms);
+                }
+
+                $sms->status = 'delivered';
+                $sms->delivery_at = Carbon::now()->toDateTimeString();
+                $sms->cache = json_encode([
+                    'ContactCount' => $sms->readCache('DeliveredCount') + $contact->count(),
+                    'DeliveredCount' => $contact->count(),
+                    'FailedDeliveredCount' => $sms->readCache('DeliveredCount') + 0,
+                    'NotDeliveredCount' => $sms->readCache('DeliveredCount') + 0,
+                ]);
+
+                $sms->update();
+            }
+        }
+    }
+
+    public function monthlyHandler()
+    {
+        $currentDateTime = Carbon::now();
+
+        // Add one month to the current date
+        $nextMonth = $currentDateTime->copy()->addMonth();
+
+        $monthly = SmsCampaign::where([
+            'action' => 'Play',
+            'frequency_cycle' => 'monthly',
+            'schedule_type' => 'recurring',
+        ])->where('schedule_time', '<=', $nextMonth) // Ensure scheduled time is not in a future month
+          ->whereDate('recurring_end', '>=', $currentDateTime)
+          ->get();
+
+        if ($monthly->count() > 0) {
+            foreach ($monthly as $sms) {
+                $contact = SMSQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
+
+                if ($sms->integration == "Multitexter")
+                {
+                    $this->sendMessageMultitexter($sms);
+                }
+
+                if ($sms->integration == "NigeriaBulkSms")
+                {
+                    $this->sendMessageNigeriaBulkSms($sms);
+                }
+
+                if($sms->integration == 'Twillio')
+                {
+                    $this->sendMessageTwilio($sms);
+                }
+
+                if($sms->integration == 'AWS')
+                {
+                    $this->sendMessageAWS($sms);
+                }
+
+                if($sms->integration == 'InfoBip')
+                {
+                    $this->sendMessageInfoBip($sms);
+                }
+
+                $sms->status = 'delivered';
+                $sms->delivery_at = Carbon::now()->toDateTimeString();
+                $sms->cache = json_encode([
+                    'ContactCount' => $sms->readCache('DeliveredCount') + $contact->count(),
+                    'DeliveredCount' => $contact->count(),
+                    'FailedDeliveredCount' => $sms->readCache('DeliveredCount') + 0,
+                    'NotDeliveredCount' => $sms->readCache('DeliveredCount') + 0,
+                ]);
+
+                $sms->update();
+            }
+        }
+    }
+
+    public function yearlyHandler()
+    {
+        $currentDateTime = Carbon::now();
+
+        // Add one year to the current date
+        $nextYear = $currentDateTime->copy()->addYear();
+
+        $yearly = SmsCampaign::where([
+            'action' => 'Play',
+            'frequency_cycle' => 'yearly',
+            'schedule_type' => 'recurring',
+        ])->where('schedule_time', '<=', $nextYear) // Ensure scheduled time is not in a future year
+            ->whereDate('recurring_end', '>=', $currentDateTime)
+            ->get();
+
+        if ($yearly->count() > 0) {
+            foreach ($yearly as $sms) {
+                $contact = SMSQueue::where('sms_campaign_id', $sms->id)->select('phone_number')->get();
+
+                if ($sms->integration == "Multitexter")
+                {
+                    $this->sendMessageMultitexter($sms);
+                }
+
+                if ($sms->integration == "NigeriaBulkSms")
+                {
+                    $this->sendMessageNigeriaBulkSms($sms);
+                }
+
+                if($sms->integration == 'Twillio')
+                {
+                    $this->sendMessageTwilio($sms);
+                }
+
+                if($sms->integration == 'AWS')
+                {
+                    $this->sendMessageAWS($sms);
+                }
+
+                if($sms->integration == 'InfoBip')
+                {
+                    $this->sendMessageInfoBip($sms);
+                }
+
+                $sms->status = 'delivered';
+                $sms->delivery_at = Carbon::now()->toDateTimeString();
+                $sms->cache = json_encode([
+                    'ContactCount' => $sms->readCache('DeliveredCount') + $contact->count(),
+                    'DeliveredCount' => $contact->count(),
+                    'FailedDeliveredCount' => $sms->readCache('DeliveredCount') + 0,
+                    'NotDeliveredCount' => $sms->readCache('DeliveredCount') + 0,
+                ]);
+
+                $sms->update();
+            }
+        }
+    }
+
+    public function customHandler()
+    {
+        $fromDate = Carbon::now()->subDays(3)->toDateTimeString();
+        $toDate   = Carbon::now()->toDateTimeString();
+
+        $recurring = SmsCampaign::where([
+            'action' => 'Play',
+            'frequency_cycle' => 'custom',
+            'schedule_type' => 'recurring',
+        ])->whereBetween('schedule_time', [$fromDate, $toDate])->get();
 
         if ($recurring->count() > 0) {
             foreach ($recurring as $sms) {
                 if ($sms->recurring_end > Carbon::now()->toDateTimeString()) {
-                    //\Log::info([$sms->recurring_end, Carbon::now()->toDateTimeString()]);
                     // recurring running
-                    dispatch(new StoreCampaignJob($sms->id));
 
                     if ($sms->frequency_cycle != 'custom') {
                         $schedule_cycle = $sms::scheduleCycleValues();
@@ -173,54 +360,12 @@ class SendSms extends Command
                     ]);
 
                     $sms->update();
-
-                    // if ($data) {
-
-                    //     //insert campaign contact list
-                    //     foreach (SmsCampaignsList::where('campaign_id', $sms->id)->cursor() as $list) {
-                    //         SmsCampaignsList::create([
-                    //                 'campaign_id'     => $new_camp->id,
-                    //                 'contact_list_id' => $list->contact_list_id,
-                    //         ]);
-                    //     }
-
-                    //     //insert campaign recipients
-                    //     foreach (SmsCampaignsRecipients::where('campaign_id', $sms->id)->cursor() as $recipients) {
-                    //         SmsCampaignsRecipients::create([
-                    //                 'campaign_id' => $new_camp->id,
-                    //                 'recipient'   => $recipients->recipient,
-                    //         ]);
-                    //     }
-
-
-                    //     // //insert campaign sender ids
-                    //     // foreach (CampaignsSenderid::where('campaign_id', $sms->id)->cursor() as $sender_ids) {
-                    //     //     CampaignsSenderid::create([
-                    //     //             'campaign_id' => $new_camp->id,
-                    //     //             'sender_id'   => $sender_ids->sender_id,
-                    //     //             'originator'  => $sender_ids->originator,
-                    //     //     ]);
-                    //     // }
-
-
-                    //     // //insert campaign sending servers
-                    //     // foreach (CampaignsSendingServer::where('campaign_id', $sms->id)->cursor() as $servers) {
-                    //     //     CampaignsSendingServer::create([
-                    //     //             'campaign_id'       => $new_camp->id,
-                    //     //             'sending_server_id' => $servers->sending_server_id,
-                    //     //             'fitness'           => $servers->fitness,
-                    //     //     ]);
-                    //     // }
-                    // }
-
                 } else {
                     //recurring date end
                     $sms->delivered();
                 }
             }
         }
-
-        return Command::SUCCESS;
     }
 
     public function sendMessageTwilio($sms)
@@ -300,15 +445,17 @@ class SendSms extends Command
                     'Authorization' => 'Bearer ' . $api_key
                 ];
 
-                $client->request('POST', $url, [
+                $response = $client->request('POST', $url, [
                     'json' => $params,
                     'headers' => $headers,
                 ]);
-
-                // $responseBody = json_decode($response->getBody());
+                $statusCode = $response->getStatusCode();
+                $responseBody = $response->getBody()->getContents();
+                Log::info("Multitexter SMS sent. Status Code: $statusCode, Response: $responseBody");
                 $responseBody = true;
             } catch (Exception $e) {
                 $responseBody = $e;
+                Log::error("Error sending Multitexter SMS: " . $e->getMessage());
             }
         }
 

@@ -40,22 +40,18 @@ class SendWhatsappBroadcast extends Command
         $date = date('Y-m-d');
         $time = date('h:i:s');
 
-
         $broadcasts = WhatappBroadcast::where('date', $date)
             // ->where('time', $time)
             ->where('DeliveredCount', null)
             ->get();
 
         // echo json_encode($broadcasts); exit();
-
         $broadcasts->map(function ($_campaign) use ($date, $time) {
             $whatsapp_number = WhatsappNumber::where(['user_id' => $_campaign->user_id, 'phone_number' => $_campaign->sender_id])->first();
 
+            $lists = ListManagementContact::where(['list_management_id' => $_campaign->list_mgt_id])->where('subscribe', true)->get();
 
-            $lists = ListManagementContact::where(['list_management_id' => $_campaign->list_mgt_id])->where('subscribe', true)
-                ->get();
-
-                // echo json_encode($lists);
+            // echo json_encode($lists);
 
             // divide into 10 chunks and
             // delay each job between 10  - 20 sec in the queue
@@ -65,7 +61,7 @@ class SendWhatsappBroadcast extends Command
             // template 1
             // dispatch job and delay
             foreach ($chunks as $key => $_chunk) {
-                
+
                 // dispatch job
                 ProcessBroadcastWAMessages::dispatch($_chunk, [
                     'whatsapp_account' => $whatsapp_number->phone_number,

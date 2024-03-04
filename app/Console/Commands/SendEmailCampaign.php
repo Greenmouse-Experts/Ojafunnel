@@ -46,8 +46,6 @@ class SendEmailCampaign extends Command
             'start_time' => $current_time,
         ])->get();
 
-        Log::info($email_campaigns);
-
         $email_campaigns->map(function ($_campaign) {
             $email_kit = EmailKit::where('id', $_campaign->email_kit_id)->first();
             $user = User::where('id', $_campaign->user_id)->first();
