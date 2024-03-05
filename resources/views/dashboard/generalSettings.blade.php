@@ -105,6 +105,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <label>Timezone</label>
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <input type="text" value="{{Auth::user()->customer->timezone}}" class="input" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="account-border"></div>
                                     <div>
                                         <h4>Login Details</h4>
