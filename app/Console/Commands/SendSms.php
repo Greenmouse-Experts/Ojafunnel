@@ -55,7 +55,7 @@ class SendSms extends Command
      */
     public function handle()
     {
-        // onetime, daily, weekly, monthly, yearly, and custom handler
+        // onetime, daily, monthly, yearly, and custom handler
         $this->oneTimeHandler();
         $this->dailyHandler();
         $this->monthlyHandler();
