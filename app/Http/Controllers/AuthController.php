@@ -237,7 +237,7 @@ class AuthController extends Controller
 
             if ($user->user_type == 'User') {
                 // Retrieve timezone from the user model
-                $timezone =  $user->customer->timezone ?? 'Africa\Lagos';
+                $timezone =  $user->customer->timezone ?? 'UTC';
 
                 // Set timezone in user's session (optional)
                 session(['timezone' => $timezone]);
