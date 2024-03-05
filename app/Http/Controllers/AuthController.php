@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Aws\Sns\SnsClient;      //// Import this package
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
@@ -205,12 +206,11 @@ class AuthController extends Controller
         }
 
         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        // if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
 
         // authentication attempt
         if (auth()->attempt(array($fieldType => $input['email'], 'password' => $input['password']))) {
 
-            /* if (!$user->email_verified_at) {
+            if (!$user->email_verified_at) {
                 $code = mt_rand(100000, 999999);
                 $user->update([
                     'code' => $code
@@ -222,7 +222,7 @@ class AuthController extends Controller
                     'type' => 'success',
                     'message' => 'Registration Successful, Please verify your account!'
                 ]);
-            } */
+            }
 
             if ($user->status == 'inactive') {
 
@@ -236,11 +236,19 @@ class AuthController extends Controller
 
 
             if ($user->user_type == 'User') {
+                // Retrieve timezone from the user model
+                $timezone =  $user->customer()->timezone ?? 'UTC';
+
+                // Set timezone in user's session (optional)
+                session(['timezone' => $timezone]);
+
+                // Set timezone in Laravel configuration
+                Config::set('app.timezone', $timezone);
+
                 return redirect()->route('user.dashboard', $user->username);
             }
 
             Auth::logout();
-
 
             return back()->with([
                 'type' => 'danger',
