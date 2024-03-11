@@ -478,6 +478,8 @@
                             // Get the base URL of the current page
                             var baseUrl = window.location.origin;
 
+                            $('#makePayment').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Payment processing...');
+
                             // Configure FlutterwaveCheckout
                             FlutterwaveCheckout({
                                 public_key: response.FLW_PUBLIC_KEY,
@@ -500,16 +502,22 @@
                                     $( "#checkoutForm" ).submit();
                                 },
                                 onclose: function() {
-                                    console.log('Payment closed');
-                                    // Handle actions when the payment modal is closed
+                                    alert('Payment closed');
+
+                                    $('#makePayment').attr('disabled', false).html('Place Order');
                                 }
                             });
                         },
                         error: function(error) {
-                            console.error("Error fetching payment details:", error);
+                            alert("Error fetching payment details: ".error.message);
+                            // console.error("Error fetching payment details:", error);
+
+                            $('#makePayment').attr('disabled', false).html('Place Order');
                         }
                     });
                 } else if (selectedPaymentOption == 'Paystack') {
+                    $('#makePayment').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Payment processing...');
+
                     $.ajax({
                         method: 'GET',
                         url: '/retrieve/payment/' + 'Paystack', // Replace with your actual backend endpoint
@@ -529,6 +537,8 @@
                                 },
                                 onClose: function() {
                                     alert('window closed');
+
+                                    $('#makePayment').attr('disabled', false).html('Place Order');
                                 }
                             });
                             handler.openIframe();
@@ -536,7 +546,9 @@
                     });
                 } else {
                     // Handle other payment gateways or show an error message
-                    alert('Unsupported payment option');
+                    alert("Error fetching payment details:", error.message);
+
+                    $('#makePayment').attr('disabled', false).html('Place Order');
                 }
             }
         })
@@ -573,7 +585,7 @@
                     });
 
                     if (error) {
-                        console.log(error);
+                        $('#payment-btn').attr('disabled', false).html('Place Order');
                     } else {
                         let input = document.createElement('input');
                         input.setAttribute('type', 'hidden');
@@ -587,7 +599,9 @@
                 });
             },
             error: function(error) {
-                console.error("Error fetching payment details:", error);
+                alert("Error fetching payment details: ".error.message);
+                // console.error("Error fetching payment details: ", error);
+                $('#payment-btn').attr('disabled', false).html('Place Order');
             }
         });
     </script>
