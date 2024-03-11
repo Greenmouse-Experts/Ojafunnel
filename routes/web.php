@@ -188,9 +188,6 @@ Route::prefix('dashboard')->group(function(){
     Route::post('buy_backup', [DashboardController::class, 'buy_backup']);
 });
 
-
-
-
 Route::prefix('{username}')->group(function () {
     // Route::domain('{username}.' . config('app.domain_url'))->group(function () {
     Route::prefix('dashboard')->group(

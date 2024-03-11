@@ -287,7 +287,7 @@
                                                                     </div>
                                                                     <div class="row mt-4">
                                                                         <div class="col-sm-6">
-                                                                            <button type="submit" class="btn d-none d-sm-inline-block" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
+                                                                            <button type="submit" id="payment-btn" class="btn d-none d-sm-inline-block" style="background-color: {{$shop->theme}}; color: #fff; border: 1px solid {{$shop->theme}}">
                                                                                 PLACE ORDER
                                                                             </button>
                                                                         </div> <!-- end col -->
@@ -554,13 +554,15 @@
                         }
                     }
                 });
-
+                // Disable submit button and show loading state
                 const checkoutForm = document.getElementById('checkoutForm');
                 const cardName = document.getElementById('card-name');
                 cardElement.mount('#card');
 
                 checkoutForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
+
+                    $('#payment-btn').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Payment processing...');
 
                     const { paymentMethod, error } = await stripe.createPaymentMethod({
                         type: 'card',
@@ -571,7 +573,7 @@
                     });
 
                     if (error) {
-                        console.log('error');
+                        console.log(error);
                     } else {
                         let input = document.createElement('input');
                         input.setAttribute('type', 'hidden');
@@ -589,7 +591,7 @@
             }
         });
     </script>
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
     <script>
         const input = document.querySelector("#phoneNo");
