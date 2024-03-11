@@ -574,6 +574,8 @@
                                                                 </div>
                                                             </div>
                                                         </form>
+                                                        <!-- Add a div to display error messages -->
+                                                        <div id="error-message" class="alert alert-danger" style="display: none;"></div>
                                                         <div class="form" style="display: none;" id="stripePayment">
                                                             <h5 class="mt-3 mb-3 font-size-15">For Stripe Payment</h5>
                                                             <div class="row">
@@ -764,7 +766,7 @@
                                     $( "#checkoutForm" ).submit();
                                 },
                                 onclose: function() {
-                                    alert('Payment closed');
+                                    $('#error-message').html('Payment closed').show();
 
                                     $('#makePayment').attr('disabled', false).html('Place Order');
                                     // Handle actions when the payment modal is closed
@@ -772,8 +774,7 @@
                             });
                         },
                         error: function(error) {
-                            alert("Error fetching payment details: ".error.message);
-                            // console.error("Error fetching payment details:", error);
+                            $('#error-message').html(error.message).show();
 
                             $('#makePayment').attr('disabled', false).html('Place Order');
                         }
@@ -798,7 +799,7 @@
                                     $( "#checkoutForm" ).submit();
                                 },
                                 onClose: function(){
-                                    alert('window closed');
+                                    $('#error-message').html('Window closed').show();
 
                                     $('#makePayment').attr('disabled', false).html('Place Order');
                                 }
@@ -806,14 +807,14 @@
                             handler.openIframe();
                         },
                         error: function(error) {
-                            alert("Error fetching payment details:", error.message);
+                            $('#error-message').html(error.message).show();
 
                             $('#makePayment').attr('disabled', false).html('Place Order');
                         }
                     });
                 } else {
                     // Handle other payment gateways or show an error message
-                    alert('Unsupported payment option');
+                    $('#error-message').html('Unsupported payment option').show();
                 }
             }
         })
@@ -896,7 +897,9 @@
                     });
 
                     if (error) {
-                        // Enable submit button and reset its state
+                        // Display the error message in the error message div
+                        $('#error-message').html(error.message).show();
+
                         $('#payment-btn').attr('disabled', false).html('Place Order');
                     } else {
                         let input = document.createElement('input');
@@ -911,7 +914,11 @@
                 });
             },
             error: function(error) {
-                alert("Error fetching payment details: ".error.message);
+                // alert("Error fetching payment details: ".error.message);
+
+                // Display the error message in the error message div
+                $('#error-message').html(error.message).show();
+
                 // console.error("Error fetching payment details: ", error);
                 $('#payment-btn').attr('disabled', false).html('Place Order');
             }
