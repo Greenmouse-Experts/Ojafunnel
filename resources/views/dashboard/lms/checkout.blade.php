@@ -500,7 +500,7 @@
                                 callback: function(response) {
                                     console.log(response);
                                     // Handle the response after successful payment
-                                    alert('Payment successful!');
+                                    alert('Please wait while we process your payment.');
                                     $( "#checkoutForm" ).submit();
                                 },
                                 onclose: function() {
