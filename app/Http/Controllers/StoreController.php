@@ -284,8 +284,6 @@ class StoreController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'currency' => 'required',
-            'currency_sign' => 'required',
             'quantity' => 'required',
             'level1_comm' => 'required',
             'level2_comm' => 'required',
