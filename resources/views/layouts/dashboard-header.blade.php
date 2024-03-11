@@ -241,6 +241,8 @@
                         <form class="paymentForm" id="dollarPaymentForm" method="post" action="{{route('user.fund.dollar.account')}}">
                             @csrf
                             <div class="form">
+                                <!-- Add a div to display error messages -->
+                                <div id="error-message" class="alert alert-danger" style="display: none;"></div>
                                 <div class="col-lg-12 mb-4">
                                     <label>Amount</label>
                                     <div class="row">
@@ -263,7 +265,7 @@
                                         </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                        <button class="form-btn btn px-4" type="submit" id="payment-btn" style="color: #ffffff; background-color: #714091">
                                            Fund Wallet
                                         </button>
                                     </div>
@@ -322,6 +324,7 @@
 
             checkoutForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                $('#payment-btn').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Payment processing...');
 
                 const { paymentMethod, error } = await stripe.createPaymentMethod({
                     type: 'card',
@@ -332,7 +335,8 @@
                 });
 
                 if (error) {
-                    console.log('error');
+                    $('#error-message').html(error.message).show();
+                    $('#payment-btn').attr('disabled', false).html('Fund Wallet');
                 } else {
                     let input = document.createElement('input');
                     input.setAttribute('type', 'hidden');
@@ -346,7 +350,13 @@
             });
         },
         error: function(error) {
-            console.error("Error fetching payment details:", error);
+            // alert("Error fetching payment details: ".error.message);
+
+            // Display the error message in the error message div
+            $('#error-message').html(error.message).show();
+
+            // console.error("Error fetching payment details: ", error);
+            $('#payment-btn').attr('disabled', false).html('Fund Wallet');
         }
     });
 </script>

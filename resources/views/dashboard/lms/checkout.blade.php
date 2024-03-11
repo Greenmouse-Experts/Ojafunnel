@@ -488,7 +488,7 @@
                                 tx_ref: ''+Math.floor((Math.random() * 1000000000) + 1),
                                 amount: document.getElementById("totalAmount").value, // Amount in cents (e.g., $50.00 is 5000 cents)
                                 currency: '{{$shop->currency}}',
-                                payment_options: "card",
+                                payment_options: "card, banktransfer, ussd",
                                 customer: {
                                     email: $('#email').val(), // Replace with your user's email
                                 },
