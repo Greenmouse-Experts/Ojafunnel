@@ -30,6 +30,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://www.paypalobjects.com/webstatic/en_US/developer/docs/css/cardfields.css"
+    />
+    <!-- Express fills in the clientId and clientToken variables -->
+    <script src="https://www.paypal.com/sdk/js?components=buttons,card-fields&client-id={{env('PAYPAL_CLIENT_ID')}}"></script>
     <style>
         .hide {
             display: none !important;
@@ -604,13 +611,8 @@
                                                             </div> <!-- end col -->
                                                             <!-- end col -->
                                                         </div>
-
                                                         <div class="row mt-4" style="display: none;" id="paypalPayment">
-                                                            {{-- <div class="col-sm-6">
-                                                                <button type="button" id="makePaypalPayment" class="btn btn-success text-white d-none d-sm-inline-block">
-                                                                    PLACE ORDER
-                                                                </button>
-                                                            </div> <!-- end col --> --}}
+                                                            <div class="col-sm-6" id="paypal-button-container" class="paypal-button-container"></div>
                                                             <!-- end col -->
                                                         </div>
                                                     </div>
@@ -656,8 +658,7 @@
     <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id={{env('PAYPAL_CLIENT_ID')}}&debug=true&currency=USD" data-namespace="paypal"></script>
-
+    <!-- <script src="https://www.paypal.com/sdk/js?client-id={{env('PAYPAL_CLIENT_ID')}}&debug=true&currency={{$store->currency}}" data-namespace="paypal"></script> -->
 
     <script>
         $(document).ready(function () {
@@ -674,15 +675,13 @@
                     $('#paystackPayment').show();
                     $('#paypalPayment').hide();
                 } else if ($(this).val() === 'Paypal') {
-
-                    setup_paypal_buttons();
                     $('#stripePayment').hide();
                     $('#paystackPayment').hide();
                     $('#paypalPayment').show();
                 }
                 else {
                     $('#stripePayment').hide();
-                    $('#paystackPayment').show();
+                    $('#paystackPayment').hide();
                     $('#paypalPayment').hide();
                 }
             });
@@ -701,53 +700,36 @@
             $('#AmountToPay').val($discount);
         };
 
-        function setup_paypal_buttons() {
-            paypal.Buttons({
-                    // Call your server to set up the transaction
-                    createOrder: function(data, actions) {
-                        return actions.order.create({
-                            purchase_units: [{
-                                amount: {
-                                    value: document.getElementById("AmountToPay").value // Set the amount to be paid
-                                }
-                            }]
-                        });
-                    },
-
-                    // Call your server to finalize the transaction
-                    onApprove: function(data, actions) {
-                        return fetch('/demo/checkout/api/paypal/order/' + data.orderID + '/capture/', {
-                            method: 'post'
-                        }).then(function(res) {
-                            return res.json();
-                        }).then(function(orderData) {
-                            // Three cases to handle:
-                            //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-                            //   (2) Other non-recoverable errors -> Show a failure message
-                            //   (3) Successful transaction -> Show confirmation or thank you
-
-                            // This example reads a v2/checkout/orders capture response, propagated from the server
-                            // You could use a different API or structure for your 'orderData'
-                            var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
-
-                            if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
-                                return actions.restart(); // Recoverable state, per:
-                                // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
-                            }
-
-                            if (errorDetail) {
-                                var msg = 'Sorry, your transaction could not be processed.';
-                                if (errorDetail.description) msg += '\n\n' + errorDetail.description;
-                                if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
-                                return alert(msg); // Show a failure message (try to avoid alerts in production environments)
-                            }
-
-                            // Successful capture! For demo purposes:
-                            $( "#checkoutForm" ).submit();
-                        });
-                    }
-                }).render('#paypalPayment');
-        }
+        // Render the button component
+        paypal
+        .Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: document.getElementById("AmountToPay").value // Set the amount to be paid
+                        }
+                    }]
+                });
+            },
+            // Finalize the transaction after payer approval
+            onApprove: function (data) {
+                console.log(
+                    "Capture result",
+                );
+                // var transaction = orderData.purchase_units[0].payments.captures[0];
+                // Show a success message within this page. For example:
+                var element = document.getElementById('paypal-button-container');
+                element.innerHTML = '<h4 style="color: green;">Thank you for your payment, wait while we complete the transaction.......</h4>';
+                // Or go to another URL: actions.redirect('thank_you.html');
+                $( "#checkoutForm" ).submit();
+            },
+            onError: function (error) {
+                // Do something with the error from the SDK
+                $('#error-message').html(error.message).show();
+            },
+        })
+        .render("#paypal-button-container");
 
         $("#activePayment").click(function() {
             if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '' || $('#paymemtOptions').val() == '') {
@@ -789,7 +771,7 @@
 
         $("#makePayment").click(function() {
             if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '' || !$('input[name="paymentOptions"]:checked').val()) {
-                alert('Please fill in the required fields to continue');
+                $('#error-message').html('Please fill in the required fields to continue').show();
                 $('#error').html('Please fill in the required fields to continue');
             } else {
                 var selectedPaymentOption = $('input[name="paymentOptions"]:checked').val();
@@ -800,9 +782,6 @@
                     // Prevent the default form submission
                     event.preventDefault();
                     // Your conditions are met, trigger the form submission asynchronously
-                    // checkoutForm.submit();
-
-                    
 
                 } else if (selectedPaymentOption == 'Flutterwave') {
                     $.ajax({

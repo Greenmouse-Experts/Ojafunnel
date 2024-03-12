@@ -45,6 +45,8 @@ Route::get('/getDates', function () {
 
     return response()->json($dates);
 });
+// Route::post('/demo/checkout/api/paypal/order/create', [PaypalController::class, 'createOrder']);
+// Route::post('/demo/checkout/api/paypal/order/{orderID}/capture', [PaypalController::class, 'capture']);
 
 Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamScore']);
 Route::get('/text', [AuthController::class, 'text']);

@@ -1,5 +1,6 @@
 <?php
 
+use Acelle\Http\Controllers\Admin\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

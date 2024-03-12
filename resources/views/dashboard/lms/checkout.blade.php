@@ -31,6 +31,13 @@
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://www.paypalobjects.com/webstatic/en_US/developer/docs/css/cardfields.css"
+    />
+    <!-- Express fills in the clientId and clientToken variables -->
+    <script src="https://www.paypal.com/sdk/js?components=buttons,card-fields&client-id={{env('PAYPAL_CLIENT_ID')}}"></script>
     <style>
         .hide {
             display: none !important;
@@ -219,6 +226,13 @@
                                                                     <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><img src="{{URL::asset($payment->logo)}}" alt="{{$payment->name}}" class="me-1 font-size-20 align-top" width="15"/> {{$payment->name}}</label>
                                                                 </div>
                                                             </div>
+                                                            @elseif(($payment->name == 'Paypal') && ($shop->currency == 'USD' || $shop->currency == 'GBP' || $shop->currency == 'EUR'))
+                                                            <div class="mt-3">
+                                                                <div class="form-check form-check-inline font-size-16">
+                                                                    <input class="form-check-input" type="radio" name="paymentOptions" id="paymemtOptions" value="{{$payment->name}}">
+                                                                    <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><img src="{{URL::asset($payment->logo)}}" alt="{{$payment->name}}" class="me-1 font-size-20 align-top" width="15"/> {{$payment->name}}</label>
+                                                                </div>
+                                                            </div>
                                                             @endif
                                                         @endforeach
                                                         <div class="text-end mt-2">
@@ -305,6 +319,10 @@
                                                                 </div> <!-- end col -->
                                                                 <!-- end col -->
                                                             </div>
+                                                            <div class="row mt-4" style="display: none;" id="paypalPayment">
+                                                                <div class="col-sm-6" id="paypal-button-container" class="paypal-button-container"></div>
+                                                                <!-- end col -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -369,7 +387,6 @@
     <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
-
     <script src="{{ asset('assets/js/jscripts.js') }}"></script>
 
     <script>
@@ -381,15 +398,20 @@
                 if ($(this).val() === 'Stripe') {
                     $('#stripePayment').show();
                     $('#paystackPayment').hide();
+                    $('#paypalPayment').hide();
                 } else if ($(this).val() === 'Flutterwave') {
                     $('#stripePayment').hide();
                     $('#paystackPayment').show();
+                    $('#paypalPayment').hide();
                 } else if ($(this).val() === 'Paypal') {
                     $('#stripePayment').hide();
-                    $('#paystackPayment').show();
-                } else {
+                    $('#paystackPayment').hide();
+                    $('#paypalPayment').show();
+                }
+                else {
                     $('#stripePayment').hide();
-                    $('#paystackPayment').show();
+                    $('#paystackPayment').hide();
+                    $('#paypalPayment').hide();
                 }
             });
 
@@ -400,6 +422,42 @@
         });
         var token = $('#txt_token1').val();
         var site_url = $('#site_url').val();
+
+        // window.onload=function(){
+        //     $discount = $('#totalAmount').val() - $('#couponDiscount').val();
+        //     $('#AmountToPay').val($discount);
+        // };
+
+        // Render the button component
+        paypal
+        .Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: document.getElementById("totalAmount").value // Set the amount to be paid
+                        }
+                    }]
+                });
+            },
+            // Finalize the transaction after payer approval
+            onApprove: function (data) {
+                console.log(
+                    "Capture result",
+                );
+                // var transaction = orderData.purchase_units[0].payments.captures[0];
+                // Show a success message within this page. For example:
+                var element = document.getElementById('paypal-button-container');
+                element.innerHTML = '<h4 style="color: green;">Thank you for your payment, wait while we complete the transaction.......</h4>';
+                // Or go to another URL: actions.redirect('thank_you.html');
+                $( "#checkoutForm" ).submit();
+            },
+            onError: function (error) {
+                // Do something with the error from the SDK
+                $('#error-message').html(error.message).show();
+            },
+        })
+        .render("#paypal-button-container");
 
         $("#activePayment").click(function() {
             if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == '' || $('#address').val() == '' || $('#state').val() == '' || $('#country').val() == '') {

@@ -32,7 +32,6 @@
         "mews/purifier": "^3.3",
         "omnipay/paypal": "^3.0",
         "omnipay/sagepay": "~3.0",
-        "paypal/paypal-checkout-sdk": "^1.0",
         "php-http/client-common": "^2.6",
         "php-http/curl-client": "^2.2",
         "php-http/guzzle7-adapter": "^1.0",
