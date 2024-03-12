@@ -604,6 +604,15 @@
                                                             </div> <!-- end col -->
                                                             <!-- end col -->
                                                         </div>
+
+                                                        <div class="row mt-4" style="display: none;" id="paypalPayment">
+                                                            {{-- <div class="col-sm-6">
+                                                                <button type="button" id="makePaypalPayment" class="btn btn-success text-white d-none d-sm-inline-block">
+                                                                    PLACE ORDER
+                                                                </button>
+                                                            </div> <!-- end col --> --}}
+                                                            <!-- end col -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -647,6 +656,8 @@
     <script src="{{URL::asset('dash/assets/libs/node-waves/waves.min.js')}}"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id={{env('PAYPAL_CLIENT_ID')}}&debug=true&currency=USD" data-namespace="paypal"></script>
+
 
     <script>
         $(document).ready(function () {
@@ -657,15 +668,22 @@
                 if ($(this).val() === 'Stripe') {
                     $('#stripePayment').show();
                     $('#paystackPayment').hide();
+                    $('#paypalPayment').hide();
                 } else if ($(this).val() === 'Flutterwave') {
                     $('#stripePayment').hide();
                     $('#paystackPayment').show();
+                    $('#paypalPayment').hide();
                 } else if ($(this).val() === 'Paypal') {
+
+                    setup_paypal_buttons();
+                    $('#stripePayment').hide();
+                    $('#paystackPayment').hide();
+                    $('#paypalPayment').show();
+                }
+                else {
                     $('#stripePayment').hide();
                     $('#paystackPayment').show();
-                } else {
-                    $('#stripePayment').hide();
-                    $('#paystackPayment').show();
+                    $('#paypalPayment').hide();
                 }
             });
 
@@ -682,6 +700,54 @@
             $discount = $('#totalAmount').val() - $('#couponDiscount').val();
             $('#AmountToPay').val($discount);
         };
+
+        function setup_paypal_buttons() {
+            paypal.Buttons({
+                    // Call your server to set up the transaction
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: document.getElementById("AmountToPay").value // Set the amount to be paid
+                                }
+                            }]
+                        });
+                    },
+
+                    // Call your server to finalize the transaction
+                    onApprove: function(data, actions) {
+                        return fetch('/demo/checkout/api/paypal/order/' + data.orderID + '/capture/', {
+                            method: 'post'
+                        }).then(function(res) {
+                            return res.json();
+                        }).then(function(orderData) {
+                            // Three cases to handle:
+                            //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                            //   (2) Other non-recoverable errors -> Show a failure message
+                            //   (3) Successful transaction -> Show confirmation or thank you
+
+                            // This example reads a v2/checkout/orders capture response, propagated from the server
+                            // You could use a different API or structure for your 'orderData'
+                            var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
+
+                            if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
+                                return actions.restart(); // Recoverable state, per:
+                                // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
+                            }
+
+                            if (errorDetail) {
+                                var msg = 'Sorry, your transaction could not be processed.';
+                                if (errorDetail.description) msg += '\n\n' + errorDetail.description;
+                                if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
+                                return alert(msg); // Show a failure message (try to avoid alerts in production environments)
+                            }
+
+                            // Successful capture! For demo purposes:
+                            $( "#checkoutForm" ).submit();
+                        });
+                    }
+                }).render('#paypalPayment');
+        }
 
         $("#activePayment").click(function() {
             if ($('#name').val() == '' || $('#email').val() == '' || $('#phoneNo').val() == ''  || $('#address').val() == ''  || $('#state').val() == '' || $('#country').val() == '' || $('#paymemtOptions').val() == '') {
@@ -729,11 +795,15 @@
                 var selectedPaymentOption = $('input[name="paymentOptions"]:checked').val();
                 var checkoutForm = document.getElementById('checkoutForm');
 
+
                 if (selectedPaymentOption == 'Paypal') {
                     // Prevent the default form submission
                     event.preventDefault();
                     // Your conditions are met, trigger the form submission asynchronously
                     // checkoutForm.submit();
+
+                    
+
                 } else if (selectedPaymentOption == 'Flutterwave') {
                     $.ajax({
                         method: 'GET',
@@ -815,6 +885,7 @@
                     // Handle other payment gateways or show an error message
                     $('#error-message').html('Unsupported payment option').show();
                 }
+
             }
         })
 
