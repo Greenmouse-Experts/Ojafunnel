@@ -194,6 +194,8 @@
                     <div class="Edit-level">
                         <form class="paymentForm">
                             @csrf
+
+                            <div id="error-message" class="alert alert-danger" style="display: none;"></div>
                             <div class="form">
                                 <div class="col-lg-12">
                                     <label>Amount</label>
@@ -285,23 +287,32 @@
     paymentForm.addEventListener("submit", payWithPaystack, false);
 
     function payWithPaystack(){
-        var handler = PaystackPop.setup({
-        key: 'pk_test_dafbbf580555e2e2a10a8d59c6157b328192334d',
-        email: '{{Auth::user()->email}}',
-        amount: document.getElementById("amount").value * 100,
-        ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-        callback: function(response){
-            // alert(JSON.stringify(response))
-            let url = '{{ route("user.transaction.confirm", [":response", ":amount"]) }}';
-            url = url.replace(':response', response.reference);
-            url = url.replace(':amount', document.getElementById("amount").value);
-            document.location.href=url;
-        },
-        onClose: function(){
-            alert('window closed');
-        }
+        $.ajax({
+            method: 'GET',
+            url: '/retrieve/payment/' + 'Paystack', // Replace with your actual backend endpoint
+            success: function(response) {
+                var handler = PaystackPop.setup({
+                    key: response.PAYSTACK_PUBLIC_KEY,
+                    email: '{{Auth::user()->email}}',
+                    amount: document.getElementById("amount").value * 100,
+                    ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                    callback: function(response){
+                        // alert(JSON.stringify(response))
+                        let url = '{{ route("user.transaction.confirm", [":response", ":amount"]) }}';
+                        url = url.replace(':response', response.reference);
+                        url = url.replace(':amount', document.getElementById("amount").value);
+                        document.location.href=url;
+                    },
+                    onClose: function(){
+                        alert('window closed');
+                    }
+                });
+                handler.openIframe();
+            },
+            error: function(error) {
+                $('#error-message').html(error.message).show();
+            }
         });
-        handler.openIframe();
     }
 
     $.ajax({
