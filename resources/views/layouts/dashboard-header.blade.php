@@ -212,7 +212,7 @@
                                         </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button class="form-btn btn px-4" type="button" onclick="payWithPaystack()" style="color: #ffffff; background-color: #714091">
+                                        <button class="form-btn btn px-4" id="payment-btn" type="button" onclick="payWithPaystack()" style="color: #ffffff; background-color: #714091">
                                             Proceed To Payment
                                         </button>
                                     </div>
@@ -304,7 +304,7 @@
                         document.location.href=url;
                     },
                     onClose: function(){
-                        alert('window closed');
+                        $('#error-message').html('window closed').show();
                     }
                 });
                 handler.openIframe();

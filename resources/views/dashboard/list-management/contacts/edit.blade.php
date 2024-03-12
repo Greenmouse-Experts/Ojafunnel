@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <label for="">Phone Number</label>
-                                <input type="text" name="phone" class="form-control" i="phonee" value="{{$contact->phone}}" placeholder="Enter Phone Number" />
+                                <input type="text" name="phone" class="form-control" id="phonee" value="{{$contact->phone}}" placeholder="Enter Phone Number" />
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
@@ -127,68 +127,68 @@
         </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $("#phonee").intlTelInput({
-            // preferredCountries: ["us", "ca"],
-            separateDialCode: true,
-            initialCountry: ""
-        }).on('countrychange', function(e, countryData) {
-            $("#phonee").val('+' + ($("#phonee").intlTelInput("getSelectedCountryData").dialCode));
-        });
+    const input = document.querySelector("#phonee");
+    const errorMsg = document.querySelector("#error-msg");
+    const validMsg = document.querySelector("#valid-msg");
+    let validationTimeout;
+
+    // here, the index maps to the error code returned from getValidationError - see readme
+    const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+    // initialise plugin with Nigeria as the default country
+    const iti = window.intlTelInput(input, {
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+        separateDialCode: true, // Add a space between the country code and the phone number
+        placeholderNumberType: "MOBILE", // Set the placeholder to match the user's mobile number format
+        nationalMode: false, // Do not automatically switch to national mode
+        initialCountry: "us" // Set Nigeria as the default country
     });
-</script>
 
-<script>
-    var input = document.querySelector("#phonee");
-    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
-    window.addEventListener("load", function() {
-
-        errorMsg = document.querySelector("#error-msg"),
-            validMsg = document.querySelector("#valid-msg");
-        var iti = window.intlTelInput(input, {
-            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.2/build/js/utils.js"
-        });
-        window.intlTelInput(input, {
-            geoIpLookup: function(callback) {
-                $.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
-                    var countryCode = (resp && resp.country) ? resp.country : "";
-                    callback(countryCode);
-                });
-            },
-            initialCountry: "auto",
-            placeholderNumberType: "MOBILE",
-            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.2/build/js/utils.js",
-        });
-        $(validMsg).addClass("hide");
-        input.addEventListener('blur', function() {
-            reset();
-            if (input.value.trim()) {
-                if (iti.isValidNumber()) {
+    const updateMessages = () => {
+        clearTimeout(validationTimeout);
+        reset();
+        if (input.value.trim()) {
+            validationTimeout = setTimeout(() => {
+                if (input.value.startsWith('+') && iti.isValidNumber()) {
                     validMsg.classList.remove("hide");
                 } else {
                     input.classList.add("error");
-                    var errorCode = iti.getValidationError();
+                    const errorCode = iti.getValidationError();
                     errorMsg.innerHTML = errorMap[errorCode];
                     errorMsg.classList.remove("hide");
                 }
-            }
-        });
+            }, 300); // Adjust the delay time as needed (in milliseconds)
+        }
+    };
 
-        input.addEventListener('change', reset);
-        input.addEventListener('keyup', reset);
-    });
-
-
-    var reset = function() {
+    const reset = () => {
         input.classList.remove("error");
         errorMsg.innerHTML = "";
         errorMsg.classList.add("hide");
         validMsg.classList.add("hide");
     };
-    $(document).ready(function() {
-        $("#phonee").val("+234");
+
+    // Set the initial value of the input to include the selected country code only if input is empty
+    window.addEventListener('DOMContentLoaded', () => {
+        if (input.value.trim() === '') {
+            const countryCodeValue = iti.getSelectedCountryData().dialCode;
+            input.value = `+${countryCodeValue}`;
+        }
+    });
+
+    // on input: validate with slight delay
+    input.addEventListener('input', updateMessages);
+
+    // on keyup / change flag: reset
+    input.addEventListener('change', reset);
+    input.addEventListener('keyup', reset);
+
+    // Update input value on country change
+    input.addEventListener('countrychange', () => {
+        const countryCodeValue = iti.getSelectedCountryData().dialCode;
+        input.value = `+${countryCodeValue}`;
     });
 </script>
 

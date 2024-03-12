@@ -5,6 +5,7 @@
         <meta charset="utf-8"><style data-styles="">ion-icon{visibility:hidden}.hydrated{visibility:inherit}</style><style data-styles="">ion-icon{visibility:hidden}.hydrated{visibility:inherit}</style><style data-styles="">ion-icon{visibility:hidden}.hydrated{visibility:inherit}</style><style data-styles="">ion-icon{visibility:hidden}.hydrated{visibility:inherit}</style>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
+        <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
         <meta name="author" content="">
         <title>$title</title>
         <!-- Bootstrap core CSS -->
@@ -128,13 +129,13 @@
             // here, the index maps to the error code returned from getValidationError - see readme
             const errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
 
-            // initialise plugin
+            // initialise plugin with Nigeria as the default country
             const iti = window.intlTelInput(input, {
                 utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
-                initialCountry: "auto", // Automatically select the user's country
                 separateDialCode: true, // Add a space between the country code and the phone number
                 placeholderNumberType: "MOBILE", // Set the placeholder to match the user's mobile number format
                 nationalMode: false, // Do not automatically switch to national mode
+                initialCountry: "us" // Set Nigeria as the default country
             });
 
             const updateMessages = () => {
@@ -142,7 +143,7 @@
                 reset();
                 if (input.value.trim()) {
                     validationTimeout = setTimeout(() => {
-                        if (iti.isValidNumber()) {
+                        if (input.value.startsWith('+') && iti.isValidNumber()) {
                             validMsg.classList.remove("hide");
                         } else {
                             input.classList.add("error");
@@ -161,6 +162,14 @@
                 validMsg.classList.add("hide");
             };
 
+            // Set the initial value of the input to include the selected country code only if input is empty
+            window.addEventListener('DOMContentLoaded', () => {
+                if (input.value.trim() === '') {
+                    const countryCodeValue = iti.getSelectedCountryData().dialCode;
+                    input.value = `+${countryCodeValue}`;
+                }
+            });
+
             // on input: validate with slight delay
             input.addEventListener('input', updateMessages);
 
@@ -168,12 +177,13 @@
             input.addEventListener('change', reset);
             input.addEventListener('keyup', reset);
 
-            // Set the initial value of the input to include the selected country code
+            // Update input value on country change
             input.addEventListener('countrychange', () => {
                 const countryCodeValue = iti.getSelectedCountryData().dialCode;
                 input.value = `+${countryCodeValue}`;
             });
         </script>
+
         <style>
             .iti {
                 display: block !important;
