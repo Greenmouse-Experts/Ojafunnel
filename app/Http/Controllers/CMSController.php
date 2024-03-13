@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\Learn;
 use App\Models\Lesson;
 use App\Models\LmsQuiz;
@@ -14,6 +15,7 @@ use App\Models\Quiz;
 use App\Models\Requirement;
 use App\Models\Section;
 use App\Models\Shop;
+use App\Models\ShopOrder;
 use App\Models\Video;
 use Exception;
 use Illuminate\Http\Request;
@@ -900,6 +902,15 @@ class CMSController extends Controller
             'type' => 'success',
             'message' =>  'Quiz deleted successfully.'
         ]);
+    }
 
+    public function enrollment_details($id)
+    {
+        $shopOrder = ShopOrder::find(decrypt($id));
+        $shop = Shop::find($shopOrder->shop_id);
+        $enroll = Enrollment::find($shopOrder->enrollment_id);
+        $username = Auth::user()->username;
+
+        return view('dashboard.lms.viewEnrollmentOverview', compact('username', 'shop', 'enroll', 'shopOrder'));
     }
 }

@@ -95,6 +95,8 @@ Route::prefix('user')->group(function () {
     Route::post('/crm/update/quiz/{quiz_id}', [App\Http\Controllers\CMSController::class, 'update_quiz'])->name('user.update.quiz');
     Route::get('/crm/delete/question/{question_id}', [App\Http\Controllers\CMSController::class, 'delete_question'])->name('user.delete.question');
 
+    Route::get('/crm/enrollment/details/{id}', [App\Http\Controllers\CMSController::class, 'enrollment_details'])->name('user.enrollment.details');
+
     // Email
     Route::post('/user/send/message/admin', [OjafunnelNotificationController::class, 'user_send_message'])->name('user.send.message');
     Route::post('/user/reply/email-support/{id}', [OjafunnelNotificationController::class, 'reply_email_support'])->name('user.replyEmailSupport');

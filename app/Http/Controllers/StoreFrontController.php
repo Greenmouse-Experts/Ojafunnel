@@ -108,9 +108,10 @@ class StoreFrontController extends Controller
         return view('dashboard.store.checkout', compact('store', 'products'));
     }
 
-    public function addToCart($id)
+    public function addToCart($id, $storename)
     {
         $product = StoreProduct::findOrFail($id);
+        $store = Store::latest()->where('name', $storename)->first();
         $targetDate = strtotime($product->date_to);
         $now = time();
         $timeRemaining = $targetDate - $now;
@@ -126,11 +127,12 @@ class StoreFrontController extends Controller
                 "quantity" => 1,
                 'rmQuan' => $product->quantity,
                 "price" => $timeRemaining > 0 ? $product->new_price : $product->price,
-                "currency" => $product->currency,
-                "currency_sign" => $product->currency_sign,
+                "currency" => $store->currency,
+                "currency_sign" => $store->currency_sign,
                 "description" => $product->description,
                 "image" => $product->image,
                 "timeRemaining" => $timeRemaining,
+                'store' => $store
             ];
         }
 
@@ -271,10 +273,13 @@ class StoreFrontController extends Controller
         $qty = 0;
 
         foreach ($cart as $item) {
-            $item_price = $item['price'] * $item['quantity'];
-            $totalAmount += $item_price;
+            // Check if the item belongs to the specified store
+            if (isset($item['store']) && $item['store']->name == $store->name) {
+                $item_price = $item['price'] * $item['quantity'];
+                $totalAmount += $item_price;
 
-            $qty += $item['quantity'];
+                $qty += $item['quantity'];
+            }
         }
 
         // order
@@ -286,169 +291,171 @@ class StoreFrontController extends Controller
         $order->coupon = json_encode([
             'coupon_id' => $request->couponID,
             'percent' => StoreCoupon::find($request->couponID)->discount_percent ?? null,
-            'amountPaid' => $request->amountToPay,
+            'amountPaid' => $store->currency_sign.''.$request->amountToPay,
         ]);
         $order->amount = $store->currency_sign.''.$totalAmount;
         $order->save();
 
         foreach ($cart as $item) {
-            // item price
-            $item_price = $item['price'] * $item['quantity'];
+            if (isset($item['store']) && $item['store']->name == $store->name) {
+                // item price
+                $item_price = $item['price'] * $item['quantity'];
 
-            // item total amount
-            $item_amount = 0;
-            // promoter
-            $level1_fee = 0;
-            // promoter's refer by
-            $level2_fee = 0;
-            //
+                // item total amount
+                $item_amount = 0;
+                // promoter
+                $level1_fee = 0;
+                // promoter's refer by
+                $level2_fee = 0;
+                //
 
-            if ($item['id'] == $product_id && $promoter->exists()) {
-                $product = StoreProduct::find($item['id'])->first();
+                if ($item['id'] == $product_id && $promoter->exists()) {
+                    $product = StoreProduct::find($item['id'])->first();
 
-                // promoter fee
-                $level1_fee = ($product->level1_comm / 100) * $item_price;
+                    // promoter fee
+                    $level1_fee = ($product->level1_comm / 100) * $item_price;
 
-                if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
-                    // promoter's refer by free
-                    $level2_fee = ($product->level2_comm / 100) * $item_price;
+                    if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
+                        // promoter's refer by free
+                        $level2_fee = ($product->level2_comm / 100) * $item_price;
+                    }
+
+                    $item_amount = $item_price - ($level1_fee + $level2_fee);
+                } else {
+                    $item_amount = $item_price;
                 }
 
-                $item_amount = $item_price - ($level1_fee + $level2_fee);
-            } else {
-                $item_amount = $item_price;
-            }
+                // order item
+                $orderItem = new OrderItem();
+                $orderItem->store_order_id = $order->id;
+                $orderItem->store_product_id = $item['id'];
+                $orderItem->quantity = $item['quantity'];
+                $orderItem->amount = $store->currency_sign.''.$item['price'];
+                $orderItem->type = $item['id'] == $product_id && $promoter->exists() ? 'Promotion' : 'Normal';
+                $orderItem->save();
 
-            // order item
-            $orderItem = new OrderItem();
-            $orderItem->store_order_id = $order->id;
-            $orderItem->store_product_id = $item['id'];
-            $orderItem->quantity = $item['quantity'];
-            $orderItem->amount = $store->currency_sign.''.$item['price'];
-            $orderItem->type = $item['id'] == $product_id && $promoter->exists() ? 'Promotion' : 'Normal';
-            $orderItem->save();
+                // update store_product quantity
+                $store_product = StoreProduct::findOrFail($item['id']);
+                $store_product->quantity = $store_product->quantity - $item['quantity'];
+                $store_product->update();
 
-            // update store_product quantity
-            $store_product = StoreProduct::findOrFail($item['id']);
-            $store_product->quantity = $store_product->quantity - $item['quantity'];
-            $store_product->update();
-
-            // add fund to vendor wallet
-            $userData = User::findOrFail($store->user_id);
-            if($store->currency == 'NGN')
-            {
-                $userData->wallet = $userData->wallet + $item_amount;
-            } else {
-                $userData->dollar_wallet = $userData->dollar_wallet + $item_amount;
-            }
-            $userData->update();
-
-            // VENDOR
-            // add record to transaction table for vendor - (plus)
-            $trans = new Transaction();
-            $trans->user_id = $store->user_id;
-            $trans->amount = $store->currency_sign.''.$item_price;
-            $trans->reference = Str::random(8);
-            $trans->status = 'Product Purchase';
-            $trans->save();
-
-            OjafunnelNotification::create([
-                'to' => $store->user_id,
-                'title' => config('app.name'),
-                'body' => $request->name . ' purchase product in your shop.'
-            ]);
-
-            // send mail to vendor
-            $vendor = User::where('id', $store->user_id)->first();
-            Mail::to($vendor->email)->send(new StoreFrontMail('Store Product Purchase', "Hello $vendor->username, a new product has been purchased in your store with a total amount of $store->currency_sign $item_price"));
-
-            // add fund to promoter and promoter referral wallet
-            if ($item['id'] == $product_id && $promoter->exists()) {
+                // add fund to vendor wallet
+                $userData = User::findOrFail($store->user_id);
                 if($store->currency == 'NGN')
                 {
-                    // level1 fee
-                    $promoter->update([
-                        'wallet' => $promoter->first()->wallet + $level1_fee,
-                        'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
-                    ]);
+                    $userData->wallet = $userData->wallet + $item_amount;
                 } else {
-                    // level1 fee
-                    $promoter->update([
-                        'dollar_wallet' => $promoter->first()->dollar_wallet + $level1_fee,
-                        'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
-                    ]);
+                    $userData->dollar_wallet = $userData->dollar_wallet + $item_amount;
                 }
+                $userData->update();
 
-                // LEVEL 1
-                // add record to transaction table for vendor - (minus)
+                // VENDOR
+                // add record to transaction table for vendor - (plus)
                 $trans = new Transaction();
                 $trans->user_id = $store->user_id;
-                $trans->amount = $store->currency_sign."-$level1_fee";
+                $trans->amount = $store->currency_sign.''.$item_price;
                 $trans->reference = Str::random(8);
-                $trans->status = 'Level 1 Fee Deduction';
-                $trans->save();
-
-                // add record to transaction table for promoter - (plus)
-                $trans = new Transaction();
-                $trans->user_id = $promoter->first()->id;
-                $trans->amount = $store->currency_sign."$level1_fee";
-                $trans->reference = Str::random(8);
-                $trans->status = 'Level 1 Fee Received';
+                $trans->status = 'Product Purchase';
                 $trans->save();
 
                 OjafunnelNotification::create([
-                    'to' => $promoter->first()->id,
+                    'to' => $store->user_id,
                     'title' => config('app.name'),
-                    'body' => 'You have received level 1 fee of ' . $store->currency_sign.''.$level1_fee . ' for promoting ' . $item['name'] . '.'
+                    'body' => $request->name . ' purchase product in your shop.'
                 ]);
 
-                // send mail to both vendor and promoter - for level 1
-                Mail::to($vendor->email)->send(new StoreFrontMail('Level 1 Fee Deduction', "Hello $vendor->username, a total amount of $store->currency_sign $level1_fee has been deducted from your account for level 1 commission."));
-                Mail::to($promoter->first()->email)->send(new StoreFrontMail('Level 1 Fee Received', "Hello " . $promoter->first()->username . ", a total amount of $store->currency_sign $level1_fee has been added to your account for level 1 commission."));
+                // send mail to vendor
+                $vendor = User::where('id', $store->user_id)->first();
+                Mail::to($vendor->email)->send(new StoreFrontMail('Store Product Purchase', "Hello $vendor->username, a new product has been purchased in your store with a total amount of $store->currency_sign $item_price"));
 
-                // level2 fee
-                if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
-                    $user = User::where(['id' => $promoter->first()->referral_link]);
-
+                // add fund to promoter and promoter referral wallet
+                if ($item['id'] == $product_id && $promoter->exists()) {
                     if($store->currency == 'NGN')
                     {
-                        $user->update([
-                            'wallet' => $user->first()->wallet + $level2_fee,
-                            'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                        // level1 fee
+                        $promoter->update([
+                            'wallet' => $promoter->first()->wallet + $level1_fee,
+                            'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
                         ]);
                     } else {
-                        $user->update([
-                            'dollar_wallet' => $user->first()->dollar_wallet + $level2_fee,
-                            'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                        // level1 fee
+                        $promoter->update([
+                            'dollar_wallet' => $promoter->first()->dollar_wallet + $level1_fee,
+                            'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
                         ]);
                     }
 
-                    // LEVEL 2
+                    // LEVEL 1
                     // add record to transaction table for vendor - (minus)
                     $trans = new Transaction();
                     $trans->user_id = $store->user_id;
-                    $trans->amount = $store->currency_sign."-$level2_fee";
+                    $trans->amount = $store->currency_sign."-$level1_fee";
                     $trans->reference = Str::random(8);
-                    $trans->status = 'Level 2 Fee Deducted';
+                    $trans->status = 'Level 1 Fee Deduction';
                     $trans->save();
 
-                    // add record to transaction table for promoter referral - (plus)
+                    // add record to transaction table for promoter - (plus)
                     $trans = new Transaction();
-                    $trans->user_id = $user->first()->id;
-                    $trans->amount = $store->currency_sign."$level2_fee";
+                    $trans->user_id = $promoter->first()->id;
+                    $trans->amount = $store->currency_sign."$level1_fee";
                     $trans->reference = Str::random(8);
-                    $trans->status = 'Level 2 Fee Received';
+                    $trans->status = 'Level 1 Fee Received';
                     $trans->save();
 
                     OjafunnelNotification::create([
-                        'to' => $user->first()->id,
+                        'to' => $promoter->first()->id,
                         'title' => config('app.name'),
-                        'body' => 'You have received level 2 fee of ' . $store->currency_sign.''.$level2_fee . ' for referring the promoter of ' . $item['name'] . '.'
+                        'body' => 'You have received level 1 fee of ' . $store->currency_sign.''.$level1_fee . ' for promoting ' . $item['name'] . '.'
                     ]);
 
-                    // send mail to both vendor and promoter referral - for level 2
-                    Mail::to($vendor->email)->send(new StoreFrontMail('Level 2 Fee Deduction', "Hello $vendor->username, a total amount of $store->currency_sign $level2_fee has been deducted from your account for level 2 commission."));
-                    Mail::to($user->first()->email)->send(new StoreFrontMail('Level 2 Fee Received', "Hello " . $user->first()->username . ", a total amount of $store->currency_sign $level2_fee has been added to your account for referring the promoter (i.e level 2 commission)."));
+                    // send mail to both vendor and promoter - for level 1
+                    Mail::to($vendor->email)->send(new StoreFrontMail('Level 1 Fee Deduction', "Hello $vendor->username, a total amount of $store->currency_sign $level1_fee has been deducted from your account for level 1 commission."));
+                    Mail::to($promoter->first()->email)->send(new StoreFrontMail('Level 1 Fee Received', "Hello " . $promoter->first()->username . ", a total amount of $store->currency_sign $level1_fee has been added to your account for level 1 commission."));
+
+                    // level2 fee
+                    if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
+                        $user = User::where(['id' => $promoter->first()->referral_link]);
+
+                        if($store->currency == 'NGN')
+                        {
+                            $user->update([
+                                'wallet' => $user->first()->wallet + $level2_fee,
+                                'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                            ]);
+                        } else {
+                            $user->update([
+                                'dollar_wallet' => $user->first()->dollar_wallet + $level2_fee,
+                                'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                            ]);
+                        }
+
+                        // LEVEL 2
+                        // add record to transaction table for vendor - (minus)
+                        $trans = new Transaction();
+                        $trans->user_id = $store->user_id;
+                        $trans->amount = $store->currency_sign."-$level2_fee";
+                        $trans->reference = Str::random(8);
+                        $trans->status = 'Level 2 Fee Deducted';
+                        $trans->save();
+
+                        // add record to transaction table for promoter referral - (plus)
+                        $trans = new Transaction();
+                        $trans->user_id = $user->first()->id;
+                        $trans->amount = $store->currency_sign."$level2_fee";
+                        $trans->reference = Str::random(8);
+                        $trans->status = 'Level 2 Fee Received';
+                        $trans->save();
+
+                        OjafunnelNotification::create([
+                            'to' => $user->first()->id,
+                            'title' => config('app.name'),
+                            'body' => 'You have received level 2 fee of ' . $store->currency_sign.''.$level2_fee . ' for referring the promoter of ' . $item['name'] . '.'
+                        ]);
+
+                        // send mail to both vendor and promoter referral - for level 2
+                        Mail::to($vendor->email)->send(new StoreFrontMail('Level 2 Fee Deduction', "Hello $vendor->username, a total amount of $store->currency_sign $level2_fee has been deducted from your account for level 2 commission."));
+                        Mail::to($user->first()->email)->send(new StoreFrontMail('Level 2 Fee Received', "Hello " . $user->first()->username . ", a total amount of $store->currency_sign $level2_fee has been added to your account for referring the promoter (i.e level 2 commission)."));
+                    }
                 }
             }
         }

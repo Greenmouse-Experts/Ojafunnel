@@ -420,8 +420,8 @@
                       <span class="total-space" style="font-weight: bold; color: #4d4d4d">Total</span>
                     </td>
                     <td class="item-col price" style="text-align: left; border-top: 1px solid #cccccc;">
-                      <span class="total-space">{{$store->currency_sign}}{{number_format(json_decode($order->coupon)->amountPaid, 2)}}</span> <br />
-                      <span class="total-space" style="font-weight:bold; color: #4d4d4d">{{$store->currency_sign}}{{number_format(json_decode($order->coupon)->amountPaid, 2)}}</span>
+                      <span class="total-space">{{json_decode($order->coupon)->amountPaid}}</span> <br />
+                      <span class="total-space" style="font-weight:bold; color: #4d4d4d">{{json_decode($order->coupon)->amountPaid}}</span>
                     </td>
                   </tr>
                 </table>

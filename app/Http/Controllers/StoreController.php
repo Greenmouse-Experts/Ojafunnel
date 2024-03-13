@@ -41,7 +41,6 @@ class StoreController extends Controller
                 'name' => 'required|unique:stores|max:255',
                 'description' => 'required',
                 'link' => 'required',
-                // 'theme' => 'required'
             ],
             [
                 'name.unique' => 'Store name has already been taken, please use another one!',
@@ -188,7 +187,7 @@ class StoreController extends Controller
     public function sales(Request $request, $username)
     {
         $order = StoreOrder::latest()->where('store_id', $request->store_id)->get();
-        $store = Store::findOrFail($request->store_id);
+        $store = Store::find($request->store_id);
         return view('dashboard.Sales', [
             'username' => $username,
             'order' => $order,

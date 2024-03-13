@@ -3194,11 +3194,12 @@ class DashboardController extends Controller
         return view('dashboard.lms.checkShops', compact('username', 'shop'));
     }
 
-    public function view_enrollments($username, Request $reequest)
+    public function view_enrollments($username, $id)
     {
-        $shop = Shop::latest()->where('user_id', Auth::user()->id)->first();
+        $shop = Shop::find($id);
+        $shopOrder = ShopOrder::latest()->where('shop_id', $shop->id)->get();
 
-        return view('dashboard.lms.view_enrollments', compact('username', 'shop'));
+        return view('dashboard.lms.view_enrollments', compact('username', 'shop', 'shopOrder'));
     }
 
     public function my_shops($username)

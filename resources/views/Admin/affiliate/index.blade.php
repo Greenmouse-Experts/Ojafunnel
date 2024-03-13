@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-10">
+                <div class="col-lg-12">
                     <div class="card account-head">
                         <div class="py-2">
                             <h4 class="font-500">Affiliate Level</h4>

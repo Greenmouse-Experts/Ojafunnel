@@ -182,7 +182,7 @@
                                                                                     $country_code = $country['code'];
                                                                                     $country = $country['name'];
                                                                                 @endphp
-                                                                                <option value="{{ $country_code }}">{{ $country }}</option>
+                                                                                <option value="{{ $country }}">{{ $country }}</option>
                                                                             @endforeach
                                                                         @endif
                                                                     </select>
@@ -264,15 +264,17 @@
                                                                         @php $total = 0 @endphp
                                                                         @if(session('cart'))
                                                                         @foreach(session('cart') as $id => $details)
-                                                                        @php $total += $details['price'] @endphp
-                                                                        <tr>
-                                                                            <th scope="row"><img src="{{ $details['image'] ?? URL::asset('dash/assets/image/store-logo.png') }}" alt="product-img" title="product-img" class="avatar-md"></th>
-                                                                            <td>
-                                                                                <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ isset($details['title']) ? $details['title'] : '' }} </a></h5>
-                                                                            </td>
-                                                                            <td>{{ $shop->currency_sign }}{{ number_format($details['price'], 2) }}</td>
-                                                                        </tr>
-                                                                        @endforeach
+                                                                            @if(isset($details['shop']) && $details['shop']->name == $shop->name)
+                                                                            @php $total += $details['price'] @endphp
+                                                                            <tr>
+                                                                                <th scope="row"><img src="{{ $details['image'] ?? URL::asset('dash/assets/image/store-logo.png') }}" alt="product-img" title="product-img" class="avatar-md"></th>
+                                                                                <td>
+                                                                                    <h5 class="font-size-14 text-truncate"><a href="javascrit(0);" class="text-dark">{{ isset($details['title']) ? $details['title'] : '' }} </a></h5>
+                                                                                </td>
+                                                                                <td>{{ $shop->currency_sign }}{{ number_format($details['price'], 2) }}</td>
+                                                                            </tr>
+                                                                            @endif
+                                                                            @endforeach
                                                                         @endif
                                                                         <tr>
                                                                             <td colspan="2">

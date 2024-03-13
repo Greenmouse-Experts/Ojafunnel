@@ -41,11 +41,9 @@ class ShopFrontController extends Controller
             })
             ->get();
 
-
         } else {
             $courses = Course::latest()->where('user_id', $shop->user_id)->where('approved', true)->get();
         }
-
 
         $isvalid = false;
 
@@ -62,24 +60,24 @@ class ShopFrontController extends Controller
         } else return view('dashboard.lms.viewShop', compact('shop', 'courses', 'isvalid'));
     }
 
-    public function addCourseToCart($id)
+    public function addCourseToCart($id, $shopname)
     {
-        $course = Course::findOrFail($id);
-
+        $course = Course::find($id);
+        $shop = Shop::latest()->where('name', $shopname)->first();
         $cart = session()->get('cart', []);
 
         $cart[$id] = [
             "id" => $course->id,
             "title" => $course->title,
-            'currency' => $course->currency,
+            "currency" => $shop->currency,
+            "currency_sign" => $shop->currency_sign,
             "price" => $course->price,
             "description" => $course->description,
-            "image" => $course->image
+            "image" => $course->image,
+            "shop" => $shop
         ];
 
         session()->put('cart', $cart);
-
-        // return $cart;
 
         return redirect()->back()->with('success', 'Course added to cart successfully!');
     }
@@ -127,7 +125,6 @@ class ShopFrontController extends Controller
         }
     }
 
-
     public function courseCheckoutPayment(Request $request)
     {
         $promotion_id = $request->has('promotion_id') ? $request->get('promotion_id') : null;
@@ -152,7 +149,9 @@ class ShopFrontController extends Controller
         $promoter = User::where(['promotion_link' => $promotion_id]);
 
         foreach ($cart as $item) {
-            $totalAmount += $item['price'];
+            if (isset($item['shop']) && $item['shop']->name == $shop->name) {
+                $totalAmount += $item['price'];
+            }
         }
 
         if($request->paymentOptions == 'Stripe')
@@ -202,100 +201,102 @@ class ShopFrontController extends Controller
         $data = [];
 
         foreach ($cart as $item) {
-            $data['items'] = [
-                [
-                    'name' => $item['title'],
-                    'price' => $item['price'],
-                    'desc' => $item['title'],
-                ]
-            ];
+            if (isset($item['shop']) && $item['shop']->name == $shop->name) {
+                $data['items'] = [
+                    [
+                        'name' => $item['title'],
+                        'price' => $item['price'],
+                        'desc' => $item['title'],
+                    ]
+                ];
 
-            // item total amount
-            $item_amount = 0;
-            // promoter
-            $level1_fee = 0;
-            // promoter's refer by
-            $level2_fee = 0;
-            //
+                // item total amount
+                $item_amount = 0;
+                // promoter
+                $level1_fee = 0;
+                // promoter's refer by
+                $level2_fee = 0;
+                //
 
-            if ($item['id'] == $course_id && $promoter->exists()) {
-                $product = Course::find($item['id'])->first();
+                if ($item['id'] == $course_id && $promoter->exists()) {
+                    $product = Course::find($item['id'])->first();
 
-                // promoter fee
-                $level1_fee = ($product->level1_comm / 100) * $item['price'];
+                    // promoter fee
+                    $level1_fee = ($product->level1_comm / 100) * $item['price'];
 
-                if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
-                    // promoter's refer by free
-                    $level2_fee = ($product->level2_comm / 100) * $item['price'];
-                }
+                    if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
+                        // promoter's refer by free
+                        $level2_fee = ($product->level2_comm / 100) * $item['price'];
+                    }
 
-                $item_amount = $item['price'] - ($level1_fee + $level2_fee);
-            } else $item_amount = $item['price'];
+                    $item_amount = $item['price'] - ($level1_fee + $level2_fee);
+                } else $item_amount = $item['price'];
 
-            $shopOrder = ShopOrder::create([
-                'shop_id' => $shop->id,
-                'course_id' => $item['id'],
-                'enrollment_id' => $enroll->id,
-                'order_no' => $enroll->order_no,
-                'payment_method' => $request->paymentOptions,
-                'amount' => $item['price'],
-                'description' => $request->name . ' purchase/enroll on a course published in your shop.',
-                'transaction_id' => $trans->id,
-                'type' => $item['id'] == $course_id && $promoter->exists() ? 'Promotion' : 'Normal'
-            ]);
+                $shopOrder = ShopOrder::create([
+                    'shop_id' => $shop->id,
+                    'course_id' => $item['id'],
+                    'enrollment_id' => $enroll->id,
+                    'order_no' => $enroll->order_no,
+                    'payment_method' => $request->paymentOptions,
+                    'amount' => $item['price'],
+                    'description' => $request->name . ' purchase/enroll on a course published in your shop.',
+                    'transaction_id' => $trans->id,
+                    'type' => $item['id'] == $course_id && $promoter->exists() ? 'Promotion' : 'Normal'
+                ]);
 
-            // add fund to vendor wallet
-            $userData = ModelsUser::findOrFail($shop->user_id);
-            if($shop->currency == 'NGN')
-            {
-                $userData->wallet = $userData->wallet + $item_amount;
-            } else {
-                $userData->dollar_wallet = $userData->dollar_wallet + $item_amount;
-            }
-            $userData->update();
-
-            OjafunnelNotification::create([
-                'to' => $userData->id,
-                'title' => config('app.name'),
-                'body' => $request->name . ' purchase/enroll on a course published in your shop.'
-            ]);
-
-            // add fund to promoter and promoter referral wallet
-            if ($item['id'] == $course_id && $promoter->exists()) {
-                // level1 fee
+                // add fund to vendor wallet
+                $userData = ModelsUser::findOrFail($shop->user_id);
                 if($shop->currency == 'NGN')
                 {
-                    $promoter->update([
-                        'wallet' => $promoter->first()->wallet + $level1_fee,
-                        'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
-                    ]);
+                    $userData->wallet = $userData->wallet + $item_amount;
                 } else {
-                    $promoter->update([
-                        'dollar_wallet' => $promoter->first()->dollar_wallet + $level1_fee,
-                        'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
-                    ]);
+                    $userData->dollar_wallet = $userData->dollar_wallet + $item_amount;
                 }
+                $userData->update();
 
-                // notify level 1 here
+                OjafunnelNotification::create([
+                    'to' => $userData->id,
+                    'title' => config('app.name'),
+                    'body' => $request->name . ' purchase/enroll on a course published in your shop.'
+                ]);
 
-                // level2 fee
-                if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
-                    $user = User::where(['id' => $promoter->first()->referral_link]);
-
+                // add fund to promoter and promoter referral wallet
+                if ($item['id'] == $course_id && $promoter->exists()) {
+                    // level1 fee
                     if($shop->currency == 'NGN')
                     {
-                        $user->update([
-                            'wallet' => $user->first()->wallet + $level2_fee,
-                            'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                        $promoter->update([
+                            'wallet' => $promoter->first()->wallet + $level1_fee,
+                            'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
                         ]);
                     } else {
-                        $user->update([
-                            'dollar_wallet' => $user->first()->dollar_wallet + $level2_fee,
-                            'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                        $promoter->update([
+                            'dollar_wallet' => $promoter->first()->dollar_wallet + $level1_fee,
+                            'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
                         ]);
                     }
 
-                    // notify level 2 here
+                    // notify level 1 here
+
+                    // level2 fee
+                    if ($promoter->first()->referral_link != null || $promoter->first()->referral_link != "") {
+                        $user = User::where(['id' => $promoter->first()->referral_link]);
+
+                        if($shop->currency == 'NGN')
+                        {
+                            $user->update([
+                                'wallet' => $user->first()->wallet + $level2_fee,
+                                'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                            ]);
+                        } else {
+                            $user->update([
+                                'dollar_wallet' => $user->first()->dollar_wallet + $level2_fee,
+                                'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                            ]);
+                        }
+
+                        // notify level 2 here
+                    }
                 }
             }
         }

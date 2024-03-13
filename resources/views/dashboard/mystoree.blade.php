@@ -50,10 +50,10 @@
             <form class="app-search d-none d-lg-block" method="get" action="{{route('user.stores.link', $store->name)}}">
                 @csrf
                 <div class="input-group search-box mobile-search">
-                    <input type="text" name='search_string' class="form-control" placeholder="Search for courses">
-                    <div class="input-group-append">
+                    <input type="text" name='search_string' class="form-control" placeholder="Search for products">
+                    <!-- <div class="input-group-append">
                         <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-                    </div>
+                    </div> -->
                 </div>
             </form>
         </div>
@@ -74,19 +74,44 @@
             </a> --}}
             <div class="dropdown" style="right: 0; left: auto !important">
                 <button type="button" class="btn btn-info dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
+                    @php
+                        $cartCount = 0;
+                        foreach((array) session('cart') as $id => $details) {
+                            if(isset($details['store']) && $details['store']->name == $store->name) {
+                                $cartCount++;
+                            }
+                        }
+                    @endphp
+                    <span class="badge badge-pill badge-danger">{{ $cartCount }}</span>
                 </button>
 
                 <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
                     <div class="row total-header-section">
                         <div class="col-lg-6 col-sm-6 col-6">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            @php
+                                $cartCount = 0;
+                                foreach((array) session('cart') as $id => $details) {
+                                    if(isset($details['store']) && $details['store']->name == $store->name) {
+                                        $cartCount++;
+                                    }
+                                }
+                            @endphp
+                            <span class="badge badge-pill badge-danger">{{ $cartCount }}</span>
                         </div>
                         @php $total = 0 @endphp
                         @foreach((array) session('cart') as $id => $details)
-                          @if(isset($details['quantity']) && isset($details['price']))
-                            @php $total += $details['price'] * $details['quantity'] @endphp
-                          @endif
+                            @if(isset($details['quantity']) && isset($details['price']) &&
+                                isset($details['store']) &&
+                                $details['store']->name == $store->name)
+                                @php
+                                    // Cast price to float and check if it's numeric
+                                    $price = floatval(preg_replace('/[^-0-9.]/', '', $details['price']));
+                                    $quantity = intval($details['quantity']);
+                                    $total += $price * $quantity;
+                                @endphp
+                            @endif
                         @endforeach
                         <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
                             <p>Total: <span class="text-info">{{$store->currency_sign}}{{number_format($total, 2) }}</span></p>
@@ -94,15 +119,17 @@
                     </div>
                     @if(session('cart'))
                         @foreach(session('cart') as $id => $details)
-                            <div class="row cart-detail">
-                                <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                    <img style="width: 70px" src="{{ Storage::url($details['image']) }}" />
+                            @if(isset($details['store']) && $details['store']->name == $store->name)
+                                <div class="row cart-detail">
+                                    <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                                        <img style="width: 70px" src="{{ Storage::url($details['image']) }}" />
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                        <p>{{ isset($details['name']) ? $details['name'] : '' }}</p>
+                                        <span class="price text-info"> {{$details['currency_sign']}}{{ $price ? number_format($price, 2) : 0 }}</span> <span class="count"> Quantity:{{ isset($details['quantity']) ? $details['quantity'] : 1 }}</span>
+                                    </div>
                                 </div>
-                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                    <p>{{ isset($details['name']) ? $details['name'] : '' }}</p>
-                                    <span class="price text-info"> {{$store->currency_sign}}{{ $details['price'] ? number_format($details['price']) : 0 }}</span> <span class="count"> Quantity:{{ isset($details['quantity']) ? $details['quantity'] : 1 }}</span>
-                                </div>
-                            </div>
+                            @endif
                         @endforeach
                     @endif
                     <div class="row">
@@ -131,7 +158,7 @@
   <div class="acc-border my-4"></div>
   <div>
     <div class="container">
-      <div class="hero-store d-flex align-items-center justify-content-center" style="background: {{$store->theme}}; color: {{$store->color}}">
+      <div class="hero-store d-flex align-items-center justify-content-center">
         <div class="text-center">
           <img src="{{Storage::url($store->logo) ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" width="60" />
           <h3 class="mt-3 px-2">{{$store->name}}</h3>
@@ -183,14 +210,14 @@
                               @if (@$timeRemaining <= 0)
                                 <p class="dynamic_price">{{$store->currency_sign}}{{number_format($item->price, 2)}}</p>
                                 @if ($item->price >= 1)
-                                    <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
+                                    <a href="{{ route('add.to.cart', [$item->id, $store->name]) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
                                 @else
                                     <button disabled>Out of Stock</button>
                                 @endif
                               @else
                                 <p class="dynamic_price">{{$store->currency_sign}}{{number_format($item->new_price, 2)}} <span style="text-decoration:line-through;color:red;opacity:0.6;margin-left:4px;font-size:12px">NGN{{number_format($item->price, 2)}}</span></p>
                                 @if ($item->new_price >= 1)
-                                    <a href="{{ route('add.to.cart', $item->id) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
+                                    <a href="{{ route('add.to.cart', [$item->id, $store->name]) }}"><i class="bi bi-cart-check"></i> Add to Cart</a>
                                 @else
                                     <button disabled>Out of Stock</button>
                                 @endif
@@ -303,10 +330,17 @@
     color: {{$store->color}};
     background: {{$store->theme}};
 }
+
+.hero-store {
+    background: {{$store->theme}} !important;
+    color: {{$store->color}} !important;
+}
 .btn{
     border:0px;
     margin:10px 0px;
     box-shadow:none !important;
+    color: {{$store->color}} !important;
+    background: {{$store->theme}} !important;
 }
 .dropdown .dropdown-menu{
     padding:20px;

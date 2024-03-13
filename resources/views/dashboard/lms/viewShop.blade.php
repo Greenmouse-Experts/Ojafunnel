@@ -86,34 +86,60 @@
                                 @endauth
                             </div>
                             <div class="dropdown">
-                                <a class="btn btn-success dropdown-toggle" style="background-color: {{$shop->theme}}; border-color: {{$shop->theme}};" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
+                                    @php
+                                        $cartCount = 0;
+                                        foreach((array) session('cart') as $id => $details) {
+                                            if(isset($details['shop']) && $details['shop']->name == $shop->name) {
+                                                $cartCount++;
+                                            }
+                                        }
+                                    @endphp
+                                    <span class="badge badge-pill badge-danger">{{ $cartCount }}</span>
                                 </a>
                                 <ul class="dropdown-menu" style="right: 0; left: auto !important">
                                     <div class="row total-header-section">
-                                        <div class="col-lg-6 col-sm-6 col-6">
-                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
-                                        </div>
-                                        @php $total = 0 @endphp
-                                        @foreach((array) session('cart') as $id => $details)
-                                        @php $total += $details['price'] @endphp
-                                        @endforeach
-                                        <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
-                                            <p>Total: <span class="text-info">{{$shop->currency_sign}}{{ number_format($total, 2) }}</span></p>
-                                        </div>
+                                    <div class="col-lg-6 col-sm-6 col-6">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        @php
+                                            $cartCount = 0;
+                                            foreach((array) session('cart') as $id => $details) {
+                                                if(isset($details['shop']) && $details['shop']->name == $shop->name) {
+                                                    $cartCount++;
+                                                }
+                                            }
+                                        @endphp
+                                        <span class="badge badge-pill badge-danger">{{ $cartCount }}</span>
+                                    </div>
+                                    @php $total = 0 @endphp
+                                    @foreach((array) session('cart') as $id => $details)
+                                        @if(isset($details['price']) && isset($details['shop']) && $details['shop']->name == $shop->name)
+                                            @php
+                                                // Cast price to float and check if it's numeric
+                                                $price = floatval(preg_replace('/[^-0-9.]/', '', $details['price']));
+                                                $total += $price;
+                                            @endphp
+                                        @endif
+                                    @endforeach
+                                    <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                                        <p>Total: <span class="text-info">{{$shop->currency_sign}}{{number_format($total, 2) }}</span></p>
+                                    </div>
                                     </div>
                                     @if(session('cart'))
-                                    @foreach(session('cart') as $id => $details)
-                                    <div class="row cart-detail">
-                                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                            <img style="width: 70px" src="{{ $details['image'] ?? URL::asset('dash/assets/image/store-logo.png') }}" />
-                                        </div>
-                                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                            <p>{{ isset($details['title']) ? $details['title'] : '' }}</p>
-                                            <span class="price text-info"> {{$shop->currency_sign}}{{ $details['price'] ? number_format($details['price'], 2) : '' }}</span>
-                                        </div>
-                                    </div>
-                                    @endforeach
+                                        @foreach(session('cart') as $id => $details)
+                                            @if(isset($details['shop']) && $details['shop']->name == $shop->name)
+                                                <div class="row cart-detail">
+                                                    <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                                                        <img style="width: 70px" src="{{ $details['image'] ?? URL::asset('dash/assets/image/store-logo.png') }}" />
+                                                    </div>
+                                                    <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                                        <p>{{ isset($details['name']) ? $details['name'] : '' }}</p>
+                                                        <span class="price text-info"> {{$details['currency_sign']}}{{ $details['price'] ? number_format($details['price'], 2) : 0 }}</span> <span class="count"> Quantity:{{ isset($details['quantity']) ? $details['quantity'] : 1 }}</span>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
                                     @endif
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
@@ -257,9 +283,6 @@
                                     <p class="price text-right">
                                     {{$shop->currency_sign}}{{number_format($course->price, 2)}}
                                     </p>
-                                    {{-- <button class="btn add-to-cart-btn mobile-cart-btn" item="{{$course->id}}" link="{{ route('add.course.to.cart', $course->id) }}" onclick="add_tocartMobile(this)">
-                                        Add To Cart
-                                    </button> --}}
                                 </div>
                             </div>
                         </a>
@@ -291,7 +314,7 @@
                                     </ul>
                                 </div>
                                 <div class="popover-btns">
-                                    <a href="{{ route('add.course.to.cart', $course->id) }}" type="button" class="btn add-to-cart-btn addedToCart big-cart-button-1" id="1">
+                                    <a href="{{ route('add.course.to.cart', [$course->id, $shop->name]) }}" type="button" class="btn add-to-cart-btn addedToCart big-cart-button-1" id="1">
                                         Add To Cart
                                     </a>
                                 </div>
@@ -346,7 +369,7 @@
                                     <p class="price text-right">
                                         {{$course->currency}}{{number_format($course->price, 2)}}
                                     </p>
-                                    <a class="btn add-to-cart-btn mobile-cart-btn" href="{{ route('add.course.to.cart', $course->id) }}">
+                                    <a class="btn add-to-cart-btn mobile-cart-btn" href="{{ route('add.course.to.cart', [$course->id, $shop->name]) }}">
                                         Add To Cart
                                     </a>
                                     <br>
@@ -429,7 +452,6 @@
     color:#000;
     font-weight:500;
 }
-
 span.text-info{
     color: {{$shop->theme}} !important;
 }
@@ -448,6 +470,12 @@ span.text-info{
 .checkout .btn-primary{
     color: {{$shop->color}};
     background: {{$shop->theme}};
+}
+
+.btn {
+    color: {{$shop->color}};
+    background: {{$shop->theme}};
+    border-color: {{$shop->theme}};
 }
 .dropdown-menu:before{
     content: " ";

@@ -135,7 +135,7 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td class="text-wrap" style="width: 330px;">
-                                                {{$item->product->name}}
+                                                <p>{{$item->product->name}}</p>
                                                 <p>{{$item->product->description}}</p>
                                             </td>
                                             <td><img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset=""></td>
@@ -164,11 +164,11 @@
                                         </tr>
                                         @endforeach
                                         <tr>
-                                            <td colspan="6" class="border-0 text-end">
+                                            <td colspan="7" class="border-0 text-end">
                                                 <strong>Total:</strong>
                                             </td>
                                             <td class="border-0">
-                                               <b>{{$store->currency_sign}}{{number_format(json_decode($order->coupon)->amountPaid, 2)}}</b>
+                                               <b>{{json_decode($order->coupon)->amountPaid}}</b>
                                             </td>
                                         </tr>
                                     </tbody>

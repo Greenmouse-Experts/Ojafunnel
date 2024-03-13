@@ -142,7 +142,7 @@
                     <div class="course-sidebar">
                         <div class="course-sidebar-text-box">
                             <div class="buy-btns">
-                                <a href="{{ route('add.course.to.cart', $course->id) }}" class="btn btn-add-cart">Add to cart</a>
+                                <a href="{{ route('add.course.to.cart', [$course->id, $shop->name]) }}" class="btn btn-add-cart">Add to cart</a>
                             </div>
 
                             <div class="includes">

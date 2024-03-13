@@ -53,47 +53,41 @@
                       <th>Payment Method</th>
                       <th>Amount</th>
                       <th>Purchase Date</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                        @foreach (\App\Models\ShopOrder::latest()->where('shop_id', $shop->id)->get() as $item)
+                        @foreach ($shopOrder as $item)
                         <tr>
                             <th scope="row">{{$loop->iteration}}</th>
                             <td><a href="#" data-bs-toggle="modal" data-bs-target="#view-student-{{$item->id}}">View Student</a></td>
                                 <div class="modal fade" id="view-student-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" style="max-width: 45%">
                                         <div class="modal-content pb-3">
-
                                             <div class="modal-header border-bottom-0">
                                                 <h4 class="card-title mb-4">Student Details</h4>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="Editt">
-                                                    <div>
-                                                        <div class="Editt">
-                                                            <div class="form">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12 mb-4">
-                                                                        <label for="Name">Name: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->name}}</label>
-                                                                    </div>
-                                                                    <div class="col-lg-12 mb-4">
-                                                                        <label for="Name">Email: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->email}}</label>
-                                                                    </div>
-                                                                    <div class="col-lg-12 mb-4">
-                                                                        <label for="Name">Phone Number: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->phone_no}}</label>
-                                                                    </div>
-                                                                    <div class="col-lg-12 mb-4">
-                                                                        <label for="Name">Address: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->address}}</label>
-                                                                    </div>
-                                                                    <div class="col-lg-12 mb-4">
-                                                                        <label for="Name">State: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->state}}</label>
-                                                                    </div>
-                                                                    <div class="col-lg-12 mb-4">
-                                                                        <label for="Name">Country: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->country}}</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                <div class="form">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 mb-4">
+                                                            <label for="Name">Name: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->name}}</label>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-4">
+                                                            <label for="Name">Email: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->email}}</label>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-4">
+                                                            <label for="Name">Phone Number: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->phone_no}}</label>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-4">
+                                                            <label for="Name">Address: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->address}}</label>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-4">
+                                                            <label for="Name">State: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->state}}</label>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-4">
+                                                            <label for="Name">Country: {{\App\Models\Enrollment::where('order_no', $item->order_no)->first()->country}}</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -111,10 +105,15 @@
                                 {{$item->payment_method}}
                             </td>
                             <td>
-                                {{number_format($item->amount, 2)}}
+                                {{$shop->currency_sign}}{{number_format($item->amount, 2)}}
                             </td>
                             <td>
                                 {{$item->created_at->toDayDateTimeString()}}
+                            </td>
+                            <td>
+                                <a href="{{route('user.enrollment.details', ['id' => Crypt::encrypt($item->id)])}}">
+                                    View
+                                </a>
                             </td>
                           </tr>
                         @endforeach

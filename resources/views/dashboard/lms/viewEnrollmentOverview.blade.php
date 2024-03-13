@@ -10,11 +10,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">Sales</h4>
+                        <h4 class="mb-sm-0 font-size-18">Enrollment</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
-                                <li class="breadcrumb-item active">Sales</li>
+                                <li class="breadcrumb-item active">Enrollment Details</li>
                             </ol>
                         </div>
                     </div>
@@ -31,10 +31,10 @@
                                 </div>
                             </div>
                             <div>
-                                <strong>Order Id -</strong> {{$order->order_no}}
+                                <strong>Order Id -</strong> {{$enroll->order_no}}
                             </div>
                             <div class="mb-4">
-                                <strong>Order Date - </strong>{{$order->created_at->format('d-m-Y')}}
+                                <strong>Order Date - </strong>{{$enroll->created_at->format('d-m-Y')}}
                             </div>
                             <div class="table-responsive mb-3">
                                 <table class="table table-bordered dt-responsive nowrap w-100">
@@ -47,14 +47,14 @@
                                     <tbody class="text-center">
                                         <tr>
                                             <td>
-                                               <img style="width: 40px;" src="{{Storage::url($store->logo)}}" alt=""> {{$store->name}}
+                                               <img style="width: 40px;" src="{{$shop->logo}}" alt=""> {{$shop->name}}
                                             </td>
                                             <td class="border-0" style="text-align: right">
-                                                <p><strong>Name: </strong>{{$order->user[0]->name}}</p>
-                                                <p><strong>Email: </strong>{{$order->user[0]->email}}</p>
-                                                <p><strong>Phone No: </strong>{{$order->user[0]->phone_no}}</p>
-                                                <p><strong>Address: </strong>{{$order->user[0]->address}}, <br>
-                                                    {{$order->user[0]->state}}, {{$order->user[0]->country}}
+                                                <p><strong>Name: </strong>{{$enroll->name}}</p>
+                                                <p><strong>Email: </strong>{{$enroll->email}}</p>
+                                                <p><strong>Phone No: </strong>{{$enroll->phone_no}}</p>
+                                                <p><strong>Address: </strong>{{$enroll->address}}, <br>
+                                                    {{$enroll->state}}, {{$enroll->country}}
                                                 </p>
                                             </td>
                                         </tr>
@@ -72,7 +72,7 @@
                                     <tbody class="text-center">
                                         <tr>
                                             <td>
-                                            {{$order->payment_method}}
+                                            {{$shopOrder->payment_method}}
                                             </td>
                                             <td>
                                             Free Shipping - Free Shipping
@@ -85,77 +85,37 @@
                                 <h3 class="font-size-15 fw-bold">Order summary</h3>
                             </div>
                             @php
-                                $orderItem = \App\Models\OrderItem::where('store_order_id', $order->id)->get();
+                                $orderItem = \App\Models\ShopOrder::where('enrollment_id', $enroll->id)->get();
                             @endphp
                             <div class="table-responsive">
                                 <table class="table table-nowrap">
                                     <thead>
                                         <tr>
                                             <th style="width: 70px;">No.</th>
-                                            <th>Product Name</th>
+                                            <th>Course Title</th>
                                             <th>Image</th>
                                             <th>Price</th>
-                                            <th>Qty</th>
                                             <th>Subtotal</th>
-                                            <!-- <th>Tax Amount</th> -->
-                                            <th>Promoted</th>
+                                            {{-- <th>Tax Amount</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($orderItem as $item)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>
-                                                @if (App\Models\StoreProduct::where('id', $item->store_product_id)->exists())
-                                                    {{$item->product->name}}
-                                                @else
-                                                    <b>{{ 'DELETED' }}</b>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if (App\Models\StoreProduct::where('id', $item->store_product_id)->exists())
-                                                    <img style="width: 50px" src="{{Storage::url($item->product->image)}}" alt="" srcset="">
-                                                @else
-                                                    <b>{{ 'DELETED' }}</b>
-                                                @endif
-                                            </td>
-                                            <td class="text-wrap" style="width: 330px;">
-                                                @if (App\Models\StoreProduct::where('id', $item->store_product_id)->exists())
-                                                    {{$item->product->description}}
-                                                @else
-                                                    <b>{{ 'DELETED' }}</b>
-                                                @endif
-                                            </td>
-                                            <td>{{$item->quantity}}</td>
-                                            <!-- <td>{{$item->amount}}</td> -->
-                                            <td>{{ substr($item->amount, 0, 1) }}{{$item->quantity * str_replace(['$', '€', '£', '¥', '₹', '₦'], '', $item->amount) }}</td>
-                                            <td>
-                                                @if ($item->type == 'Promotion')
-                                                    {{ 'Yes' }}
-                                                @else
-                                                    {{ 'No' }}
-                                                @endif
-                                            </td>
+                                            <td>{{\App\Models\Course::find($item->course_id)->title ?? 'Course has been Deleted'}}</td>
+                                            <td><img style="width: 50px" src="{{\App\Models\Course::find($item->course_id)->image ?? URL::asset('dash/assets/image/store-logo.png')}}" alt="" srcset=""></td>
+                                            <td class="text-wrap" style="width: 330px;">{{$shop->currency_sign}}{{$item->amount}}</td>
+                                            <td>{{$shop->currency_sign}}{{number_format($item->amount)}}</td>
+                                            {{-- <td>{{$shop->currency_sign}}{{number_format($item->amount, 2)}}</td> --}}
                                         </tr>
                                         @endforeach
-                                        {{-- <tr>
-                                            <td colspan="6" class="border-0 text-end">
-                                                <strong>Sub Total:</strong>
-                                            </td>
-                                            <td class="border-0">$13.00</td>
-                                        </tr>
                                         <tr>
-                                            <td colspan="6" class="border-0 text-end">
-                                                <strong>Tax (18%):</strong>
-                                            </td>
-                                            <td class="border-0">$13.00</td>
-                                        </tr> --}}
-                                        <tr>
-                                            <td colspan="5" class="border-0 text-end">
+                                            <td colspan="4" class="border-0 text-end">
                                                 <strong>Total:</strong>
                                             </td>
                                             <td class="border-0">
-                                               <b>{{ $order->amount }}</b>
+                                               <b>{{$shop->currency_sign}}{{number_format($orderItem->sum('amount'), 2)}}</b>
                                             </td>
                                         </tr>
                                     </tbody>

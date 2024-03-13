@@ -76,7 +76,7 @@
                                         <div class="col-md-1 mt-3 mb-3">
                                             <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction1()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-12">
                                             <label for="Name">Store Currency</label>
                                             <select name="currency" class="input mov" required>
                                                 <option value="">-- Select Currency --</option>
@@ -84,16 +84,6 @@
                                                 <option value="NGN">NGN</option>
                                                 <!-- <option value="GBP">GBP</option>
                                                 <option value="EUR">EUR</option> -->
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label for="Name">Store Currency Sign</label>
-                                            <select name="currency_sign" class="input mov" required>
-                                                <option value="">-- Select Currency --</option>
-                                                <option value="$">$</option>
-                                                <option value="₦">₦</option>
-                                                <!-- <option value="£">£</option>
-                                                <option value="€">€</option> -->
                                             </select>
                                         </div>
                                     </div>

@@ -97,6 +97,7 @@
                                     @php $total = 0 @endphp
                                     @if(session('cart'))
                                         @foreach(session('cart') as $id => $details)
+                                            @if(isset($details['shop']) && $details['shop']->name == $shop->name)
                                             @php $total += $details['price'] @endphp
                                                 <tr data-id="{{ $id }}">
                                                     <td>
@@ -115,6 +116,7 @@
                                                         <a href="javascript(0);" class="action-icon text-danger remove-from-cart"> <i class="fas fa-trash-can font-size-18"></i></a>
                                                     </td>
                                                 </tr>
+                                            @endif
                                         @endforeach
                                     @endif
                                 </tbody>
