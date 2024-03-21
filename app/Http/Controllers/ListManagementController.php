@@ -17,8 +17,7 @@ use Illuminate\Support\Str;
 use App\Mail\UserApprovedNotification;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\HomePageController;
-
-
+use Illuminate\Support\Facades\Http;
 
 class ListManagementController extends Controller
 {
@@ -262,6 +261,8 @@ class ListManagementController extends Controller
             'email'         => 'required|email|max:250',
             'phone' => 'required|numeric',
         ]);
+
+        return true;
 
         $finder = Crypt::decrypt($id);
 
@@ -540,5 +541,21 @@ class ListManagementController extends Controller
                 'message' => 'Contact arrangement invalid!'
             ]);
         }
+    }
+
+    public function debounceEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $response = Http::post('https://api.debounce.io/v1/', [
+            'api' => config('app.debounce_key'), // Replace with your Debounce API key
+            'email' => $request->input('email'),
+        ]);
+
+        $data = $response->json();
+
+        return response()->json(['valid' => $data['debounce']['result'] === 'Safe']);
     }
 }

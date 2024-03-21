@@ -302,6 +302,16 @@
                                                                         <label for="Name">Pricing</label>
                                                                         <input type="number" name="price" value="{{$course->price}}" placeholder="Enter Price" />
                                                                     </div>
+                                                                    <div class="col-lg-4 mb-4">
+                                                                        <label for="Name">Shop</label>
+                                                                        <select name="shop_id">
+                                                                            <option value="{{$course->shop_id ?? ''}}">{{\App\Models\Shop::find($course->shop_id)->name ?? ""}}</option>
+                                                                            <option value="">-- Select Shop --</option>
+                                                                            @foreach($shops as $shop)
+                                                                            <option value="{{$shop->id}}">{{$shop->name}}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
                                                                     <div class="col-lg-12 mb-4">
                                                                         <label for="Name">Course image</label>
                                                                         <input type="file" name="image" />

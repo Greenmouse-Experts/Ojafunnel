@@ -121,6 +121,8 @@ Route::prefix('user')->group(function () {
     Route::post('/withdrawal/update/paystack/{id}', [App\Http\Controllers\TransactionController::class, 'update_paystack'])->name('user.update.paystack');
     Route::post('/withdrawal/add/paypal', [App\Http\Controllers\TransactionController::class, 'add_paypal'])->name('user.add.paypal');
     Route::post('/withdrawal/withdraw', [App\Http\Controllers\TransactionController::class, 'withdraw'])->name('user.withdraw');
+    Route::post('/withdrawal/withdraw/promotion/{promote_id}', [App\Http\Controllers\TransactionController::class, 'withdrawpromotion'])->name('user.withdraw.promotion');
+    Route::post('/withdrawal/withdraw/promotion/request/{promote_id}', [App\Http\Controllers\TransactionController::class, 'withdrawPromotionRequest'])->name('user.withdrawPromotionRequest');
     Route::post('/withdrawal/delete/withdraw/{id}', [App\Http\Controllers\TransactionController::class, 'delete_withdraw'])->name('user.delete.withdraw');
 
     // Birthday Automation
@@ -135,6 +137,7 @@ Route::prefix('user')->group(function () {
     Route::post('/list/management/list/delete/{id}', [ListManagementController::class, 'delete_list'])->name('user.delete.list');
     Route::get('/list/management/create/contact/list/{id}', [ListManagementController::class, 'create_contact_list'])->name('user.create.contact.list');
     Route::post('/list/management/create/contact/{id}', [ListManagementController::class, 'create_contact'])->name('user.create.contact');
+    Route::post('/debounce-email', [ListManagementController::class, 'debounceEmail']);
     Route::get('/list/management/contact/edit/{id}', [ListManagementController::class, 'edit_contact'])->name('user.edit.contact');
     Route::post('/list/management/contact/update/{id}', [ListManagementController::class, 'update_contact'])->name('user.update.contact');
     Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');
@@ -165,3 +168,8 @@ Route::prefix('user')->group(function () {
 });
 Route::get('/unsubscribe/confirm/{email}', [App\Http\Controllers\HomePageController::class, 'confirmUnsubscribe'])->name('user.subscribe.confirm');
 Route::post('/unsubscribe/confirm', [App\Http\Controllers\HomePageController::class, 'unsubscribe'])->name('unsubscribe.confirm');
+
+// Payment Process
+Route::post('/user/payment/add', [App\Http\Controllers\DashboardController::class, 'addPayment'])->name('userPaymentGateway');
+Route::get('/user/view/payment/gateway/{gate_id}', [App\Http\Controllers\DashboardController::class, 'viewPaymentGateway'])->name('viewPaymentGateway');
+Route::post('/user/payment/gateway/update', [App\Http\Controllers\DashboardController::class, 'userUpdatePaymentGateway'])->name('userUpdatePaymentGateway');

@@ -70,10 +70,13 @@
                                                 </td>
                                                 <td>{{$item->payment_method}}</td>
                                                 <td>{{$item->status}}</td>
-                                                <td>{{$item->created_at->format('d M, Y')}}</td>
+                                                <td>{{$item->created_at->toDayDateTimeString()}}</td>
                                                 <td>
-                                                    <a href="{{route('user.order.details', ['username' => Auth::user()->username, 'id' => $item->id])}}">
-                                                        View
+                                                    <a href="{{route('user.order.details', ['username' => Auth::user()->username, 'id' => $item->id])}}" class="btn btn-secondary">
+                                                        View Receipt
+                                                    </a>
+                                                    <a href="{{route('user.store.order.details', ['username' => Auth::user()->username, 'id' => $item->id])}}" class="btn btn-primary">
+                                                        View Order
                                                     </a>
                                                 </td>
                                             </tr>

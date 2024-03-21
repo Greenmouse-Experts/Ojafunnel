@@ -136,7 +136,7 @@ class AccountUpgradeController extends Controller
                         } else {
                             $user_wallet->update([
                                 'dollar_wallet' => $user_wallet->dollar_wallet + $earnings,
-                                'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                                'dollar_ref_bonus' => $user_wallet->dollar_ref_bonus + $earnings,
                             ]);
                         }
                     }
@@ -252,7 +252,7 @@ class AccountUpgradeController extends Controller
                         } else {
                             $user_wallet->update([
                                 'dollar_wallet' => $user_wallet->dollar_wallet + $earnings,
-                                'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                                'dollar_ref_bonus' => $user_wallet->dollar_ref_bonus + $earnings,
                             ]);
                         }
                     }
@@ -390,7 +390,7 @@ class AccountUpgradeController extends Controller
                         } else {
                             $user_wallet->update([
                                 'dollar_wallet' => $user_wallet->dollar_wallet + $earnings,
-                                'ref_bonus' => $user_wallet->ref_bonus + $earnings,
+                                'dollar_ref_bonus' => $user_wallet->dollar_ref_bonus + $earnings,
                             ]);
                         }
                     }

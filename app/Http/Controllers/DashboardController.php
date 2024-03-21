@@ -59,10 +59,12 @@ use App\Models\CourseProgress;
 use App\Models\CourseVideoProgress;
 use App\Models\Message as ModelsMessage;
 use App\Models\MessageUser;
+use App\Models\Promotion;
 use App\Models\Quiz;
 use App\Models\QuizAnswer;
 use App\Models\QuizSubmission;
 use App\Models\SeriesSmsCampaign;
+use App\Models\UserPaymentGateway;
 use App\Models\Withdrawal;
 use AWS\CRT\HTTP\Message;
 use Illuminate\Support\Facades\Mail;
@@ -2515,15 +2517,21 @@ class DashboardController extends Controller
 
     public function my_store($username)
     {
+        $paymentGateways = UserPaymentGateway::where(['user_id' => Auth::id(), 'status' => 'Active'])->get();
+
         return view('dashboard.myStore', [
-            'username' => $username
+            'username' => $username,
+            'paymentGateways' => $paymentGateways
         ]);
     }
 
     public function viewstore($username)
     {
+        // $paymentGateways = UserPaymentGateway::where(['user_id' => Auth::id(), 'status' => 'Active'])->get();
+
         return view('dashboard.checkstore', [
-            'username' => $username
+            'username' => $username,
+            // 'paymentGateways' => $paymentGateways
         ]);
     }
 
@@ -2597,6 +2605,44 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function withdrawalPromotion($username)
+    {
+        $promotions = Promotion::latest()->where('promoter_id', Auth::user()->id)->where('store_owner_id', '!=', Auth::user()->id)->with(['storeOwner', 'store', 'order'])->get();
+
+        // Get the sum of amounts for NGN currency sign
+        $ngnTotal = Promotion::where('promoter_id', Auth::user()->id)
+        ->where('status', 'paid')
+        ->whereHas('store', function ($query) {
+            $query->where('currency_sign', '₦');
+        })
+        ->sum('amount');
+
+        // Get the sum of amounts for USD currency sign
+        $usdTotal = Promotion::where('promoter_id', Auth::user()->id)
+            ->where('status', 'paid')
+            ->whereHas('store', function ($query) {
+                $query->where('currency_sign', '$');
+            })
+            ->sum('amount');
+
+        return view('dashboard.withdrawal.withdrawalPromotion', [
+            'username' => $username,
+            'promotions' => $promotions,
+            'ngnTotal' => $ngnTotal,
+            'usdTotal' => $usdTotal
+        ]);
+    }
+
+    public function withdrawalPromotionRequest($username)
+    {
+        $promotions = Promotion::latest()->where('store_owner_id', Auth::user()->id)->where('promoter_id', '!=', Auth::user()->id)->with(['storeOwner', 'store', 'order'])->get();
+
+        return view('dashboard.withdrawal.withdrawalPromotionRequests', [
+            'username' => $username,
+            'promotions' => $promotions,
+        ]);
+    }
+
     public function bank($username)
     {
         $bank_details = BankDetail::latest()->where('user_id', Auth::user()->id)->where('type', 'NGN')->get();
@@ -2652,10 +2698,12 @@ class DashboardController extends Controller
         $idFinder = Crypt::decrypt($id);
 
         $course = Course::find($idFinder);
+        $shops = Shop::where('user_id', Auth::id())->get();
 
         return view('dashboard.lms.coursecontent', [
             'username' => $username,
-            'course' => $course
+            'course' => $course,
+            'shops' => $shops
         ]);
     }
 
@@ -2695,8 +2743,11 @@ class DashboardController extends Controller
 
     public function create_shop($username)
     {
+        $paymentGateways = UserPaymentGateway::where(['user_id' => Auth::id(), 'status' => 'Active'])->get();
+
         return view('dashboard.lms.createshop', [
-            'username' => $username
+            'username' => $username,
+            'paymentGateways' => $paymentGateways
         ]);
     }
 
@@ -3190,8 +3241,9 @@ class DashboardController extends Controller
     public function view_shops($username)
     {
         $shop = Shop::latest()->where('user_id', Auth::user()->id)->get();
+        $paymentGateways = UserPaymentGateway::where(['user_id' => Auth::id(), 'status' => 'Active'])->get();
 
-        return view('dashboard.lms.checkShops', compact('username', 'shop'));
+        return view('dashboard.lms.checkShops', compact('username', 'shop', 'paymentGateways'));
     }
 
     public function view_enrollments($username, $id)
@@ -3611,5 +3663,79 @@ class DashboardController extends Controller
 
             echo 'Unable to process request';
         }
+    }
+
+    public function payment_gateway()
+    {
+        $gateways = UserPaymentGateway::latest()->where('user_id', Auth::user()->id)->get();
+
+        return view('dashboard.payment-gateway.index', [
+            'gateways' => $gateways
+        ]);
+    }
+
+    public function addPayment(Request $request)
+    {
+        $this->validate($request, [
+            'name' => ['required'],
+        ]);
+
+        $exist = UserPaymentGateway::where(['name' => $request->name, 'user_id' => Auth::id()])->exists();
+
+        if($exist)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'The payment gateway already exist.'
+            ]);
+        }
+
+        UserPaymentGateway::create([
+            'user_id' => Auth::id(),
+            'name' => $request->name
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'The payment gateway added successfully.'
+        ]);
+    }
+
+    public function viewPaymentGateway($id)
+    {
+        // Fetch PaymentGateway details from the database
+        $paymentGateway = UserPaymentGateway::find($id);
+
+        // You can return a view or JSON response based on your needs
+        return response()->json($paymentGateway);
+    }
+
+    public function userUpdatePaymentGateway(Request $request)
+    {
+        $this->validate($request, [
+            'id' => ['required', 'integer'],
+        ]);
+
+        $gateway = UserPaymentGateway::find($request->id);
+
+        $gateway->update([
+            'PAYSTACK_PUBLIC_KEY' => $request->PAYSTACK_PUBLIC_KEY,
+            'PAYSTACK_SECRET_KEY' => $request->PAYSTACK_SECRET_KEY,
+            'FLW_PUBLIC_KEY' => $request->FLW_PUBLIC_KEY,
+            'FLW_SECRET_KEY' => $request->FLW_SECRET_KEY,
+            'PAYPAL_MODE' => $request->PAYPAL_MODE,
+            'PAYPAL_CURRENCY' => $request->PAYPAL_CURRENCY,
+            'PAYPAL_SANDBOX_API_CERTIFICATE' => $request->PAYPAL_SANDBOX_API_CERTIFICATE,
+            'PAYPAL_CLIENT_ID' => $request->PAYPAL_CLIENT_ID,
+            'PAYPAL_CLIENT_SECRET' => $request->PAYPAL_CLIENT_SECRET,
+            'STRIPE_KEY' => $request->STRIPE_KEY,
+            'STRIPE_SECRET' => $request->STRIPE_SECRET,
+            'status' => $request->status,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => $gateway->name .' update successful.'
+        ]);
     }
 }

@@ -12,6 +12,7 @@ use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Store;
 use App\Models\StoreCoupon;
+use App\Models\UserPaymentGateway;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\File as FacadeFile;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StoreController extends Controller
 {
@@ -41,6 +43,8 @@ class StoreController extends Controller
                 'name' => 'required|unique:stores|max:255',
                 'description' => 'required',
                 'link' => 'required',
+                'currency' => 'required',
+                'payment_gateway' => 'required',
             ],
             [
                 'name.unique' => 'Store name has already been taken, please use another one!',
@@ -51,6 +55,16 @@ class StoreController extends Controller
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access.'
+            ]);
+        }
+
+        $payment = UserPaymentGateway::where(['user_id' => Auth::user()->id, 'name' => $request->payment_gateway])->get();
+
+        if($payment->isEmpty())
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Payment gateway doesn't exist in our database."
             ]);
         }
 
@@ -78,6 +92,7 @@ class StoreController extends Controller
             $store->user_id = Auth::user()->id;
             $store->currency = $request->currency;
             $store->currency_sign = $request->currency === 'NGN' ? '₦' : '$';
+            $store->payment_gateway = $request->payment_gateway;
             $store->save();
         } else {
             if ($request->file('logo')) {
@@ -96,6 +111,7 @@ class StoreController extends Controller
             $store->user_id = Auth::user()->id;
             $store->currency = $request->currency;
             $store->currency_sign = $request->currency === 'NGN' ? '₦' : '$';
+            $store->payment_gateway = $request->payment_gateway;
             $store->save();
         }
 
@@ -107,6 +123,33 @@ class StoreController extends Controller
 
     public function updateStore(Request $request)
     {
+        $request->validate(
+            [
+                'name' => [
+                    'required',
+                    Rule::unique('stores')->ignore($request->id), // $storeId should contain the ID of the record being updated
+                    'max:255',
+                ],
+                'description' => 'required',
+                'link' => 'required',
+                'currency' => 'required',
+                'payment_gateway' => 'required',
+            ],
+            [
+                'name.unique' => 'Store name has already been taken, please use another one!',
+            ]
+        );
+
+        $payment = UserPaymentGateway::where(['user_id' => Auth::user()->id, 'name' => $request->payment_gateway])->get();
+
+        if($payment->isEmpty())
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Doesn't exist in our database."
+            ]);
+        }
+
         if ($request->primaryColor == '#000000') {
             $store = Store::findOrFail($request->id);
             $store->name = $request->name;
@@ -124,6 +167,7 @@ class StoreController extends Controller
             $store->user_id = Auth::user()->id;
             $store->currency = $request->currency;
             $store->currency_sign = $request->currency === 'NGN' ? '₦' : '$';
+            $store->payment_gateway = $request->payment_gateway;
             $store->update();
         } else {
             $store = Store::findOrFail($request->id);
@@ -142,6 +186,7 @@ class StoreController extends Controller
             $store->user_id = Auth::user()->id;
             $store->currency = $request->currency;
             $store->currency_sign = $request->currency === 'NGN' ? '₦' : '$';
+            $store->payment_gateway = $request->payment_gateway;
             $store->update();
         }
 
@@ -171,8 +216,9 @@ class StoreController extends Controller
 
     public function viewstore($username)
     {
+        $paymentGateways = UserPaymentGateway::where(['user_id' => Auth::id(), 'status' => 'Active'])->get();
         $store = Store::latest()->where('user_id', Auth::user()->id)->get();
-        return view('dashboard.checkstore', compact('username', 'store'));
+        return view('dashboard.checkstore', compact('username', 'store', 'paymentGateways'));
     }
 
     public function available_product(Request $request, $username)
@@ -205,6 +251,20 @@ class StoreController extends Controller
             'username' => $username,
             'order' => $order,
             'store' => $store,
+        ]);
+    }
+
+    public function store_order_details(Request $request, $username)
+    {
+        $order = StoreOrder::latest()->where('id', $request->id)->first();
+        $store = Store::where('id', $order->store_id)->first();
+        $items = OrderItem::latest()->where('store_order_id', $order->id)->with('product')->get();
+
+        return view('dashboard.orderItems', [
+            'username' => $username,
+            'order' => $order,
+            'store' => $store,
+            'items' => $items
         ]);
     }
 

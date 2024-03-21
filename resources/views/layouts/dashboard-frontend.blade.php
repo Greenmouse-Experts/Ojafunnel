@@ -76,6 +76,7 @@
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <script>
         window.setTimeout(function() {

@@ -10,11 +10,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
-                        <h4 class="mb-sm-0 font-size-18">Withdrawal </h4>
+                        <h4 class="mb-sm-0 font-size-18">Promotion Withdrawals</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
-                                <li class="breadcrumb-item active">Withdrawal</li>
+                                <li class="breadcrumb-item active">Promotion Withdrawals</li>
                             </ol>
                         </div>
                     </div>
@@ -25,9 +25,9 @@
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="font-60">Withdrawal</h4>
+                            <h4 class="font-60">Promotion Withdrawals</h4>
                             <p>
-                                All your Withdrawals in one Place
+                                All your Promotion Withdrawals in one Place
                             </p>
                         </div>
                     </div>
@@ -66,8 +66,8 @@
                             <div class="card-body">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <p class="text-muted fw-medium">Total Naira Balance</p>
-                                        <h4 class="mb-0">₦{{number_format(Auth::user()->wallet, 2)}}</h4>
+                                        <p class="text-muted fw-medium">Total Promotion Naira Balance</p>
+                                        <h4 class="mb-0">₦{{number_format(Auth::user()->promotion_bonus, 2)}}</h4>
                                     </div>
                                     <div class="flex-shrink-0 align-self-center">
                                         <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
@@ -85,8 +85,8 @@
                             <div class="card-body">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <p class="text-muted fw-medium">Total Dollar Balance</p>
-                                        <h4 class="mb-0">${{number_format(Auth::user()->dollar_wallet, 2)}}</h4>
+                                        <p class="text-muted fw-medium">Total Promotion Dollar Balance</p>
+                                        <h4 class="mb-0">${{number_format(Auth::user()->dollar_promotion_bonus, 2)}}</h4>
                                     </div>
                                     <div class="flex-shrink-0 align-self-center">
                                         <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
@@ -104,10 +104,10 @@
                             <div class="card-body">
                                 <div class="d-flex">
                                     <div class="flex-grow-1">
-                                        <p class="text-muted fw-medium">Total Withdrawal</p>
-                                        <h4 class="mb-0">₦{{number_format(App\Models\Withdrawal::latest()->where(['user_id' => Auth::user()->id, 'wallet' => 'Naira'])->where('status', '!=', 'refunded')->sum('amount'), 2)}}</h4>
+                                        <p class="text-muted fw-medium">Total Withdrawals</p>
+                                        <h4 class="mb-0">₦{{ number_format($ngnTotal, 2) }}</h4>
                                         <br>
-                                        <h4 class="mb-0">${{number_format(App\Models\Withdrawal::latest()->where(['user_id' => Auth::user()->id, 'wallet' => 'Dollar'])->where('status', '!=', 'refunded')->sum('amount'), 2)}}</h4>
+                                        <h4 class="mb-0">${{ number_format($usdTotal, 2) }}</h4>
                                     </div>
 
                                     <div class="flex-shrink-0 align-self-center">
@@ -134,91 +134,111 @@
                                     <thead class="tread">
                                         <tr>
                                             <th class="align-middle">S/N</th>
-                                            <th class="align-middle">Amount</th>
+                                            <th class="align-middle">Store</th>
+                                            <th class="align-middle">StoreOwner</th>
                                             <th class="align-middle">Payment Method</th>
-                                            <th class="align-middle">Description</th>
+                                            <th class="align-middle">Amount</th>
+                                            <th class="align-middle">Type</th>
                                             <th class="align-middle">Payment Status</th>
                                             <th class="align-middle">Date</th>
                                             <th class="align-middle">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($withdrawals as $key => $withdraw)
+                                        @foreach($promotions as $key => $promote)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>
-                                                @if($withdraw->wallet == 'Naira')
-                                                <p class='text-bold-600'> ₦{{number_format($withdraw->amount, 2)}} </p>
+                                                {{$promote->store->name}}
+                                                <p>{{$promote->store->description}}</p>
+                                                <p><img src="{{URL::asset('storage/'.$promote->store->logo)}}" alt="{{$promote->store->name}}" width="100"/></p>
+                                            </td>
+                                            <td>
+                                                {{$promote->storeOwner->first_name}} {{$promote->storeOwner->last_name}}
+                                                <p>{{$promote->storeOwner->email}}</p>
+                                                <p>{{$promote->storeOwner->phone_number}}</p>
+                                                <p>{{$promote->storeOwner->user_name}}</p>
+                                            </td>
+                                            <td>
+                                                @if($promote->gateway_payment_id)
+                                                    {{ App\Models\BankDetail::find($promote->gateway_payment_id)->type ?? '' }} -
+                                                    {{ App\Models\BankDetail::find($promote->gateway_payment_id)->account_name ?? '' }}
+                                                    {{ App\Models\BankDetail::find($promote->gateway_payment_id)->account_number ?? '' }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{$promote->store->currency_sign}}{{ $promote->amount }}
+                                            </td>
+                                            <td>
+                                                {{$promote->type}}
+                                            </td>
+                                            <td>
+                                                @if ($promote->status == 'pending')
+                                                <span class="badge badge-pill badge-soft-primary font-size-11">{{ucfirst($promote->status)}}</span>
+                                                @endif
+
+                                                @if ($promote->status == 'withdrawal request')
+                                                <span class="badge badge-pill badge-soft-secondary font-size-11">{{ucfirst($promote->status)}}</span>
+                                                @endif
+
+                                                @if ($promote->status == 'paid')
+                                                <span class="badge badge-pill badge-soft-success font-size-11">{{ucfirst($promote->status)}}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{$promote->created_at->toDayDateTimeString()}}</td>
+                                            <td>
+                                                @if ($promote->status == 'paid')
+                                                <a class="btn btn-sm btn-soft-primary">{{ucfirst($promote->status)}}</a>
                                                 @else
-                                                <p class='text-bold-600'> ${{number_format($withdraw->amount, 2)}} </p>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($withdraw->payment_method)
-                                                    {{ App\Models\BankDetail::find($withdraw->payment_method)->type ?? '' }} -
-                                                    {{ App\Models\BankDetail::find($withdraw->payment_method)->account_name ?? '' }}
-                                                    {{ App\Models\BankDetail::find($withdraw->payment_method)->account_number ?? '' }}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                {{ $withdraw->description }}
-                                            </td>
-                                            <td>
-                                                @if ($withdraw->status == 'created')
-                                                <span class="badge badge-pill badge-soft-primary font-size-11">{{$withdraw->status}}</span>
-                                                @endif
-
-                                                @if ($withdraw->status == 'refunded')
-                                                <span class="badge badge-pill badge-soft-secondary font-size-11">{{$withdraw->status}}</span>
-                                                @endif
-
-                                                @if ($withdraw->status == 'finalized')
-                                                <span class="badge badge-pill badge-soft-success font-size-11">{{$withdraw->status}}</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                {{ \Carbon\Carbon::parse($withdraw->created_at)->isoFormat('llll') }}
-                                            </td>
-                                            <td>
-                                                @if ($withdraw->status == 'created')
-                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-danger" data-bs-toggle="modal" data-bs-target="#delete-{{$withdraw->id}}">Delete</a>
+                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-danger" data-bs-toggle="modal" data-bs-target="#request-{{$promote->id}}">Request Withdraw</a>
                                                 <!-- Modal START -->
-                                                <div class="modal fade" id="delete-{{$withdraw->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="request-{{$promote->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content pb-3">
+                                                        <div class="modal-content">
                                                             <div class="modal-header border-bottom-0">
+                                                                <h3>Request Withdrawal</h3>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <div class="modal-body ">
-                                                                <div class="row">
-                                                                    <div class="Editt">
-                                                                        <form method="POST" action="{{ route('user.delete.withdraw', Crypt::encrypt($withdraw->id))}}">
-                                                                            @csrf
-                                                                            <div class="form">
-                                                                                <p><b>Delete withdrawal</b></p>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-12">
-                                                                                        <p>This action cannot be undone. This will permanently delete.</p>
-                                                                                    </div>
-                                                                                    <div class="col-lg-12 mb-4">
-                                                                                        <div class="boding">
-                                                                                            <button type="submit" class="form-btn">
-                                                                                                Delete
-                                                                                            </button>
+                                                            <form method="post" action="{{route('user.withdraw.promotion', Crypt::encrypt($promote->id))}}">
+                                                                @csrf
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12">
+                                                                            <div class="Editt">
+                                                                                <div class="form">
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-12 mb-4">
+                                                                                            <label for="Name">Amount</label>
+                                                                                            <input type="text" placeholder="Enter amount" value="{{$promote->amount}}" disabled/>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12 mb-4">
+                                                                                            <label for="Name">Payment Method</label>
+                                                                                            <select name="payment_method" id="name">
+                                                                                                <option value="">-- Select Payment Method --</option>
+                                                                                                @foreach(App\Models\BankDetail::latest()->where('user_id', Auth::user()->id)->get() as $bank)
+                                                                                                <option value="{{$bank->id}}">{{$bank->type}} - {{$bank->account_name}} {{$bank->account_number}}</option>
+                                                                                                @endforeach
+                                                                                            </select>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </form>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                        Close
+                                                                    </button>
+                                                                    <button type="submit" class="btn" style="color: #714091; border: 1px solid #714091">
+                                                                        Submit
+                                                                    </button>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- end modal -->
-                                                @else
-                                                <a class="btn btn-sm btn-soft-primary">{{$withdraw->status}}</a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -230,58 +250,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form method="post" action="{{route('user.withdraw')}}">
-                @csrf
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="Editt">
-                                <div class="form">
-                                    <h4 class="card-title">Withdrawal Information</h4>
-                                    <p class="card-title-desc">Fill all information below to complete your Withdrawal</p>
-                                    <div class="row">
-                                        <div class="col-lg-12 mb-4">
-                                            <label for="wallet">Select Wallet</label>
-                                            <select name="wallet" required>
-                                                <option value="">-- Select Wallet --</option>
-                                                <option value="Naira">Naira</option>
-                                                <option value="Dollar">Dollar</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-12 mb-4">
-                                            <label for="Name">Amount</label>
-                                            <input type="text" name="amount" placeholder="Enter amount" required />
-                                        </div>
-                                        <div class="col-lg-12 mb-4">
-                                            <label for="Name">Payment Method</label>
-                                            <select name="payment_method" id="name">
-                                                <option value="">-- Select Payment Method --</option>
-                                                @foreach(App\Models\BankDetail::latest()->where('user_id', Auth::user()->id)->get() as $bank)
-                                                <option value="{{$bank->id}}">{{$bank->type}} - {{$bank->account_name}} {{$bank->account_number}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="submit" class="btn" style="color: #714091; border: 1px solid #714091">
-                        Submit
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 </div>

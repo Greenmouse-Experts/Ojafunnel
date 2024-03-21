@@ -13,6 +13,4 @@ class OrderUser extends Model
     {
         return $this->belongsTo(StoreOrder::class, 'store_order_id');
     }
-
-
 }

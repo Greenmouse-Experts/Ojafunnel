@@ -12,7 +12,7 @@
             <!-- start page title -->
             <div class="row">
                 <div class="col-lg-8 aminn">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between mt-4">
+                    <div class="page-title-box mt-4">
                         <h4 style="color:#000; font-weight:600;">Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}} 👋</h4>
                         <p>
                             Start enjoying full control of your business all in
@@ -54,97 +54,94 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="start">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="start-main">
-                            <h1>Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}} 👋</h1>
-                            <p>
-                                Start enjoying full control of your business all in
-                                one place
-                            </p>
+            <div class="mb-3">
+                <div class="content-top-div">
+                    <div class="top-div">
+                        <div class="Ensure wallet-dashboard row align-items-center">
+                            <div class="col-8 font-500">
+                                <h3>₦{{number_format(Auth::user()->promotion_bonus, 2)}}</h3>
+                                <p class="mb-0">Promotion Naira Bonus</p>
+                            </div>
+                            <div class="col-4 lead-img-div">
+                                <i class="mdi mdi-wallet me-1" style="font-size: 3rem;"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <div class="exaplaner" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1678461136/OjaFunnel-Images/multimedia_yugciw.png" draggable="false" alt="">
-
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="exaplanerr" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
-                            <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1678959746/OjaFunnel-Images/written-paper_1_wlsmrq.png" draggable="false" alt="">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="click">
-                            <button type="button" class="px-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                + Create
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <div class="content-top-div">
-                <div class="top-div">
-                    <div class="Ensure row align-items-center">
-                        <div class="col-8 font-500">
-                            <h3>{{App\Models\User::where('referral_link', Auth::user()->id)->get()->count() ?? '0'}}</h3>
-                            <p class="mb-0">Total Direct Affiliate</p>
-                        </div>
-                        <div class="col-4 lead-img-div">
-                            <div class="lead-img p-2 rounded d-flex justify-content-center" style="background: #edfbfc">
-                                <img src="{{URL::asset('dash/assets/image/leads.png')}}" alt="" />
+                    <div class="top-div">
+                        <div class="Ensure wallet-dashboard row align-items-center">
+                            <div class="col-8 font-500">
+                                <h3>${{number_format(Auth::user()->dollar_promotion_bonus, 2)}}</h3>
+                                <p class="mb-0">Promotion Dollar Bonus</p>
+                            </div>
+                            <div class="col-4 lead-img-div">
+                                <i class="mdi mdi-wallet me-1" style="font-size: 3rem;"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="top-div">
-                    <div class="Ensure row align-items-center">
-                        <div class="col-8 font-500">
-                            @php
-                            $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
-                            @endphp
-                            @if($store != null)
-                            <h3>{{\App\Models\StoreProduct::where('store_id', $store->id)->count()}}</h3>
-                            @else
-                            <h3>0</h3>
-                            @endif
-                            <p class="mb-0">New Products</p>
-                        </div>
-                        <div class="col-4 lead-img-div">
-                            <div class="lead-img p-2 rounded d-flex justify-content-center" style="background: #f5effc">
-                                <img src="{{URL::asset('dash/assets/image/products.png')}}" alt="" />
+            </div>
+            <div class="">
+                <div class="content-top-div">
+                    <div class="top-div">
+                        <div class="Ensure row align-items-center">
+                            <div class="col-8 font-500">
+                                <h3>{{App\Models\User::where('referral_link', Auth::user()->id)->get()->count() ?? '0'}}</h3>
+                                <p class="mb-0">Total Direct Affiliate</p>
+                            </div>
+                            <div class="col-4 lead-img-div">
+                                <div class="lead-img p-2 rounded d-flex justify-content-center" style="background: #edfbfc">
+                                    <img src="{{URL::asset('dash/assets/image/leads.png')}}" alt="" />
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="top-div">
-                    <div class="Ensure row align-items-center">
-                        <div class="col-8 font-500">
-                            <h3>{{App\Models\Store::where('user_id', Auth::user()->id)->get()->count()}}</h3>
-                            <p class="mb-0">Total Store</p>
-                        </div>
-                        <div class="col-4 lead-img-div">
-                            <div class="lead-img p-2 rounded d-flex justify-content-center" style="background: #f0fcef">
-                                <img src="{{URL::asset('dash/assets/image/sales.png')}}" alt="" />
+                    <div class="top-div">
+                        <div class="Ensure row align-items-center">
+                            <div class="col-8 font-500">
+                                @php
+                                $store = \App\Models\Store::where('user_id', Auth::user()->id)->first();
+                                @endphp
+                                @if($store != null)
+                                <h3>{{\App\Models\StoreProduct::where('store_id', $store->id)->count()}}</h3>
+                                @else
+                                <h3>0</h3>
+                                @endif
+                                <p class="mb-0">New Products</p>
+                            </div>
+                            <div class="col-4 lead-img-div">
+                                <div class="lead-img p-2 rounded d-flex justify-content-center" style="background: #f5effc">
+                                    <img src="{{URL::asset('dash/assets/image/products.png')}}" alt="" />
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="top-div">
-                    <div class="Ensure row align-items-center">
-                        <div class="col-8 font-500">
-                            @if($store != null)
-                            <h3>{{\App\Models\StoreOrder::where('store_id', $store->id)->count()}}</h3>
-                            @else
-                            <h3>0</h3>
-                            @endif
-                            <p class="mb-0">Total Orders</p>
+                    <div class="top-div">
+                        <div class="Ensure row align-items-center">
+                            <div class="col-8 font-500">
+                                <h3>{{App\Models\Store::where('user_id', Auth::user()->id)->get()->count()}}</h3>
+                                <p class="mb-0">Total Store</p>
+                            </div>
+                            <div class="col-4 lead-img-div">
+                                <div class="lead-img p-2 rounded d-flex justify-content-center" style="background: #f0fcef">
+                                    <img src="{{URL::asset('dash/assets/image/sales.png')}}" alt="" />
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-4 lead-img-div">
-                            <div class="lead-img p-2 rounded d-flex justify-content-center" style="background: #fceff1">
-                                <img src="{{URL::asset('dash/assets/image/bags.png')}}" alt="" width="28" />
+                    </div>
+                    <div class="top-div">
+                        <div class="Ensure row align-items-center">
+                            <div class="col-8 font-500">
+                                @if($store != null)
+                                <h3>{{\App\Models\StoreOrder::where('store_id', $store->id)->count()}}</h3>
+                                @else
+                                <h3>0</h3>
+                                @endif
+                                <p class="mb-0">Total Orders</p>
+                            </div>
+                            <div class="col-4 lead-img-div">
+                                <div class="lead-img p-2 rounded d-flex justify-content-center" style="background: #fceff1">
+                                    <img src="{{URL::asset('dash/assets/image/bags.png')}}" alt="" width="28" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -366,7 +363,6 @@
 <!-- Modal Ends -->
 @endif
 
-
 <div class="modal fade" id="backUpData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <form class="backup_form">
@@ -413,8 +409,6 @@
         </form>
     </div>
 </div>
-
-
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
@@ -570,4 +564,11 @@
     var chart = new ApexCharts(document.getElementById("sales"), options);
     chart.render();
 </script>
+
+<style>
+    .wallet-dashboard {
+        background-color: #713f93 !important;
+        color: #fff !important;
+    }
+</style>
 @endsection

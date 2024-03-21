@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AdminWithdrawnNotification;
+use App\Mail\UserPromotionWithdrawalNotification;
 use App\Mail\UserWithdrawnNotification;
 use App\Models\Admin;
 use App\Models\AffiliateLevel;
@@ -10,6 +11,7 @@ use App\Models\Affiliates;
 use App\Models\BankDetail;
 use App\Models\OjafunnelNotification;
 use App\Models\PaymentGateway;
+use App\Models\Promotion;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Withdrawal;
@@ -587,8 +589,10 @@ class TransactionController extends Controller
             if($request->wallet == 'Naira')
             {
                 $user->wallet -= $request->amount;
+                $currency = '₦';
             } else {
                 $user->dollar_wallet -= $request->amount;
+                $currency = '$';
             }
             $user->save();
 
@@ -602,26 +606,26 @@ class TransactionController extends Controller
             $administrator = Admin::latest()->first();
 
             // send withdraw email notification here
-            Mail::to($administrator->email)->send(new AdminWithdrawnNotification(Auth::user(), $withdraw->amount));
+            Mail::to($administrator->email)->send(new AdminWithdrawnNotification($administrator, $withdraw->amount));
             Mail::to(Auth::user()->email)->send(new UserWithdrawnNotification(Auth::user(), $withdraw->amount));
 
             OjafunnelNotification::create([
                 'to' => Auth::user()->id,
                 'title' => config('app.name'),
-                'body' => 'Withdrawal request of ₦' . $withdraw->amount . '.',
+                'body' => 'Withdrawal request of '.$currency. $withdraw->amount . '.',
             ]);
 
             OjafunnelNotification::create([
                 'admin_id' => $administrator->id,
                 'title' => config('app.name'),
-                'body' => Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a withdrawal of ₦' . $withdraw->amount,
+                'body' => Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a withdrawal of '.$currency. $withdraw->amount,
             ]);
 
             $user = User::where('id', Auth::user()->id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
             $admin = Admin::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-            $this->fcm('Withdrawal request of ₦' . $withdraw->amount . '.', $user);
-            $this->fcm(Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a withdrawal of ₦' . $withdraw->amount, $admin);
+            $this->fcm('Withdrawal request of '.$currency. $withdraw->amount . '.', $user);
+            $this->fcm(Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a withdrawal of '.$currency. $withdraw->amount, $admin);
 
 
             return back()->with([
@@ -629,6 +633,123 @@ class TransactionController extends Controller
                 'message' => 'Wallet Withdrawal Successfully!'
             ]);
         }
+    }
+
+    public function withdrawpromotion(Request $request, $promote_id)
+    {
+        $promote = Promotion::find(decrypt($promote_id))->load('store');
+
+        if(!$promote)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Promotion not existing in our database.'
+            ]);
+        }
+
+        if($promote->status == 'paid')
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Payment has been initialized for this withdrawal already.'
+            ]);
+        }
+
+        // /Validate Request
+        $this->validate($request, [
+            'payment_method' => ['required'],
+        ]);
+
+        $bank = BankDetail::where('user_id', Auth::user()->id)->get();
+
+        if ($bank->isEmpty()) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'No Bank details added, add bank details and try again.',
+            ]);
+        } else {
+            $user = User::find(Auth::user()->id);
+
+            if($promote->status == 'pending')
+            {
+                if($promote->store->currency_sign == '$')
+                {
+                    $user->dollar_promotion_bonus -= $promote->amount;
+                } else {
+                    $user->promotion_bonus -= $promote->amount;
+                }
+                $user->save();
+            }
+
+            $promote->update([
+                'gateway_payment_id' => $request->payment_method,
+                'status' => 'withdrawal request'
+            ]);
+
+            $storeOwner = User::find($promote->store_owner_id);
+
+            // send withdraw email notification here
+            Mail::to($storeOwner->email)->send(new UserPromotionWithdrawalNotification($storeOwner, Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a promotion withdrawal of '.$promote->store->currency_sign . $promote->amount));
+            Mail::to(Auth::user()->email)->send(new UserPromotionWithdrawalNotification(Auth::user(), 'You requested to withdraw the amount of '.$promote->store->currency_sign  . $promote->amount . '.'));
+
+            OjafunnelNotification::create([
+                'to' => Auth::user()->id,
+                'title' => config('app.name'),
+                'body' => 'Promotion Withdrawal request of '.$promote->store->currency_sign  . $promote->amount . '.',
+            ]);
+
+            OjafunnelNotification::create([
+                'to' => $storeOwner->id,
+                'title' => config('app.name'),
+                'body' => Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a promotion withdrawal of '.$promote->store->currency_sign . $promote->amount,
+            ]);
+
+            $user = User::where('id', Auth::user()->id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $storeOwnerFCM = User::where('id',$promote->store_owner_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+
+            $this->fcm('Promotion withdrawal request of '.$promote->store->currency_sign  . $promote->amount . '.', $user);
+            $this->fcm(Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a promotion withdrawal of '.$promote->store->currency_sign  . $promote->amount, $storeOwnerFCM);
+
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Promotion Withdrawal Successfully!'
+            ]);
+        }
+    }
+
+    public function withdrawPromotionRequest(Request $request, $promote_id)
+    {
+        $promote = Promotion::find(decrypt($promote_id))->load('store');
+
+        if(!$promote)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Promotion not existing in our database.'
+            ]);
+        }
+
+        if($promote->status == 'paid')
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Payment has been initialized for this withdrawal already.'
+            ]);
+        }
+
+        $this->validate($request, [
+            'status' => ['required'],
+        ]);
+
+        $promote->update([
+            'status' => $request->status
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Payment initiated successfully.'
+        ]);
     }
 
     public function delete_withdraw($id)

@@ -16,6 +16,7 @@ use App\Models\Requirement;
 use App\Models\Section;
 use App\Models\Shop;
 use App\Models\ShopOrder;
+use App\Models\UserPaymentGateway;
 use App\Models\Video;
 use Exception;
 use Illuminate\Http\Request;
@@ -99,6 +100,7 @@ class CMSController extends Controller
                     'level' => $request->level,
                     'price' => $price,
                     'image' => '/storage/course_photo/' . $filename,
+                    'shop_id' => $request->shop_id
                 ]);
 
                 return back()->with([
@@ -115,7 +117,8 @@ class CMSController extends Controller
                 'language' => $request->language,
                 'image' => $request->image,
                 'level' => $request->level,
-                'price' => $price
+                'price' => $price,
+                'shop_id' => $request->shop_id
             ]);
 
             return back()->with([
@@ -132,6 +135,7 @@ class CMSController extends Controller
             'language' => ['required'],
             'level' => ['required'],
             'price' => ['required'],
+            'shop_id' => ['required'],
         ]);
 
         $course->update([
@@ -543,6 +547,7 @@ class CMSController extends Controller
                 'link' => 'required',
                 'logo' => 'required|mimes:jpeg,png,jpg',
                 'currency' => 'required',
+                'payment_gateway' => 'required',
             ],
             [
                 'name.unique' => 'Shop name has already been taken, please use another one!',
@@ -556,129 +561,80 @@ class CMSController extends Controller
             ]);
         }
 
-        // $shops = Shop::latest()->where('user_id', Auth::user()->id)->get();
+        $payment = UserPaymentGateway::where(['user_id' => Auth::user()->id, 'name' => $request->payment_gateway])->get();
 
-        // if ($shops->isEmpty()) {
+        if($payment->isEmpty())
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Payment gateway doesn't exist in our database."
+            ]);
+        }
 
-            if ($request->primaryColor == '#000000') {
-                $request->validate(
-                    [
-                        'theme' => 'required'
-                    ]
-                );
-                $filename = request()->logo->getClientOriginalName();
-                request()->logo->storeAs('courseShopLogo', $filename, 'public');
+        if ($request->primaryColor == '#000000') {
+            $request->validate(
+                [
+                    'theme' => 'required'
+                ]
+            );
+            $filename = request()->logo->getClientOriginalName();
+            request()->logo->storeAs('courseShopLogo', $filename, 'public');
 
-                Shop::create([
-                    'name' => $request->name,
-                    'description' => $request->description,
-                    'link' => $request->link,
-                    'logo' => '/storage/courseShopLogo/' . $filename,
-                    'theme' => $request->theme,
-                    'color' => '#fff',
-                    'user_id' => Auth::user()->id,
-                    'currency' => $request->currency,
-                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
-                ]);
+            Shop::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'link' => $request->link,
+                'logo' => '/storage/courseShopLogo/' . $filename,
+                'theme' => $request->theme,
+                'color' => '#fff',
+                'user_id' => Auth::user()->id,
+                'currency' => $request->currency,
+                'currency_sign' => $request->currency === 'NGN' ? '₦' : '$',
+                'payment_gateway' => $request->payment_gateway
+            ]);
 
-                return back()->with([
-                    'type' => 'success',
-                    'message' => $request->name . ' shop created successfully'
-                ]);
-            } else {
-                $filename = request()->logo->getClientOriginalName();
-                request()->logo->storeAs('courseShopLogo', $filename, 'public');
+            return back()->with([
+                'type' => 'success',
+                'message' => $request->name . ' shop created successfully'
+            ]);
+        } else {
+            $filename = request()->logo->getClientOriginalName();
+            request()->logo->storeAs('courseShopLogo', $filename, 'public');
 
-                Shop::create([
-                    'name' => $request->name,
-                    'description' => $request->description,
-                    'link' => $request->link,
-                    'logo' => '/storage/courseShopLogo/' . $filename,
-                    'theme' => $request->primaryColor,
-                    'color' => '#fff',
-                    'user_id' => Auth::user()->id,
-                    'currency' => $request->currency,
-                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
-                ]);
+            Shop::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'link' => $request->link,
+                'logo' => '/storage/courseShopLogo/' . $filename,
+                'theme' => $request->primaryColor,
+                'color' => '#fff',
+                'user_id' => Auth::user()->id,
+                'currency' => $request->currency,
+                'currency_sign' => $request->currency === 'NGN' ? '₦' : '$',
+                'payment_gateway' => $request->payment_gateway
+            ]);
 
-                return back()->with([
-                    'type' => 'success',
-                    'message' => $request->name . ' shop created successfully'
-                ]);
-            }
-        // } else {
-        //     foreach ($shops as $shop) {
-        //         $user_id[] = $shop->user_id;
-        //     }
-        //     if (in_array(Auth::user()->id, $user_id)) {
-
-        //         return back()->with([
-        //             'type' => 'danger',
-        //             'message' => 'You already have a shop.'
-        //         ]);
-        //     } else {
-        //         if ($request->primaryColor == '#000000') {
-        //             $request->validate(
-        //                 [
-        //                     'theme' => 'required'
-        //                 ]
-        //             );
-        //             $filename = request()->logo->getClientOriginalName();
-        //             request()->logo->storeAs('courseShopLogo', $filename, 'public');
-
-        //             Shop::create([
-        //                 'name' => $request->name,
-        //                 'description' => $request->description,
-        //                 'link' => $request->link,
-        //                 'logo' => '/storage/courseShopLogo/' . $filename,
-        //                 'theme' => $request->theme,
-        //                 'color' => '#fff',
-        //                 'user_id' => Auth::user()->id,
-        //                 'currency' => $request->currency,
-        //                 'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
-        //             ]);
-
-        //             return back()->with([
-        //                 'type' => 'success',
-        //                 'message' => $request->name . ' shop created successfully'
-        //             ]);
-        //         } else {
-        //             $filename = request()->logo->getClientOriginalName();
-        //             request()->logo->storeAs('courseShopLogo', $filename, 'public');
-
-        //             Shop::create([
-        //                 'name' => $request->name,
-        //                 'description' => $request->description,
-        //                 'link' => $request->link,
-        //                 'logo' => '/storage/courseShopLogo/' . $filename,
-        //                 'theme' => $request->primaryColor,
-        //                 'color' => '#fff',
-        //                 'user_id' => Auth::user()->id,
-        //                 'currency' => $request->currency,
-        //                 'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
-        //             ]);
-
-        //             return back()->with([
-        //                 'type' => 'success',
-        //                 'message' => $request->name . ' shop created successfully'
-        //             ]);
-        //         }
-        //     }
-        // }
+            return back()->with([
+                'type' => 'success',
+                'message' => $request->name . ' shop created successfully'
+            ]);
+        }
     }
 
     public function update_shop(Request $request)
     {
+        $request->validate(
+            [
+                'description' => 'required',
+                'link' => 'required',
+                'currency' => 'required',
+                'payment_gateway' => 'required',
+            ]
+        );
+
         $shop = Shop::findOrFail($request->id);
 
         if ($request->name == $shop->name) {
-            $request->validate(
-                [
-                    'description' => 'required',
-                    'currency' => 'required',
-                ]
-            );
-
             if ($request->primaryColor == '#000000') {
                 if (request()->hasFile('logo')) {
                     $this->validate($request, [
@@ -697,7 +653,8 @@ class CMSController extends Controller
                         'theme' => $request->theme,
                         'color' => '#fff',
                         'currency' => $request->currency,
-                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
+                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$',
+                        'payment_gateway' => $request->payment_gateway
                     ]);
 
                     return back()->with([
@@ -711,7 +668,8 @@ class CMSController extends Controller
                     'theme' => $request->theme,
                     'color' => '#fff',
                     'currency' => $request->currency,
-                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
+                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$',
+                    'payment_gateway' => $request->payment_gateway
                 ]);
             } else {
                 if (request()->hasFile('logo')) {
@@ -731,7 +689,8 @@ class CMSController extends Controller
                         'theme' => $request->primaryColor,
                         'color' => '#fff',
                         'currency' => $request->currency,
-                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
+                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$',
+                        'payment_gateway' => $request->payment_gateway
                     ]);
 
                     return back()->with([
@@ -745,7 +704,8 @@ class CMSController extends Controller
                     'theme' => $request->primaryColor,
                     'color' => '#fff',
                     'currency' => $request->currency,
-                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
+                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$',
+                    'payment_gateway' => $request->payment_gateway
                 ]);
             }
 
@@ -757,10 +717,6 @@ class CMSController extends Controller
             $request->validate(
                 [
                     'name' => 'required|unique:shops|max:255',
-                    'description' => 'required',
-                    'link' => 'required',
-                    'currency' => 'required',
-                    'currency_sign' => 'required',
                 ],
                 [
                     'name.unique' => 'Shop name has already been taken, please use another one!',
@@ -787,7 +743,8 @@ class CMSController extends Controller
                         'theme' => $request->theme,
                         'color' => '#fff',
                         'currency' => $request->currency,
-                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
+                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$',
+                        'payment_gateway' => $request->payment_gateway
                     ]);
 
                     return back()->with([
@@ -803,7 +760,8 @@ class CMSController extends Controller
                     'theme' => $request->theme,
                     'color' => '#fff',
                     'currency' => $request->currency,
-                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
+                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$',
+                    'payment_gateway' => $request->payment_gateway
                 ]);
             } else {
                 if (request()->hasFile('logo')) {
@@ -825,7 +783,8 @@ class CMSController extends Controller
                         'theme' => $request->primaryColor,
                         'color' => '#fff',
                         'currency' => $request->currency,
-                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
+                        'currency_sign' => $request->currency === 'NGN' ? '₦' : '$',
+                        'payment_gateway' => $request->payment_gateway
                     ]);
 
                     return back()->with([
@@ -841,7 +800,8 @@ class CMSController extends Controller
                     'theme' => $request->primaryColor,
                     'color' => '#fff',
                     'currency' => $request->currency,
-                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$'
+                    'currency_sign' => $request->currency === 'NGN' ? '₦' : '$',
+                    'payment_gateway' => $request->payment_gateway
                 ]);
             }
 

@@ -38,7 +38,9 @@ class User extends Authenticatable
         'fcm_token',
         'feature_access',
         'paid_for_backup',
-        'dollar_wallet'
+        'dollar_wallet',
+        'dollar_ref_bonus',
+        'dollar_promotion_bonus'
     ];
 
     /**

@@ -27,6 +27,8 @@ return [
 
     'log' => 'errorlog',
 
+    'debounce_key' => '5f29214f552c7',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

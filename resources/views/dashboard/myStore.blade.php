@@ -77,25 +77,28 @@
                                             <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="myFunction1()" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
                                         </div>
                                         <div class="col-12">
-                                            <label for="Name">Store Currency</label>
-                                            <select name="currency" class="input mov" required>
+                                            <label for="currency">Store Currency</label>
+                                            <select name="currency" id="currency" class="input mov" required>
                                                 <option value="">-- Select Currency --</option>
                                                 <option value="USD">USD</option>
                                                 <option value="NGN">NGN</option>
-                                                <!-- <option value="GBP">GBP</option>
-                                                <option value="EUR">EUR</option> -->
                                             </select>
                                         </div>
-                                        <!-- <div class="col-lg-6">
-                                            <label for="Name">Store Currency Sign</label>
-                                            <select name="currency_sign" class="input mov" required>
-                                                <option value="">-- Select Currency --</option>
-                                                <option value="$">$</option>
-                                                <option value="₦">₦</option>
-                                                <option value="£">£</option>
-                                                <option value="€">€</option>
+
+                                        <div class="col-12">
+                                            <label for="payment_gateway">Store Payment Gateway</label>
+                                            <select name="payment_gateway" id="payment_gateway" class="input mov" required>
+                                                <option value="">-- Select Payment Gateway --</option>
+                                                @foreach($paymentGateways as $paymentGateway)
+                                                    @if ($paymentGateway->name == 'Paypal' || $paymentGateway->name == 'Flutterwave' || $paymentGateway->name == 'Stripe')
+                                                        <option value="{{ $paymentGateway->name }}" data-currency="USD">{{ $paymentGateway->name }}</option>
+                                                    @endif
+                                                    @if ($paymentGateway->name == 'Paystack' || $paymentGateway->name == 'Flutterwave')
+                                                        <option value="{{ $paymentGateway->name }}" data-currency="NGN">{{ $paymentGateway->name }}</option>
+                                                    @endif
+                                                @endforeach
                                             </select>
-                                        </div> -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -162,6 +165,7 @@
                                     </button>
                                 </div>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -170,39 +174,27 @@
     </div>
 </div>
 
-<!-- SuccessModal -->
-<!-- <div class="modal fade" id="onlineStore" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content pb-3">
-            <div class="modal-header border-bottom-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="icon-success">
-                    <img src="{{URL::asset('dash/assets/image/theme.png')}}" alt="" width="100%" />
-                </div>
-                <div class="text-center mt-5">
-                    <p>Congratulations, you've created your online store</p>
-                </div>
-                <div class="text-end mt-2">
-                    <a href="{{route('user.check.store', Auth::user()->username)}}" class="text-decoration-none">
-                        <button class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
-                            Next
-                        </button>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-<!-- end modal -->
-
 <script>
     $(document).ready(function(){
         $("#storeName").keyup(function(){
             var storeNameValue = $(this).val(); // Get the value from #storeName
             var sanitizedValue = storeNameValue.replace(/\s+/g, '').toLowerCase(); // Remove spaces from the value
             $("#myInput").val("http://store.ojafunnel.test/" + sanitizedValue); // Set the value of #myInput
+        });
+
+        // Initially disable all payment gateway options
+        $('#payment_gateway option').prop('disabled', true);
+
+        $('#currency').change(function() {
+            var currency = $(this).val();
+            $('#payment_gateway option').each(function() {
+                if ($(this).data('currency') !== currency) {
+                    $(this).prop('disabled', true);
+                } else {
+                    $(this).prop('disabled', false);
+                }
+            });
+            $('#payment_gateway').val('');
         });
     });
 

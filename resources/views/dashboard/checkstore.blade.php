@@ -176,13 +176,29 @@
                                                                                         </div>
                                                                                         <div class="col-12">
                                                                                             <label for="Name">Store Currency</label>
-                                                                                            <select name="currency" class="input mov" required>
+                                                                                            <select name="currency" id="currency" class="input mov" required>
                                                                                                 <option value="{{$item->currency}}">{{$item->currency}}</option>
                                                                                                 <option value="">-- Select Currency --</option>
                                                                                                 <option value="USD">USD</option>
                                                                                                 <option value="NGN">NGN</option>
                                                                                                 <!-- <option value="GBP">GBP</option>
                                                                                                 <option value="EUR">EUR</option> -->
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="col-12">
+                                                                                            <label for="payment_gateway">Store Payment Gateway</label>
+                                                                                            <select name="payment_gateway" id="payment_gateway" class="input mov" required>
+                                                                                                @foreach($paymentGateways as $paymentGateway)
+                                                                                                    @php
+                                                                                                        $selected = ($paymentGateway->name == $item->payment_gateway) ? 'selected' : '';
+                                                                                                    @endphp
+                                                                                                    @if (in_array($paymentGateway->name, ['Paypal', 'Flutterwave', 'Stripe']))
+                                                                                                        <option value="{{ $paymentGateway->name }}" data-currency="USD" {{ $selected }}>{{ $paymentGateway->name }}</option>
+                                                                                                    @endif
+                                                                                                    @if (in_array($paymentGateway->name, ['Paystack', 'Flutterwave']))
+                                                                                                        <option value="{{ $paymentGateway->name }}" data-currency="NGN" {{ $selected }}>{{ $paymentGateway->name }}</option>
+                                                                                                    @endif
+                                                                                                @endforeach
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
@@ -248,6 +264,7 @@
                                                                                     </button>
                                                                                 </div>
                                                                             </div>
+                                                                        </div>
                                                                     </form>
                                                                 </div>
                                                             </div>
@@ -276,6 +293,18 @@
                 var storeNameValue = $(this).val(); // Get the value from #storeName
                 var sanitizedValue = storeNameValue.replace(/\s+/g, '').toLowerCase(); // Remove spaces from the value
                 $("#myInput").val("http://store.ojafunnel.test/" + sanitizedValue); // Set the value of #myInput
+            });
+
+            $('#currency').change(function() {
+                var currency = $(this).val();
+                $('#payment_gateway option').each(function() {
+                    if ($(this).data('currency') !== currency) {
+                        $(this).prop('disabled', true);
+                    } else {
+                        $(this).prop('disabled', false);
+                    }
+                });
+                $('#payment_gateway').val('');
             });
         });
 

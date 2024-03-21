@@ -303,7 +303,7 @@ Route::prefix('{username}')->group(function () {
                     Route::post('/my-store/product/delete/{id}', [App\Http\Controllers\StoreController::class, 'deleteProduct'])->name('user.store.product.delete');
                     Route::get('/shop/sales', [App\Http\Controllers\StoreController::class, 'sales'])->name('user.sales');
                     Route::get('/shop/order-details/{id}', [App\Http\Controllers\StoreController::class, 'order_details'])->name('user.order.details');
-                    // Route::get('/my-store/storee', [App\Http\Controllers\DashboardController::class, 'store'])->name('user.store');
+                    Route::get('/shop/order/{id}', [App\Http\Controllers\StoreController::class, 'store_order_details'])->name('user.store.order.details');
                     Route::get('/shops', [App\Http\Controllers\StoreController::class, 'shops'])->name('user.shops');
                     Route::get('/stores', [App\Http\Controllers\DashboardController::class, 'stores'])->name('user.stores');
                     Route::get('/checkout', [App\Http\Controllers\DashboardController::class, 'checkout'])->name('user.checkout');
@@ -426,6 +426,8 @@ Route::prefix('{username}')->group(function () {
             Route::prefix('/withdrawal')->group(
                 function () {
                     Route::get('/', [App\Http\Controllers\DashboardController::class, 'withdrawal'])->name('user.withdrawal');
+                    Route::get('/promotion', [App\Http\Controllers\DashboardController::class, 'withdrawalPromotion'])->name('user.withdrawal.promotion');
+                    Route::get('/promotion/requests', [App\Http\Controllers\DashboardController::class, 'withdrawalPromotionRequest'])->name('user.withdrawal.promotion.request');
                     Route::get('/bank', [App\Http\Controllers\DashboardController::class, 'bank'])->name('user.bank.details');
                     Route::get('/other_payment_method', [App\Http\Controllers\DashboardController::class, 'other_payment_method'])->name('user.other.payment.method');
                     Route::get('/direct_us_bank', [App\Http\Controllers\DashboardController::class, 'direct_us_bank'])->name('user.direct.us.bank');
@@ -448,6 +450,13 @@ Route::prefix('{username}')->group(function () {
                 function () {
                     Route::get('/index', [App\Http\Controllers\ListManagementController::class, 'list_management'])->name('user.list.management');
                     Route::get('/create', [App\Http\Controllers\ListManagementController::class, 'create_list'])->name('user.create.list');
+                }
+            );
+
+            // Payment Gateway
+            Route::prefix('/settings')->group(
+                function () {
+                    Route::get('/payment/gateway', [App\Http\Controllers\DashboardController::class, 'payment_gateway'])->name('user.payment.gateway');
                 }
             );
         }

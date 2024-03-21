@@ -68,6 +68,8 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('user.withdrawal', Auth::user()->username)}}" key="t-tui-calendar">Withdraw</a></li>
+                        <li><a href="{{route('user.withdrawal.promotion', Auth::user()->username)}}" key="t-tui-calendar">Promotion Withdraw</a></li>
+                        <li><a href="{{route('user.withdrawal.promotion.request', Auth::user()->username)}}" key="t-tui-calendar">Promotion Request Transaction</a></li>
                         <li><a href="{{route('user.bank.details', Auth::user()->username)}}" key="t-tui-calendar">Bank Details</a></li>
                         <li><a href="{{route('user.other.payment.method', Auth::user()->username)}}" key="t-tui-calendar">Payment Method</a></li>
                     </ul>
@@ -192,6 +194,7 @@
                     <span key="t-chat">Settings</span>
                 </a>
                 <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="{{route('user.payment.gateway', Auth::user()->username)}}" key="t-full-calendar">Payment Gateway</a></li>
                     <li><a href="{{route('user.general', Auth::user()->username)}}" key="t-tui-calendar">General</a></li>
                     <li><a href="{{route('user.security', Auth::user()->username)}}" key="t-full-calendar">Security</a></li>
                 </ul>

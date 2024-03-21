@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="card">
                     <div class="card-body" style="padding: 4rem;">
-                        <form method="post" action="{{ route('user.create.contact', Crypt::encrypt($list->id)) }}">
+                        <form method="post" id="contactForm" action="{{ route('user.create.contact', Crypt::encrypt($list->id)) }}">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
@@ -68,6 +68,7 @@
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Email Address</label>
                                     <input type="email" name="email" class="form-control"  value="{{old('email')}}" placeholder="Enter email" required />
+                                    <span id="emailError" style="color: red;"></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -129,7 +130,7 @@
                                         Cancel
                                     </button>
                                 </a>
-                                <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                <button type="button" id="saveButton" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
                                     Save
                                 </button>
                             </div>
@@ -203,6 +204,57 @@
         const countryCodeValue = iti.getSelectedCountryData().dialCode;
         input.value = `+${countryCodeValue}`;
     });
+</script>
+<script>
+    let debounceTimer;
+
+    document.getElementById('email').addEventListener('input', function(event) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            validateEmail(event.target.value);
+        }, 500); // Adjust debounce delay as needed (in milliseconds)
+    });
+
+    $("#saveButton").click(function() {
+
+        alert('true');
+
+        // Validate email when the save button is clicked
+        const email = document.getElementById('email').value;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            validateEmail(email);
+        }, 500); // Adjust debounce delay as needed (in milliseconds)
+    });
+
+    function validateEmail(email) {
+        $('#contactForm').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Contact Saving...');
+
+        fetch('/debounce-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.valid) {
+                    document.getElementById('emailError').textContent = '';
+                    // Enable the submit button and trigger form submission
+                    document.getElementById('saveButton').removeAttribute('disabled');
+                    // document.getElementById('contactForm').submit();
+                } else {
+                    document.getElementById('emailError').textContent = 'Invalid email address';
+                    $('#contactForm').attr('disabled', false).html('Save');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                $('#contactForm').attr('disabled', false).html('Save');
+            });
+    }
 </script>
 <style>
     .iti {

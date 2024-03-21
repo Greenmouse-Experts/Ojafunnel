@@ -7,12 +7,14 @@ use App\Models\OjafunnelNotification;
 use App\Models\OrderItem;
 use App\Models\OrderUser;
 use App\Models\PaymentGateway;
+use App\Models\Promotion;
 use App\Models\Store;
 use App\Models\StoreCoupon;
 use App\Models\StoreOrder;
 use App\Models\StoreProduct;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\UserPaymentGateway;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Str;
@@ -105,7 +107,9 @@ class StoreFrontController extends Controller
         // return $location;
         $store = Store::latest()->where('name', $request->storename)->first();
         $products = StoreProduct::latest()->where('store_id', $store->id)->get();
-        return view('dashboard.store.checkout', compact('store', 'products'));
+        $paymentGateway = UserPaymentGateway::where(['user_id' => $store->user_id, 'name' => $store->payment_gateway])->first();
+
+        return view('dashboard.store.checkout', compact('store', 'products', 'paymentGateway'));
     }
 
     public function addToCart($id, $storename)
@@ -191,53 +195,6 @@ class StoreFrontController extends Controller
     protected function checkoutPaymentWithPromotion(Request $request, $promotion_id, $product_id)
     {
         $store = Store::where('name', $request->storename)->first();
-
-        // if($request->paymentOptions == 'Paypal')
-        // {
-        //     $data = [
-        //         'name' => $request->name,
-        //         'email' => $request->email,
-        //         'phone_no' => $request->phoneNo,
-        //         'address' => $request->address,
-        //         'state' => $request->state,
-        //         'country' => $request->country,
-        //         'cart' => session()->get('cart'),
-        //         'storename' => $request->storename,
-        //         'storename' => $request->amountToPay,
-        //         'couponID' => $request->couponID
-        //     ];
-
-        //     // Fetch PaymentGateway details from the database
-        //     $paymentGateway = PaymentGateway::where('name', 'Paypal')->first();
-
-        //     // try {
-        //         $response = $this->gateway->purchase(array(
-        //             'amount' => $request->amountToPay,
-        //             'description' => $data,
-        //             'currency' => $paymentGateway->PAYPAL_CURRENCY,
-        //             'returnUrl' => route('success.payment'),
-        //             'cancelUrl' => route('cancel.payment')
-        //         ))->send();
-
-        //         return  $response->redirect();
-
-        //         if ($response->isRedirect()) {
-        //             $response->redirect();
-        //         }
-        //         else {
-        //             return back()->with(
-        //                 'danger',
-        //                 $response->getMessage()
-        //             );
-        //         }
-        //     // } catch (\Throwable $th) {
-        //     //     return back()->with(
-        //     //         'danger',
-        //     //         $th->getMessage()
-        //     //     );
-        //     // }
-
-        // }
 
         if($request->paymentOptions == 'Stripe')
         {
@@ -341,13 +298,13 @@ class StoreFrontController extends Controller
 
                 // add fund to vendor wallet
                 $userData = User::findOrFail($store->user_id);
-                if($store->currency == 'NGN')
-                {
-                    $userData->wallet = $userData->wallet + $item_amount;
-                } else {
-                    $userData->dollar_wallet = $userData->dollar_wallet + $item_amount;
-                }
-                $userData->update();
+                // if($store->currency == 'NGN')
+                // {
+                //     $userData->wallet = $userData->wallet + $item_amount;
+                // } else {
+                //     $userData->dollar_wallet = $userData->dollar_wallet + $item_amount;
+                // }
+                // $userData->update();
 
                 // VENDOR
                 // add record to transaction table for vendor - (plus)
@@ -374,14 +331,12 @@ class StoreFrontController extends Controller
                     {
                         // level1 fee
                         $promoter->update([
-                            'wallet' => $promoter->first()->wallet + $level1_fee,
                             'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
                         ]);
                     } else {
                         // level1 fee
                         $promoter->update([
-                            'dollar_wallet' => $promoter->first()->dollar_wallet + $level1_fee,
-                            'promotion_bonus' => $promoter->first()->promotion_bonus + $level1_fee
+                            'dollar_promotion_bonus' => $promoter->first()->dollar_promotion_bonus + $level1_fee
                         ]);
                     }
 
@@ -394,6 +349,7 @@ class StoreFrontController extends Controller
                     $trans->status = 'Level 1 Fee Deduction';
                     $trans->save();
 
+
                     // add record to transaction table for promoter - (plus)
                     $trans = new Transaction();
                     $trans->user_id = $promoter->first()->id;
@@ -401,6 +357,16 @@ class StoreFrontController extends Controller
                     $trans->reference = Str::random(8);
                     $trans->status = 'Level 1 Fee Received';
                     $trans->save();
+
+                    Promotion::create([
+                        'promoter_id' =>  $promoter->first()->id,
+                        'order_item_id' => $orderItem->id,
+                        'store_owner_id' => $store->user_id,
+                        'store_id' => $store->id,
+                        'transaction_id' => $trans->id,
+                        'amount' => $level1_fee,
+                        'type' => 'Product'
+                    ]);
 
                     OjafunnelNotification::create([
                         'to' => $promoter->first()->id,
@@ -419,13 +385,11 @@ class StoreFrontController extends Controller
                         if($store->currency == 'NGN')
                         {
                             $user->update([
-                                'wallet' => $user->first()->wallet + $level2_fee,
                                 'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
                             ]);
                         } else {
                             $user->update([
-                                'dollar_wallet' => $user->first()->dollar_wallet + $level2_fee,
-                                'promotion_bonus' => $user->first()->promotion_bonus + $level2_fee
+                                'dollar_promotion_bonus' => $user->first()->dollar_promotion_bonus + $level2_fee
                             ]);
                         }
 
@@ -445,6 +409,17 @@ class StoreFrontController extends Controller
                         $trans->reference = Str::random(8);
                         $trans->status = 'Level 2 Fee Received';
                         $trans->save();
+
+                        Promotion::create([
+                            'promoter_id' =>  $user->first()->id,
+                            'order_item_id' => $orderItem->id,
+                            'store_owner_id' => $store->user_id,
+                            'store_id' => $store->id,
+                            'transaction_id' => $trans->id,
+                            'amount' => $level2_fee,
+                            'type' => 'Product'
+                        ]);
+
 
                         OjafunnelNotification::create([
                             'to' => $user->first()->id,
