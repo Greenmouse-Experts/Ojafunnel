@@ -420,7 +420,6 @@ class StoreFrontController extends Controller
                             'type' => 'Product'
                         ]);
 
-
                         OjafunnelNotification::create([
                             'to' => $user->first()->id,
                             'title' => config('app.name'),
