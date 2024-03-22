@@ -441,18 +441,23 @@
                         </div>
                         <div class="col-md-8 mt-3">
                             @php
-                                $shop = \App\Models\Shop::where(['user_id' => $lm->user_id, 'id' => $lm->shop_id])->first();
-                                $shopName = $shop ? $shop->name : ''; // Check if $shop is not null before accessing its properties
-                                $shareComponentForLMS = \Share::page(
-                                    route('user.shops.link', ['shopname' => $shopName, 'promotion_id' => Auth::user()->promotion_link, 'course_id' => $lm->id]) . '#item-' . $lm->id,
-                                    $lm->title,
-                                )
-                                ->facebook()
-                                ->twitter()
-                                ->linkedin()
-                                ->telegram()
-                                ->whatsapp()
-                                ->reddit();
+                                $shareComponentForLMS = null; // Initialize as null by default
+                                if ($lm) {
+                                    $shop = \App\Models\Shop::where(['user_id' => $lm->user_id, 'id' => $lm->shop_id])->first();
+                                    if ($shop) {
+                                        $shopname = $shop->name;
+                                        $shareComponentForLMS = \Share::page(
+                                            route('user.shops.link', ['shopname' => $shopname]) . '?promotion_id=' . Auth::user()->promotion_link.'&course_id='. $lm->id . '#item-' . $lm->id,
+                                            $lm->title,
+                                        )
+                                        ->facebook()
+                                        ->twitter()
+                                        ->linkedin()
+                                        ->telegram()
+                                        ->whatsapp()
+                                        ->reddit();
+                                    }
+                                }
                             @endphp
 
                             {!! $shareComponentForLMS !!}
