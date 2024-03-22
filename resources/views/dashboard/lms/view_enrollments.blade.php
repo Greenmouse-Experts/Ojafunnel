@@ -140,6 +140,7 @@
                                                                                 <th scope="col">Promoter Details</th>
                                                                                 <th scope="col">Amount</th>
                                                                                 <th scope="col">Status</th>
+                                                                                <th scope="col">Level</th>
                                                                                 <th scope="col">Date</th>
                                                                             </tr>
                                                                         </thead>
@@ -157,6 +158,7 @@
                                                                                         <a class="btn btn-success">
                                                                                         {{ucfirst($promote->status)}}</a>
                                                                                     </td>
+                                                                                    <td><span class="badge badge-pill badge-soft-primary font-size-11">{{ucfirst($promote->transaction->status)}}</span></td>
                                                                                     <td>{{$item->created_at->format('d M, Y')}}</td>
                                                                                 </tr>
                                                                             @endforeach

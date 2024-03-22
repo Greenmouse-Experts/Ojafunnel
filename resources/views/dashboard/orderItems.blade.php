@@ -98,11 +98,12 @@
                                                                                                     <th scope="col">Promoter Details</th>
                                                                                                     <th scope="col">Amount</th>
                                                                                                     <th scope="col">Status</th>
+                                                                                                    <th scope="col">Level</th>
                                                                                                     <th scope="col">Date</th>
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
-                                                                                                @foreach (App\Models\Promotion::latest()->where('order_item_id', $item->id)->with(['promoter', 'store'])->get() as $promote)
+                                                                                                @foreach (App\Models\Promotion::latest()->where('order_item_id', $item->id)->with(['promoter', 'store', 'transaction'])->get() as $promote)
                                                                                                     <tr>
                                                                                                         <td>{{$loop->iteration}}</td>
                                                                                                         <td>{{$promote->promoter->first_name}} {{$promote->promoter->last_name}}
@@ -114,6 +115,7 @@
                                                                                                         <td>
                                                                                                             <a class="btn btn-success">{{ucfirst($promote->status)}}</a>
                                                                                                         </td>
+                                                                                                        <td><span class="badge badge-pill badge-soft-primary font-size-11">{{ucfirst($promote->transaction->status)}}</span></td>
                                                                                                         <td>{{$item->created_at->format('d M, Y')}}</td>
                                                                                                     </tr>
                                                                                                 @endforeach

@@ -129,6 +129,7 @@
                                             <th class="align-middle">Amount</th>
                                             <th class="align-middle">Type</th>
                                             <th class="align-middle">Payment Status</th>
+                                            <th class="align-middle">Level</th>
                                             <th class="align-middle">Date</th>
                                             <th class="align-middle">Action</th>
                                         </tr>
@@ -174,6 +175,7 @@
                                                 <span class="badge badge-pill badge-soft-success font-size-11">{{ucfirst($promote->status)}}</span>
                                                 @endif
                                             </td>
+                                            <td><span class="badge badge-pill badge-soft-primary font-size-11">{{ucfirst($promote->transaction->status)}}</span></td>
                                             <td>{{$promote->created_at->toDayDateTimeString()}}</td>
                                             <td>
                                                 @if ($promote->status == 'paid')
@@ -284,6 +286,7 @@
                                             <th class="align-middle">Amount</th>
                                             <th class="align-middle">Type</th>
                                             <th class="align-middle">Payment Status</th>
+                                            <th class="align-middle">Level</th>
                                             <th class="align-middle">Date</th>
                                             <th class="align-middle">Action</th>
                                         </tr>
@@ -329,6 +332,7 @@
                                                 <span class="badge badge-pill badge-soft-success font-size-11">{{ucfirst($cpromote->status)}}</span>
                                                 @endif
                                             </td>
+                                            <td><span class="badge badge-pill badge-soft-primary font-size-11">{{ucfirst($promote->transaction->status)}}</span></td>
                                             <td>{{$cpromote->created_at->toDayDateTimeString()}}</td>
                                             <td>
                                                 @if ($cpromote->status == 'paid')

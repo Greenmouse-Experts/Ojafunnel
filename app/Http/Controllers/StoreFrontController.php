@@ -267,7 +267,7 @@ class StoreFrontController extends Controller
                 //
 
                 if ($item['id'] == $product_id && $promoter->exists()) {
-                    $product = StoreProduct::find($item['id'])->first();
+                    $product = StoreProduct::find($item['id']);
 
                     // promoter fee
                     $level1_fee = ($product->level1_comm / 100) * $item_price;
@@ -281,6 +281,8 @@ class StoreFrontController extends Controller
                 } else {
                     $item_amount = $item_price;
                 }
+
+                return $level1_fee;
 
                 // order item
                 $orderItem = new OrderItem();

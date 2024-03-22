@@ -227,7 +227,7 @@ class ShopFrontController extends Controller
                 //
 
                 if ($item['id'] == $course_id && $promoter->exists()) {
-                    $product = Course::find($item['id'])->first();
+                    $product = Course::find($item['id']);
 
                     // promoter fee
                     $level1_fee = ($product->level1_comm / 100) * $item['price'];
