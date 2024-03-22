@@ -502,12 +502,20 @@
                                                 <div>
                                                     <h4 class="card-title">Payment information</h4>
                                                     <p class="card-title-desc">Select payment below</p>
+                                                    @if($paymentGateway)
                                                     <div class="mt-3">
                                                         <div class="form-check form-check-inline font-size-16">
                                                             <input class="form-check-input" type="radio" name="paymentOptions" id="paymemtOptions" value="{{$paymentGateway->name}}">
                                                             <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><img src="{{ $paymentGateway->logo ? URL::asset($paymentGateway->logo) : URL::asset(strtolower($paymentGateway->name) . '.png') }}" alt="{{$paymentGateway->name}}" class="me-1 font-size-20 align-top" width="15"/> {{$paymentGateway->name}}</label>
                                                         </div>
                                                     </div>
+                                                    @else
+                                                        <div class="mt-3">
+                                                            <div class="form-check form-check-inline font-size-16">
+                                                                <p>No Payment Assigned</p>
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                     <div class="text-end mt-2">
                                                         <a type="button" class="text-decoration-none">
                                                             <button type="button" class="btn px-4 py-1" id="activeconfirm" style="color: #714091; border: 1px solid #714091">

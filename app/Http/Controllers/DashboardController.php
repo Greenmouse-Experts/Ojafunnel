@@ -56,6 +56,7 @@ use Illuminate\Routing\Redirector;
 use App\Http\Controllers\HomePageController;
 use App\Models\Affiliates;
 use App\Models\CourseProgress;
+use App\Models\CoursePromotion;
 use App\Models\CourseVideoProgress;
 use App\Models\Message as ModelsMessage;
 use App\Models\MessageUser;
@@ -2619,17 +2620,39 @@ class DashboardController extends Controller
 
         // Get the sum of amounts for USD currency sign
         $usdTotal = Promotion::where('promoter_id', Auth::user()->id)
-            ->where('status', 'paid')
-            ->whereHas('store', function ($query) {
-                $query->where('currency_sign', '$');
-            })
-            ->sum('amount');
+        ->where('status', 'paid')
+        ->whereHas('store', function ($query) {
+            $query->where('currency_sign', '$');
+        })
+        ->sum('amount');
+
+
+        $coursePromotions = CoursePromotion::latest()->where('promoter_id', Auth::user()->id)->where('shop_owner_id', '!=', Auth::user()->id)->with(['shopOwner', 'shop', 'order'])->get();
+
+        // Get the sum of amounts for NGN currency sign
+        $ngnTotalCourse = CoursePromotion::where('promoter_id', Auth::user()->id)
+        ->where('status', 'paid')
+        ->whereHas('shop', function ($query) {
+            $query->where('currency_sign', '₦');
+        })
+        ->sum('amount');
+
+        // Get the sum of amounts for USD currency sign
+        $usdTotalCourse = CoursePromotion::where('promoter_id', Auth::user()->id)
+        ->where('status', 'paid')
+        ->whereHas('shop', function ($query) {
+            $query->where('currency_sign', '$');
+        })
+        ->sum('amount');
 
         return view('dashboard.withdrawal.withdrawalPromotion', [
             'username' => $username,
             'promotions' => $promotions,
+            'coursePromotions' => $coursePromotions,
             'ngnTotal' => $ngnTotal,
-            'usdTotal' => $usdTotal
+            'usdTotal' => $usdTotal,
+            'usdTotalCourse' => $usdTotalCourse,
+            'ngnTotalCourse' => $ngnTotalCourse
         ]);
     }
 
