@@ -470,19 +470,21 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         @php
-                                            $shopname = '';
-                                            $promotion_id = Auth::user()->promotion_link ?? '';
+                                            $route = '';
 
-                                            if ($lm) {
+                                            // Check if $lm exists and is not empty
+                                            if ($lm && !empty($lm->user_id) && !empty($lm->shop_id)) {
                                                 $shop = \App\Models\Shop::where(['user_id' => $lm->user_id, 'id' => $lm->shop_id])->first();
-                                                if ($shop) {
-                                                    $shopname = $shop->name;
-                                                }
-                                            }
 
-                                            $route = route('user.shops.link', ['shopname' => $shopname]);
-                                            if ($promotion_id) {
-                                                $route .= '?promotion_id=' . $promotion_id;
+                                                // Check if $shop exists and has a non-empty name
+                                                if ($shop && !empty($shop->name)) {
+                                                    $route = route('user.shops.link', ['shopname' => $shop->name]);
+
+                                                    // Append promotion_id if available
+                                                    if (Auth::user() && Auth::user()->promotion_link) {
+                                                        $route .= '?promotion_id=' . Auth::user()->promotion_link;
+                                                    }
+                                                }
                                             }
                                         @endphp
                                         <input type="text" value="{{ $route }}">
