@@ -131,6 +131,7 @@
                 <ul class="sub-menu" aria-expanded="false">
                     <li><a href="{{route('user.integration', Auth::user()->username)}}" key="t-tui-calendar">Create Integrations</a></li>
                     <li><a href="{{route('user.manage_integration', Auth::user()->username)}}" key="t-tui-calendar">Manage Integrations</a></li>
+                    <li><a href="{{route('user.payment.gateway', Auth::user()->username)}}" key="t-full-calendar">Payment Gateway</a></li>
                 </ul>
             </li>
             <li>
@@ -194,7 +195,6 @@
                     <span key="t-chat">Settings</span>
                 </a>
                 <ul class="sub-menu" aria-expanded="false">
-                    <li><a href="{{route('user.payment.gateway', Auth::user()->username)}}" key="t-full-calendar">Payment Gateway</a></li>
                     <li><a href="{{route('user.general', Auth::user()->username)}}" key="t-tui-calendar">General</a></li>
                     <li><a href="{{route('user.security', Auth::user()->username)}}" key="t-full-calendar">Security</a></li>
                 </ul>
