@@ -469,7 +469,18 @@
                             <div class="form">
                                 <div class="row">
                                     <div class="col-md-10">
-                                        <input type="text" value="{{ route('user.shops.link', ['shopname' => \App\Models\Shop::where(['user_id' => $lm->user_id, 'id' => $lm->shop_id])->first()->name]) . '?promotion_id=' . Auth::user()->promotion_link.'&course_id='. $lm->id . '#item-' . $lm->id }}" class="input mov" id="myInputLMS{{$lm->id}}" readonly required>
+                                    @php
+                                        $shopname = '';
+                                        $shop = \App\Models\Shop::where(['user_id' => optional($lm)->user_id, 'id' => optional($lm)->shop_id])->first();
+                                        if ($shop) {
+                                            $shopname = $shop->name;
+                                        }
+                                        $route = route('user.shops.link', ['shopname' => $shopname]);
+                                        if ($lm) {
+                                            $route .= '?promotion_id=' . Auth::user()->promotion_link;
+                                        }
+                                    @endphp
+                                    <input type="text" value="{{ $route }}">
                                     </div>
                                     <div class="col-md-2">
                                         <button type=" button" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy" onclick="copyLMS('{{$lm->id}}')" class="btn btn-secondary push"><i class="mdi mdi-content-copy"></i></button>
