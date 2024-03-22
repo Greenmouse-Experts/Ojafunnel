@@ -85,9 +85,99 @@
                                             </td>
                                             <td>
                                                 @if($promote->gateway_payment_id)
-                                                    {{ App\Models\BankDetail::find($promote->gateway_payment_id)->type ?? '' }} -
-                                                    {{ App\Models\BankDetail::find($promote->gateway_payment_id)->account_name ?? '' }}
-                                                    {{ App\Models\BankDetail::find($promote->gateway_payment_id)->account_number ?? '' }}
+                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary" data-bs-toggle="modal" data-bs-target="#view-{{$promote->id}}">View Payment Method</a>
+                                                <div class="modal fade" id="view-{{$promote->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content pb-3">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="myExtraLargeModalLabel">View payment method</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body ">
+                                                                <div class="row">
+                                                                    <div class="Editt">
+                                                                        @if(App\Models\BankDetail::find($promote->gateway_payment_id)->type == 'US')
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($promote->gateway_payment_id)->type}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Holder Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($promote->gateway_payment_id)->account_name}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="bank">Bank Account: </label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($promote->gateway_payment_id)->type_of_bank_account}}</label>
+                                                                                    <p onmouseover="showTBA()" onmouseout="hideTBA();"><input type="text" class="form-control" value="{{App\Models\BankDetail::find($promote->gateway_payment_id)->type_of_bank_account}}" id="typeBA" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Routing Number: </label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($promote->gateway_payment_id)->routing_number}}</label>
+                                                                                    <p onmouseover="showRoutingNumber()" onmouseout="hideRoutingNumber();"><input type="text" class="form-control" value="{{App\Models\BankDetail::find($promote->gateway_payment_id)->routing_number}}" id="routingNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Number: </label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($promote->gateway_payment_id)->account_number}}</label>
+                                                                                    <p onmouseover="showAccountNumber()" onmouseout="hideAccountNumber();"><i class="uil uil-wallet"></i> <input type="text" class="form-control" value="{{App\Models\BankDetail::find($promote->gateway_payment_id)->account_number}}" id="accountNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
+                                                                        @if(App\Models\BankDetail::find($promote->gateway_payment_id)->type == 'PAYSTACK')
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($promote->gateway_payment_id)->type}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Holder Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($promote->gateway_payment_id)->account_name}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Secret Key: </label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($promote->gateway_payment_id)->secret_key}}</label>
+                                                                                    <p onmouseover="showSecret()" onmouseout="hideSecret();"><input type="text" class="form-control" value="{{App\Models\BankDetail::find($promote->gateway_payment_id)->secret_key}}" id="secretKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Public Key: </label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($promote->gateway_payment_id)->public_key}}</label>
+                                                                                    <p onmouseover="showPublic()" onmouseout="hidePublic();"><input type="text" class="form-control" value="{{App\Models\BankDetail::find($promote->gateway_payment_id)->public_key}}" id="publicKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
+                                                                        @if(App\Models\BankDetail::find($promote->gateway_payment_id)->type == 'NGN')
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($promote->gateway_payment_id)->type}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($promote->gateway_payment_id)->account_name}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Number: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($promote->gateway_payment_id)->account_number}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="bank">Bank Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($promote->gateway_payment_id)->bank_name}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Bank Code: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($promote->gateway_payment_id)->bank_code}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 @endif
                                             </td>
                                             <td>
@@ -205,9 +295,99 @@
                                             </td>
                                             <td>
                                                 @if($cpromote->gateway_payment_id)
-                                                    {{ App\Models\BankDetail::find($cpromote->gateway_payment_id)->type ?? '' }} -
-                                                    {{ App\Models\BankDetail::find($cpromote->gateway_payment_id)->account_name ?? '' }}
-                                                    {{ App\Models\BankDetail::find($cpromote->gateway_payment_id)->account_number ?? '' }}
+                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary" data-bs-toggle="modal" data-bs-target="#view-course-{{$cpromote->id}}">View Payment Method</a>
+                                                <div class="modal fade" id="view-course-{{$cpromote->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content pb-3">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="myExtraLargeModalLabel">View payment method</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body ">
+                                                                <div class="row">
+                                                                    <div class="Editt">
+                                                                        @if(App\Models\BankDetail::find($cpromote->gateway_payment_id)->type == 'US')
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->type}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Holder Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->account_name}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="bank">Bank Account: </label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->type_of_bank_account}}</label>
+                                                                                    <p onmouseover="showTBA()" onmouseout="hideTBA();"><input type="text" class="form-control" value="{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->type_of_bank_account}}" id="typeBA" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Routing Number: </label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->routing_number}}</label>
+                                                                                    <p onmouseover="showRoutingNumber()" onmouseout="hideRoutingNumber();"><input type="text" class="form-control" value="{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->routing_number}}" id="routingNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Number: </label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->account_number}}</label>
+                                                                                    <p onmouseover="showAccountNumber()" onmouseout="hideAccountNumber();"><i class="uil uil-wallet"></i> <input type="text" class="form-control" value="{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->account_number}}" id="accountNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
+                                                                        @if(App\Models\BankDetail::find($cpromote->gateway_payment_id)->type == 'PAYSTACK')
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->type}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Holder Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->account_name}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Secret Key: </label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->secret_key}}</label>
+                                                                                    <p onmouseover="showSecret()" onmouseout="hideSecret();"><input type="text" class="form-control" value="{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->secret_key}}" id="secretKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Public Key: </label>
+                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->public_key}}</label>
+                                                                                    <p onmouseover="showPublic()" onmouseout="hidePublic();"><input type="text" class="form-control" value="{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->public_key}}" id="publicKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
+                                                                        @if(App\Models\BankDetail::find($cpromote->gateway_payment_id)->type == 'NGN')
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->type}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->account_name}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Number: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->account_number}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="bank">Bank Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->bank_name}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Bank Code: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->bank_code}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 @endif
                                             </td>
                                             <td>
@@ -234,9 +414,9 @@
                                                 @if ($cpromote->status == 'paid')
                                                 <a class="btn btn-sm btn-soft-primary">{{ucfirst($cpromote->status)}}</a>
                                                 @else
-                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-danger" data-bs-toggle="modal" data-bs-target="#request-{{$cpromote->id}}">Confirm Payment</a>
+                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-danger" data-bs-toggle="modal" data-bs-target="#request-course-{{$cpromote->id}}">Confirm Payment</a>
                                                 <!-- Modal START -->
-                                                <div class="modal fade" id="request-{{$cpromote->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="request-course-{{$cpromote->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
                                                             <div class="modal-header border-bottom-0">

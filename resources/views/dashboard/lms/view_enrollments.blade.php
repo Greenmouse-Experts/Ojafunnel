@@ -52,6 +52,7 @@
                       <th>Order No</th>
                       <th>Payment Method</th>
                       <th>Amount</th>
+                      <th>Type</th>
                       <th>Purchase Date</th>
                       <th>Action</th>
                     </tr>
@@ -106,6 +107,70 @@
                             </td>
                             <td>
                                 {{$shop->currency_sign}}{{number_format($item->amount, 2)}}
+                            </td>
+                            <td>
+                                @if($item->type == 'Promotion')
+                                <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewPromoters-{{$item->id}}">
+                                    View Promotion
+                                </a>
+                                @else
+                                <a>
+                                    {{$item->type}}
+                                </a>
+                                @endif
+                                <div class="modal fade" id="viewPromoters-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header border-bottom-0">
+                                                <h5 class="modal-title" id="staticBackdropLabel">
+                                                    Promotion
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="table-responsive">
+                                                                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                                                        <thead class="tread">
+                                                                            <tr>
+                                                                                <th scope="col">S/N</th>
+                                                                                <th scope="col">Promoter Details</th>
+                                                                                <th scope="col">Amount</th>
+                                                                                <th scope="col">Status</th>
+                                                                                <th scope="col">Date</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach (App\Models\CoursePromotion::latest()->where('shop_order_id', $item->id)->where('promoter_id', '!=', Auth::user()->id)->with(['promoter', 'shop'])->get() as $promote)
+                                                                                <tr>
+                                                                                    <td>{{$loop->iteration}}</td>
+                                                                                    <td>{{$promote->promoter->first_name}} {{$promote->promoter->last_name}}
+                                                                                        <p>{{$promote->promoter->email}}</p>
+                                                                                        <p>{{$promote->promoter->phone_number}}</p>
+                                                                                        <p>{{$promote->promoter->user_name}}</p>
+                                                                                    </td>
+                                                                                    <td>{{$promote->shop->currency_sign}}{{$promote->amount}}</td>
+                                                                                    <td>
+                                                                                        <a class="btn btn-success">
+                                                                                        {{ucfirst($promote->status)}}</a>
+                                                                                    </td>
+                                                                                    <td>{{$item->created_at->format('d M, Y')}}</td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                             <td>
                                 {{$item->created_at->toDayDateTimeString()}}

@@ -76,7 +76,6 @@
                                                         {{$item->type}}
                                                     </a>
                                                     @endif
-
                                                     <div class="modal fade" id="viewPromoters-{{$item->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
                                                             <div class="modal-content">
@@ -98,6 +97,7 @@
                                                                                                     <th scope="col">S/N</th>
                                                                                                     <th scope="col">Promoter Details</th>
                                                                                                     <th scope="col">Amount</th>
+                                                                                                    <th scope="col">Status</th>
                                                                                                     <th scope="col">Date</th>
                                                                                                 </tr>
                                                                                             </thead>
@@ -111,6 +111,9 @@
                                                                                                             <p>{{$promote->promoter->user_name}}</p>
                                                                                                         </td>
                                                                                                         <td>{{$promote->store->currency_sign}}{{$promote->amount}}</td>
+                                                                                                        <td>
+                                                                                                            <a class="btn btn-success">{{ucfirst($promote->status)}}</a>
+                                                                                                        </td>
                                                                                                         <td>{{$item->created_at->format('d M, Y')}}</td>
                                                                                                     </tr>
                                                                                                 @endforeach
