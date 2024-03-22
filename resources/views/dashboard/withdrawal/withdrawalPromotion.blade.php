@@ -190,7 +190,7 @@
                                                 @if ($promote->status == 'paid')
                                                 <a class="btn btn-sm btn-soft-primary">{{ucfirst($promote->status)}}</a>
                                                 @else
-                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-danger" data-bs-toggle="modal" data-bs-target="#request-{{$promote->id}}">Request Withdraw</a>
+                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary" data-bs-toggle="modal" data-bs-target="#request-{{$promote->id}}">Request Withdraw</a>
                                                 <!-- Modal START -->
                                                 <div class="modal fade" id="request-{{$promote->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
@@ -345,7 +345,7 @@
                                                 @if ($cpromote->status == 'paid')
                                                 <a class="btn btn-sm btn-soft-primary">{{ucfirst($cpromote->status)}}</a>
                                                 @else
-                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-danger" data-bs-toggle="modal" data-bs-target="#request-{{$cpromote->id}}">Request Withdraw</a>
+                                                <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary" data-bs-toggle="modal" data-bs-target="#request-{{$cpromote->id}}">Request Withdraw</a>
                                                 <!-- Modal START -->
                                                 <div class="modal fade" id="request-{{$cpromote->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">

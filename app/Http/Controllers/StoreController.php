@@ -363,6 +363,9 @@ class StoreController extends Controller
             $sp->image = $image;
         }
         $sp->store_id = $request->store_id;
+        $sp->date_from = $request->from;
+        $sp->date_to = $request->to;
+        $sp->new_price = $request->new_price ?? 0;
 
         // check if level1_comm <= level2_comm... then fail
         if ($request->level1_comm <= $request->level2_comm) return back()->with([
@@ -514,6 +517,9 @@ class StoreController extends Controller
             );
             $sp->image = $image;
         }
+        $sp->date_from = $request->from;
+        $sp->date_to = $request->to;
+        $sp->new_price = $request->new_price ?? 0;
 
 
         $token = explode('/', $sp->link);

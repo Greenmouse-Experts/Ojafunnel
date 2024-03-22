@@ -756,7 +756,7 @@ class TransactionController extends Controller
 
             if($promote->status == 'pending')
             {
-                if($promote->store->currency_sign == '$')
+                if($promote->shop->currency_sign == '$')
                 {
                     $user->dollar_promotion_bonus -= $promote->amount;
                 } else {
@@ -770,29 +770,29 @@ class TransactionController extends Controller
                 'status' => 'withdrawal request'
             ]);
 
-            $shopOwner = User::find($promote->store_owner_id);
+            $shopOwner = User::find($promote->shop_owner_id);
 
             // send withdraw email notification here
-            Mail::to($shopOwner->email)->send(new UserPromotionWithdrawalNotification($shopOwner, Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a course promotion withdrawal of '.$promote->store->currency_sign . $promote->amount));
-            Mail::to(Auth::user()->email)->send(new UserPromotionWithdrawalNotification(Auth::user(), 'You requested to withdraw the amount of '.$promote->store->currency_sign  . $promote->amount . ' for a course promotion.'));
+            Mail::to($shopOwner->email)->send(new UserPromotionWithdrawalNotification($shopOwner, Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a course promotion withdrawal of '.$promote->shop->currency_sign . $promote->amount));
+            Mail::to(Auth::user()->email)->send(new UserPromotionWithdrawalNotification(Auth::user(), 'You requested to withdraw the amount of '.$promote->shop->currency_sign  . $promote->amount . ' for a course promotion.'));
 
             OjafunnelNotification::create([
                 'to' => Auth::user()->id,
                 'title' => config('app.name'),
-                'body' => 'Course promotion Withdrawal request of '.$promote->store->currency_sign  . $promote->amount . '.',
+                'body' => 'Course promotion Withdrawal request of '.$promote->shop->currency_sign  . $promote->amount . '.',
             ]);
 
             OjafunnelNotification::create([
                 'to' => $shopOwner->id,
                 'title' => config('app.name'),
-                'body' => Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a course promotion withdrawal of '.$promote->store->currency_sign . $promote->amount,
+                'body' => Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a course promotion withdrawal of '.$promote->shop->currency_sign . $promote->amount,
             ]);
 
             $user = User::where('id', Auth::user()->id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
-            $shopOwnerFCM = User::where('id',$promote->store_owner_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $shopOwnerFCM = User::where('id',$promote->shop_owner_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
 
-            $this->fcm('Course promotion withdrawal request of '.$promote->store->currency_sign  . $promote->amount . '.', $user);
-            $this->fcm(Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a course promotion withdrawal of '.$promote->store->currency_sign  . $promote->amount, $shopOwnerFCM);
+            $this->fcm('Course promotion withdrawal request of '.$promote->shop->currency_sign  . $promote->amount . '.', $user);
+            $this->fcm(Auth::user()->first_name . ' ' . Auth::user()->last_name . ' request a course promotion withdrawal of '.$promote->shop->currency_sign  . $promote->amount, $shopOwnerFCM);
 
 
             return back()->with([

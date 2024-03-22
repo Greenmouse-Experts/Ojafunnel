@@ -178,6 +178,18 @@
                                                                                         <input type="number" name="price" value="{{$item->price}}" placeholder="Enter price" required />
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Promotion Price</label>
+                                                                                        <input type="number" name="new_price" value="{{$item->new_price}}" placeholder="Enter promotion price" />
+                                                                                    </div>
+                                                                                    <div class="col-lg-6 mb-4">
+                                                                                        <label>From</label>
+                                                                                        <input type="datetime-local" name="from" placeholder="Select Date" value="{{$item->date_from}}" />
+                                                                                    </div>
+                                                                                    <div class="col-lg-6 mb-4">
+                                                                                        <label>To</label>
+                                                                                        <input type="datetime-local" name="to" placeholder="Select Date" value="{{$item->date_to}}" />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
                                                                                         <label for="Name">Quantity</label>
                                                                                         <input type="number" name="quantity" value="{{$item->quantity}}" required />
                                                                                     </div>
@@ -192,7 +204,7 @@
                                                                                     <div class="text-end mt-2">
                                                                                         <a href="#" class="text-decoration-none">
                                                                                             <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
-                                                                                                Submit
+                                                                                                Update
                                                                                             </button>
                                                                                         </a>
                                                                                     </div>
@@ -252,6 +264,18 @@
                                                                                         <input type="number" name="price" value="{{$item->price}}" placeholder="Enter price" required />
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
+                                                                                        <label for="Name">Promotion Price</label>
+                                                                                        <input type="number" name="new_price" value="{{$item->new_price}}" placeholder="Enter promotion price" />
+                                                                                    </div>
+                                                                                    <div class="col-lg-6 mb-4">
+                                                                                        <label>From</label>
+                                                                                        <input type="datetime-local" name="from" placeholder="Select Date" value="{{$item->date_from}}" />
+                                                                                    </div>
+                                                                                    <div class="col-lg-6 mb-4">
+                                                                                        <label>To</label>
+                                                                                        <input type="datetime-local" name="to" placeholder="Select Date" value="{{$item->date_to}}" />
+                                                                                    </div>
+                                                                                    <div class="col-lg-12 mb-4">
                                                                                         <label for="Name">Quantity</label>
                                                                                         <input type="number" name="quantity" value="{{$item->quantity}}" required />
                                                                                     </div>
@@ -266,7 +290,7 @@
                                                                                     <div class="text-end mt-2">
                                                                                         <a href="#" class="text-decoration-none">
                                                                                             <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
-                                                                                                Submit
+                                                                                                Update
                                                                                             </button>
                                                                                         </a>
                                                                                     </div>
