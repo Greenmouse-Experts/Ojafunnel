@@ -444,7 +444,7 @@
                                 $shop = \App\Models\Shop::where(['user_id' => $lm->user_id, 'id' => $lm->shop_id])->first();
                                 $shopName = $shop ? $shop->name : ''; // Check if $shop is not null before accessing its properties
                                 $shareComponentForLMS = \Share::page(
-                                    route('user.shops.link', ['shopname' => $shopName]) . '?promotion_id=' . Auth::user()->promotion_link.'&course_id='. $lm->id . '#item-' . $lm->id,
+                                    route('user.shops.link', ['shopname' => $shopName, 'promotion_id' => Auth::user()->promotion_link, 'course_id' => $lm->id]) . '#item-' . $lm->id,
                                     $lm->title,
                                 )
                                 ->facebook()
@@ -454,7 +454,6 @@
                                 ->whatsapp()
                                 ->reddit();
                             @endphp
-
 
                             {!! $shareComponentForLMS !!}
                         </div>
