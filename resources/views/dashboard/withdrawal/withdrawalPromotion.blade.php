@@ -22,7 +22,7 @@
             </div>
             <!-- start page title -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-9">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="font-60">Promotion Withdrawals</h4>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-1">
+                <div class="col-lg-3">
                     <div class="card">
                         <div class="card-body">
                             @if(App\Models\ExplainerContent::where('menu', 'Withdrawal')->exists())
@@ -44,17 +44,6 @@
                                 <i class="bi bi-card-text"></i>
                             </div>
                             @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="all-create">
-                                <button type="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
-                                    Click To Withdraw
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
