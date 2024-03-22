@@ -2608,7 +2608,7 @@ class DashboardController extends Controller
 
     public function withdrawalPromotion($username)
     {
-        $promotions = Promotion::latest()->where('promoter_id', Auth::user()->id)->where('store_owner_id', '!=', Auth::user()->id)->with(['storeOwner', 'store', 'order'])->get();
+        $promotions = Promotion::latest()->where('promoter_id', Auth::user()->id)->with(['storeOwner', 'store', 'order'])->get();
 
         // Get the sum of amounts for NGN currency sign
         $ngnTotal = Promotion::where('promoter_id', Auth::user()->id)
@@ -2627,7 +2627,7 @@ class DashboardController extends Controller
         ->sum('amount');
 
 
-        $coursePromotions = CoursePromotion::latest()->where('promoter_id', Auth::user()->id)->where('shop_owner_id', '!=', Auth::user()->id)->with(['shopOwner', 'shop', 'order'])->get();
+        $coursePromotions = CoursePromotion::latest()->where('promoter_id', Auth::user()->id)->with(['shopOwner', 'shop', 'order'])->get();
 
         // Get the sum of amounts for NGN currency sign
         $ngnTotalCourse = CoursePromotion::where('promoter_id', Auth::user()->id)
@@ -2658,8 +2658,8 @@ class DashboardController extends Controller
 
     public function withdrawalPromotionRequest($username)
     {
-        $promotions = Promotion::latest()->where('store_owner_id', Auth::user()->id)->where('promoter_id', '!=', Auth::user()->id)->with(['storeOwner', 'store', 'order'])->get();
-        $coursePromotions = CoursePromotion::latest()->where('shop_owner_id', Auth::user()->id)->where('promoter_id', '!=', Auth::user()->id)->with(['shopOwner', 'shop', 'order'])->get();
+        $promotions = Promotion::latest()->where('store_owner_id', Auth::user()->id)->with(['storeOwner', 'store', 'order'])->get();
+        $coursePromotions = CoursePromotion::latest()->where('shop_owner_id', Auth::user()->id)->with(['shopOwner', 'shop', 'order'])->get();
 
         return view('dashboard.withdrawal.withdrawalPromotionRequests', [
             'username' => $username,

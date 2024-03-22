@@ -102,7 +102,7 @@
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
-                                                                                                @foreach (App\Models\Promotion::latest()->where('order_item_id', $item->id)->where('promoter_id', '!=', Auth::user()->id)->with(['promoter', 'store'])->get() as $promote)
+                                                                                                @foreach (App\Models\Promotion::latest()->where('order_item_id', $item->id)->with(['promoter', 'store'])->get() as $promote)
                                                                                                     <tr>
                                                                                                         <td>{{$loop->iteration}}</td>
                                                                                                         <td>{{$promote->promoter->first_name}} {{$promote->promoter->last_name}}
