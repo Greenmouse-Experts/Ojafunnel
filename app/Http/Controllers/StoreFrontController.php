@@ -282,8 +282,6 @@ class StoreFrontController extends Controller
                     $item_amount = $item_price;
                 }
 
-                return $level1_fee;
-
                 // order item
                 $orderItem = new OrderItem();
                 $orderItem->store_order_id = $order->id;
