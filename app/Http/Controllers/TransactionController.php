@@ -836,6 +836,40 @@ class TransactionController extends Controller
         ]);
     }
 
+    public function withdrawCoursePromotionRequest(Request $request, $promote_id)
+    {
+        $promote = CoursePromotion::find(decrypt($promote_id))->load('shop');
+
+        if(!$promote)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Promotion not existing in our database.'
+            ]);
+        }
+
+        if($promote->status == 'paid')
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Payment has been initialized for this withdrawal already.'
+            ]);
+        }
+
+        $this->validate($request, [
+            'status' => ['required'],
+        ]);
+
+        $promote->update([
+            'status' => $request->status
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Payment initiated successfully.'
+        ]);
+    }
+
     public function delete_withdraw($id)
     {
         $idFinder = Crypt::decrypt($id);

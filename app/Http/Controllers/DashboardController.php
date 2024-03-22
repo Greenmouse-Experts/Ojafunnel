@@ -2659,10 +2659,12 @@ class DashboardController extends Controller
     public function withdrawalPromotionRequest($username)
     {
         $promotions = Promotion::latest()->where('store_owner_id', Auth::user()->id)->where('promoter_id', '!=', Auth::user()->id)->with(['storeOwner', 'store', 'order'])->get();
+        $coursePromotions = CoursePromotion::latest()->where('shop_owner_id', Auth::user()->id)->where('promoter_id', '!=', Auth::user()->id)->with(['shopOwner', 'shop', 'order'])->get();
 
         return view('dashboard.withdrawal.withdrawalPromotionRequests', [
             'username' => $username,
             'promotions' => $promotions,
+            'coursePromotions' => $coursePromotions
         ]);
     }
 

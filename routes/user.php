@@ -124,6 +124,7 @@ Route::prefix('user')->group(function () {
     Route::post('/withdrawal/withdraw/promotion/{promote_id}', [App\Http\Controllers\TransactionController::class, 'withdrawpromotion'])->name('user.withdraw.promotion');
     Route::post('/withdrawal/withdraw/course/promotion/{promote_id}', [App\Http\Controllers\TransactionController::class, 'withdrawcoursePromotion'])->name('user.withdraw.coursePromotion');
     Route::post('/withdrawal/withdraw/promotion/request/{promote_id}', [App\Http\Controllers\TransactionController::class, 'withdrawPromotionRequest'])->name('user.withdrawPromotionRequest');
+    Route::post('/withdrawal/withdraw/course/promotion/request/{promote_id}', [App\Http\Controllers\TransactionController::class, 'withdrawCoursePromotionRequest'])->name('user.withdrawCoursePromotionRequest');
     Route::post('/withdrawal/delete/withdraw/{id}', [App\Http\Controllers\TransactionController::class, 'delete_withdraw'])->name('user.delete.withdraw');
 
     // Birthday Automation
