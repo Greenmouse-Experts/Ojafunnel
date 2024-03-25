@@ -505,7 +505,7 @@
                                                     @if($paymentGateway)
                                                     <div class="mt-3">
                                                         <div class="form-check form-check-inline font-size-16">
-                                                            <input class="form-check-input" type="radio" name="paymentOptions" id="paymemtOptions" value="{{$paymentGateway->name}}">
+                                                            <input class="form-check-input" type="radio" style="border-color: black !important;" name="paymentOptions" id="paymemtOptions" value="{{$paymentGateway->name}}">
                                                             <label class="form-check-label font-size-13" for="paymentoptionsRadio1"><img src="{{ $paymentGateway->logo ? URL::asset($paymentGateway->logo) : URL::asset(strtolower($paymentGateway->name) . '.png') }}" alt="{{$paymentGateway->name}}" class="me-1 font-size-20 align-top" width="15"/> {{$paymentGateway->name}}</label>
                                                         </div>
                                                     </div>
