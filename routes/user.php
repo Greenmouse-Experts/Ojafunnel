@@ -120,6 +120,7 @@ Route::prefix('user')->group(function () {
     Route::post('/withdrawal/add/paystack', [App\Http\Controllers\TransactionController::class, 'add_paystack'])->name('user.add.paystack');
     Route::post('/withdrawal/update/paystack/{id}', [App\Http\Controllers\TransactionController::class, 'update_paystack'])->name('user.update.paystack');
     Route::post('/withdrawal/add/paypal', [App\Http\Controllers\TransactionController::class, 'add_paypal'])->name('user.add.paypal');
+    Route::post('/withdrawal/update/paypal/{id}', [App\Http\Controllers\TransactionController::class, 'update_paypal'])->name('user.update.paypal');
     Route::post('/withdrawal/withdraw', [App\Http\Controllers\TransactionController::class, 'withdraw'])->name('user.withdraw');
     Route::post('/withdrawal/withdraw/promotion/{promote_id}', [App\Http\Controllers\TransactionController::class, 'withdrawpromotion'])->name('user.withdraw.promotion');
     Route::post('/withdrawal/withdraw/course/promotion/{promote_id}', [App\Http\Controllers\TransactionController::class, 'withdrawcoursePromotion'])->name('user.withdraw.coursePromotion');

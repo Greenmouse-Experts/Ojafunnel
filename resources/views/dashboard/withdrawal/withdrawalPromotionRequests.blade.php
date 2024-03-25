@@ -96,6 +96,23 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
+                                                                        @if(App\Models\BankDetail::find($promote->gateway_payment_id)->type == 'PAYPAL')
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($promote->gateway_payment_id)->type}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Holder Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($promote->gateway_payment_id)->account_name}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Email: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($promote->gateway_payment_id)->secret_key}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
                                                                         @if(App\Models\BankDetail::find($promote->gateway_payment_id)->type == 'US')
                                                                         <div class="row">
                                                                             <div class="col-12">
@@ -306,6 +323,23 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
+                                                                        @if(App\Models\BankDetail::find($cpromote->gateway_payment_id)->type == 'PAYPAL')
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="col-lg-12 mb-4 text-center">
+                                                                                    <label for="">{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->type}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Account Holder Name: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->account_name}}</label>
+                                                                                </div>
+                                                                                <div class="col-lg-12 mb-4">
+                                                                                    <label for="">Email: </label>
+                                                                                    <label>{{App\Models\BankDetail::find($cpromote->gateway_payment_id)->secret_key}}</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @endif
                                                                         @if(App\Models\BankDetail::find($cpromote->gateway_payment_id)->type == 'US')
                                                                         <div class="row">
                                                                             <div class="col-12">

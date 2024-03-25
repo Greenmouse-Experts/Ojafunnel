@@ -552,6 +552,85 @@ class TransactionController extends Controller
         ]);
     }
 
+    public function add_paypal(Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'account_name' => ['required', 'string'],
+            'email' => ['required'],
+        ]);
+
+        $bankInformations = BankDetail::where('user_id', Auth::user()->id)->get();
+
+        if ($bankInformations->count() == 10) {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'You are not allowed to enter more than ten(10) payment methods.'
+            ]);
+        }
+
+        if ($bankInformations->isEmpty()) {
+            BankDetail::create([
+                'user_id' => Auth::user()->id,
+                'type' => 'PAYPAL',
+                'account_name' => $request->account_name,
+                'secret_key' => $request->email,
+                'status' => 'Active'
+            ]);
+
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Payment method added successfully.'
+            ]);
+        } else {
+            foreach ($bankInformations as $bank) {
+                $secret_key[] = $bank->secret_key;
+            }
+            if (in_array($request->email, $secret_key)) {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => 'Payment method added before.'
+                ]);
+            } else {
+                BankDetail::create([
+                    'user_id' => Auth::user()->id,
+                    'type' => 'PAYPAL',
+                    'account_name' => $request->account_name,
+                    'secret_key' => $request->email,
+                    'status' => 'Active'
+                ]);
+
+                return back()->with([
+                    'type' => 'success',
+                    'message' => 'Payment method added successfully.'
+                ]);
+            }
+        }
+    }
+
+    public function update_paypal($id, Request $request)
+    {
+        //Validate Request
+        $this->validate($request, [
+            'account_name' => ['required', 'string'],
+            'email' => ['required'],
+        ]);
+
+        $idFinder = Crypt::decrypt($id);
+
+        $bank = BankDetail::find($idFinder);
+
+        $bank->update([
+            'account_name' => $request->account_name,
+            'secret_key' => $request->email,
+        ]);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Payment method updated successfully.'
+        ]);
+    }
+
     public function withdraw(Request $request)
     {
         // /Validate Request

@@ -83,6 +83,9 @@
                             <p class="text-muted fs-14 mb-1" onmouseover="showSecret()" onmouseout="hideSecret();"><input type="password" class="form-control" value="{{$bank->secret_key}}" id="secretKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                             <p class="text-muted fs-14 mb-1" onmouseover="showPublic()" onmouseout="hidePublic();"><input type="password" class="form-control" value="{{$bank->public_key}}" id="publicKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                             @endif
+                            @if($bank->type == 'PAYPAL')
+                            <p class="text-muted fs-14 mb-1"><input type="email" class="form-control" value="{{$bank->secret_key}}" id="secret_key" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                            @endif
                             <div class="mt-4 hstack gap-2">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#edit-{{$bank->id}}" class="btn text-light w-100" style="background: #70418f;">Edit</a>
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#delete-{{$bank->id}}" class="btn w-100 bg-danger text-light">Delete</a>
@@ -183,6 +186,50 @@
                                                                     <div class="col-lg-12 mb-4">
                                                                         <label for="">Public Key</label>
                                                                         <input type="password" name="public_key" class="form-control" value="{{$bank->public_key}}" placeholder="Enter public key" required />
+                                                                    </div>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="">By adding this paystack method of payment you are confirming that you are the owner and have full authorization to this details.</label>
+                                                                    </div>
+                                                                    <div class="text-end mt-2">
+                                                                        <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                                                            Update
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end modal -->
+                                @endif
+                                @if($bank->type == 'PAYPAL')
+                                <!-- Modal START -->
+                                <div class="modal fade" id="edit-{{$bank->id}}" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content pb-3">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="myExtraLargeModalLabel">Update payment method</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body ">
+                                                <div class="row">
+                                                    <div class="Editt">
+                                                        <form method="POST" action="{{ route('user.update.paypal', Crypt::encrypt($bank->id))}}">
+                                                            @csrf
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="">Account Holder Name</label>
+                                                                        <input type="text" name="account_name" class="form-control" value="{{$bank->account_name}}" placeholder="Enter acount number" required />
+                                                                    </div>
+                                                                    <div class="col-lg-12 mb-4">
+                                                                        <label for="">Email</label>
+                                                                        <input type="email" name="email" class="form-control" value="{{$bank->secret_key}}" placeholder="Enter email" required />
                                                                     </div>
                                                                     <div class="col-lg-12 mb-4">
                                                                         <label for="">By adding this paystack method of payment you are confirming that you are the owner and have full authorization to this details.</label>
@@ -328,7 +375,7 @@
                                             </td>
                                             <td>
                                                 <div class="text-center">
-                                                    <a href="javascript: void(0);" class="btn text-light btn-secondary">Set up</a>
+                                                    <a href="{{route('user.paypal', Auth::user()->username)}}" class="btn text-light btn-secondary">Set up</a>
                                                 </div>
                                             </td>
                                         </tr>
