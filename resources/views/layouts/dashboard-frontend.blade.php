@@ -327,5 +327,11 @@
             stopVideo();
         });
     </script>
+
+<script type="text/javascript">
+    DeBounce_APIKEY = 'public_aDl4U2RjNmhkU2ZqQmtnZyt3Y3FpQT09'; // Your DeBounce Public API Key.
+    DeBounce_RedBackgound = 'true'; // Convert input background to red for an invalid email or not.
+</script>
+<script async type="text/javascript" src="https://cdn.debounce.io/widget/DeBounce.v2.js"></script>
 </body>
 </html>

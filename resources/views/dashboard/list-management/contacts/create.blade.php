@@ -141,9 +141,6 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
-<script type="text/javascript">
-    DeBounce_APIKEY = 'public_aDl4U2RjNmhkU2ZqQmtnZyt3Y3FpQT09'; // Your DeBounce Public API Key. </script>
-    <script async type="text/javascript" src="https://cdn.debounce.io/widget/DeBounce.v2.js"></script>
 <script>
     const input = document.querySelector("#phonee");
     const errorMsg = document.querySelector("#error-msg");
