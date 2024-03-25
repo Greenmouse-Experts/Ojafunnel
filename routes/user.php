@@ -140,7 +140,7 @@ Route::prefix('user')->group(function () {
     Route::post('/list/management/list/delete/{id}', [ListManagementController::class, 'delete_list'])->name('user.delete.list');
     Route::get('/list/management/create/contact/list/{id}', [ListManagementController::class, 'create_contact_list'])->name('user.create.contact.list');
     Route::post('/list/management/create/contact/{id}', [ListManagementController::class, 'create_contact'])->name('user.create.contact');
-    Route::post('/debounce-email', [ListManagementController::class, 'debounceEmail']);
+    Route::match(['get', 'post'], '/debounce-email', [ListManagementController::class, 'debounceEmail']);
     Route::get('/list/management/contact/edit/{id}', [ListManagementController::class, 'edit_contact'])->name('user.edit.contact');
     Route::post('/list/management/contact/update/{id}', [ListManagementController::class, 'update_contact'])->name('user.update.contact');
     Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');

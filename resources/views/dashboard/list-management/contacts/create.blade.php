@@ -1,7 +1,6 @@
 @extends('layouts.dashboard-frontend')
 
 @section('page-content')
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css">
 <style>
     .hide {
@@ -67,7 +66,7 @@
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Email Address</label>
-                                    <input type="email" name="email" class="form-control"  value="{{old('email')}}" placeholder="Enter email" required />
+                                    <input type="email" name="email" class="form-control" id="email" value="{{old('email')}}" placeholder="Enter email" debounce-disable="true" required />
                                     <span id="emailError" style="color: red;"></span>
                                 </div>
                             </div>
@@ -130,7 +129,7 @@
                                         Cancel
                                     </button>
                                 </a>
-                                <button type="button" id="saveButton" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
                                     Save
                                 </button>
                             </div>
@@ -142,6 +141,9 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
+<script type="text/javascript">
+    DeBounce_APIKEY = 'public_aDl4U2RjNmhkU2ZqQmtnZyt3Y3FpQT09'; // Your DeBounce Public API Key. </script>
+    <script async type="text/javascript" src="https://cdn.debounce.io/widget/DeBounce.v2.js"></script>
 <script>
     const input = document.querySelector("#phonee");
     const errorMsg = document.querySelector("#error-msg");
@@ -208,54 +210,50 @@
 <script>
     let debounceTimer;
 
-    document.getElementById('email').addEventListener('input', function(event) {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-            validateEmail(event.target.value);
-        }, 500); // Adjust debounce delay as needed (in milliseconds)
-    });
+    $(document).ready(function() {
+        $("#saveContactButton").click(function() {
+            $('#saveContactButton').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Contact Saving...');
 
-    $("#saveButton").click(function() {
-
-        alert('true');
-
-        // Validate email when the save button is clicked
-        const email = document.getElementById('email').value;
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-            validateEmail(email);
-        }, 500); // Adjust debounce delay as needed (in milliseconds)
+            // Validate email when the save button is clicked
+            const email = $('#email').val();
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                validateEmail(email);
+            }, 500); // Adjust debounce delay as needed (in milliseconds)
+        });
     });
 
     function validateEmail(email) {
-        $('#contactForm').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Contact Saving...');
-
-        fetch('/debounce-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({ email: email })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.valid) {
+        // Send Ajax request to Laravel backend
+        $.ajax({
+            type: 'POST', // Corrected to POST method
+            url: '/user/debounce-email',
+            data: {
+                email: email // Simplified data format
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.valid) {
                     document.getElementById('emailError').textContent = '';
                     // Enable the submit button and trigger form submission
-                    document.getElementById('saveButton').removeAttribute('disabled');
-                    // document.getElementById('contactForm').submit();
+                    $('#saveContactButton').attr('disabled', false).html('Save');
                 } else {
                     document.getElementById('emailError').textContent = 'Invalid email address';
-                    $('#contactForm').attr('disabled', false).html('Save');
+                    $('#saveContactButton').attr('disabled', false).html('Save');
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                $('#contactForm').attr('disabled', false).html('Save');
-            });
+            },
+            error: function(xhr, status, error) {
+                document.getElementById('emailError').textContent = error;
+                // disabled submit button and reset its state
+                $('#saveContactButton').attr('disabled', false).html('Save');
+            }
+        });
     }
 </script>
+
 <style>
     .iti {
         display: block !important;

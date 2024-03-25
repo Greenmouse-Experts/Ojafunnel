@@ -27,7 +27,7 @@ return [
 
     'log' => 'errorlog',
 
-    'debounce_key' => '5f29214f552c7',
+    'debounce_key' => 'public_aDl4U2RjNmhkU2ZqQmtnZyt3Y3FpQT09',
 
     /*
     |--------------------------------------------------------------------------

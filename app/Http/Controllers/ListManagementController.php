@@ -556,6 +556,7 @@ class ListManagementController extends Controller
 
         $data = $response->json();
 
-        return response()->json(['valid' => $data['debounce']['result'] === 'Safe']);
+        // return response()->json(['valid' => $data['debounce']['result'] === 'Safe']);
+         return response()->json(['valid' => $data]);
     }
 }
