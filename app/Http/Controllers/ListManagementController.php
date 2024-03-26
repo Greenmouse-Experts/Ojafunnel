@@ -262,8 +262,6 @@ class ListManagementController extends Controller
             'phone' => 'required|numeric',
         ]);
 
-        return true;
-
         $finder = Crypt::decrypt($id);
 
         $list = ListManagement::find($finder);
