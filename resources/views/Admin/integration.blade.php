@@ -124,7 +124,7 @@
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <div class="boding">
-                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                        <button type="button" data-bs-dismiss="modal" class="btn-close px-3" style="color: #fff; border: 1px solid #714091">
                                                                                             Cancel
                                                                                         </button>
                                                                                     </div>
@@ -151,7 +151,7 @@
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <div class="boding">
-                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                        <button type="button" data-bs-dismiss="modal" class="px-3" style="color: #fff; border: 1px solid #714091">
                                                                                             Cancel
                                                                                         </button>
                                                                                     </div>
@@ -178,7 +178,7 @@
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <div class="boding">
-                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                        <button type="button" data-bs-dismiss="modal" class="px-3" style="color: #fff; border: 1px solid #714091">
                                                                                             Cancel
                                                                                         </button>
                                                                                     </div>
@@ -205,7 +205,7 @@
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <div class="boding">
-                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                        <button type="button" data-bs-dismiss="modal" class="px-3" style="color: #fff; border: 1px solid #714091">
                                                                                             Cancel
                                                                                         </button>
                                                                                     </div>
@@ -240,7 +240,7 @@
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <div class="boding">
-                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                        <button type="button" data-bs-dismiss="modal" class="px-3" style="color: #fff; border: 1px solid #714091">
                                                                                             Cancel
                                                                                         </button>
                                                                                     </div>
@@ -267,7 +267,7 @@
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <div class="boding">
-                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                        <button type="button" data-bs-dismiss="modal" class="px-3" style="color: #fff; border: 1px solid #714091">
                                                                                             Cancel
                                                                                         </button>
                                                                                     </div>
@@ -302,7 +302,7 @@
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <div class="boding">
-                                                                                        <button data-bs-dismiss="modal" aria-label="Close" class="px-3" style="color: #fff; border: 1px solid #714091">
+                                                                                        <button type="button" data-bs-dismiss="modal" class="px-3" style="color: #fff; border: 1px solid #714091">
                                                                                             Cancel
                                                                                         </button>
                                                                                     </div>
@@ -359,7 +359,7 @@
                                                                                     </div>
                                                                                     <div class="row justify-content-between">
                                                                                         <div class="col-6">
-                                                                                            <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                            <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                                                                                 Cancel
                                                                                             </button>
                                                                                         </div>
@@ -394,7 +394,7 @@
                                                                                     </div>
                                                                                     <div class="row justify-content-between">
                                                                                         <div class="col-6">
-                                                                                            <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                            <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                                                                                 Cancel
                                                                                             </button>
                                                                                         </div>
@@ -429,7 +429,7 @@
                                                                                     </div>
                                                                                     <div class="row justify-content-between">
                                                                                         <div class="col-6">
-                                                                                            <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                            <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                                                                                 Cancel
                                                                                             </button>
                                                                                         </div>
@@ -472,7 +472,7 @@
                                                                                     </div>
                                                                                     <div class="row justify-content-between">
                                                                                         <div class="col-6">
-                                                                                            <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                                                                            <button type="button" data-bs-dismiss="modal" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                                                                                 Cancel
                                                                                             </button>
                                                                                         </div>

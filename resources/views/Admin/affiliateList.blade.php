@@ -75,7 +75,7 @@
                                             <th>Level</th>
                                             <th>Commission (%)</th>
                                             <th>Referred By</th>
-                                            <th>Bonus</th>
+                                            <th>Bonus Amount</th>
                                             <th>Joined Date</th>
                                         </tr>
                                     </thead>

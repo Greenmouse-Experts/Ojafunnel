@@ -247,7 +247,7 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -311,7 +311,7 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -369,7 +369,7 @@
 
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -425,7 +425,7 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -481,7 +481,7 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -536,7 +536,7 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -600,7 +600,7 @@
                                 </div>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -713,7 +713,7 @@
                                 <input type="hidden" name="type" value="AWS SES" required>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -824,7 +824,7 @@
                                 <input type="hidden" name="type" value="Sendgrid" required>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -935,7 +935,7 @@
                                 <input type="hidden" name="type" value="Sendinblue" required>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -1046,7 +1046,7 @@
                                 <input type="hidden" name="type" value="SendPulse" required>
                                 <div class="row justify-content-between">
                                     <div class="col-6">
-                                        <button data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
+                                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn px-3" style="color: #714091; border: 1px solid #714091">
                                             Cancel
                                         </button>
                                     </div>
@@ -1162,7 +1162,7 @@
                                         </button>
                                     </div>
                                     <div class="col-6 text-end">
-                                        <button class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
+                                        <button type="button" class="form-btn btn px-4" type="submit" style="color: #ffffff; background-color: #714091">
                                             Save
                                         </button>
                                     </div>
