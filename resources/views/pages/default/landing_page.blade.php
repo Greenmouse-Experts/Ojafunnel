@@ -52,7 +52,7 @@
 
 
         <footer class="footer" contenteditable="false">
-            <p>Built with <a href="#" class="text-white">Ojafunnel</a></p>
+            <p>Built with <a href="https://ojafunnel.com" class="text-white">Ojafunnel</a></p>
         </footer>
 
         <grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>

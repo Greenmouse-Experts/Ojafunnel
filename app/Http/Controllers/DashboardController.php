@@ -2903,7 +2903,6 @@ class DashboardController extends Controller
         return view('dashboard.lms.create_quiz', [
             'username' => $username,
             'sessions' => $sessions,
-            'quizzes' => $quizzes
         ]);
     }
 

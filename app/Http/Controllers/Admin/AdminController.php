@@ -1218,8 +1218,6 @@ class AdminController extends Controller
         return $responseBody;
     }
 
-
-
     public function sendMessageTwilio($sms, $phones)
     {
         $integration = \App\Models\Integration::where('type', 'Multitexter')->first();
@@ -1508,6 +1506,7 @@ class AdminController extends Controller
                 'data' => ''
             ],200);
         }
+        
         return response()->json([
             'status' => 'error',
             'message' => "Error in sending broadcast",
@@ -1629,7 +1628,6 @@ class AdminController extends Controller
         ],200);
     }
 
-
     public function react_feature(Request $request)
     {
         $attributes = ['id'  => 'ID'];
@@ -1660,7 +1658,6 @@ class AdminController extends Controller
         ],200);
     }
 
-
     public function generateAndValidateIfPromotionLinkNotExist()
     {
         $promotionLink = substr(sha1(mt_rand()), 17, 20);
@@ -1668,7 +1665,6 @@ class AdminController extends Controller
         if ($user->exists()) $this->generateAndValidateIfPromotionLinkNotExist();
         return $promotionLink;
     }
-
 
     // EMAIL-MARKETING
     public function add_category(Request $request)
