@@ -258,8 +258,8 @@ class ListManagementController extends Controller
     {
         $this->validate($request, [
             'name'  => 'required|max:250',
-            'email'         => 'required|email|max:250',
-            'phone' => 'required|numeric',
+            'email' => 'required|email|max:250',
+            'phone' => ['required', 'min:9', 'max:14']
         ]);
 
         $finder = Crypt::decrypt($id);
@@ -374,7 +374,7 @@ class ListManagementController extends Controller
         $this->validate($request, [
             'name'  => 'required|max:250',
             'email' => 'required|email|max:250',
-            'phone' => 'required|numeric',
+            'phone' => ['required', 'min:9', 'max:14']
         ]);
 
         $finder = Crypt::decrypt($id);
