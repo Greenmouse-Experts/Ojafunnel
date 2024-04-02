@@ -2901,8 +2901,7 @@ class DashboardController extends Controller
         }
 
         return view('dashboard.lms.create_quiz', [
-            'username' => $username,
-            'studentResults' => $studentResults
+            'username' => $username
         ]);
     }
 
