@@ -508,7 +508,6 @@ class AdminController extends Controller
         return $results;
     }
 
-
     public function fetch_referrals(Request $request)
     {
         $rules = [
@@ -560,7 +559,6 @@ class AdminController extends Controller
         return $results;
     }
 
-
     public function get_users_prvd(Request $request)
     {
         $rules = [
@@ -591,9 +589,38 @@ class AdminController extends Controller
     }
 
 
-    public function clrs(){
-        session()->forget('hidden_emails');
-        session()->forget('hidden_deliverability');
+    public function clrs(Request $request)
+    {
+        // session()->forget('hidden_emails');
+        // session()->forget('hidden_deliverability');
+        // Get the list of emails from the form
+        $emails = $request->input('emails');
+
+        // Make a request to the debounce API
+        $response = Http::post('https://api.debounce.io/v1/', [
+            'api' => '660d2bb95f92f',
+            'email' => $emails,
+            // Add any other parameters required by the API
+        ]);
+
+        $data = $response->json();
+
+        return $data;
+
+        // Check if the request was successful
+        if ($response->successful()) {
+            // Process the response data
+            $data = $response->json();
+            // Return the response to the view
+            return $data;
+            // return view('email.validation-result', ['data' => $data]);
+        } else {
+            // Handle the error
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'Failed to validate email addresses.',
+            ]);
+        }
     }
 
     public function reply_email_support($id, Request $request)
@@ -1506,7 +1533,7 @@ class AdminController extends Controller
                 'data' => ''
             ],200);
         }
-        
+
         return response()->json([
             'status' => 'error',
             'message' => "Error in sending broadcast",

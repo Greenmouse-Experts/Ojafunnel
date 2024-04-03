@@ -34,8 +34,8 @@
             <div class="row">
                 <!-- <div class="col-lg-2"></div> -->
                 <div class="col-lg-10">
-                    <div class="Edit"> 
-                        <form method="POST">
+                    <div class="Edit">
+                        <form method="POST" action="{{route('clrs')}}">
                             @csrf
                             <div class="form">
                                 <div class="row">
@@ -56,7 +56,7 @@
                                             <div class="col-md-9"></div>
                                             <div class="col-md-3">
                                                 <div class="boding">
-                                                    <button type="button" class="validateEmail">
+                                                    <button type="submit">
                                                         Validate
                                                     </button>
                                                 </div>
