@@ -33,9 +33,9 @@
 
             <div class="row">
                 <!-- <div class="col-lg-2"></div> -->
-                <div class="col-lg-10">
+                <div class="col-lg-6">
                     <div class="Edit">
-                        <form method="POST" action="{{route('clrs')}}">
+                        <form class="formSubmitValidation">
                             @csrf
                             <div class="form">
                                 <div class="row">
@@ -52,15 +52,10 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="col-md-9"></div>
-                                            <div class="col-md-3">
-                                                <div class="boding">
-                                                    <button type="submit">
-                                                        Validate
-                                                    </button>
-                                                </div>
-                                            </div>
+                                        <div class="boding">
+                                            <button type="submit" class="submitBtn">
+                                                Validate
+                                            </button>
                                         </div>
                                     </div>
 
@@ -75,10 +70,68 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-2"></div>
+                <div class="col-lg-6">
+                    <div class="validation-result">
+                        <!-- Validation result will be displayed here -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.formSubmitValidation').submit(function(event) {
+            event.preventDefault();
+
+            // Disable submit button and show loading state
+            $('.submitBtn').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Verifying...');
+
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('clrs') }}",
+                data: formData,
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include the CSRF token in the headers
+                },
+                success: function(response) {
+                    console.log(response);
+                    // Update the HTML content with the validation result
+                    if (response.data.length > 0) {
+                        var tableHtml = '<table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">';
+                        tableHtml += '<thead class="tread">';
+                        tableHtml += '<tr><th>Email</th><th>Result</th></tr>';
+                        tableHtml += '</thead><tbody>';
+
+                        // Iterate over each result object
+                        response.data.forEach(function(result) {
+                            tableHtml += '<tr><td>' + result.debounce.email + '</td><td>' + result.debounce.result + '</td></tr>';
+                        });
+
+                        tableHtml += '</tbody></table>';
+                        $('.validation-result').html(tableHtml);
+                    } else {
+                        $('.validation-result').html('<p class="text-danger">No validation result found.</p>');
+                    }
+
+                    // Enable submit button and reset its state
+                    $('.submitBtn').attr('disabled', false).html('Validate');
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors
+                    console.error(xhr.responseText);
+                    $('.validation-result').html('<p class="text-danger">Failed to validate email addresses.</p>');
+                    // Enable submit button and reset its state
+                    $('.submitBtn').attr('disabled', false).html('Validate');
+                }
+            });
+        });
+    });
+</script>
+
 @endsection
 

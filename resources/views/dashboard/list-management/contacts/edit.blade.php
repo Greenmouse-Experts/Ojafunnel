@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="card">
                     <div class="card-body" style="padding: 4rem;">
-                        <form method="post" action="{{ route('user.update.contact', Crypt::encrypt($contact->id)) }}">
+                        <form method="post" id="contactForm" action="{{ route('user.update.contact', Crypt::encrypt($contact->id)) }}">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
@@ -48,7 +48,9 @@
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <label for="">Email Address</label>
-                                    <input type="email" name="email" class="form-control"  value="{{$contact->email}}" placeholder="Enter email" required />
+                                    <input type="email" name="email" class="form-control" id="email" value="{{$contact->email}}" placeholder="Enter email" required />
+                                    <span id="emailError" style="color: red;"></span>
+                                    <span id="emailValid" style="color: green;"></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -116,7 +118,7 @@
                                         Cancel
                                     </button>
                                 </a>
-                                <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                <button type="button" id="updateContactButton" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
                                     Update
                                 </button>
                             </div>
@@ -190,6 +192,58 @@
         const countryCodeValue = iti.getSelectedCountryData().dialCode;
         input.value = `+${countryCodeValue}`;
     });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    let debounceTimer;
+
+    $(document).ready(function() {
+        $("#updateContactButton").click(function() {
+            $('#updateContactButton').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Contact updating...');
+
+            // Validate email when the save button is clicked
+            const email = $('#email').val();
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                validateEmail(email);
+            }, 500); // Adjust debounce delay as needed (in milliseconds)
+        });
+    });
+
+    function validateEmail(email) {
+        // Send Ajax request to Laravel backend
+        $.ajax({
+            type: 'POST', // Corrected to POST method
+            url: '/user/list/management/validate/email',
+            data: {
+                email: email // Simplified data format
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if (response) {
+                    document.getElementById('emailError').textContent = '';
+                    document.getElementById('emailValid').textContent = response.data.debounce.result;
+                    // Enable the submit button and trigger form submission
+                    // $('#updateContactButton').attr('disabled', false).html('Update');
+                    setTimeout(function() {
+                        $('#contactForm').submit();
+                   }, 3000);
+                } else {
+                    document.getElementById('emailError').textContent = 'Invalid email address';
+                    document.getElementById('emailError').textContent = '';
+                    $('#updateContactButton').attr('disabled', false).html('Update');
+                }
+            },
+            error: function(xhr, status, error) {
+                document.getElementById('emailError').textContent = error;
+                document.getElementById('emailError').textContent = '';
+                // disabled submit button and reset its state
+                $('#updateContactButton').attr('disabled', false).html('Update');
+            }
+        });
+    }
 </script>
 
 <style>

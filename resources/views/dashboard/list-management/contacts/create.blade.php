@@ -68,6 +68,7 @@
                                     <label for="">Email Address</label>
                                     <input type="email" name="email" class="form-control" id="email" value="{{old('email')}}" placeholder="Enter email" debounce-disable="true" required />
                                     <span id="emailError" style="color: red;"></span>
+                                    <span id="emailValid" style="color: green;"></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -129,7 +130,7 @@
                                         Cancel
                                     </button>
                                 </a>
-                                <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                <button type="button" id="saveContactButton" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
                                     Save
                                 </button>
                             </div>
@@ -204,6 +205,7 @@
         input.value = `+${countryCodeValue}`;
     });
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     let debounceTimer;
 
@@ -224,7 +226,7 @@
         // Send Ajax request to Laravel backend
         $.ajax({
             type: 'POST', // Corrected to POST method
-            url: '/user/debounce-email',
+            url: '/user/list/management/validate/email',
             data: {
                 email: email // Simplified data format
             },
@@ -232,18 +234,23 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function(response) {
-                console.log(response);
-                if (response.valid) {
+                if (response) {
                     document.getElementById('emailError').textContent = '';
+                    document.getElementById('emailValid').textContent = response.data.debounce.result;
                     // Enable the submit button and trigger form submission
-                    $('#saveContactButton').attr('disabled', false).html('Save');
+                    // $('#saveContactButton').attr('disabled', false).html('Save');
+                    setTimeout(function() {
+                        $('#contactForm').submit();
+                   }, 3000);
                 } else {
                     document.getElementById('emailError').textContent = 'Invalid email address';
+                    document.getElementById('emailError').textContent = '';
                     $('#saveContactButton').attr('disabled', false).html('Save');
                 }
             },
             error: function(xhr, status, error) {
                 document.getElementById('emailError').textContent = error;
+                document.getElementById('emailError').textContent = '';
                 // disabled submit button and reset its state
                 $('#saveContactButton').attr('disabled', false).html('Save');
             }

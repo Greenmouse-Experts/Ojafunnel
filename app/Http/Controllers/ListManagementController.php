@@ -541,20 +541,35 @@ class ListManagementController extends Controller
         }
     }
 
-    public function debounceEmail(Request $request)
+    public function validateEmail(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
         ]);
 
-        $response = Http::post('https://api.debounce.io/v1/', [
-            'api' => config('app.debounce_key'), // Replace with your Debounce API key
-            'email' => $request->input('email'),
+        // Make a request to the debounce API for each email address
+        $response = Http::get('https://api.debounce.io/v1/', [
+            'api' => config('app.debounce_key'),
+            'email' => trim($request->email), // Trim any leading/trailing whitespace
+            // Add any other parameters required by the API
         ]);
 
-        $data = $response->json();
+        // Check if the request was successful
+        if ($response->successful()) {
+            // Process the response data
+            $data = $response->json();
 
-        // return response()->json(['valid' => $data['debounce']['result'] === 'Safe']);
-         return response()->json(['valid' => $data]);
+            // Add the debounce data to the result array
+            $result = $data;
+        } else {
+            // Handle the error
+            $result = ['error' => 'Failed to validate email address'];
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Email addresse validated successfully.',
+            'data' => $result
+        ]);
     }
 }

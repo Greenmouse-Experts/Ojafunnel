@@ -591,36 +591,43 @@ class AdminController extends Controller
 
     public function clrs(Request $request)
     {
-        // session()->forget('hidden_emails');
-        // session()->forget('hidden_deliverability');
         // Get the list of emails from the form
-        $emails = $request->input('emails');
+        $emailString = $request->input('emails');
 
-        // Make a request to the debounce API
-        $response = Http::post('https://api.debounce.io/v1/', [
-            'api' => '660d2bb95f92f',
-            'email' => $emails,
-            // Add any other parameters required by the API
-        ]);
+        // Split the input string into an array of email addresses
+        $emails = explode(',', $emailString);
 
-        $data = $response->json();
+        $results = [];
 
-        return $data;
-
-        // Check if the request was successful
-        if ($response->successful()) {
-            // Process the response data
-            $data = $response->json();
-            // Return the response to the view
-            return $data;
-            // return view('email.validation-result', ['data' => $data]);
-        } else {
-            // Handle the error
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'Failed to validate email addresses.',
+        // Iterate over each email address
+        foreach ($emails as $email) {
+            // Make a request to the debounce API for each email address
+            $response = Http::get('https://api.debounce.io/v1/', [
+                'api' => config('app.debounce_key'),
+                'email' => trim($email), // Trim any leading/trailing whitespace
+                // Add any other parameters required by the API
             ]);
+
+            // Check if the request was successful
+            if ($response->successful()) {
+                // Process the response data
+                $data = $response->json();
+                // Extract the debounce data for the current email address
+                $debounceData = $data['debounce'];
+                // Add the debounce data to the results array
+                $results[] = $data;
+            } else {
+                // Handle the error
+                $results[] = ['error' => 'Failed to validate email address'];
+            }
         }
+
+        // Return the response as JSON
+        return response()->json([
+            'success' => true,
+            'message' => 'Email addresses validated successfully.',
+            'data' => $results
+        ]);
     }
 
     public function reply_email_support($id, Request $request)
