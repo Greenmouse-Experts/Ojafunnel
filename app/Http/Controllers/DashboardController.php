@@ -2836,7 +2836,7 @@ class DashboardController extends Controller
         $totalScore = $questions->sum('score');
 
         $questions = \App\Models\QuizSubmission::where([
-            'course_id' => $question->course_id,
+            'course_id' => $quiz->course_id,
             'quiz_id' => $quiz->id,
             'session' => $quiz->session
         ])->with(['course', 'quiz', 'question'])->get();
