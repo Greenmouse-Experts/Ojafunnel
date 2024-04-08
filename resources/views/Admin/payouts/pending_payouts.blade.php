@@ -56,6 +56,9 @@ $admin = auth()->guard('admin')->user();
                                     </thead>
                                     <tbody>
                                         @foreach($withdrawals as $key => $withdraw)
+                                        @php
+                                            $bankDetail = App\Models\BankDetail::find($withdraw->payment_method);
+                                        @endphp
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
                                             <td>
@@ -88,95 +91,95 @@ $admin = auth()->guard('admin')->user();
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'PAYPAL')
+                                                                        @if($bankDetail && $bankDetail->type == 'PAYPAL')
                                                                             <div class="row">
                                                                                 <div class="col-12">
                                                                                     <div class="col-lg-12 mb-4 text-center">
-                                                                                        <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
+                                                                                        <label for="">{{$bankDetail && $bankDetail->type}}</label>
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <label for="">Account Holder Name: </label>
-                                                                                        <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}</label>
+                                                                                        <label>{{$bankDetail && $bankDetail->account_name}}</label>
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <label for="">Email: </label>
-                                                                                        <label>{{App\Models\BankDetail::find($withdraw->payment_method)->secret_key}}</label>
+                                                                                        <label>{{$bankDetail && $bankDetail->secret_key}}</label>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         @endif
-                                                                        @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'US')
+                                                                        @if($bankDetail && $bankDetail->type == 'US')
                                                                         <div class="row">
                                                                             <div class="col-12">
                                                                                 <div class="col-lg-12 mb-4 text-center">
-                                                                                    <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
+                                                                                    <label for="">{{$bankDetail && $bankDetail->type}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Holder Name: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}</label>
+                                                                                    <label>{{$bankDetail && $bankDetail->account_name}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="bank">Bank Account: </label>
-                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($withdraw->payment_method)->type_of_bank_account}}</label>
-                                                                                    <p onmouseover="showTBA()" onmouseout="hideTBA();"><input type="password" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->type_of_bank_account}}" id="typeBA" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                    <label style="display: none;">{{$bankDetail && $bankDetail->type_of_bank_account}}</label>
+                                                                                    <p onmouseover="showTBA()" onmouseout="hideTBA();"><input type="password" class="form-control" value="{{$bankDetail && $bankDetail->type_of_bank_account}}" id="typeBA" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Routing Number: </label>
-                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($withdraw->payment_method)->routing_number}}</label>
-                                                                                    <p onmouseover="showRoutingNumber()" onmouseout="hideRoutingNumber();"><input type="password" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->routing_number}}" id="routingNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                    <label style="display: none;">{{$bankDetail && $bankDetail->routing_number}}</label>
+                                                                                    <p onmouseover="showRoutingNumber()" onmouseout="hideRoutingNumber();"><input type="password" class="form-control" value="{{$bankDetail && $bankDetail->routing_number}}" id="routingNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Number: </label>
-                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($withdraw->payment_method)->account_number}}</label>
-                                                                                    <p onmouseover="showAccountNumber()" onmouseout="hideAccountNumber();"><i class="uil uil-wallet"></i> <input type="password" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->account_number}}" id="accountNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                    <label style="display: none;">{{$bankDetail && $bankDetail->account_number}}</label>
+                                                                                    <p onmouseover="showAccountNumber()" onmouseout="hideAccountNumber();"><i class="uil uil-wallet"></i> <input type="password" class="form-control" value="{{$bankDetail && $bankDetail->account_number}}" id="accountNumber" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         @endif
-                                                                        @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'PAYSTACK')
+                                                                        @if($bankDetail && $bankDetail->type == 'PAYSTACK')
                                                                         <div class="row">
                                                                             <div class="col-12">
                                                                                 <div class="col-lg-12 mb-4 text-center">
-                                                                                    <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
+                                                                                    <label for="">{{$bankDetail && $bankDetail->type}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Holder Name: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}</label>
+                                                                                    <label>{{$bankDetail && $bankDetail->account_name}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Secret Key: </label>
-                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($withdraw->payment_method)->secret_key}}</label>
-                                                                                    <p onmouseover="showSecret()" onmouseout="hideSecret();"><input type="password" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->secret_key}}" id="secretKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                    <label style="display: none;">{{$bankDetail && $bankDetail->secret_key}}</label>
+                                                                                    <p onmouseover="showSecret()" onmouseout="hideSecret();"><input type="password" class="form-control" value="{{$bankDetail && $bankDetail->secret_key}}" id="secretKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Public Key: </label>
-                                                                                    <label style="display: none;">{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}</label>
-                                                                                    <p onmouseover="showPublic()" onmouseout="hidePublic();"><input type="password" class="form-control" value="{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}" id="publicKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
+                                                                                    <label style="display: none;">{{$bankDetail && $bankDetail->public_key}}</label>
+                                                                                    <p onmouseover="showPublic()" onmouseout="hidePublic();"><input type="password" class="form-control" value="{{$bankDetail && $bankDetail->public_key}}" id="publicKey" disabled style="border: none; outline: none; background-color: #fff !important;"></p>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         @endif
-                                                                        @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'NGN')
+                                                                        @if($bankDetail && $bankDetail->type == 'NGN')
                                                                         <div class="row">
                                                                             <div class="col-12">
                                                                                 <div class="col-lg-12 mb-4 text-center">
-                                                                                    <label for="">{{App\Models\BankDetail::find($withdraw->payment_method)->type}}</label>
+                                                                                    <label for="">{{$bankDetail && $bankDetail->type}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Name: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_name}}</label>
+                                                                                    <label>{{$bankDetail && $bankDetail->account_name}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Account Number: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->account_number}}</label>
+                                                                                    <label>{{$bankDetail && $bankDetail->account_number}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="bank">Bank Name: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->bank_name}}</label>
+                                                                                    <label>{{$bankDetail && $bankDetail->bank_name}}</label>
                                                                                 </div>
                                                                                 <div class="col-lg-12 mb-4">
                                                                                     <label for="">Bank Code: </label>
-                                                                                    <label>{{App\Models\BankDetail::find($withdraw->payment_method)->bank_code}}</label>
+                                                                                    <label>{{$bankDetail && $bankDetail->bank_code}}</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -204,7 +207,7 @@ $admin = auth()->guard('admin')->user();
                                                 {{ \Carbon\Carbon::parse($withdraw->created_at)->isoFormat('llll') }}
                                             </td>
                                             <td>
-                                                @if(App\Models\BankDetail::find($withdraw->payment_method)->type != 'PAYSTACK')
+                                                @if($bankDetail && $bankDetail->type != 'PAYSTACK')
                                                     @if ($withdraw->status == 'created')
                                                     <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary" data-bs-toggle="modal" data-bs-target="#process-{{$withdraw->id}}">Process</a>
                                                     <!-- Modal START -->
@@ -267,7 +270,7 @@ $admin = auth()->guard('admin')->user();
                                                     <a style="cursor: pointer;" class="btn btn-sm btn-soft-primary">{{$withdraw->status}}</a>
                                                     @endif
                                                 @endif
-                                                @if(App\Models\BankDetail::find($withdraw->payment_method)->type == 'PAYSTACK')
+                                                @if($bankDetail && $bankDetail->type == 'PAYSTACK')
                                                     @if ($withdraw->status == 'created')
                                                     <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#process-{{$withdraw->id}}" class="btn btn-sm btn-soft-primary">Process</a>
                                                     <!-- Modal START -->
@@ -290,7 +293,7 @@ $admin = auth()->guard('admin')->user();
                                                                                             <label for="user">User</label>
                                                                                             <input id="paystack_id" value="{{ $withdraw->id }}" hidden />
                                                                                             <input id="paystack_email" value="{{App\Models\User::find($withdraw->user_id)->email}}" hidden />
-                                                                                            <input id="paystack_public_key" value="{{App\Models\BankDetail::find($withdraw->payment_method)->public_key}}" hidden />
+                                                                                            <input id="paystack_public_key" value="{{$bankDetail && $bankDetail->public_key}}" hidden />
                                                                                             <input id="user" value="{{ App\Models\User::find($withdraw->user_id)->first_name }} {{ App\Models\User::find($withdraw->user_id)->last_name }}" readonly />
                                                                                         </div>
                                                                                         <div class="col-lg-12 mb-4">
