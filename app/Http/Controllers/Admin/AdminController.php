@@ -2291,7 +2291,7 @@ class AdminController extends Controller
 
         return back()->with([
             'type' => 'danger',
-            'message' => 'Action failed.',
+            'message' => 'Status should either be finalized or refunded.',
         ]);
     }
 
