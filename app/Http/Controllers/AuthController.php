@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Aws\Sns\SnsClient;      //// Import this package
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
@@ -423,5 +424,37 @@ class AuthController extends Controller
         $text = $request->get('text');
 
         return response()->json(['text' => $text]);
+    }
+
+    public function validateEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        // Make a request to the debounce API for each email address
+        $response = Http::get('https://api.debounce.io/v1/', [
+            'api' => config('app.debounce_key'),
+            'email' => trim($request->email), // Trim any leading/trailing whitespace
+            // Add any other parameters required by the API
+        ]);
+
+        // Check if the request was successful
+        if ($response->successful()) {
+            // Process the response data
+            $data = $response->json();
+
+            // Add the debounce data to the result array
+            $result = $data;
+        } else {
+            // Handle the error
+            $result = ['error' => 'Failed to validate email address'];
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Email addresse validated successfully.',
+            'data' => $result
+        ]);
     }
 }

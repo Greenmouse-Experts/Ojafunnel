@@ -8,6 +8,8 @@
         <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
         <meta name="author" content="">
         <title>$title</title>
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- Bootstrap core CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -87,14 +89,16 @@
 
             <div>
                 <div class="col-lg-6" style="margin: 0 auto;">
-                    <form method="POST" action="$action">
+                    <form method="POST" id="optinForm" action="$action">
                         <div class="form-group">
                             <lable>Full name</lable>
                             <input type="text" class="form-control" name="name" required>
                         </div>
                         <div class="form-group mt-3">
-                            <lable>Email addres</lable>
-                            <input type="text" class="form-control" name="email" required>
+                            <lable>Email address</lable>
+                            <input type="text" class="form-control" id="email" name="email" required>
+                            <span id="emailError" style="color: red;"></span>
+                            <span id="emailValid" style="color: green;"></span>
                         </div>
                         <div class="form-group mt-3">
                             <lable>Phone number</lable>
@@ -103,7 +107,7 @@
 					        <span id="error-msg" class="help-block hide"></span>
                         </div>
                         <div class="form-group mt-3">
-                            <button class="btn btn-success">Continue</button>
+                            <button type="button" id="optinButton" class="btn btn-success">Continue</button>
                         </div>
                     </form>
                 </div>
@@ -182,6 +186,80 @@
                 const countryCodeValue = iti.getSelectedCountryData().dialCode;
                 input.value = `+${countryCodeValue}`;
             });
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            let debounceTimer;
+
+            $(document).ready(function() {
+                $("#optinButton").click(function() {
+                    $('#optinButton').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Opting in...');
+
+                    // Validate email when the save button is clicked
+                    const email = $('#email').val();
+
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(() => {
+                        validateEmail(email);
+                    }, 500); // Adjust debounce delay as needed (in milliseconds)
+                });
+            });
+
+            function validateEmail(email) {
+                // Fetch CSRF token from the server
+                $.ajax({
+                    type: 'GET',
+                    url: '/csrf-token',
+                    success: function(response) {
+                        const csrfToken = response.csrf_token;
+
+                        // Now, send the actual AJAX request to validate email
+                        $.ajax({
+                            type: 'POST',
+                            url: '/user/list/management/validate/email',
+                            data: {
+                                email: email
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken
+                            },
+                            success: function(response) {
+                                if (response) {
+                                    if(response.data.debounce.result == 'Invalid' || response.data.debounce.result == 'Risky')
+                                    {
+                                        document.getElementById('emailValid').textContent = '';
+                                        document.getElementById('emailError').textContent = response.data.debounce.result;
+                                        $('#optinButton').attr('disabled', false).html('Continue');
+                                    } else {
+                                        document.getElementById('emailError').textContent = '';
+                                        document.getElementById('emailValid').textContent = response.data.debounce.result;
+                                        // Enable the submit button and trigger form submission
+                                        // $('#optinButton').attr('disabled', false).html('Continue');
+                                        setTimeout(function() {
+                                            $('#optinForm').submit();
+                                        }, 5000);
+                                    }
+                                } else {
+                                    document.getElementById('emailError').textContent = 'Invalid email address';
+                                    document.getElementById('emailValid').textContent = '';
+                                    $('#optinButton').attr('disabled', false).html('Continue');
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                document.getElementById('emailError').textContent = error;
+                                document.getElementById('emailValid').textContent = '';
+                                // disabled submit button and reset its state
+                                $('#optinButton').attr('disabled', false).html('Continue');
+                            }
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching CSRF token:', error);
+                        // Handle error gracefully
+                    }
+                });
+            }
         </script>
 
         <style>

@@ -223,22 +223,29 @@
             },
             success: function(response) {
                 if (response) {
-                    document.getElementById('emailError').textContent = '';
-                    document.getElementById('emailValid').textContent = response.data.debounce.result;
-                    // Enable the submit button and trigger form submission
-                    // $('#updateContactButton').attr('disabled', false).html('Update');
-                    setTimeout(function() {
-                        $('#contactForm').submit();
-                   }, 3000);
+                    if(response.data.debounce.result == 'Invalid' || response.data.debounce.result == 'Risky')
+                    {
+                        document.getElementById('emailValid').textContent = '';
+                        document.getElementById('emailError').textContent = response.data.debounce.result;
+                        $('#updateContactButton').attr('disabled', false).html('Update');
+                    } else {
+                        document.getElementById('emailError').textContent = '';
+                        document.getElementById('emailValid').textContent = response.data.debounce.result;
+                        // Enable the submit button and trigger form submission
+                        // $('#updateContactButton').attr('disabled', false).html('Update');
+                        setTimeout(function() {
+                            $('#contactForm').submit();
+                        }, 3000);
+                    }
                 } else {
                     document.getElementById('emailError').textContent = 'Invalid email address';
-                    document.getElementById('emailError').textContent = '';
+                    document.getElementById('emailValid').textContent = '';
                     $('#updateContactButton').attr('disabled', false).html('Update');
                 }
             },
             error: function(xhr, status, error) {
                 document.getElementById('emailError').textContent = error;
-                document.getElementById('emailError').textContent = '';
+                document.getElementById('emailValid').textContent = '';
                 // disabled submit button and reset its state
                 $('#updateContactButton').attr('disabled', false).html('Update');
             }

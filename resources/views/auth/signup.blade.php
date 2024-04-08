@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{URL::asset('assets/images/Logo-fav.png')}}" type="image/x-icon">
     <title>{{config('app.name')}} | Sign Up</title>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <link rel="stylesheet" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -57,7 +59,7 @@
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6">
                     <div class="sign">
-                        <form class="sign-div" action="{{ route('register')}}" method="post">
+                        <form class="sign-div" id="registrationForm" action="{{ route('register')}}" method="post">
                             @csrf
                             <a href="{{route('index')}}">
                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1660217514/OjaFunnel-Images/Logo_s0wfpp.png" draggable="false" alt="OjaFunnel Logo">
@@ -102,7 +104,9 @@
                                     <div class="row">
                                         <div class="col-md-12 mb-4">
                                             <i class="bi bi-envelope"></i>
-                                            <input type="email" placeholder="Enter your email address" name="email" value="{{ old('email') }}" class="input" required>
+                                            <input id="email" type="email" placeholder="Enter your email address" name="email" value="{{ old('email') }}" class="input" required>
+                                            <span id="emailError" style="color: red;"></span>
+                                            <span id="emailValid" style="color: green;"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +193,7 @@
                                     By clicking Sign Up, you agree to the terms and conditions
                                 </p>
                                 <div class="col-md-12 mb-2">
-                                    <button type="submit">Sign Up </button>
+                                    <button type="button" id="registrationButton">Sign Up </button>
                                 </div>
                                 <!--Message-->
                                 <p style="text-align: center;">Already have an account ? <a href="{{route('login')}}">Login</a> </p>
@@ -282,6 +286,66 @@
             const countryCodeValue = iti.getSelectedCountryData().dialCode;
             input.value = `+${countryCodeValue}`;
         });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let debounceTimer;
+
+        $(document).ready(function() {
+            $("#registrationButton").click(function() {
+                $('#registrationButton').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Signing up...');
+
+                // Validate email when the save button is clicked
+                const email = $('#email').val();
+
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    validateEmail(email);
+                }, 500); // Adjust debounce delay as needed (in milliseconds)
+            });
+        });
+
+        function validateEmail(email) {
+            // Send Ajax request to Laravel backend
+            $.ajax({
+                type: 'POST', // Corrected to POST method
+                url: '/user/list/management/validate/email',
+                data: {
+                    email: email // Simplified data format
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response) {
+                        if(response.data.debounce.result == 'Invalid' || response.data.debounce.result == 'Risky')
+                        {
+                            document.getElementById('emailValid').textContent = '';
+                            document.getElementById('emailError').textContent = response.data.debounce.result;
+                            $('#registrationButton').attr('disabled', false).html('Sign Up');
+                        } else {
+                            document.getElementById('emailError').textContent = '';
+                            document.getElementById('emailValid').textContent = response.data.debounce.result;
+                            // Enable the submit button and trigger form submission
+                            // $('#saveContactButton').attr('disabled', false).html('Save');
+                            setTimeout(function() {
+                                    $('#registrationForm').submit();
+                            }, 5000);
+                        }
+                    } else {
+                        document.getElementById('emailError').textContent = 'Invalid email address';
+                        document.getElementById('emailValid').textContent = '';
+                        $('#registrationButton').attr('disabled', false).html('Sign Up');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    document.getElementById('emailError').textContent = error;
+                    document.getElementById('emailValid').textContent = '';
+                    // disabled submit button and reset its state
+                    $('#registrationButton').attr('disabled', false).html('Sign Up');
+                }
+            });
+        }
     </script>
     <style>
         .iti {
