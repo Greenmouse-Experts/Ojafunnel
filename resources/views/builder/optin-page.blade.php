@@ -208,7 +208,7 @@
 
             function validateEmail(email) {
                 var mainDomainCSRF = 'https://ojafunnel.com/csrf-token';
-                var mainDomainList = 'https://ojafunnel.com/user/list/management/validate/email';
+                var mainDomainList = 'https://ojafunnel.com/list/management/validate/email';
 
                 // Fetch CSRF token from the server
                 $.ajax({
