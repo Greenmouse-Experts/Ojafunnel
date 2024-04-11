@@ -185,10 +185,13 @@ class ListManagementController extends Controller
         $finder = Crypt::decrypt($id);
 
         $list = ListManagement::find($finder);
-        $contact = ListManagementContact::where('list_management_id', $list->id)->get();
+        $contacts = ListManagementContact::where('list_management_id', $list->id)->get();
 
-        if ($contact->count() > 0) {
-            $contact->delete();
+        if ($contacts->count() > 0) {
+            foreach($contacts as $contact)
+            {
+                $contact->delete();
+            }
         }
 
         $list->delete();
