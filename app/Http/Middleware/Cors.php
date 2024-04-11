@@ -26,9 +26,7 @@ class Cors
         ];
 
         if ($request->isMethod('OPTIONS')) {
-            // return response()->json('{"method":"OPTIONS"}', 200, $headers);
-            // If it is, return a response with the appropriate headers
-            return response()->json(['method' => 'OPTIONS'], 200, $headers);
+            return response()->json('{"method":"OPTIONS"}', 200, $headers);
         }
 
         $response = $next($request);
@@ -37,5 +35,6 @@ class Cors
         }
 
         return $response;
+
     }
 }

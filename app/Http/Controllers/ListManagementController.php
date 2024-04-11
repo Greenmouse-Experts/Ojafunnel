@@ -467,6 +467,9 @@ class ListManagementController extends Controller
 
     public function upload_contact($id, Request $request)
     {
+        $failed = 0;
+        $passed = 0;
+
         $validator = FacadesValidator::make(
             [
                 'file'      => $request->contact_upload,
@@ -517,23 +520,51 @@ class ListManagementController extends Controller
                     ]);
                 }
 
-                $contact[] = [
+                // Make a request to the debounce API for each email address
+                $response = Http::get('https://api.debounce.io/v1/', [
+                    'api' => config('app.debounce_key'),
+                    'email' => preg_replace('/\s+/', '', $escapedItem[1]), // Trim any leading/trailing whitespace
+                    // Add any other parameters required by the API
+                ]);
+
+                // Check if the request was successful
+                if ($response->successful()) {
+                    // Process the response data
+                    $data = $response->json();
+
+                    // Add the debounce data to the result array
+                    $result = $data;
+
+                    // Check if the result is invalid or risky
+                    if ($result['debounce']['result'] === 'Invalid' || $result['debounce']['result'] === 'Risky') {
+                        // Skip saving the contact and move to the next iteration
+                        $failed += 1;
+                        continue;
+                    }
+
+                } else {
+                    // Handle the error
+                    $result = ['error' => 'Failed to validate email address'];
+                    continue;
+                }
+
+                $passed += 1;
+
+                ListManagementContact::create([
                     'uid' => Str::uuid(),
                     'list_management_id' => $list->id,
                     'name' => ucfirst($escapedItem[0]),
                     'email' => preg_replace('/\s+/', '', $escapedItem[1]),
                     'phone' => preg_replace('/\s+/', '', $escapedItem[2]),
                     'subscribe' => true,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
+                ]);
             }
 
-            ListManagementContact::insert($contact);
+            // ListManagementContact::insert($contact);
 
             return redirect()->route('user.view.list', Crypt::encrypt($list->id))->with([
                 'type' => 'success',
-                'message' => 'Contact added successfully!'
+                'message' => 'Contact added successfully! Failed Contacts:'.$failed.' Passed Contacts:'.$passed
             ]);
         } catch (Exception $e)
         {
