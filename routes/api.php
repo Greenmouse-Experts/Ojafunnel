@@ -20,11 +20,3 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::group(['middleware' => ['cors']], function () {
-    Route::get('/csrf-token', function() {
-        return response()->json(['csrf_token' => csrf_token()]);
-    });
-    Route::post('/list/management/validate/email', [AuthController::class, 'validateEmail']);
-});
-
-
