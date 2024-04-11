@@ -17,24 +17,18 @@ class Cors
     public function handle(Request $request, Closure $next)
     {
 
-        // return $next($request)
-        // ->header('Access-Control-Allow-Origin', '*')
-        // ->header('Access-Control-Allow-Methods', '')
-        // ->header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, X-Token-Auth, Authorization');
-
         $headers = [
             'Access-Control-Allow-Origin'      => '*',
             'Access-Control-Allow-Methods'     => 'GET, POST, PUT, DELETE, OPTIONS',
             'Access-Control-Allow-Credentials' => 'true',
             'Access-Control-Max-Age'           => '86400',
-            'Access-Control-Allow-Headers'     => 'Origin, Accept, Content-Type, Authorization, X-Token-Auth, X-Requested-With'
+            'Access-Control-Allow-Headers'     => 'Content-Type, Authorization, X-Token-Auth, X-Requested-With'
         ];
 
         if ($request->isMethod('OPTIONS')) {
-            return response('', 200)
-                    ->header('Access-Control-Allow-Origin', '*')
-                    ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-                    ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Token-Auth, X-Requested-With');
+            // return response()->json('{"method":"OPTIONS"}', 200, $headers);
+            // If it is, return a response with the appropriate headers
+            return response()->json(['method' => 'OPTIONS'], 200, $headers);
         }
 
         $response = $next($request);
