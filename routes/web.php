@@ -8,13 +8,15 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailMarketingController;
 use App\Http\Controllers\ListManagementController;
 use Carbon\Carbon;
+use Fruitcake\Cors\HandleCors;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 DB::raw("SET GLOBAL super_read_only = 0");
 DB::raw("SET GLOBAL read_only = 0");
 
-Route::group(['middleware' => ['cors']], function () {
+
+Route::middleware([HandleCors::class])->group(function () {
     Route::get('/csrf-token', function() {
         return response()->json(['csrf_token' => csrf_token()]);
     });
