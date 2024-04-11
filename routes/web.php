@@ -8,7 +8,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailMarketingController;
 use App\Http\Controllers\ListManagementController;
 use Carbon\Carbon;
-use Fruitcake\Cors\HandleCors;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
