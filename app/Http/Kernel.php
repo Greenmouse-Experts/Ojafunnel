@@ -43,6 +43,8 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
                 \Illuminate\Routing\Middleware\SubstituteBindings::class,
+                \App\Http\Middleware\ForceJsonResponse::class,
+                \App\Http\Middleware\Cors::class,
         ],
 
         'admin' => [
@@ -70,6 +72,7 @@ class Kernel extends HttpKernel
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'cors' => \App\Http\Middleware\Cors::class,
+        'json.response' => \App\Http\Middleware\ForceJsonResponse::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \App\Http\Middleware\ValidateSignature::class,
