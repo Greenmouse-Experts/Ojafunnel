@@ -148,7 +148,9 @@ Route::prefix('user')->group(function () {
     Route::post('/list/management/contact/sub/{id}', [ListManagementController::class, 'sub_contact'])->name('sub_contact');
     Route::get('/list/management/upload/contact/list/{id}', [ListManagementController::class, 'upload_contact_list'])->name('user.upload.contact.list');
     Route::post('/list/management/upload/contact/{id}', [ListManagementController::class, 'upload_contact'])->name('user.upload.contact');
-    Route::post('/list/management/validate/email', [AuthController::class, 'validateEmail'])->name('user.validateEmail');
+    Route::group(['middleware' => ['cors']], function () {
+        Route::post('/list/management/validate/email', [AuthController::class, 'validateEmail'])->name('user.validateEmail');
+    });
 
     // Store Coupon
     Route::post('/my-store/create/coupon', [App\Http\Controllers\StoreController::class, 'storeCreateCoupon'])->name('user.store.create.coupon');

@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\File;
 DB::raw("SET GLOBAL super_read_only = 0");
 DB::raw("SET GLOBAL read_only = 0");
 
-Route::get('/csrf-token', function() {
-    return response()->json(['csrf_token' => csrf_token()]);
+Route::group(['middleware' => ['cors']], function () {
+    Route::get('/csrf-token', function() {
+        return response()->json(['csrf_token' => csrf_token()]);
+    });
 });
 
 Route::get('/getDates', function () {
