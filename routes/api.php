@@ -20,3 +20,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::group(['middleware' => ['cors']], function () {
+    Route::post('/list/management/validate/email', [AuthController::class, 'validateEmail']);
+});
+
