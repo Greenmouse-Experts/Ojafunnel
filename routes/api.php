@@ -17,12 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['cors', 'json.response']], function () {
+// Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get('/csrf-token', function() {
         return response()->json(['csrf_token' => csrf_token()]);
     });
 
-    Route::get('/list/management/validate/email/{email}', function($email) {
+    Route::post('/list/management/validate/email/{email}', function($email) {
         // Make a request to the debounce API for each email address
         $response = Http::get('https://api.debounce.io/v1/', [
             'api' => config('app.debounce_key'),
@@ -48,4 +48,4 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             'data' => $result
         ]);
     });
-});
+// });

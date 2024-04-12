@@ -56,53 +56,53 @@ class Handler extends ExceptionHandler
             //
         });
 
-        $this->renderable(function (NotFoundHttpException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return response([
-                    'status' => false,
-                    'message' =>  str_contains($e->getMessage(), 'The route') ? 'Endpoint not found. If error persists, contact '.config('app.name').' customer care.' : (str_contains($e->getMessage(), 'No query results') ? str_replace(']', '', last(explode('\\', $e->getMessage()))) . ' not found.' : $e->getMessage())
-                ]);
-            }
-        });
-        $this->renderable(function (ServiceUnavailableHttpException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return response([
-                    'status' => false,
-                    'message' => 'Server Error. If error persists, contact '.config('app.name').' customer care.'
-                ], 500);
-            }
-        });
-        $this->renderable(function (BadRequestHttpException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return response([
-                    'status' => false,
-                    'message' => 'Invalid request'
-                ]);
-            }
-        });
-        $this->renderable(function (ErrorException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return response([
-                    'status' => false,
-                    'message' => 'Failed to get service'
-                ]);
-            }
-        });
-        $this->renderable(function (MethodNotAllowedHttpException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return response([
-                    'status' => false,
-                    'message' => 'The method is not supported for this route.'
-                ]);
-            }
-        });
-        $this->renderable(function (BadMethodCallException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return response([
-                    'status' => false,
-                    'message' => 'Invalid request. If error persists, contact '.config('app.name').' customer care.'
-                ]);
-            }
-        });
+        // $this->renderable(function (NotFoundHttpException $e, Request $request) {
+        //     if ($request->is('api/*')) {
+        //         return response([
+        //             'status' => false,
+        //             'message' =>  str_contains($e->getMessage(), 'The route') ? 'Endpoint not found. If error persists, contact '.config('app.name').' customer care.' : (str_contains($e->getMessage(), 'No query results') ? str_replace(']', '', last(explode('\\', $e->getMessage()))) . ' not found.' : $e->getMessage())
+        //         ]);
+        //     }
+        // });
+        // $this->renderable(function (ServiceUnavailableHttpException $e, Request $request) {
+        //     if ($request->is('api/*')) {
+        //         return response([
+        //             'status' => false,
+        //             'message' => 'Server Error. If error persists, contact '.config('app.name').' customer care.'
+        //         ], 500);
+        //     }
+        // });
+        // $this->renderable(function (BadRequestHttpException $e, Request $request) {
+        //     if ($request->is('api/*')) {
+        //         return response([
+        //             'status' => false,
+        //             'message' => 'Invalid request'
+        //         ]);
+        //     }
+        // });
+        // $this->renderable(function (ErrorException $e, Request $request) {
+        //     if ($request->is('api/*')) {
+        //         return response([
+        //             'status' => false,
+        //             'message' => 'Failed to get service'
+        //         ]);
+        //     }
+        // });
+        // $this->renderable(function (MethodNotAllowedHttpException $e, Request $request) {
+        //     if ($request->is('api/*')) {
+        //         return response([
+        //             'status' => false,
+        //             'message' => 'The method is not supported for this route.'
+        //         ]);
+        //     }
+        // });
+        // $this->renderable(function (BadMethodCallException $e, Request $request) {
+        //     if ($request->is('api/*')) {
+        //         return response([
+        //             'status' => false,
+        //             'message' => 'Invalid request. If error persists, contact '.config('app.name').' customer care.'
+        //         ]);
+        //     }
+        // });
     }
 }
