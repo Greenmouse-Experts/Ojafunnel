@@ -367,13 +367,14 @@ $('body').on('click', '.sendBroadcast', function (e) {
         });
       }
     },error : function(data){
-      $(self).removeAttr('disabled').css({'opacity': '1'});
-      Swal.fire({
-        title: "Error!",
-        text: "There are some wrong email addresses or phone numbers",
-        icon: 'error',
-        timer: 5000
-      });
+        console.log(data);
+        $(self).removeAttr('disabled').css({'opacity': '1'});
+        Swal.fire({
+            title: "Error!",
+            text: "There are some wrong email addresses",
+            icon: 'error',
+            timer: 5000
+        });
     }
   });
 });
