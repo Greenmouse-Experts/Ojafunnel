@@ -564,7 +564,7 @@ class ListManagementController extends Controller
 
             return redirect()->route('user.view.list', Crypt::encrypt($list->id))->with([
                 'type' => 'success',
-                'message' => 'Contact added successfully! Failed Contacts:'.$failed.' Passed Contacts:'.$passed
+                'message' => 'Contact added successfully! Failed Contacts:'.$failed.'  Passed Contacts:'.$passed
             ]);
         } catch (Exception $e)
         {

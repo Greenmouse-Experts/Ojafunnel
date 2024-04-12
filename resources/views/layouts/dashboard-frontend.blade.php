@@ -83,7 +83,7 @@
             $(".alert-timeout").fadeTo(500, 0).slideUp(1000, function() {
                 $(this).remove();
             });
-        }, 8000);
+        }, 10000);
 
         function myFunction() {
             var x = document.getElementById("preview");
