@@ -43,6 +43,7 @@ use App\Models\ReplyMailSupport;
 use App\Models\BirthdayAutomation;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendBroadcastEmail;
 use App\Models\ListManagement;
 use App\Models\ListManagementContact;
 use App\Models\OjafunnelMailSupport;
@@ -1500,6 +1501,8 @@ class AdminController extends Controller
             ]);
 
             Mail::to(env('MAIL_FROM_ADDRESS'))->bcc($data['emails'])->send(new BroadcastEmail($data['subject'], $data['body']));
+
+            SendBroadcastEmail::dispatch($data);
             $send_emails = true;
         }
 
