@@ -16,7 +16,6 @@ class Cors
      */
     public function handle(Request $request, Closure $next)
     {
-
         $headers = [
             'Access-Control-Allow-Origin'      => '*',
             'Access-Control-Allow-Methods'     => 'GET, POST, PUT, DELETE, OPTIONS',
@@ -35,6 +34,5 @@ class Cors
         }
 
         return $response;
-
     }
 }

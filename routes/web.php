@@ -16,11 +16,11 @@ use Illuminate\Http\Request;
 DB::raw("SET GLOBAL super_read_only = 0");
 DB::raw("SET GLOBAL read_only = 0");
 
-
 Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get('/csrf-token', function() {
         return response()->json(['csrf_token' => csrf_token()]);
     });
+
     Route::get('/list/management/validate/email/{email}', function($email) {
         // Make a request to the debounce API for each email address
         $response = Http::get('https://api.debounce.io/v1/', [
@@ -47,9 +47,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             'data' => $result
         ]);
     });
-
 });
-
 
 Route::get('/getDates', function () {
     $dates = [];
