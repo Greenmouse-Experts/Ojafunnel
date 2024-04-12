@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::group(['middleware' => ['cors', 'json.response']], function () {
+Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get('/csrf-token', function() {
         return response()->json(['csrf_token' => csrf_token()]);
     });
@@ -48,4 +48,4 @@ use Illuminate\Support\Facades\Route;
             'data' => $result
         ]);
     });
-// });
+});

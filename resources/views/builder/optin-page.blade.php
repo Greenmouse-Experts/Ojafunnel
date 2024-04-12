@@ -5,7 +5,7 @@
         <meta charset="utf-8"><style data-styles="">ion-icon{visibility:hidden}.hydrated{visibility:inherit}</style><style data-styles="">ion-icon{visibility:hidden}.hydrated{visibility:inherit}</style><style data-styles="">ion-icon{visibility:hidden}.hydrated{visibility:inherit}</style><style data-styles="">ion-icon{visibility:hidden}.hydrated{visibility:inherit}</style>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
-        <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" />
+        <!-- <link rel="shortcut icon" href="{{URL::asset('dash/assets/images/Logo-fav.png')}}" /> -->
         <meta name="author" content="">
         <title>$title</title>
         <!-- CSRF Token -->
@@ -207,8 +207,8 @@
             });
 
             function validateEmail(email) {
-                var mainDomainCSRF = 'https://ojafunnel.com/csrf-token';
-                var mainDomainList = 'https://ojafunnel.com/list/management/validate/email';
+                var mainDomainCSRF = 'https://ojafunnel.com/api/csrf-token';
+                var mainDomainVerify = 'https://ojafunnel.com/api/list/management/validate/email/' + email;
 
                 // Fetch CSRF token from the server
                 $.ajax({
@@ -219,13 +219,10 @@
 
                         // Now, send the actual AJAX request to validate email
                         $.ajax({
-                            type: 'POST',
-                            url: mainDomainList,
-                            data: {
-                                email: email
-                            },
+                            type: 'POST', // Corrected to POST method
+                            url: mainDomainVerify,
                             headers: {
-                                'X-CSRF-TOKEN': csrfToken
+                                'X-CSRF-TOKEN': csrfToken,
                             },
                             success: function(response) {
                                 if (response) {
