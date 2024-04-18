@@ -457,4 +457,9 @@ class AuthController extends Controller
             'data' => $result
         ]);
     }
+
+    public function thankYouPage()
+    {
+        return view('pages.default.thank_you_page');
+    }
 }

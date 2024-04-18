@@ -148,6 +148,31 @@ class CMSController extends Controller
         ]);
     }
 
+    public function course_status_toggle($id)
+    {
+        $course = Course::find($id);
+
+        // Check if the current approved status is true
+        if ($course->approved) {
+            // If approved is true, change it to false
+            $course->update([
+                'approved' => false
+            ]);
+            $message = 'Course suspended successfully.';
+        } else {
+            // If approved is false, change it to true
+            $course->update([
+                'approved' => true
+            ]);
+            $message = 'Course approved successfully.';
+        }
+
+        return back()->with([
+            'type' => 'success',
+            'message' => $message,
+        ]);
+    }
+
     public function save_curriculum($id, Request $request)
     {
         //Validate Request

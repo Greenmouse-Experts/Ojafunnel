@@ -152,6 +152,13 @@
                                                         </div>
 
                                                         <div class="mt-5">
+                                                        @if($course->approved == true)
+                                                            <a href="{{route('user.course.status.toggle', $course->id)}}" class="btn btn-sm btn-soft-danger">Deactivate</a>
+                                                        @else
+                                                            <a href="{{route('user.course.status.toggle', $course->id)}}" class="btn btn-sm btn-soft-success">Activate</a>
+                                                        @endif
+                                                        </div>
+                                                        <div class="mt-1">
                                                             <a href="javascript:;" ids="{{ $course->id }}" class="block deleteCourse" style="color:red"><strong>Delete Course</strong></a>
                                                         </div>
                                                     </div>

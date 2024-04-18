@@ -89,10 +89,14 @@
 
             <div>
                 <div class="col-lg-6" style="margin: 0 auto;">
-                    <form method="POST" id="optinForm" action="$action">
+                    <div style="margin-bottom: 1rem;">
+                        <span id="generalError" style="color: red;"></span>
+                        <span id="generalValid" style="color: green;"></span>
+                    </div>
+                    <form id="optionform" data-optin-url="$action">
                         <div class="form-group">
                             <lable>Full name</lable>
-                            <input type="text" class="form-control" name="name" required>
+                            <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="form-group mt-3">
                             <lable>Email address</lable>
@@ -107,7 +111,7 @@
 					        <span id="error-msg" class="help-block hide"></span>
                         </div>
                         <div class="form-group mt-3">
-                            <button type="button" id="optinButton" class="btn btn-success">Continue</button>
+                            <button type="button" id="optinButton" data-optin-url="$action" class="btn btn-success">Continue</button>
                         </div>
                     </form>
                 </div>
@@ -193,15 +197,21 @@
             let debounceTimer;
 
             $(document).ready(function() {
-                $("#optinButton").click(function() {
+                $("#optinButton").click(function(e) {
                     $('#optinButton').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Opting in...');
+
+                    e.preventDefault(); // Prevent the default form submission
+
+                    // Disable the form to prevent multiple submissions
+                    $(this).prop('disabled', true);
 
                     // Validate email when the save button is clicked
                     const email = $('#email').val();
+                    const optinUrl = $(this).data('optin-url');
 
                     clearTimeout(debounceTimer);
                     debounceTimer = setTimeout(() => {
-                        validateEmail(email);
+                        validateEmail(email, optinUrl);
                     }, 500); // Adjust debounce delay as needed (in milliseconds)
                 });
             });
@@ -209,6 +219,12 @@
             function validateEmail(email) {
                 var mainDomainCSRF = 'https://ojafunnel.com/api/csrf-token';
                 var mainDomainVerify = 'https://ojafunnel.com/api/list/management/validate/email/' + email;
+
+                var formData =  {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                };
 
                 // Fetch CSRF token from the server
                 $.ajax({
@@ -236,9 +252,50 @@
                                         document.getElementById('emailValid').textContent = response.data.debounce.result;
                                         // Enable the submit button and trigger form submission
                                         // $('#optinButton').attr('disabled', false).html('Continue');
-                                        setTimeout(function() {
-                                            $('#optinForm').submit();
-                                        }, 5000);
+                                        // setTimeout(function() {
+                                        //     $('#optinForm').submit();
+                                        // }, 5000);
+
+                                        // Send Ajax request to Laravel backend
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: optinUrl,
+                                            data: formData,
+                                            // headers: {
+                                            //     'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the headers
+                                            // },
+                                            success: function(response) {
+                                                console.log(response);
+
+                                                if(response.code === 200) {
+                                                    // Show success toastr notification
+                                                    document.getElementById('generalError').textContent = '';
+                                                    document.getElementById('generalValid').textContent = response.message;
+
+                                                    setTimeout(function() {
+                                                        var thankYouURL = response.data;
+                                                        window.location.href = thankYouURL;
+                                                    }, 5000);
+
+                                                } else {
+                                                    document.getElementById('generalValid').textContent = '';
+                                                    document.getElementById('generalError').textContent = response.message;
+
+
+                                                    // Enable submit button and reset its state
+                                                    $('#optinButton').attr('disabled', false).html('Continue');
+                                                }
+
+                                            },
+                                            error: function(xhr, status, error) {
+                                                // Show error toastr notification
+                                                document.getElementById('generalValid').textContent = '';
+                                                document.getElementById('generalError').textContent = 'Opt-in failed. Please try again.';
+
+                                                // Enable submit button and reset its state
+                                                $('#optinButton').attr('disabled', false).html('Continue');
+                                            }
+                                        });
                                     }
                                 } else {
                                     document.getElementById('emailError').textContent = 'Invalid email address';

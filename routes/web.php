@@ -54,6 +54,8 @@ Route::get('/getDates', function () {
 Route::get('/spam-score/{id}', [EmailMarketingController::class, 'calculateSpamScore']);
 Route::get('/text', [AuthController::class, 'text']);
 
+Route::get('/thank_you_page', [AuthController::class, 'thankYouPage'])->name('thank_you_page');
+
 Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');
 Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');
 

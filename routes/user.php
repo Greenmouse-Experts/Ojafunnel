@@ -69,6 +69,7 @@ Route::prefix('user')->group(function () {
 
     // LMS
     Route::post('/crm/start/course/creation', [App\Http\Controllers\CMSController::class, 'start_course_creation'])->name('user.start.course.creation');
+    Route::get('/crm/course/status/toggle/{id}', [App\Http\Controllers\CMSController::class, 'course_status_toggle'])->name('user.course.status.toggle');
 
     Route::post('/crm/save/course/{id}', [App\Http\Controllers\CMSController::class, 'save_course'])->name('user.save.course');
 

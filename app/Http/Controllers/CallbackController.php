@@ -8,8 +8,10 @@ use App\Models\UpsellPageSubmission;
 use App\Models\BumpsellSubmission;
 use App\Models\ListManagement;
 use App\Models\ListManagementContact;
+use App\Models\Page;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 
 class CallbackController extends Controller
@@ -148,7 +150,42 @@ class CallbackController extends Controller
             // } else {
             //     return redirect()->back()->with('success', 'Email added successfully.');
             // }
+
+            if($request->name == null)
+            {
+                return response()->json([
+                    'code' => 401,
+                    'message' => 'Name is required.'
+                ]);
+            }
+
+            if($request->email == null)
+            {
+                return response()->json([
+                    'code' => 401,
+                    'message' => 'Email is required.'
+                ]);
+            }
+
+            if($request->phone == null)
+            {
+                return response()->json([
+                    'code' => 401,
+                    'message' => 'Phone number is required.'
+                ]);
+            }
+
             if(isset($page->list_id)) {
+                $list = ListManagementContact::where(['list_management_id' => $page->list_id, 'email' => $request->email])->first();
+
+                if($list)
+                {
+                    return response()->json([
+                        'code' => 401,
+                        'message' => 'Email already exist.'
+                    ]);
+                }
+
                 ListManagementContact::create([
                     'uid' => Str::uuid(),
                     'list_management_id' => $page->list_id,
@@ -221,7 +258,23 @@ class CallbackController extends Controller
             $vendor->notify(new \App\Notifications\LeadNotification($bundle));
 
 
-            return view('pages.default.thank_you_page')->with(['route' => URL::previous()]);
+            $page = Page::where(['user_id' => Auth::user()->id, 'type' => 'thank_you_page'])->first();
+
+            if($page)
+            {
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'Opt-in successful.',
+                    'data' => $page->file_location
+                ]);
+            }
+
+            return response()->json([
+                'code' => 200,
+                'message' => 'Opt-in successful.',
+                'data' => URL::route('thank_you_page')
+            ]);
+
         }
 
         // Upsell Pages
