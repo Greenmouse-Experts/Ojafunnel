@@ -216,7 +216,7 @@
                 });
             });
 
-            function validateEmail(email) {
+            function validateEmail(email, optinUrl) {
                 var mainDomainCSRF = 'https://ojafunnel.com/api/csrf-token';
                 var mainDomainVerify = 'https://ojafunnel.com/api/list/management/validate/email/' + email;
 
@@ -265,7 +265,6 @@
                                             //     'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the headers
                                             // },
                                             success: function(response) {
-                                                console.log(response);
 
                                                 if(response.code === 200) {
                                                     // Show success toastr notification
