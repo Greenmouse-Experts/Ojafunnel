@@ -81,7 +81,7 @@ class SendWASchduledSeries extends Command
                     if (!$this->messageSent($element, $_chunk, $element->type)) {
 
                         // Send the Whatsapp message
-                        $contactsCollection = new Collection($contacts);
+                        $contactsCollection = new Collection($_chunk);
                         if ($_campaign->template == 'template1') {
                             // dispatch job and delay
                             ProcessTemplate1BulkWAMessages::dispatch($contactsCollection, [
@@ -163,7 +163,7 @@ class SendWASchduledSeries extends Command
                 if (!$this->messageSent($element, $_chunk, $element->type)) {
                 // if (true){
                     // Send the Whatsapp message
-                    $contactsCollection = new Collection($contacts);
+                    $contactsCollection = new Collection(_chunk);
                     if ($_campaign->template == 'template1') {
                         // dispatch job
                         ProcessTemplate1BulkWAMessages::dispatch($contactsCollection, [
