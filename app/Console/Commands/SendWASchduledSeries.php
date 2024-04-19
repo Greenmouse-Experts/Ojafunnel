@@ -82,12 +82,10 @@ class SendWASchduledSeries extends Command
                     if (!$this->messageSent($element, $_chunk, $element->type)) {
 
                         // Send the Whatsapp message
-                        // $contactsCollection = new Collection($_chunk);
+                        $contactsCollection->push($_chunk);
 
-                        $contactsCollection = $chunk->map(function ($_chunk) {
-                            // Assuming $_chunk is already an instance of ListManagementContact
-                            return $_chunk;
-                        });
+                        // Convert the collection to Eloquent Collection
+                        $contactsCollection = \App\Models\ListManagementContact::hydrate($contactsCollection->toArray());
 
                         if ($_campaign->template == 'template1') {
                             // dispatch job and delay
@@ -168,12 +166,11 @@ class SendWASchduledSeries extends Command
             foreach ($chunks as $key => $_chunk) {
                 // Check if the message has already been sent to this contact
                 if (!$this->messageSent($element, $_chunk, $element->type)) {
-                // if (true){
                     // Send the Whatsapp message
-                    $contactsCollection = $chunks->map(function ($_chunk) {
-                        // Assuming $_chunk is already an instance of ListManagementContact
-                        return $_chunk;
-                    });
+                    $contactsCollection->push($_chunk);
+
+                    // Convert the collection to Eloquent Collection
+                    $contactsCollection = \App\Models\ListManagementContact::hydrate($contactsCollection->toArray());
 
                     if ($_campaign->template == 'template1') {
                         // dispatch job
