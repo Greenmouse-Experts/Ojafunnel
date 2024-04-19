@@ -154,7 +154,7 @@ class PageController extends Controller
 
         $data = null;
 
-        if ($request->page_type == "landing_page") {
+        if ($request->page_type == "landing_page" || $request->page_type == "thank_you_page") {
             $data = file_get_contents(resource_path('views/builder/new-page-blank-template.blade.php'));
         }
         elseif($request->page_type == "questionaire_page") {

@@ -351,6 +351,8 @@
                                                         Quiz Page
                                                     @elseif($page->type == "dynamic_timer_page")
                                                         Dynamic Timer for Product Page
+                                                    @else
+                                                        Thank You Page
                                                     @endif
                                                 </th>
                                                 <td>{{ $page->folder }}</td>
@@ -487,6 +489,7 @@
                                                     <option value="upsell_page">Upsell Form Page</option>
                                                     <option value="upsell_bump_page">Order Bump/Upsell Page</option>
                                                     <option value="questionaire_page">Quiz Page</option>
+                                                    <option value="thank_you_page">Thank You Page</option>
                                                     <option value="dynamic_timer_page">Dynamic Timer for Product Page</option>
                                                 </select>
                                                 <small id="generatePage"></small>
