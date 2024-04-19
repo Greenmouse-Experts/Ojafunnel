@@ -269,14 +269,15 @@ class ListManagementController extends Controller
 
         $list = ListManagement::find($finder);
 
-        // $emailVerification = $this->email_veriication($request->email);
+        $list = ListManagementContact::where(['list_management_id' => $list->id, 'email' => $request->email])->first();
 
-        // if ($emailVerification !== 'true') {
-        //     return back()->with([
-        //         'type' => 'danger',
-        //         'message' => 'The email address is not valid.'
-        //     ]);
-        // }
+        if($list)
+        {
+            return back()->with([
+                'type' => 'danger',
+                'message' => 'The email address already exist.'
+            ]);
+        }
 
         $listManagementContact = ListManagementContact::create([
             'uid' => Str::uuid(),
@@ -469,6 +470,7 @@ class ListManagementController extends Controller
     {
         $failed = 0;
         $passed = 0;
+        $existingEmail = 0;
 
         $validator = FacadesValidator::make(
             [
@@ -520,51 +522,60 @@ class ListManagementController extends Controller
                     ]);
                 }
 
-                // Make a request to the debounce API for each email address
-                $response = Http::get('https://api.debounce.io/v1/', [
-                    'api' => config('app.debounce_key'),
-                    'email' => preg_replace('/\s+/', '', $escapedItem[1]), // Trim any leading/trailing whitespace
-                    // Add any other parameters required by the API
-                ]);
+                $listEmail = ListManagementContact::where(['list_management_id' => $list->id, 'email' => preg_replace('/\s+/', '', $escapedItem[1])])->first();
 
-                // Check if the request was successful
-                if ($response->successful()) {
-                    // Process the response data
-                    $data = $response->json();
+                if($listEmail)
+                {
+                    $existingEmail += 1;
 
-                    // Add the debounce data to the result array
-                    $result = $data;
+                    // Handle the error
+                    $result = ['error' => 'The email address already exist.'];
+                    continue;
+                } else {
+                    // Make a request to the debounce API for each email address
+                    $response = Http::get('https://api.debounce.io/v1/', [
+                        'api' => config('app.debounce_key'),
+                        'email' => preg_replace('/\s+/', '', $escapedItem[1]), // Trim any leading/trailing whitespace
+                        // Add any other parameters required by the API
+                    ]);
 
-                    // Check if the result is invalid or risky
-                    if ($result['debounce']['result'] === 'Invalid' || $result['debounce']['result'] === 'Risky') {
-                        // Skip saving the contact and move to the next iteration
-                        $failed += 1;
+                    // Check if the request was successful
+                    if ($response->successful()) {
+                        // Process the response data
+                        $data = $response->json();
+
+                        // Add the debounce data to the result array
+                        $result = $data;
+
+                        // Check if the result is invalid or risky
+                        if ($result['debounce']['result'] === 'Invalid' || $result['debounce']['result'] === 'Risky') {
+                            // Skip saving the contact and move to the next iteration
+                            $failed += 1;
+                            continue;
+                        }
+
+                    } else {
+                        // Handle the error
+                        $result = ['error' => 'Failed to validate email address'];
                         continue;
                     }
 
-                } else {
-                    // Handle the error
-                    $result = ['error' => 'Failed to validate email address'];
-                    continue;
+                    $passed += 1;
+
+                    ListManagementContact::create([
+                        'uid' => Str::uuid(),
+                        'list_management_id' => $list->id,
+                        'name' => ucfirst($escapedItem[0]),
+                        'email' => preg_replace('/\s+/', '', $escapedItem[1]),
+                        'phone' => preg_replace('/\s+/', '', $escapedItem[2]),
+                        'subscribe' => true,
+                    ]);
                 }
-
-                $passed += 1;
-
-                ListManagementContact::create([
-                    'uid' => Str::uuid(),
-                    'list_management_id' => $list->id,
-                    'name' => ucfirst($escapedItem[0]),
-                    'email' => preg_replace('/\s+/', '', $escapedItem[1]),
-                    'phone' => preg_replace('/\s+/', '', $escapedItem[2]),
-                    'subscribe' => true,
-                ]);
             }
-
-            // ListManagementContact::insert($contact);
 
             return redirect()->route('user.view.list', Crypt::encrypt($list->id))->with([
                 'type' => 'success',
-                'message' => 'Contact added successfully! Failed Contacts:'.$failed.'  Passed Contacts:'.$passed
+                'message' => 'Contact added successfully! Failed Contacts:'.$failed.'  Passed Contacts:'.$passed.' Existing Contacts:'.$existingEmail
             ]);
         } catch (Exception $e)
         {
