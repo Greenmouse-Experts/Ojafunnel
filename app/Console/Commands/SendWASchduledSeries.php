@@ -73,6 +73,7 @@ class SendWASchduledSeries extends Command
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts->chunk(10);
             $delay = mt_rand(10, 20);
+            $contactsCollection = collect();
 
             foreach ($chunks as $key => $chunk) {
                 // Log message sent for each contact in the chunk
@@ -81,7 +82,13 @@ class SendWASchduledSeries extends Command
                     if (!$this->messageSent($element, $_chunk, $element->type)) {
 
                         // Send the Whatsapp message
-                        $contactsCollection = new Collection($_chunk);
+                        // $contactsCollection = new Collection($_chunk);
+
+                        $contactsCollection = $chunk->map(function ($_chunk) {
+                            // Assuming $_chunk is already an instance of ListManagementContact
+                            return $_chunk;
+                        });
+
                         if ($_campaign->template == 'template1') {
                             // dispatch job and delay
                             ProcessTemplate1BulkWAMessages::dispatch($contactsCollection, [
@@ -116,7 +123,7 @@ class SendWASchduledSeries extends Command
                             ])->afterCommit()->onQueue('waTemplate3')->delay($delay);
                         }
 
-                        // $delay += mt_rand(10, 20);
+                        $delay += mt_rand(10, 20);
                         // Log or handle the message sending process
                         $this->logMessageSent($element, $_chunk, $element->type);
 
@@ -135,7 +142,6 @@ class SendWASchduledSeries extends Command
             SeriesWaCampaign::where(['id' => $element->id,])->update(['DeliveredCount' => $count]);
             // WaCampaigns::where(['id' => $element->wa_campaign_id])->update(['']);
         }
-
 
         foreach($seriesSDJ as $element)
         {
@@ -157,13 +163,18 @@ class SendWASchduledSeries extends Command
             // delay each job between 10  - 20 sec in the queue
             $chunks = $contacts;
             $delay = mt_rand(10, 20);
+            $contactsCollection = collect();
 
             foreach ($chunks as $key => $_chunk) {
                 // Check if the message has already been sent to this contact
                 if (!$this->messageSent($element, $_chunk, $element->type)) {
                 // if (true){
                     // Send the Whatsapp message
-                    $contactsCollection = new Collection(_chunk);
+                    $contactsCollection = $chunks->map(function ($_chunk) {
+                        // Assuming $_chunk is already an instance of ListManagementContact
+                        return $_chunk;
+                    });
+
                     if ($_campaign->template == 'template1') {
                         // dispatch job
                         ProcessTemplate1BulkWAMessages::dispatch($contactsCollection, [
