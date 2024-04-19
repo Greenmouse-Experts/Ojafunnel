@@ -269,9 +269,9 @@ class ListManagementController extends Controller
 
         $list = ListManagement::find($finder);
 
-        $list = ListManagementContact::where(['list_management_id' => $list->id, 'email' => $request->email])->first();
+        $listEmail = ListManagementContact::where(['list_management_id' => $list->id, 'email' => $request->email])->first();
 
-        if($list)
+        if($listEmail)
         {
             return back()->with([
                 'type' => 'danger',
