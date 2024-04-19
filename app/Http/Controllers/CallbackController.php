@@ -258,7 +258,7 @@ class CallbackController extends Controller
             $vendor->notify(new \App\Notifications\LeadNotification($bundle));
 
 
-            $page = Page::where(['user_id' => Auth::user()->id, 'type' => 'thank_you_page'])->first();
+            $page = Page::where(['user_id' => $page->user_id, 'type' => 'thank_you_page'])->first();
 
             if($page)
             {
