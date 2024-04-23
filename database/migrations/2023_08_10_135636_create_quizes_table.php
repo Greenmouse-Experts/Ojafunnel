@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('option3', 50)->nullable();
             $table->string('option4', 50)->nullable();
             $table->string('ans', 50);
-            
+            $table->integer('score')->default(0);
+
             $table->timestamps();
         });
     }
