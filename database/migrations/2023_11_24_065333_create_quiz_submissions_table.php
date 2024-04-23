@@ -15,16 +15,10 @@ return new class extends Migration
     {
         Schema::create('quiz_submissions', function (Blueprint $table) {
             $table->id();
-            $table->foreign(['course_id'])
-                ->references(['id'])
-                ->on('courses')->onUpdate('NO ACTION')->onDelete('NO ACTION'); // Course
-            $table->foreign(['quiz_id'])
-                ->references(['id'])
-                ->on('lms_quizzes')->onUpdate('NO ACTION')->onDelete('NO ACTION'); // LMS Quiz
+            $table->unsignedBigInteger('course_id'); // Course
+            $table->unsignedBigInteger('quiz_id'); // LMS Quiz
             $table->unsignedBigInteger('session'); // Session
-            $table->foreign(['question_id'])
-                ->references(['id'])
-                ->on('quizzes')->onUpdate('NO ACTION')->onDelete('NO ACTION'); // Quiz
+            $table->unsignedBigInteger('question_id'); // Quiz
             $table->string('submitted')->nullable();
             $table->string('answer')->nullable();
             $table->string('order_no')->nullable();
