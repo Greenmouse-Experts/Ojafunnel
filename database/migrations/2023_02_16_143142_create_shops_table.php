@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('theme')->nullable();
             $table->string('color')->nullable();
+            $table->string('payment_gateway')->nullable();
+            $table->string('currency')->nullable();
+            $table->string('currency_sign')->nullable();
             $table->timestamps();
         });
     }

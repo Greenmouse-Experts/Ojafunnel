@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('domain');
             $table->string('status');
+            $table->date('ssl_renewal_date')->nullable();
             $table->timestamps();
         });
     }

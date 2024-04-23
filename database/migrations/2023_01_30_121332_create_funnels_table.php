@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('funnels', function (Blueprint $table) {
             $table->comment('');
             $table->bigIncrements('id');
+            $table->unsignedInteger('category_id')->nullable();
             $table->string('user_id');
             $table->string('folder')->nullable();
+            $table->string('slug');
             $table->timestamps();
         });
     }

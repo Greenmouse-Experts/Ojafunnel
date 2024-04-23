@@ -23,13 +23,13 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // $this->call(CategorySeeder::class);
-        // $this->call(CountrySeeder::class);
-        // $this->call(LanguageSeeder::class);
-        // $this->call(AdminSeeder::class);
-        // $this->call(SiteFeaturesSeeder::class);
-        // $this->call(PaymentGatewaySeeder::class);
-        //  $this->call(MenuesSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(CountrySeeder::class);
+        $this->call(LanguageSeeder::class);
+        $this->call(AdminSeeder::class);
+        $this->call(SiteFeaturesSeeder::class);
+        $this->call(PaymentGatewaySeeder::class);
+         $this->call(MenuesSeeder::class);
         $this->call(LevelSeeder::class);
     }
 }

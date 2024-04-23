@@ -230,7 +230,7 @@ class SendWASchduledSeries extends Command
             }
 
             // update the campaign queue to waiting
-            // WaQueues::where(['wa_campaign_id' => $_campaign->id])->update([
+            // WaQueues::where(['wa_campaign_id' => $_campaign->id])->update([s
             //     'status' => 'Waiting'
             // ]);
 

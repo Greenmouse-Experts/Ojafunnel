@@ -15,18 +15,20 @@ return new class extends Migration
     {
         Schema::create('email_campaigns', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
-            $table->string('name');
-            $table->string('subject');
-            $table->string('replyto_email');
-            $table->string('replyto_name');
-            $table->string('email_kit_id');
-            $table->string('list_id');
-            $table->string('email_template_id');
-            $table->string('sent');
-            $table->string('bounced');
-            $table->string('spam_score');
-            $table->string('message_timing');
+            $table->string('user_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('subject')->nullable();
+            $table->string('replyto_email')->nullable();
+            $table->string('replyto_name')->nullable();
+            $table->string('email_kit_id')->nullable();
+            $table->string('list_id')->nullable();
+            $table->string('email_template_id')->nullable();
+            $table->string('sent')->nullable();
+            $table->string('bounced')->nullable();
+            $table->string('spam_score')->nullable();
+            $table->string('message_timing')->nullable();
+            $table->string('attachment_paths')->nullable();
+            $table->string('slug')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->time('start_time')->nullable();

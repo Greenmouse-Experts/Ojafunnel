@@ -17,9 +17,10 @@ return new class extends Migration
             $table->comment('');
             $table->increments('id');
             $table->string('title', 55);
-            $table->longText('message');
+            $table->longText('message')->nullable();
             $table->unsignedBigInteger('user_id')->index('sms_campaigns_user_id_foreign');
-            $table->text('receivers');
+            $table->unsignedBigInteger('maillist_id')->nullable();
+            $table->text('receivers')->nullable();
             $table->string('sms_type', 15)->nullable();
             $table->longText('media_url')->nullable();
             $table->string('status', 55)->default('Active');
@@ -30,7 +31,6 @@ return new class extends Migration
             $table->text('cache')->nullable();
             $table->string('timezone')->nullable();
             $table->timestamp('schedule_time')->nullable();
-            $table->enum('schedule_type', ['onetime', 'recurring'])->nullable();
             $table->string('frequency_cycle', 50)->nullable();
             $table->integer('frequency_amount')->nullable();
             $table->string('frequency_unit', 8)->nullable();
@@ -40,6 +40,8 @@ return new class extends Migration
             $table->text('reason')->nullable();
             $table->string('batch_id')->nullable();
             $table->integer('running_pid')->nullable();
+            $table->string('action')->default('Play');
+            $table->enum('schedule_type', ['onetime', 'recurring', 'series'])->nullable();
         });
     }
 

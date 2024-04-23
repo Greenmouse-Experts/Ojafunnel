@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('oja_plan_intervals', function (Blueprint $table) {
             $table->id();
             $table->integer('plan_id')->unsigned();
-            $table->double('price');
+            $table->string('price');
             $table->enum('type', ['monthly', 'yearly'])->nullable();
-            $table->integer('currency')->nullable();
+            $table->string('currency')->nullable();
             $table->string('currency_sign')->nullable();
             $table->timestamps();
         });

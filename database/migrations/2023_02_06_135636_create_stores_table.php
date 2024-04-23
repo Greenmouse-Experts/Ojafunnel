@@ -20,9 +20,12 @@ return new class extends Migration {
             $table->string('link')->nullable();
             $table->string('logo')->nullable();
             $table->unsignedBigInteger('user_id')->index('store_user_id_foreign');
-            $table->timestamps();
             $table->string('theme')->nullable();
             $table->string('color')->nullable();
+            $table->string('payment_gateway')->nullable();
+            $table->string('currency')->nullable();
+            $table->string('currency_sign')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('contact_numbers', function (Blueprint $table) {
             $table->comment('');
             $table->bigIncrements('id');
+            $table->string('name');
             $table->string('phone_number');
             $table->unsignedBigInteger('contact_list_id')->index('contact_numbers_contact_list_id_foreign');
             $table->string('status')->nullable()->default('subscribe');

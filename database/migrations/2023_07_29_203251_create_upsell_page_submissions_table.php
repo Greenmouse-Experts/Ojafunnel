@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('list_contact_id');
             $table->text('payment_link');
             $table->string('status')->default('Pending');
+            $table->string('ref')->nullable();
             $table->timestamps();
 
             $table->foreign(['page_id'])->references(['id'])->on('pages')->onUpdate('NO ACTION')->onDelete('NO ACTION');

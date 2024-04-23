@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('user_id')->nullable();
             $table->string('wallet')->nullable();
             $table->string('payment_method')->nullable();
-            $table->double('amount', 8,2)->nullable();
+            $table->string('amount')->nullable();
             $table->string('description')->nullable();
             $table->string('gateway_payment_id')->nullable();
             $table->integer('transaction_id')->unsigned()->nullable();

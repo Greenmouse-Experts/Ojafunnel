@@ -22,7 +22,8 @@ return new class extends Migration
             $table->text('body')->nullable();
             $table->enum('status', ['Read', 'Unread', 'Replied'])->default('Unread');
             $table->enum('by_who', ['Administrator', 'User']);
-
+            $table->string('replied_by')->nullable();
+            
             $table->foreign('mail_id')->references('id')->on('ojafunnel_mail_supports')->onDelete('cascade');
             $table->timestamps();
         });

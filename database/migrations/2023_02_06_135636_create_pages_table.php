@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->comment('');
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('list_id')->nullable()->references('id')->on('list_management')->onDelete('cascade');
             $table->string('user_id')->nullable();
             $table->string('admin_id')->nullable();
             $table->string('name')->nullable();
@@ -23,6 +24,8 @@ return new class extends Migration
             $table->string('thumbnail')->nullable();
             $table->string('folder')->nullable();
             $table->string('file_location')->nullable();
+            $table->string('type')->nullable();
+            $table->string('slug');
             $table->boolean('published')->default(false);
             $table->timestamps();
         });

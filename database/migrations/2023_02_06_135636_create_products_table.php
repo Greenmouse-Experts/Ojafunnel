@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->mediumText('description')->nullable();
             $table->longText('content')->nullable();
-            $table->double('price', 16, 2)->nullable();
+            $table->string('price')->nullable();
             $table->timestamps();
             $table->string('source_item_id')->nullable();
             $table->longText('meta')->nullable();

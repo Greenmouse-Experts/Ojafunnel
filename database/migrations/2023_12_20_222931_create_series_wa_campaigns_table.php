@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->time('time')->nullable();
             $table->text('message')->nullable();
+            $table->string('type')->nullable();
             $table->double('ContactCount')->nullable();
             $table->double('DeliveredCount')->nullable();
             $table->double('FailedDeliveredCount')->nullable();

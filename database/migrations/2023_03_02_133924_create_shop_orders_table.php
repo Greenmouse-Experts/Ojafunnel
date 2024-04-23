@@ -27,9 +27,10 @@ return new class extends Migration
             $table->decimal('affiliate_earning', 10,2)->nullable();
             $table->integer('referred_by')->nullable();
             $table->integer('transaction_id')->unsigned()->references('id')->on('transactions')->onDelete('cascade');
+            $table->string('type')->nullable();
             $table->enum('status', ['created', 'refunded', 'finalized'])->default('created');
             $table->timestamps();
-            
+
         });
     }
 

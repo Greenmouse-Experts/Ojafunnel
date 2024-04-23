@@ -20,7 +20,8 @@ return new class extends Migration
             $table->integer('session');
             $table->string('quiz_title', 100)->nullable();
             $table->text('description')->nullable();
-            
+            $table->integer('time_per_question')->nullable();
+
             $table->timestamps();
         });
     }

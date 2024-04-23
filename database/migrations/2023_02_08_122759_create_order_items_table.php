@@ -19,7 +19,8 @@ return new class extends Migration {
             $table->foreignIdFor(StoreOrder::class);
             $table->foreignIdFor(StoreProduct::class);
             $table->tinyInteger('quantity');
-            $table->double('amount');
+            $table->string('amount');
+            $table->string('type');
             $table->timestamps();
         });
     }

@@ -18,9 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger('page_id');
             $table->string('product_name');
             $table->string('amount');
-            $table->text('payment_link')->nullable();
+            $table->text('payment_link')->nullable();$table->unsignedBigInteger('account_id');
             $table->timestamps();
 
+            $table->foreign(['account_id'])->references(['id'])->on('bank_details')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign(['page_id'])->references(['id'])->on('pages')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }

@@ -22,16 +22,20 @@ return new class extends Migration
             $table->unsignedInteger('contact_id')->nullable()->index('mailadmins_contact_id_foreign');
             $table->unsignedInteger('admin_group_id')->index('mailadmins_admin_group_id_foreign');
             $table->unsignedInteger('language_id')->nullable()->index('mailadmins_language_id_foreign');
+            $table->string('email')->unique();
+            $table->string('name')->nullable();
+            $table->string('password')->nullable();
             $table->string('timezone');
             $table->string('status')->nullable();
             $table->string('color_scheme')->nullable();
-            $table->timestamps();
             $table->string('text_direction')->default('ltr');
             $table->string('menu_layout')->default('none');
             $table->string('theme_mode')->default('light');
-            $table->double('backup_amt')->default(0);
+            $table->string('backup_amt')->default(0);
             $table->integer('months_nonactive_user')->default(0);
-            
+            $table->string('fcm_token')->nullable();
+            $table->timestamps();
+
         });
     }
 

@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(BirthdayContactList::class);
+            $table->string('email_kit_id');
             $table->string('title');
             $table->string('sms_type');
             $table->longText('message');

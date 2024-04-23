@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('category_id')->unsigned()->references('id')->on('categories')->onDelete('cascade');
+            $table->integer('shop_id')->nullable();
             $table->string('title')->nullable();
             $table->string('subtitle')->nullable();
             $table->text('description')->nullable();
@@ -28,6 +29,9 @@ return new class extends Migration
             $table->boolean('published')->default(false);
             $table->boolean('approved')->default(false);
             $table->text('settings')->nullable();
+            $table->string('level1_comm')->nullable();
+            $table->string('level2_comm')->nullable();
+            $table->string('currency_sign')->nullable();
             $table->timestamps();
         });
     }

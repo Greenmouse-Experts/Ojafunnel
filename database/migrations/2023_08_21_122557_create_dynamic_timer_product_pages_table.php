@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('product_name');
             $table->string('offer_time');
             $table->string('rate');
+            $table->string('amount');
             $table->timestamps();
             $table->foreign(['user_id'])->references(['id'])->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign(['page_id'])->references(['id'])->on('pages')->onUpdate('NO ACTION')->onDelete('NO ACTION');

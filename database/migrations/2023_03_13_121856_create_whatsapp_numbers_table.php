@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('whatsapp_numbers', function (Blueprint $table) {
             $table->id();
             $table->string('phone_number')->nullable();
+            $table->string('full_jwt_session');
+            $table->string('user_id');
             $table->timestamps();
         });
     }

@@ -27,6 +27,9 @@ return new class extends Migration
             $table->string('type');
             $table->string('sent');
             $table->string('bounced');
+            $table->string('master')->default(false);
+            $table->string('replyto_email');
+            $table->string('replyto_name');
             $table->timestamps();
         });
     }
