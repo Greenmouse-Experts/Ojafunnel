@@ -13,18 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('quiz_submissions', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('course_id'); // Course
-            $table->unsignedBigInteger('quiz_id'); // LMS Quiz
-            $table->unsignedBigInteger('session'); // Session
-            $table->unsignedBigInteger('question_id'); // Quiz
-            $table->string('submitted')->nullable();
-            $table->string('answer')->nullable();
-            $table->string('order_no')->nullable();
-            $table->string('status'); // Pass | Wrong
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('quiz_submissions')) {
+            Schema::create('quiz_submissions', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('course_id'); // Course
+                $table->unsignedBigInteger('quiz_id'); // LMS Quiz
+                $table->unsignedBigInteger('session'); // Session
+                $table->unsignedBigInteger('question_id'); // Quiz
+                $table->string('submitted')->nullable();
+                $table->string('answer')->nullable();
+                $table->string('order_no')->nullable();
+                $table->string('status'); // Pass | Wrong
+                $table->timestamps();
+            });
+        }
     }
 
     /**
