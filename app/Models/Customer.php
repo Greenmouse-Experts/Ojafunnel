@@ -42,6 +42,7 @@ use App\Library\Traits\TrackJobs;
 use App\Jobs\ImportBlacklistJob;
 use App\Library\Traits\HasUid;
 use App\Library\QuotaManager;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class Customer extends Model
 {
@@ -705,7 +706,7 @@ class Customer extends Model
 
         DB::transaction(function () use ($request, &$user) {
 
-            $plan = OjaPlan::where('name', 'Free')->first();
+            $plan = OjaPlan::where('name', 'Free Plan')->first();
 
             if ($request->referral_link) {
                 $request->validate([
@@ -776,10 +777,10 @@ class Customer extends Model
     {
         $user = new User();
 
-        DB::transaction(function () use ($request, &$user) {
+        FacadesDB::transaction(function () use ($request, &$user) {
             $fullname = explode(" ", $request->fullname);
 
-            $plan = OjaPlan::where('name', 'Free')->first();
+            $plan = OjaPlan::where('name', 'Free Plan')->first();
 
             if (!$request->referral_link == null) {
                 $request->validate([

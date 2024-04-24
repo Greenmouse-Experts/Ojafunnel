@@ -1132,7 +1132,7 @@ class AdminController extends Controller
             $user->fill($request->all());
             $rules = $user->registerRules();
 
-            $plan = OjaPlan::where('name', 'Free')->first();
+            $plan = OjaPlan::where('name', 'Free Plan')->first();
             // Okay, create it
             if ($plan) {
                 $user = $customer->adminCreateAccountAndUser($request);
