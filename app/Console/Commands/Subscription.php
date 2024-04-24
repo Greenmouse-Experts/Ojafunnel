@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\OjaPlan;
 use App\Models\OjaSubscription;
 use App\Models\User;
 use Carbon\Carbon;
@@ -38,17 +39,19 @@ class Subscription extends Command
         {
             if(date('Y-m-d', strtotime($sub->ends_at)) == Carbon::today()->toDateString())
             {
-                 $sub->update([
+                $sub->update([
                     'status' => 'Expired'
                 ]);
 
                 $user = User::find($sub->user_id);
 
+                $plan = OjaPlan::where('name', 'Free Plan')->first();
+
                 $user->update([
-                    'plan' => 1
+                    'plan' => $plan->id
                 ]);
             }
-           
+
         }
         return Command::SUCCESS;
     }
