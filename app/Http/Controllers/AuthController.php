@@ -45,7 +45,7 @@ class AuthController extends Controller
 
             $this->validate($request, $rules);
 
-            $plan = OjaPlan::where('name', 'Free')->first();
+            $plan = OjaPlan::where('name', 'Free Plan')->first();
             // Okay, create it
             if ($plan) {
                 $user = $customer->createAccountAndUser($request);
