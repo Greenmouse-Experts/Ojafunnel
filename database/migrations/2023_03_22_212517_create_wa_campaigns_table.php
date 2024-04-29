@@ -35,10 +35,10 @@ return new class extends Migration
             $table->string('template3_phone_number')->nullable();
             $table->string('template3_phone_cta')->nullable();
 
-            // 
+            //
             $table->string('message_timing');
 
-            // schedule 
+            // schedule
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->time('start_time')->nullable();
@@ -46,6 +46,8 @@ return new class extends Migration
             $table->string('frequency_cycle')->nullable();
             $table->string('frequency_amount')->nullable();
             $table->string('frequency_unit')->nullable();
+
+            $table->tinyInteger('notify_every_newcontact')->nullable();
 
             $table->timestamps();
         });
