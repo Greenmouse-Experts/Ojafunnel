@@ -17,7 +17,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="{{route('user.dashboard', Auth::user()->username)}}">Home</a></li>
-                                <li class="breadcrumb-item active">Create new contact list</li>
+                                <li class="breadcrumb-item active">Upload new contact list</li>
                             </ol>
                         </div>
                     </div>
@@ -43,14 +43,14 @@
             <div class="row">
                 <div class="card">
                     <div class="card-body" style="padding: 4rem;">
-                        <form method="post" action="{{ route('user.upload.contact', Crypt::encrypt($list->id)) }}" enctype="multipart/form-data">
+                        <form method="post" id="contactForm" action="{{ route('user.upload.contact', Crypt::encrypt($list->id)) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="mt-5">
                                     <div class="logo-input border-in w-full px-5 py-4 pb-5">
                                         <p>
                                             <b>
-                                                Upload a file containing your contact
+                                                Upload a file containing your contacts
                                             </b>
                                         </p>
                                         <div class="logo-input2 border-in py-5 px-3">
@@ -74,8 +74,8 @@
                                         Cancel
                                     </button>
                                 </a>
-                                <button type="submit" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
-                                    Save
+                                <button type="button" id="uploadContactButton" class="btn px-4 py-1" style="color: #714091; border: 1px solid #714091">
+                                    Upload
                                 </button>
                             </div>
                         </form>
@@ -85,4 +85,16 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#uploadContactButton").click(function() {
+            $('#uploadContactButton').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Contacts uploading...');
+
+            setTimeout(function() {
+                $('#contactForm').submit();
+            }, 3000);
+        });
+    });
+</script>
 @endsection

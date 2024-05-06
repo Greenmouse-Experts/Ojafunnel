@@ -52,7 +52,7 @@
                                         <p class="text-xs text-gray-500">
                                             The name used for your own reference.
                                         </p>
-                                        <input type="text" name="name" class="form-control"  value="{{old('name')}}" placeholder="Enter list name" required />
+                                        <input type="text" name="name" class="form-control" value="{{old('name')}}" placeholder="Enter list name" required />
                                     </div>
                                     <div class="col-lg-12 mb-4">
                                         <label for="">Display Name</label>
