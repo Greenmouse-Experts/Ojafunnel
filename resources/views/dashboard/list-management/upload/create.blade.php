@@ -94,7 +94,7 @@
 
         var uploadURL = $(this).data('upload-url');
 
-        $('.notifyme').modal('show');
+        $('.notifyme').removeClass('d-none');
 
         // Disable submit button and show loading state
         $form.find('#uploadContactButton').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Contacts uploading...');
@@ -131,7 +131,7 @@
                     toastr.error(response.message);
                 }
 
-                $('.notifyme').modal('hide');
+                $('.notifyme').addClass('d-none');
 
                 // Enable submit button and reset its state
                 $form.find('#uploadContactButton').attr('disabled', false).html('Upload');
