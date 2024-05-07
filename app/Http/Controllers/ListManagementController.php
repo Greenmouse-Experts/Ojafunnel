@@ -197,9 +197,9 @@ class ListManagementController extends Controller
 
         $list->delete();
 
-        return back()->with([
-            'type' => 'success',
-            'message' => 'List deleted!'
+        return response()->json([
+            'code' => 200,
+            'message' => 'List deleted successfully.',
         ]);
     }
 
@@ -359,7 +359,7 @@ class ListManagementController extends Controller
 
         return redirect()->route('user.view.list', Crypt::encrypt($list->id))->with([
             'type' => 'success',
-            'message' => 'Contact created!'
+            'message' => 'Contact created successfully!'
         ]);
     }
 
@@ -421,9 +421,9 @@ class ListManagementController extends Controller
 
         ListManagementContact::find($finder)->delete();
 
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Contact deleted!'
+        return response()->json([
+            'code' => 200,
+            'message' => 'Contact deleted successfully.',
         ]);
     }
 
@@ -473,23 +473,17 @@ class ListManagementController extends Controller
         $passed = 0;
         $existingEmail = 0;
 
-        $validator = FacadesValidator::make(
-            [
-                'file'      => $request->contact_upload,
-                'extension' => strtolower($request->contact_upload->getClientOriginalExtension()),
-                'size' => strtolower($request->contact_upload->getSize())
-            ],
-            [
-                'file'          => 'required',
-                'extension'      => 'required|in:csv,xsls,xsl',
-                'size' => 'required|max:4096'
-            ]
-        );
+        $validator = FacadesValidator::make($request->all(), [
+            'contact_upload' => 'required|file', // Ensure 'contact_upload' exists and is a file
+            'contact_upload' => 'mimes:csv,xlsx,xls', // Check file extension
+            'contact_upload' => 'max:4096', // Check file size (in kilobytes)
+        ]);
 
-        if($validator->fails()){
-            return back()->with([
-                'type' => 'danger',
-                'message' => 'The selected file format is invalid'
+        if ($validator->fails()) {
+            return response()->json([
+                'code' => 422,
+                'message' => 'Validation failed. Please see errors parameter for details.',
+                'errors' => $validator->errors()
             ]);
         }
 
@@ -510,7 +504,7 @@ class ListManagementController extends Controller
                         // Your validation and processing code here
 
                         // Example:
-                        $validatedData = FacadesValidator::make([
+                        $validatedData = FacadesValidator::make($request->all(), [
                             'name' => $escapedItem[0],
                             'email' => preg_replace('/\s+/', '', $escapedItem[1]),
                             'phone' => preg_replace('/\s+/', '', $escapedItem[2])
@@ -577,13 +571,17 @@ class ListManagementController extends Controller
                 }
             }
 
-            return redirect()->route('user.view.list', Crypt::encrypt($list->id))->with([
-                'type' => 'success',
+            // return redirect()->route('user.view.list', Crypt::encrypt($list->id))->with([
+            //     'type' => 'success',
+            //     'message' => 'Contact upload completed. Failed: ' . $failed . ', Passed: ' . $passed . ' Existing Contacts:' . $existingEmail
+            // ]);
+            return response()->json([
+                'code' => 200,
                 'message' => 'Contact upload completed. Failed: ' . $failed . ', Passed: ' . $passed . ' Existing Contacts:' . $existingEmail
             ]);
         } catch (Exception $e) {
-            return back()->with([
-                'type' => 'danger',
+            return response()->json([
+                'code' => 401,
                 'message' => 'Contact upload failed: ' . $e->getMessage()
             ]);
         }

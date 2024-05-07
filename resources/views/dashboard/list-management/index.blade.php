@@ -129,7 +129,7 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        <form method="POST" action="{{ route('user.delete.list', Crypt::encrypt($list->id))}}">
+                                                                        <form class="delete-list-form" data-list-url="{{ route('user.delete.list', Crypt::encrypt($list->id))}}">
                                                                             @csrf
                                                                             <div class="form">
                                                                                 <p><b>Delete List</b></p>
@@ -139,7 +139,7 @@
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <div class="boding">
-                                                                                            <button type="submit" class="form-btn">
+                                                                                            <button type="submit" class="form-btn deleteListBtn">
                                                                                                 I understand this consquences, Delete List
                                                                                             </button>
                                                                                         </div>
@@ -218,4 +218,58 @@
 </div>
 <!-- Modal Ends -->
 @endif
+<script>
+    $('.delete-list-form').submit(function(e) {
+        e.preventDefault(); // Prevent form submission
+        var $form = $(this); // Get the form being submitted
+
+        var deleteURL = $(this).data('list-url');
+
+        // Disable submit button and show loading state
+        $form.find('.deleteListBtn').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Deleting list management...');
+
+        // Send Ajax request to Laravel backend
+        $.ajax({
+            type: 'DELETE',
+            url: deleteURL,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include the CSRF token in the headers
+            },
+            success: function(response) {
+                if(response.code === 200) {
+                    // Show success toastr notification
+                    toastr.success(response.message);
+                    // Delay the redirection for 2 seconds (adjust the delay as needed)
+                    setTimeout(function() {
+                         // Reload the page after successful upload
+                        window.location.reload();
+                    }, 3000);
+                } else if(response.code === 422) {
+                    // Handle validation errors if needed
+                    var errors = response.errors;
+                    // Loop through errors and display them as toasts
+                    $.each(errors, function(key, value) {
+                        toastr.error(value[0]); // Display the first error message
+                    });
+
+                    // Enable submit button and reset its state
+                   $form.find('.deleteListBtn').attr('disabled', false).html('I understand this consquences, Delete List');
+                } else {
+                    toastr.error(response.message);
+
+                    // Enable submit button and reset its state
+                   $form.find('.deleteListBtn').attr('disabled', false).html('I understand this consquences, Delete List');
+                }
+
+            },
+            error: function(xhr, status, error) {
+                // Show error toastr notification
+                toastr.error('Deleting list management failed. Please try again.');
+
+                // Enable submit button and reset its state
+               $form.find('.deleteListBtn').attr('disabled', false).html('I understand this consquences, Delete List');
+            }
+        });
+    });
+</script>
 @endsection

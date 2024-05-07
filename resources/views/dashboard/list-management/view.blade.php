@@ -191,21 +191,18 @@
                                                             <div class="modal-body ">
                                                                 <div class="row">
                                                                     <div class="Editt">
-                                                                        @php /*
-                                                                        <form method="POST" action="{{ route('delete_contact', Crypt::encrypt($list1->id))}}">
-                                                                        */
-                                                                        @endphp
-                                                                        <form method="POST" action="{{ url('user/list/management/contact/delete/'.Crypt::encrypt($list1->id)) }}">
+                                                                        <form class="delete-contact-form" data-contact-url="{{ url('user/list/management/contact/delete/'.Crypt::encrypt($list1->id)) }}">
                                                                             @csrf
                                                                             <div class="form">
                                                                                 <p><b>Delete Contact</b></p>
                                                                                 <div class="row">
                                                                                     <div class="col-lg-12">
-                                                                                        <p>This action cannot be undone. </p> <p>This will permanently delete this contact.</p>
+                                                                                        <p>This action cannot be undone. </p>
+                                                                                        <p>This will permanently delete this contact.</p>
                                                                                     </div>
                                                                                     <div class="col-lg-12 mb-4">
                                                                                         <div class="boding">
-                                                                                            <button type="submit" class="form-btn">
+                                                                                            <button type="submit" class="form-btn deleteContactBtn">
                                                                                                 I understand this consquences, Delete Contact
                                                                                             </button>
                                                                                         </div>
@@ -301,4 +298,59 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.delete-contact-form').submit(function(e) {
+        e.preventDefault(); // Prevent form submission
+        var $form = $(this); // Get the form being submitted
+
+        var deleteURL = $(this).data('contact-url');
+
+        // Disable submit button and show loading state
+        $form.find('.deleteContactBtn').attr('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Deleting contact...');
+
+        // Send Ajax request to Laravel backend
+        $.ajax({
+            type: 'DELETE',
+            url: deleteURL,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include the CSRF token in the headers
+            },
+            success: function(response) {
+                if(response.code === 200) {
+                    // Show success toastr notification
+                    toastr.success(response.message);
+                    // Delay the redirection for 2 seconds (adjust the delay as needed)
+                    setTimeout(function() {
+                         // Reload the page after successful upload
+                        window.location.reload();
+                    }, 3000);
+                } else if(response.code === 422) {
+                    // Handle validation errors if needed
+                    var errors = response.errors;
+                    // Loop through errors and display them as toasts
+                    $.each(errors, function(key, value) {
+                        toastr.error(value[0]); // Display the first error message
+                    });
+
+                    // Enable submit button and reset its state
+                   $form.find('.deleteContactBtn').attr('disabled', false).html('I understand this consquences, Delete Contact');
+                } else {
+                    toastr.error(response.message);
+
+                    // Enable submit button and reset its state
+                   $form.find('.deleteContactBtn').attr('disabled', false).html('I understand this consquences, Delete Contact');
+                }
+
+            },
+            error: function(xhr, status, error) {
+                // Show error toastr notification
+                toastr.error('Deleting contact failed. Please try again.');
+
+                // Enable submit button and reset its state
+               $form.find('.deleteContactBtn').attr('disabled', false).html('I understand this consquences, Delete Contact');
+            }
+        });
+    });
+</script>
 @endsection

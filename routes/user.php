@@ -139,12 +139,12 @@ Route::prefix('user')->group(function () {
     Route::get('/list/management/list/view/{id}', [ListManagementController::class, 'view_list'])->name('user.view.list');
     Route::get('/list/management/list/edit/{id}', [ListManagementController::class, 'edit_list'])->name('user.edit.list');
     Route::post('/list/management/list/update/{id}', [ListManagementController::class, 'update_list'])->name('user.update.list');
-    Route::post('/list/management/list/delete/{id}', [ListManagementController::class, 'delete_list'])->name('user.delete.list');
+    Route::delete('/list/management/list/delete/{id}', [ListManagementController::class, 'delete_list'])->name('user.delete.list');
     Route::get('/list/management/create/contact/list/{id}', [ListManagementController::class, 'create_contact_list'])->name('user.create.contact.list');
     Route::post('/list/management/create/contact/{id}', [ListManagementController::class, 'create_contact'])->name('user.create.contact');
     Route::get('/list/management/contact/edit/{id}', [ListManagementController::class, 'edit_contact'])->name('user.edit.contact');
     Route::post('/list/management/contact/update/{id}', [ListManagementController::class, 'update_contact'])->name('user.update.contact');
-    Route::post('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');
+    Route::delete('/list/management/contact/delete/{id}', [ListManagementController::class, 'delete_contact'])->name('delete_contact');
     Route::post('/list/management/contact/unsub/{id}', [ListManagementController::class, 'unsub_contact'])->name('unsub_contact');
     Route::post('/list/management/contact/sub/{id}', [ListManagementController::class, 'sub_contact'])->name('sub_contact');
     Route::get('/list/management/upload/contact/list/{id}', [ListManagementController::class, 'upload_contact_list'])->name('user.upload.contact.list');
@@ -159,7 +159,6 @@ Route::prefix('user')->group(function () {
     Route::post('/my-store/check/coupon', [App\Http\Controllers\StoreFrontController::class, 'checkCoupon'])->name('user.store.check.coupon');
 
     Route::get('/sms-automation/view/action/{sms_id}', [App\Http\Controllers\SmsAutomationController::class, 'action_sms'])->name('user.automation.action.sms');
-
 
     Route::get('/sms-automation/view/series/{sms_id}', [App\Http\Controllers\SmsAutomationController::class, 'view_series_sms'])->name('user.automation.view.series');
     Route::get('/sms-automation/view/series/action/{series_id}', [App\Http\Controllers\SmsAutomationController::class, 'action_series_sms'])->name('user.automation.action.series');

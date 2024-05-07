@@ -204,8 +204,6 @@
         }
     </style>
     <!-- JAVASCRIPT -->
-    {{-- <script src="{{URL::asset('dash/assets/libs/jquery/jquery.min.js')}}"></script> --}}
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> --}}
     <script type="text/javascript" src="{{ URL::asset('core/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{URL::asset('dash/assets/libs/metismenu/metisMenu.min.js')}}"></script>
     <script src="{{URL::asset('dash/assets/libs/simplebar/simplebar.min.js')}}"></script>
@@ -244,7 +242,21 @@
 
     <script src="{{ asset('assets/js/jscripts.js') }}"></script>
 
+    <!-- Include toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script>
+        toastr.options = {
+            closeButton: true, // Show a close button
+            progressBar: true, // Show a progress bar
+            positionClass: 'toast-top-right', // Position the toasts at the top-right corner
+            timeOut: 3000, // How long the toasts will be displayed (in milliseconds)
+            extendedTimeOut: 3000, // Time added to the timeOut for toast being hovered
+            hideEasing: 'linear', // Easing for hide animation
+            showMethod: 'fadeIn', // Show animation method
+            hideMethod: 'fadeOut' // Hide animation method
+        };
         function myFunction1() {
             // Get the text field
             var input = document.getElementById("myInput");
@@ -328,10 +340,10 @@
         });
     </script>
 
-<script type="text/javascript">
-    DeBounce_APIKEY = 'public_aDl4U2RjNmhkU2ZqQmtnZyt3Y3FpQT09'; // Your DeBounce Public API Key.
-    DeBounce_RedBackgound = 'true'; // Convert input background to red for an invalid email or not.
-</script>
-<script async type="text/javascript" src="https://cdn.debounce.io/widget/DeBounce.v2.js"></script>
+    <script type="text/javascript">
+        DeBounce_APIKEY = 'public_aDl4U2RjNmhkU2ZqQmtnZyt3Y3FpQT09'; // Your DeBounce Public API Key.
+        DeBounce_RedBackgound = 'true'; // Convert input background to red for an invalid email or not.
+    </script>
+    <script async type="text/javascript" src="https://cdn.debounce.io/widget/DeBounce.v2.js"></script>
 </body>
 </html>
