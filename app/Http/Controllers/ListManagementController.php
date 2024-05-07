@@ -186,15 +186,19 @@ class ListManagementController extends Controller
         $finder = Crypt::decrypt($id);
 
         $list = ListManagement::find($finder);
+
         $contacts = ListManagementContact::where('list_management_id', $list->id)->get();
 
         if ($contacts->count() > 0) {
-            foreach($contacts as $contact)
-            {
-                $contact->delete();
-            }
+            // Delete contacts associated with the list in batches
+            ListManagementContact::where('list_management_id', $list->id)->chunk(100, function ($contacts) {
+                foreach ($contacts as $contact) {
+                    $contact->delete();
+                }
+            });
         }
 
+        // Delete the list
         $list->delete();
 
         return response()->json([
@@ -202,6 +206,7 @@ class ListManagementController extends Controller
             'message' => 'List deleted successfully.',
         ]);
     }
+
 
     public function create_contact_list($id)
     {
@@ -497,10 +502,11 @@ class ListManagementController extends Controller
 
             $batchSize = 100; // Set your preferred batch size
 
+            DB::beginTransaction();
+
             foreach (array_chunk($csv_data, $batchSize) as $batch) {
-                DB::beginTransaction();
-                try {
-                    foreach ($batch as $key => $escapedItem) {
+                foreach ($batch as $key => $escapedItem) {
+                    try {
                         // Your validation and processing code here
 
                         // Example:
@@ -513,6 +519,10 @@ class ListManagementController extends Controller
                             'email' => 'required|email',
                             'phone' => 'required|numeric'
                         ]);
+
+                        if ($validatedData->fails()) {
+                            throw new \Exception('Validation error');
+                        }
 
                         $listEmail = ListManagementContact::where(['list_management_id' => $list->id, 'email' => preg_replace('/\s+/', '', $escapedItem[1])])->first();
 
@@ -563,13 +573,13 @@ class ListManagementController extends Controller
                                 'subscribe' => true,
                             ]);
                         }
+                    } catch (Exception $e) {
+                        $failed += count($batch); // Increment failed count by the batch size
                     }
-                    DB::commit(); // Commit the batch transaction
-                } catch (Exception $e) {
-                    DB::rollback(); // Rollback the batch transaction in case of error
-                    $failed += count($batch); // Increment failed count by the batch size
                 }
             }
+
+            DB::commit();
 
             // return redirect()->route('user.view.list', Crypt::encrypt($list->id))->with([
             //     'type' => 'success',
@@ -580,6 +590,9 @@ class ListManagementController extends Controller
                 'message' => 'Contact upload completed. Failed: ' . $failed . ', Passed: ' . $passed . ' Existing Contacts:' . $existingEmail
             ]);
         } catch (Exception $e) {
+
+            DB::rollback(); // Rollback the batch transaction in case of error
+
             return response()->json([
                 'code' => 401,
                 'message' => 'Contact upload failed: ' . $e->getMessage()
