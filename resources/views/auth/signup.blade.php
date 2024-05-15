@@ -317,10 +317,13 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    console.log(response.data);
                     if (response) {
-                        if(response.data.debounce.result == 'Invalid' || response.data.debounce.result == 'Risky')
+                        if(response.data.error)
                         {
+                            document.getElementById('emailValid').textContent = '';
+                            document.getElementById('emailError').textContent = response.data.error;
+                            $('#registrationButton').attr('disabled', false).html('Sign Up');
+                        } else if(response.data.debounce.result == 'Invalid' || response.data.debounce.result == 'Risky') {
                             document.getElementById('emailValid').textContent = '';
                             document.getElementById('emailError').textContent = response.data.debounce.result;
                             $('#registrationButton').attr('disabled', false).html('Sign Up');

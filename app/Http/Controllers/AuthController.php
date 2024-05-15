@@ -439,6 +439,8 @@ class AuthController extends Controller
             // Add any other parameters required by the API
         ]);
 
+        $data = $response->json();
+
         // Check if the request was successful
         if ($response->successful()) {
             // Process the response data
@@ -448,12 +450,12 @@ class AuthController extends Controller
             $result = $data;
         } else {
             // Handle the error
-            $result = ['error' => 'Failed to validate email address'];
+            $result = ['error' => $data['debounce']['error']];
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Email addresse validated successfully.',
+            'message' => 'Email address validated successfully.',
             'data' => $result
         ]);
     }
