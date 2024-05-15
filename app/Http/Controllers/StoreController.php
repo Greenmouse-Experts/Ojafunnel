@@ -51,7 +51,7 @@ class StoreController extends Controller
             ]
         );
 
-        if (Store::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->store) {
+        if (Store::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->store) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access.'
@@ -280,7 +280,7 @@ class StoreController extends Controller
             'level2_comm' => 'required',
         ]);
 
-        if (StoreProduct::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->products) {
+        if (StoreProduct::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->products) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access.'
@@ -426,7 +426,7 @@ class StoreController extends Controller
             ]);
         }
 
-        if (StoreProduct::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->products) {
+        if (StoreProduct::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->products) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access.'

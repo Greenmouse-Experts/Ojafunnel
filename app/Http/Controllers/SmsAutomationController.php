@@ -47,7 +47,7 @@ class SmsAutomationController extends Controller
             'integration' => ['required', 'string', 'max:255'],
         ], $messages);
 
-        if (SmsCampaign::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->sms_automation) {
+        if (SmsCampaign::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->sms_automation) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access'

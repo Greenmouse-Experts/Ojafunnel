@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\HomePageController;
+use App\Models\OjaPlanParameter;
 use App\Models\SeriesEmailCampaign;
 use App\Models\SeriesSmsCampaign;
 
@@ -598,6 +599,13 @@ class EmailMarketingController extends Controller
                     'type' => 'danger',
                     'message' => 'You currently have no master email kit. Likewise Ojafunnel team have no master email kit. Please set up email kit and it make master. Thanks.'
                 ])->withInput();
+            }
+
+            if (OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->platform_email_integration == 'no') {
+                return back()->with([
+                    'type' => 'danger',
+                    'message' => "Your subscription plan doesn't support platform email integration. Please set up email kit and it make master. Thanks."
+                ]);
             }
 
             $email_kit = $email_kit->first();

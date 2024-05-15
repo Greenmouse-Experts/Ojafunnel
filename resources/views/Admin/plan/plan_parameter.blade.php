@@ -104,6 +104,86 @@
                                                 <td class="text-dark fw-medium">Birthday Automation</td>
                                                 <td><input class="form-control" name="birthday_automation" value="{{$parameters->birthday_automation}}" type="number" /></td>
                                             </tr>
+                                            <tr>
+                                                <td class="text-dark fw-medium">List Upload</td>
+                                                <td>
+                                                    <select class="form-control" name="list_upload">
+                                                        <option value="{{$parameters->list_upload}}">{{ucfirst($parameters->list_upload)}}</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-dark fw-medium">Add Contact List</td>
+                                                <td>
+                                                    <select class="form-control" name="add_contact_list">
+                                                        <option value="{{$parameters->add_contact_list}}">{{ucfirst($parameters->add_contact_list)}}</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-dark fw-medium">Email File Upload</td>
+                                                <td>
+                                                    <select class="form-control" name="email_file_upload">
+                                                        <option value="{{$parameters->email_file_upload}}">{{ucfirst($parameters->email_file_upload)}}</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-dark fw-medium">Whatsapp File Upload</td>
+                                                <td>
+                                                    <select class="form-control" name="whatsapp_file_upload">
+                                                        <option value="{{$parameters->whatsapp_file_upload}}">{{ucfirst($parameters->whatsapp_file_upload)}}</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-dark fw-medium">Platform Email Integration</td>
+                                                <td>
+                                                    <select class="form-control" name="platform_email_integration">
+                                                        <option value="{{$parameters->platform_email_integration}}">{{ucfirst($parameters->platform_email_integration)}}</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <!-- <tr>
+                                                <td class="text-dark fw-medium">Platform SMS Integration</td>
+                                                <td>
+                                                    <select class="form-control" name="platform_sms_integration">
+                                                        <option value="{{$parameters->platform_sms_integration}}">{{ucfirst($parameters->platform_sms_integration)}}</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </td>
+                                            </tr> -->
+                                            <tr>
+                                                <td class="text-dark fw-medium">User Email Integration</td>
+                                                <td>
+                                                    <select class="form-control" name="user_email_integration">
+                                                        <option value="{{$parameters->user_email_integration}}">{{ucfirst($parameters->user_email_integration)}}</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-dark fw-medium">User SMS Integration</td>
+                                                <td>
+                                                    <select class="form-control" name="user_sms_integration">
+                                                        <option value="{{$parameters->user_sms_integration}}">{{ucfirst($parameters->user_sms_integration)}}</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
                                         </form>
                                     </tbody>
                                 </table>

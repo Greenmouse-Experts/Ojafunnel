@@ -185,6 +185,7 @@
                                                         Attach, images, videos, audios or files
                                                     </b>
                                                 </p>
+                                                @if(App\Models\OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->whatsapp_file_upload == 'yes')
                                                 <div class="logo-input2 border-in py-5 px-2">
                                                         <div class="avatar">
                                                             <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664984753/OjaFunnel-Images/Vectoor_rbkrfl.png" alt="">
@@ -194,6 +195,9 @@
                                                             class="mt-4 w-100" />
                                                     </div>
                                                 </div>
+                                                @else
+                                                <p class="text-danger">Your subscription plan doesn't support file upload.</p>
+                                                @endif
                                             </div>
                                         </div>
 

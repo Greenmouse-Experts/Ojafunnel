@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Ramsey\Uuid\Type\Integer;
 use App\Http\Controllers\HomePageController;
-
+use App\Models\OjaPlanParameter;
 
 class IntegrationController extends Controller
 {
@@ -21,6 +21,7 @@ class IntegrationController extends Controller
      */
 
     private $home;
+
     public function __construct(){
         $this->home = new HomePageController;
         $this->middleware(['auth', 'verified']);
@@ -28,6 +29,13 @@ class IntegrationController extends Controller
 
     public function integration_email_create(Request $request)
     {
+        if (OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->user_email_integration == 'no') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Your subscription plan doesn't support email integration creation."
+            ]);
+        }
+
         $request->validate([
             'host' => 'required',
             'port' => 'required|numeric',
@@ -74,6 +82,13 @@ class IntegrationController extends Controller
 
     public function integration_create(Request $request)
     {
+        if (OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->user_sms_integration == 'no') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Your subscription plan doesn't support sms integration creation."
+            ]);
+        }
+
         if($this->home->site_features_settings('Integration Page') || $this->home->user_site_features_settings('Integration Page') > 0) return $this->home->redirects();
 
         $integrations = Integration::where('user_id', Auth::user()->id)->get();
@@ -345,6 +360,13 @@ class IntegrationController extends Controller
 
     public function integration_update($id, Request $request)
     {
+        if (OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->user_sms_integration == 'no') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Your subscription plan doesn't support sms integration creation."
+            ]);
+        }
+
         $idFinder = Crypt::decrypt($id);
 
         $integration = Integration::findorfail($idFinder);
@@ -446,6 +468,13 @@ class IntegrationController extends Controller
 
     public function integration_enable($id)
     {
+        if (OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->user_sms_integration == 'no') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Your subscription plan doesn't support sms integration creation."
+            ]);
+        }
+
         $idFinder = Crypt::decrypt($id);
 
         $integration = Integration::findorfail($idFinder);
@@ -472,6 +501,13 @@ class IntegrationController extends Controller
 
     public function integration_disable($id)
     {
+        if (OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->user_sms_integration == 'no') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Your subscription plan doesn't support sms integration creation."
+            ]);
+        }
+        
         $idFinder = Crypt::decrypt($id);
 
         $integration = Integration::findorfail($idFinder);

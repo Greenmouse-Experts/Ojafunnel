@@ -48,7 +48,7 @@ class CMSController extends Controller
         ]);
 
         $userCoursesCount = Course::where('user_id', Auth::user()->id)->count();
-        $planCoursesLimit = OjaPlanParameter::find(Auth::user()->plan)->courses;
+        $planCoursesLimit = OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->courses;
 
         if ($userCoursesCount >= $planCoursesLimit) {
             return back()->with([
@@ -579,7 +579,7 @@ class CMSController extends Controller
             ]
         );
 
-        if (Shop::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->shop) {
+        if (Shop::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->shop) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access'

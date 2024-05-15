@@ -28,6 +28,14 @@ return new class extends Migration
             $table->integer('courses')->default(0);
             $table->integer('birthday_contact_list')->default(0);
             $table->integer('birthday_automation')->default(0);
+            $table->string('list_upload')->default('no');
+            $table->string('add_contact_list')->default('no');
+            $table->string('email_file_upload')->default('no');
+            $table->string('whatsapp_file_upload')->default('no');
+            $table->string('platform_email_integration')->default('no');
+            $table->string('platform_sms_integration')->default('no');
+            $table->string('user_email_integration')->default('no');
+            $table->string('user_sms_integration')->default('no');
             $table->timestamps();
         });
     }

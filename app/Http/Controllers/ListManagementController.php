@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use App\Mail\UserApprovedNotification;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\HomePageController;
+use App\Models\OjaPlanParameter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -207,7 +208,6 @@ class ListManagementController extends Controller
         ]);
     }
 
-
     public function create_contact_list($id)
     {
         if($this->home->site_features_settings('List Management') || $this->home->user_site_features_settings('List Management') > 0) return $this->home->redirects();
@@ -265,6 +265,13 @@ class ListManagementController extends Controller
 
     public function create_contact($id, Request $request)
     {
+        if (OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->add_contact_list == 'no') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Your subscription plan doesn't support contact creation"
+            ]);
+        }
+
         $this->validate($request, [
             'name'  => 'required|max:250',
             'email' => 'required|email|max:250',
@@ -474,6 +481,13 @@ class ListManagementController extends Controller
 
     public function upload_contact($id, Request $request)
     {
+        if (OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->list_upload == 'no') {
+            return back()->with([
+                'type' => 'danger',
+                'message' => "Your subscription plan doesn't support upload of contact"
+            ]);
+        }
+
         $failed = 0;
         $passed = 0;
         $existingEmail = 0;

@@ -317,6 +317,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
+                    console.log(response.data);
                     if (response) {
                         if(response.data.debounce.result == 'Invalid' || response.data.debounce.result == 'Risky')
                         {

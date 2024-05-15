@@ -113,6 +113,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="logo-input w-full px-5 py-4 pb-5" id="attachment">
                                         <p>Upload Attachments:</p>
                                         <p>
@@ -120,6 +121,7 @@
                                                 Attach, images, videos, audios or files
                                             </b>
                                         </p>
+                                        @if(App\Models\OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->email_file_upload == 'yes')
                                         <div class="logo-input2 border-in py-5 px-2">
                                             <div class="avatar">
                                                 <img src="https://res.cloudinary.com/greenmouse-tech/image/upload/v1664984753/OjaFunnel-Images/Vectoor_rbkrfl.png" alt="">
@@ -128,6 +130,9 @@
                                                 <input type="file" name="attachments[]" id="" multiple/>
                                             </div>
                                         </div>
+                                        @else
+                                            <p class="text-danger">Your subscription plan doesn't support file upload.</p>
+                                        @endif
                                     </div>
 
                                     <div class="col-12" id="series" style="display: none;">

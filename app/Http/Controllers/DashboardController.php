@@ -893,7 +893,7 @@ class DashboardController extends Controller
             'selected_page' => ['required']
         ]);
 
-        if (Page::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->page_builder) {
+        if (Page::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->page_builder) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access'
@@ -1167,7 +1167,7 @@ class DashboardController extends Controller
             'phone_number' => 'required|unique:whatsapp_numbers'
         ]);
 
-        if (WhatsappNumber::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->wa_number) {
+        if (WhatsappNumber::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->wa_number) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access'
@@ -1412,7 +1412,7 @@ class DashboardController extends Controller
             // 'template' => 'required',
         ]);
 
-        if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->whatsapp_automation) {
+        if (WaCampaigns::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->whatsapp_automation) {
             return back()->with([
                 'type' => 'danger',
                 'message' => 'Upgrade to enjoy more access'
@@ -1513,14 +1513,17 @@ class DashboardController extends Controller
 
                     $waCaimpagn->notify_every_newcontact = false;
 
-                    // filename
-                    $file = $request->file('template2_file');
-                    $path = $file->storeAs(
-                        '/public/WAfiles',
-                        substr(md5(mt_rand()), 0, 7) . '-' . $file->getClientOriginalName()
-                    );
+                    if ($request->hasFile('template2_file')) {
+                        // filename
+                        $file = $request->file('template2_file');
+                        $path = $file->storeAs(
+                            '/public/WAfiles',
+                            substr(md5(mt_rand()), 0, 7) . '-' . $file->getClientOriginalName()
+                        );
 
-                    $waCaimpagn->template2_file = $path;
+                        $waCaimpagn->template2_file = $path;
+                    }
+
                     $waCaimpagn->message_timing = $request->message_timing;
                     $waCaimpagn->save();
 
@@ -1761,14 +1764,17 @@ class DashboardController extends Controller
                         $waCaimpagn->template = $request->template;
                         $waCaimpagn->template2_message = $request->template2_message;
 
-                        // filename
-                        $file = $request->file('template2_file');
-                        $path = $file->storeAs(
-                            '/public/WAfiles',
-                            substr(md5(mt_rand()), 0, 7) . '-' . $file->getClientOriginalName()
-                        );
+                        if ($request->hasFile('template2_file')) {
+                            // filename
+                            $file = $request->file('template2_file');
+                            $path = $file->storeAs(
+                                '/public/WAfiles',
+                                substr(md5(mt_rand()), 0, 7) . '-' . $file->getClientOriginalName()
+                            );
 
-                        $waCaimpagn->template2_file = $path;
+                            $waCaimpagn->template2_file = $path;
+                        }
+
                         $waCaimpagn->message_timing = $request->message_timing;
 
                         // frequency

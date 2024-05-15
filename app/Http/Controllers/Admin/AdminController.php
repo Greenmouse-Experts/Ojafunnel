@@ -2461,7 +2461,15 @@ class AdminController extends Controller
             'products' => $request->product,
             'courses' => $request->course,
             'birthday_contact_list' => $request->birthday_contact_list,
-            'birthday_automation' => $request->birthday_automation
+            'birthday_automation' => $request->birthday_automation,
+            'list_upload' => $request->list_upload,
+            'add_contact_list' => $request->add_contact_list,
+            'email_file_upload' => $request->email_file_upload,
+            'whatsapp_file_upload' => $request->whatsapp_file_upload,
+            'platform_email_integration' => $request->platform_email_integration,
+            // 'platform_sms_integration' => $request->platform_sms_integration,
+            'user_email_integration' => $request->user_email_integration,
+            'user_sms_integration' => $request->user_sms_integration
         ]);
 
         return back()->with([
@@ -2731,7 +2739,7 @@ class AdminController extends Controller
 
     public function delete_birthday(Request $request)
     {
-        $bd = BirthdayAutomation::findOrFail($request->id)->delete();
+        BirthdayAutomation::findOrFail($request->id)->delete();
 
         return back()->with([
             'type' => 'success',
@@ -3600,13 +3608,6 @@ class AdminController extends Controller
         $request->validate([
             'phone_number' => 'required|unique:whatsapp_numbers'
         ]);
-
-        // if (WhatsappNumber::where('user_id', Auth::user()->id)->get()->count() >= OjaPlanParameter::find(Auth::user()->plan)->wa_number) {
-        //     return back()->with([
-        //         'type' => 'danger',
-        //         'message' => 'Upgrade to enjoy more access'
-        //     ]);
-        // }
 
         $wa_number = new WhatsappNumber();
         $wa_number->phone_number = $request->phone_number;
