@@ -73,7 +73,7 @@
                                                 <td><input class="form-control" name="sms_contact_list" value="{{$parameters->sms_contact_list}}" type="number" /></td>
                                             </tr>
                                             <tr>
-                                                <td class="text-dark fw-medium">SMS & WhatsApp Automation</td>
+                                                <td class="text-dark fw-medium">SMS Automation</td>
                                                 <td><input class="form-control" name="sms_automation" value="{{$parameters->sms_automation}}" type="number" /></td>
                                             </tr>
                                             <tr>
