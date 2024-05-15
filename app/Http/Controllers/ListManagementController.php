@@ -482,8 +482,8 @@ class ListManagementController extends Controller
     public function upload_contact($id, Request $request)
     {
         if (OjaPlanParameter::where('plan_id', Auth::user()->plan)->first()->list_upload == 'no') {
-            return back()->with([
-                'type' => 'danger',
+            return response()->json([
+                'code' => 401,
                 'message' => "Your subscription plan doesn't support upload of contact"
             ]);
         }
