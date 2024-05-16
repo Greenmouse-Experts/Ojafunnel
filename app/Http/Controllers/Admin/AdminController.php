@@ -2453,7 +2453,7 @@ class AdminController extends Controller
             'page_builder' => $request->page_builder,
             'funnel_builder' => $request->funnel_builder,
             'wa_number' =>  $request->whatsapp_number,
-            'sms_contact_list' => $request->sms_contact_list,
+            // 'sms_contact_list' => $request->sms_contact_list,
             'sms_automation' => $request->sms_automation,
             'whatsapp_automation' => $request->whatsapp_automation,
             'store' => $request->store,
