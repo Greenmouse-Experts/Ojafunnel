@@ -600,7 +600,7 @@ class ListManagementController extends Controller
 
             return response()->json([
                 'code' => 200,
-                'message' => 'Contact upload completed. Failed: ' . $failed . ', Passed: ' . $passed . ' Existing Contacts:' . $existingEmail
+                'message' => 'Contact upload completed. <br> Failed Contacts: ' . $failed . ' <br> Passed Contacts: ' . $passed . ' <br> Existing Contacts:' . $existingEmail
             ]);
         } catch (Exception $e) {
 
