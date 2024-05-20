@@ -492,10 +492,9 @@ class ListManagementController extends Controller
         $passed = 0;
         $existingEmail = 0;
 
+        // Validate the uploaded file
         $validator = FacadesValidator::make($request->all(), [
-            'contact_upload' => 'required|file', // Ensure 'contact_upload' exists and is a file
-            'contact_upload' => 'mimes:csv,xlsx,xls', // Check file extension
-            'contact_upload' => 'max:4096', // Check file size (in kilobytes)
+            'contact_upload' => 'required|file|mimes:csv,xlsx,xls|max:4096'
         ]);
 
         if ($validator->fails()) {
@@ -521,21 +520,25 @@ class ListManagementController extends Controller
             foreach (array_chunk($csv_data, $batchSize) as $batch) {
                 foreach ($batch as $key => $escapedItem) {
                     try {
+
+                        $phone = preg_replace('/\s+/', '', $escapedItem[2]);
+
                         // Your validation and processing code here
 
                         // Example:
-                        $validatedData = FacadesValidator::make($request->all(), [
+                        $validatedData = FacadesValidator::make( [
                             'name' => $escapedItem[0],
                             'email' => preg_replace('/\s+/', '', $escapedItem[1]),
-                            'phone' => preg_replace('/\s+/', '', $escapedItem[2])
+                            'phone' => $phone
                         ],[
                             'name' => 'required|string|max:255',
                             'email' => 'required|email',
-                            'phone' => 'required|numeric'
+                            'phone' => ['required', 'regex:/^\+\d+$/'] // Ensure phone number starts with "+"
                         ]);
 
                         if ($validatedData->fails()) {
-                            throw new \Exception('Validation error');
+                            $failed++;
+                            continue;
                         }
 
                         $listEmail = ListManagementContact::where(['list_management_id' => $list->id, 'email' => preg_replace('/\s+/', '', $escapedItem[1])])->first();
@@ -543,7 +546,6 @@ class ListManagementController extends Controller
                         if($listEmail)
                         {
                             $existingEmail++;
-
                             // Handle the error
                             $result = ['error' => 'The email address already exist.'];
                             continue;
@@ -584,22 +586,18 @@ class ListManagementController extends Controller
                                 'list_management_id' => $list->id,
                                 'name' => ucfirst($escapedItem[0]),
                                 'email' => preg_replace('/\s+/', '', $escapedItem[1]),
-                                'phone' => preg_replace('/\s+/', '', $escapedItem[2]),
+                                'phone' => $phone,
                                 'subscribe' => true,
                             ]);
                         }
                     } catch (Exception $e) {
-                        $failed += count($batch); // Increment failed count by the batch size
+                        $failed ++; // Increment failed count by the batch size
                     }
                 }
             }
 
             DB::commit();
 
-            // return redirect()->route('user.view.list', Crypt::encrypt($list->id))->with([
-            //     'type' => 'success',
-            //     'message' => 'Contact upload completed. Failed: ' . $failed . ', Passed: ' . $passed . ' Existing Contacts:' . $existingEmail
-            // ]);
             return response()->json([
                 'code' => 200,
                 'message' => 'Contact upload completed. Failed: ' . $failed . ', Passed: ' . $passed . ' Existing Contacts:' . $existingEmail
